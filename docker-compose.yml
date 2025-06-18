@@ -1,12 +1,22 @@
+# docker-compose.yml — Arkalia Luna Pro
+# Architecture optimisée avec blocs réutilisables
+
+x-arkalia-defaults: &arkalia-defaults
+  build:
+    context: .
+    dockerfile: Dockerfile
+  container_name: arkalia-api
+  volumes:
+    - .:/app
+  working_dir: /app
+  ports:
+    - "8000:8000"
+  environment:
+    - PYTHONUNBUFFERED=1
+  restart: unless-stopped
+
 services:
   arkalia-api:
-    build:
-      context: .
-    command: uvicorn helloria.core:app --host 0.0.0.0 --port 8000 --reload
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    working_dir: /app
-    environment:
-      - PYTHONUNBUFFERED=1
+    <<: *arkalia-defaults
+    command: >
+      uvicorn helloria.core:app --host 0.0.0.0 --port 8000 --reload --reload-dir helloria --reload-exclude logs/ --reload-exclude docs/ --reload-exclude site/
