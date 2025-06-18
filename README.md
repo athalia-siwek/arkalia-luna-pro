@@ -1,3 +1,5 @@
+![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
+![version](https://img.shields.io/badge/version-1.0.6-blue)
 ![Tests Coverage](htmlcov/badge.svg)
 
 # 🌕 Arkalia-LUNA PRO
