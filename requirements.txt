@@ -3,3 +3,5 @@ uvicorn
 black
 ruff
 pytest
+pytest-cov
+httpx>=0.23.0
