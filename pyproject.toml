@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arkalia-luna-pro"
+version = "1.0.0"
+description = "Devstation IA pour modules Arkalia"
+authors = [{ name = "Athalia" }]
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I"]
+
+[tool.bumpver]
+version_file = ["version.toml", "pyproject.toml"]
+current_version = "1.0.6"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "🔖 bump: {old_version} → {new_version}"
+tag_message = "🔖 Version {new_version}"
