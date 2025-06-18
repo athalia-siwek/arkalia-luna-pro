@@ -43,7 +43,7 @@ jobs:
       - name: 🧪 Lancer les tests unitaires avec couverture
         run: |
           echo "::group::Run tests"
-          pytest --cov=modules --cov=core --cov=tests --cov-report=term-missing -v
+          pytest --cov=modules --cov=core --cov=tests --cov-report=term-missing -v --tb=short
           echo "::endgroup::"
 
       - name: ✅ Exécuter les hooks pre-commit
