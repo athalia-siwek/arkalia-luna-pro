@@ -1,0 +1,12 @@
+services:
+  arkalia-api:
+    build:
+      context: .
+    command: uvicorn helloria.core:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    working_dir: /app
+    environment:
+      - PYTHONUNBUFFERED=1
