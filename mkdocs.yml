@@ -4,6 +4,26 @@ site_url: https://athalia-siwek.github.io/arkalia-luna-pro
 
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/favicon.ico
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Mode sombre
+    - scheme: slate
+      primary: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Mode clair
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/athalia-siwek
+  copyright:
+    text: '© 2025 Arkalia System — Tous droits réservés.'
 
 nav:
   - Accueil: index.md
@@ -14,3 +34,18 @@ nav:
   - CI/CD & Tests: ci-cd.md
   - Architecture: structure.md
   - Ollama (LLM local): ollama.md
+  - Historique des versions: CHANGELOG.md
+  - Roadmap: roadmap.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.highlight
+  - pymdownx.emoji
+  - pymdownx.tasklist
+  - pymdownx.snippets
+  - pymdownx.details
+  - pymdownx.keys
