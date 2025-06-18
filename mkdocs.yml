@@ -34,17 +34,15 @@ extra:
     text: "© 2025 Arkalia System — Tous droits réservés."
 
 nav:
-  - 🧭 Accueil: index.md
-  - 🧩 Modules: modules.md
-  - ⚙️ API FastAPI: api.md
-  - 🧠 Noyau Cognitif: kernel.md
-  - 🛠️ Scripts & Automatisation: automation.md
-  - 🧪 CI/CD & Tests: ci-cd.md
-  - 🧱 Architecture: structure.md
-  - 🧬 Ollama (LLM local): ollama.md
-  - 📘 Journal des versions: CHANGELOG.md
-  - 🛣️ Roadmap: roadmap.md
-  - 🧑‍💻 Crédits & Auteure: credits.md
+  - Accueil: index.md
+  - Modules: modules.md
+  - API: api.md
+  - Structure: structure.md
+  - CI/CD: ci-cd.md
+  - Roadmap: roadmap.md
+  - Kernel: kernel.md
+  - Automatisation: automation.md
+  - Crédits: credits.md
 
 markdown_extensions:
   - admonition
