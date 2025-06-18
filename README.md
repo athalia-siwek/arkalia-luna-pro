@@ -1,49 +1,75 @@
+# 🌕 Arkalia-LUNA Pro — Devstation IA
 
-# Arkalia-Luna Pro Workspace
----
-
-## ⚙️ Commandes Principales
-
-| Commande            | Description                                      |
-|---------------------|--------------------------------------------------|
-| `ark-backup`        | 🔐 Sauvegarde complète vers `/strict_backup/`    |
-| `ark-bump-patch`    | 🔖 Incrémente la version patch (`0.1.1 → 0.1.2`) |
-| `ark-bump-minor`    | 🔖 Incrémente version mineure (`0.1.1 → 0.2.0`)  |
-| `ark-bump-major`    | 🔖 Incrémente version majeure (`0.1.1 → 1.0.0`)  |
-| `ark-welcome`       | 🌕 Affichage d’état IA terminal + disque         |
-| `ark-pulse`         | 🩺 Check système + citation motivante            |
-| `ark-bootstrap`     | 🖥️ Lance Devstation dans nouveau terminal        |
-| `clear-pycache`     | 🧼 Supprime les `__pycache__` partout            |
+**Dévstation professionnelle pour modules IA Arkalia Luna**  
+→ FastAPI, CI, bumpver, modules propres, structure modulaire.
 
 ---
 
-## 🧪 Environnement IA
+## 📁 Arborescence
 
-- Python : géré via `pyenv`
-- Formatage : `black`, `ruff`
-- Vérif auto : `pre-commit`
-- Serveur : `FastAPI + Uvicorn`
-
----
-
-## 🔐 Devstation
-
-> 📂 Local : `/Volumes/T7/devstation/cursor/arkalia-luna-pro`  
-> 🧠 Venv : `/Volumes/T7/arkalia-luna-venv`  
-> 🌐 Server test : `http://127.0.0.1:8000`
-
----
-
-## ✅ Versioning
-
-Système de version : `bumpver`  
-Fichier : `version.toml`  
-Tag actuel : `v0.1.1`
+```
+arkalia-luna-pro/
+├── application/           # Future app centralisée FastAPI
+├── configuration/         # Configs globales système
+├── modules/               # Modules IA : helloria/, nyxalia/, ...
+├── scripts/               # Scripts CLI, bootstrap, tests
+├── venv/                  # Virtualenv local (non versionné)
+├── README.md              # Ce fichier !
+├── pyproject.toml         # Config Python + tools (black, ruff, pytest)
+├── version.toml           # bumpver versionning
+└── .pre-commit-config.yaml # Hooks automatiques (black, ruff)
+```
 
 ---
 
-## 🧸 Citation IA
+## 🚀 Démarrage rapide
 
-> *"Arkalia est éternelle, parce qu’elle est propre."* — Athalia 🌙
+```bash
+# 1. Activer l’environnement
+source ./venv/bin/activate
+
+# 2. Installer les dépendances
+pip install -r exigences.txt
+
+# 3. Lancer l’API FastAPI
+uvicorn application.main:app --reload
+
+# 4. Lancer les tests
+pytest
+```
 
 ---
+
+## 🧪 Modules IA intégrés
+
+| Module     | Description courte                  | Version  |
+|------------|-------------------------------------|----------|
+| `helloria` | Module API IA base de test          | `v0.1.0` |
+| `nyxalia`  | Module interface IA (à venir)       | `v0.1.0` |
+
+---
+
+## 🛠️ Outils intégrés
+
+| Outil         | Rôle                            |
+|---------------|---------------------------------|
+| `black`       | Formatage automatique du code   |
+| `ruff`        | Lint & fix style Python         |
+| `pytest`      | Tests automatisés               |
+| `bumpver`     | Gestion versions et tags Git    |
+| `pre-commit`  | Lint/format auto avant commit   |
+| `Makefile`    | Scriptable CLI (à compléter)    |
+
+---
+
+## 🔖 Versions et Tags
+
+Version actuelle : `v0.1.0`  
+Voir tous les tags : `git tag --list`
+
+---
+
+## 👩‍💻 Auteur
+
+**Athalia Siwek** — *Système IA autonome Arkalia.*  
+🌀 [GitHub](https://github.com/athalia-siwek)
