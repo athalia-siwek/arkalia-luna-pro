@@ -54,5 +54,17 @@ Historique complet des versions et évolutions majeures du système IA local **A
 
 ## [v0.1.0] — INIT
 
-- Réinitialisation d’Arkalia-LUNA depuis `arkalia-system` hérité
+- Réinitialisation d'Arkalia-LUNA depuis `arkalia-system` hérité
 - Création du noyau `arkalia-luna-core` (figé, propre, sans dette technique)
+
+## 🚀 Nouveautés v1.0.7
+
+- 🧭 Nouvelle navigation MkDocs avec palette claire/sombre
+- 📘 `CHANGELOG.md` intégré à la documentation publique
+- 🗺 Diagramme visuel `img/diagram_kernel.png`
+- 📂 Page `roadmap.md` ajoutée, avec jalons de développement
+- ✅ Déploiement GitHub Pages corrigé (`--force`)
+- 🧪 Tests & CI toujours actifs (`black`, `ruff`, `pytest`, `pre-commit`)
+- 📦 Site de documentation synchronisé avec GitHub Pages
+
+🔗 [Documentation publique Arkalia-LUNA](https://athalia-siwek.github.io/arkalia-luna-pro/)

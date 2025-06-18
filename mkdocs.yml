@@ -1,41 +1,49 @@
 site_name: Arkalia-LUNA Documentation
-repo_url: https://github.com/athalia-siwek/arkalia-luna-pro
 site_url: https://athalia-siwek.github.io/arkalia-luna-pro
+repo_url: https://github.com/athalia-siwek/arkalia-luna-pro
 
 theme:
   name: material
-  logo: assets/logo.png
-  favicon: assets/favicon.ico
+  logo: img/logo.png           # ✅ Logo stocké dans docs/img/logo.png
+  favicon: img/favicon.ico     # ✅ Favicon dans le même dossier
   palette:
     - scheme: default
-      primary: indigo
+      primary: blue-grey       # 🌙 Couleur douce type "coton nuit"
       toggle:
         icon: material/weather-night
         name: Mode sombre
     - scheme: slate
-      primary: deep purple
+      primary: blue-grey       # Harmonisé sur les deux thèmes
       toggle:
         icon: material/weather-sunny
         name: Mode clair
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - content.tabs.link
 
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/athalia-siwek
   copyright:
-    text: '© 2025 Arkalia System — Tous droits réservés.'
+    text: "© 2025 Arkalia System — Tous droits réservés."
 
 nav:
-  - Accueil: index.md
-  - Modules: modules.md
-  - API FastAPI: api.md
-  - Structure du noyau: kernel.md
-  - Scripts & Automatisation: automation.md
-  - CI/CD & Tests: ci-cd.md
-  - Architecture: structure.md
-  - Ollama (LLM local): ollama.md
-  - Historique des versions: CHANGELOG.md
-  - Roadmap: roadmap.md
+  - 🧭 Accueil: index.md
+  - 🧩 Modules: modules.md
+  - ⚙️ API FastAPI: api.md
+  - 🧠 Noyau Cognitif: kernel.md
+  - 🛠️ Scripts & Automatisation: automation.md
+  - 🧪 CI/CD & Tests: ci-cd.md
+  - 🧱 Architecture: structure.md
+  - 🧬 Ollama (LLM local): ollama.md
+  - 📘 Journal des versions: CHANGELOG.md
+  - 🛣️ Roadmap: roadmap.md
 
 markdown_extensions:
   - admonition
