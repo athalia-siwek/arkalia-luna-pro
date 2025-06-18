@@ -44,6 +44,7 @@ nav:
   - 🧬 Ollama (LLM local): ollama.md
   - 📘 Journal des versions: CHANGELOG.md
   - 🛣️ Roadmap: roadmap.md
+  - 🧑‍💻 Crédits & Auteure: credits.md
 
 markdown_extensions:
   - admonition
