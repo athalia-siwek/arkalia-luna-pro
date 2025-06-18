@@ -25,3 +25,6 @@ venv/
 *.tar
 *.img
 docker-compose.override.yml.pytest_cache/
+site/
+docs/
+
