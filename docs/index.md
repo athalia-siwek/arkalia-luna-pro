@@ -44,4 +44,4 @@ Cette documentation couvre l’ensemble des composants : modules actifs, API loc
 
 🧭 *Cette documentation évolue en parallèle du système IA. Toute mise à jour majeure de code est automatiquement synchronisée avec cette page via GitHub Actions (MkDocs).*  
 
-![Architecture du noyau Arkalia](img/diagram_kernel.png)  
+![Architecture du noyau Arkalia](img/diagram_kernel.png)
