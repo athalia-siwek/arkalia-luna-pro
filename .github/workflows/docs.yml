@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write  # ✅ Nécessaire pour push sur gh-pages avec GITHUB_TOKEN
+  contents: write  # ⬅️ Autorise le push sur gh-pages via le GITHUB_TOKEN
 
 jobs:
   deploy:
@@ -28,4 +28,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config --global user.email "ci@arkalia.ai"
+          git config --global user.name "arkalia-bot"
           mkdocs gh-deploy --force --remote-branch gh-pages --remote-name origin
