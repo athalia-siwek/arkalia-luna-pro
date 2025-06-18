@@ -56,7 +56,7 @@ testpaths = ["tests", "modules"]
 
 [tool.bumpver]
 version_file = ["version.toml", "pyproject.toml"]
-current_version = "1.0.7"
+current_version = "1.0.8"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "🔖 bump: {old_version} → {new_version}"
 tag_message = "🔖 Version {new_version}"
