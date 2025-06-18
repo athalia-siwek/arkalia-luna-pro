@@ -1,4 +1,6 @@
 # 🧠 Arkalia-LUNA PRO
+[![Enhancements](https://img.shields.io/badge/enhancements-active-purple)](ENHANCEMENTS.md)
+📚 Documentation disponible dans le dossier [`/docs`](./docs/)
 
 > **Système IA modulaire local** — FastAPI • Python • Terminal • 🛡️ Zéro dette technique
 
@@ -36,3 +38,9 @@ arkalia-luna-pro/
 ├── core.py                 # Entrée logique principale du projet
 ├── arkalia_master_loop.py  # Boucle orchestratrice des modules
 └── README.md               # Documentation publique
+
+---
+
+## ✨ Améliorations en cours
+
+Consulte le fichier [`ENHANCEMENTS.md`](./ENHANCEMENTS.md) pour suivre les pistes d’amélioration, standardisation, et professionnalisation continue d’Arkalia-LUNA.

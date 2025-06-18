@@ -1,53 +1,82 @@
-# ✨ ENHANCEMENTS.md — Bonnes pratiques pour Arkalia-LUNA
+# ✨ ENHANCEMENTS.md — Améliorations Arkalia-LUNA
 
-Voici une série de suggestions professionnelles pour améliorer la qualité, la lisibilité et la maintenabilité de ton dépôt `arkalia-luna-pro`.
+Fichier maintenu pour professionnaliser, optimiser et sécuriser le dépôt [`arkalia-luna-pro`](https://github.com/athalia-siwek/arkalia-luna-pro).
 
----
-
-## 🧱 Structure du dépôt
-
-- [x] ✅ Répertoire `modules/` séparé pour chaque IA
-- [x] ✅ Fichier `README.md` clair et documenté
-- [ ] 🔲 Ajouter un fichier `CONTRIBUTING.md` pour documenter les règles de contribution
-- [ ] 🔲 Ajouter une licence (`LICENSE`) claire (ex: MIT, Apache 2.0, etc.)
-- [ ] 🔲 Ajouter un `CHANGELOG.md` pour les versions publiques
+Dernière mise à jour : **2025-06-18**
 
 ---
 
-## 🧪 Qualité du code
+## 🧱 Structure du Dépôt
 
-- [x] ✅ Formatage automatique avec `black`
-- [x] ✅ Linting automatique avec `ruff`
-- [x] ✅ Pre-commit hook actif
-- [ ] 🔲 Ajouter `pytest` et des tests unitaires dans `/tests`
-- [ ] 🔲 Ajouter `coverage` ou badge de couverture de test dans le README
-
----
-
-## 🔧 Automatisation GitHub
-
-- [ ] 🔲 Activer GitHub Actions :
-    - test auto (`pytest`)
-    - lint check (`ruff`)
-    - black check
-- [ ] 🔲 Ajouter des badges (`build`, `format`, `license`, etc.)
-- [ ] 🔲 Release notes automatiques (`release-please` ou `semantic-release`)
+- [x] Dossier `modules/<nom>/` isolé par fonction IA
+- [x] Structure standardisée : `core.py`, `config/`, `state/`, `logs/`, `tests/`, `utils/`
+- [x] `README.md` pro et structuré
+- [ ] Ajouter `CONTRIBUTING.md` pour les règles de contribution
+- [ ] Ajouter un `SECURITY.md` clair
+- [ ] Ajouter `CODE_OF_CONDUCT.md` professionnel
+- [ ] Dossier `docs/` avec doc indexée
+- [ ] Ajouter un `CHANGELOG.md` par version
 
 ---
 
-## 📦 Packaging (optionnel mais pro)
+## 🧪 Qualité du Code
 
-- [ ] 🔲 Ajouter un `setup.cfg` ou `pyproject.toml` propre pour distribution
-- [ ] 🔲 Ajouter `bumpver` ou `bump2version` en mode production
+- [x] `black` actif via `pre-commit`
+- [x] `ruff` actif pour le linting
+- [x] `pre-commit` hook vérifié
+- [ ] Activer `pytest` dans `/tests`
+- [ ] Ajouter un badge de couverture (`coverage`)
+- [ ] Ajouter des tests pour `core.py` et `reflexia/`
+
+---
+
+## 🔧 Automatisations GitHub
+
+- [ ] Créer `.github/workflows/test.yml` avec :
+  - `black`
+  - `ruff`
+  - `pytest`
+- [ ] Badges CI/CD (`build`, `tests`, `release`)
+- [ ] Release notes automatiques (`release-please`)
+- [ ] Script de post-install (`ark-init.sh`)
 
 ---
 
 ## 🧠 Documentation
 
-- [ ] 🔲 Créer un dossier `docs/`
-- [ ] 🔲 Intégrer `mkdocs` ou `Sphinx` pour docs pro consultables en ligne
-- [ ] 🔲 Ajouter une page de changelog + structure des modules
+- [ ] Initier `docs/index.md` + `mkdocs.yml`
+- [ ] Lier `mkdocs` à GitHub Pages (ou repo dédié)
+- [ ] Ajouter des exemples d’usage CLI/API
+- [ ] Cartographie des modules (diagramme Mermaid ou Markdown)
 
 ---
 
-> Mise à jour : `$(date "+%Y-%m-%d")`
+## 📦 Packaging & Distribution
+
+- [x] `pyproject.toml` de base
+- [ ] Compléter `pyproject.toml` (auteur, version, classifiers)
+- [ ] Rendre le projet installable via `pip install .`
+- [ ] Ajouter `bumpver` pour les versions clean
+- [ ] Inclure un `setup.cfg` (optionnel)
+
+---
+
+## 🛡️ Sécurité & Conformité
+
+- [ ] `SECURITY.md` avec procédure de signalement
+- [ ] Script de vérification des dépendances (`safety`, `pip-audit`)
+- [ ] Git secrets ou pre-commit secrets scan
+
+---
+
+## 🧩 Suggestions Modules
+
+- [ ] `Nyxalia` → Interface externe (mobile / vocal)
+- [ ] `Psykalia` → Module IA d’analyse émotionnelle
+- [ ] `Logaria` → Superviseur de logs IA
+- [ ] `Chronalia` → Gestion intelligente du temps et des priorités
+- [ ] `Sandozia` → Sécurité système IA + sauvegardes
+
+---
+
+*© Athalia — Arkalia System, 2025*
