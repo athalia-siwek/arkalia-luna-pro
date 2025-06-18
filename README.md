@@ -1,75 +1,88 @@
-# 🌕 Arkalia-LUNA Pro — Devstation IA
+# 🧠 Arkalia-Luna Pro
 
-**Dévstation professionnelle pour modules IA Arkalia Luna**  
-→ FastAPI, CI, bumpver, modules propres, structure modulaire.
+**Devstation IA professionnelle pour Arkalia Luna**  
+Modules IA — FastAPI, CI, bumpver, tests, pré-commit, et versioning automatisé.
 
 ---
 
-## 📁 Arborescence
+## 🚀 Structure du projet
 
 ```
 arkalia-luna-pro/
-├── application/           # Future app centralisée FastAPI
-├── configuration/         # Configs globales système
-├── modules/               # Modules IA : helloria/, nyxalia/, ...
-├── scripts/               # Scripts CLI, bootstrap, tests
-├── venv/                  # Virtualenv local (non versionné)
-├── README.md              # Ce fichier !
-├── pyproject.toml         # Config Python + tools (black, ruff, pytest)
-├── version.toml           # bumpver versionning
-└── .pre-commit-config.yaml # Hooks automatiques (black, ruff)
+├── application/                 # Code applicatif central (FastAPI, endpoints, démarrage)
+├── configuration/              # Fichiers de configuration système ou runtime
+├── modules/                    # Modules IA actifs (ex: helloria, nyxalia...)
+│   └── <nom_module>/
+│       ├── __init__.py
+│       ├── core.py
+│       ├── config/
+│       ├── logs/
+│       ├── state/
+│       ├── tests/
+│       └── utils/
+├── scripts/                    # Scripts de provisioning / outils de gestion
+├── venv/                       # Environnement Python local (non versionné)
+├── .pre-commit-config.yaml    # Lint automatique avec black + ruff
+├── pyproject.toml             # Config Python + bumpver
+├── version.toml               # Fichier de version unique (géré par bumpver)
+└── README.md                  # Présentation pro du dépôt
 ```
 
 ---
 
-## 🚀 Démarrage rapide
+## 🧩 Modules IA disponibles
+
+- [`helloria`](modules/helloria/) — Interface de lancement cognitif IA
+- [`nyxalia`](modules/nyxalia/) — [à compléter]
+
+---
+
+## 🛠️ Commandes principales
 
 ```bash
-# 1. Activer l’environnement
-source ./venv/bin/activate
-
-# 2. Installer les dépendances
-pip install -r exigences.txt
-
-# 3. Lancer l’API FastAPI
+# Lancer l’API en mode développement
 uvicorn application.main:app --reload
 
-# 4. Lancer les tests
+# Exécuter tous les tests
 pytest
+
+# Lint + auto-format du projet
+black . && ruff check . --fix
+
+# Mettre à jour la version (patch, minor, major)
+ark-bump-patch
+ark-bump-minor
+ark-bump-major
+
+# Lancer le bootstrap dans une nouvelle fenêtre Terminal
+ark-bootstrap
 ```
 
 ---
 
-## 🧪 Modules IA intégrés
+## 🧪 Configuration des outils
 
-| Module     | Description courte                  | Version  |
-|------------|-------------------------------------|----------|
-| `helloria` | Module API IA base de test          | `v0.1.0` |
-| `nyxalia`  | Module interface IA (à venir)       | `v0.1.0` |
-
----
-
-## 🛠️ Outils intégrés
-
-| Outil         | Rôle                            |
-|---------------|---------------------------------|
-| `black`       | Formatage automatique du code   |
-| `ruff`        | Lint & fix style Python         |
-| `pytest`      | Tests automatisés               |
-| `bumpver`     | Gestion versions et tags Git    |
-| `pre-commit`  | Lint/format auto avant commit   |
-| `Makefile`    | Scriptable CLI (à compléter)    |
+- ✅ `black` — formatage de code
+- ✅ `ruff` — linting performant
+- ✅ `pytest` — tests unitaires
+- ✅ `bumpver` — gestion version automatique
+- ✅ `pre-commit` — hooks de vérification avant chaque commit
 
 ---
 
-## 🔖 Versions et Tags
+## 🧰 Dossiers sensibles exclus
 
-Version actuelle : `v0.1.0`  
-Voir tous les tags : `git tag --list`
+Les dossiers suivants sont ignorés par git :
+
+- `venv/` (environnement virtuel)
+- `__pycache__/` et fichiers `.DS_Store`, `._*`
+- Tout contenu temporaire ou généré automatiquement
 
 ---
 
-## 👩‍💻 Auteur
+## 🪪 Auteure
 
-**Athalia Siwek** — *Système IA autonome Arkalia.*  
-🌀 [GitHub](https://github.com/athalia-siwek)
+**Athalia 🌙**  
+Développement IA propre, modulaire et ultra-pro.  
+Architecture : Arkalia System.
+
