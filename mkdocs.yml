@@ -9,5 +9,8 @@ nav:
   - Accueil: index.md
   - Modules: modules.md
   - API FastAPI: api.md
-  - Structure du noyau: structure.md
+  - Structure du noyau: kernel.md
+  - Scripts & Automatisation: automation.md
   - CI/CD & Tests: ci-cd.md
+  - Architecture: structure.md
+  - Ollama (LLM local): ollama.md
