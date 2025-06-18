@@ -1,0 +1,7 @@
+## Endpoints
+
+- `/` : Accueil
+- `/status` : État du système
+- `/modules` : Liste des modules chargés
+
+Les endpoints sont déclarés dans `helloria/core.py`

@@ -7,3 +7,7 @@ theme:
 
 nav:
   - Accueil: index.md
+  - Modules: modules.md
+  - API FastAPI: api.md
+  - Structure du noyau: structure.md
+  - CI/CD & Tests: ci-cd.md
