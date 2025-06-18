@@ -4,16 +4,16 @@ repo_url: https://github.com/athalia-siwek/arkalia-luna-pro
 
 theme:
   name: material
-  logo: img/logo.png           # ✅ Logo stocké dans docs/img/logo.png
-  favicon: img/favicon.ico     # ✅ Favicon dans le même dossier
+  logo: assets/logo.png            # ✅ Placer ici : docs/assets/logo.png
+  favicon: assets/favicon.ico      # ✅ Placer ici : docs/assets/favicon.ico
   palette:
     - scheme: default
-      primary: blue-grey       # 🌙 Couleur douce type "coton nuit"
+      primary: blue-grey           # 🌙 Doux, élégant
       toggle:
         icon: material/weather-night
         name: Mode sombre
     - scheme: slate
-      primary: blue-grey       # Harmonisé sur les deux thèmes
+      primary: blue-grey
       toggle:
         icon: material/weather-sunny
         name: Mode clair
