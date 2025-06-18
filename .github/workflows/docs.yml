@@ -1,25 +1,31 @@
-# .github/workflows/docs.yml
 name: Deploy Docs
 
 on:
   push:
     branches: [main]
 
+permissions:
+  contents: write  # ✅ Nécessaire pour push sur gh-pages avec GITHUB_TOKEN
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout du dépôt
+      - name: 🧾 Checkout du dépôt
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
-      - name: Installer les dépendances
+      - name: 📦 Installer les dépendances
         run: |
           pip install mkdocs mkdocs-material
 
-      - name: Déployer la documentation
-        run: mkdocs gh-deploy --force
+      - name: 📘 Déployer la documentation avec mkdocs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdocs gh-deploy --force --remote-branch gh-pages --remote-name origin
