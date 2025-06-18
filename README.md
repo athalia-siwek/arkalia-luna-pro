@@ -1,4 +1,13 @@
-# 🌕 Arkalia-LUNA
+# 🧠 Arkalia-LUNA PRO
+
+> **Système IA modulaire local** — FastAPI • Python • Terminal • 🛡️ Zéro dette technique
+
+Arkalia-LUNA est un noyau industriel d’IA **100% local**, conçu pour la cognition, l’autonomie, et l’orchestration de modules IA modulaires.  
+Chaque brique est testable, isolable et interfaçable — le système est entièrement pilotable en terminal sous macOS.
+
+---
+
+## 🌟 Badges de statut
 
 [![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/athalia-siwek/arkalia-luna-pro)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -9,49 +18,21 @@
 
 ## 🎯 Objectif
 
-Arkalia-LUNA est un **système IA modulaire**, auto-réparant, évolutif et propre, conçu pour fonctionner en boucle orchestrée, sans dette technique.
+Développer un **système IA modulaire, évolutif, auto-réparant et zéro dette technique**, fonctionnant sous boucle orchestrée, avec exécution 100% locale et performances optimisées.
 
 ---
 
-## 📁 Architecture
+## 🏗️ Architecture standard
 
-```
+```text
 arkalia-luna-pro/
-├── modules/            # Modules IA (chaque logique métier = 1 module)
-├── config/             # Configs TOML / JSON
-├── logs/               # Journaux d'exécution
-├── tests/              # Tests unitaires
-├── utils/              # Fonctions internes communes
-├── core.py             # Entrée principale logique
-└── arkalia_master_loop.py  # Boucle centrale du système
-```
-
----
-
-## ⚙️ Technologies utilisées
-
-- 🐍 Python 3.10+
-- 🚀 FastAPI + Uvicorn
-- 🔁 Git + pre-commit (`black`, `ruff`)
-- 📦 bumpver (versioning sémantique)
-- 📚 Modularisation extrême
-
----
-
-## 🧩 Fonctionnalités principales
-
-- ✅ Lancement modulaire orchestré (`arkalia_master_loop`)
-- ✅ Suivi réflexif automatique (`ReflexIA`)
-- ✅ Raisonnement IA local (`ZeroIA`)
-- ✅ Sécurité et état système (`Sandozia`)
-- ✅ Sauvegarde stricte avec `ark-backup`
-
----
-
-## 📜 Licence
-
-Ce projet est sous licence **MIT**. Voir le fichier [`LICENSE`](LICENSE) pour plus de détails.
-
----
-
-*© Athalia — Arkalia System, 2025*
+├── modules/                # Modules IA (1 fonction = 1 dossier)
+│   └── reflexia/           # Ex : module de scan adaptatif
+├── config/                 # Configs TOML / JSON
+├── logs/                   # Logs horodatés de chaque module
+├── state/                  # États persistants
+├── tests/                  # Tests unitaires
+├── utils/                  # Fonctions internes (helpers)
+├── core.py                 # Entrée logique principale du projet
+├── arkalia_master_loop.py  # Boucle orchestratrice des modules
+└── README.md               # Documentation publique
