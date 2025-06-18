@@ -97,6 +97,9 @@ docker-compose up -d
 | `v0.3.0-docker-ok`  | ✅ Stable & local    | Dockerfile + Compose opérationnels avec FastAPI |
 | `v0.2.0`            | 🛠 Structuration Git | Ajout des fichiers pro (`README`, `tests`, etc.)|
 | `v0.1.1`            | 🧪 Devstation OK     | Lancement stable de la devstation IA            |
+📍 Checkpoint : v0.3.0-docker-ok
+📂 Contexte : Docker fonctionnel, FastAPI auto-déployé, script rebuild présent
+🔒 Status : stable, test local OK
 
 ---
 
