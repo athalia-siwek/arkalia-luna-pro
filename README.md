@@ -95,6 +95,8 @@ chmod +x ./scripts/ark-docker-rebuild.sh
 [![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://pre-commit.com/)  
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)  
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
+[![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/athalia-siwek/arkalia-luna-pro/actions)
+
 
 ---
 
@@ -140,3 +142,133 @@ chmod +x ./scripts/ark-docker-rebuild.sh
 
 > ⚙️ Arkalia est une IA **industrielle, modulaire, évolutive, terminal-native**. Chaque module agit indépendamment mais peut être orchestré dans une boucle intelligente locale.  
 > Ce dépôt est la Devstation principale pour l’expansion des modules IA cognitifs.
+
+# 🌕 Arkalia-LUNA PRO
+
+Bienvenue dans le dépôt **officiel de développement IA modulaire local** d'Arkalia Luna.  
+🧠 Industrialisation IA locale • Docker • FastAPI • Python 3.10+ • Terminal native • Zéro dette technique
+
+---
+
+## 🎯 Objectif
+
+Développer un **système IA modulaire, auto-réparant, évolutif et interfaçable**, fonctionnant **100% localement**, orchestré via :
+
+- Docker (isolation + déploiement rapide)
+- FastAPI (API asynchrone et extensible)
+- Terminal natif (macOS)
+- Boucle orchestrée : `arkalia_master_loop.py`
+
+---
+
+## 🧱 Architecture du dépôt
+
+arkalia-luna-pro/
+├── Dockerfile                  # Image FastAPI + Python 3.10
+├── docker-compose.yml         # Lancement multi-services local
+├── requirements.txt           # Dépendances Python
+├── core.py                    # Entrée logique principale
+├── arkalia_master_loop.py     # Boucle IA orchestrée
+│
+├── modules/                   # Modules IA (autonomes, testables)
+│   └── reflexia/              # Exemple : module adaptatif
+├── config/                    # Fichiers TOML/JSON
+├── logs/                      # Journaux d'exécution
+├── state/                     # États persistants
+├── tests/                     # Tests unitaires
+├── utils/                     # Fonctions internes
+├── scripts/                   # Scripts outils (ex: rebuild docker)
+├── docs/                      # Documentation technique (mkdocs)
+└── README.md                  # Cette documentation publique
+
+---
+
+## 🚀 Lancer localement avec Docker
+
+### 🔧 Prérequis
+
+- Docker Desktop installé et actif
+
+### 🛠️ Commandes de build & exécution
+
+docker-compose down
+find . -name '._*' -delete && find . -name '.DS_Store' -delete
+docker-compose build --no-cache
+docker-compose up
+
+📍 Accès local après lancement : http://localhost:8000
+
+---
+
+## 🧪 Mode daemon (en arrière-plan)
+
+docker-compose up -d
+
+---
+
+## 🧼 Script automatique : rebuild
+
+scripts/ark-docker-rebuild.sh :
+
+#!/bin/bash
+echo "🧼 Nettoyage..."
+find . -name '._*' -delete && find . -name '.DS_Store' -delete
+docker-compose down
+docker-compose build --no-cache
+docker-compose up
+
+Rendre exécutable :
+
+chmod +x ./scripts/ark-docker-rebuild.sh
+
+---
+
+## 📦 Tests
+
+pytest --cov=.
+
+Voir résultat :
+
+open htmlcov/index.html
+
+---
+
+## 📚 Documentation
+
+📂 Dossier source : docs/index.md  
+🧠 Suivi qualité : ENHANCEMENTS.md
+
+---
+
+## 🧠 Badges de statut
+
+Version : v0.3.0-docker-ok  
+Coverage : 100% tests unitaires  
+CI GitHub Actions actif : .github/workflows/ci.yml  
+Licence : MIT  
+Python : 3.10+
+
+---
+
+## 🗃️ Historique des versions
+
+v0.3.0-docker-ok → Docker opérationnel avec FastAPI  
+v0.2.0 → Structuration Git, tests, scripts  
+v0.1.1 → Base stable Devstation IA
+
+📍 Checkpoint stable : v0.3.0-docker-ok
+
+---
+
+## 💡 Prévu pour v0.4.0
+
+- Multi-modules Docker
+- Image `arkalia-light` allégée
+- CI améliorée avec release auto
+- mkdocs site web complet
+
+---
+
+⚙️ Arkalia est une IA **industrielle, modulaire, évolutive, terminal-native**.  
+Chaque module agit indépendamment mais peut être orchestré dans une boucle intelligente locale.
+Ce dépôt est la Devstation principale pour l’expansion des modules IA cognitifs.
