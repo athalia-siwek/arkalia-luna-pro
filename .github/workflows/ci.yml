@@ -10,6 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      PYTHONPATH: .
+
     steps:
       - name: 🧾 Checkout du dépôt
         uses: actions/checkout@v4
@@ -26,15 +29,25 @@ jobs:
           pip install black ruff pytest pytest-cov pre-commit
 
       - name: 🧹 Lint avec Ruff
-        run: ruff check .
+        run: |
+          echo "::group::Ruff lint"
+          ruff check .
+          echo "::endgroup::"
 
       - name: 🎨 Vérifier le format Black
-        run: black . --check
+        run: |
+          echo "::group::Black format check"
+          black . --check
+          echo "::endgroup::"
 
       - name: 🧪 Lancer les tests unitaires avec couverture
         run: |
-          PYTHONPATH=. pytest --cov=modules --cov=core --cov=tests --cov-report=term-missing
+          echo "::group::Run tests"
+          pytest --cov=modules --cov=core --cov=tests --cov-report=term-missing -v
+          echo "::endgroup::"
 
       - name: ✅ Exécuter les hooks pre-commit
         run: |
-          pre-commit run --all-files
+          echo "::group::Pre-commit checks"
+          pre-commit run --all-files --show-diff-on-failure
+          echo "::endgroup::"
