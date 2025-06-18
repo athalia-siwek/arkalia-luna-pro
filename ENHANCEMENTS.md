@@ -1,37 +1,53 @@
-# ✨ Arkalia-LUNA — ENHANCEMENTS.md
+# ✨ ENHANCEMENTS.md — Bonnes pratiques pour Arkalia-LUNA
 
-## 🧭 Objectif
-
-Documenter toutes les suggestions, idées, axes d'amélioration et évolutions à envisager pour le projet **Arkalia-LUNA**, dans une logique **open innovation**, mais **sans dette technique**.
+Voici une série de suggestions professionnelles pour améliorer la qualité, la lisibilité et la maintenabilité de ton dépôt `arkalia-luna-pro`.
 
 ---
 
-## 📌 Recommandations Techniques
+## 🧱 Structure du dépôt
 
-- [x] Utiliser `pre-commit` pour Black + Ruff ✅
-- [x] Mise en place de `bumpver` pour le versionnage
-- [x] Structure modulaire : `modules/<nom>/`
-- [ ] Ajouter des badges dans le README (version, licence, tests)
-- [ ] Créer un `CONTRIBUTING.md` clair
-- [ ] Ajouter une `LICENSE` (MIT)
-- [ ] Générer un changelog automatique (`git-chglog` ?)
+- [x] ✅ Répertoire `modules/` séparé pour chaque IA
+- [x] ✅ Fichier `README.md` clair et documenté
+- [ ] 🔲 Ajouter un fichier `CONTRIBUTING.md` pour documenter les règles de contribution
+- [ ] 🔲 Ajouter une licence (`LICENSE`) claire (ex: MIT, Apache 2.0, etc.)
+- [ ] 🔲 Ajouter un `CHANGELOG.md` pour les versions publiques
 
 ---
 
-## 🔭 Idées Futures
+## 🧪 Qualité du code
 
-- [ ] Intégration d’un dashboard FastAPI de monitoring
-- [ ] Export automatique des logs en `.json` ou `.csv`
-- [ ] Refactorisation des scripts initiaux en mini modules
-- [ ] Système de décision automatique (`ReflexIA++`)
-- [ ] Documentation publique (GitHub Pages ?)
-
----
-
-## 💡 Notes
-
-Ce fichier peut être modifié à chaque commit important ou à la fin d’un sprint de dev. Il sert à garder une vision **horizontale** du système.
+- [x] ✅ Formatage automatique avec `black`
+- [x] ✅ Linting automatique avec `ruff`
+- [x] ✅ Pre-commit hook actif
+- [ ] 🔲 Ajouter `pytest` et des tests unitaires dans `/tests`
+- [ ] 🔲 Ajouter `coverage` ou badge de couverture de test dans le README
 
 ---
 
-*Rédigé avec ❤️ par Athalia pour le système Arkalia-LUNA*
+## 🔧 Automatisation GitHub
+
+- [ ] 🔲 Activer GitHub Actions :
+    - test auto (`pytest`)
+    - lint check (`ruff`)
+    - black check
+- [ ] 🔲 Ajouter des badges (`build`, `format`, `license`, etc.)
+- [ ] 🔲 Release notes automatiques (`release-please` ou `semantic-release`)
+
+---
+
+## 📦 Packaging (optionnel mais pro)
+
+- [ ] 🔲 Ajouter un `setup.cfg` ou `pyproject.toml` propre pour distribution
+- [ ] 🔲 Ajouter `bumpver` ou `bump2version` en mode production
+
+---
+
+## 🧠 Documentation
+
+- [ ] 🔲 Créer un dossier `docs/`
+- [ ] 🔲 Intégrer `mkdocs` ou `Sphinx` pour docs pro consultables en ligne
+- [ ] 🔲 Ajouter une page de changelog + structure des modules
+
+---
+
+> Mise à jour : `$(date "+%Y-%m-%d")`
