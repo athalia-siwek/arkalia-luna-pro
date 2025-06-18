@@ -1,3 +1,5 @@
+![Tests Coverage](htmlcov/badge.svg)
+
 # 🌕 Arkalia-LUNA PRO
 
 Bienvenue dans le dépôt **officiel de développement IA modulaire local** d'Arkalia Luna.

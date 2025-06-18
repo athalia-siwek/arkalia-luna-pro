@@ -12,10 +12,47 @@ requires-python = ">=3.10"
 
 [tool.black]
 line-length = 88
+target-version = ["py310"]
 
 [tool.ruff]
 line-length = 88
-select = ["E", "F", "I"]
+exclude = [
+    "venv",
+    ".venv",
+    "__pycache__",
+    "site-packages",
+    "build",
+    "dist",
+    "htmlcov",
+]
+
+[tool.ruff.lint]  # ✅ migration future-proof
+select = ["E", "F", "I"]  # E: pycodestyle, F: pyflakes, I: isort
+
+[tool.coverage.run]
+branch = true
+source = ["core", "modules", "scripts", "utils"]
+omit = [
+    "*/tests/*",
+    "*/__init__.py",
+    "*/site-packages/*",
+    "*/.venv/*",
+    "*/_*.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == '__main__':",
+    "raise NotImplementedError",
+    "except ImportError",
+]
+
+[tool.pytest.ini_options]
+addopts = "--cov=modules --cov-report=html"
+testpaths = ["tests", "modules"]
 
 [tool.bumpver]
 version_file = ["version.toml", "pyproject.toml"]

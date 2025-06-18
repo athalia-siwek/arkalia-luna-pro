@@ -1,0 +1,27 @@
+# 🧠 Fichiers Arkalia à ignorer
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.db
+
+# 🧪 Coverage & test
+htmlcov/
+.coverage
+coverage.xml
+
+# 🧽 Parasites macOS
+.DS_Store
+._*
+
+# 🧰 Python
+.venv/
+venv/
+.env
+.env.*
+
+# 🐳 Docker
+*.tar
+*.img
+docker-compose.override.yml
