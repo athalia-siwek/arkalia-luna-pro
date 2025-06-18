@@ -1,7 +1,19 @@
+# Base Web Server
 fastapi
-uvicorn
+uvicorn[standard]
+
+# Formatage et linting
 black
 ruff
+
+# Tests et couverture
 pytest
 pytest-cov
 httpx>=0.23.0
+
+# Documentation
+mkdocs
+mkdocs-material
+
+# Pre-commit (hooks automatiques)
+pre-commit

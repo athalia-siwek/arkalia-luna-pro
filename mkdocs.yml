@@ -1,6 +1,9 @@
 site_name: Arkalia-LUNA Documentation
 repo_url: https://github.com/athalia-siwek/arkalia-luna-pro
+site_url: https://athalia-siwek.github.io/arkalia-luna-pro
+
 theme:
   name: material
+
 nav:
   - Accueil: index.md

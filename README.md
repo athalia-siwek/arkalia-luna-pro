@@ -94,7 +94,7 @@ chmod +x ./scripts/ark-docker-rebuild.sh
 
 ## 🧠 Badges de statut
 
-[![Version](https://img.shields.io/badge/version-v0.3.1-blue.svg)](https://github.com/athalia-siwek/arkalia-luna-pro)
+[![Version](https://img.shields.io/badge/version-v1.0.6-blue.svg)](https://github.com/athalia-siwek/arkalia-luna-pro/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 [![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://pre-commit.com/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
