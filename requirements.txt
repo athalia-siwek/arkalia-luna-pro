@@ -16,4 +16,4 @@ mkdocs
 mkdocs-material
 
 # Pre-commit (hooks automatiques)
-pre-commit
+pre-commitmkdocs-minify-plugin
