@@ -26,7 +26,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install black ruff pytest pytest-cov pre-commit mkdocs mkdocs-material mkdocs-simple-hooks
+          pip install \
+            black \
+            ruff \
+            pytest \
+            pytest-cov \
+            pre-commit \
+            mkdocs \
+            mkdocs-material \
+            mkdocs-simple-hooks \
+            mkdocs-minify-plugin  # 👈 plugin manquant
 
       - name: 🌐 Construire le site MkDocs (sitemap.xml)
         run: |
