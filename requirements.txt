@@ -4,6 +4,9 @@
 fastapi
 uvicorn[standard]
 
+# 📡 Appels HTTP
+requests
+
 #########################
 # 🎨 Formatage & Linting
 #########################
