@@ -1,47 +1,62 @@
 # 📚 Documentation Arkalia-LUNA
 
-Bienvenue dans la documentation technique d’**Arkalia-LUNA**, un système cognitif IA local, **modulaire**, **auto-réflexif** et **entièrement documenté**.
+Bienvenue dans la documentation officielle d’**Arkalia-LUNA** — un système cognitif IA **local**, **modulaire**, **auto-réflexif** et **entièrement versionné**.
 
-Cette documentation couvre l’ensemble des composants : modules actifs, API locale, scripts d’orchestration, tests, automatisation et intégration de modèles IA (LLM).
-
----
-
-## 🧠 Modules actifs
-
-- `reflexia` — Réflexion adaptative et surveillance système  
-- `zeroia` — Raisonnement logique et décisions contextuelles  
-- `nyxalia` — Interfaces mobiles et externes  
-- `helloria` — Passerelle FastAPI et serveur local  
+Cette base documente l’ensemble des composants d’Arkalia : modules actifs, API locale, scripts intelligents, logique de tests, automatisation et intégration de modèles IA locaux (LLMs).
 
 ---
 
-## ⚙️ Fonctionnalités couvertes dans la documentation
+## 🧠 Modules IA actifs
 
-- 🧠 **Modules IA actifs**
-- ⚙️ **API FastAPI** (avec endpoints `/status`, `/module/trigger`, etc.)
-- 🧬 **Structure du noyau** (kernel & devstation)
-- 🔁 **Scripts & automatisation** (`ark-test`, `ark-docker-rebuild.sh`, etc.)
-- 🧪 **Tests unitaires & CI/CD** (pytest, ruff, GitHub Actions)
-- 🐳 **Docker & déploiement local**
-
----
-
-## 🔁 Configuration locale des modèles (Ollama)
-
-> Utilisation des modèles LLM **localement avec `ollama`**, sans consommer l’espace disque interne du Mac.
-
-➡ Voir le dépôt dédié : [arkalia-ollama (GitHub)](https://github.com/athalia-siwek/arkalia-ollama)
-
-### ✅ Modèles installés :
-- `mistral`
-- `tinyllama`
-- `llama2`
-
-📁 **Chemin de stockage** :  
-`/Volumes/T7/devstation/ollama_data/models`
+| Module     | Rôle principal                                    |
+|------------|---------------------------------------------------|
+| `reflexia` | Réflexion adaptative, pondération, auto-surveillance |
+| `zeroia`   | Raisonnement logique, décisions contextuelles     |
+| `nyxalia`  | Interfaces mobiles et externes                    |
+| `helloria` | Passerelle FastAPI et serveur local               |
 
 ---
 
-🧭 *Cette documentation évolue en parallèle du système IA. Toute mise à jour majeure de code est automatiquement synchronisée avec cette page via GitHub Actions (MkDocs).*  
+## ⚙️ Fonctionnalités couvertes
 
-![Architecture du noyau Arkalia](img/diagram_kernel.png)
+- 🧠 Modules IA actifs et orchestrables
+- ⚙️ API FastAPI (`/status`, `/module/trigger`, etc.)
+- 🧬 Architecture du noyau (`core`, `modules`, `state`, `logs`, etc.)
+- 🔁 Scripts d’orchestration (`ark-test`, `ark-docker`, `trigger_scan.sh`)
+- 🧪 Tests & CI : `pytest`, `ruff`, `black`, `GitHub Actions`
+- 🐳 Docker : `docker-compose`, build sans cache, image locale propre
+
+---
+
+## 🧠 Intégration LLM locale (via Ollama)
+
+> Arkalia utilise des **modèles IA locaux** via [**Ollama**](https://ollama.com), stockés en externe pour préserver l’environnement principal.
+
+**Modèles disponibles :**
+- `mistral` (7B)
+- `tinyllama` (1.1B)
+- `llama2` (7B, 13B)
+
+📁 **Chemin de stockage externe :**  
+`/Volumes/T7/devstation/ollama_data/models/`
+
+➡ Plus d'infos : [`arkalia-ollama`](https://github.com/arkalia-luna-system/arkalia-ollama)
+
+---
+
+## 🔄 Synchronisation & documentation automatique
+
+> Chaque mise à jour du code entraîne une synchronisation automatique de la documentation via **MkDocs + GitHub Actions**.
+
+📘 Documentation publique :  
+[`arkalia-luna-system.github.io/arkalia-luna-pro`](https://arkalia-luna-system.github.io/arkalia-luna-pro)
+
+---
+
+![🧠 Diagramme de l’architecture Arkalia](img/diagram_kernel.png)
+
+🧭 *Arkalia-LUNA est un système IA évolutif, conçu pour durer, s’adapter, et orchestrer intelligemment ses modules internes.*
+
+---
+
+Maintenu par **Athalia 🌙** — [`github.com/arkalia-luna-system`](https://github.com/arkalia-luna-system)

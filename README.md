@@ -2,17 +2,17 @@
 
 **Système Cognitif IA Local, Modulaire, Auto-Réflexif et Documenté**
 
-> 🧠 Version : `v1.0.6`  
-> 📘 Docs : [arkalia-siwek.github.io/arkalia-luna-pro](https://athalia-siwek.github.io/arkalia-luna-pro)  
+> 🧠 Version : `v1.0.9`  
+> 📘 Docs : [arkalia-luna-system.github.io/arkalia-luna-pro](https://arkalia-luna-system.github.io/arkalia-luna-pro)  
 > 🐳 Docker • 🧪 CI • 🧠 ReflexIA • ⚙️ ZeroIA
 
 ---
 
 ## 📘 Accès rapide
 
-[![📘 Docs](https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=readthedocs)](https://athalia-siwek.github.io/arkalia-luna-pro/)
-[![version](https://img.shields.io/badge/version-v1.0.6-purple?style=flat-square)](https://github.com/athalia-siwek/arkalia-luna-pro/releases)
-[![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/athalia-siwek/arkalia-luna-pro/actions)
+[![📘 Docs](https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=readthedocs)](https://arkalia-luna-system.github.io/arkalia-luna-pro/)
+[![version](https://img.shields.io/badge/version-v1.0.9-purple?style=flat-square)](https://github.com/arkalia-luna-system/arkalia-luna-pro/releases)
+[![CI](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
 [![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://pre-commit.com/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
@@ -21,64 +21,64 @@
 
 ## 🌟 Objectif
 
-Créer un **système IA local, modulaire, interfaçable, auto-réparant** et entièrement versionné.
+Créer un **système IA local, modulaire, interfaçable, auto-réparant**, et entièrement versionné.
 
 Fonctions principales :
-- 📦 Modules IA autonomes (`reflexia`, `nyxalia`, `helloria`)
-- 🛰️ API locale (`FastAPI`) + endpoints (`/status`, `/trigger`, etc.)
-- 🔁 Scripts intelligents orchestrés par ZeroIA / ReflexIA
+
+- 📦 Modules IA autonomes : `reflexia`, `nyxalia`, `helloria`
+- 🛰️ API locale via FastAPI (`/status`, `/trigger`)
+- 🔁 Scripts intelligents orchestrés par ReflexIA / ZeroIA
 - 🔐 Dockerisé, testé, synchronisé avec GitHub (CI + Docs)
-- 🧠 Compatible LLM locaux (`ollama` : mistral, llama2, tinyllama)
+- 🧠 Compatible LLM locaux (`ollama`) : mistral, llama2, tinyllama
 
 ---
 
 ## 🧱 Architecture technique
 
-```bash
 arkalia-luna-pro/
 ├── core/                  # Logique transversale
-├── modules/               # Modules IA isolés
+├── modules/               # Modules IA autonomes
 ├── config/                # Fichiers TOML / JSON
 ├── logs/                  # Logs horodatés
 ├── state/                 # États persistants
-├── scripts/               # Scripts de build / Docker / ReflexIA
+├── scripts/               # Scripts de build, ReflexIA, Docker
 ├── tests/                 # Couverture via pytest
 ├── docs/                  # Documentation MkDocs
 └── .github/workflows/     # Pipelines CI GitHub Actions
 
-🛠️ Scripts principaux
+### 🛠️ Scripts essentiels
 
-Script
-Fonction
-ark-test
-Tests + couverture (htmlcov/)
-ark-docker-rebuild.sh
-Rebuild Docker sans cache + relance serveur
-ark-clean-push
-Format (black, ruff) + commit + push Git
-trigger_scan.sh
-Déclenche ReflexIA manuellement
+| Script | Fonction |
+|--------|----------|
+| `ark-test` | Lancer tous les tests + couverture HTML |
+| `ark-docker-rebuild.sh` | Rebuild Docker + relance serveur |
+| `ark-clean-push` | Formatage (black + ruff) + commit & push |
+| `trigger_scan.sh` | Déclenchement manuel ReflexIA |
 
-🚀 Lancer en local (Docker)
+---
 
-🔧 Prérequis :
-	•	Docker Desktop (macOS ou Linux)
-	•	Python 3.10+ si mode manuel
+## 🚀 Lancement rapide (Docker)
 
-🔁 Commandes :
-docker-compose down
+**Prérequis :**
+- Docker Desktop (macOS, Linux)
+- Python 3.10+ si mode manuel
+
+**Commandes :**
+
+```bash
+docker compose down
 find . -name '._*' -delete && find . -name '.DS_Store' -delete
-docker-compose build --no-cache
-docker-compose up
+docker compose build --no-cache
+docker compose up
 
-📍 Accès API : http://localhost:8000
+📍 Accès local : http://localhost:8000
 
 ⸻
 
-💡 Tips
+💡 Tips & Aliases
 	•	./scripts/ark-docker-rebuild.sh → rebuild rapide
-	•	ark-test (alias) → lance tous les tests + génère couverture
-	•	Intégration automatique avec mkdocs via GitHub Actions
+	•	ark-test → lance les tests + ouvre couverture (htmlcov/)
+	•	Intégration automatique MkDocs via GitHub Actions
 
 ⸻
 
@@ -87,8 +87,11 @@ docker-compose up
 Version
 État
 Description
-v1.0.6
+v1.0.9
 ✅ Stable
+Docs + Docker + Design Arkalia Final
+v1.0.6
+✅ Propre
 CI/CD, Docker, couverture 100%, docs pro
 v0.3.0
 ✅ Fonctionnel
@@ -100,13 +103,21 @@ v0.1.1
 🚀 Devstation
 Environnement IA local installé
 
-✨ En développement
-	•	🧩 Modules supplémentaires (Kaelia, Psykalia)
-	•	📊 Pondération IA réflexive (weights.toml)
+🧠 En cours de développement
+	•	🧩 Modules supplémentaires : Kaelia, Psykalia
+	•	📊 IA réflexive : pondération (weights.toml)
 	•	📁 Mémoire vectorielle (FAISS)
-	•	🚦 Monitoring système (Prometheus / Grafana)
+	•	🚦 Monitoring système : Prometheus, Grafana
 
 ⸻
 
-🧠 Arkalia-LUNA est une base cognitive IA locale conçue pour être propre, interconnectable, modulaire et durable.
-Chaque composant est conçu pour fonctionner de manière autonome, mais orchestrée intelligemment via la boucle principale.
+🪪 À propos
+
+Arkalia-LUNA est une base cognitive IA locale conçue pour être :
+	•	Propre
+	•	Interconnectable
+	•	Modulaire
+	•	Durable
+
+Chaque composant est autonome mais orchestré de manière réflexive via une boucle IA adaptative.
+Un projet signé 🌓 Système Lunaire Arkalia.
