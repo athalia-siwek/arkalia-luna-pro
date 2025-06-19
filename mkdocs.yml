@@ -75,6 +75,9 @@ nav:
       - Licence: license.md
   - 🧰 Utilisation: utilisation.md
   - 🧪 Tests LLM: ollama.md
+  - Modules:
+      - Arkalia API: modules.md
+      - AssistantIA: assistantia.md
 
 markdown_extensions:
   - admonition
@@ -111,6 +114,7 @@ extra_css:
 extra_javascript:
   - assets/js/theme.js
   - https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
+  - assets/js/arkalia-assistant.js
 
 plugins:
   - search

@@ -1,36 +1,41 @@
-# 🧠 Arkalia-LUNA — .gitignore officiel
-
-# 🔁 Fichiers Python compilés
+# 🐍 Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-
-# 📦 Environnements virtuels
+*.env
+*.venv
 .venv/
+env/
 venv/
-.env
-.env.*
+*.egg-info/
 
-# 🧪 Tests & couverture
-htmlcov/
-.coverage
-coverage.xml
-pytest_cache/
-
-# 📃 Logs & bases locales
+# 🔧 Logs, tests, coverage
 *.log
-*.db
-
-# 🧽 Parasites macOS
-.DS_Store
-._*
-
-# 🐳 Docker
-*.tar
-*.img
-docker-compose.override.yml
-
-# 🚫 Fichiers à ne jamais versionner
-site/          # 📘 Build MkDocs
+logs/
+htmlcov/
+coverage.xml
 site/
+
+# ⚙️ VSCode & IDE
+.vscode/
+.idea/
+*.swp
+
+# 📦 Build et cache
+.eggs/
+*.egg
+build/
+dist/
+pip-wheel-metadata/
+
+# 🐳 Docker (si tu ne veux pas les versionner)
+docker-compose.override.yml
+Dockerfile*
+
+# Tests & Coverage
+.coverage
+
+# Tests
+tests/
+*.test.*

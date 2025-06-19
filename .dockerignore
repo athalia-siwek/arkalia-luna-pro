@@ -1,21 +1,48 @@
+# ❌ Fichiers parasites macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# 🐍 Environnements Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
+*.env
+*.venv
 .venv/
-.env
-.DS_Store
-.git
-.gitignore
-.github/
-*.log
-._*
-.DS_Store
-__pycache__/
-.venv/
-site/
-docs/
-*.sqlite3
-._*
-.DS_Store
+env/
+venv/
+*.egg-info/
 
+# 📦 Dépendances et builds
+*.egg
+.eggs/
+*.whl
+build/
+dist/
+pip-wheel-metadata/
+
+# 🔧 Config locale, logs, coverage
+*.log
+logs/
+htmlcov/
+site/
+coverage.xml
+
+# 🔁 Docker, CI/CD, Git
+docker-compose.override.yml
+Dockerfile*
+.git/
+.github/
+.bak
+.swp
+
+# 📚 MkDocs artefacts
+site/
+*.sqlite3
+
+# Tests
+tests/
+*.test.*

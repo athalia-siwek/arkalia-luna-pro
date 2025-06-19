@@ -20,6 +20,7 @@
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
 [![Sitemap](https://img.shields.io/badge/sitemap-valid-brightgreen?style=flat-square&logo=sitemaps)](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
 [![CI + Sitemap](https://img.shields.io/badge/CI%20%2B%20Sitemap-passing-brightgreen?style=flat-square&logo=github)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
+[![Tests](https://img.shields.io/badge/tests-100%25-brightgreen?style=flat-square&logo=pytest)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
 
 ---
 
@@ -125,3 +126,45 @@ Arkalia-LUNA est une base cognitive IA locale conçue pour être :
 
 Chaque composant est autonome mais orchestré de manière réflexive via une boucle IA adaptative.
 Un projet signé 🌓 Système Lunaire Arkalia.
+
+## 🧠 AssistantIA
+
+> Module de dialogue intelligent intégré à Arkalia.  
+> Environnement : Dockerisé, FastAPI, port 8001
+
+- **Status :** ✅ Actif
+- **Port :** `8001`
+- **Commande dev locale :** `uvicorn modules.assistantia.core:app --port 8001`
+- **Commande Docker :** `docker-compose up assistantia`
+
+### 🔗 Endpoints disponibles
+
+| Méthode | URL                     | Description                |
+|---------|-------------------------|----------------------------|
+| GET     | /                       | Accueil API AssistantIA    |
+| POST    | /chat                   | (À venir) Dialogue IA      |
+
+[![Version](https://img.shields.io/badge/version-v1.2.1--stable--docker-blue)](https://github.com/arkalia-luna-system/arkalia-luna-pro/releases)
+
+Pour plus de détails, consultez la [documentation AssistantIA](docs/assistantia.md).
+
+---
+
+## 🐳 Docker Services Actifs
+
+| Service       | Port | Commande Docker                        |
+|---------------|------|----------------------------------------|
+| arkalia-api   | 8000 | `docker-compose up arkalia-api`        |
+| assistantia   | 8001 | `docker-compose up assistantia`        |
+
+## 🚀 Lancer le projet avec Docker
+
+```bash
+# Lancer les deux services
+docker-compose up --build
+
+# Ou relancer seulement assistantia
+docker-compose up assistantia
+```
+
+![Docker](https://img.shields.io/badge/docker-ready-blue)

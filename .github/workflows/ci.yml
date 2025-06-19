@@ -1,4 +1,4 @@
-name: CI
+name: Arkalia CI
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
             mkdocs \
             mkdocs-material \
             mkdocs-simple-hooks \
-            mkdocs-minify-plugin  # 👈 plugin manquant
+            mkdocs-minify-plugin
 
       - name: 🌐 Construire le site MkDocs (sitemap.xml)
         run: |
@@ -45,24 +45,24 @@ jobs:
 
       - name: 🧹 Lint avec Ruff
         run: |
-          echo "::group::Ruff lint"
+          echo "::group::Ruff Lint"
           ruff check .
           echo "::endgroup::"
 
-      - name: 🎨 Vérifier le format Black
+      - name: 🎨 Vérifier le format avec Black
         run: |
-          echo "::group::Black format check"
+          echo "::group::Black Format Check"
           black . --check
           echo "::endgroup::"
 
       - name: 🧪 Lancer les tests unitaires avec couverture
         run: |
-          echo "::group::Run tests"
+          echo "::group::Run Tests + Coverage"
           pytest --cov=modules --cov=core --cov=tests --cov-report=term-missing -v --tb=short
           echo "::endgroup::"
 
       - name: ✅ Exécuter les hooks pre-commit
         run: |
-          echo "::group::Pre-commit checks"
+          echo "::group::Pre-commit Checks"
           pre-commit run --all-files --show-diff-on-failure
           echo "::endgroup::"
