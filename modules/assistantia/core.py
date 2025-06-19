@@ -3,9 +3,7 @@
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from modules.assistantia.utils.ollama_connector import (
-    query_ollama,
-)
+from modules.assistantia.utils.ollama_connector import query_ollama
 
 router = APIRouter()
 
@@ -21,7 +19,7 @@ async def chat(request: Request):
                 status_code=400, content={"error": "Aucun message reçu."}
             )
 
-        response_text = query_ollama(prompt)  # ✅ Appel de ta fonction IA
+        response_text = query_ollama(prompt)
         return {"réponse": response_text}
 
     except Exception as e:
@@ -30,6 +28,6 @@ async def chat(request: Request):
         )
 
 
-# ✅ Application FastAPI
+# API exposée
 app = FastAPI()
 app.include_router(router)
