@@ -7,7 +7,7 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  custom_dir: docs/overrides        # ⚠️ Assure-toi que ce dossier existe
+  custom_dir: docs/overrides  # Dossier pour custom HTML (main.html, 404.html, etc.)
   logo: assets/logo.png
   favicon: assets/favicon.ico
   palette:
@@ -68,12 +68,14 @@ nav:
       - Déploiement: deployment.md
   - 🗺️ Feuille de route: roadmap.md
   - 📜 Journal:
-    - Journal des versions: releases/index.md
-    - CHANGELOG.md
+      - Journal des versions: releases/index.md
+      - CHANGELOG.md
   - 🧾 Crédits:
       - Auteure: credits.md
       - Licence: license.md
   - 🧰 Utilisation: utilisation.md
+  - 🧪 Tests LLM: ollama.md
+
 
 markdown_extensions:
   - admonition

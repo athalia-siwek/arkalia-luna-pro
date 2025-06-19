@@ -33,3 +33,4 @@ docker-compose.override.yml
 
 # 🚫 Fichiers à ne jamais versionner
 site/          # 📘 Build MkDocs
+site/

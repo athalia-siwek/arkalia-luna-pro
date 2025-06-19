@@ -1,19 +1,33 @@
-# Base Web Server
+#########################
+# 🌐 Base Web Server
+#########################
 fastapi
 uvicorn[standard]
 
-# Formatage et linting
+#########################
+# 🎨 Formatage & Linting
+#########################
 black
 ruff
 
-# Tests et couverture
+#########################
+# ✅ Tests & Couverture
+#########################
 pytest
 pytest-cov
 httpx>=0.23.0
 
-# Documentation
+#########################
+# 📘 Documentation MkDocs
+#########################
 mkdocs
 mkdocs-material
+mkdocs-minify-plugin
+mkdocs-macros-plugin
+mkdocs-git-revision-date-localized-plugin
+mkdocs-sitemap
 
-# Pre-commit (hooks automatiques)
-pre-commitmkdocs-minify-plugin
+#########################
+# 🔧 Pre-commit Hooks
+#########################
+pre-commit

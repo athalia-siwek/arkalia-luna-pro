@@ -1,3 +1,24 @@
+# Licence et Informations du Projet
+
+## Signature Athalia 🪶
+
+Ce projet a été conçu et développé par Athalia 🌙, avec une attention particulière à l'innovation et à l'excellence technique.
+
+## Contexte de Création
+
+Arkalia-LUNA a été créé pour fournir une solution d'intelligence artificielle locale, modulaire et auto-réflexive, capable de fonctionner indépendamment des services cloud.
+
+## Stack IA Utilisée
+
+- **FastAPI** : Pour la création d'API asynchrones performantes.
+- **Docker** : Pour la conteneurisation et le déploiement facile des services.
+- **Ollama** : Pour l'utilisation de modèles LLM locaux.
+- **Pytest** : Pour les tests et la couverture du code.
+
+## Mention Spéciale
+
+Arkalia-LUNA est un projet open-libre avec un noyau privé, permettant une flexibilité et une sécurité accrues tout en favorisant l'innovation ouverte.
+
 # Licence MIT
 
 Copyright (c) 2025 Arkalia System
