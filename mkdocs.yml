@@ -7,7 +7,7 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  custom_dir: docs/overrides  # Dossier pour custom HTML (main.html, 404.html, etc.)
+  custom_dir: docs/overrides
   logo: assets/logo.png
   favicon: assets/favicon.ico
   palette:
@@ -76,7 +76,6 @@ nav:
   - 🧰 Utilisation: utilisation.md
   - 🧪 Tests LLM: ollama.md
 
-
 markdown_extensions:
   - admonition
   - attr_list
@@ -124,5 +123,6 @@ plugins:
       fallback_to_build_date: true
   - offline
   - macros
-  - simple-hooks:
-      on_post_build: "scripts/sitemap_generator.py"
+  - mkdocs-simple-hooks:
+      hooks:
+        on_post_build: arkalia.hooks:generate_sitemap
