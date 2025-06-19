@@ -46,4 +46,18 @@ Ce fichier retrace les changements apportés à chaque version publique d'Arkali
 ### 🚀 CI/CD
 - CI/CD et Docker validés
 
+## [v1.3.2] - 2025-06-19
+
+### 🔧 Améliorations Dev
+- Ajout des badges `Black` + `Ruff` dans le README
+- Correction `.pre-commit-config.yaml` (exclusions propres)
+- CI/CD validée avec tous les tests unitaires
+- Linting propre (black, ruff) passé à 100%
+
+### ✅ État du système
+- Couverture globale : **86 %**
+- Tests : **8/8 passés**
+- CI GitHub : **verte**
+- Docker : **ok**
+
 ---
