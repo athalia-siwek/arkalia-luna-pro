@@ -58,3 +58,8 @@ if __name__ == "__main__":
         site_url="https://arkalia-luna-system.github.io/arkalia-luna-pro",
         output_dir="site",
     )
+
+
+def generate_sitemap_from_site():
+    site_url = "https://arkalia-luna-system.github.io/arkalia-luna-pro"
+    generate_sitemap(site_url)
