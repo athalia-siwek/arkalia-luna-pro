@@ -1,64 +1,123 @@
 site_name: Arkalia-LUNA Documentation
+site_description: Système IA local, modulaire, auto-réflexif — Arkalia-LUNA
+site_author: Athalia 🌙
 site_url: https://arkalia-luna-system.github.io/arkalia-luna-pro
 repo_url: https://github.com/arkalia-luna-system/arkalia-luna-pro
+edit_uri: edit/main/docs/
 
 theme:
   name: material
-  logo: assets/logo.png            # ✅ Doit être dans docs/assets/
-  favicon: assets/favicon.ico      # ✅ Doit être dans docs/assets/
+  custom_dir: docs/overrides        # ⚠️ Assure-toi que ce dossier existe
+  logo: assets/logo.png
+  favicon: assets/favicon.ico
   palette:
     - scheme: default
-      primary: blue-grey           # 🌙 Bleu coton doux
+      primary: blue-grey
+      accent: light-blue
       toggle:
         icon: material/weather-night
         name: Mode sombre
     - scheme: slate
       primary: blue-grey
+      accent: light-blue
       toggle:
         icon: material/weather-sunny
         name: Mode clair
+  font:
+    text: Roboto
+    code: JetBrains Mono
   features:
     - navigation.instant
     - navigation.tabs
     - navigation.top
+    - navigation.expand
     - search.highlight
+    - search.suggest
     - content.code.copy
     - content.action.edit
     - content.tabs.link
+    - header.autohide
 
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/arkalia-luna-system
+    - icon: fontawesome/solid/moon
+      link: https://arkalia-luna-system.github.io
   copyright:
     text: "© 2025 Arkalia System — Tous droits réservés."
+  last_updated:
+    text: "🕒 Dernière mise à jour :"
 
 nav:
-  - Accueil: index.md
-  - Utilisation rapide: utilisation.md
-  - Modules: modules.md
-  - API: api.md
-  - Structure: structure.md
-  - CI/CD: ci-cd.md
-  - Feuille de route: roadmap.md
-  - Noyau: kernel.md
-  - Automatisation: automation.md
-  - Changelog: CHANGELOG.md
-  - Crédits: credits.md
-  - Sécurité: security.md
+  - 🏠 Accueil: index.md
+  - ⚡ Démarrage rapide:
+      - Installation: installation.md
+      - Configuration: configuration.md
+  - 🧠 Modules IA:
+      - Présentation générale: modules.md
+      - Kernel & Coordination: kernel.md
+      - API & Interface: api.md
+      - Automatisation: automation.md
+      - Sécurité: security.md
+  - 🛠️ Architecture:
+      - Structure: structure.md
+      - Composants: composants.md
+  - ⚙️ CI/CD & Déploiement:
+      - Intégration continue: ci-cd.md
+      - Déploiement: deployment.md
+  - 🗺️ Feuille de route: roadmap.md
+  - 📜 Journal:
+      - CHANGELOG.md
+      - releases/
+  - 🧾 Crédits:
+      - Auteure: credits.md
+      - Licence: license.md
 
 markdown_extensions:
   - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
   - toc:
       permalink: true
-  - pymdownx.superfences
+      toc_depth: 3
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed
-  - pymdownx.highlight
-  - pymdownx.emoji
-  - pymdownx.tasklist
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.snippets
   - pymdownx.details
   - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.critic
 
 extra_css:
-  - assets/extra.css
+  - assets/css/extra.css
+  - https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|JetBrains+Mono&display=swap
+
+extra_javascript:
+  - assets/js/theme.js
+  - https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      type: datetime
+      locale: fr
+      timezone: Europe/Paris
+      fallback_to_build_date: true
+  - offline
+  - macros
