@@ -19,6 +19,7 @@
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
 [![Sitemap](https://img.shields.io/badge/sitemap-valid-brightgreen?style=flat-square&logo=sitemaps)](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
+[![CI + Sitemap](https://img.shields.io/badge/CI%20%2B%20Sitemap-passing-brightgreen?style=flat-square&logo=github)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
 
 ---
 
