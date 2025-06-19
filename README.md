@@ -18,6 +18,8 @@ Système Cognitif IA Local • Modulaire • Auto-Réflexif • Documenté
 [![Tests](https://img.shields.io/badge/tests-100%25-brightgreen?style=flat-square&logo=pytest)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
 [![Docker](https://img.shields.io/badge/docker-ready-blue?style=flat-square)](https://www.docker.com/)
 [![Sitemap](https://img.shields.io/badge/sitemap-valid-brightgreen?style=flat-square&logo=sitemaps)](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
+[![Ruff](https://img.shields.io/badge/Ruff-validated-brightgreen?style=flat-square)](https://github.com/charliermarsh/ruff-pre-commit)
+[![Black](https://img.shields.io/badge/Black-validated-brightgreen?style=flat-square)](https://github.com/psf/black)
 
 
 
