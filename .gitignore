@@ -39,3 +39,7 @@ Dockerfile*
 # Tests
 tests/
 *.test.*
+
+# Fichiers système macOS
+._*
+.DS_Store
