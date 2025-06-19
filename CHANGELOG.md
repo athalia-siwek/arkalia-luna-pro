@@ -1,6 +1,24 @@
 # 📋 CHANGELOG.md — Historique des versions Arkalia-LUNA
 
-Ce fichier retrace les changements apportés à chaque version publique d’Arkalia-LUNA.
+Ce fichier retrace les changements apportés à chaque version publique d'Arkalia-LUNA.
+
+## [helloria-v1.0.0] — 2025-06-19
+
+### ✅ Ajouts
+- Endpoint `GET /` pour ping racine (`core.py`)
+- Endpoint `GET /status` pour état opérationnel (`core.py`)
+- Gestion d'état via `HelloriaStateManager` (`state.py`)
+- Ajout de `main.py` pour exécution directe via Uvicorn
+- Test unitaire minimal (`test_helloria.py`)
+
+### ♻️ Refactoring
+- Nettoyage et normalisation via `black` et `ruff`
+
+### 📄 Documentation
+- `README.md` : objectif, routes, exemple de requête, lien vers MkDocs
+
+🔁 **Couverture test :** 100 % sur `test_helloria.py`  
+🔗 **Documentation :** [https://athalia-siwek.github.io/arkalia-luna-pro/modules](https://athalia-siwek.github.io/arkalia-luna-pro/modules)
 
 ---
 
