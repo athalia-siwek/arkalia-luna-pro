@@ -25,7 +25,6 @@ mkdocs-material
 mkdocs-minify-plugin
 mkdocs-macros-plugin
 mkdocs-git-revision-date-localized-plugin
-mkdocs-sitemap
 
 #########################
 # 🔧 Pre-commit Hooks

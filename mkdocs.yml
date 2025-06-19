@@ -124,3 +124,5 @@ plugins:
       fallback_to_build_date: true
   - offline
   - macros
+  - simple-hooks:
+      on_post_build: "scripts/sitemap_generator.py"
