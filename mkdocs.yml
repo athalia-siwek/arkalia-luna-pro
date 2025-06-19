@@ -45,6 +45,7 @@ nav:
   - Automatisation: automation.md
   - Changelog: CHANGELOG.md
   - Crédits: credits.md
+  - Sécurité: security.md
 
 markdown_extensions:
   - admonition
