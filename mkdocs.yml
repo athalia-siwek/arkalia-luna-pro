@@ -34,15 +34,17 @@ extra:
     text: "© 2025 Arkalia System — Tous droits réservés."
 
 nav:
-  - 🧭 Accueil: index.md
-  - 🧩 Modules: modules.md
-  - ⚙️ API: api.md
-  - 🧱 Structure: structure.md
-  - 🧪 CI/CD: ci-cd.md
-  - 🛣️ Roadmap: roadmap.md
-  - 🧠 Kernel: kernel.md
-  - 🛠️ Automatisation: automation.md
-  - 📘 Crédits: credits.md
+  - Accueil: index.md
+  - Utilisation rapide: utilisation.md
+  - Modules: modules.md
+  - API: api.md
+  - Structure: structure.md
+  - CI/CD: ci-cd.md
+  - Feuille de route: roadmap.md
+  - Noyau: kernel.md
+  - Automatisation: automation.md
+  - Changelog: CHANGELOG.md
+  - Crédits: credits.md
 
 markdown_extensions:
   - admonition

@@ -1,13 +1,11 @@
-# 🧾 Crédits & Auteure
+# 🧾 Crédits & Auteur
 
 ---
 
-## 👩‍💻 Auteure principale
+## 👩‍💻 Auteur du système
 
-- **Nom :** Athalia Siwek  
-- **Rôle :** Architecte IA & Développeuse principale  
-- **Contact :** [athalia@example.com](mailto:athalia@example.com)  
-- **LinkedIn :** [linkedin.com/in/athalia-siwek](https://www.linkedin.com/in/athalia-siwek)  
+- **Nom :** Athalia 🌙  
+- **Rôle :** Architecte IA & créatrice du système Arkalia-LUNA  
 - **GitHub :** [github.com/arkalia-luna-system](https://github.com/arkalia-luna-system)
 
 ---
@@ -15,43 +13,43 @@
 ## 🤖 Modules IA développés
 
 ### 🔁 ReflexIA  
-Module adaptatif de **surveillance cognitive**. Analyse l'état du système, pondère les actions, et agit en autonomie partielle.
+Module adaptatif de **surveillance cognitive**. Analyse l’état du système, pondère les actions et agit en autonomie partielle.
 
 ### 🧠 ZeroIA  
-Moteur de **raisonnement logique**. Prend des décisions à partir du contexte, déclenche des scripts IA, et évalue les priorités.
+Moteur de **raisonnement logique**. Prend des décisions contextuelles, déclenche les scripts IA et hiérarchise les priorités.
 
 ### 🌐 Nyxalia  
-Interface IA destinée aux **interactions externes et mobiles**. Permet la communication entre les modules internes et les interfaces utilisateur.
+Interface dédiée aux **interactions externes et mobiles**. Permet la communication fluide avec les utilisateurs ou services distants.
 
 ### 🔎 Helloria  
-Passerelle **FastAPI** : expose les endpoints publics, orchestre les appels IA, et sert de point d’entrée du système Arkalia.
+Passerelle **FastAPI**. Expose les endpoints publics, orchestre les appels IA et sert de lien entre modules internes et requêtes HTTP.
 
 ### 🛡️ Sandozia *(prévu)*  
-Système de **cybersécurité cognitive**, conçu pour analyser les comportements anormaux, gérer les accès et renforcer la résilience du noyau IA.
+Système de **cybersécurité cognitive**. Analyse des comportements anormaux, gestion des accès, renforcement du noyau.
 
 ### 🧬 ArkaliaLoop  
-**Boucle réflexive principale**. Assure la synchronisation, la coordination des modules et l’apprentissage adaptatif.
-
----
+**Boucle réflexive principale**. Coordonne l’ensemble du système, synchronise les modules et supervise l’apprentissage adaptatif.
 
 > Chaque module est conçu pour fonctionner **de manière autonome**, mais s’intègre harmonieusement dans une architecture **modulaire, scalable et intelligente**.
 
 ---
 
-## 🛠️ Remerciements techniques
+## 🛠️ Technologies utilisées
 
-- [FastAPI](https://fastapi.tiangolo.com/) — Serveur API moderne et asynchrone
+- [FastAPI](https://fastapi.tiangolo.com/) — API asynchrone moderne
 - [Docker](https://www.docker.com/) — Conteneurisation du système
-- [Ollama](https://ollama.com/) — Exécution de modèles LLM en local
-- [Pytest](https://docs.pytest.org/) — Tests unitaires & couverture
-- [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) — Génération de la documentation
-- [GitHub Actions](https://github.com/features/actions) — Intégration continue
+- [Ollama](https://ollama.com/) — LLM locaux exécutés sans cloud
+- [Pytest](https://docs.pytest.org/) — Tests unitaires avec couverture automatique
+- [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) — Génération de documentation
+- [GitHub Actions](https://github.com/features/actions) — Intégration continue (CI/CD)
 
 ---
 
 ## 🧭 À propos d’Arkalia-LUNA
 
-> Arkalia-LUNA est un système cognitif IA local, modulaire, auto-réflexif, conçu et maintenu par Athalia 🌙.  
-> Son but : **offrir une base IA propre, interconnectée et durable**, 100% contrôlée en local.
+> **Arkalia-LUNA** est un système cognitif IA local, modulaire et auto-réflexif,  
+> conçu pour fonctionner sans dépendances cloud, avec une autonomie **évolutive et sécurisée**.
+
+> 🎯 Son objectif : **offrir une base IA propre, interconnectée, durable et 100 % locale.**
 
 ---
