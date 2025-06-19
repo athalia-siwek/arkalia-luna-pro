@@ -1,32 +1,36 @@
-# 🧠 Fichiers Arkalia à ignorer
+# 🧠 Arkalia-LUNA — .gitignore officiel
+
+# 🔁 Fichiers Python compilés
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
-*.log
-*.db
 
-
-# 🧪 Coverage & test
-htmlcov/
-.coverage
-coverage.xml
-
-# 🧽 Parasites macOS
-.DS_Store
-._*
-
-# 🧰 Python
+# 📦 Environnements virtuels
 .venv/
 venv/
 .env
 .env.*
 
+# 🧪 Tests & couverture
+htmlcov/
+.coverage
+coverage.xml
+pytest_cache/
+
+# 📃 Logs & bases locales
+*.log
+*.db
+
+# 🧽 Parasites macOS
+.DS_Store
+._*
+
 # 🐳 Docker
 *.tar
 *.img
-docker-compose.override.yml.pytest_cache/
-site/
-docs/
+docker-compose.override.yml
 
-site/
+# 🚫 Fichiers à ne jamais versionner
+site/          # 📘 Build MkDocs
+# docs/        # ❌ Ne PAS ignorer ! Tu veux le versionner, donc on commente cette ligne
