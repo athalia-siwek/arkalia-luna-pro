@@ -4,7 +4,9 @@
 
 > 🧠 Version : `v1.0.9`  
 > 📘 Docs : [arkalia-luna-system.github.io/arkalia-luna-pro](https://arkalia-luna-system.github.io/arkalia-luna-pro)  
-> 🐳 Docker • 🧪 CI • 🧠 ReflexIA • ⚙️ ZeroIA
+> 🐳 Docker • 🧪 CI • 🧠 ReflexIA • ⚙️ ZeroIA  
+>  
+> 🔒 Maintenu par le système cognitif Arkalia-LUNA — [github.com/arkalia-luna-system](https://github.com/arkalia-luna-system)
 
 ---
 
