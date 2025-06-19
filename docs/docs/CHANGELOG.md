@@ -16,4 +16,13 @@ Cette version apporte :
 - 🎉 Nouveau service `assistantia` (FastAPI)
 - 🐳 Dockerfile.assistantia intégré
 - 🔁 Ajout dans `docker-compose.yml` avec port `8001`
-- ✅ Double service `arkalia-api` + `assistantia` actif via Docker 
+- ✅ Double service `arkalia-api` + `assistantia` actif via Docker
+
+## [v1.2.1] - 2025-06-19
+
+### ✅ Finalisation CI et tests
+- Couverture de test unitaire validée (91%)
+- Lint automatisé (`ruff`, `black`) corrigé et appliqué
+- Hooks `pre-commit` opérationnels
+- Construction MkDocs réussie (documentation et sitemap généré)
+- Docker + CI locale (`act`) validée 
