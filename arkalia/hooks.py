@@ -1,9 +1,10 @@
 # arkalia/hooks.py
 
-from scripts.sitemap_generator import generate_sitemap
+from scripts.sitemap_generator import generate_sitemap_from_site
 
 
-def on_post_build(config):
-    print("🌐 [Hook] Génération du sitemap...")
-    generate_sitemap(config["site_url"], output_dir=config["site_dir"])
-    print("✅ Sitemap généré ✔")
+def generate_sitemap(config=None, **kwargs):
+    """
+    Hook pour générer le sitemap.xml après la construction du site.
+    """
+    generate_sitemap_from_site()
