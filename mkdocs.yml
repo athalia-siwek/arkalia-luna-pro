@@ -68,11 +68,12 @@ nav:
       - Déploiement: deployment.md
   - 🗺️ Feuille de route: roadmap.md
   - 📜 Journal:
-      - CHANGELOG.md
-      - releases/
+    - Journal des versions: releases/index.md
+    - CHANGELOG.md
   - 🧾 Crédits:
       - Auteure: credits.md
       - Licence: license.md
+  - 🧰 Utilisation: utilisation.md
 
 markdown_extensions:
   - admonition
