@@ -1,45 +1,60 @@
+# scripts/sitemap_generator.py
+
+import datetime
 import os
-import time
-from pathlib import Path
-from urllib.parse import urljoin
 
-BASE_URL = "https://arkalia-luna-system.github.io/arkalia-luna-pro/"
-SITE_DIR = Path(__file__).resolve().parent.parent / "site"
-SITEMAP_PATH = SITE_DIR / "sitemap.xml"
+import yaml
 
 
-def collect_html_files(site_dir):
-    return sorted([f for f in site_dir.rglob("*.html") if "404.html" not in str(f)])
+def parse_nav_from_mkdocs(mkdocs_yml_path="mkdocs.yml"):
+    with open(mkdocs_yml_path, "r", encoding="utf-8") as f:
+        config = yaml.load(f, Loader=yaml.UnsafeLoader)
+    return extract_paths(config.get("nav", []))
 
 
-def build_url(path):
-    rel_path = path.relative_to(SITE_DIR)
-    url = urljoin(BASE_URL, str(rel_path).replace(os.sep, "/"))
-    return url
+def extract_paths(nav, prefix=""):
+    paths = []
+
+    for item in nav:
+        if isinstance(item, dict):
+            for _, value in item.items():
+                if isinstance(value, list):
+                    paths += extract_paths(value, prefix)
+                elif isinstance(value, str):
+                    path = value.replace(".md", "/").replace("index/", "")
+                    paths.append(f"{prefix}{path}")
+        elif isinstance(item, str):
+            path = item.replace(".md", "/")
+            paths.append(f"{prefix}{path}")
+
+    return paths
 
 
-def generate_sitemap():
-    print("🌐 [Sitemap] Génération du sitemap.xml…")
-    pages = collect_html_files(SITE_DIR)
+def generate_sitemap(site_url, output_dir="site", mkdocs_yml_path="mkdocs.yml"):
+    now = datetime.datetime.now().strftime("%Y-%m-%d")
+    urls = parse_nav_from_mkdocs(mkdocs_yml_path)
 
-    now = time.strftime("%Y-%m-%dT%H:%M:%S+00:00")
-    lines = [
-        '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    ]
+    # Crée le dossier output_dir si inexistant
+    os.makedirs(output_dir, exist_ok=True)
 
-    for page in pages:
-        url = build_url(page)
-        lines.append("  <url>")
-        lines.append(f"    <loc>{url}</loc>")
-        lines.append(f"    <lastmod>{now}</lastmod>")
-        lines.append("  </url>")
+    sitemap_path = os.path.join(output_dir, "sitemap.xml")
+    with open(sitemap_path, "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+        for path in urls:
+            full_url = f"{site_url.rstrip('/')}/{path}"
+            f.write("  <url>\n")
+            f.write(f"    <loc>{full_url}</loc>\n")
+            f.write(f"    <lastmod>{now}</lastmod>\n")
+            f.write("  </url>\n")
+        f.write("</urlset>\n")
 
-    lines.append("</urlset>")
-
-    SITEMAP_PATH.write_text("\n".join(lines), encoding="utf-8")
-    print(f"✅ Sitemap généré : {SITEMAP_PATH}")
+    print(f"✅ Sitemap généré : {sitemap_path}")
 
 
+# 💡 Exécution directe
 if __name__ == "__main__":
-    generate_sitemap()
+    generate_sitemap(
+        site_url="https://arkalia-luna-system.github.io/arkalia-luna-pro",
+        output_dir="site",
+    )
