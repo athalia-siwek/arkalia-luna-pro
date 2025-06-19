@@ -52,9 +52,11 @@ exclude_lines = [
 
 [tool.pytest.ini_options]
 testpaths = [
-    "modules",
-    "tests/unit",
-    "tests/integration"
+  "modules",
+  "tests/base",
+  "tests/core",
+  "tests/scripts",
+  "tests/integration"
 ]
 addopts = "--cov --cov-report html"
 
