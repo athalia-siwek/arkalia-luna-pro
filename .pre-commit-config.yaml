@@ -6,10 +6,10 @@ repos:
         language_version: python3.10
         exclude: '.*\.tox/|.*venv/|.*site-packages/|.*\._.*\.py'
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.2
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.4.0
     hooks:
       - id: ruff
-        args: ["--fix", "--ignore-patterns", "._*"]
+        args: ["--exclude=docs/"]
         language_version: python3.10
         exclude: '.*\.tox/|.*venv/|.*site-packages/|.*\._.*\.py'

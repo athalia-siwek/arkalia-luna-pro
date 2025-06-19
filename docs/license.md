@@ -1,30 +1,59 @@
-# Licence et Informations du Projet
+# 🛡️ Licence & Mentions Légales — Arkalia-LUNA
 
-## Signature Athalia 🪶
+> Ce projet est distribué sous licence **MIT**, avec un noyau privé, assurant **ouverture contrôlée et sécurité locale**.
 
-Ce projet a été conçu et développé par Athalia 🌙, avec une attention particulière à l'innovation et à l'excellence technique.
+---
 
-## Contexte de Création
+## ✨ Signature Athalia 🪶
 
-Arkalia-LUNA a été créé pour fournir une solution d'intelligence artificielle locale, modulaire et auto-réflexive, capable de fonctionner indépendamment des services cloud.
+| Élément         | Valeur                                             |
+|----------------|-----------------------------------------------------|
+| 🧠 Créatrice     | **Athalia 🌙** (Architecte IA, développeuse système) |
+| 🗂️ Dépôt GitHub  | [arkalia-luna-system](https://github.com/arkalia-luna-system) |
+| 📜 Objectif      | Système IA local, modulaire, auto-réflexif et souverain |
 
-## Stack IA Utilisée
+---
 
-- **FastAPI** : Pour la création d'API asynchrones performantes.
-- **Docker** : Pour la conteneurisation et le déploiement facile des services.
-- **Ollama** : Pour l'utilisation de modèles LLM locaux.
-- **Pytest** : Pour les tests et la couverture du code.
+## 📚 Contexte de Création
 
-## Mention Spéciale
+Arkalia-LUNA a été pensé comme un **noyau d'intelligence cognitive**, sans cloud, sans dépendances extérieures, basé sur une logique de **modules interfaçables**, **automatisés**, et **auto-adaptatifs**.
 
-Arkalia-LUNA est un projet open-libre avec un noyau privé, permettant une flexibilité et une sécurité accrues tout en favorisant l'innovation ouverte.
+---
 
-# Licence MIT
+## 🛠️ Stack Technologique
 
-Copyright (c) 2025 Arkalia System
+| Technologie      | Rôle principal                                 |
+|------------------|------------------------------------------------|
+| FastAPI          | Exposition des endpoints IA (asynchrone)       |
+| Docker           | Conteneurisation des services IA               |
+| Ollama           | Exécution locale des modèles LLM               |
+| Pytest + Coverage| Tests unitaires et couverture de code          |
+| MkDocs           | Génération de la documentation publique        |
+| GitHub Actions   | CI/CD complète, déclenchée à chaque push       |
 
-Permission est accordée, gratuitement, à toute personne obtenant une copie de ce logiciel et des fichiers de documentation associés (le "Logiciel"), de traiter le Logiciel sans restriction, y compris sans limitation les droits d'utiliser, de copier, de modifier, de fusionner, de publier, de distribuer, de sous-licencier et/ou de vendre des copies du Logiciel, et de permettre aux personnes à qui le Logiciel est fourni de le faire, sous réserve des conditions suivantes :
+---
 
-Le avis de copyright ci-dessus et cet avis de permission doivent être inclus dans toutes les copies ou parties substantielles du Logiciel.
+## 🪪 Licence MIT
 
-LE LOGICIEL EST FOURNI "EN L'ÉTAT", SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE, Y COMPRIS MAIS SANS S'Y LIMITER AUX GARANTIES DE QUALITÉ MARCHANDE, D'ADÉQUATION À UN USAGE PARTICULIER ET D'ABSENCE DE CONTREFAÇON. EN AUCUN CAS LES AUTEURS OU LES TITULAIRES DU COPYRIGHT NE SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DOMMAGE OU AUTRE RESPONSABILITÉ, QUE CE SOIT DANS UNE ACTION DE CONTRAT, DE DÉLIT OU AUTRE, DÉCOULANT DE, HORS DE OU EN RELATION AVEC LE LOGICIEL OU L'UTILISATION OU D'AUTRES ACTIONS DANS LE LOGICIEL. 
+MIT License
+
+Copyright (c) 2025 Arkalia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction…
+
+[version complète incluse dans le fichier LICENSE officiel du dépôt]
+
+**Résumé humain** :  
+Vous êtes libres d’utiliser, modifier, distribuer ce logiciel, à condition de **créditer l’auteure** et de **reproduire cette licence**.
+
+---
+
+## 🔐 Noyau Privé & Éthique
+
+Le noyau d’Arkalia est **privé**, isolé du cloud, conçu pour la **protection des données sensibles**, l’**autonomie technique** et une **éthique cognitive rigoureuse**.
+
+---
+
+🕊️ *“Concevoir une IA éthique, souveraine, réflexive, 100 % locale, au service de l’humain.”* — Athalia 🌙

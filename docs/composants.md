@@ -1,26 +1,39 @@
-# Composants d'Arkalia-LUNA
+# 🧩 Composants d’Arkalia-LUNA
 
-## Introduction
+> Vue d’ensemble des composants actifs dans le système IA Arkalia-LUNA.
 
-Arkalia-LUNA est composé de plusieurs composants modulaires qui travaillent ensemble pour fournir une intelligence artificielle locale et adaptable. Chaque composant joue un rôle spécifique dans le système global.
+---
 
-## Composants Principaux
+## 🧠 Composants principaux
 
-- **ReflexIA** : Responsable de la surveillance cognitive et de la pondération adaptative. Il assure une veille réflexive continue.
-- **ZeroIA** : Gère le raisonnement logique et les décisions contextuelles, orchestrant les actions intelligentes du système.
-- **Nyxalia** : Fournit des interfaces pour les API mobiles et vocales, facilitant l'interaction externe.
-- **Helloria** : Sert de passerelle FastAPI, exposant les endpoints et agissant comme un hub interne/externe.
-- **Sandozia** *(prévu)* : Module de cybersécurité cognitive, surveillant le comportement et renforçant la sécurité du système.
-- **ArkaliaLoop** : Coordonne de manière adaptative les modules IA, formant la boucle maîtresse réflexive.
+| Composant     | Rôle |
+|---------------|------|
+| **Reflexia**  | Supervise la cognition et applique des pondérations adaptatives. |
+| **ZeroIA**    | Réalise des raisonnements logiques et prend des décisions contextuelles. |
+| **Nyxalia**   | Sert de passerelle mobile et vocale (interfaces externes). |
+| **Helloria**  | Démarre l’API FastAPI, relie les modules internes et les interfaces REST. |
+| **Sandozia** *(à venir)* | Module de cybersécurité cognitive et d’analyse comportementale. |
+| **ArkaliaLoop** | Orchestre l’activation séquentielle des modules IA. |
 
-## Interaction entre Composants
+---
 
-Les composants d'Arkalia-LUNA interagissent de manière fluide pour assurer une performance optimale. Par exemple, ReflexIA et ZeroIA collaborent pour ajuster les décisions en temps réel, tandis que Nyxalia et Helloria facilitent la communication avec les systèmes externes.
+## 🔁 Collaboration des composants
 
-## Avantages des Composants Modulaires
+- `Reflexia` analyse les logs → propose des décisions.
+- `ZeroIA` raisonne → déclenche ou suspend un module.
+- `Nyxalia` capte une intention vocale → la transmet via `Helloria`.
+- `Helloria` expose les endpoints vers l’extérieur ou vers `AssistantIA`.
 
-L'architecture modulaire d'Arkalia-LUNA permet une flexibilité et une évolutivité accrues. Chaque composant peut être mis à jour ou remplacé indépendamment, ce qui simplifie la maintenance et l'amélioration continue du système.
+Chaque composant peut être mis à jour indépendamment.
 
-## Conclusion
+---
 
-Les composants d'Arkalia-LUNA sont conçus pour fonctionner ensemble de manière harmonieuse, offrant une solution IA robuste et adaptable. Cette modularité est essentielle pour répondre aux besoins évolutifs des utilisateurs et des environnements technologiques. 
+## ⚙️ Architecture modulaire
+
+- Maintenance facilitée
+- Évolutivité immédiate
+- Séparation stricte des responsabilités
+
+---
+
+💡 *La modularité d’Arkalia-LUNA est pensée pour durer, évoluer et s’adapter à l’usage cognitif réel.*

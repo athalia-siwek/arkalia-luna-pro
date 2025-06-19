@@ -1,77 +1,73 @@
-# 🧬 Structure du noyau Arkalia-LUNA
+# 🧬 Structure du Noyau — Arkalia-LUNA
 
-## Racine :
-- `/core/` → logique commune
-- `/modules/` → modules IA isolés
-- `/config/` → fichiers `.toml`, `.json`, etc.
-- `/logs/`, `/state/`, `/utils/`
+> Arkalia-LUNA repose sur une architecture **modulaire, lisible, performante** et 100 % locale. Chaque composant est isolé, orchestrable et testable de manière indépendante.
 
-## Devstation :
-- Git propre avec tags + CI
-- Docker + mkdocs + tests
+---
 
-```
+## 📂 Structure Principale
+
+```plaintext
 arkalia-luna-pro/
-├── core/        # Logique commune transversale
-├── modules/     # Modules IA isolés et autonomes
-├── config/      # Fichiers .toml / .json centralisés
-├── logs/        # Journaux d'activité et exécution
-├── state/       # États persistants (internes / cognitifs)
-├── utils/       # Fonctions techniques internes partagées
-├── tests/       # Tests unitaires (pytest)
-├── docs/        # Documentation MkDocs
-└── scripts/     # Scripts automatisés (build, test, Docker)
-```
+├── core/        # Logique partagée multi-modules
+├── modules/     # Modules IA indépendants (Reflexia, Nyxalia, etc.)
+├── config/      # Fichiers .toml, .json (centrés)
+├── logs/        # Journaux d'activité (journalisation réflexive)
+├── state/       # États internes persistants (sauvegardes IA)
+├── utils/       # Fonctions techniques et connecteurs externes
+├── tests/       # Tests unitaires et d’intégration (pytest)
+├── docs/        # Documentation publique (MkDocs, Mermaid, etc.)
+└── scripts/     # Scripts automatisés (build, test, docker, backup)
 
-## 🧪 Devstation IA Professionnelle
+🧪 Devstation IA Professionnelle
 
-Ta Devstation actuelle est un environnement de production IA local, avec les composants suivants :
+Composant
+Statut
+Description technique
+🔁 Git & Tags
+✅
+Dépôt propre, versionné via bumpver, avec branche main
+🧼 Qualité Code
+✅
+pre-commit actif : black, ruff, pytest, auto-formatage
+🧪 Tests
+✅
+Couverture ≥ 85 %, pytest, pytest-cov, alias ark-test
+🐳 Docker
+✅
+Conteneurisation complète (Dockerfile, docker-compose)
+🌍 API FastAPI
+✅
+Serveur local uvicorn, endpoints /status, /chat, /echo
+📘 MkDocs
+✅
+Documentation publique auto-déployée (GitHub Pages)
+🚦 CI/CD
+✅
+Workflows GitHub Actions (tests, lint, build, doc, deploy)
 
-| Composant     | Statut | Détail |
-|---------------|--------|--------|
-| 🔀 Git        | ✅ Propre avec tags, branches, bumpver |
-| 🧪 Tests      | ✅ pytest + pytest-cov, 100% couverture |
-| 🧼 Qualité code | ✅ pre-commit actif (black, ruff) |
-| 🐳 Docker     | ✅ Dockerfile + docker-compose stables |
-| 🌍 API        | ✅ FastAPI + Uvicorn local fonctionnel |
-| 📘 Docs       | ✅ MkDocs auto-publiée (gh-pages) |
-| 🚦 CI/CD      | ✅ GitHub Actions (tests, lint, deploy) |
 
-## 🧠 Objectifs visés
-- 💡 Zéro dette technique
-- 🔁 Modules IA indépendants et orchestrables
-- 🛰 Déploiement local rapide & versionné
-- 🧩 Interopérabilité entre sous-systèmes (Reflexia, ZeroIA, etc.)
+🧠 Kernel vs Devstation
 
-## Noyau Arkalia
+Composant
+Description
+/arkalia-luna-core/
+Noyau stable, sans logique métier. Config, bootstrap, sécurité
+/arkalia-luna-pro/
+Devstation active IA : modulaire, locale, dockerisée, versionnée
 
-Le noyau d'Arkalia est composé du kernel et de la devstation, qui ensemble fournissent une base robuste pour le développement et l'exécution des applications.
 
-## 🔁 Structure dynamique (Mermaid)
+🛰 Architecture Dynamique (Mermaid)
 
-```mermaid
 graph TD
   ReflexIA --> ZeroIA
   ZeroIA --> ArkaliaLoop
   ArkaliaLoop --> Nyxalia
   Nyxalia --> User
-```
 
-## Exemples de Blocs
+  📦 Exemples de Blocs Riches (Markdown)
 
-### Bloc Mermaid
+➕ Code multi-langages
 
-```mermaid
-graph TD
-    ReflexIA --> ZeroIA
-    ZeroIA --> ArkaliaLoop
-    ArkaliaLoop --> Nyxalia
-    Nyxalia --> User
-```
-
-### Bloc Tabbed Markdown
-
-```markdown
 === "Python"
     ```python
     print("Hello, Arkalia-LUNA!")
@@ -81,4 +77,14 @@ graph TD
     ```javascript
     console.log("Hello, Arkalia-LUNA!");
     ```
-``` 
+
+    🎯 Objectifs Stratégiques
+	•	🔒 Aucune dette technique persistante
+	•	🧩 Modules IA orchestrables et autonomes
+	•	🧠 Architecture cognitive interconnectée
+	•	🌍 Déploiement local prêt production
+	•	📚 Documentation publique automatisée et stylisée
+
+⸻
+
+🧠 La force d’Arkalia réside dans sa clarté structurelle, sa cohérence cognitive et son évolutivité modulaire.

@@ -1,39 +1,76 @@
-# Déploiement d'Arkalia-LUNA
+# 🚀 Déploiement — Arkalia-LUNA
 
-## Introduction
+> Déployer Arkalia-LUNA proprement, avec Docker et GitHub, sur un serveur Linux local ou distant.
 
-Ce guide fournit des instructions détaillées pour déployer le système Arkalia-LUNA. Un déploiement correct est crucial pour garantir la disponibilité et la performance du système.
+---
 
-## Prérequis pour le Déploiement
+## 📦 Prérequis Déploiement
 
-- **Serveur Linux** : Assurez-vous que le serveur cible exécute une distribution Linux compatible.
-- **Docker et Docker Compose** : Utilisés pour orchestrer les conteneurs du système.
-- **Accès SSH** : Nécessaire pour accéder au serveur et exécuter les commandes de déploiement.
+| Composant          | Détail                                 |
+|--------------------|----------------------------------------|
+| 🐧 **Serveur Linux**      | Ubuntu 20.04+ ou équivalent requis       |
+| 🐳 **Docker + Compose**   | Conteneurisation des services IA         |
+| 🔐 **Accès SSH**          | Pour les déploiements distants           |
+| 🌐 **Ports ouverts**      | 8000 (API), 8001+ (modules IA si exposés) |
 
-## Étapes de Déploiement
+---
 
-1. **Préparer le Serveur**
-   - Mettez à jour le système et installez les dépendances nécessaires.
+## ⚙️ Étapes de Déploiement
 
-2. **Cloner le Dépôt**
-   ```bash
-   git clone https://github.com/arkalia-luna-system/arkalia-luna-pro.git
-   cd arkalia-luna-pro
-   ```
+### 1. 🔧 Préparer le Serveur
 
-3. **Configurer les Variables d'Environnement**
-   - Définissez les variables d'environnement requises dans un fichier `.env`.
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install docker.io docker-compose git -y
+sudo systemctl enable docker
 
-4. **Lancer le Déploiement**
-   ```bash
-   docker-compose up -d
-   ```
+2. 📁 Cloner le Dépôt
 
-## Meilleures Pratiques de Déploiement
+git clone https://github.com/arkalia-luna-system/arkalia-luna-pro.git
+cd arkalia-luna-pro
 
-- **Automatisation** : Utilisez des scripts d'automatisation pour simplifier le processus de déploiement.
-- **Surveillance** : Implémentez des outils de surveillance pour suivre la performance et la disponibilité du système.
+3. 🔐 Configurer .env
 
-## Conclusion
+Crée un fichier .env à la racine avec :
 
-Le déploiement d'Arkalia-LUNA nécessite une préparation minutieuse et une exécution précise. En suivant ces étapes, vous pouvez vous assurer que votre système est déployé de manière efficace et sécurisée. 
+ARKALIA_ENV=prod
+OLLAMA_HOST=http://localhost:11434
+ARKALIA_SECRET_KEY=generate-a-key-here
+
+Tu peux aussi y placer la config FastAPI, Docker ou logs.
+
+⸻
+
+4. 🚀 Lancer le Déploiement
+
+docker-compose up -d --build
+
+Vérifie ensuite l’accès sur :
+➡ http://<IP-serveur>:8000/
+
+⸻
+
+🧠 Meilleures Pratiques
+
+Aspect
+Recommandation
+🛠 Automatisation
+Utilise ark-clean-push, ark-docker-rebuild.sh
+📊 Monitoring
+Installe htop, docker stats, ou prometheus
+🔄 CI/CD
+GitHub Actions peut automatiser le déploiement
+🔒 Sécurité
+Ne jamais exposer les clés .env en public
+
+
+✅ Vérification Post-Déploiement
+	•	Conteneurs actifs (docker ps)
+	•	FastAPI accessible
+	•	Logs OK (logs/, htmlcov/)
+	•	Modules IA opérationnels
+
+⸻
+
+💡 Le déploiement d’Arkalia-LUNA est conçu pour être automatisable, stable et extensible, même sur une machine locale.
+

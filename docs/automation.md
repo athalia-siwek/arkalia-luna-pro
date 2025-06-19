@@ -1,50 +1,54 @@
 ---
 
-# ✅ `/docs/automation.md` — **Scripts & Automatisation**
+## ✅ `/docs/automation.md` — Version améliorée
 
 ```markdown
-# 🤖 Scripts & Automatisation — Arkalia-LUNA
+# 🧠 Scripts & Automatisation — Arkalia-LUNA
 
-Le cœur d’Arkalia repose sur un ensemble de **scripts bash professionnels** et de **boucles intelligentes** permettant l'orchestration autonome du système IA.
+Arkalia n’est pas simplement automatisée : elle est **auto-orchestrée**.
 
----
-
-## 🔁 Boucle Maîtresse : `arkalia_master_loop.py`
-
-Cette boucle unique orchestre l’ensemble du système en :
-
-- Chargeant les modules déclarés dans `config/`
-- Réinjectant les états enregistrés depuis `state/`
-- Analysant les logs pour décisions correctives
-- Déléguant aux IA internes (Reflexia, ZeroIA) les actions adaptatives
+Son cœur repose sur des **scripts Bash intelligents**, interfacés avec les modules IA pour une gestion proactive, auto-corrective et dynamique.
 
 ---
 
-## ⚙️ Scripts Principaux
+## 🔁 Boucle Maîtresse — `arkalia_master_loop.py`
 
-| Script                         | Fonction                                                                 |
-|-------------------------------|--------------------------------------------------------------------------|
-| `ark-bootstrap`               | Initialise l’environnement IA local (`venv`, pre-commit, configs)        |
-| `ark-test`                    | Lance tous les tests `pytest` + génère la couverture                    |
-| `ark-docker-rebuild.sh`       | Rebuild du container Docker propre et relance FastAPI                   |
-| `trigger_scan.sh`             | Déclenche une analyse réflexive manuelle via ReflexIA                   |
-| `ark-clean-push`              | Lint (`ruff`), format (`black`) puis `git commit + push` automatisé     |
+La boucle principale du système :
 
----
-
-💡 *Ces scripts sont conçus pour être **déclenchés par l’IA elle-même** (ZeroIA, ReflexIA) selon les contextes systèmes détectés.*
-
----
-
-## 🧠 Orchestration IA Dynamique
-
-Reflexia ou ZeroIA peuvent :
-
-- suspendre des modules
-- forcer des tests
-- relancer un container
-- corriger automatiquement un état corrompu
+- 🧩 Charge dynamiquement tous les modules déclarés (`config/`)
+- 🔁 Réinjecte les derniers états sauvegardés (`state/`)
+- 📊 Analyse les logs récents pour détecter les dérives
+- 🤖 Laisse ReflexIA ou ZeroIA décider d’actions automatiques :
+  - restart de module
+  - forçage d’un `pytest`
+  - déclenchement d’un `ark-clean-push`
+  - interruption d’un service incohérent
 
 ---
 
-🧭 Arkalia n'est pas seulement automatisée — elle est **auto-orchestrée**.
+## ⚙️ Scripts opérationnels
+
+| Script                   | Fonction principale                                               |
+|--------------------------|-------------------------------------------------------------------|
+| `ark-bootstrap`          | Initialise l’environnement local (`venv`, pre-commit, etc.)       |
+| `ark-test`               | Lance tous les tests `pytest` + rapport de couverture             |
+| `ark-docs`               | Compile la documentation MkDocs en local                          |
+| `ark-docker`             | Lance l’API via Docker (`docker-compose up`)                      |
+| `ark-docker-rebuild.sh`  | Rebuild complet du container (`build`, `up`, `logs`)              |
+| `trigger_scan.sh`        | Déclenche manuellement une analyse réflexive (Reflexia)           |
+| `ark-clean-push`         | Format `black`, lint `ruff`, commit Git et push sécurisé          |
+
+---
+
+## 🧠 Orchestration cognitive
+
+Modules intelligents comme `reflexia/` ou `zeroia/` peuvent automatiquement :
+
+- suspendre des modules en surcharge
+- redémarrer un service figé
+- corriger un état incohérent dans `state/`
+- vérifier les `logs/` et décider de relancer une boucle de test
+
+---
+
+💡 *Cette orchestration transforme Arkalia en un **système IA auto-régulé**, sans besoin d’intervention humaine constante.*

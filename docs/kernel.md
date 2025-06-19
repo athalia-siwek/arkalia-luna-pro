@@ -1,50 +1,63 @@
-🧬 Structure du Noyau — Arkalia
+# 🧬 Structure du Noyau — Arkalia-LUNA
 
-Le noyau Arkalia est conçu comme une architecture IA industrielle modulaire, avec une séparation stricte entre le kernel pur et la Devstation de développement IA.
+> Le noyau Arkalia est fondé sur une **architecture IA industrielle modulaire**, garantissant une séparation stricte entre exécution, logique métier et développement.
 
-⸻
+---
 
-⚙️ 1️⃣ /arkalia-luna-core/ — Kernel IA Pur
+## ⚙️ 1️⃣ `/arkalia-luna-core/` — Noyau IA Pur
 
-Partie stable, figée, sans logique métier. C’est le socle d’exécution sécurisé.
+> Partie figée, **stable** et **non évolutive**. Elle constitue le **socle de sécurité du système**.
 
-	•	📁 Contenu : uniquement des fichiers de configuration système (.toml, scripts init)
-	•	🔒 Aucune dette technique autorisée
-	•	🚀 Script de démarrage : arkalia_devstation_bootstrap.sh
-	•	🧱 Rôle : préparer, sécuriser, isoler la Devstation IA du reste du système
+| Élément                        | Description                                                   |
+|-------------------------------|---------------------------------------------------------------|
+| 📁 Contenu                    | Fichiers de configuration système uniquement (`.toml`, `.sh`) |
+| 🚫 Aucune logique métier      | Pas de modules IA ni de code d’application                   |
+| 🔒 Interdiction de dette tech | Cette zone doit rester immuable                              |
+| 🚀 Script de boot             | `arkalia_devstation_bootstrap.sh`                            |
+| 🧱 Rôle principal              | Isoler la Devstation, sécuriser l’environnement système      |
 
-⸻
+---
 
-🧠 2️⃣ /arkalia-luna-pro/ — Devstation IA Modulaire
+## 🧠 2️⃣ `/arkalia-luna-pro/` — Devstation IA Modulaire
 
-Environnement de développement local modulaire, dockerisé, testé, avec CI/CD active.
+> Espace de **développement local**, dockerisé, versionné, avec CI/CD automatique.
 
-	•	🧩 Modules IA : reflexia, nyxalia, helloria, etc.
-	•	🧪 Tests unitaires avec pytest
-	•	🐳 Docker + Docker Compose
-	•	🚦 GitHub Actions (CI/CD, lint, couverture)
-	•	🌍 API FastAPI disponible localement
-	•	🔖 Version actuelle : v1.0.6
+| Composant         | Description                                             |
+|------------------|---------------------------------------------------------|
+| 🧩 Modules IA     | `reflexia`, `nyxalia`, `helloria`, `assistantia`, etc. |
+| 🧪 Tests          | `pytest`, `pytest-cov` (couverture 85% mini recommandée)|
+| 🐳 Docker         | Lancement local via `docker-compose`                   |
+| 🚦 CI/CD          | GitHub Actions (`lint`, `tests`, `deploy`)             |
+| 🌍 API            | FastAPI (`/`, `/status`, `/chat`, etc.)                |
+| 🏷 Version active | `v1.2.1` (dernier tag stable)                          |
 
-⸻
+---
 
-📁 Structure Type — Devstation Pro
+## 📁 Structure Type — `arkalia-luna-pro/`
 
 arkalia-luna-pro/
-├── modules/               # Modules IA isolés
-├── core/                  # Logique transversale
-├── config/                # Fichiers .toml / .json
-├── logs/                  # Journaux du système
-├── state/                 # États persistants
-├── scripts/               # Scripts utilitaires (build, docker, test)
-├── docs/                  # Documentation MkDocs
-├── tests/                 # Tests unitaires (pytest)
-├── .github/workflows/     # Pipelines CI GitHub Actions
+├── modules/               # Modules IA autonomes (1 fonction = 1 dossier)
+├── core/                  # Logique transversale partagée
+├── config/                # Fichiers de configuration TOML/JSON
+├── logs/                  # Logs du système (temps réel, historisés)
+├── state/                 # États persistants des modules
+├── scripts/               # Scripts d’automatisation (build, test, docker)
+├── tests/                 # Tests unitaires, intégration et couverture
+├── docs/                  # Documentation MkDocs (publique)
+├── .github/workflows/     # CI GitHub Actions
 
-🧩 Philosophie de conception
-	•	🔒 Stabilité garantie par séparation Kernel / Métier
-	•	♻️ Modules IA interchangeables
-	•	🧪 Tests et couverture obligatoires
-	•	🛰 Déploiement local maîtrisé
-	•	📚 Documentation publique automatisée
-    
+---
+
+## 🧩 Philosophie de Conception
+
+| Principe                     | Application concrète                          |
+|-----------------------------|-----------------------------------------------|
+| 🔒 Stabilité                 | Kernel figé, sans dette technique              |
+| 🧠 Modularité                | Chaque module IA est autonome et testable     |
+| 🧪 Qualité                   | CI active : `black`, `ruff`, `pytest`, `cov`  |
+| 📚 Documentation continue   | Auto-générée avec MkDocs, versionnée          |
+| 🛰 Déploiement local maîtrisé | Docker + scripts `ark-docker`, `ark-test`, etc.|
+
+---
+
+🧠 Le système Arkalia est conçu comme un **noyau cognitif auto-réflexif**, industriel, extensible et maîtrisé localement — sans dépendance cloud.

@@ -1,43 +1,77 @@
-# Installation d'Arkalia-LUNA
+---
 
-## Introduction
+## ✅ `/docs/installation.md` — Version optimisée
 
-Bienvenue dans le guide d'installation d'Arkalia-LUNA, un système d'intelligence artificielle modulaire et local. Ce guide vous aidera à installer et configurer le système sur votre machine.
+```markdown
+# 🛠️ Installation — Arkalia-LUNA
 
-## Prérequis
+> Guide étape par étape pour installer Arkalia-LUNA sur votre machine locale (Mac/Linux).
 
-Avant de commencer l'installation, assurez-vous d'avoir les éléments suivants :
+---
 
-- **Python 3.8+** : Assurez-vous que Python est installé et configuré sur votre système.
-- **Docker** : Utilisé pour la conteneurisation des services.
-- **Git** : Pour cloner le dépôt et gérer les versions du code.
+## 🔍 Prérequis
 
-## Étapes d'Installation
+| Logiciel      | Rôle                                               |
+|---------------|----------------------------------------------------|
+| Python 3.10+  | Exécution des scripts IA                           |
+| Docker        | Conteneurisation des modules IA + FastAPI         |
+| Git           | Clonage du dépôt et gestion du code               |
 
-1. **Cloner le dépôt**
-   ```bash
-   git clone https://github.com/arkalia-luna-system/arkalia-luna-pro.git
-   cd arkalia-luna-pro
-   ```
+⚠️ **Important** : utilise Python 3.10 (non 3.11+) pour compatibilité avec certaines dépendances.
 
-2. **Installer les dépendances Python**
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-3. **Construire et lancer les conteneurs Docker**
-   ```bash
-   docker-compose up --build
-   ```
+## ⚙️ Étapes d’Installation
 
-## Configuration Post-Installation
+### 1. 📥 Cloner le dépôt
 
-- **Configurer les variables d'environnement** : Assurez-vous que toutes les variables d'environnement nécessaires sont définies.
-- **Vérifier les logs** : Consultez les logs pour vous assurer que tous les services fonctionnent correctement.
+```bash
+git clone https://github.com/arkalia-luna-system/arkalia-luna-pro.git
+cd arkalia-luna-pro
 
-## Dépannage
+2. 🐍 Créer un environnement Python local
 
-- **Problèmes de dépendances** : Si vous rencontrez des problèmes lors de l'installation des dépendances, vérifiez que vous utilisez la bonne version de Python.
-- **Erreurs Docker** : Assurez-vous que Docker est en cours d'exécution et que vous avez les permissions nécessaires pour exécuter des conteneurs.
+python3 -m venv arkalia-luna-venv
+source arkalia-luna-venv/bin/activate
 
-Pour plus d'informations, consultez la documentation complète ou contactez le support technique. 
+3. 📦 Installer les dépendances
+
+pip install -r requirements.txt
+
+4. 🐳 Construire et lancer en Docker
+
+docker-compose up --build -d
+
+🔧 Configuration Post-Installation
+	•	Crée un fichier .env avec :
+
+    ARKALIA_ENV=dev
+OLLAMA_HOST=http://localhost:11434
+
+	•	Lance manuellement l’API si besoin :
+
+    uvicorn helloria.core:app --reload
+
+    🧪 Vérifications & Dépannage
+
+    Problème possible
+Solution
+❌ Docker ne répond pas
+Redémarre le service sudo systemctl restart docker
+⚠️ Dépendances non installées
+Vérifie Python (python3 --version) et pip
+🐛 Problèmes API
+Regarde les logs FastAPI / Docker (docker logs)
+🔍 Test rapide
+Visite http://127.0.0.1:8000/ et teste /status
+
+
+🎯 Finalisation
+	•	Venv activé ?
+	•	FastAPI accessible ?
+	•	LLM Ollama chargé (ollama list) ?
+	•	Tests passés (ark-test) ?
+
+⸻
+
+🧠 Arkalia-LUNA est conçue pour être installée en local, sans cloud, sans dépendances extérieures — pour une IA souveraine et maîtrisée.

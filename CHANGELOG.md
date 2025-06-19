@@ -33,3 +33,17 @@ Ce fichier retrace les changements apportés à chaque version publique d'Arkali
 - Dépôt GitHub mis en ligne
 - README.md structuré
 - Pre-commit activé (`black`, `ruff`)
+
+## [v1.3.1] — 2025-06-20
+
+### ✅ Tests
+- 20 tests validés avec succès
+- Intégration AssistantIA, ReflexIA, Nyxalia, Helloria OK
+
+### 📊 Couverture
+- Couverture > 85 %
+
+### 🚀 CI/CD
+- CI/CD et Docker validés
+
+---

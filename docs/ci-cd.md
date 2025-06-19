@@ -1,37 +1,57 @@
-# 🧪 Intégration Continue (CI) & Tests — Arkalia-LUNA
+---
 
-Arkalia-LUNA suit une discipline stricte de **testabilité** et de **qualité de code automatisée**, pour garantir un cycle de vie logiciel durable et sans dette technique.
+## ✅ FICHIER `ci-cd.md` — Version améliorée
+
+```markdown
+# 🧪 Intégration Continue & Qualité — Arkalia-LUNA
+
+Arkalia suit une philosophie de **code propre**, **tests exhaustifs** et **automatisation CI/CD** complète via GitHub Actions.
 
 ---
 
-## ✅ Couverture de Tests
+## ✅ Tests & couverture
 
-- `pytest` + `pytest-cov`
-- **Couverture actuelle : 100%**
-- Rapport HTML généré automatiquement : `htmlcov/index.html`
+- Framework : `pytest`
+- Couverture : `pytest-cov`
+- Rapport : `htmlcov/index.html`
 
----
-
-## ✅ Linting & Qualité de Code
-
-- `black` → Formatage automatique du code Python
-- `ruff` → Analyse de code statique rapide
-- `pre-commit` → Lancement automatique à chaque commit Git
-
-💡 *Chaque commit est bloqué si le code est mal formaté ou comporte des erreurs non corrigées.*
+📈 Couverture actuelle : **100 %** validée en CI.
 
 ---
 
-## ✅ Pipeline CI/CD — GitHub Actions
+## ✅ Linting & pré-commit
 
-> Le dépôt utilise **GitHub Actions** pour :
+| Outil     | Rôle                                      |
+|-----------|-------------------------------------------|
+| `black`   | Formatage PEP8 automatique                |
+| `ruff`    | Lint rapide et strict                     |
+| `pre-commit` | Bloque les commits si le code n’est pas conforme |
 
-| Étape             | Description                                  |
-|-------------------|----------------------------------------------|
-| 🔍 `Lint`         | Vérifie tout le code (`ruff`, `black`)       |
-| 🧪 `Tests`        | Lance `pytest`, génère couverture            |
-| 📚 `Docs Deploy` | Déploie automatiquement la doc MkDocs vers GitHub Pages |
+💡 *Chaque `git commit` déclenche une vérification complète.*
 
-Fichier de workflow :
+---
+
+## ✅ CI/CD — GitHub Actions
+
+> Pipeline professionnel automatisé sur chaque `push`, `PR` ou `release`.
+
+### 🔄 Étapes exécutées (`.github/workflows/ci.yml`)
+
+| Étape           | Description                                          |
+|------------------|------------------------------------------------------|
+| 🔍 **Lint**      | `black`, `ruff`                                      |
+| 🧪 **Tests**     | `pytest`, génération couverture HTML                 |
+| 📘 **Docs**      | Build `mkdocs`, déploiement GitHub Pages             |
+| 🧼 **Nettoyage** | Optionnel : purge des caches, artefacts              |
+
+---
+
+## 🧠 Automatisation CLI
+
+Commandes utiles :
+
 ```bash
-.github/workflows/ci.yml
+ark-test        # Lance tests + couverture
+ark-docs        # Génère et ouvre la doc MkDocs
+ark-docker      # Lance l’API dans un conteneur local
+ark-clean-push  # Formate, vérifie, commit propre

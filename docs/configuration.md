@@ -1,24 +1,63 @@
-# Configuration d'Arkalia-LUNA
+# ⚙️ Configuration — Arkalia-LUNA
 
-## Introduction
+> Guide complet pour configurer correctement le système IA **Arkalia-LUNA**, en garantissant stabilité, performance et sécurité.
 
-Ce document fournit des instructions détaillées pour configurer le système Arkalia-LUNA. Une configuration correcte est essentielle pour garantir le bon fonctionnement et la sécurité du système.
+---
 
-## Paramètres Essentiels
+## 🔑 Paramètres Essentiels
 
-- **Fichier de configuration principal** : Assurez-vous que `config.yaml` est correctement configuré avec les paramètres de base tels que les chemins d'accès et les clés API.
-- **Variables d'environnement** : Définissez les variables d'environnement nécessaires pour le déploiement et l'exécution du système.
+- **Fichier principal** : `config/system/config.yaml`  
+  Contient :
+  - chemins d’accès (logs, state, modules…)
+  - clés API locales (si activées)
+  - poids IA initiaux (`weights.toml`)
+  
+- **Variables d’environnement** :
+  - `ARKALIA_ENV=dev` ou `prod`
+  - `OLLAMA_HOST=http://localhost:11434`
+  - `ARKALIA_SECRET_KEY=...` *(à définir)*
 
-## Configuration Avancée
+Définir dans `.env`, `.zshrc` ou `docker-compose.yml` selon le mode utilisé.
 
-- **Personnalisation des modules** : Modifiez les paramètres des modules individuels pour adapter le système à vos besoins spécifiques.
-- **Optimisation des performances** : Ajustez les paramètres de performance pour maximiser l'efficacité du système.
+---
 
-## Meilleures Pratiques
+## ⚙️ Configuration Avancée
 
-- **Sauvegarde régulière** : Effectuez des sauvegardes régulières de vos fichiers de configuration pour éviter toute perte de données.
-- **Sécurité** : Assurez-vous que toutes les configurations de sécurité sont en place, y compris les pare-feu et les contrôles d'accès.
+### 🔧 Modules personnalisés
 
-## Conclusion
+Chaque module IA dispose de son propre fichier :
 
-Une configuration adéquate d'Arkalia-LUNA est cruciale pour son efficacité et sa sécurité. En suivant ces directives, vous pouvez vous assurer que votre système est configuré de manière optimale pour répondre à vos besoins. 
+modules/<nom_module>/config/config.toml
+
+- Tu peux y adapter le comportement (seuils, poids, déclencheurs, etc.)
+
+### 🚀 Optimisations recommandées
+
+- **Docker** : Limite CPU/mémoire pour chaque container
+- **FastAPI** : Config `workers`, `keep-alive` dans `uvicorn`
+- **Logs** : Rotation automatique via `logging.conf` si besoin
+
+---
+
+## 🧼 Bonnes pratiques
+
+| Sécurité | Recommandation |
+|---------|-----------------|
+| 🔐 | Ne jamais committer les clés dans Git |
+| 🧯 | Sauvegarde automatique régulière (`ark-backup`) |
+| 🔍 | Vérifier les accès avec `ZeroIA` ou `Reflexia` |
+| 🧰 | Isoler les `venv`, les fichiers `.env` et `/state/` |
+
+---
+
+## ✅ Checklist post-installation
+
+- [x] `config.yaml` bien rempli
+- [x] variables d’environnement définies
+- [x] modules IA accessibles
+- [x] Docker + FastAPI fonctionnels
+- [x] scripts `arkalia-*.sh` opérationnels
+
+---
+
+💡 Une **configuration propre**, c’est la garantie d’un système IA **autonome, sécurisé et sans dette technique**.
