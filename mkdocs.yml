@@ -1,14 +1,14 @@
 site_name: Arkalia-LUNA Documentation
-site_url: https://athalia-siwek.github.io/arkalia-luna-pro
-repo_url: https://github.com/athalia-siwek/arkalia-luna-pro
+site_url: https://arkalia-luna-system.github.io/arkalia-luna-pro
+repo_url: https://github.com/arkalia-luna-system/arkalia-luna-pro
 
 theme:
   name: material
-  logo: assets/logo.png            # ✅ Placer ici : docs/assets/logo.png
-  favicon: assets/favicon.ico      # ✅ Placer ici : docs/assets/favicon.ico
+  logo: assets/logo.png            # ✅ Doit être dans docs/assets/
+  favicon: assets/favicon.ico      # ✅ Doit être dans docs/assets/
   palette:
     - scheme: default
-      primary: blue-grey           # 🌙 Doux, élégant
+      primary: blue-grey           # 🌙 Bleu coton doux
       toggle:
         icon: material/weather-night
         name: Mode sombre
@@ -29,20 +29,20 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/athalia-siwek
+      link: https://github.com/arkalia-luna-system
   copyright:
     text: "© 2025 Arkalia System — Tous droits réservés."
 
 nav:
-  - Accueil: index.md
-  - Modules: modules.md
-  - API: api.md
-  - Structure: structure.md
-  - CI/CD: ci-cd.md
-  - Roadmap: roadmap.md
-  - Kernel: kernel.md
-  - Automatisation: automation.md
-  - Crédits: credits.md
+  - 🧭 Accueil: index.md
+  - 🧩 Modules: modules.md
+  - ⚙️ API: api.md
+  - 🧱 Structure: structure.md
+  - 🧪 CI/CD: ci-cd.md
+  - 🛣️ Roadmap: roadmap.md
+  - 🧠 Kernel: kernel.md
+  - 🛠️ Automatisation: automation.md
+  - 📘 Crédits: credits.md
 
 markdown_extensions:
   - admonition
