@@ -12,4 +12,4 @@ repos:
       - id: ruff
         args: ["--exclude=docs/"]
         language_version: python3.10
-        exclude: '.*(\.tox|venv|site-packages|\.?__pycache__|\.DS_Store|\.?_)'
+        exclude: '^.*(venv|\.DS_Store|\.AppleDouble|^\._).*$'

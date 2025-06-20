@@ -88,6 +88,9 @@ nav:
       - Auteure: credits.md
       - Licence: license.md
   - ❓ FAQ: faqs.md
+  - 🧰 Utilisation:
+      - Présentation: utilisation.md
+      - AssistantIA: assistantia.md
 
 markdown_extensions:
   - admonition
