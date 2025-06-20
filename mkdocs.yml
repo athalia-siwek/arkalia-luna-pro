@@ -98,15 +98,11 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.superfences
   - pymdownx.tabbed
   - pymdownx.highlight:
       anchor_linenums: true
-  - pymdownx.emoji:
+  - pymdownx.emoji
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.snippets
@@ -134,6 +130,6 @@ plugins:
       timezone: Europe/Paris
       fallback_to_build_date: true
   - macros
-  - simple-hooks:
-      hooks:
-        on_post_build: python3 scripts/sitemap_generator.py
+
+hooks:
+  - scripts/sitemap_generator.py
