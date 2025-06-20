@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.get("/", tags=["Root"])
 async def root():
-    return {"message": "Bienvenue dans Helloria"}
+    return {"message": "Arkalia-LUNA API active"}
 
 
 @router.get("/status", tags=["Status"])

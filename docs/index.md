@@ -69,3 +69,24 @@ graph TD
   ZeroIA --> AssistantIA
   AssistantIA --> Nyxalia
 ```
+
+## 📊 Couverture des Tests
+
+```mermaid
+graph TD
+  A[Tests] -->|100%| B[app/main.py]
+  A -->|90%| C[arkalia/hooks.py]
+```
+
+## 📊 Couverture des Modules (Tests Unitaires)
+
+```mermaid
+graph TD
+  A[app/main.py<br/>🟥 0%] -->|à compléter| C[core.py 🟩 79%]
+  B[arkalia/hooks.py<br/>🟥 0%] -->|à compléter| C
+  C --> D[ollama_connector.py 🟨 80%]
+  C --> E[helloria/core.py 🟨 83%]
+  C --> F[reflexia/tests ✅]
+  C --> G[assistantia/tests ✅]
+  C --> H[nyxalia/tests ✅]
+```

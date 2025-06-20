@@ -8,6 +8,10 @@ from modules.assistantia.utils.ollama_connector import query_ollama
 router = APIRouter()
 
 
+def process_input(message: str) -> str:
+    return f"Tu as dit : {message}"
+
+
 @router.post("/chat", tags=["IA"])
 async def chat(request: Request):
     try:

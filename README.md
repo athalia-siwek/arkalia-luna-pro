@@ -4,7 +4,7 @@
 
 **Système Cognitif IA Local • Modulaire • Auto-Réflexif • Documenté**
 
-🧠 Version : **v1.3.2**
+🧠 Version : **v1.3.4**
 📘 Docs : **[arkalia-luna-system.github.io/arkalia-luna-pro](https://arkalia-luna-system.github.io/arkalia-luna-pro)**
 🧪 CI • 🐳 Docker • 🧠 ReflexIA • ⚙️ ZeroIA
 🔒 Maintenu par Arkalia-LUNA System
@@ -14,7 +14,7 @@
 ## 📘 Accès Rapide
 
 [![Docs](https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=readthedocs)](https://arkalia-luna-system.github.io/arkalia-luna-pro/)
-[![Version](https://img.shields.io/badge/version-v1.3.2-purple?style=flat-square)](https://github.com/arkalia-luna-system/arkalia-luna-pro/releases)
+[![Version](https://img.shields.io/badge/version-v1.3.4-purple?style=flat-square)](https://github.com/arkalia-luna-system/arkalia-luna-pro/releases)
 [![CI](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
 [![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://pre-commit.com/)
 [![Tests](https://img.shields.io/badge/tests-100%25-brightgreen?style=flat-square&logo=pytest)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
@@ -88,6 +88,9 @@ docker compose up
 Version
 État
 Description technique
+v1.3.4
+✅ Spéciale
+100 % couverture
 v1.3.2
 ✅ Stable
 Docs refondues, utilisation.md, navigation optimisée
