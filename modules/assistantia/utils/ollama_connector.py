@@ -3,24 +3,24 @@
 import requests
 
 
-def query_ollama(prompt: str) -> str:
+def query_ollama(prompt: str, model: str = "mistral") -> str:
+    supported_models = ["mistral", "tinyllama"]
+
+    if model not in supported_models:
+        raise ValueError(f"Modèle non supporté : {model}")
+
+    if not prompt or not prompt.strip():
+        return "[⚠️ Réponse IA vide]"
+
     try:
-        base_context = (
-            "Tu es ReflexIA, un module IA du système Arkalia-LUNA. "
-            "Tu es spécialisé dans la surveillance adaptative, l’analyse système, "
-            "et la prise de décision automatique. Sois clair, synthétique et pro."
-        )
+        url = "http://localhost:11434/api/generate"
+        payload = {"model": model, "prompt": prompt, "stream": False}
+        response = requests.post(url, json=payload, timeout=20)
 
-        full_prompt = f"{base_context}\n\nQuestion utilisateur : {prompt}"
-
-        response = requests.post(
-            "http://localhost:11434/api/generate",
-            json={"model": "mistral", "prompt": full_prompt, "stream": False},
-            timeout=20,
-        )
-
-        data = response.json()
-        return data.get("response", "[⚠️ Réponse IA vide]")
+        if response.status_code == 200:
+            return response.json().get("response", "[⚠️ Aucune réponse générée]")
+        else:
+            return f"[Erreur IA] {response.status_code} : {response.text}"
 
     except Exception as e:
         return f"[Erreur IA] {str(e)}"

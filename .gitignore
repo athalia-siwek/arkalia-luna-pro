@@ -42,4 +42,4 @@ tests/
 
 # Fichiers système macOS
 ._*
-.DS_Store
+.DS_Storehtmlcov/

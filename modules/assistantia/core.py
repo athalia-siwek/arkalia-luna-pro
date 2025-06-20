@@ -1,11 +1,15 @@
 # modules/assistantia/core.py
 
-from fastapi import APIRouter, FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, FastAPI
+from pydantic import BaseModel
 
 from modules.assistantia.utils.ollama_connector import query_ollama
 
 router = APIRouter()
+
+
+class ChatRequest(BaseModel):
+    message: str
 
 
 def process_input(message: str) -> str:
@@ -13,23 +17,9 @@ def process_input(message: str) -> str:
 
 
 @router.post("/chat", tags=["IA"])
-async def chat(request: Request):
-    try:
-        data = await request.json()
-        prompt = data.get("message", "").strip()
-
-        if not prompt:
-            return JSONResponse(
-                status_code=400, content={"error": "Aucun message reçu."}
-            )
-
-        response_text = query_ollama(prompt)
-        return {"réponse": response_text}
-
-    except Exception as e:
-        return JSONResponse(
-            status_code=500, content={"error": f"Erreur interne : {str(e)}"}
-        )
+async def chat_route(request: ChatRequest):
+    response = query_ollama(request.message)
+    return {"réponse": response}
 
 
 # API exposée

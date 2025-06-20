@@ -36,3 +36,5 @@ pymdown-extensions
 # 🔧 Pre-commit Hooks
 #########################
 pre-commit
+
+toml==0.10.2

@@ -60,4 +60,30 @@ Ce fichier retrace les changements apportés à chaque version publique d'Arkali
 - CI GitHub : **verte**
 - Docker : **ok**
 
+## [v1.2.2] — 2025-06-20
+
+### 🚀 Nouveautés
+- Création du module `assistantia` avec endpoint `/chat` dynamique
+- Intégration locale d'Ollama (`mistral`), via `query_ollama()`
+- Ajout du fichier `ollama_connector.py` dans `utils/` (testé à 91%)
+- Comportement IA sécurisé : prompt vide, modèles invalides → contrôlés
+
+### ✅ Tests
+- 35 tests unitaires passés (`pytest`)
+- 92 % de couverture globale (`htmlcov/index.html`)
+- Ajout de cas limites (`422`, ValueError, timeouts)
+
+### 🛠️ CI / Docker
+- CI GitHub Actions validée (lint, tests, doc)
+- Docker stable (`ark-docker`, `assistantia` intégré)
+
+### 📘 Documentation
+- Site MkDocs à jour (sitemap, modules, automation)
+- Bloc `/chat` ajouté dans `docs/api.md` avec erreurs gérées
+- Signature visuelle maintenue (`extra.css`, `.arkalia-box`)
+
+### 🏁 État
+- Version stable IA contextuelle validée
+- Prête pour évolution vers Arkalia LUNA Nexus
+
 ---
