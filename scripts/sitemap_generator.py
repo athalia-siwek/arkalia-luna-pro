@@ -2,17 +2,18 @@
 
 import datetime
 import os
-
 import yaml
 
 
 def parse_nav_from_mkdocs(mkdocs_yml_path="mkdocs.yml"):
+    """Charge la config MkDocs et extrait les chemins de navigation."""
     with open(mkdocs_yml_path, "r", encoding="utf-8") as f:
-        config = yaml.load(f, Loader=yaml.UnsafeLoader)
+        config = yaml.safe_load(f)  # 🔒 Remplace UnsafeLoader → plus sécurisé
     return extract_paths(config.get("nav", []))
 
 
 def extract_paths(nav, prefix=""):
+    """Parcours récursivement la nav pour extraire tous les chemins .md"""
     paths = []
 
     for item in nav:
@@ -27,22 +28,23 @@ def extract_paths(nav, prefix=""):
             path = item.replace(".md", "/")
             paths.append(f"{prefix}{path}")
 
-    return paths
+    return sorted(set(paths))  # 💡 Supprime les doublons et trie
 
 
 def generate_sitemap(site_url, output_dir="site", mkdocs_yml_path="mkdocs.yml"):
-    now = datetime.datetime.now().strftime("%Y-%m-%d")
+    """Génère un fichier sitemap.xml basé sur la config mkdocs.yml"""
+    now = datetime.datetime.utcnow().strftime("%Y-%m-%d")
     urls = parse_nav_from_mkdocs(mkdocs_yml_path)
 
-    # Crée le dossier output_dir si inexistant
     os.makedirs(output_dir, exist_ok=True)
-
     sitemap_path = os.path.join(output_dir, "sitemap.xml")
+
     with open(sitemap_path, "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         for path in urls:
-            full_url = f"{site_url.rstrip('/')}/{path}"
+            path = path.strip("/")
+            full_url = f"{site_url.rstrip('/')}/{path}/"
             f.write("  <url>\n")
             f.write(f"    <loc>{full_url}</loc>\n")
             f.write(f"    <lastmod>{now}</lastmod>\n")
@@ -52,14 +54,12 @@ def generate_sitemap(site_url, output_dir="site", mkdocs_yml_path="mkdocs.yml"):
     print(f"✅ Sitemap généré : {sitemap_path}")
 
 
-# 💡 Exécution directe
-if __name__ == "__main__":
-    generate_sitemap(
-        site_url="https://arkalia-luna-system.github.io/arkalia-luna-pro",
-        output_dir="site",
-    )
-
-
 def generate_sitemap_from_site():
+    """Exécution par appel externe"""
     site_url = "https://arkalia-luna-system.github.io/arkalia-luna-pro"
     generate_sitemap(site_url)
+
+
+# 💡 Exécution directe
+if __name__ == "__main__":
+    generate_sitemap_from_site()

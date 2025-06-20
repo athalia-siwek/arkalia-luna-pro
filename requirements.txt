@@ -37,4 +37,6 @@ pymdown-extensions
 #########################
 pre-commit
 
+toml>=0.10mkdocs-simple-hooks==0.1.5
 toml==0.10.2
+tomli==2.2.1

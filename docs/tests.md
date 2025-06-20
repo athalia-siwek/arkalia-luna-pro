@@ -17,3 +17,5 @@
 - Isoler chaque test
 - Couvrir erreurs connues
 - Éviter dépendance entre tests
+
+Pour plus d'informations sur les modèles testés, consultez [Ollama](ollama.md).

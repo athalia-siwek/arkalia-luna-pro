@@ -90,3 +90,37 @@ graph TD
   C --> G[assistantia/tests ✅]
   C --> H[nyxalia/tests ✅]
 ```
+
+## 🧠 Résumé Global des Modules IA
+
+Arkalia-LUNA intègre plusieurs modules IA actifs, chacun jouant un rôle crucial dans le système :
+
+- **AssistantIA** : Fournit des réponses contextuelles via l'API /chat.
+- **Helloria** : Gère les requêtes entrantes via FastAPI.
+- **Reflexia** : Supervise les performances et les métriques.
+- **Nyxalia** : Assure la connectivité mobile et l'interface utilisateur.
+
+## 📚 Liens Rapides
+
+- [API Guide](api.md)
+- [Ollama Guide](ollama.md)
+- [Guide d'Utilisation](utilisation.md)
+- [Tests et CI/CD](ci-cd.md)
+- [FAQ](faqs.md)
+
+![Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen)
+
+## 🗺️ Mini Carte Mentale
+
+```mermaid
+mindmap
+  root((Arkalia-LUNA))
+    AssistantIA
+    Helloria
+    Reflexia
+    Nyxalia
+    Utilisation
+    API
+    Tests
+    FAQ
+```

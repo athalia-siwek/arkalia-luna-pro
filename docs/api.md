@@ -154,3 +154,5 @@ Utilisez le paramètre `debug=true` pour obtenir des informations détaillées s
 | Prompt vide          | Champ `message` vide            | Fournir un texte dans `message` |
 | Modèle non supporté  | Modèle IA non disponible        | Vérifier la configuration du modèle |
 | Timeout Ollama       | Temps d'attente dépassé         | Vérifier la connexion et les ressources |
+
+Pour plus de détails sur l'AssistantIA, consultez [AssistantIA](assistantia.md).

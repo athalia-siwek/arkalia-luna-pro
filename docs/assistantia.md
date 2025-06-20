@@ -122,3 +122,5 @@ sequenceDiagram
 ---
 
 🧠 *L'AssistantIA est votre partenaire intelligent pour une interaction IA enrichissante et sécurisée.*
+
+Pour des considérations de sécurité, veuillez consulter [Sécurité](security.md).

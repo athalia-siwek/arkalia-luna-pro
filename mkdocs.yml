@@ -28,17 +28,18 @@ theme:
     code: JetBrains Mono
   features:
     - navigation.instant
+    - navigation.sections
     - navigation.tabs
     - navigation.top
     - navigation.expand
     - navigation.collapse
+    - navigation.icons
     - search.highlight
     - search.suggest
     - content.code.copy
     - content.action.edit
     - content.tabs.link
     - header.autohide
-    - navigation.sections
 
 extra:
   social:
@@ -50,6 +51,13 @@ extra:
     text: "© 2025 Arkalia System — Tous droits réservés."
   last_updated:
     text: "🕒 Dernière mise à jour :"
+  meta:
+    - name: description
+      content: "Arkalia-LUNA: Système IA local, modulaire et auto-réflexif."
+    - name: keywords
+      content: "IA, Arkalia, LUNA, modulaire, local, auto-réflexif, sécurité, documentation"
+    - name: author
+      content: "Athalia 🌙"
 
 nav:
   - 🏠 Accueil: index.md
@@ -57,32 +65,28 @@ nav:
       - Installation: installation.md
       - Configuration: configuration.md
   - 🧠 Modules IA:
-      - Présentation générale: modules.md
+      - Vue d'ensemble: modules.md
       - Kernel & Coordination: kernel.md
-      - API & Interface: api.md
+      - AssistantIA: assistantia.md
+      - API /chat: api.md
       - Automatisation: automation.md
       - Sécurité: security.md
+      - Tests: tests.md
   - 🛠️ Architecture:
-      - Structure: structure.md
-      - Composants: composants.md
+      - Structure du dépôt: structure.md
+      - Composants IA: composants.md
   - ⚙️ CI/CD & Déploiement:
       - Intégration continue: ci-cd.md
-      - Déploiement: deployment.md
-  - 🗺️ Feuille de route: roadmap.md
+      - Déploiement GitHub Pages: deployment.md
+  - 🧪 Tests LLM:
+      - Ollama & IA locales: ollama.md
   - 📜 Journal:
       - Journal des versions: releases/index.md
-      - CHANGELOG.md
+      - CHANGELOG: CHANGELOG.md
+  - 🗺️ Feuille de route: roadmap.md
   - 🧾 Crédits:
       - Auteure: credits.md
       - Licence: license.md
-  - 🧰 Utilisation:
-      - Présentation: utilisation.md
-      - AssistantIA: assistantia.md
-      - Tests: tests.md
-  - 🧪 Tests LLM: ollama.md
-  - Modules:
-      - Arkalia API: modules.md
-      - AssistantIA: assistantia.md
   - ❓ FAQ: faqs.md
 
 markdown_extensions:
@@ -103,8 +107,6 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.emoji:
-    # emoji_index: !!python/name:material.extensions.emoji.twemoji
-    # emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.snippets
@@ -131,8 +133,7 @@ plugins:
       locale: fr
       timezone: Europe/Paris
       fallback_to_build_date: true
-  - offline
   - macros
-  # - mkdocs-simple-hooks:
-  #     hooks:
-  #       on_post_build: arkalia.hooks:generate_sitemap
+  - simple-hooks:
+      hooks:
+        on_post_build: python3 scripts/sitemap_generator.py

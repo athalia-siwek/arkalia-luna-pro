@@ -6,20 +6,30 @@ Bienvenue dans la section FAQ d'Arkalia-LUNA. Ici, nous répondons aux questions
 
 ## 🤔 Questions Fréquentes
 
-### 1. Qu'est-ce qu'Arkalia-LUNA ?
+<details>
+<summary>### 1. Qu'est-ce qu'Arkalia-LUNA ?</summary>
 Arkalia-LUNA est un système IA local, modulaire et auto-réflexif conçu pour fonctionner sans dépendance cloud, garantissant la souveraineté des données et la confidentialité des utilisateurs.
+</details>
 
-### 2. Comment puis-je contribuer au projet ?
+<details>
+<summary>### 2. Comment puis-je contribuer au projet ?</summary>
 Vous pouvez contribuer en soumettant des pull requests sur notre [dépôt GitHub](https://github.com/arkalia-luna-system/arkalia-luna-pro) ou en signalant des bugs et des suggestions d'amélioration.
+</details>
 
-### 3. Quels sont les prérequis pour développer avec Arkalia-LUNA ?
+<details>
+<summary>### 3. Quels sont les prérequis pour développer avec Arkalia-LUNA ?</summary>
 Assurez-vous d'avoir Python 3.10, Docker, et les dépendances listées dans `requirements.txt` installés sur votre machine.
+</details>
 
-### 4. Où puis-je trouver la documentation technique ?
+<details>
+<summary>### 4. Où puis-je trouver la documentation technique ?</summary>
 La documentation technique est disponible sur notre site [GitHub Pages](https://arkalia-luna-system.github.io/arkalia-luna-pro/).
+</details>
 
-### 5. Comment puis-je signaler un bug ou une vulnérabilité ?
+<details>
+<summary>### 5. Comment puis-je signaler un bug ou une vulnérabilité ?</summary>
 Veuillez signaler tout bug ou vulnérabilité via notre [dépôt GitHub](https://github.com/arkalia-luna-system/arkalia-luna-pro/issues) ou par email à support@arkalia-luna.com.
+</details>
 
 ---
 
