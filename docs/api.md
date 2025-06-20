@@ -22,13 +22,13 @@ URL
 Description
 GET
 /
-Test de vie : “Bienvenue dans Helloria”
+Test de vie : "Bienvenue dans Helloria"
 POST
 /chat
-Envoie un prompt à l’IA locale (assistantia)
+Envoie un prompt à l'IA locale (assistantia)
 GET
 /status
-Retourne l’état général du système
+Retourne l'état général du système
 GET
 /echo?msg=x
 Répond avec le message donné
@@ -38,7 +38,7 @@ Répond avec le message donné
 
 🔐 Sécurité & accès
 	•	API uniquement exposée en local
-	•	Possibilité future d’ajouter :
+	•	Possibilité future d'ajouter :
 	•	Authentification par clé
 	•	Rate limiting
 	•	Journalisation des accès via reflexia
@@ -55,4 +55,72 @@ Chaque endpoint est délégué à un module :
 
 ⸻
 
-✅ Architecture pensée pour l’extensibilité et le contrôle par module.
+✅ Architecture pensée pour l'extensibilité et le contrôle par module.
+
+# 📌 Arkalia-LUNA Documentation Technique
+
+## Version Actuelle
+
+**v2.0.2 — 20 juin 2025**
+🔄 Git tag synchronisé, CI/CD active, Docker stable, tests validés à 100 %
+
+## 🧠 Modules IA Actifs
+
+| Module      | Rôle                                | État       |
+|-------------|-------------------------------------|------------|
+| assistantia | IA contextuelle via /chat + Ollama  | ✅ Stable  |
+| helloria    | Serveur d'entrée FastAPI            | ✅ Stable  |
+| reflexia    | Superviseur cognitif & metrics      | ✅ Stable  |
+| nyxalia     | Interface cognitive mobile          | ✅ Stable  |
+
+## 🚀 API Active
+
+**POST /chat — AssistantIA**
+
+Utilisation : envoie un message à l'IA locale (Ollama mistral)
+
+**Requête :**
+
+```json
+{
+  "message": "Bonjour Arkalia"
+}
+```
+
+**Réponse :**
+
+```json
+{
+  "réponse": "Bonjour ! Je suis AssistantIA, prêt à vous aider."
+}
+```
+
+**Erreurs gérées :**
+
+| Cas               | Statut | Message retourné            |
+|-------------------|--------|-----------------------------|
+| Body vide         | 422    | Champ message requis        |
+| Prompt vide       | 200    | [⚠️ Réponse IA vide]        |
+| Modèle non supporté | 500  | ValueError levée            |
+| Timeout Ollama    | 500    | [Erreur IA] ReadTimeout     |
+
+## 🧪 Tests & Couverture
+
+- ✅ 35/35 tests passés
+- ✅ Couverture : 92 %
+- ✅ Modules testés : assistantia, ollama_connector, helloria, reflexia, nyxalia, hooks, scripts
+
+## 🐳 Environnement Docker
+
+- Conteneur stable (ark-docker)
+- Ollama local requis (mistral, tinyllama)
+- FastAPI exposé sur localhost:8000
+
+## 📘 Site public MkDocs
+
+Disponible ici : arkalia-luna-pro GitHub Pages
+Sitemap automatique, Mermaid, thème personnalisé Bleu Coton Nuit, badge coverage 92 %.
+
+---
+
+## 🧭 Prochaine étape : Arkalia LUNA Nexus — interface IA guidée, cognitive, et adaptative.
