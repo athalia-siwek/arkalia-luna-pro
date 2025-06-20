@@ -130,3 +130,11 @@
 ➡️ Prochaine version `v1.3.5` : préparation phase Nexus (ZéroIA + Psykalia + surcouche cognitive Arkalia).
 
 ---
+
+## v2.1.0 — 21/06/2025
+
+- ✅ Tests `assistantia` 100 %
+- ✅ Nouvelle gestion des erreurs 400/422
+- ✅ Amélioration couverture `ollama_connector`
+
+---

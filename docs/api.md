@@ -156,3 +156,11 @@ Utilisez le paramètre `debug=true` pour obtenir des informations détaillées s
 | Timeout Ollama       | Temps d'attente dépassé         | Vérifier la connexion et les ressources |
 
 Pour plus de détails sur l'AssistantIA, consultez [AssistantIA](assistantia.md).
+
+### POST /chat
+
+- **Body :** `{ "message": str }`
+- **Réponses :**
+  - `200` → `{ "réponse": str }`
+  - `400` → `{ "detail": "Message vide." }`
+  - `422` → validation automatique si champ manquant

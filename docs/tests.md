@@ -19,3 +19,12 @@
 - Éviter dépendance entre tests
 
 Pour plus d'informations sur les modèles testés, consultez [Ollama](ollama.md).
+
+## Module assistantia — Couverture 100 %
+
+- 🔁 Tests unitaires avec FastAPI `TestClient`
+- 🧪 Vérification :
+  - `/chat` (mocké et réel)
+  - gestion erreurs 422 / 400
+  - réponse longue (stress test)
+- 📦 Dépendance mockée : `get_query_ollama`
