@@ -1,7 +1,8 @@
 # modules/reflexia/tests/test_reflexia.py
 
-from modules.reflexia.core import monitor_status
 import toml
+
+from modules.reflexia.core import monitor_status
 
 
 def test_monitor_status():
