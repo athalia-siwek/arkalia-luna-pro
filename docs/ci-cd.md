@@ -2,6 +2,31 @@
 
 ## ✅ FICHIER `ci-cd.md` — Version améliorée
 
+# 🧪 Tests Automatiques
+
+## Structure
+
+- `tests/unit/` : fonctions isolées (modules, utils…)
+- `tests/integration/` : endpoints, FastAPI, interactions
+- `tests/scripts/` : vérif sitemap, auto-clean, etc.
+
+## Commandes Utiles
+
+- `ark-test` : tous les tests + coverage HTML
+- `ark-test-modules` : focus sur `modules/`
+- `pytest --cov=...` pour custom
+
+## Couverture Actuelle
+
+- ✅ 92 % au 20 juin 2025
+- ✅ 35 tests passés
+
+---
+
+🧭 BONUS UX :
+- Activer les collapsibles (details) dans api.md ou modules.md
+- Ajouter liens internes entre les fichiers ([voir structure](structure.md))
+
 ```markdown
 # 🧪 Intégration Continue & Qualité — Arkalia-LUNA
 
@@ -25,7 +50,7 @@ Arkalia suit une philosophie de **code propre**, **tests exhaustifs** et **autom
 |-----------|-------------------------------------------|
 | `black`   | Formatage PEP8 automatique                |
 | `ruff`    | Lint rapide et strict                     |
-| `pre-commit` | Bloque les commits si le code n’est pas conforme |
+| `pre-commit` | Bloque les commits si le code n'est pas conforme |
 
 💡 *Chaque `git commit` déclenche une vérification complète.*
 
@@ -53,5 +78,5 @@ Commandes utiles :
 ```bash
 ark-test        # Lance tests + couverture
 ark-docs        # Génère et ouvre la doc MkDocs
-ark-docker      # Lance l’API dans un conteneur local
+ark-docker      # Lance l'API dans un conteneur local
 ark-clean-push  # Formate, vérifie, commit propre

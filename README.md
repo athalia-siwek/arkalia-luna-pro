@@ -4,7 +4,7 @@
 
 **Système Cognitif IA Local • Modulaire • Auto-Réflexif • Documenté**
 
-🧠 Version : **v1.3.4**
+🧠 Version : **v2.0.2**
 📘 Docs : **[arkalia-luna-system.github.io/arkalia-luna-pro](https://arkalia-luna-system.github.io/arkalia-luna-pro)**
 🧪 CI • 🐳 Docker • 🧠 ReflexIA • ⚙️ ZeroIA
 🔒 Maintenu par Arkalia-LUNA System
@@ -22,9 +22,7 @@
 [![Sitemap](https://img.shields.io/badge/sitemap-valid-brightgreen?style=flat-square&logo=sitemaps)](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
 [![Ruff](https://img.shields.io/badge/Ruff-validated-brightgreen?style=flat-square)](https://github.com/charliermarsh/ruff-pre-commit)
 [![Black](https://img.shields.io/badge/Black-validated-brightgreen?style=flat-square)](https://github.com/psf/black)
-
-
-
+[![Coverage](https://img.shields.io/badge/Coverage-92%25-blue?style=flat-square)](https://arkalia-luna-system.github.io/arkalia-luna-pro/coverage)
 
 🌟 Objectif
 
@@ -158,5 +156,10 @@ Modules à venir :
 ⸻
 
 🌓 Un projet signé Arkalia-LUNA — système IA local, durable, interconnectable.
+
+- [API](https://arkalia-luna-system.github.io/arkalia-luna-pro/api)
+- [Modules](https://arkalia-luna-system.github.io/arkalia-luna-pro/modules)
+- [CI/CD](https://arkalia-luna-system.github.io/arkalia-luna-pro/ci-cd)
+- [Tests](https://arkalia-luna-system.github.io/arkalia-luna-pro/tests)
 
 

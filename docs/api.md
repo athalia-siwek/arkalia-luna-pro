@@ -1,6 +1,6 @@
 # 🚀 API FastAPI — Arkalia-LUNA
 
-L’API FastAPI permet à des agents externes, humains ou systèmes, de communiquer avec Arkalia-LUNA de manière **locale, modulaire et sécurisée**.
+L'API FastAPI permet à des agents externes, humains ou systèmes, de communiquer avec Arkalia-LUNA de manière **locale, modulaire et sécurisée**.
 
 ---
 
@@ -8,7 +8,7 @@ L’API FastAPI permet à des agents externes, humains ou systèmes, de communiq
 
 - **URL locale** : `http://127.0.0.1:8000/`
 - **Serveur** : `Uvicorn` (via Docker ou en local)
-- **Point d’entrée** : `helloria.core:app`
+- **Point d'entrée** : `helloria.core:app`
 
 ### ▶️ Commande de démarrage manuelle
 
@@ -124,3 +124,33 @@ Sitemap automatique, Mermaid, thème personnalisé Bleu Coton Nuit, badge covera
 ---
 
 ## 🧭 Prochaine étape : Arkalia LUNA Nexus — interface IA guidée, cognitive, et adaptative.
+
+## 📊 Flux de Communication — /chat
+
+```mermaid
+sequenceDiagram
+    participant U as Utilisateur
+    participant A as AssistantIA
+    participant O as Ollama (modèle local)
+    U->>A: POST /chat (message)
+    A->>O: Query modèle (via `query_ollama`)
+    O-->>A: Réponse IA (texte brut)
+    A-->>U: JSON { "response": "..." }
+```
+
+## 📚 Cas d'Usage
+
+### Poser une Question
+Envoyez une requête POST à `/chat` avec votre question pour obtenir une réponse contextuelle de l'IA.
+
+### Mode Debug
+Utilisez le paramètre `debug=true` pour obtenir des informations détaillées sur le traitement de la requête.
+
+## ⚠️ Erreurs Typiques
+
+| Erreur               | Cause Possible                  | Correction Suggestée            |
+|----------------------|---------------------------------|---------------------------------|
+| Body vide            | Requête sans champ `message`    | Ajouter un champ `message`      |
+| Prompt vide          | Champ `message` vide            | Fournir un texte dans `message` |
+| Modèle non supporté  | Modèle IA non disponible        | Vérifier la configuration du modèle |
+| Timeout Ollama       | Temps d'attente dépassé         | Vérifier la connexion et les ressources |

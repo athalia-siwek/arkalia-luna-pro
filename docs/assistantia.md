@@ -79,6 +79,46 @@ curl -X POST http://localhost:8000/chat \
 
 L'AssistantIA utilise des modèles LLM locaux pour garantir la confidentialité et l'efficacité. Les modèles sont stockés localement et peuvent être mis à jour ou remplacés selon les besoins.
 
+## 📊 Structure JSON Entrante/Sortante
+
+### Requête
+
+```json
+{
+  "message": "Bonjour Arkalia",
+  "mode": "empathique",
+  "lang": "fr",
+  "user_id": "12345"
+}
+```
+
+### Réponse
+
+```json
+{
+  "réponse": "Bonjour ! Je suis AssistantIA, prêt à vous aider."
+}
+```
+
+## ⚙️ Paramètres Optionnels
+
+- **mode** : Définit le mode de raisonnement de l'IA (ex: neutre, empathique).
+- **lang** : Langue de réponse attendue (ex: fr, en).
+- **user_id** : Identifiant utilisateur pour personnalisation.
+
+## 📈 Schéma d'Interaction
+
+```mermaid
+sequenceDiagram
+    participant U as Utilisateur
+    participant A as AssistantIA
+    participant O as Ollama
+    U->>A: POST /chat (message)
+    A->>O: Query modèle
+    O-->>A: Réponse IA
+    A-->>U: JSON { "réponse": "..." }
+```
+
 ---
 
 🧠 *L'AssistantIA est votre partenaire intelligent pour une interaction IA enrichissante et sécurisée.*

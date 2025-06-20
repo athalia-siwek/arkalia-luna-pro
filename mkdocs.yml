@@ -75,11 +75,15 @@ nav:
   - 🧾 Crédits:
       - Auteure: credits.md
       - Licence: license.md
-  - 🧰 Utilisation: utilisation.md
+  - 🧰 Utilisation:
+      - Présentation: utilisation.md
+      - AssistantIA: assistantia.md
+      - Tests: tests.md
   - 🧪 Tests LLM: ollama.md
   - Modules:
       - Arkalia API: modules.md
       - AssistantIA: assistantia.md
+  - ❓ FAQ: faqs.md
 
 markdown_extensions:
   - admonition
