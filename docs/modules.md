@@ -12,11 +12,21 @@ Chacun suit une structure **autonome, testable, scalable** selon les principes d
 
 🧠 Fonction : *Observateur cognitif adaptatif*
 
+```mermaid
+flowchart TD
+  reflexia([Reflexia]) --> metrics
+  reflexia --> decision
+  reflexia --> snapshot
+  metrics -->|lecture CPU| reflexia
+  decision -->|analyse cognitive| reflexia
+  snapshot -->|sauvegarde JSON| reflexia
+```
+
 ---
 
 ## 📱 `nyxalia/` — Interface & connectivité mobile
 
-> Ce module gère les **interfaces de communication** entre Arkalia et l’extérieur : mobile, vocal, API externes.  
+> Ce module gère les **interfaces de communication** entre Arkalia et l'extérieur : mobile, vocal, API externes.  
 > Il permet des échanges fluides, contextualisés, et multiplateformes.
 
 🔗 Fonction : *Passerelle interactive humaine / machine*
@@ -25,7 +35,7 @@ Chacun suit une structure **autonome, testable, scalable** selon les principes d
 
 ## 🌐 `helloria/` — Lien FastAPI & serveur local
 
-> Lance le serveur **FastAPI**, orchestre les endpoints, connecte les autres modules à l’extérieur via une **API REST locale sécurisée**.
+> Lance le serveur **FastAPI**, orchestre les endpoints, connecte les autres modules à l'extérieur via une **API REST locale sécurisée**.
 
 🚀 Fonction : *Orchestrateur FastAPI & accès API centralisé*
 
@@ -53,7 +63,7 @@ Chaque module est :
 🚧 Modules en cours ou futurs
 	•	🧠 assistantia/ — IA contextuelle (Ollama local)
 	•	🛡️ sandozia/ — Sécurité, permissions, pare-feu IA
-	•	🔁 zeroia/ — Boucle d’orchestration globale
+	•	�� zeroia/ — Boucle d'orchestration globale
 
 ⸻
 

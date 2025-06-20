@@ -1,0 +1,4 @@
+# Poids réflexifs simulés
+cpu_critical = 90.0
+ram_critical = 90.0
+latency_degraded = 300

@@ -23,6 +23,7 @@
 [![Ruff](https://img.shields.io/badge/Ruff-validated-brightgreen?style=flat-square)](https://github.com/charliermarsh/ruff-pre-commit)
 [![Black](https://img.shields.io/badge/Black-validated-brightgreen?style=flat-square)](https://github.com/psf/black)
 [![Coverage](https://img.shields.io/badge/couverture-90%25-brightgreen)](htmlcov/index.html)
+[![Coverage Status](https://img.shields.io/badge/coverage-100%25-brightgreen)](htmlcov/index.html)
 
 🌟 Objectif
 

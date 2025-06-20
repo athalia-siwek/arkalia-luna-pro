@@ -137,4 +137,10 @@
 - ✅ Nouvelle gestion des erreurs 400/422
 - ✅ Amélioration couverture `ollama_connector`
 
+### Ajouté
+- 🔧 Module ReflexIA entièrement finalisé
+- 💯 5 fichiers de test unitaire ReflexIA
+- ✅ 100 % de couverture de test (reflexia)
+- 📚 Documentation mise à jour : api.md, tests.md, modules.md
+
 ---

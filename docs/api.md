@@ -164,3 +164,26 @@ Pour plus de détails sur l'AssistantIA, consultez [AssistantIA](assistantia.md)
   - `200` → `{ "réponse": str }`
   - `400` → `{ "detail": "Message vide." }`
   - `422` → validation automatique si champ manquant
+
+## 🧠 Module `reflexia` — Analyse cognitive réflexive
+
+Reflexia est le module d'observation et d'auto-analyse du système Arkalia.  
+Il lit des métriques internes (CPU, mémoire, etc.), évalue leur criticité, et peut sauvegarder un état réflexif.
+
+### 🔹 Fonctions exposées :
+
+| Fonction | Description |
+|---------|-------------|
+| `launch_reflexia_check()` | Lance un scan réflexif et retourne un dictionnaire contenant le statut du système. |
+
+### 🔬 Exemple de retour :
+
+```json
+{
+  "status": "normal"
+}
+
+Dossiers :
+  •  reflexia/core.py : fonction principale
+  •  reflexia/logic/*.py : analyse CPU, snapshot JSON, décisions
+  •  reflexia/tests/unit/ : 5 fichiers de test, tous validés

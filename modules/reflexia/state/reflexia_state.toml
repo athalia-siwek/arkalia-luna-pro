@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-06-20T22:48:07.196130",
+  "metrics": {
+    "cpu": 72.5,
+    "ram": 61.8,
+    "latency": 145
+  },
+  "status": "ok"
+}

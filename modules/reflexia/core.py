@@ -1,12 +1,13 @@
-# modules/reflexia/core.py
+from modules.reflexia.logic.decision import monitor_status
+from modules.reflexia.logic.metrics import read_metrics
+from modules.reflexia.logic.snapshot import save_snapshot
 
 
-def monitor_status(metrics):
+def launch_reflexia_check() -> dict:
     """
-    Analyse les métriques et retourne un statut simple.
+    Lance un scan réflexif complet : collecte métriques + évalue + snapshot.
     """
-    if metrics.get("cpu", 0) > 90:
-        return "🛑 surcharge CPU"
-    elif metrics.get("memory", 0) > 80:
-        return "⚠️ haute mémoire"
-    return "✅ stable"
+    metrics = read_metrics()
+    status = monitor_status(metrics)
+    save_snapshot(metrics, status)
+    return {"status": status, "metrics": metrics}
