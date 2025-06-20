@@ -31,12 +31,14 @@ theme:
     - navigation.tabs
     - navigation.top
     - navigation.expand
+    - navigation.collapse
     - search.highlight
     - search.suggest
     - content.code.copy
     - content.action.edit
     - content.tabs.link
     - header.autohide
+    - navigation.sections
 
 extra:
   social:

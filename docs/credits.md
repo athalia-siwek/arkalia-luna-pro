@@ -48,7 +48,7 @@
 ## 🧭 Philosophie du projet
 
 > “Créer une IA **souveraine, éthique, locale et modulaire**.  
-> Refuser les dépendances cloud. Respecter la vie privée. Favoriser l’intelligence réflexive.”
+> Refuser les dépendances cloud. Respecter la vie privée. Favoriser l'intelligence réflexive.”
 
 ---
 
@@ -64,4 +64,18 @@ Arkalia-LUNA est une **IA personnelle, cognitive, 100 % locale**, conçue pour :
 
 ---
 
+## 📜 Licence
+
+Le projet Arkalia-LUNA est sous licence propriétaire. Pour plus de détails, veuillez consulter le fichier [license.md](license.md).
+
+---
+
 © 2025 **Athalia** – Tous droits réservés.
+
+## 🌍 Pourquoi Local & Souverain ?
+
+Arkalia-LUNA est conçu pour fonctionner entièrement en local, garantissant ainsi la souveraineté des données et la confidentialité des utilisateurs. En évitant les dépendances cloud, nous assurons une maîtrise totale de l'infrastructure IA, tout en respectant la vie privée et en minimisant les risques de sécurité.
+
+---
+
+🧠 Powered by Arkalia ReflexIA v1.x

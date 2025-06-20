@@ -1,15 +1,17 @@
-🌌 Arkalia-LUNA PRO
+# 🌌 Arkalia-LUNA PRO
 
-Système Cognitif IA Local • Modulaire • Auto-Réflexif • Documenté
+![Arkalia Logo](https://example.com/logo.png)
 
-🧠 Version : v1.3.2
-📘 Docs : arkalia-luna-system.github.io/arkalia-luna-pro
+**Système Cognitif IA Local • Modulaire • Auto-Réflexif • Documenté**
+
+🧠 Version : **v1.3.2**
+📘 Docs : **[arkalia-luna-system.github.io/arkalia-luna-pro](https://arkalia-luna-system.github.io/arkalia-luna-pro)**
 🧪 CI • 🐳 Docker • 🧠 ReflexIA • ⚙️ ZeroIA
 🔒 Maintenu par Arkalia-LUNA System
 
 ⸻
 
-   📘 Accès rapide
+## 📘 Accès Rapide
 
 [![Docs](https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=readthedocs)](https://arkalia-luna-system.github.io/arkalia-luna-pro/)
 [![Version](https://img.shields.io/badge/version-v1.3.2-purple?style=flat-square)](https://github.com/arkalia-luna-system/arkalia-luna-pro/releases)

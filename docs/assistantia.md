@@ -56,3 +56,29 @@ Le module est connecté à :
 ⸻
 
 🎯 Objectif futur : une IA embarquée réflexive, contextuelle, auto-ajustable.
+
+# 🧠 AssistantIA — Utilisation et Intégration LLM
+
+L'AssistantIA est conçu pour offrir une interaction fluide et intelligente avec les utilisateurs, en intégrant des modèles de langage de pointe (LLM) pour comprendre et répondre aux requêtes de manière contextuelle.
+
+## 🚀 Fonctionnalités Principales
+
+- **Réponses Contextuelles** : Grâce à l'intégration de modèles LLM comme Mistral et Llama2, l'AssistantIA peut fournir des réponses précises et adaptées au contexte de la conversation.
+- **Personnalisation** : L'AssistantIA s'adapte aux préférences de l'utilisateur, offrant une expérience personnalisée.
+- **Intégration Facile** : Peut être intégré dans diverses applications via des API REST, facilitant l'interaction avec d'autres systèmes.
+
+## 🌐 Exemple d'Utilisation
+
+```bash
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Quelle est la philosophie d'Arkalia ?"}'
+```
+
+## 🧠 Modèles LLM Intégrés
+
+L'AssistantIA utilise des modèles LLM locaux pour garantir la confidentialité et l'efficacité. Les modèles sont stockés localement et peuvent être mis à jour ou remplacés selon les besoins.
+
+---
+
+🧠 *L'AssistantIA est votre partenaire intelligent pour une interaction IA enrichissante et sécurisée.*
