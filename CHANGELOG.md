@@ -87,3 +87,48 @@ Ce fichier retrace les changements apportés à chaque version publique d'Arkali
 - Prête pour évolution vers Arkalia LUNA Nexus
 
 ---
+
+## 🏷️ Version `v1.3.4-final` — 20 juin 2025
+
+### ✅ Stabilisation totale du système IA
+
+- 🎯 Objectif atteint : IA locale modulaire, dockerisée, testée, publiée.
+- 🧠 Modules actifs :
+  - `reflexia/` (analyse cognitive adaptative)
+  - `nyxalia/` (interface mobile/API)
+  - `helloria/` (FastAPI & serveurs IA)
+  - `assistantia/` (Ollama connector IA locale)
+
+### 🧪 Tests & couverture
+
+- ✔️ `35` tests passés (`pytest`)
+- 📈 Couverture : `90 %`
+- 📂 Rapport : `htmlcov/index.html`
+
+### 📘 Documentation publique
+
+- 🌍 Publication MkDocs : [https://arkalia-luna-system.github.io/arkalia-luna-pro/](https://arkalia-luna-system.github.io/arkalia-luna-pro/)
+- 🗺️ Sitemap dynamique généré : [`/sitemap.xml`](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
+- 📦 Dossiers nettoyés : suppression des doublons `docs/docs/*`, renommages, correction `nav` dans `mkdocs.yml`
+
+### ⚙️ Système & Devstation
+
+- 🐳 Docker opérationnel (`docker-compose`)
+- 🧪 `ark-test`, `ark-docs`, `ark-docker`, `ark-backup` activés
+- 🎛️ CI GitHub : lint (`black`, `ruff`) + tests + pages
+- 🪪 Fichier `.pre-commit-config.yaml` actif
+
+### 🧰 Scripts & bonus
+
+- ✅ Script `sitemap_generator.py` exécuté automatiquement après `mkdocs build` via plugin `simple-hooks`
+- ✅ Test unitaire `test_sitemap.py` intégré (`scripts/`)
+- ✅ Page `ci-cd.md` enrichie (bonus UX, collapsibles, état réel CI)
+- ✅ Pages stylisées (Mermaid, blocs contextuels, tableaux dynamiques)
+
+---
+
+📦 **Version gelée, stable et publiable**.
+
+➡️ Prochaine version `v1.3.5` : préparation phase Nexus (ZéroIA + Psykalia + surcouche cognitive Arkalia).
+
+---

@@ -29,14 +29,12 @@ mkdocs-material
 mkdocs-minify-plugin
 mkdocs-git-revision-date-localized-plugin
 mkdocs-macros-plugin
-mkdocs-simple-hooks
+mkdocs-simple-hooks==0.1.5
 pymdown-extensions
 
 #########################
 # 🔧 Pre-commit Hooks
 #########################
 pre-commit
-
-toml>=0.10mkdocs-simple-hooks==0.1.5
 toml==0.10.2
 tomli==2.2.1
