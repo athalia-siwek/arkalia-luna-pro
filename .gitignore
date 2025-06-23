@@ -43,3 +43,4 @@ tests/
 # Fichiers système macOS
 ._*
 .DS_Storehtmlcov/
+modules/reflexia/state/reflexia_state.toml
