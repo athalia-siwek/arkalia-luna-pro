@@ -21,9 +21,9 @@ NAMESPACE = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
 @pytest.fixture(scope="module", autouse=True)
 def check_sitemap_file():
-    assert os.path.exists(SITEMAP_PATH), (
-        f"❌ Le fichier {SITEMAP_PATH} est introuvable."
-    )
+    assert os.path.exists(
+        SITEMAP_PATH
+    ), f"❌ Le fichier {SITEMAP_PATH} est introuvable."
 
 
 def test_sitemap_is_valid_xml():
@@ -42,9 +42,7 @@ def test_sitemap_contains_urls():
     for url_elem in urls:
         loc = url_elem.find("sm:loc", NAMESPACE)
         assert loc is not None, "❌ Une balise <url> ne contient pas de <loc>"
-        assert loc.text and loc.text.startswith("http"), (
-            f"❌ URL invalide : {loc.text}"
-        )
+        assert loc.text and loc.text.startswith("http"), f"❌ URL invalide : {loc.text}"
 
 
 def test_sitemap_matches_nav():
@@ -64,9 +62,11 @@ def test_sitemap_matches_nav():
 
     # 🧠 Génère les URLs attendues (gestion du cas 'index.md' → "")
     expected_urls = {
-        f"{SITE_URL.rstrip('/')}/"
-        if not p.strip("/")
-        else f"{SITE_URL.rstrip('/')}/{p.strip('/')}/"
+        (
+            f"{SITE_URL.rstrip('/')}/"
+            if not p.strip("/")
+            else f"{SITE_URL.rstrip('/')}/{p.strip('/')}/"
+        )
         for p in expected_paths
     }
 

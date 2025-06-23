@@ -34,7 +34,9 @@ def extract_paths(nav, prefix=""):
 
 def generate_sitemap(site_url=None, output_dir="site", mkdocs_yml_path="mkdocs.yml"):
     """Génère un fichier sitemap.xml basé sur la config mkdocs.yml"""
-    site_url = site_url or os.getenv("ARKALIA_SITE_URL", "https://arkalia-luna-system.github.io/arkalia-luna-pro")
+    site_url = site_url or os.getenv(
+        "ARKALIA_SITE_URL", "https://arkalia-luna-system.github.io/arkalia-luna-pro"
+    )
     now = datetime.datetime.utcnow().strftime("%Y-%m-%d")
     urls = parse_nav_from_mkdocs(mkdocs_yml_path)
 
