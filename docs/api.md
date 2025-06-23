@@ -187,3 +187,25 @@ Dossiers :
   •  reflexia/core.py : fonction principale
   •  reflexia/logic/*.py : analyse CPU, snapshot JSON, décisions
   •  reflexia/tests/unit/ : 5 fichiers de test, tous validés
+```
+
+### 🧠 ReflexIA — Vérification réflexive instantanée
+
+- 🔍 Description : Analyse réflexive instantanée — récupère les métriques système, les évalue, et retourne un diagnostic.
+- 📂 Module : modules/reflexia/
+- ⚙️ Fonction appelée : launch_reflexia_check()
+
+🔄 Exemple de réponse :
+```json
+{
+  "status": "ok",
+  "metrics": {
+    "cpu": 72.5,
+    "ram": 61.8,
+    "latency": 145
+  }
+}
+```
+
+```bash
+curl http://localhost:8000/reflexia/check | jq

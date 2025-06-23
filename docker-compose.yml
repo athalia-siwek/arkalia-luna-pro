@@ -4,8 +4,6 @@
 x-arkalia-defaults: &arkalia-defaults
   build:
     context: .
-    dockerfile: Dockerfile
-  container_name: arkalia-api
   volumes:
     - .:/app
   working_dir: /app
@@ -17,22 +15,34 @@ services:
   # 🚀 Serveur principal Arkalia API (Helloria)
   arkalia-api:
     <<: *arkalia-defaults
+    container_name: arkalia-api
     ports:
       - "${PORT_API:-8000}:${PORT_API:-8000}"
     command: >
-      uvicorn helloria.core:app --host 0.0.0.0 --port ${PORT_API:-8000}  --reload --reload-dir helloria  --reload-exclude logs/ --reload-exclude docs/ --reload-exclude site/
+      uvicorn helloria.core:app --host 0.0.0.0 --port ${PORT_API:-8000}
+        --reload --reload-dir helloria
+        --reload-exclude logs/ --reload-exclude docs/ --reload-exclude site/
 
   # 🧠 AssistantIA — IA contextuelle de navigation
   assistantia:
+    <<: *arkalia-defaults
+    container_name: assistantia
     build:
       context: .
       dockerfile: Dockerfile.assistantia
-    container_name: assistantia
-    volumes:
-      - .:/app
-    working_dir: /app
     ports:
       - "${PORT_ASSISTANTIA:-8001}:${PORT_ASSISTANTIA:-8001}"
     command: >
       uvicorn modules.assistantia.core:app --host 0.0.0.0 --port ${PORT_ASSISTANTIA:-8001}
-    restart: unless-stopped
+
+  # 🔁 ReflexIA — Boucle adaptative réflexive
+  reflexia:
+    <<: *arkalia-defaults
+    container_name: reflexia
+    build:
+      context: .
+      dockerfile: Dockerfile-reflexia
+    command: python run_reflexia.py
+    restart: always
+    depends_on:
+      - assistantia

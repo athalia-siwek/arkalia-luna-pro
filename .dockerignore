@@ -46,3 +46,5 @@ site/
 # Tests
 tests/
 *.test.*
+
+modules/reflexia/state/._reflexia_state.toml
