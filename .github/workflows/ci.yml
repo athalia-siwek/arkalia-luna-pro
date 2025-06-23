@@ -24,9 +24,14 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: 📦 Installer les dépendances
+      - name: 🧼 Patch pip & setuptools pour compatibilité MkDocs
         run: |
           python -m pip install --upgrade pip
+          pip install "setuptools<70" "pip<24"
+
+      - name: 📦 Installer les dépendances
+        run: |
+          echo "::group::Install dependencies"
           pip install -r requirements.txt
           pip install \
             black \
@@ -39,6 +44,7 @@ jobs:
             mkdocs-simple-hooks \
             mkdocs-minify-plugin \
             mkdocs-git-revision-date-localized-plugin
+          echo "::endgroup::"
 
       - name: 🌐 Construire le site MkDocs (sitemap.xml)
         run: |
