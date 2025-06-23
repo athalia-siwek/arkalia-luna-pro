@@ -14,8 +14,10 @@ jobs:
       PYTHONPATH: .
 
     steps:
-      - name: 🧾 Checkout du dépôt
+      - name: 🧾 Checkout du dépôt (avec historique complet)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
@@ -35,7 +37,8 @@ jobs:
             mkdocs \
             mkdocs-material \
             mkdocs-simple-hooks \
-            mkdocs-minify-plugin
+            mkdocs-minify-plugin \
+            mkdocs-git-revision-date-localized-plugin
 
       - name: 🌐 Construire le site MkDocs (sitemap.xml)
         run: |
@@ -43,13 +46,13 @@ jobs:
           mkdocs build
           echo "::endgroup::"
 
-      - name: 🧹 Lint avec Ruff
+      - name: 🧹 Analyse statique (Ruff)
         run: |
           echo "::group::Ruff Lint"
           ruff check .
           echo "::endgroup::"
 
-      - name: 🎨 Vérifier le format avec Black
+      - name: 🎨 Vérification du formatage (Black)
         run: |
           echo "::group::Black Format Check"
           black . --check
@@ -61,8 +64,15 @@ jobs:
           pytest --cov=modules --cov=core --cov=tests --cov-report=term-missing -v --tb=short
           echo "::endgroup::"
 
-      - name: ✅ Exécuter les hooks pre-commit
+      - name: ✅ Hooks Pre-commit
         run: |
           echo "::group::Pre-commit Checks"
           pre-commit run --all-files --show-diff-on-failure
+          echo "::endgroup::"
+
+      - name: 🧪 Vérification sitemap (rapide si [sitemap])
+        if: contains(github.event.head_commit.message, '[sitemap]')
+        run: |
+          echo "::group::Sitemap Check (Trigger: [sitemap])"
+          pytest tests/scripts/test_sitemap_generator.py -v
           echo "::endgroup::"
