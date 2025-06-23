@@ -4,7 +4,7 @@ Ce fichier retrace les changements apportés à chaque version publique d'Arkali
 
 ## [helloria-v1.0.0] — 2025-06-19
 
-### ✅ Ajouts
+### ✅ Fonctionnalités
 - Endpoint `GET /` pour ping racine (`core.py`)
 - Endpoint `GET /status` pour état opérationnel (`core.py`)
 - Gestion d'état via `HelloriaStateManager` (`state.py`)
