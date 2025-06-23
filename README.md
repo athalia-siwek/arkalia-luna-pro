@@ -22,7 +22,7 @@
 [![Sitemap](https://img.shields.io/badge/sitemap-valid-brightgreen?style=flat-square&logo=sitemaps)](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
 [![Ruff](https://img.shields.io/badge/Ruff-validated-brightgreen?style=flat-square)](https://github.com/charliermarsh/ruff-pre-commit)
 [![Black](https://img.shields.io/badge/Black-validated-brightgreen?style=flat-square)](https://github.com/psf/black)
-[![Coverage](https://img.shields.io/badge/couverture-90%25-brightgreen)](htmlcov/index.html)
+[![Couverture](https://img.shields.io/badge/couverture-94%25-brightgreen)](htmlcov/index.html)
 [![Coverage Status](https://img.shields.io/badge/coverage-100%25-brightgreen)](htmlcov/index.html)
 [![Reflexia GET /check](https://img.shields.io/badge/Reflexia-GET_%2Fcheck-green?logo=fastapi)](https://arkalia-luna-system.github.io/arkalia-luna-pro/api)
 

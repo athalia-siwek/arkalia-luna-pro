@@ -40,3 +40,28 @@ Pour plus d'informations sur les modèles testés, consultez [Ollama](ollama.md)
 | `test_reflexia_snapshot.py` | `save_snapshot()` JSON réflexif | ✅ |
 
 Tous les tests passent avec succès ✅ (CI : 58/58), et le module ReflexIA atteint 100 % de couverture.
+
+## Résultats de la session de test v2.1.2 — 23 juin 2025
+
+### État des tests
+- **Tests Pytest** : ✅ 68/68 passés en 41.95s
+- **Couverture globale** : 🔍 94% HTML, 89% moyenne code
+- **Reflexia core.py** : ✅ 93% couvert (2 succursales logiques testées)
+- **assistantia modules** : ✅ 91–93% pour core et utils, stable
+- **Fichiers ignorés** : 📁 8 fichiers entièrement couverts (pas listés)
+- **CI/CD locale** : 🟢 Tests, lint, pre-commit, tout passe sans erreur
+
+### Couverture détaillée (top modules)
+- **modules/reflexia/core.py** : ✅ 93%
+- **modules/assistantia/utils/ollama_connector.py** : ✅ 91%
+- **modules/assistantia/core.py** : ✅ 93%
+- **modules/helloria/core.py** : ✅ 83%
+- **arkalia/hooks.py** : ✅ 83%
+
+### Prochaines pistes (optionnel pour la perfection totale)
+- 🔬 Monter core.py et helloria/core.py à 100% → quelques branches conditionnelles manquantes (if/else)
+- 🔁 Tester reflexia_loop() en mode timeout (boucle longue)
+- 📁 Archiver cette version : v2.1.2-tests-ok-full
+- 📝 Documenter cette étape dans CHANGELOG.md + badge coverage (si pas encore fait)
+
+![Couverture](https://img.shields.io/badge/couverture-94%25-brightgreen)
