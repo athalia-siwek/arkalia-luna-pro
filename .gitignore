@@ -16,6 +16,7 @@ logs/
 htmlcov/
 coverage.xml
 site/
+.coverage
 
 # ⚙️ VSCode & IDE
 .vscode/
@@ -29,18 +30,23 @@ build/
 dist/
 pip-wheel-metadata/
 
-# 🐳 Docker (si tu ne veux pas les versionner)
+# 🐳 Docker (optionnel si non versionnés)
 docker-compose.override.yml
 Dockerfile*
 
-# Tests & Coverage
-.coverage
+# ✅ Autoriser les tests Python
+!tests/
+!tests/**/*.py
 
-# Tests
-tests/
+# ❌ Ignorer fichiers de test parasites
+tests/**/*.pyc
+tests/**/__pycache__/
+tests/**/.DS_Store
 *.test.*
 
-# Fichiers système macOS
-._*
-.DS_Storehtmlcov/
+# 📁 Reflexia : état volatile
 modules/reflexia/state/reflexia_state.toml
+
+# 💻 macOS système
+._*
+.DS_Store
