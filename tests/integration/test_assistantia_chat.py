@@ -14,4 +14,4 @@ def test_chat_post_empty_message(test_client: TestClient):
     """Teste l'endpoint /chat avec un message vide → erreur 400 attendue."""
     response = test_client.post("/chat", json={"message": ""})
     assert response.status_code == 400
-    assert "Message vide" in response.json()["detail"] 
+    assert "Message vide" in response.json()["detail"]

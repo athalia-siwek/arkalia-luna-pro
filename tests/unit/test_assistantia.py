@@ -18,6 +18,7 @@ def test_root_get(test_client):
 
 def test_chat_post(test_client: TestClient):
     """Teste l'endpoint /chat avec une dépendance mockée."""
+
     def mock_query_ollama(msg: str, model: str = "mistral") -> str:
         return msg  # brut, sans "Tu as dit"
 

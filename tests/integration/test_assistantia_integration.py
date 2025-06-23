@@ -5,6 +5,7 @@ from modules.assistantia.core import app
 
 pytestmark = pytest.mark.asyncio
 
+
 @pytest.mark.asyncio
 async def test_chat_endpoint():
     transport = ASGITransport(app=app)
@@ -15,6 +16,7 @@ async def test_chat_endpoint():
         assert "réponse" in data
         assert isinstance(data["réponse"], str)
         assert len(data["réponse"]) > 3
+
 
 @pytest.mark.asyncio
 async def test_post_chat_empty_payload():

@@ -8,12 +8,12 @@ def test_launch_reflexia_check_mocked():
     """
     🧪 Test simulé : vérifie launch_reflexia_check avec des mocks pour chaque composant.
     """
-    mocked_metrics = {'cpu': 0.5}
-    mocked_status = 'ok'
+    mocked_metrics = {"cpu": 0.5}
+    mocked_status = "ok"
 
-    with patch('modules.reflexia.core.read_metrics', return_value=mocked_metrics):
-        with patch('modules.reflexia.core.monitor_status', return_value=mocked_status):
-            with patch('modules.reflexia.core.save_snapshot') as mock_save:
+    with patch("modules.reflexia.core.read_metrics", return_value=mocked_metrics):
+        with patch("modules.reflexia.core.monitor_status", return_value=mocked_status):
+            with patch("modules.reflexia.core.save_snapshot") as mock_save:
                 # Suppression de la variable inutilisée 'result'
                 reflexia_core.launch_reflexia_check()
                 mock_save.assert_called_once_with(mocked_metrics, mocked_status)
@@ -43,13 +43,13 @@ def test_launch_reflexia_check_realistic():
     state_log = []
 
     def mock_save_snapshot(metrics, status):
-        state_log.append({'metrics': metrics, 'status': status})
+        state_log.append({"metrics": metrics, "status": status})
 
-    with patch('modules.reflexia.core.save_snapshot', new=mock_save_snapshot):
-        with patch('modules.reflexia.core.monitor_status', return_value='ok'):
+    with patch("modules.reflexia.core.save_snapshot", new=mock_save_snapshot):
+        with patch("modules.reflexia.core.monitor_status", return_value="ok"):
             # Suppression de la variable inutilisée 'result'
             reflexia_core.launch_reflexia_check()
 
     assert len(state_log) == 1
-    assert 'metrics' in state_log[0]
-    assert 'status' in state_log[0]
+    assert "metrics" in state_log[0]
+    assert "status" in state_log[0]

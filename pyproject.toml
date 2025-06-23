@@ -26,7 +26,7 @@ exclude = [
     "htmlcov",
 ]
 
-[tool.ruff.lint]  # ✅ Section moderne recommandée
+[tool.ruff.lint]
 select = ["E", "F", "I"]  # E: pycodestyle, F: pyflakes, I: isort
 
 [tool.coverage.run]
@@ -69,3 +69,7 @@ current_version = "2.1.1"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "🔖 bump: {old_version} → {new_version}"
 tag_message = "🔖 Version {new_version}"
+
+# [optionnel] Support MkDocs (plugins à installer via pip si actif)
+[tool.mkdocs]
+plugins = ["search", "minify"]

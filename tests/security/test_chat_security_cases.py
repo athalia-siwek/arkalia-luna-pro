@@ -4,6 +4,7 @@ from modules.assistantia.core import app
 
 client = TestClient(app)
 
+
 def test_chat_sql_injection_like():
     """Teste une entrée ressemblant à une injection SQL."""
     payload = {"message": "'DROP TABLE users;"}

@@ -6,6 +6,7 @@ from modules.assistantia.core import app
 
 client = TestClient(app)
 
+
 def test_chat_response_time_under_2s():
     """Assure que /chat répond en moins de 2 secondes."""
     start = time.time()

@@ -5,6 +5,7 @@ from modules.helloria.core import app  # Chemin propre modulaire
 
 pytestmark = pytest.mark.asyncio
 
+
 @pytest.mark.asyncio
 async def test_root_endpoint():
     transport = ASGITransport(app=app)
