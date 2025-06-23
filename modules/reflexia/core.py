@@ -14,7 +14,11 @@ def launch_reflexia_check() -> dict:
     """
     metrics = read_metrics()
     status = monitor_status(metrics)
-    save_snapshot(metrics, status)
+
+    # Toujours sauvegarder, même en état dégradé
+    if status.lower() in {"ok", "degraded", "critical"}:
+        save_snapshot(metrics, status)
+
     return {"status": status, "metrics": metrics}
 
 
