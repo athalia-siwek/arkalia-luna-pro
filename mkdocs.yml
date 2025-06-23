@@ -72,6 +72,7 @@ nav:
       - Automatisation: automation.md
       - Sécurité: security.md
       - Tests: tests.md
+      - ReflexIA: reflexia.md
   - 🛠️ Architecture:
       - Structure du dépôt: structure.md
       - Composants IA: composants.md
