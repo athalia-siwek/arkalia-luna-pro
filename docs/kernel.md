@@ -35,6 +35,7 @@
 
 ## 📁 Structure Type — `arkalia-luna-pro/`
 
+```
 arkalia-luna-pro/
 ├── modules/               # Modules IA autonomes (1 fonction = 1 dossier)
 ├── core/                  # Logique transversale partagée
@@ -45,6 +46,7 @@ arkalia-luna-pro/
 ├── tests/                 # Tests unitaires, intégration et couverture
 ├── docs/                  # Documentation MkDocs (publique)
 ├── .github/workflows/     # CI GitHub Actions
+```
 
 ---
 

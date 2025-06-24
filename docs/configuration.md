@@ -39,14 +39,14 @@ modules/<nom_module>/config/config.toml
 
 ---
 
-## 🧼 Bonnes pratiques
+## 🧾 Bonnes pratiques
 
 | Sécurité | Recommandation |
 |---------|-----------------|
-| 🔐 | Ne jamais committer les clés dans Git |
-| 🧯 | Sauvegarde automatique régulière (`ark-backup`) |
+| 🔒 | Ne jamais committer les clés dans Git |
+| 🛡️ | Sauvegarde automatique régulière (`ark-backup`) |
 | 🔍 | Vérifier les accès avec `ZeroIA` ou `Reflexia` |
-| 🧰 | Isoler les `venv`, les fichiers `.env` et `/state/` |
+| 🧩 | Isoler les `venv`, les fichiers `.env` et `/state/` |
 
 ---
 

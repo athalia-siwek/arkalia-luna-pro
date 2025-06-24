@@ -15,18 +15,18 @@
 
 ---
 
-## 🧠 Modules IA développés
+## 🤖 Modules IA développés
 
 | Module       | Fonction                                                                 |
 |--------------|--------------------------------------------------------------------------|
-| 🔁 **Reflexia**     | Veille cognitive adaptative, surveillance système                  |
-| 🧠 **ZeroIA**       | Raisonnement logique et décisions contextuelles                    |
+| 🔄 **Reflexia**     | Veille cognitive adaptative, surveillance système                  |
+| 🤖 **ZeroIA**       | Raisonnement logique et décisions contextuelles                    |
 | 🌐 **Nyxalia**      | Interfaces mobiles, vocales et API externes                        |
-| 🔎 **Helloria**     | Passerelle FastAPI, expose les endpoints, route les appels         |
+| 🔍 **Helloria**     | Passerelle FastAPI, expose les endpoints, route les appels         |
 | 🛡️ **Sandozia** *(à venir)* | Cybersécurité cognitive, renforcement du noyau              |
-| 🧬 **ArkaliaLoop**  | Orchestration réflexive, exécution modulaire intelligente         |
+| 🔄 **ArkaliaLoop**  | Orchestration réflexive, exécution modulaire intelligente         |
 
-> 🧩 Tous les modules sont autonomes, testables, interconnectés.
+> 🤖 Tous les modules sont autonomes, testables, interconnectés.
 
 ---
 
@@ -45,7 +45,7 @@
 
 ---
 
-## 🧭 Philosophie du projet
+## 🤔 Philosophie du projet
 
 > “Créer une IA **souveraine, éthique, locale et modulaire**.
 > Refuser les dépendances cloud. Respecter la vie privée. Favoriser l'intelligence réflexive.”
@@ -78,4 +78,4 @@ Arkalia-LUNA est conçu pour fonctionner entièrement en local, garantissant ain
 
 ---
 
-🧠 Powered by Arkalia ReflexIA v1.x
+🤖 Powered by Arkalia ReflexIA v1.x

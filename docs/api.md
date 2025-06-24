@@ -1,6 +1,6 @@
 # 🚀 API FastAPI — Arkalia-LUNA
 
-L'API FastAPI permet à des agents externes, humains ou systèmes, de communiquer avec Arkalia-LUNA de manière **locale, modulaire et sécurisée**.
+L'API FastAPI permet aux agents externes, qu'ils soient humains ou systèmes, de communiquer avec Arkalia-LUNA de manière **locale, modulaire et sécurisée**.
 
 ---
 
@@ -14,48 +14,39 @@ L'API FastAPI permet à des agents externes, humains ou systèmes, de communique
 
 ```bash
 uvicorn helloria.core:app --reload
+```
 
-💡 Alternativement, utiliser docker-compose up ou le script ark-docker.
+💡 **Astuce** : Utilisez `docker-compose up` ou le script `ark-docker` pour démarrer.
 
-Méthode
-URL
-Description
-GET
-/
-Test de vie : "Bienvenue dans Helloria"
-POST
-/chat
-Envoie un prompt à l'IA locale (assistantia)
-GET
-/status
-Retourne l'état général du système
-GET
-/echo?msg=x
-Répond avec le message donné
-
+| Méthode | URL       | Description                          |
+|---------|-----------|--------------------------------------|
+| GET     | /         | Test de vie : "Bienvenue dans Helloria" |
+| POST    | /chat     | Envoie un prompt à l'IA locale (assistantia) |
+| GET     | /status   | Retourne l'état général du système   |
+| GET     | /echo?msg=x | Répond avec le message donné        |
 
 ⸻
 
-🔐 Sécurité & accès
-	•	API uniquement exposée en local
-	•	Possibilité future d'ajouter :
-	•	Authentification par clé
-	•	Rate limiting
-	•	Journalisation des accès via reflexia
+🔐 **Sécurité & accès**
+- API uniquement exposée en local
+- Possibilité future d'ajouter :
+  - Authentification par clé
+  - Limitation de débit
+  - Journalisation des accès via reflexia
 
 ⸻
 
-📦 Design modulaire
+📦 **Design modulaire**
 
 Chaque endpoint est délégué à un module :
-	•	helloria/ = orchestration API
-	•	assistantia/ = génération IA
-	•	reflexia/ = métriques & diagnostics
-	•	nyxalia/ = interprétation mobile
+- `helloria/` : orchestration API
+- `assistantia/` : génération IA
+- `reflexia/` : métriques & diagnostics
+- `nyxalia/` : interprétation mobile
 
 ⸻
 
-✅ Architecture pensée pour l'extensibilité et le contrôle par module.
+✅ **Architecture pensée pour l'extensibilité et le contrôle par module.**
 
 # 📌 Arkalia-LUNA Documentation Technique
 
@@ -77,7 +68,7 @@ Chaque endpoint est délégué à un module :
 
 **POST /chat — AssistantIA**
 
-Utilisation : envoie un message à l'IA locale (Ollama mistral)
+**Utilisation** : Envoie un message à l'IA locale (Ollama mistral)
 
 **Requête :**
 
@@ -182,28 +173,24 @@ Il lit des métriques internes (CPU, mémoire, etc.), évalue leur criticité, e
 {
   "status": "normal"
 }
-
-Dossiers :
-  •  reflexia/core.py : fonction principale
-  •  reflexia/logic/*.py : analyse CPU, snapshot JSON, décisions
-  •  reflexia/tests/unit/ : 5 fichiers de test, tous validés
 ```
+
+**Dossiers :**
+- `reflexia/core.py` : fonction principale
+- `reflexia/logic/*.py` : analyse CPU, snapshot JSON, décisions
+- `reflexia/tests/unit/` : 5 fichiers de test, tous validés
 
 ### 🧠 ReflexIA — Vérification réflexive instantanée
 
-- 🔍 Description : Analyse réflexive instantanée — récupère les métriques système, les évalue, et retourne un diagnostic.
-- 📂 Module : modules/reflexia/
-- ⚙️ Fonction appelée : launch_reflexia_check()
+- 🔍 **Description** : Analyse réflexive instantanée — récupère les métriques système, les évalue, et retourne un diagnostic.
+- 📂 **Module** : modules/reflexia/
+- ⚙️ **Fonction appelée** : launch_reflexia_check()
 
-🔄 Exemple de réponse :
+🔄 **Exemple de réponse :**
+
 ```json
 {
-  "status": "ok",
-  "metrics": {
-    "cpu": 72.5,
-    "ram": 61.8,
-    "latency": 145
-  }
+  "status": "normal"
 }
 ```
 

@@ -1,4 +1,4 @@
-# 🧩 Composants d’Arkalia-LUNA
+# 🤖 Composants d’Arkalia-LUNA
 
 > Vue d’ensemble des composants actifs dans le système IA Arkalia-LUNA.
 
@@ -17,7 +17,7 @@
 
 ---
 
-## 🔁 Collaboration des composants
+## 🔄 Collaboration des composants
 
 - `Reflexia` analyse les logs → propose des décisions.
 - `ZeroIA` raisonne → déclenche ou suspend un module.

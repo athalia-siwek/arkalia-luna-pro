@@ -29,16 +29,17 @@
 🌟 Objectif
 
 Construire un système IA local, modulaire, interfaçable et auto-réparant, avec :
-	•	📦 Modules IA isolés (reflexia, nyxalia, helloria, assistantia)
-	•	🛰️ API FastAPI locale : /status, /trigger, /chat
-	•	🔁 Scripts orchestrés par ReflexIA / ZeroIA
-	•	🐳 Environnement Dockerisé, testé, CI/CD intégré
-	•	🧠 Compatibilité LLM locaux (ollama) : mistral, llama2, tinyllama
+- 📦 Modules IA isolés (reflexia, nyxalia, helloria, assistantia)
+- 🛰️ API FastAPI locale : /status, /trigger, /chat
+- 🔁 Scripts orchestrés par ReflexIA / ZeroIA
+- 🐳 Environnement Dockerisé, testé, CI/CD intégré
+- 🧠 Compatibilité LLM locaux (ollama) : mistral, llama2, tinyllama
 
 ⸻
 
 🧱 Architecture
 
+```
 arkalia-luna-pro/
 ├── core/                  # 💡 Logique transversale (utilisée par tous les modules)
 ├── modules/               # 🧠 Modules IA autonomes (AssistantIA, ReflexIA, Nyxalia…)
@@ -49,86 +50,61 @@ arkalia-luna-pro/
 ├── tests/                 # ✅ Tests unitaires et intégration (Pytest + couverture)
 ├── docs/                  # 📘 Documentation (MkDocs)
 └── .github/workflows/     # 🔁 Workflows CI (GitHub Actions)
-
+```
 
 🛠️ Scripts essentiels
 
-Script
-Fonction
-ark-test
-Lance tous les tests + génère htmlcov
-ark-docker-rebuild.sh
-Rebuild complet Docker
-ark-clean-push
-Formatage auto (black, ruff) + commit
-trigger_scan.sh
-Déclenche ReflexIA manuellement
-
+| Script               | Fonction                                      |
+|----------------------|-----------------------------------------------|
+| ark-test             | Lance tous les tests + génère htmlcov         |
+| ark-docker-rebuild.sh| Rebuild complet Docker                        |
+| ark-clean-push       | Formatage auto (black, ruff) + commit         |
+| trigger_scan.sh      | Déclenche ReflexIA manuellement               |
 
 🚀 Lancement rapide
 
 🐳 Docker (recommandé)
 
+```bash
 docker compose down
 find . -name '._*' -delete && find . -name '.DS_Store' -delete
 docker compose build --no-cache
 docker compose up
+```
 
 📍 Accès : http://localhost:8000
 
 💡 Astuces :
-	•	ark-test → lance tests + couverture
-	•	./scripts/ark-docker-rebuild.sh → rebuild rapide
-	•	CI + docs auto via GitHub Actions
+- `ark-test` → lance tests + couverture
+- `./scripts/ark-docker-rebuild.sh` → rebuild rapide
+- CI + docs auto via GitHub Actions
 
 ⸻
 
 📃 Historique des versions
 
-Version
-État
-Description technique
-v1.3.4
-✅ Spéciale
-100 % couverture
-v1.3.2
-✅ Stable
-Docs refondues, utilisation.md, navigation optimisée
-v1.3.1
-✅ Validé
-Couverture > 85 %, Docker, CI OK
-v1.0.9
-✅ Propre
-Design final, architecture stable
-v1.0.6
-✅ Solide
-Docker + couverture 100 %, CI
-v0.3.0
-🛠️ Base
-FastAPI + Docker fonctionnel
-v0.1.1
-🚀 Départ
-Devstation + env IA locale
-
+| Version | État    | Description technique                             |
+|---------|---------|--------------------------------------------------|
+| v1.3.4  | ✅ Spéciale | 100 % couverture                                 |
+| v1.3.2  | ✅ Stable  | Docs refondues, utilisation.md, navigation optimisée |
+| v1.3.1  | ✅ Validé  | Couverture > 85 %, Docker, CI OK                 |
+| v1.0.9  | ✅ Propre  | Design final, architecture stable                |
+| v1.0.6  | ✅ Solide  | Docker + couverture 100 %, CI                    |
+| v0.3.0  | 🛠️ Base   | FastAPI + Docker fonctionnel                     |
+| v0.1.1  | 🚀 Départ | Devstation + env IA locale                       |
 
 🧠 AssistantIA
 
 Module IA de dialogue contextuel, branché sur Ollama (Mistral, TinyLLaMA)
 
-	•	Port local : 8001
-	•	Dev local : uvicorn modules.assistantia.core:app --port 8001
-	•	Docker : docker-compose up assistantia
+- Port local : 8001
+- Dev local : `uvicorn modules.assistantia.core:app --port 8001`
+- Docker : `docker-compose up assistantia`
 
-    Méthode
-URL
-Description
-GET
-/
-Accueil API AssistantIA
-POST
-/chat
-Dialogue avec la LLM
-
+| Méthode | URL  | Description                      |
+|---------|------|----------------------------------|
+| GET     | /    | Accueil API AssistantIA          |
+| POST    | /chat| Dialogue avec la LLM             |
 
 📘 [Voir la documentation complète](docs/assistantia.md)
 
@@ -136,24 +112,18 @@ Dialogue avec la LLM
 
 🐳 Services Docker actifs
 
-Service
-Port
-Lancement
-arkalia-api
-8000
-docker-compose up arkalia-api
-assistantia
-8001
-docker-compose up assistantia
-
+| Service      | Port | Lancement                        |
+|--------------|------|----------------------------------|
+| arkalia-api  | 8000 | `docker-compose up arkalia-api`  |
+| assistantia  | 8001 | `docker-compose up assistantia`  |
 
 🧠 Vision & avenir
 
 Modules à venir :
-	•	kaelia/ → gestion cognitive de tâches complexes
-	•	psykalia/ → analyse émotionnelle et psycholinguistique
-	•	Mémoire vectorielle (FAISS)
-	•	Monitoring système (Prometheus, Grafana)
+- kaelia/ → gestion cognitive de tâches complexes
+- psykalia/ → analyse émotionnelle et psycholinguistique
+- Mémoire vectorielle (FAISS)
+- Monitoring système (Prometheus, Grafana)
 
 ⸻
 

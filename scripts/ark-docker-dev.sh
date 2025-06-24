@@ -8,4 +8,4 @@ echo "🔧 Rebuilding Docker image..."
 docker compose build --no-cache
 
 echo "🚀 Starting Arkalia API in dev mode..."
-docker compose up
+docker compose up -d

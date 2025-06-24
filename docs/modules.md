@@ -43,7 +43,7 @@ flowchart TD
 
 ## 🔎 Structure standard de chaque module
 
-```text
+```
 modules/<nom_module>/
 ├── __init__.py           # Initialisation du module
 ├── core.py               # Logique principale
@@ -52,18 +52,19 @@ modules/<nom_module>/
 ├── logs/                 # Journaux de diagnostic
 ├── tests/                # Tests unitaires et intégration
 ├── utils/                # Fonctions internes spécifiques
+```
 
 Chaque module est :
-	•	🔹 Isolé : pas de dépendance sauvage
-	•	🔹 Testable : via pytest, CI/CD
-	•	🔹 Extensible : ajout de fonctionnalités par core.py ou utils/
+- 🔹 Isolé : pas de dépendance sauvage
+- 🔹 Testable : via pytest, CI/CD
+- 🔹 Extensible : ajout de fonctionnalités par core.py ou utils/
 
 ⸻
 
 🚧 Modules en cours ou futurs
-	•	🧠 assistantia/ — IA contextuelle (Ollama local)
-	•	🛡️ sandozia/ — Sécurité, permissions, pare-feu IA
-	•	�� zeroia/ — Boucle d'orchestration globale
+- 🧠 assistantia/ — IA contextuelle (Ollama local)
+- 🛡️ sandozia/ — Sécurité, permissions, pare-feu IA
+- 🔄 zeroia/ — Boucle d'orchestration globale
 
 ⸻
 

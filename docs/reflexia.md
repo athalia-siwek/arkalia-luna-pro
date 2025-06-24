@@ -19,3 +19,6 @@ Reflexia est un module de supervision cognitive autonome.
 
 ```bash
 docker-compose up reflexia
+```
+
+</rewritten_file>

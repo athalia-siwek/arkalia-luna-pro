@@ -1,52 +1,67 @@
-# 🐍 Python
+# ======================================================
+# 🐍 Python : fichiers compilés et environnements virtuels
+# ======================================================
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-*.env
-*.venv
+
+.env
 .venv/
+*.venv
 env/
 venv/
 *.egg-info/
 
-# 🔧 Logs, tests, coverage
+# ======================================================
+# 🧪 Tests : ignorer les caches et résidus, autoriser les vrais tests
+# ======================================================
+
+# ✅ Autoriser les vrais tests Python
+!tests/
+!tests/**/*.py
+
+# ❌ Fichiers de test parasites à ignorer
+tests/**/__pycache__/
+tests/**/*.pyc
+tests/**/.DS_Store
+*.test.*
+
+# ======================================================
+# 📦 Build, logs, coverage
+# ======================================================
 *.log
 logs/
-htmlcov/
-coverage.xml
-site/
 .coverage
+coverage.xml
+htmlcov/
+build/
+dist/
+.eggs/
+*.egg
+pip-wheel-metadata/
+site/  # dossier MkDocs généré
 
-# ⚙️ VSCode & IDE
+# ======================================================
+# ⚙️ IDEs & fichiers temporaires
+# ======================================================
 .vscode/
 .idea/
 *.swp
 
-# 📦 Build et cache
-.eggs/
-*.egg
-build/
-dist/
-pip-wheel-metadata/
-
-# 🐳 Docker (optionnel si non versionnés)
+# ======================================================
+# 🐳 Docker (non versionnés dans Git)
+# ======================================================
 docker-compose.override.yml
 Dockerfile*
 
-# ✅ Autoriser les tests Python
-!tests/
-!tests/**/*.py
-
-# ❌ Ignorer fichiers de test parasites
-tests/**/*.pyc
-tests/**/__pycache__/
-tests/**/.DS_Store
-*.test.*
-
-# 📁 Reflexia : état volatile
+# ======================================================
+# 🧠 Fichiers de state temporaires (ex : Reflexia)
+# ======================================================
 modules/reflexia/state/reflexia_state.toml
 
-# 💻 macOS système
-._*
+# ======================================================
+# 💻 Fichiers système macOS à ignorer
+# ======================================================
 .DS_Store
+._*

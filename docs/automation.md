@@ -2,8 +2,7 @@
 
 ## ✅ `/docs/automation.md` — Version améliorée
 
-```markdown
-# 🧠 Scripts & Automatisation — Arkalia-LUNA
+# 🤖 Scripts & Automatisation — Arkalia-LUNA
 
 Arkalia n’est pas simplement automatisée : elle est **auto-orchestrée**.
 
@@ -11,12 +10,12 @@ Son cœur repose sur des **scripts Bash intelligents**, interfacés avec les mod
 
 ---
 
-## 🔁 Boucle Maîtresse — `arkalia_master_loop.py`
+## 🔄 Boucle Maîtresse — `arkalia_master_loop.py`
 
 La boucle principale du système :
 
-- 🧩 Charge dynamiquement tous les modules déclarés (`config/`)
-- 🔁 Réinjecte les derniers états sauvegardés (`state/`)
+- 🤖 Charge dynamiquement tous les modules déclarés (`config/`)
+- 🔄 Réinjecte les derniers états sauvegardés (`state/`)
 - 📊 Analyse les logs récents pour détecter les dérives
 - 🤖 Laisse ReflexIA ou ZeroIA décider d’actions automatiques :
   - restart de module
@@ -40,7 +39,7 @@ La boucle principale du système :
 
 ---
 
-## 🧠 Orchestration cognitive
+## 🤖 Orchestration cognitive
 
 Modules intelligents comme `reflexia/` ou `zeroia/` peuvent automatiquement :
 
