@@ -12,6 +12,8 @@ jobs:
   arkalia-ci:
     name: 🔁 Arkalia Tests + Lint + Docs
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     env:
       PYTHONPATH: .

@@ -10,6 +10,7 @@ client = TestClient(app)
 
 
 @pytest.mark.skipif(os.getenv("CI") == "true", reason="Ignoré en CI")
+@pytest.mark.slow
 def test_chat_response_time_under_2s():
     """Assure que /chat répond en moins de 2 secondes."""
     start = time.time()
