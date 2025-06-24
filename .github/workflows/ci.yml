@@ -93,5 +93,11 @@ jobs:
           echo "::group::MkDocs Deploy"
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
+          pip install --no-cache-dir \
+            mkdocs \
+            mkdocs-material \
+            mkdocs-minify-plugin \
+            mkdocs-simple-hooks \
+            mkdocs-git-revision-date-localized-plugin
           mkdocs gh-deploy --clean --force --remote-branch gh-pages
           echo "::endgroup::"
