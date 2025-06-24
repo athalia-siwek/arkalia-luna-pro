@@ -66,6 +66,9 @@ jobs:
           pre-commit run --all-files --show-diff-on-failure
           echo "::endgroup::"
 
+      - name: 📘 Build MkDocs (avant les tests sitemap)
+        run: mkdocs build --strict
+
       - name: 🧪 Tests unitaires avec couverture
         run: |
           echo "::group::Run Tests + Coverage"

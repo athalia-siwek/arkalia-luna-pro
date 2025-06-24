@@ -1,5 +1,6 @@
 # 📁 helloria/core.py
 
+import json
 import logging
 
 from fastapi import APIRouter, FastAPI, Request
@@ -11,7 +12,7 @@ from modules.reflexia.core_api import router as reflexia_router
 # 🚦 Router principal
 router = APIRouter()
 
-# 🧾 Logging d’erreurs
+# 🧾 Logging d'erreurs
 logging.basicConfig(
     level=logging.ERROR,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -58,3 +59,9 @@ app = FastAPI(
 # 🧩 Inclusion des routers
 app.include_router(router)
 app.include_router(reflexia_router)  # ✅ Active le endpoint /reflexia/check
+
+
+@app.get("/zeroia/status", tags=["ZeroIA"])
+def zeroia_status():
+    with open("state/zeroia_dashboard.json") as f:
+        return json.load(f)

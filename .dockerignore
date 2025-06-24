@@ -1,8 +1,15 @@
-# ❌ Fichiers parasites macOS
-.DS_Store
-.AppleDouble
-.LSOverride
+# 🧹 Ignore les fichiers Apple & caches toxiques
 ._*
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+htmlcov/
+.coverage
+site/
+*.log
+*.toml~
+*.swp
 
 # 🐍 Environnements Python
 __pycache__/
@@ -48,3 +55,6 @@ tests/
 *.test.*
 
 modules/reflexia/state/._reflexia_state.toml
+
+# 📁 Recommandés pour éviter les erreurs liées aux fichiers ._ de macOS
+.pytest_cache/

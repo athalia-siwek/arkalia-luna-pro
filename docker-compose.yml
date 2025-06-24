@@ -12,6 +12,7 @@ x-arkalia-defaults: &arkalia-defaults
   restart: unless-stopped
 
 services:
+
   # 🚀 Serveur principal Arkalia API (Helloria)
   arkalia-api:
     <<: *arkalia-defaults
@@ -46,3 +47,20 @@ services:
     restart: always
     depends_on:
       - assistantia
+
+  # 🤖 ZeroIA — Service de décision autonome
+  zeroia:
+    <<: *arkalia-defaults
+    build:
+      context: .
+      dockerfile: Dockerfile.zeroia
+    container_name: zeroia
+    image: arkalia-luna-zeroia
+    command: python modules/zeroia/reason_loop.py
+    depends_on:
+      - reflexia
+    healthcheck:
+      test: [ "CMD-SHELL", "cat modules/zeroia/state/zeroia_state.toml || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3

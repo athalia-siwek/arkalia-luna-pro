@@ -1,0 +1,9 @@
+[status]
+cpu = 72.1
+ram = 65.4
+latency = 1.7
+severity = "warning"
+
+[reflexia]
+last_snapshot = "⚠️ RAM élevée"
+last_decision = "monitor"

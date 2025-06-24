@@ -1,0 +1,16 @@
+{
+    "include": [
+        "."
+    ],
+    "venvPath": "/Volumes/T7",
+    "venv": "arkalia-luna-venv",
+    "reportMissingImports": true,
+    "reportMissingModuleSource": true,
+    "reportUnknownParameterType": false,
+    "reportUnknownArgumentType": false,
+    "reportUnknownMemberType": false,
+    "pythonVersion": "3.10",
+    "extraPaths": [
+        "."
+    ]
+}
