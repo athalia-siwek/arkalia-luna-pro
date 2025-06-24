@@ -11,7 +11,7 @@ import yaml
 sys.path.insert(
     0, os.path.abspath("/Volumes/T7/devstation/cursor/arkalia-luna-pro/scripts")
 )
-import sitemap_generator  # noqa: E402
+from scripts import sitemap_generator  # noqa: E402
 
 SITEMAP_PATH = "site/sitemap.xml"
 MKDOCS_CONFIG_PATH = "mkdocs.yml"
