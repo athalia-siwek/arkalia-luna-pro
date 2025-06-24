@@ -20,5 +20,5 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
 
-default_stages: [commit]
+default_stages: [pre-commit]
 exclude: '^(venv|\.venv|env|\.env|\.mypy_cache|\.pytest_cache|site|dist|build)/'
