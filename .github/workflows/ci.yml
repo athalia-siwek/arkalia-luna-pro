@@ -86,6 +86,12 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           echo "::group::MkDocs Deploy"
+          pip install --no-cache-dir \
+            mkdocs \
+            mkdocs-material \
+            mkdocs-minify-plugin \
+            mkdocs-simple-hooks \
+            mkdocs-git-revision-date-localized-plugin
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
           mkdocs gh-deploy --clean --force --remote-branch gh-pages
