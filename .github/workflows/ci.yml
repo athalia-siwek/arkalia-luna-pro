@@ -30,7 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install --no-cache-dir "setuptools<70" "pip<24"
 
-      - name: 📦 Installer les dépendances Python
+      - name: 📦 Installer les dépendances Python (CI + Docs)
         run: |
           echo "::group::Install dependencies"
           pip install --no-cache-dir -r requirements.txt
@@ -42,8 +42,10 @@ jobs:
             pre-commit \
             mkdocs \
             mkdocs-material \
+            mkdocs-minify-plugin \
+            mkdocs-git-revision-date-localized-plugin \
             mkdocs-simple-hooks \
-            mkdocs-minify-plugin || true
+            pymdown-extensions
           echo "::endgroup::"
 
       - name: 🌐 Build MkDocs (sitemap.xml)
