@@ -88,3 +88,22 @@ Ce fichier retrace les évolutions majeures du système IA modulaire Arkalia-LUN
 
 🧭 Prochaine étape : v2.2.0
 ➡️ Démarrage de la phase Nexus : ZeroIA, Psykalia, surcouche cognitive, IA réflexive complète.
+
+## [v1.3.5] - 2025-06-24
+
+### ✨ Améliorations majeures
+- Relecture et réécriture complète de la documentation (`docs/*.md`)
+- Normalisation de la syntaxe Markdown et des titres
+- Ajout de visuels Mermaid interactifs (graphes et mindmaps)
+- Uniformisation du style rédactionnel et structure des fichiers
+
+### 🛠️ Technique
+- Nettoyage des fichiers orphelins (`._*`)
+- Mise à jour automatique du site via `mkdocs gh-deploy --force`
+
+### 📚 Docs
+- `assistantia.md`, `api.md`, `reflexia.md` restructurés
+- `kernel.md`, `modules.md`, `automation.md` clarifiés
+- Ajout d'exemples concrets dans `ollama.md`, `ci-cd.md`, `faqs.md`
+
+---
