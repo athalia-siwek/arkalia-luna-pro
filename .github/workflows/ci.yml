@@ -98,4 +98,5 @@ jobs:
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
           mkdocs gh-deploy --clean --force
+          pip install --no-cache-dir mkdocs mkdocs-material mkdocs-minify-plugin
           echo "::endgroup::"
