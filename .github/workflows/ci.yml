@@ -25,16 +25,13 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: 🧼 Patch pip & setuptools pour MkDocs & plugins
-        run: |
-          python -m pip install --upgrade pip
-          pip install --no-cache-dir "setuptools<70" "pip<24"
-
       - name: 📦 Installer les dépendances Python (CI + Docs)
         run: |
           echo "::group::Install dependencies"
-          pip install --no-cache-dir -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir "setuptools<70" "pip<24"
           pip install --no-cache-dir \
+            -r requirements.txt \
             black \
             ruff \
             pytest \
@@ -43,9 +40,8 @@ jobs:
             mkdocs \
             mkdocs-material \
             mkdocs-minify-plugin \
-            mkdocs-git-revision-date-localized-plugin \
             mkdocs-simple-hooks \
-            pymdown-extensions
+            mkdocs-git-revision-date-localized-plugin
           echo "::endgroup::"
 
       - name: 🌐 Build MkDocs (sitemap.xml)
@@ -97,6 +93,5 @@ jobs:
           echo "::group::MkDocs Deploy"
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
-          mkdocs gh-deploy --clean --force
-          pip install --no-cache-dir mkdocs mkdocs-material mkdocs-minify-plugin
+          mkdocs gh-deploy --clean --force --remote-branch gh-pages
           echo "::endgroup::"
