@@ -3,8 +3,10 @@ name: Arkalia CI
 on:
   push:
     branches: [main]
+    tags: ['v*']
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   arkalia-ci:
@@ -25,7 +27,7 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: 📦 Installer les dépendances Python (CI + Docs)
+      - name: 📦 Installer les dépendances (CI, Docs, Lint)
         run: |
           echo "::group::Install dependencies"
           python -m pip install --upgrade pip
@@ -42,24 +44,6 @@ jobs:
             mkdocs-minify-plugin \
             mkdocs-simple-hooks \
             mkdocs-git-revision-date-localized-plugin
-          echo "::endgroup::"
-
-      - name: 🌐 Build MkDocs (sitemap.xml)
-        run: |
-          echo "::group::MkDocs Build"
-          mkdocs build
-          echo "::endgroup::"
-
-      - name: 🧪 Tests unitaires avec couverture
-        run: |
-          echo "::group::Run Tests + Coverage"
-          pytest \
-            --cov=modules \
-            --cov=core \
-            --cov=tests \
-            --cov=scripts \
-            --cov-report=term-missing \
-            -v --tb=short
           echo "::endgroup::"
 
       - name: 🧹 Analyse statique (Ruff)
@@ -80,10 +64,21 @@ jobs:
           pre-commit run --all-files --show-diff-on-failure
           echo "::endgroup::"
 
-      - name: 🧪 Vérification sitemap (si commit contient [sitemap])
-        if: contains(github.event.head_commit.message, '[sitemap]')
+      - name: 🧪 Tests unitaires avec couverture
         run: |
-          echo "::group::Sitemap Check (Trigger: [sitemap])"
+          echo "::group::Run Tests + Coverage"
+          pytest \
+            --cov=modules \
+            --cov=core \
+            --cov=tests \
+            --cov=scripts \
+            --cov-report=term-missing \
+            -v --tb=short
+          echo "::endgroup::"
+
+      - name: 🌐 Vérification du sitemap (tests dédiés)
+        run: |
+          echo "::group::Sitemap Test Suite"
           pytest tests/scripts/test_sitemap_generator.py -v
           echo "::endgroup::"
 
@@ -93,11 +88,5 @@ jobs:
           echo "::group::MkDocs Deploy"
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
-          pip install --no-cache-dir \
-            mkdocs \
-            mkdocs-material \
-            mkdocs-minify-plugin \
-            mkdocs-simple-hooks \
-            mkdocs-git-revision-date-localized-plugin
           mkdocs gh-deploy --clean --force --remote-branch gh-pages
           echo "::endgroup::"

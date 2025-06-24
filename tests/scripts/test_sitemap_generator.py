@@ -3,6 +3,7 @@
 import os
 import sys
 import xml.etree.ElementTree as ET
+from unittest.mock import patch
 
 import pytest
 import yaml
@@ -82,3 +83,17 @@ def test_extract_paths_basic():
     ]
     result = sitemap_generator.extract_paths(mock_nav)
     assert all(path in result for path in ("index/", "installation/", "assistantia/"))
+
+
+@patch("requests.get")
+def test_ping_google_sitemap_success(mock_get):
+    # 🧪 Simule une réponse HTTP 200
+    mock_get.return_value.status_code = 200
+
+    try:
+        sitemap_generator.ping_google_sitemap()
+    except Exception as e:
+        pytest.fail(f"Ping Google a levé une exception : {e}")
+
+    mock_get.assert_called_once()
+    assert mock_get.call_args[0][0].startswith("https://www.google.com/ping?sitemap=")

@@ -19,7 +19,7 @@
 [![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://pre-commit.com/)
 [![Tests](https://img.shields.io/badge/tests-100%25-brightgreen?style=flat-square&logo=pytest)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
 [![Docker](https://img.shields.io/badge/docker-ready-blue?style=flat-square)](https://www.docker.com/)
-[![Sitemap](https://img.shields.io/badge/sitemap-validated-blueviolet?style=flat-square)](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
+[![Sitemap](https://img.shields.io/badge/Sitemap-Online-blue)](https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml)
 [![Ruff](https://img.shields.io/badge/Ruff-validated-brightgreen?style=flat-square)](https://github.com/charliermarsh/ruff-pre-commit)
 [![Black](https://img.shields.io/badge/Black-validated-brightgreen?style=flat-square)](https://github.com/psf/black)
 [![Couverture](https://img.shields.io/badge/couverture-94%25-brightgreen)](htmlcov/index.html)
@@ -163,5 +163,7 @@ Modules à venir :
 - [Modules](https://arkalia-luna-system.github.io/arkalia-luna-pro/modules)
 - [CI/CD](https://arkalia-luna-system.github.io/arkalia-luna-pro/ci-cd)
 - [Tests](https://arkalia-luna-system.github.io/arkalia-luna-pro/tests)
+
+<!-- Trigger CI -->
 
 

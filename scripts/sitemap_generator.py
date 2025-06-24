@@ -2,14 +2,16 @@
 
 import datetime
 import os
+import urllib.parse
 
+import requests
 import yaml
 
 
 def parse_nav_from_mkdocs(mkdocs_yml_path="mkdocs.yml"):
     """Charge la config MkDocs et extrait les chemins de navigation."""
     with open(mkdocs_yml_path, "r", encoding="utf-8") as f:
-        config = yaml.safe_load(f)  # 🔒 Remplace UnsafeLoader → plus sécurisé
+        config = yaml.safe_load(f)  # 🔒 Utilise SafeLoader par défaut
     return extract_paths(config.get("nav", []))
 
 
@@ -48,7 +50,7 @@ def generate_sitemap(site_url=None, output_dir="site", mkdocs_yml_path="mkdocs.y
         f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         for path in urls:
             path = path.strip("/")
-            full_url = f"{site_url.rstrip('/')}/{path}/"
+            full_url = f"{site_url.rstrip('/')}/{path.lstrip('/')}".rstrip("/") + "/"
             f.write("  <url>\n")
             f.write(f"    <loc>{full_url}</loc>\n")
             f.write(f"    <lastmod>{now}</lastmod>\n")
@@ -56,15 +58,31 @@ def generate_sitemap(site_url=None, output_dir="site", mkdocs_yml_path="mkdocs.y
         f.write("</urlset>\n")
 
     print(f"✅ Sitemap généré : {sitemap_path}")
+    ping_google_sitemap()
 
 
 def generate_sitemap_from_site():
-    """Exécution par appel externe"""
+    """Exécution pour script externe (ex: CI/CD)"""
     site_url = "https://arkalia-luna-system.github.io/arkalia-luna-pro"
     generate_sitemap(site_url)
 
 
-# 💡 Exécution directe
+def ping_google_sitemap():
+    """Tente de notifier Google de la mise à jour du sitemap."""
+    sitemap_url = "https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml"
+    encoded_url = urllib.parse.quote(sitemap_url, safe=":/")
+    ping_url = f"https://www.google.com/ping?sitemap={encoded_url}"
+    try:
+        response = requests.get(ping_url, timeout=5)
+        if response.status_code == 200:
+            print("✅ Google pingé avec succès")
+        else:
+            print(f"⚠️ Échec du ping Google : {response.status_code}")
+    except Exception as e:
+        print(f"❌ Erreur ping Google : {e}")
+
+
+# 🚀 Exécution directe
 if __name__ == "__main__":
     generate_sitemap(
         site_url="https://arkalia-luna-system.github.io/arkalia-luna-pro",

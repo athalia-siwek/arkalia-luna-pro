@@ -132,6 +132,3 @@ plugins:
       timezone: Europe/Paris
       fallback_to_build_date: true
   - macros
-
-hooks:
-  - scripts/sitemap_generator.py
