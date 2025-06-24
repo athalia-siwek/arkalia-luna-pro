@@ -18,4 +18,4 @@ print(response.json())
 - `GET /status`: Retourne le statut opérationnel de Helloria.
 
 ## Documentation Générale
-Pour plus de détails, consultez la [documentation générale](https://athalia-siwek.github.io/arkalia-luna-pro/). 
+Pour plus de détails, consultez la [documentation générale](https://athalia-siwek.github.io/arkalia-luna-pro/).

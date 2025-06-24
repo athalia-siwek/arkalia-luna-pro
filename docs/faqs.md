@@ -33,4 +33,4 @@ Veuillez signaler tout bug ou vulnérabilité via notre [dépôt GitHub](https:/
 
 ---
 
-Pour toute autre question, n'hésitez pas à nous contacter via notre [dépôt GitHub](https://github.com/arkalia-luna-system/arkalia-luna-pro) ou par email. 
+Pour toute autre question, n'hésitez pas à nous contacter via notre [dépôt GitHub](https://github.com/arkalia-luna-system/arkalia-luna-pro) ou par email.

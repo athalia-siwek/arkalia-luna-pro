@@ -167,7 +167,7 @@ Pour plus de détails sur l'AssistantIA, consultez [AssistantIA](assistantia.md)
 
 ## 🧠 Module `reflexia` — Analyse cognitive réflexive
 
-Reflexia est le module d'observation et d'auto-analyse du système Arkalia.  
+Reflexia est le module d'observation et d'auto-analyse du système Arkalia.
 Il lit des métriques internes (CPU, mémoire, etc.), évalue leur criticité, et peut sauvegarder un état réflexif.
 
 ### 🔹 Fonctions exposées :

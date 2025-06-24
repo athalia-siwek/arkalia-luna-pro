@@ -4,7 +4,7 @@ Merci de contribuer à la sécurité d'Arkalia-LUNA.
 
 ## 📬 Signalement de vulnérabilités
 
-Si vous découvrez une vulnérabilité, **merci de ne pas la divulguer publiquement**.  
+Si vous découvrez une vulnérabilité, **merci de ne pas la divulguer publiquement**.
 Veuillez nous contacter via l’un des moyens suivants :
 
 - 📧 Email : [athalia.security@arkalia.system](mailto:athalia.security@arkalia.system)

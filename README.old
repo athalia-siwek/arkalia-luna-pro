@@ -1,6 +1,6 @@
 # 🌕 Arkalia-LUNA Pro — Devstation IA
 
-**Dévstation professionnelle pour modules IA Arkalia Luna**  
+**Dévstation professionnelle pour modules IA Arkalia Luna**
 → FastAPI, CI, bumpver, modules propres, structure modulaire.
 
 ---
@@ -64,12 +64,12 @@ pytest
 
 ## 🔖 Versions et Tags
 
-Version actuelle : `v0.1.0`  
+Version actuelle : `v0.1.0`
 Voir tous les tags : `git tag --list`
 
 ---
 
 ## 👩‍💻 Auteur
 
-**Athalia Siwek** — *Système IA autonome Arkalia.*  
+**Athalia Siwek** — *Système IA autonome Arkalia.*
 🌀 [GitHub](https://github.com/athalia-siwek)

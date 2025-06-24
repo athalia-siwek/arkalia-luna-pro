@@ -1,6 +1,6 @@
 # 🧪 Tests Arkalia-LUNA
 
-Bienvenue dans la suite de tests officielle du projet **Arkalia LUNA**.  
+Bienvenue dans la suite de tests officielle du projet **Arkalia LUNA**.
 Tous les tests sont organisés de manière modulaire, maintenable et orientée production.
 
 ---

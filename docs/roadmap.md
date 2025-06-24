@@ -56,10 +56,10 @@
 
 > Construire un **noyau IA local, souverain, éthique et modulaire**, interfaçable dans tous les environnements physiques (RPi, edge, serveur IA, bureau personnel).
 
-🧠 L’objectif ultime :  
+🧠 L’objectif ultime :
 Créer un **système IA auto-réflexif intelligent**, capable de s’auto-réguler, s’auto-documenter et s’auto-optimiser dans des cycles cognitifs autonomes.
 
 ---
 
-👩‍💻 Maintenu par **Athalia 🌙**  
+👩‍💻 Maintenu par **Athalia 🌙**
 📡 [github.com/arkalia-luna-system](https://github.com/arkalia-luna-system)

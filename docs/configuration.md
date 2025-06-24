@@ -6,12 +6,12 @@
 
 ## 🔑 Paramètres Essentiels
 
-- **Fichier principal** : `config/system/config.yaml`  
+- **Fichier principal** : `config/system/config.yaml`
   Contient :
   - chemins d’accès (logs, state, modules…)
   - clés API locales (si activées)
   - poids IA initiaux (`weights.toml`)
-  
+
 - **Variables d’environnement** :
   - `ARKALIA_ENV=dev` ou `prod`
   - `OLLAMA_HOST=http://localhost:11434`

@@ -68,7 +68,7 @@ pytest tests/
 
 ## 📅 Mise à jour
 
-Fichier généré le : `2025-06-18`  
+Fichier généré le : `2025-06-18`
 Merci de contribuer à un projet IA propre et durable ✨
 
 © Athalia — Arkalia System

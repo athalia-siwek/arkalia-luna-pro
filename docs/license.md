@@ -45,7 +45,7 @@ in the Software without restriction…
 
 [version complète incluse dans le fichier LICENSE officiel du dépôt]
 
-**Résumé humain** :  
+**Résumé humain** :
 Vous êtes libres d’utiliser, modifier, distribuer ce logiciel, à condition de **créditer l’auteure** et de **reproduire cette licence**.
 
 ---

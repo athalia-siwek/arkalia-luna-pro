@@ -47,7 +47,7 @@
 
 ## 🧭 Philosophie du projet
 
-> “Créer une IA **souveraine, éthique, locale et modulaire**.  
+> “Créer une IA **souveraine, éthique, locale et modulaire**.
 > Refuser les dépendances cloud. Respecter la vie privée. Favoriser l'intelligence réflexive.”
 
 ---

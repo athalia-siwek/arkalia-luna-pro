@@ -9,4 +9,4 @@ Disallow: /img/
 
 Allow: /
 
-Sitemap: https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml 
+Sitemap: https://arkalia-luna-system.github.io/arkalia-luna-pro/sitemap.xml

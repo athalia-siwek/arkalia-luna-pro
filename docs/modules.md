@@ -1,13 +1,13 @@
 # 🧩 Modules IA Actifs
 
-Voici les modules actuellement opérationnels dans Arkalia-LUNA.  
+Voici les modules actuellement opérationnels dans Arkalia-LUNA.
 Chacun suit une structure **autonome, testable, scalable** selon les principes du système.
 
 ---
 
 ## 🔁 `reflexia/` — Réflexion adaptative & surveillance
 
-> Module réflexif central. Il surveille l'état du système, détecte les anomalies, ajuste les modules selon des métriques internes (CPU, latence, mémoire).  
+> Module réflexif central. Il surveille l'état du système, détecte les anomalies, ajuste les modules selon des métriques internes (CPU, latence, mémoire).
 > Il peut suspendre, redémarrer ou corriger un module si nécessaire.
 
 🧠 Fonction : *Observateur cognitif adaptatif*
@@ -26,7 +26,7 @@ flowchart TD
 
 ## 📱 `nyxalia/` — Interface & connectivité mobile
 
-> Ce module gère les **interfaces de communication** entre Arkalia et l'extérieur : mobile, vocal, API externes.  
+> Ce module gère les **interfaces de communication** entre Arkalia et l'extérieur : mobile, vocal, API externes.
 > Il permet des échanges fluides, contextualisés, et multiplateformes.
 
 🔗 Fonction : *Passerelle interactive humaine / machine*

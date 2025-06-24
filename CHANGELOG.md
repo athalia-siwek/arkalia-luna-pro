@@ -17,7 +17,7 @@ Ce fichier retrace les changements apportés à chaque version publique d'Arkali
 ### 📄 Documentation
 - `README.md` : objectif, routes, exemple de requête, lien vers MkDocs
 
-🔁 **Couverture test :** 100 % sur `test_helloria.py`  
+🔁 **Couverture test :** 100 % sur `test_helloria.py`
 🔗 **Documentation :** [https://athalia-siwek.github.io/arkalia-luna-pro/modules](https://athalia-siwek.github.io/arkalia-luna-pro/modules)
 
 ---

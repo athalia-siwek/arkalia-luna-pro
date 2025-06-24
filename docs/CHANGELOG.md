@@ -1,6 +1,6 @@
 # 📃 CHANGELOG — Arkalia-LUNA
 
-> Suivi des versions du système IA local **Arkalia-LUNA**  
+> Suivi des versions du système IA local **Arkalia-LUNA**
 > Maintenu par [Athalia 🌙](https://github.com/arkalia-luna-system)
 
 ---

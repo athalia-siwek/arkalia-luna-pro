@@ -73,4 +73,3 @@ Ne jamais exposer les clés .env en public
 ⸻
 
 💡 Le déploiement d’Arkalia-LUNA est conçu pour être automatisable, stable et extensible, même sur une machine locale.
-
