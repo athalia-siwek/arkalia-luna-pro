@@ -15,7 +15,7 @@ CI = os.getenv("CI", "false").lower() == "true"
 sys.path.insert(
     0, os.path.abspath("/Volumes/T7/devstation/cursor/arkalia-luna-pro/scripts")
 )
-from scripts import sitemap_generator  # noqa: E402
+from scripts.sitemap_generator import extract_paths, ping_google_sitemap  # noqa: E402
 
 SITEMAP_PATH = "site/sitemap.xml"
 MKDOCS_CONFIG_PATH = "mkdocs.yml"
@@ -28,16 +28,16 @@ skip_if_no_sitemap = pytest.mark.skipif(
 )
 
 
-@skip_if_no_sitemap
-@pytest.fixture(scope="module", autouse=True)
-def check_sitemap_file():
-    assert os.path.exists(
-        SITEMAP_PATH
-    ), f"❌ Le fichier {SITEMAP_PATH} est introuvable. Exécute 'mkdocs build'."
+def ensure_sitemap_exists():
+    if not os.path.exists(SITEMAP_PATH):
+        pytest.fail(
+            f"❌ Le fichier {SITEMAP_PATH} est introuvable. Exécute 'mkdocs build'."
+        )
 
 
 @skip_if_no_sitemap
 def test_sitemap_is_valid_xml():
+    ensure_sitemap_exists()
     try:
         ET.parse(SITEMAP_PATH)
     except ET.ParseError as e:
@@ -46,6 +46,7 @@ def test_sitemap_is_valid_xml():
 
 @skip_if_no_sitemap
 def test_sitemap_contains_urls():
+    ensure_sitemap_exists()
     tree = ET.parse(SITEMAP_PATH)
     root = tree.getroot()
     urls = root.findall("sm:url", NAMESPACE)
@@ -59,10 +60,11 @@ def test_sitemap_contains_urls():
 
 @skip_if_no_sitemap
 def test_sitemap_matches_nav():
+    ensure_sitemap_exists()
     # 🔍 Extraction des chemins attendus
     with open(MKDOCS_CONFIG_PATH, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
-    expected_paths = sitemap_generator.extract_paths(config.get("nav", []))
+    expected_paths = extract_paths(config.get("nav", []))
 
     # 📄 Extraction des URLs actuelles du sitemap
     tree = ET.parse(SITEMAP_PATH)
@@ -92,7 +94,7 @@ def test_extract_paths_basic():
         {"Démarrage": ["installation.md", "configuration.md"]},
         {"Modules": [{"AssistantIA": "assistantia.md"}, "api.md"]},
     ]
-    result = sitemap_generator.extract_paths(mock_nav)
+    result = extract_paths(mock_nav)
     assert all(path in result for path in ("index/", "installation/", "assistantia/"))
 
 
@@ -101,7 +103,7 @@ def test_ping_google_sitemap_success(mock_get):
     mock_get.return_value.status_code = 200
 
     try:
-        sitemap_generator.ping_google_sitemap()
+        ping_google_sitemap()
     except Exception as e:
         pytest.fail(f"Ping Google a levé une exception : {e}")
 
