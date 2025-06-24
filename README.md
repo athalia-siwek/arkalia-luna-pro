@@ -13,7 +13,7 @@
 
 ## 📘 Accès Rapide
 
-[![Docs](https://img.shields.io/badge/docs-online-blue?style=flat-square&logo=readthedocs)](https://arkalia-luna-system.github.io/arkalia-luna-pro/)
+[![Docs](https://img.shields.io/badge/docs-online-blue?logo=githubpages)](https://athalia-siwek.github.io/arkalia-luna-pro/)
 [![Version](https://img.shields.io/badge/version-v1.3.4-purple?style=flat-square)](https://github.com/arkalia-luna-system/arkalia-luna-pro/releases)
 [![CI](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/arkalia-luna-system/arkalia-luna-pro/actions)
 [![Pre-Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://pre-commit.com/)
