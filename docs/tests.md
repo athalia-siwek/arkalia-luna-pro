@@ -64,4 +64,4 @@ Tous les tests passent avec succès ✅ (CI : 58/58), et le module ReflexIA atte
 - 📁 Archiver cette version : v2.1.2-tests-ok-full
 - 📝 Documenter cette étape dans CHANGELOG.md + badge coverage (si pas encore fait)
 
-![Couverture](https://img.shields.io/badge/couverture-94%25-brightgreen)
+![Couverture](https://img.shields.io/badge/couverture-94%25-brightgreen)🔧 Patch test
