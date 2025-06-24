@@ -20,10 +20,7 @@ async def check_reflexia_status():
     """
     try:
         result = launch_reflexia_check()
-        return JSONResponse(content={
-            "status": "ok",
-            "metrics": result["metrics"]
-        })
+        return JSONResponse(content={"status": "ok", "metrics": result["metrics"]})
 
     except Exception as e:
         return JSONResponse(

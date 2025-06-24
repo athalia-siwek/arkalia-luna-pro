@@ -10,13 +10,15 @@ from helloria.core import app  # ou là où tu exposes FastAPI
 def client():
     return TestClient(app)
 
+
 def test_reflexia_check(client):
     # 🔎 Appel du endpoint Reflexia
     response = client.get("/reflexia/check")
 
     # ✅ Statut HTTP attendu
-    assert response.status_code == 200, \
-        f"Erreur HTTP : {response.status_code} - {response.text}"
+    assert (
+        response.status_code == 200
+    ), f"Erreur HTTP : {response.status_code} - {response.text}"
 
     # ✅ Structure de la réponse attendue
     data = response.json()
