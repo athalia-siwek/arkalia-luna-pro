@@ -1,3 +1,11 @@
+# 📁 modules/reflexia/core.py
+
+"""
+Module principal pour lancer la logique réflexive :
+- Check unique (snapshot + status)
+- Boucle réflexive (surveillance continue)
+"""
+
 from modules.reflexia.logic.decision import monitor_status
 from modules.reflexia.logic.metrics import read_metrics
 from modules.reflexia.logic.snapshot import save_snapshot
@@ -15,17 +23,25 @@ def launch_reflexia_check() -> dict:
     metrics = read_metrics()
     status = monitor_status(metrics)
 
-    # Toujours sauvegarder, même en état dégradé
-    if status.lower() in {"ok", "degraded", "critical"}:
-        save_snapshot(metrics, status)
+    # ✅ Sauvegarde même si status critique
+    save_snapshot(metrics, status)
 
     return {"status": status, "metrics": metrics}
 
 
+# ✅ Alias utilisé par l'API pour simplifier les imports
+def get_metrics() -> dict:
+    """
+    🎯 Interface simple pour l'API REST :
+    Retourne uniquement les métriques (sans logique réflexive complète).
+    """
+    return read_metrics()
+
+
 def launch_reflexia_loop() -> None:
     """
-    🔁 Lance la boucle réflexive automatique depuis `main_loop`.
-    Utilisé pour un mode surveillance continue.
+    🔁 Lance la boucle réflexive automatique depuis `main_loop.py`.
+    Utilisé pour un mode surveillance continue (via trigger ou cron).
     """
     from modules.reflexia.logic.main_loop import reflexia_loop
 

@@ -1,19 +1,27 @@
-# /Volumes/T7/devstation/cursor/arkalia-luna-pro/tests/integration/
-# test_reflexia_check.py
+# 📁 tests/integration/test_reflexia_check.py
 
+import pytest
 from fastapi.testclient import TestClient
 
-from helloria.core import app
-
-client = TestClient(app)
+from helloria.core import app  # ou là où tu exposes FastAPI
 
 
-def test_reflexia_check():
+@pytest.fixture
+def client():
+    return TestClient(app)
+
+def test_reflexia_check(client):
+    # 🔎 Appel du endpoint Reflexia
     response = client.get("/reflexia/check")
-    assert response.status_code == 200
+
+    # ✅ Statut HTTP attendu
+    assert response.status_code == 200, \
+        f"Erreur HTTP : {response.status_code} - {response.text}"
+
+    # ✅ Structure de la réponse attendue
     data = response.json()
-    assert "status" in data
-    assert "metrics" in data
-    assert isinstance(data["metrics"], dict)
-    assert "cpu" in data["metrics"]
-    assert "ram" in data["metrics"]
+    assert "status" in data, "Clé 'status' manquante dans la réponse"
+    assert "metrics" in data, "Clé 'metrics' manquante dans la réponse"
+    assert isinstance(data["metrics"], dict), "'metrics' doit être un dictionnaire"
+    assert "cpu" in data["metrics"], "Clé 'cpu' manquante dans les métriques"
+    assert "ram" in data["metrics"], "Clé 'ram' manquante dans les métriques"

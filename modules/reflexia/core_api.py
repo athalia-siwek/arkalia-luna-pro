@@ -1,16 +1,32 @@
-# /Volumes/T7/devstation/cursor/arkalia-luna-pro/modules/reflexia/core_api.py
+# 📁 modules/reflexia/core_api.py
 
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 
 from modules.reflexia.core import launch_reflexia_check
 
-router = APIRouter()
+# 🧩 Router Reflexia
+router = APIRouter(
+    prefix="/reflexia",
+    tags=["Reflexia"],
+)
 
 
-@router.get("/reflexia/check", tags=["Reflexia"])
-def reflexia_check():
+@router.get("/check")
+async def check_reflexia_status():
     """
-    ✅ Lance une vérification réflexive instantanée.
-    Retourne : status + métriques.
+    ✅ Endpoint de vérification réflexive.
+    Retourne l'état des métriques système (CPU, RAM, etc.)
     """
-    return launch_reflexia_check()
+    try:
+        result = launch_reflexia_check()
+        return JSONResponse(content={
+            "status": "ok",
+            "metrics": result["metrics"]
+        })
+
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Erreur réflexive : {str(e)}"},
+        )
