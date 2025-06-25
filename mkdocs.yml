@@ -73,6 +73,8 @@ nav:
       - Sécurité: security.md
       - Tests: tests.md
       - ReflexIA: reflexia.md
+      - Assistant TaskIA: modules/taskia.md
+      - Mémoire Globale IA: modules/global_state.md
   - 🛠️ Architecture:
       - Structure du dépôt: structure.md
       - Composants IA: composants.md
