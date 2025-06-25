@@ -99,8 +99,9 @@ def update_dashboard(
         "previous": ["reduce_load", "monitor", "monitor"],
         "last_updated": str(datetime.now()),
     }
-    with open(dashboard_path, "w") as f:
-        json.dump(dashboard, f, indent=2)
+    with open(dashboard_path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(dashboard, f, indent=2, ensure_ascii=False)
+        f.write("\n")  # 👈 Corrige définitivement le problème de EOF manquant
 
 
 # === Détection de contradiction ReflexIA vs ZeroIA ===
