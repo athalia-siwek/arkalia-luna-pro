@@ -10,6 +10,8 @@ CONFLICT_LOG = Path("tests/tmp/zeroia_contradictions.log")
 
 
 def test_check_for_ia_conflict_detected(monkeypatch):
+    REFLEXIA_STATE.parent.mkdir(parents=True, exist_ok=True)
+    REFLEXIA_STATE.write_text("last_decision = 'normal'")
     toml.dump({"last_decision": "monitor"}, REFLEXIA_STATE.open("w"))
     toml.dump({"last_decision": "reduce_load"}, ZEROIA_STATE.open("w"))
 
@@ -29,7 +31,8 @@ def test_check_for_ia_conflict_detected(monkeypatch):
 
 
 def test_conflict_log_written(tmp_path):
-    reflexia_path = tmp_path / "reflexia.toml"
+    reflexia_path = tmp_path / "reflexia_state.toml"
+    reflexia_path.write_text('[reflexia]\nstatus="ok"')
     zeroia_path = tmp_path / "zeroia.toml"
     log_path = tmp_path / "contradiction.log"
 

@@ -38,3 +38,31 @@ def test_query_ollama_network_error(monkeypatch):
 
     response = ollama_connector.query_ollama("Hello", model="mistral")
     assert "Erreur IA" in response
+
+
+def test_query_ollama_timeout(monkeypatch):
+    def mock_post(*args, **kwargs):
+        raise requests.exceptions.Timeout
+
+    monkeypatch.setattr("requests.post", mock_post)
+
+    response = ollama_connector.query_ollama("Hello", model="mistral")
+    assert "Erreur IA" in response
+
+
+def test_query_ollama_http_error(monkeypatch):
+    class MockResponse:
+        def __init__(self, status_code):
+            self.status_code = status_code
+            self.text = "Error"
+
+        def json(self):
+            return {}
+
+    def mock_post(*args, **kwargs):
+        return MockResponse(500)
+
+    monkeypatch.setattr("requests.post", mock_post)
+
+    response = ollama_connector.query_ollama("Hello", model="mistral")
+    assert "Erreur IA" in response

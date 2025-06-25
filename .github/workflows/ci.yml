@@ -17,6 +17,7 @@ jobs:
 
     env:
       PYTHONPATH: .
+      GH_TOKEN: ${{ secrets.ARKALIA_PAT }}
 
     steps:
       - name: 🧾 Checkout du dépôt (avec historique complet)
@@ -99,5 +100,6 @@ jobs:
             mkdocs-git-revision-date-localized-plugin
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git --quiet
           mkdocs gh-deploy --clean --force --remote-branch gh-pages
           echo "::endgroup::"
