@@ -100,6 +100,6 @@ jobs:
             mkdocs-git-revision-date-localized-plugin
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git --quiet
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
           mkdocs gh-deploy --clean --force --remote-branch gh-pages
           echo "::endgroup::"
