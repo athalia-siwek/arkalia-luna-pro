@@ -10,7 +10,7 @@ from modules.zeroia.reason_loop import (
 
 def test_decide_with_empty_context():
     """Test 1: Vérifie que la fonction decide() ne plante pas même si le contexte
-est vide."""
+    est vide."""
     decision, score = decide({})
     assert decision == "normal"
     assert score == 0.4

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+
+PROJECT_DIR="/Volumes/T7/devstation/cursor/arkalia-luna-pro"
+ZEROIA_DIR="$PROJECT_DIR/modules/zeroia"
+REASON_LOOP="$ZEROIA_DIR/reason_loop.py"
+SNAPSHOT_GENERATOR="$ZEROIA_DIR/snapshot_generator.py"
+FAILSAFE="$ZEROIA_DIR/failsafe.py"
+REASONING_HISTORY="$ZEROIA_DIR/logs/reasoning_history.md"
+
+timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+
+echo "🌐 [$timestamp] Lancement de ZeroIA…"
+echo "📌 Création du snapshot…"
+python "$SNAPSHOT_GENERATOR"
+
+echo "🧠 Lancement de reason_loop.py…"
+python "$REASON_LOOP" || {
+    echo "⚠️ Échec de reason_loop.py — déclenchement du failsafe"
+    python "$FAILSAFE"
+    exit 1
+}
+
+echo "📘 Écriture dans reasoning_history.md…"
+echo -e "\n---\n[$timestamp] Décision exécutée avec succès.\nSnapshot : zeroia_snapshot.toml" >> "$REASONING_HISTORY"
+
+echo "✅ ZeroIA terminé proprement."

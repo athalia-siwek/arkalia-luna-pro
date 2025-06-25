@@ -8,4 +8,4 @@ def test_invalid_weights_config(tmp_path):
     broken_config.write_text("💀 invalid_toml = !!?!")
 
     with pytest.raises(Exception):
-        load_weights()
+        load_weights(path=broken_config)

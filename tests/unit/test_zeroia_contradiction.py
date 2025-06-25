@@ -23,7 +23,11 @@ def test_contradiction_detection(tmp_path, monkeypatch):
     monkeypatch.setattr("modules.zeroia.reason_loop.REFLEXIA_STATE", reflexia_path)
     monkeypatch.setattr("modules.zeroia.reason_loop.STATE_PATH", zeroia_path)
 
-    check_for_ia_conflict(log_path_override=contradiction_log)
+    check_for_ia_conflict(
+        reflexia_state_path=reflexia_path,
+        zeroia_state_path=zeroia_path,
+        log_path_override=contradiction_log,
+    )
 
     assert contradiction_log.exists()
     with open(contradiction_log) as f:

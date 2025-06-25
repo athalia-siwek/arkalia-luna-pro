@@ -46,3 +46,13 @@ def launch_reflexia_loop() -> None:
     from modules.reflexia.logic.main_loop import reflexia_loop
 
     reflexia_loop()
+
+
+def load_reflexia_data() -> dict:
+    return {
+        "metrics": {
+            "cpu": 42,
+            "ram": 65,
+        },
+        "status": "ok",
+    }

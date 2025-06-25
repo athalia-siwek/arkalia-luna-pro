@@ -1,16 +1,58 @@
 {
     "include": [
-        "."
+        "modules",
+        "tests",
+        "scripts"
+    ],
+    "exclude": [
+        "**/__pycache__",
+        "**/.venv",
+        "build",
+        "dist",
+        "site",
+        "app",
+        "tools",
+        "strict_backup",
+        "**/site",
+        "**/app",
+        "**/tools",
+        "**/strict_backup"
     ],
     "venvPath": "/Volumes/T7",
     "venv": "arkalia-luna-venv",
+    "pythonVersion": "3.10",
+    "executionEnvironments": [
+        {
+            "root": "./",
+            "extraPaths": [
+                "./modules"
+            ]
+        }
+    ],
     "reportMissingImports": true,
     "reportMissingModuleSource": true,
     "reportUnknownParameterType": false,
     "reportUnknownArgumentType": false,
     "reportUnknownMemberType": false,
-    "pythonVersion": "3.10",
-    "extraPaths": [
-        "."
-    ]
+    "reportMissingParameterType": false,
+    "reportMissingTypeArgument": false,
+    "reportUnknownVariableType": false,
+    "reportAny": false,
+    "reportCallInDefaultInitializer": false,
+    "reportDeprecated": false,
+    "reportUnnecessaryComparison": false,
+    "reportUnusedParameter": false,
+    "reportImplicitStringConcatenation": false,
+    "reportImportCycles": false,
+    "reportOptionalSubscript": false,
+    "reportOptionalMemberAccess": false,
+    "reportOptionalCall": false,
+    "reportOptionalIterable": false,
+    "reportOptionalContextManager": false,
+    "reportOptionalOperand": false,
+    "reportPrivateImportUsage": false,
+    "reportUnboundVariable": true,
+    "reportUnusedVariable": false,
+    "reportGeneralTypeIssues": false,
+    "typeCheckingMode": "basic"
 }

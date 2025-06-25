@@ -12,6 +12,15 @@ router = APIRouter(
 )
 
 
+def get_reflexia_status() -> dict:
+    """
+    Fonction testable indépendamment de l'API FastAPI.
+    Retourne un dictionnaire avec les métriques du système.
+    """
+    result = launch_reflexia_check()
+    return {"status": "ok", "metrics": result["metrics"]}
+
+
 @router.get("/check")
 async def check_reflexia_status():
     """
@@ -19,9 +28,7 @@ async def check_reflexia_status():
     Retourne l'état des métriques système (CPU, RAM, etc.)
     """
     try:
-        result = launch_reflexia_check()
-        return JSONResponse(content={"status": "ok", "metrics": result["metrics"]})
-
+        return JSONResponse(content=get_reflexia_status())
     except Exception as e:
         return JSONResponse(
             status_code=500,
