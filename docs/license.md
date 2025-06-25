@@ -1,15 +1,20 @@
 # 🛡️ Licence & Mentions Légales — Arkalia-LUNA
 
+![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
+
 > Ce projet est distribué sous licence **MIT**, avec un noyau privé, assurant **ouverture contrôlée et sécurité locale**.
 
 ---
 
-## ✨ Signature Athalia 🪶
+## ✨ Signature Athalia 🌙
 
 | Élément         | Valeur                                             |
 |----------------|-----------------------------------------------------|
 | 🧠 Créatrice     | **Athalia 🌙** (Architecte IA, développeuse système) |
-| 🗂️ Dépôt GitHub  | [arkalia-luna-system](https://github.com/arkalia-luna-system) |
+| 📂 Dépôt GitHub  | [arkalia-luna-system](https://github.com/arkalia-luna-system) |
 | 📜 Objectif      | Système IA local, modulaire, auto-réflexif et souverain |
 
 ---
@@ -20,7 +25,7 @@ Arkalia-LUNA a été pensé comme un **noyau d'intelligence cognitive**, sans cl
 
 ---
 
-## 🛠️ Stack Technologique
+## ⚙️ Stack Technologique
 
 | Technologie      | Rôle principal                                 |
 |------------------|------------------------------------------------|
@@ -33,7 +38,7 @@ Arkalia-LUNA a été pensé comme un **noyau d'intelligence cognitive**, sans cl
 
 ---
 
-## 🪪 Licence MIT
+## 🧾 Licence MIT
 
 ```
 MIT License
@@ -52,10 +57,15 @@ Vous êtes libres d’utiliser, modifier, distribuer ce logiciel, à condition d
 
 ---
 
-## 🔐 Noyau Privé & Éthique
+## 🔒 Noyau Privé & Éthique
 
 Le noyau d’Arkalia est **privé**, isolé du cloud, conçu pour la **protection des données sensibles**, l’**autonomie technique** et une **éthique cognitive rigoureuse**.
 
 ---
 
-🕊️ *“Concevoir une IA éthique, souveraine, réflexive, 100 % locale, au service de l’humain.”* — Athalia 🌙
+🛡️ *“Concevoir une IA éthique, souveraine, réflexive, 100 % locale, au service de l’humain.”* — Athalia 🌙
+
+---
+
+© 2025 **Athalia** – Tous droits réservés.
+🤖 Powered by Arkalia ReflexIA `v1.x`

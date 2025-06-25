@@ -1,5 +1,10 @@
 # ❓ FAQ — Arkalia-LUNA
 
+![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
+
 Bienvenue dans la section FAQ d'Arkalia-LUNA. Ici, nous répondons aux questions les plus fréquentes que vous pourriez avoir en tant que contributeur ou utilisateur du système.
 
 ---
@@ -34,3 +39,8 @@ Veuillez signaler tout bug ou vulnérabilité via notre [dépôt GitHub](https:/
 ---
 
 Pour toute autre question, n'hésitez pas à nous contacter via notre [dépôt GitHub](https://github.com/arkalia-luna-system/arkalia-luna-pro) ou par email.
+
+---
+
+© 2025 **Athalia** – Tous droits réservés.
+🤖 Powered by Arkalia ReflexIA `v1.x`

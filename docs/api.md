@@ -1,198 +1,116 @@
-# 🚀 API FastAPI — Arkalia-LUNA
+# 📬 API Arkalia-LUNA (`/chat`, `/status`, `/metrics`)
 
-L'API FastAPI permet aux agents externes, qu'ils soient humains ou systèmes, de communiquer avec Arkalia-LUNA de manière **locale, modulaire et sécurisée**.
+![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
 
----
+Bienvenue dans la documentation officielle de l’API de **Helloria**, le point d’entrée HTTP de votre système IA local Arkalia-LUNA.
 
-## 🌐 Endpoint principal
-
-- **URL locale** : `http://127.0.0.1:8000/`
-- **Serveur** : `Uvicorn` (via Docker ou en local)
-- **Point d'entrée** : `helloria.core:app`
-
-### ▶️ Commande de démarrage manuelle
-
-```bash
-uvicorn helloria.core:app --reload
-```
-
-💡 **Astuce** : Utilisez `docker-compose up` ou le script `ark-docker` pour démarrer.
-
-| Méthode | URL       | Description                          |
-|---------|-----------|--------------------------------------|
-| GET     | /         | Test de vie : "Bienvenue dans Helloria" |
-| POST    | /chat     | Envoie un prompt à l'IA locale (assistantia) |
-| GET     | /status   | Retourne l'état général du système   |
-| GET     | /echo?msg=x | Répond avec le message donné        |
-
-⸻
-
-🔐 **Sécurité & accès**
-- API uniquement exposée en local
-- Possibilité future d'ajouter :
-  - Authentification par clé
-  - Limitation de débit
-  - Journalisation des accès via reflexia
-
-⸻
-
-📦 **Design modulaire**
-
-Chaque endpoint est délégué à un module :
-- `helloria/` : orchestration API
-- `assistantia/` : génération IA
-- `reflexia/` : métriques & diagnostics
-- `nyxalia/` : interprétation mobile
-
-⸻
-
-✅ **Architecture pensée pour l'extensibilité et le contrôle par module.**
-
-# 📌 Arkalia-LUNA Documentation Technique
-
-## Version Actuelle
-
-**v2.0.2 — 20 juin 2025**
-🔄 Git tag synchronisé, CI/CD active, Docker stable, tests validés à 100 %
-
-## 🧠 Modules IA Actifs
-
-| Module      | Rôle                                | État       |
-|-------------|-------------------------------------|------------|
-| assistantia | IA contextuelle via /chat + Ollama  | ✅ Stable  |
-| helloria    | Serveur d'entrée FastAPI            | ✅ Stable  |
-| reflexia    | Superviseur cognitif & metrics      | ✅ Stable  |
-| nyxalia     | Interface cognitive mobile          | ✅ Stable  |
-
-## 🚀 API Active
-
-**POST /chat — AssistantIA**
-
-**Utilisation** : Envoie un message à l'IA locale (Ollama mistral)
-
-**Requête :**
-
-```json
-{
-  "message": "Bonjour Arkalia"
-}
-```
-
-**Réponse :**
-
-```json
-{
-  "réponse": "Bonjour ! Je suis AssistantIA, prêt à vous aider."
-}
-```
-
-**Erreurs gérées :**
-
-| Cas               | Statut | Message retourné            |
-|-------------------|--------|-----------------------------|
-| Body vide         | 422    | Champ message requis        |
-| Prompt vide       | 200    | [⚠️ Réponse IA vide]        |
-| Modèle non supporté | 500  | ValueError levée            |
-| Timeout Ollama    | 500    | [Erreur IA] ReadTimeout     |
-
-## 🧪 Tests & Couverture
-
-- ✅ 35/35 tests passés
-- ✅ Couverture : 92 %
-- ✅ Modules testés : assistantia, ollama_connector, helloria, reflexia, nyxalia, hooks, scripts
-
-## 🐳 Environnement Docker
-
-- Conteneur stable (ark-docker)
-- Ollama local requis (mistral, tinyllama)
-- FastAPI exposé sur localhost:8000
-
-## 📘 Site public MkDocs
-
-Disponible ici : arkalia-luna-pro GitHub Pages
-Sitemap automatique, Mermaid, thème personnalisé Bleu Coton Nuit, badge coverage 92 %.
+> Cette API est gérée par le module `Helloria`, et permet d’interagir avec les assistants IA (`AssistantIA`, `Reflexia`, etc.), d’effectuer des tests, de surveiller le système et de lancer des actions intelligentes.
 
 ---
 
-## 🧭 Prochaine étape : Arkalia LUNA Nexus — interface IA guidée, cognitive, et adaptative.
+## 🚀 Endpoints principaux
 
-## 📊 Flux de Communication — /chat
+### `POST /chat`
 
-```mermaid
-sequenceDiagram
-    participant U as Utilisateur
-    participant A as AssistantIA
-    participant O as Ollama (modèle local)
-    U->>A: POST /chat (message)
-    A->>O: Query modèle (via `query_ollama`)
-    O-->>A: Réponse IA (texte brut)
-    A-->>U: JSON { "response": "..." }
-```
+- **Description** : Envoie une requête textuelle à l’assistant IA (`AssistantIA`).
+- **Payload JSON** :
+  ```json
+  {
+    "message": "Quelle est l'état de ReflexIA ?",
+    "user_id": "athalia-01"
+  }
+  ```
 
-## 📚 Cas d'Usage
+- **Test rapide** :
+  > 🧪 Test rapide :
+  >
+  > ```bash
+  > curl -X POST http://localhost:8000/chat -H "Content-Type: application/json" \
+  > -d '{"message": "Statut ZeroIA"}'
+  > ```
 
-### Poser une Question
-Envoyez une requête POST à `/chat` avec votre question pour obtenir une réponse contextuelle de l'IA.
+- **Authentification** :
+  > 🔒 Cette API est locale, mais une gestion future des tokens/JWT est prévue pour renforcer la sécurité.
 
-### Mode Debug
-Utilisez le paramètre `debug=true` pour obtenir des informations détaillées sur le traitement de la requête.
+### `GET /status`
+- **Description** : Retourne l'état global de l'instance Arkalia (modules actifs, statut, etc.)
+- **Réponse** :
+  ```json
+  {
+    "status": "running",
+    "modules": ["reflexia", "assistantia", "zeroia", "nyxalia"]
+  }
+  ```
 
-## ⚠️ Erreurs Typiques
+### `GET /metrics`
+- **Description** : Renvoie des métriques sur les appels API, temps de réponse, et éventuelles erreurs.
+- **Exemple** :
+  ```json
+  {
+    "uptime": "3h12m",
+    "requests_handled": 103,
+    "average_response_ms": 217
+  }
+  ```
 
-| Erreur               | Cause Possible                  | Correction Suggestée            |
-|----------------------|---------------------------------|---------------------------------|
-| Body vide            | Requête sans champ `message`    | Ajouter un champ `message`      |
-| Prompt vide          | Champ `message` vide            | Fournir un texte dans `message` |
-| Modèle non supporté  | Modèle IA non disponible        | Vérifier la configuration du modèle |
-| Timeout Ollama       | Temps d'attente dépassé         | Vérifier la connexion et les ressources |
+---
 
-Pour plus de détails sur l'AssistantIA, consultez [AssistantIA](assistantia.md).
+## 🧪 Routes de test & développement
 
-### POST /chat
+### `POST /debug/echo`
+- **Payload** : n'importe quelle chaîne JSON
+- **Réponse** : renvoie exactement ce qui a été envoyé (utile pour debug)
+- **Exemple** :
+  ```bash
+  curl -X POST http://localhost:8000/debug/echo -H "Content-Type: application/json" -d '{"test": "ping"}'
+  ```
 
-- **Body :** `{ "message": str }`
-- **Réponses :**
-  - `200` → `{ "réponse": str }`
-  - `400` → `{ "detail": "Message vide." }`
-  - `422` → validation automatique si champ manquant
+---
 
-## 🧠 Module `reflexia` — Analyse cognitive réflexive
+## ⚙️ Headers recommandés
+- `Content-Type: application/json`
+- `Authorization: Bearer <token>` (si futur système de jetons activé)
 
-Reflexia est le module d'observation et d'auto-analyse du système Arkalia.
-Il lit des métriques internes (CPU, mémoire, etc.), évalue leur criticité, et peut sauvegarder un état réflexif.
+---
 
-### 🔹 Fonctions exposées :
+## 🔒 Sécurité
 
-| Fonction | Description |
-|---------|-------------|
-| `launch_reflexia_check()` | Lance un scan réflexif et retourne un dictionnaire contenant le statut du système. |
+Cette API est locale, non exposée publiquement par défaut. Si un reverse proxy est mis en place (type Nginx), veillez à :
+- Restreindre l'accès IP
+- Activer HTTPS si utilisé sur un réseau
 
-### 🔬 Exemple de retour :
+---
 
-```json
-{
-  "status": "normal"
-}
-```
-
-**Dossiers :**
-- `reflexia/core.py` : fonction principale
-- `reflexia/logic/*.py` : analyse CPU, snapshot JSON, décisions
-- `reflexia/tests/unit/` : 5 fichiers de test, tous validés
-
-### 🧠 ReflexIA — Vérification réflexive instantanée
-
-- 🔍 **Description** : Analyse réflexive instantanée — récupère les métriques système, les évalue, et retourne un diagnostic.
-- 📂 **Module** : modules/reflexia/
-- ⚙️ **Fonction appelée** : launch_reflexia_check()
-
-🔄 **Exemple de réponse :**
-
-```json
-{
-  "status": "normal"
-}
-```
+## 🧪 Exemple d'appel en terminal
 
 ```bash
-curl http://localhost:8000/reflexia/check | jq
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Qui es-tu ?"}'
+```
+
+---
+
+## 📚 Voir aussi
+- [Guide API](api.md) dans les pages [index.md](index.md) et [Helloria](modules/helloria.md) pour une meilleure navigation.
+
+---
+
+## 📂 Fichier à créer
+
+```bash
+touch docs/api.md
+
+Puis colle le contenu ci-dessus. Tu peux ensuite l'intégrer dans mkdocs.yml comme ceci :
+
+- 📬 API Arkalia: api.md
+
+```
+
+---
+
+© 2025 **Athalia** – Tous droits réservés.
+🤖 Powered by Arkalia ReflexIA `v1.x`

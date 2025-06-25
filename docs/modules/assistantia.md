@@ -1,4 +1,9 @@
-# 🤖 AssistantIA — Module Cognitif Intégré
+# 🧠 AssistantIA — Module Cognitif Intégré
+
+![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
 
 Le module `assistantia/` est l’interface d’assistance IA locale d’Arkalia-LUNA. Il agit comme **guide conversationnel**, interface cognitive et **répondant intelligent** aux requêtes utilisateurs.
 
@@ -21,7 +26,7 @@ uvicorn modules.assistantia.core:app --port 8001
 
 📍 **Port configurable** dans `docker-compose.yml` ou `config/`.
 
-⸻
+---
 
 ## 🔄 Endpoints disponibles
 
@@ -29,6 +34,8 @@ uvicorn modules.assistantia.core:app --port 8001
 |---------|--------|----------------------------------|
 | POST    | /chat  | Envoie un message à l’IA locale  |
 | GET     | /status| État du module assistantia       |
+
+---
 
 ## 🧪 Tests associés
 
@@ -38,7 +45,7 @@ uvicorn modules.assistantia.core:app --port 8001
 
 ✅ **Couverture** : 81 % — avec plan d’extension vers les cas d’erreur et logs détaillés.
 
-⸻
+---
 
 ## 🌐 Connectivité modulaire
 
@@ -49,19 +56,25 @@ Le module est connecté à :
 
 💡 **Prêt pour une extension** vers Ollama, Langchain, ou des modèles hybrides.
 
-⸻
+---
 
 🎯 **Objectif futur** : une IA embarquée réflexive, contextuelle, auto-ajustable.
 
-# 🧠 AssistantIA — Utilisation et Intégration LLM
+---
+
+## 🧠 AssistantIA — Utilisation et Intégration LLM
 
 L'AssistantIA est conçu pour offrir une interaction fluide et intelligente avec les utilisateurs, en intégrant des modèles de langage de pointe (LLM) pour comprendre et répondre aux requêtes de manière contextuelle.
+
+---
 
 ## 🚀 Fonctionnalités Principales
 
 - **Réponses Contextuelles** : Grâce à l'intégration de modèles LLM comme Mistral et Llama2, l'AssistantIA peut fournir des réponses précises et adaptées au contexte de la conversation.
 - **Personnalisation** : L'AssistantIA s'adapte aux préférences de l'utilisateur, offrant une expérience personnalisée.
 - **Intégration Facile** : Peut être intégré dans diverses applications via des API REST, facilitant l'interaction avec d'autres systèmes.
+
+---
 
 ## 🌐 Exemple d'Utilisation
 
@@ -71,9 +84,13 @@ curl -X POST http://localhost:8000/chat \
   -d '{"message": "Quelle est la philosophie d'Arkalia ?"}'
 ```
 
+---
+
 ## 🧠 Modèles LLM Intégrés
 
 L'AssistantIA utilise des modèles LLM locaux pour garantir la confidentialité et l'efficacité. Les modèles sont stockés localement et peuvent être mis à jour ou remplacés selon les besoins.
+
+---
 
 ## 📊 Structure JSON Entrante/Sortante
 
@@ -96,13 +113,17 @@ L'AssistantIA utilise des modèles LLM locaux pour garantir la confidentialité 
 }
 ```
 
+---
+
 ## ⚙️ Paramètres Optionnels
 
 - **mode** : Définit le mode de raisonnement de l'IA (ex: neutre, empathique).
 - **lang** : Langue de réponse attendue (ex: fr, en).
 - **user_id** : Identifiant utilisateur pour personnalisation.
 
-## 📈 Schéma d'Interaction
+---
+
+## 📊 Schéma d'Interaction
 
 ```mermaid
 sequenceDiagram
@@ -117,6 +138,11 @@ sequenceDiagram
 
 ---
 
-🤖 *L'AssistantIA est votre partenaire intelligent pour une interaction IA enrichissante et sécurisée.*
+🧠 *L'AssistantIA est votre partenaire intelligent pour une interaction IA enrichissante et sécurisée.*
 
-Pour des considérations de sécurité, veuillez consulter [Sécurité](security.md).
+Pour des considérations de sécurité, veuillez consulter [Sécurité](../security/security.md).
+
+---
+
+© 2025 **Athalia** – Tous droits réservés.
+🤖 Powered by Arkalia ReflexIA `v1.x`

@@ -60,39 +60,58 @@ extra:
       content: "Athalia 🌙"
 
 nav:
-  - 🏠 Accueil: index.md
-  - ⚡ Démarrage rapide:
-      - Installation: installation.md
-      - Configuration: configuration.md
-  - 🧠 Modules IA:
-      - Vue d'ensemble: modules.md
-      - Kernel & Coordination: kernel.md
-      - AssistantIA: assistantia.md
-      - ReflexIA: reflexia.md
-      - ZeroIA: zeroia.md
-      - Assistant TaskIA: modules/taskia.md
-      - Mémoire Globale IA: modules/global_state.md
-      - API /chat: api.md
-      - Automatisation: automation.md
-      - Sécurité: security.md
-      - Tests: tests.md
-  - 🛠️ Architecture:
-      - Structure du dépôt: structure.md
-      - Composants IA: composants.md
-  - ⚙️ CI/CD & Déploiement:
-      - Intégration continue: ci-cd.md
-      - Déploiement GitHub Pages: deployment.md
-  - 🧪 Tests LLM:
-      - Ollama & IA locales: ollama.md
-  - 📜 Journal:
-      - Journal des versions: releases/index.md
-      - CHANGELOG: CHANGELOG.md
-  - 🗺️ Feuille de route: roadmap.md
-  - 🧾 Crédits:
-      - Auteure: credits.md
-      - Licence: license.md
-  - ❓ FAQ: faqs.md
-  - 🧰 Utilisation: utilisation.md
+  - Accueil: index.md
+  - Modules (index): modules.md
+  - API: api.md
+  - FAQ: faqs.md
+  - License: license.md
+
+  - Fonctionnement:
+      - Utilisation: fonctionnement/utilisation.md
+      - Composants: fonctionnement/composants.md
+      - Noyau IA: fonctionnement/kernel.md
+      - Structure: fonctionnement/structure.md
+
+  - Infrastructure:
+      - Installation: infrastructure/installation.md
+      - Configuration: infrastructure/configuration.md
+      - Déploiement Docker: infrastructure/deployment.md
+      - CI/CD: infrastructure/ci-cd.md
+      - Automatisation: infrastructure/automation.md
+      - Ollama: infrastructure/ollama.md
+
+  - Modules:
+      - Assistantia: modules/assistantia.md
+      - Reflexia: modules/reflexia.md
+      - Helloria: modules/helloria.md
+      - ZeroIA: modules/zeroia.md
+      - Nyxalia: modules/nyxalia.md
+      - TaskIA: modules/taskia.md
+      - Global State: modules/global_state.md
+
+  - Logs:
+      - Raisonnement: logs/reasoning_history.md
+      - Analyse des échecs: logs/failure_analysis.md
+
+  - Roadmap:
+      - Améliorations: roadmap/ENHANCEMENTS.md
+      - Plan: roadmap/index.md
+
+  - Journal de bord:
+      - Checklist: journal/CHECKLIST.md
+
+  - Sécurité:
+      - Sécurité générale: security/security.md
+
+  - Crédits:
+      - Contributeurs: credits/CONTRIBUTING.md
+      - Crédits généraux: credits/credits.md
+
+  - Historique:
+      - CHANGELOG: releases/CHANGELOG.md
+
+  - Releases:
+      - Index: releases/index.md
 
 markdown_extensions:
   - admonition

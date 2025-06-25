@@ -1,10 +1,15 @@
-# Documentation de ZeroIA
+# 🧠 ZeroIA — Module de Décision Contextuelle
 
-## Introduction
+![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
 
 ZeroIA est un module conçu pour prendre des décisions basées sur le contexte du système, en particulier l'utilisation du CPU. Ce document décrit sa structure, son fonctionnement, et son intégration avec ReflexIA.
 
-## Structure du Module
+---
+
+## 📂 Structure du Module
 
 Le module ZeroIA est structuré comme suit :
 
@@ -25,7 +30,9 @@ arkalia-luna-pro/
         │   └── test_zeroia_decision_basic.py
 ```
 
-## Fonctionnement
+---
+
+## 🔄 Fonctionnement
 
 ZeroIA fonctionne en trois étapes principales :
 
@@ -77,11 +84,15 @@ if __name__ == "__main__":
     main()
 ```
 
-## Tests
+---
+
+## 🧪 Tests
 
 Les tests pour ZeroIA sont validés avec Pytest, assurant que les décisions sont prises correctement en fonction de différents scénarios d'utilisation du CPU.
 
-## Intégration avec ReflexIA
+---
+
+## 🔄 Intégration avec ReflexIA
 
 ZeroIA est maintenant capable de s'intégrer avec ReflexIA pour obtenir un contexte plus riche. Cela permet à ZeroIA de prendre des décisions plus informées en utilisant les données de ReflexIA.
 
@@ -99,11 +110,15 @@ Les décisions prises par ZeroIA sont maintenant journalisées avec des informat
 2025-06-24 20:43:48.758557 :: FROM REFLEXIA: {'last_snapshot': '⚠️ RAM élevée', 'last_decision': 'monitor'} | CPU=72.1 | SEVERITY=warning → DECISION = monitor
 ```
 
-### Tests
+---
+
+## 🧪 Tests
 
 Les tests pour l'intégration avec ReflexIA ont été ajoutés et validés avec Pytest, assurant que les décisions sont prises correctement en fonction des données enrichies.
 
-## Fiche Cognitive
+---
+
+## 🧠 Fiche Cognitive
 
 La fiche cognitive de ZeroIA décrit comment le système utilise les données contextuelles pour prendre des décisions éclairées. ZeroIA intègre les informations de ReflexIA pour améliorer la précision et la pertinence de ses décisions.
 
@@ -124,9 +139,9 @@ graph TD;
     G --> H;
 ```
 
-Ce schéma montre comment ZeroIA lit les fichiers de contexte, fusionne les données, prend des décisions, et journalise les résultats en tenant compte des informations de ReflexIA.
+---
 
-## Logique et Heuristiques
+## 🔄 Logique et Heuristiques
 
 ZeroIA utilise une logique basée sur des heuristiques pour prendre des décisions en fonction du contexte système. Les décisions sont influencées par l'utilisation du CPU, la sévérité des alertes, et les données fournies par Reflexia.
 
@@ -164,16 +179,22 @@ Ce diagramme illustre comment ZeroIA intègre les données de Reflexia pour amé
 
 ZeroIA ajuste dynamiquement ses seuils de décision en fonction des actions récentes, comme indiqué par la fonction `should_lower_cpu_threshold`.
 
-## 🔁 Dernière décision
+---
+
+## 🔄 Dernière décision
 
 - Décision : `monitor`
 - Confiance : `0.6`
 - Justification : `cpu=72.1, severity=warning`
 
+---
+
 ## 📊 Pondération IA
 
 - Score moyen : **0.65**
 - Décisions majeures : `reduce_load`, `monitor`, `normal`
+
+---
 
 ## 🧠 Diagramme d'Interaction (Mermaid)
 
@@ -189,6 +210,8 @@ graph TD
   Contradiction -->|enregistrement| Log
 ```
 
+---
+
 ## 🧠 Chaîne de Raisonnement (Mermaid)
 
 ```mermaid
@@ -198,5 +221,9 @@ flowchart TD
   ZL -->|Update| ZD[zeroia_dashboard.json]
   RS -->|Read last_decision| CC[Contradiction Check]
   ZL --> CC
-  CC -->|Mismatch| ZC[zeroia_contradictions.log]
 ```
+
+---
+
+© 2025 **Athalia** – Tous droits réservés.
+🤖 Powered by Arkalia ReflexIA `v1.x`

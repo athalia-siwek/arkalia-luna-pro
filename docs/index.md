@@ -1,10 +1,9 @@
 # 🧠 Arkalia-LUNA — Interface Cognitive Modulaire
 
-![Version](https://img.shields.io/badge/version-v1.3.0-blue)
+![Version](https://img.shields.io/badge/version-v2.4.0-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
-![Docs](https://img.shields.io/badge/docs-auto--generated-blueviolet)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Powered by ReflexIA](https://img.shields.io/badge/powered%20by-ReflexIA-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
 
 Bienvenue dans **Arkalia-LUNA**, un système cognitif **modulaire, local, dockerisé, testé et documenté**.
 
@@ -23,28 +22,28 @@ Ce projet est conçu comme une **infrastructure IA stable** pour exécuter des m
 | 📦 Docker       | ✅ Fonctionnel |
 | 📚 Docs MkDocs | ✅ Publiées |
 | 🧩 Modules actifs | 4 modules IA |
-| 🧪 Couverture | 91 % à 100 % par module |
+| 🧪 Couverture | 93 % à 100 % par module |
 
 ---
 
 ## 📚 Pages importantes
 
 - [🧠 Modules IA actifs](modules.md)
-- [⚙️ Structure du projet](structure.md)
-- [🚀 Déploiement Docker](deployment.md)
-- [🔁 Automatisation](automation.md)
-- [📬 API & Intégration](api.md)
-- [🔒 Sécurité & CI/CD](ci-cd.md)
+- [⚙️ Structure du projet](fonctionnement/structure.md)
+- [🚀 Déploiement Docker](infrastructure/deployment.md)
+- [🔄 Automatisation](modules/helloria.md)
+- [📬 API & Intégration](modules/helloria.md)
+- [🔒 Sécurité & CI/CD](infrastructure/ci-cd.md)
 
 ---
 
-## 🧭 Vision du projet
+## 🧠 Vision du projet
 
 > Arkalia-LUNA est pensé comme un **noyau d'interface cognitive locale**, auto-adaptative, sécurisée et évolutive. Chaque module fonctionne de manière autonome, dans un système orchestré, observable et auto-réparant.
 
 ---
 
-## 📌 Dernière mise à jour : `v1.3.0` — 2025-06-19
+## 📌 Dernière mise à jour : `v2.4.0` — 2025-06-19
 
 ## 📊 État des Modules
 
@@ -82,10 +81,10 @@ graph TD
 
 ```mermaid
 graph TD
-  A[app/main.py<br/>🟥 0%] -->|à compléter| C[core.py 🟩 79%]
-  B[arkalia/hooks.py<br/>🟥 0%] -->|à compléter| C
-  C --> D[ollama_connector.py 🟨 80%]
-  C --> E[helloria/core.py 🟨 83%]
+  A[app/main.py<br/>🔴 0%] -->|à compléter| C[core.py 🟡 79%]
+  B[arkalia/hooks.py<br/>🔴 0%] -->|à compléter| C
+  C --> D[ollama_connector.py 🟢 80%]
+  C --> E[helloria/core.py 🟢 83%]
   C --> F[reflexia/tests ✅]
   C --> G[assistantia/tests ✅]
   C --> H[nyxalia/tests ✅]
@@ -103,14 +102,14 @@ Arkalia-LUNA intègre plusieurs modules IA actifs, chacun jouant un rôle crucia
 ## 📚 Liens Rapides
 
 - [API Guide](api.md)
-- [Ollama Guide](ollama.md)
-- [Guide d'Utilisation](utilisation.md)
-- [Tests et CI/CD](ci-cd.md)
+- [Ollama Guide](infrastructure/ollama.md)
+- [Guide d'Utilisation](fonctionnement/utilisation.md)
+- [Tests et CI/CD](infrastructure/ci-cd.md)
 - [FAQ](faqs.md)
 
-![Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
 
-## 🗺️ Mini Carte Mentale
+## 🧠 Mini Carte Mentale
 
 ```mermaid
 mindmap
@@ -124,3 +123,8 @@ mindmap
     Tests
     FAQ
 ```
+
+---
+
+© 2025 **Athalia** – Tous droits réservés.
+🤖 Powered by Arkalia ReflexIA `v1.x`

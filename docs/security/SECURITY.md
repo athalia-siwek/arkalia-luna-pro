@@ -1,45 +1,60 @@
-# 🛡️ SECURITY.md — Politique de sécurité Arkalia-LUNA
+# 🛡️ Sécurité & Performances — Arkalia-LUNA
 
-Merci de contribuer à la sécurité d'Arkalia-LUNA.
-
-## 📬 Signalement de vulnérabilités
-
-Si vous découvrez une vulnérabilité, **merci de ne pas la divulguer publiquement**.
-Veuillez nous contacter via l’un des moyens suivants :
-
-- 📧 Email : [athalia.security@arkalia.system](mailto:athalia.security@arkalia.system)
-- 🔐 Clé PGP publique : *(à publier prochainement)*
-
-Nous nous engageons à répondre dans un délai de 72 heures.
+La sécurité et la performance sont les deux piliers fondamentaux d’un système IA fiable. Arkalia-LUNA adopte une approche proactive, modulaire et cognitive pour garantir un fonctionnement optimal, sécurisé et résilient.
 
 ---
 
-## ✅ Bonnes pratiques recommandées
+## 🔐 Meilleures Pratiques de Sécurité
 
-- **Ne jamais exposer** les fichiers sensibles (`state/`, tokens, clés API) dans un dépôt public.
-- **Utiliser** un fichier `.env` pour les variables secrètes, et l’inclure dans le `.gitignore`.
-- **Analyser régulièrement** les dépendances avec :
-  - `pip list --outdated`
-  - `pip-audit` ou `safety`
-
----
-
-## 🔧 Outils de sécurité recommandés
-
-| Outil        | Description                                      | Installation              |
-|--------------|--------------------------------------------------|---------------------------|
-| `bandit`     | Détecte les vulnérabilités dans le code Python   | `pip install bandit`     |
-| `pip-audit`  | Scanne les packages pour failles connues         | `pip install pip-audit`  |
-| `safety`     | Alternative à `pip-audit`                        | `pip install safety`     |
+| Pratique                        | Description                                                                 |
+|--------------------------------|-----------------------------------------------------------------------------|
+| 🔥 **Pare-feu + VPN**          | Protection des réseaux locaux + chiffrement des échanges distants          |
+| 👤 **Authentification forte**  | Gestion des accès basée sur des tokens sécurisés et rôles internes         |
+| 📈 **Surveillance en continu** | Analyse temps réel des comportements suspects via logs et IA intégrée      |
+| 📋 **Audit & Conformité**      | Journaux horodatés, traçabilité des actions critiques, conformité RGPD     |
 
 ---
 
-## 🔐 À venir
+## 🧠 Sécurité Cognitive : `Sandozia`
 
-- 🔑 Publication de la clé PGP officielle
-- ✅ Intégration de `pip-audit` dans la CI
-- 🧪 Script `ark-secure-check.sh` pour audit automatique
+Le module **`Sandozia`** assure une **surveillance adaptative du système** :
+
+- 🔍 Analyse comportementale des modules IA
+- 🛑 Blocage automatique d’actions suspectes
+- 🧬 Signature cognitive d’authenticité
+- 🛰 Détection d'incohérences internes
 
 ---
 
-*📅 Dernière mise à jour : 2025-06-19 — Maintenu par Athalia*
+## ⚡ Optimisation des Performances
+
+| Méthode                            | Impact attendu                                      |
+|-----------------------------------|-----------------------------------------------------|
+| 📦 Utilisation optimisée des ressources | Réduction CPU/mémoire via profiling intelligent   |
+| 🔁 Boucles asynchrones (FastAPI)  | Réduction de la latence globale du système          |
+| 🔄 CI/CD automatisée              | Déploiements stables, sans erreurs manuelles        |
+| 🧪 Tests réguliers                | Prévention des régressions et goulots d’étranglement|
+
+---
+
+## 📈 Surveillance Active
+
+Arkalia-LUNA intègre :
+
+- 🧪 **Reflexia** pour l’analyse adaptative des performances
+- 📊 **Logs IA enrichis** en temps réel (activité, erreurs, auto-corrections)
+- ⚠️ **Alerting intelligent** via score de confiance ou surcharge détectée
+
+---
+
+## ✅ Conclusion
+
+> En combinant une **cybersécurité cognitive** et une **orchestration IA intelligente**, Arkalia-LUNA atteint un niveau de résilience rarement égalé dans les systèmes IA locaux.
+
+🔒 *Un système stable n’est pas juste rapide ou fonctionnel — il est **intelligemment protégé**.*
+
+## 🐞 Signalement de Bug
+
+Si vous rencontrez un bug ou une vulnérabilité, veuillez le signaler immédiatement à l'équipe de développement via notre [dépôt GitHub](https://github.com/arkalia-luna-system/arkalia-luna-pro/issues) ou par email à support@arkalia-luna.com.
+
+---

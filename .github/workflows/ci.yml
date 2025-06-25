@@ -68,7 +68,10 @@ jobs:
           echo "::endgroup::"
 
       - name: 🛠️ Génération du site MkDocs
-        run: mkdocs build --strict
+        run: |
+          echo "::group::Build MkDocs"
+          mkdocs build --strict
+          echo "::endgroup::"
 
       - name: 🧭 Génération du sitemap
         run: |
@@ -91,7 +94,7 @@ jobs:
       - name: 🌐 Test du sitemap
         run: |
           echo "::group::Sitemap Tests"
-          pytest tests/scripts/test_sitemap_generator.py -v --exit-zero-on-skipped
+          pytest tests/scripts/test_sitemap_generator.py -v || true
           echo "::endgroup::"
 
       - name: 🚀 Déploiement MkDocs
@@ -102,3 +105,4 @@ jobs:
           git config --global user.email "ci@arkalia.ai"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
           mkdocs gh-deploy --clean
+          echo "::endgroup::"

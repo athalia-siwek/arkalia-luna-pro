@@ -1,8 +1,9 @@
----
+# 🧑‍💻 Intégration Continue & Qualité — Arkalia-LUNA
 
-## ✅ FICHIER `ci-cd.md` — Version améliorée
-
-# 🤖 Intégration Continue & Qualité — Arkalia-LUNA
+![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-Proprietary-red)
+![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
 
 Arkalia suit une philosophie de **code propre**, **tests exhaustifs** et **automatisation CI/CD** complète via GitHub Actions.
 
@@ -39,13 +40,13 @@ Arkalia suit une philosophie de **code propre**, **tests exhaustifs** et **autom
 | Étape           | Description                                          |
 |------------------|------------------------------------------------------|
 | 🔍 **Lint**      | `black`, `ruff`                                      |
-| 🤖 **Tests**     | `pytest`, génération couverture HTML                 |
+| 🧪 **Tests**     | `pytest`, génération couverture HTML                 |
 | 📚 **Docs**      | Build `mkdocs`, déploiement GitHub Pages             |
 | 🧹 **Nettoyage** | Optionnel : purge des caches, artefacts              |
 
 ---
 
-## 🤖 Automatisation CLI
+## 🧑‍💻 Automatisation CLI
 
 Commandes utiles :
 
@@ -60,9 +61,10 @@ ark-clean-push  # Formate, vérifie, commit propre
 
 💡 *Cette intégration continue assure une qualité constante et une livraison rapide des fonctionnalités.*
 
-🧭 BONUS UX :
-- Activer les collapsibles (details) dans api.md ou modules.md
-- Ajouter liens internes entre les fichiers ([voir structure](structure.md))
+---
+
+© 2025 **Athalia** – Tous droits réservés.
+🤖 Powered by Arkalia ReflexIA `v1.x`
 
 ```markdown
 # 🧪 Intégration Continue & Qualité — Arkalia-LUNA
