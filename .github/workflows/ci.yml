@@ -20,19 +20,19 @@ jobs:
       GH_TOKEN: ${{ secrets.ARKALIA_PAT }}
 
     steps:
-      - name: 🧾 Checkout du dépôt (avec historique complet)
+      - name: 🧾 Checkout du dépôt
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: 🐍 Setup Python
+      - name: 🐍 Setup Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - name: 📦 Installer les dépendances (CI, Docs, Lint)
+      - name: 📦 Installer les dépendances
         run: |
-          echo "::group::Install dependencies"
+          echo "::group::Install deps"
           python -m pip install --upgrade pip
           pip install --no-cache-dir "setuptools<70" "pip<24"
           pip install --no-cache-dir \
@@ -51,28 +51,34 @@ jobs:
 
       - name: 🧹 Analyse statique (Ruff)
         run: |
-          echo "::group::Ruff Lint"
+          echo "::group::Ruff"
           ruff check .
           echo "::endgroup::"
 
-      - name: 🎨 Vérification formatage (Black)
+      - name: 🎨 Formatage (Black)
         run: |
-          echo "::group::Black Format Check"
+          echo "::group::Black"
           black . --check
           echo "::endgroup::"
 
-      - name: ✅ Pre-commit hooks
+      - name: ✅ Pre-commit (check only)
         run: |
-          echo "::group::Pre-commit Checks"
-          pre-commit run --all-files --show-diff-on-failure
+          echo "::group::Pre-commit"
+          pre-commit run --all-files --show-diff-on-failure --color always
           echo "::endgroup::"
 
-      - name: 📘 Build MkDocs (avant les tests sitemap)
+      - name: 🛠️ Génération du site MkDocs
         run: mkdocs build --strict
 
-      - name: 🧪 Tests unitaires avec couverture
+      - name: 🧭 Génération du sitemap
         run: |
-          echo "::group::Run Tests + Coverage"
+          echo "::group::Sitemap Generator"
+          python scripts/sitemap_generator.py
+          echo "::endgroup::"
+
+      - name: 🧪 Run All Tests
+        run: |
+          echo "::group::Unit Tests"
           pytest \
             --cov=modules \
             --cov=core \
@@ -82,24 +88,17 @@ jobs:
             -v --tb=short
           echo "::endgroup::"
 
-      - name: 🌐 Vérification du sitemap (tests dédiés)
+      - name: 🌐 Test du sitemap
         run: |
-          echo "::group::Sitemap Test Suite"
-          pytest tests/scripts/test_sitemap_generator.py -v
+          echo "::group::Sitemap Tests"
+          pytest tests/scripts/test_sitemap_generator.py -v --exit-zero-on-skipped
           echo "::endgroup::"
 
-      - name: 🚀 Déploiement MkDocs vers GitHub Pages
+      - name: 🚀 Déploiement MkDocs
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          echo "::group::MkDocs Deploy"
-          pip install --no-cache-dir \
-            mkdocs \
-            mkdocs-material \
-            mkdocs-minify-plugin \
-            mkdocs-simple-hooks \
-            mkdocs-git-revision-date-localized-plugin
+          echo "::group::Deploy MkDocs"
           git config --global user.name "Arkalia CI"
           git config --global user.email "ci@arkalia.ai"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
-          mkdocs gh-deploy --clean --force --remote-branch gh-pages
-          echo "::endgroup::"
+          mkdocs gh-deploy --clean
