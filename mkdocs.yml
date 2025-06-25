@@ -60,48 +60,50 @@ extra:
       content: "Athalia 🌙"
 
 nav:
-  - Accueil: index.md
-  - Modules IA:
+  - 🧠 Accueil: index.md
+  - 📚 Modules IA:
       - Aperçu: modules.md
       - Assistantia: modules/assistantia.md
       - Reflexia: modules/reflexia.md
       - ZeroIA: modules/zeroia.md
-      - Nyxalia: modules/nyxalia.md
       - Helloria: modules/helloria.md
-      - TaskIA: modules/taskia.md
-      - Global State: modules/global_state.md
-  - Fonctionnement:
-      - Structure: fonctionnement/structure.md
+      - Nyxalia: modules/nyxalia.md
+      - Taskia: modules/taskia.md
+      - État Global: modules/global_state.md
+  - 🔧 Fonctionnement:
+      - Kernel: fonctionnement/kernel.md
       - Composants: fonctionnement/composants.md
-      - Kernel IA: fonctionnement/kernel.md
+      - Structure: fonctionnement/structure.md
       - Utilisation: fonctionnement/utilisation.md
-  - Infrastructure:
+  - 🛠️ Infrastructure:
       - Installation: infrastructure/installation.md
-      - Déploiement: infrastructure/deployment.md
       - Configuration: infrastructure/configuration.md
-      - CI/CD: infrastructure/ci-cd.md
-      - Automatisation: infrastructure/automation.md
+      - Déploiement: infrastructure/deployment.md
       - Ollama: infrastructure/ollama.md
-  - API & Intégration:
-      - Guide API: api.md
-  - Logs:
-      - Reasoning History: logs/reasoning_history.md
-      - Failure Analysis: logs/failure_analysis.md
-  - Journal:
-      - Checklist: journal/CHECKLIST.md
-  - Roadmap:
-      - Roadmap: roadmap/index.md
-      - Améliorations: roadmap/ENHANCEMENTS.md
-  - Sécurité:
+      - Automation: infrastructure/automation.md
+      - CI/CD: infrastructure/ci-cd.md
+  - 📡 API & Intégration:
+      - API FastAPI: api.md
+  - 🔐 Sécurité:
       - Sécurité: security/security.md
-  - Crédits & Légal:
-      - Crédits: credits/credits.md
-      - Contribuer: credits/CONTRIBUTING.md
-      - Licence: license.md
-  - FAQ: faqs.md
-  - Releases:
-      - CHANGELOG: releases/CHANGELOG.md
+  - 🧪 Logs & Suivi:
+      - Historique Raisonnement: logs/reasoning_history.md
+      - Analyse des Échecs: logs/failure_analysis.md
+  - 📅 Roadmap:
+      - Vue d'ensemble: roadmap/index.md
+      - Améliorations prévues: roadmap/ENHANCEMENTS.md
+  - 📦 Releases:
       - Notes de version: releases/index.md
+      - CHANGELOG: releases/CHANGELOG.md
+  - 🧾 Licence:
+      - Licence: license.md
+  - 📖 FAQs & Aide:
+      - FAQs: faqs.md
+  - 🧑‍🚀 Journal & Checklist:
+      - Checklist: journal/CHECKLIST.md
+  - ✨ Crédits:
+      - Crédits: credits/credits.md
+      - Contribution: credits/CONTRIBUTING.md
 
 markdown_extensions:
   - admonition
