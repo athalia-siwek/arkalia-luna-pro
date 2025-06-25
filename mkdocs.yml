@@ -53,9 +53,9 @@ extra:
     text: "🕒 Dernière mise à jour :"
   meta:
     - name: description
-      content: "Arkalia-LUNA: Système IA local, modulaire et auto-réflexif."
+      content: "Arkalia-LUNA : système IA modulaire, autonome et auto-réflexif pour environnements locaux."
     - name: keywords
-      content: "IA, Arkalia, LUNA, modulaire, local, auto-réflexif, sécurité, documentation"
+      content: "IA, Arkalia, LUNA, cognition, modulaire, local, auto-réflexif, documentation"
     - name: author
       content: "Athalia 🌙"
 
@@ -68,13 +68,14 @@ nav:
       - Vue d'ensemble: modules.md
       - Kernel & Coordination: kernel.md
       - AssistantIA: assistantia.md
+      - ReflexIA: reflexia.md
+      - ZeroIA: zeroia.md
+      - Assistant TaskIA: modules/taskia.md
+      - Mémoire Globale IA: modules/global_state.md
       - API /chat: api.md
       - Automatisation: automation.md
       - Sécurité: security.md
       - Tests: tests.md
-      - ReflexIA: reflexia.md
-      - Assistant TaskIA: modules/taskia.md
-      - Mémoire Globale IA: modules/global_state.md
   - 🛠️ Architecture:
       - Structure du dépôt: structure.md
       - Composants IA: composants.md

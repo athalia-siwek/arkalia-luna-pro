@@ -1,67 +1,45 @@
-# 🧪 Architecture des Tests
+# 🧪 Tests Arkalia-LUNA
 
-## Objectifs
-- Vérifier le bon fonctionnement de chaque module IA
-- Garantir stabilité, compatibilité et couverture
+Bienvenue dans la suite de tests officielle du projet **Arkalia LUNA**.
+Tous les tests sont organisés de manière modulaire, maintenable et orientée production.
 
-## Répartition
-- `unit/` : logique interne
-- `integration/` : endpoints + coordination
-- `core/` : lancement, orchestration
-- `scripts/` : outils internes (sitemap, automation…)
+---
 
-## Outils & alias
-- `ark-test`, `ark-test-modules`, `pytest-cov`, `pytest -k`
+## 📂 Structure des tests
 
-## Bonnes pratiques
-- Isoler chaque test
-- Couvrir erreurs connues
-- Éviter dépendance entre tests
+```text
+tests/
+├── base/         → Tests de base du système (connexion, structure, validité initiale)
+├── core/         → Tests des fonctions centrales (core logique, scheduler, etc.)
+├── scripts/      → Tests des scripts utilitaires (sitemap, backup, docker, etc.)
+├── modules/      → Tests unitaires des modules IA (assistantia, reflexia, etc.)
+├── integration/  → Tests croisés entre modules IA (communication, orchestration)
 
-Pour plus d'informations sur les modèles testés, consultez [Ollama](ollama.md).
+🔍 Exécution des tests
 
-## Module assistantia — Couverture 100 %
+Pour exécuter tous les tests avec couverture :
 
-- 🔁 Tests unitaires avec FastAPI `TestClient`
-- 🧪 Vérification :
-  - `/chat` (mocké et réel)
-  - gestion erreurs 422 / 400
-  - réponse longue (stress test)
-- 📦 Dépendance mockée : `get_query_ollama`
+ark-test
 
-### 🤖 Module ReflexIA
+Ou manuellement :
 
-| Fichier de test | Cible | Couverture |
-|------------------|--------|------------|
-| `test_reflexia.py` | Fonction globale `launch_reflexia_check` | ✅ |
-| `test_reflexia_core.py` | Fonctions internes de `core.py` | ✅ |
-| `test_reflexia_decision.py` | `monitor_status` (analyse cognitive) | ✅ |
-| `test_reflexia_metrics.py` | `read_metrics()` (CPU/RAM simulées) | ✅ |
-| `test_reflexia_snapshot.py` | `save_snapshot()` JSON réflexif | ✅ |
+pytest --cov=modules --cov=core --cov=tests --cov-report=term --cov-report=html
 
-Tous les tests passent avec succès ✅ (CI : 58/58), et le module ReflexIA atteint 100 % de couverture.
+La couverture sera générée dans htmlcov/index.html.
 
-## Résultats de la session de test v2.1.2 — 23 juin 2025
+✅ Bonnes pratiques
+	•	Chaque fichier de test doit commencer par test_*.py.
+	•	Les assertions doivent être explicites (assert response.status_code == 200, etc.).
+	•	Utiliser pytest uniquement (pas de unittest classique).
+	•	Regrouper les tests par module IA ou composant métier clair.
 
-### État des tests
-- **Tests Pytest** : ✅ 68/68 passés en 41.95s
-- **Couverture globale** : 🔍 94% HTML, 89% moyenne code
-- **Reflexia core.py** : ✅ 93% couvert (2 succursales logiques testées)
-- **assistantia modules** : ✅ 91–93% pour core et utils, stable
-- **Fichiers ignorés** : 📁 8 fichiers entièrement couverts (pas listés)
-- **CI/CD locale** : 🟢 Tests, lint, pre-commit, tout passe sans erreur
+⸻
 
-### Couverture détaillée (top modules)
-- **modules/reflexia/core.py** : ✅ 93%
-- **modules/assistantia/utils/ollama_connector.py** : ✅ 91%
-- **modules/assistantia/core.py** : ✅ 93%
-- **modules/helloria/core.py** : ✅ 83%
-- **arkalia/hooks.py** : ✅ 83%
+🚀 Objectif de couverture
 
-### Prochaines pistes (optionnel pour la perfection totale)
-- 🔬 Monter core.py et helloria/core.py à 100% → quelques branches conditionnelles manquantes (if/else)
-- 🔁 Tester reflexia_loop() en mode timeout (boucle longue)
-- 📁 Archiver cette version : v2.1.2-tests-ok-full
-- 📝 Documenter cette étape dans CHANGELOG.md + badge coverage (si pas encore fait)
+🎯 Objectif : 80 % de couverture minimale par module IA
+Tests critiques (exécution, sécurité, routing) obligatoires à 100 %.
 
-![Couverture](https://img.shields.io/badge/couverture-94%25-brightgreen)🔧 Patch test
+⸻
+
+🧠 Cette structure fait partie du standard Arkalia System Next (ASN), phase v1.2.x+.
