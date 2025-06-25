@@ -1,4 +1,4 @@
 last_decision = "reduce_load"
 confidence_score = 0.75
 justification = "cpu=72.1, severity=warning"
-timestamp = "2025-06-25 18:30:31.504548"
+timestamp = "2025-06-25 18:31:31.656345"
