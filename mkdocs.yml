@@ -61,57 +61,47 @@ extra:
 
 nav:
   - Accueil: index.md
-  - Modules (index): modules.md
-  - API: api.md
-  - FAQ: faqs.md
-  - License: license.md
-
+  - Modules IA:
+      - Aperçu: modules.md
+      - Assistantia: modules/assistantia.md
+      - Reflexia: modules/reflexia.md
+      - ZeroIA: modules/zeroia.md
+      - Nyxalia: modules/nyxalia.md
+      - Helloria: modules/helloria.md
+      - TaskIA: modules/taskia.md
+      - Global State: modules/global_state.md
   - Fonctionnement:
-      - Utilisation: fonctionnement/utilisation.md
-      - Composants: fonctionnement/composants.md
-      - Noyau IA: fonctionnement/kernel.md
       - Structure: fonctionnement/structure.md
-
+      - Composants: fonctionnement/composants.md
+      - Kernel IA: fonctionnement/kernel.md
+      - Utilisation: fonctionnement/utilisation.md
   - Infrastructure:
       - Installation: infrastructure/installation.md
+      - Déploiement: infrastructure/deployment.md
       - Configuration: infrastructure/configuration.md
-      - Déploiement Docker: infrastructure/deployment.md
       - CI/CD: infrastructure/ci-cd.md
       - Automatisation: infrastructure/automation.md
       - Ollama: infrastructure/ollama.md
-
-  - Modules:
-      - Assistantia: modules/assistantia.md
-      - Reflexia: modules/reflexia.md
-      - Helloria: modules/helloria.md
-      - ZeroIA: modules/zeroia.md
-      - Nyxalia: modules/nyxalia.md
-      - TaskIA: modules/taskia.md
-      - Global State: modules/global_state.md
-
+  - API & Intégration:
+      - Guide API: api.md
   - Logs:
-      - Raisonnement: logs/reasoning_history.md
-      - Analyse des échecs: logs/failure_analysis.md
-
-  - Roadmap:
-      - Améliorations: roadmap/ENHANCEMENTS.md
-      - Plan: roadmap/index.md
-
-  - Journal de bord:
+      - Reasoning History: logs/reasoning_history.md
+      - Failure Analysis: logs/failure_analysis.md
+  - Journal:
       - Checklist: journal/CHECKLIST.md
-
+  - Roadmap:
+      - Roadmap: roadmap/index.md
+      - Améliorations: roadmap/ENHANCEMENTS.md
   - Sécurité:
-      - Sécurité générale: security/security.md
-
-  - Crédits:
-      - Contributeurs: credits/CONTRIBUTING.md
-      - Crédits généraux: credits/credits.md
-
-  - Historique:
-      - CHANGELOG: releases/CHANGELOG.md
-
+      - Sécurité: security/security.md
+  - Crédits & Légal:
+      - Crédits: credits/credits.md
+      - Contribuer: credits/CONTRIBUTING.md
+      - Licence: license.md
+  - FAQ: faqs.md
   - Releases:
-      - Index: releases/index.md
+      - CHANGELOG: releases/CHANGELOG.md
+      - Notes de version: releases/index.md
 
 markdown_extensions:
   - admonition
