@@ -15,18 +15,41 @@ repos:
         exclude: '^.*(venv|\.DS_Store|\.AppleDouble|^\._).*$'
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
         exclude: |
-          (^modules/zeroia/state/zeroia_state\.toml$|
-           ^state/zeroia_dashboard\.json$|
-           ^logs/failure_analysis\.md$)
+          (^state/zeroia_dashboard\.json$|
+           ^modules/zeroia/state/zeroia_state\.toml$)
       - id: trailing-whitespace
         exclude: |
-          (^modules/zeroia/state/zeroia_state\.toml$|
-           ^state/zeroia_dashboard\.json$|
-           ^logs/failure_analysis\.md$)
+          (^state/zeroia_dashboard\.json$|
+           ^modules/zeroia/state/zeroia_state\.toml$)
+
+  - repo: local
+    hooks:
+      - id: zeroia-healthcheck
+        name: ZeroIA TOML Health Check
+        entry: python3 scripts/zeroia_health.py
+        language: system
+        files: ^modules/zeroia/state/zeroia_state\.toml$
+        pass_filenames: false
+      - id: healthcheck-zeroia
+        name: 🧠 ZeroIA Healthcheck
+        entry: python3 scripts/healthcheck_zeroia.py
+        language: system
+        types: [python]
+        files: ^modules/zeroia/state/zeroia_state\.toml$
+      - id: zeroia-rollback
+        name: ♻️ ZeroIA Auto-Rollback
+        entry: python3 scripts/zeroia_rollback.py
+        language: system
+        types: [toml]
+        files: ^modules/zeroia/state/zeroia_state\.toml$
+
+ci:
+  skip: false
+
+exclude: '^(venv|\.venv|env|\.env|\.mypy_cache|\.pytest_cache|site|dist|build)/'
 
 default_stages: [pre-commit]
-exclude: '^(venv|\.venv|env|\.env|\.mypy_cache|\.pytest_cache|site|dist|build)/'
