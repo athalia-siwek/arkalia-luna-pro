@@ -18,6 +18,15 @@ def load_state(file_path: str) -> dict:
         return {}
 
 
+def is_valid_toml(data: dict) -> bool:
+    try:
+        toml.dumps(data)
+        return True
+    except Exception as e:
+        print(f"[ERROR] TOML validation failed: {e}")
+        return False
+
+
 STATE_FILE = os.path.join(os.path.dirname(__file__), "state", "zeroia_state.toml")
 SNAPSHOT_FILE = os.path.join(os.path.dirname(__file__), "state", "zeroia_snapshot.toml")
 
