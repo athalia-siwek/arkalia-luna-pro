@@ -1,14 +1,15 @@
 {
-  "last_decision": "reduce_load",
   "confidence": 0.75,
-  "reasoning_loop_active": true,
   "connected_modules": [
     "reflexia"
   ],
+  "last_decision": "reduce_load",
+  "last_updated": "2025-06-26 00:25:34.227932",
   "previous": [
     "reduce_load",
     "monitor",
     "monitor"
   ],
-  "last_updated": "2025-06-25 21:10:55.584233"
+  "reasoning_loop_active": true,
+  "timestamp": "2025-06-26 00:25:34"
 }

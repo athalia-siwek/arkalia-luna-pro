@@ -89,6 +89,7 @@ nav:
   - 🧪 Logs & Suivi:
       - Historique Raisonnement: logs/reasoning_history.md
       - Analyse des Échecs: logs/failure_analysis.md
+      - État de ZeroIA: logs/zeroia_status.md
   - 📅 Roadmap:
       - Vue d'ensemble: roadmap/index.md
       - Améliorations prévues: roadmap/ENHANCEMENTS.md
@@ -104,6 +105,8 @@ nav:
   - ✨ Crédits:
       - Crédits: credits/credits.md
       - Contribution: credits/CONTRIBUTING.md
+  - 🔍 Diagnostic:
+      - État de ZeroIA: logs/zeroia_status.md
 
 markdown_extensions:
   - admonition

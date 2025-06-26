@@ -18,3 +18,14 @@ def count_recent_action(action: str, window: int = 10) -> int:
 
 def should_lower_cpu_threshold() -> bool:
     return count_recent_action("monitor", window=10) >= 8
+
+
+def adjust_threshold(current: float, feedback: str) -> float:
+    if feedback == "success":
+        return min(1.0, current + 0.05)
+    elif feedback == "fail":
+        return max(0.0, current - 0.05)
+    elif feedback == "neutral":
+        return current
+    else:
+        raise ValueError(f"Unknown feedback: {feedback}")

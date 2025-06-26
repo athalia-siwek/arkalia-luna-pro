@@ -33,7 +33,9 @@ tests/**/.DS_Store
 # 📦 Build, logs, coverage
 # ======================================================
 *.log
-logs/
++docs/logs/
+!docs/logs/failure_analysis.md
+!docs/logs/reasoning_history.md
 *.coverage
 .coverage
 coverage.xml
@@ -76,3 +78,7 @@ docs_in_nav.txt
 docs_all.txt
 liens_non_listes.txt
 .env
+
+# Exclure le dossier security mais inclure le fichier security.md
++security/
+!docs/security/security.md

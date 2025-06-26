@@ -6,11 +6,15 @@ from modules.zeroia.reason_loop import (
     persist_state,
     update_dashboard,
 )
+from tests.unit.test_helpers import ensure_test_toml, ensure_zeroia_state_file
+
+ensure_test_toml()
 
 
 def test_decide_with_empty_context():
     """Test 1: Vérifie que la fonction decide() ne plante pas même si le contexte
     est vide."""
+    ensure_zeroia_state_file()
     decision, score = decide({})
     assert decision == "normal"
     assert score == 0.4
@@ -48,6 +52,8 @@ def test_contradiction_detection_log_creation(tmp_path, monkeypatch):
 
     with open(reflexia_path, "w") as f:
         toml.dump({"last_decision": "reduce_load"}, f)
+
+    toml.dump({"decision": {"last_decision": "shutdown"}}, state_path.open("w"))
 
     check_for_ia_conflict(log_path_override=contradiction_log_path)
 

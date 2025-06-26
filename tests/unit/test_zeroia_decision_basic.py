@@ -10,31 +10,36 @@ from modules.zeroia.reason_loop import decide, load_toml
 def test_decide_high_cpu():
     """⚠️ CPU > 80 → reduce_load"""
     context = {"status": {"cpu": 91}}
-    assert decide(context)[0] == "reduce_load"
+    decision, _ = decide(context)
+    assert decision == "reduce_load"
 
 
 def test_decide_medium_cpu():
     """🟠 CPU entre 60 et 80 → reduce_load"""
     context = {"status": {"cpu": 72}}
-    assert decide(context)[0] == "reduce_load"
+    decision, _ = decide(context)
+    assert decision == "reduce_load"
 
 
 def test_decide_low_cpu():
     """🟢 CPU < 60 → normal"""
     context = {"status": {"cpu": 45}}
-    assert decide(context)[0] == "normal"
+    decision, _ = decide(context)
+    assert decision == "normal"
 
 
 def test_decide_critical():
     """🔴 Cas critique explicite → emergency_shutdown"""
     context = {"status": {"severity": "critical"}}
-    assert decide(context)[0] == "emergency_shutdown"
+    decision, _ = decide(context)
+    assert decision == "emergency_shutdown"
 
 
 def test_decide_no_status():
     """🟢 Pas d'infos → fallback safe"""
     context = {}
-    assert decide(context)[0] == "normal"
+    decision, _ = decide(context)
+    assert decision == "normal"
 
 
 def test_toml_parsing_error(tmp_path: Path):
@@ -42,5 +47,5 @@ def test_toml_parsing_error(tmp_path: Path):
     broken_file = tmp_path / "broken.toml"
     broken_file.write_text("[status\nseverity = 'critical'")  # TOML invalide
 
-    with pytest.raises(ValueError, match="Invalid TOML format"):
+    with pytest.raises(ValueError, match=r"Invalid TOML format"):
         load_toml(broken_file)

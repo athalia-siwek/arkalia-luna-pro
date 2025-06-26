@@ -1,6 +1,9 @@
 from pathlib import Path
 
 from modules.zeroia.reason_loop import reason_loop
+from tests.unit.test_helpers import ensure_test_toml, ensure_zeroia_state_file
+
+ensure_test_toml()
 
 
 def test_reflexia_injection_merges_into_context(tmp_path: Path):
@@ -29,3 +32,5 @@ def test_reflexia_injection_merges_into_context(tmp_path: Path):
     # ✅ Le résultat doit être logique
     assert decision == "reduce_load"
     assert 0.7 <= score <= 0.8  # 🧪 Acceptable selon should_lower_cpu_threshold()
+
+    ensure_zeroia_state_file()

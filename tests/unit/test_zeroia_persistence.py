@@ -33,7 +33,9 @@ def test_persist_state_creates_valid_toml(tmp_path):
     persist_state("reduce_load", 0.75, context, state_path_override=path)
     data = toml.load(path)
 
-    assert data["last_decision"] == "reduce_load"
-    assert data["confidence_score"] == 0.75
-    assert "justification" in data
+    assert "decision" in data
+    assert "last_decision" in data["decision"]
+    assert data["decision"]["last_decision"] == "reduce_load"
+    assert data["decision"]["confidence_score"] == 0.75
+    assert "justification" in data["decision"]
     assert "timestamp" in data

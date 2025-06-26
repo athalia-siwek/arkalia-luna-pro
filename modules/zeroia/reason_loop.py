@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -6,6 +5,10 @@ from typing import Optional
 import toml
 
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
+from modules.zeroia.utils.state_writer import (
+    save_json_if_changed,
+    save_toml_if_changed,
+)
 
 # === Chemins par défaut ===
 CTX_PATH = Path("state/global_context.toml")
@@ -23,10 +26,10 @@ def load_toml(path: Path) -> dict:
             raise ValueError(f"TOML file {path} is empty or missing")
         return toml.load(path)
     except toml.TomlDecodeError as e:
-        print(f"[DEBUG] TOML Decode Error: {e}")  # Log pour vérifier l'exception
+        print(f"[DEBUG] TOML Decode Error: {e}")
         raise ValueError(f"Invalid TOML format in {path}: {e}")
     except Exception as e:
-        print(f"[DEBUG] General Error: {e}")  # Log pour vérifier l'exception
+        print(f"[DEBUG] General Error: {e}")
         raise ValueError(f"Failed to load TOML file {path}: {e}")
 
 
@@ -74,16 +77,17 @@ def persist_state(
 
     state_path = state_path_override or STATE_PATH
     ensure_parent_dir(state_path)
-    with open(state_path, "w", encoding="utf-8", newline="\n") as f:
-        toml.dump(
-            {
+    save_toml_if_changed(
+        {
+            "decision": {
                 "last_decision": decision,
                 "confidence_score": score,
                 "justification": f"cpu={cpu}, severity={severity}",
                 "timestamp": str(datetime.now()),
-            },
-            f,
-        )
+            }
+        },
+        str(state_path),
+    )
 
     ensure_parent_dir(LOG_PATH)
     with open(LOG_PATH, "a") as f:
@@ -103,39 +107,62 @@ def update_dashboard(
 ) -> None:
     dashboard_path = dashboard_path_override or DASHBOARD_PATH
     ensure_parent_dir(dashboard_path)
-    dashboard = {
-        "last_decision": decision,
-        "confidence": score,
-        "reasoning_loop_active": True,
-        "connected_modules": ["reflexia"],
-        "previous": ["reduce_load", "monitor", "monitor"],
-        "last_updated": str(datetime.now()),
-    }
-    with open(dashboard_path, "w", encoding="utf-8", newline="\n") as f:
-        json.dump(dashboard, f, indent=2, ensure_ascii=False)
-        f.write("\n")
+    save_json_if_changed(
+        {
+            "last_decision": decision,
+            "confidence": score,
+            "reasoning_loop_active": True,
+            "connected_modules": ["reflexia"],
+            "previous": ["reduce_load", "monitor", "monitor"],
+            "last_updated": str(datetime.now()),
+        },
+        str(dashboard_path),
+    )
 
 
 # === Détection contradiction IA ===
 def check_for_ia_conflict(
-    reflexia_state_path: Path = REFLEXIA_STATE,
-    zeroia_state_path: Path = STATE_PATH,
     log_path_override: Optional[Path] = None,
-) -> None:
-    reflexia_state = load_toml(reflexia_state_path)
-    zeroia_state = load_toml(zeroia_state_path)
+    reflexia_path_override: Optional[Path] = None,
+    zeroia_state_path: Optional[Path] = None,
+):
+    reflexia_path = reflexia_path_override or REFLEXIA_STATE
+    zeroia_path = zeroia_state_path or STATE_PATH
 
-    reflexia_decision = reflexia_state.get("last_decision", "unknown")
-    zeroia_decision = zeroia_state.get("last_decision", "unknown")
+    reflexia_state = load_toml(reflexia_path)
+    zeroia_state = load_toml(zeroia_path)
+
+    reflexia_decision = reflexia_state.get("decision", {}).get(
+        "last_decision", "unknown"
+    )
+    zeroia_decision = zeroia_state.get("decision", {}).get("last_decision", "unknown")
 
     if reflexia_decision != zeroia_decision:
-        contradiction_log = log_path_override or CONTRADICTION_LOG
-        ensure_parent_dir(contradiction_log)
-        with open(contradiction_log, "a") as f:
-            f.write(
-                f"{datetime.now()} :: CONTRADICTION DETECTED: "
-                f"ReflexIA = {reflexia_decision}, ZeroIA = {zeroia_decision}\n"
-            )
+        log_conflict(
+            f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, "
+            f"ZeroIA = {zeroia_decision}",
+            log_path_override,
+        )
+
+
+def log_conflict(conflict_msg: str, log_path_override: Optional[Path] = None):
+    path = log_path_override or CONTRADICTION_LOG
+    ensure_parent_dir(path)
+    print(f"[DEBUG] Attempting to write conflict log to: {path}")
+    with open(path, "a") as f:
+        f.write(
+            f"{datetime.now()} :: {conflict_msg}\n"
+            f"💥 Détection d'une contradiction explicite entre ReflexIA et ZeroIA\n"
+            f"(mocks injectés sur les chemins TOML)\n"
+        )
+    print(f"[DEBUG] Successfully wrote to conflict log: {path}")
+
+
+def check_and_exit_if_inactive():
+    state = load_toml(STATE_PATH)
+    if not state.get("active", True):
+        print("🛑 ZeroIA détectée inactive, arrêt boucle.")
+        exit(1)
 
 
 # === Boucle principale testable ===
@@ -147,6 +174,7 @@ def reason_loop(
     log_path: Optional[Path] = None,
     contradiction_log_path: Optional[Path] = None,
 ) -> tuple[str, float]:
+    check_and_exit_if_inactive()
     ctx = load_context(context_path or CTX_PATH)
     reflexia_data = load_reflexia_state(reflexia_path or REFLEXIA_STATE)
 
@@ -168,9 +196,9 @@ def reason_loop(
     persist_state(decision, score, ctx, state_path)
     update_dashboard(decision, score, ctx, dashboard_path)
     check_for_ia_conflict(
-        reflexia_path or REFLEXIA_STATE,
-        state_path or STATE_PATH,
         contradiction_log_path,
+        reflexia_path,
+        state_path,
     )
 
     print(f"CPU usage: {str(cpu)}%")
@@ -182,6 +210,10 @@ def main():
     print("🟢 ZeroIA loop started successfully")
     decision, score = reason_loop()
     print(f"ZeroIA decided: {decision} (confidence={score})")
+
+
+def compute_confidence_score(success_rate: float, error_rate: float) -> float:
+    return max(0.0, min(1.0, success_rate - error_rate))
 
 
 if __name__ == "__main__":
