@@ -1,0 +1,84 @@
+import tempfile
+from pathlib import Path
+
+import pytest
+
+from scripts import zeroia_rollback
+
+
+# 📁 Setup de répertoires temporaires pour simuler l'état ZeroIA
+@pytest.fixture
+def temp_env(monkeypatch):
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+
+        state_file = tmp_path / "zeroia_state.toml"
+        snapshot_file = tmp_path / "zeroia_state_snapshot.toml"
+        backup_file = tmp_path / "zeroia_state_backup.toml"
+        log_file = tmp_path / "zeroia_rollback.log"
+        failure_log = tmp_path / "failure_analysis.md"
+
+        # Initialisation fichiers
+        state_file.write_text(
+            'timestamp = "TEST"\n[decision]\nlast_decision = "noop"\n'
+        )
+        snapshot_file.write_text(
+            'timestamp = "SNAPSHOT"\n[decision]\nlast_decision = "snapshot"\n'
+        )
+
+        # Patch chemins internes du module
+        monkeypatch.setattr(zeroia_rollback, "STATE_FILE", state_file)
+        monkeypatch.setattr(zeroia_rollback, "SNAPSHOT_FILE", snapshot_file)
+        monkeypatch.setattr(zeroia_rollback, "BACKUP_FILE", backup_file)
+        monkeypatch.setattr(zeroia_rollback, "LOG_FILE", log_file)
+        monkeypatch.setattr(zeroia_rollback, "FAILURE_LOG", failure_log)
+
+        yield {
+            "state_file": state_file,
+            "snapshot_file": snapshot_file,
+            "backup_file": backup_file,
+            "log_file": log_file,
+            "failure_log": failure_log,
+        }
+
+
+def test_backup_current_state(temp_env):
+    zeroia_rollback.backup_current_state()
+    assert temp_env["backup_file"].exists()
+    assert "timestamp" in temp_env["backup_file"].read_text()
+
+
+def test_restore_snapshot_success(temp_env):
+    assert zeroia_rollback.restore_snapshot() is True
+    assert temp_env["state_file"].read_text().find("snapshot") != -1
+
+
+def test_restore_snapshot_failure(monkeypatch, temp_env):
+    monkeypatch.setattr(zeroia_rollback, "SNAPSHOT_FILE", Path("nonexistent.toml"))
+    assert zeroia_rollback.restore_snapshot() is False
+
+
+def test_log_failure(temp_env):
+    zeroia_rollback.log_failure()
+    assert temp_env["failure_log"].exists()
+    assert "Échec détecté" in temp_env["failure_log"].read_text()
+
+
+def test_log(temp_env):
+    zeroia_rollback.log("test log line")
+    content = temp_env["log_file"].read_text()
+    assert "[rollback] test log line" in content
+
+
+def test_rollback_success(temp_env):
+    temp_env["backup_file"].write_text(
+        'timestamp = "BACKUP"\n[decision]\nlast_decision = "rollback"\n'
+    )
+    zeroia_rollback.rollback_from_backup()
+    assert "rollback" in temp_env["state_file"].read_text()
+
+
+def test_rollback_failure(monkeypatch):
+    monkeypatch.setattr(zeroia_rollback, "BACKUP_FILE", Path("nonexistent.toml"))
+    monkeypatch.setattr(zeroia_rollback, "STATE_FILE", Path("state/zeroia_state.toml"))
+    zeroia_rollback.rollback_from_backup()

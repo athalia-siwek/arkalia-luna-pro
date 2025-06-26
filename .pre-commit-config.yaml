@@ -34,18 +34,21 @@ repos:
         language: system
         files: ^modules/zeroia/state/zeroia_state\.toml$
         pass_filenames: false
+
       - id: healthcheck-zeroia
         name: 🧠 ZeroIA Healthcheck
         entry: python3 scripts/healthcheck_zeroia.py
         language: system
         types: [python]
         files: ^modules/zeroia/state/zeroia_state\.toml$
+        pass_filenames: false
+
       - id: zeroia-rollback
         name: ♻️ ZeroIA Auto-Rollback
         entry: python3 scripts/zeroia_rollback.py
         language: system
-        types: [toml]
         files: ^modules/zeroia/state/zeroia_state\.toml$
+        pass_filenames: false  # ⚠️ ← empêche l’envoi du fichier TOML comme arg
 
 ci:
   skip: false
