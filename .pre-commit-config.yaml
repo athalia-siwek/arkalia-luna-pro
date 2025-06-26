@@ -19,8 +19,8 @@ repos:
     hooks:
       - id: end-of-file-fixer
         exclude: |
-          (^state/zeroia_dashboard\.json$|
-           ^modules/zeroia/state/zeroia_state\.toml$)
+          (^state/.*\.json$|
+           ^state/.*\.toml$)
       - id: trailing-whitespace
         exclude: |
           (^state/zeroia_dashboard\.json$|
@@ -48,11 +48,11 @@ repos:
         entry: python3 scripts/zeroia_rollback.py
         language: system
         files: ^modules/zeroia/state/zeroia_state\.toml$
-        pass_filenames: false  # ⚠️ ← empêche l’envoi du fichier TOML comme arg
+        pass_filenames: false  # ⚠️ ← empêche l'envoi du fichier TOML comme arg
 
 ci:
   skip: false
 
-exclude: '^(venv|\.venv|env|\.env|\.mypy_cache|\.pytest_cache|site|dist|build)/'
+exclude: '^(venv|\.venv|env|\.env|\.mypy_cache|\.pytest_cache|site|dist|build|state)/'
 
 default_stages: [pre-commit]

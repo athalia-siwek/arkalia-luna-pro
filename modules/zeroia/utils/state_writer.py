@@ -31,6 +31,8 @@ def save_toml_if_changed(data: dict, target_path: str):
     data["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(target_path, "w", encoding="utf-8", newline="\n") as f:
         toml.dump(data, f)
+    with open(target_path, "a", encoding="utf-8") as f:
+        f.write("\n")  # Ensure final newline
 
 
 def save_json_if_changed(data: dict, target_path: str):
@@ -51,6 +53,8 @@ def save_json_if_changed(data: dict, target_path: str):
     data["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(target_path, "w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, indent=2, sort_keys=True)
+    with open(target_path, "a", encoding="utf-8") as f:
+        f.write("\n")  # Ensure final newline
 
 
 def check_health(path: str) -> bool:
