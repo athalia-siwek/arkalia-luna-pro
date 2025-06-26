@@ -333,3 +333,13 @@
 
 ## 🛑 Échec détecté : 2025-06-26T09:47:33.539614
 **Raison :** Aucun backup disponible pour restauration.
+## 🛑 Échec détecté : 2025-06-26T11:13:20.815856
+**Raison :** Erreur de lecture du snapshot zeroia_snapshot.toml: Found invalid character in key name: ':'. Try quoting the key name. (line 1 column 2 char 1)
+
+## 🛑 Échec détecté : 2025-06-26T11:13:20.816382
+**Raison :** Aucun backup disponible pour restauration.
+## 🛑 Échec détecté : 2025-06-26T11:23:08.689929
+**Raison :** Erreur de lecture du snapshot zeroia_snapshot.toml: Found invalid character in key name: ':'. Try quoting the key name. (line 1 column 2 char 1)
+
+## 🛑 Échec détecté : 2025-06-26T11:23:08.690998
+**Raison :** Aucun backup disponible pour restauration.

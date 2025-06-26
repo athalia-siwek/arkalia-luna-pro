@@ -1,3 +1,29 @@
+# Changelog Minimal
+
+## Nouveautés
+
+### feat: Rollback
+- Implémentation de la fonctionnalité de rollback pour ZeroIA.
+
+### fix: Pre-push
+- Correction des erreurs de pre-push pour assurer la stabilité du système.
+
+### docs: Mise à jour de la documentation
+- Ajout des pages `cognitive-levels.md` et `rebuild.md` dans la navigation officielle.
+
+## Checklist des Modules Vérifiés
+- ZeroIA
+- ReflexIA
+- Arkalia Monitor
+
+## État CI/Docker/Tests
+- **CI** : Toutes les vérifications passent sauf quelques lignes trop longues (E501).
+- **Docker** : Tous les conteneurs sont actifs, sauf ZeroIA qui est "unhealthy".
+- **Tests** : Tous les tests unitaires et d'intégration passent.
+
+## Lien GitHub Pages
+- [Documentation Arkalia-LUNA](https://github.com/arkalia-luna-system/arkalia-luna-pro)
+
 # 📋 CHANGELOG.md — Historique des versions Arkalia-LUNA
 
 Ce fichier retrace les évolutions majeures du système IA modulaire Arkalia-LUNA.

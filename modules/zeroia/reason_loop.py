@@ -8,6 +8,7 @@ from typing import Optional
 import toml
 
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
+from modules.zeroia.utils.backup import save_backup
 from modules.zeroia.utils.state_writer import save_json_if_changed, save_toml_if_changed
 
 # === Chemins par défaut ===
@@ -79,6 +80,8 @@ def persist_state(
 
     state_path = state_path_override or STATE_PATH
     ensure_parent_dir(state_path)
+
+    save_backup()
 
     save_toml_if_changed(
         {

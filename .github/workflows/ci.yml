@@ -105,3 +105,7 @@ jobs:
           echo "::group::Deploy MkDocs"
           mkdocs gh-deploy --force
           echo "::endgroup::"
+
+      - name: 📣 Notification succès
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: echo "✅ Push réussi avec version ${{ github.ref_name }}"

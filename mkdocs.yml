@@ -108,6 +108,10 @@ nav:
       - Contribution: credits/CONTRIBUTING.md
   - 🔍 Diagnostic:
       - État de ZeroIA: logs/zeroia_status.md
+  - IA Ops:
+      - ops.md
+  - Rebuild: rebuild.md
+  - Cognitive Levels: cognitive-levels.md
 
 markdown_extensions:
   - admonition
