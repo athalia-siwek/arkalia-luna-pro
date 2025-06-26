@@ -18,6 +18,7 @@ repos:
     rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
+        exclude: 'zeroia_dashboard\.json|zeroia_snapshot\.toml'
       - id: trailing-whitespace
 
 default_stages: [pre-commit]

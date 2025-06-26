@@ -55,6 +55,10 @@ def test_contradiction_detection_log_creation(tmp_path, monkeypatch):
 
     toml.dump({"decision": {"last_decision": "shutdown"}}, state_path.open("w"))
 
-    check_for_ia_conflict(log_path_override=contradiction_log_path)
+    check_for_ia_conflict(
+        reflexia_decision="decision1",
+        zeroia_decision="decision2",
+        log_path=contradiction_log_path,
+    )
 
     assert contradiction_log_path.exists()

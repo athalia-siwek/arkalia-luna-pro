@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+# 🔁 Force l'ajout du root au PYTHONPATH
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import pytest
 
 from tests.unit.test_helpers import ensure_test_toml

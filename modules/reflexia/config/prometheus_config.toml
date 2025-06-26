@@ -1,0 +1,7 @@
+[metrics]
+cpu_usage = true
+ram_usage = true
+disk_io = true
+
+[alerts]
+cpu > 85 = "ALERT_HIGH_CPU"

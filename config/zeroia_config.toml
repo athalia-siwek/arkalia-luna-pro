@@ -1,0 +1,2 @@
+[logging]
+contradiction_log_path = "modules/zeroia/logs/zeroia_contradictions.log"

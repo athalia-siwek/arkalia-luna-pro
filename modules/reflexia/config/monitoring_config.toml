@@ -1,0 +1,15 @@
+# modules/reflexia/config/monitoring_config.toml
+[memory]
+interval = 30  # en secondes
+threshold_warning = 70
+threshold_critical = 90
+
+[cpu]
+interval = 30
+threshold_warning = 75
+threshold_critical = 90
+
+[logs]
+enable_rotation = true
+max_size_mb = 10
+backup_count = 5

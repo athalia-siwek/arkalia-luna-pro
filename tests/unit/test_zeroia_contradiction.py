@@ -30,11 +30,11 @@ def test_contradiction_detection(tmp_path, monkeypatch):
 
     print(f"[DEBUG] Checking for IA conflict with log path: {contradiction_log}")
     check_for_ia_conflict(
-        reflexia_path_override=reflexia_path,
-        zeroia_state_path=zeroia_path,
-        log_path_override=contradiction_log,
+        reflexia_decision="decision1",
+        zeroia_decision="decision2",
+        log_path=contradiction_log,
     )
 
     # Et ajuste ce bout final :
     assert contradiction_log.exists(), "The contradiction log file was not created."
-    assert "CONTRADICTION DETECTED" in contradiction_log.read_text().upper()
+    assert "CONTRADICTION DETECTÉE" in contradiction_log.read_text().upper()

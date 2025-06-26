@@ -23,6 +23,11 @@ services:
       uvicorn helloria.core:app --host 0.0.0.0 --port ${PORT_API:-8000}
         --reload --reload-dir helloria
         --reload-exclude logs/ --reload-exclude docs/ --reload-exclude site/
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
 
   # 🧠 AssistantIA — IA contextuelle de navigation
   assistantia:
@@ -35,6 +40,11 @@ services:
       - "${PORT_ASSISTANTIA:-8001}:${PORT_ASSISTANTIA:-8001}"
     command: >
       uvicorn modules.assistantia.core:app --host 0.0.0.0 --port ${PORT_ASSISTANTIA:-8001}
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
 
   # 🔁 ReflexIA — Boucle adaptative réflexive
   reflexia:
@@ -44,21 +54,23 @@ services:
       context: .
       dockerfile: Dockerfile-reflexia
     command: python run_reflexia.py
-    restart: always
     depends_on:
       - assistantia
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
 
   # 🤖 ZeroIA — Service de décision autonome
   zeroia:
     <<: *arkalia-defaults
+    container_name: zeroia
     build:
       context: .
       dockerfile: Dockerfile.zeroia
-    container_name: zeroia
     image: arkalia-luna-zeroia
     command: python modules/zeroia/reason_loop.py
-    volumes:
-      - .:/app
     depends_on:
       - reflexia
     healthcheck:
@@ -67,3 +79,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 15s
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

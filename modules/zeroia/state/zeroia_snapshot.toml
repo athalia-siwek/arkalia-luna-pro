@@ -1,0 +1,8 @@
+timestamp = "2025-06-26 01:14:43"
+snapshot_time = "2025-06-26T01:15:14.127044"
+
+[decision]
+last_decision = "reduce_load"
+confidence_score = 0.75
+justification = "cpu=72.1, severity=warning"
+timestamp = "2025-06-26 01:14:43.229481"
