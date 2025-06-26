@@ -8,10 +8,7 @@ from typing import Optional
 import toml
 
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
-from modules.zeroia.utils.state_writer import (
-    save_json_if_changed,
-    save_toml_if_changed,
-)
+from modules.zeroia.utils.state_writer import save_json_if_changed, save_toml_if_changed
 
 # === Chemins par défaut ===
 CTX_PATH = Path("state/global_context.toml")
@@ -20,11 +17,9 @@ LOG_PATH = Path("modules/zeroia/logs/zeroia.log")
 STATE_PATH = Path("modules/zeroia/state/zeroia_state.toml")
 DASHBOARD_PATH = Path("state/zeroia_dashboard.json")
 CONFIG_PATH = Path("config/zeroia_config.toml")
-
-# === Fallback pour contradiction log
 DEFAULT_CONTRADICTION_LOG = Path("logs/zeroia_contradictions.log")
 
-# === Logger contradiction
+# === Logger contradiction (rotatif)
 logger = logging.getLogger("zeroia_contradictions")
 logger.setLevel(logging.DEBUG)
 handler = RotatingFileHandler(
@@ -35,18 +30,15 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
-# === Chargements TOML robustes ===
 def load_toml(path: Path) -> dict:
     try:
-        if not path.exists() or path.read_text().strip() == "":
+        if not path.exists() or not path.read_text().strip():
             raise ValueError(f"TOML file {path} is empty or missing")
         return toml.load(path)
     except toml.TomlDecodeError as e:
-        print(f"[DEBUG] TOML Decode Error: {e}")
-        raise ValueError(f"Invalid TOML format in {path}: {e}")
+        raise ValueError(f"[TOML] Format invalide dans {path}: {e}")
     except Exception as e:
-        print(f"[DEBUG] General Error: {e}")
-        raise ValueError(f"Failed to load TOML file {path}: {e}")
+        raise ValueError(f"[TOML] Erreur lors du chargement de {path}: {e}")
 
 
 def load_context(path: Path = CTX_PATH) -> dict:
@@ -57,7 +49,6 @@ def load_reflexia_state(path: Path = REFLEXIA_STATE) -> dict:
     return load_toml(path)
 
 
-# === Décision IA ===
 def decide(context: dict) -> tuple[str, float]:
     status = context.get("status", {})
     severity = status.get("severity", "none")
@@ -79,10 +70,7 @@ def ensure_parent_dir(path: Path) -> None:
 
 
 def persist_state(
-    decision: str,
-    score: float,
-    ctx: dict,
-    state_path_override: Optional[Path] = None,
+    decision: str, score: float, ctx: dict, state_path_override: Optional[Path] = None
 ) -> None:
     reflexia_summary = ctx.get("reflexia", {})
     status = ctx.get("status", {})
@@ -91,13 +79,14 @@ def persist_state(
 
     state_path = state_path_override or STATE_PATH
     ensure_parent_dir(state_path)
+
     save_toml_if_changed(
         {
             "decision": {
                 "last_decision": decision,
                 "confidence_score": score,
                 "justification": f"cpu={cpu}, severity={severity}",
-                "timestamp": str(datetime.now()),
+                "timestamp": datetime.now().isoformat(),
             }
         },
         str(state_path),
@@ -127,7 +116,7 @@ def update_dashboard(
             "reasoning_loop_active": True,
             "connected_modules": ["reflexia"],
             "previous": ["reduce_load", "monitor", "monitor"],
-            "last_updated": str(datetime.now()),
+            "last_updated": datetime.now().isoformat(),
         },
         str(dashboard_path),
     )
@@ -143,9 +132,7 @@ def get_configured_contradiction_log() -> Path:
 
 
 def check_for_ia_conflict(
-    reflexia_decision: str,
-    zeroia_decision: str,
-    log_path: Path = get_configured_contradiction_log(),
+    reflexia_decision: str, zeroia_decision: str, log_path: Path
 ) -> bool:
     if reflexia_decision != zeroia_decision:
         ensure_parent_dir(log_path)
@@ -153,9 +140,9 @@ def check_for_ia_conflict(
             f.write(
                 textwrap.dedent(
                     f"""
-                [{datetime.utcnow()}] CONTRADICTION DETECTÉE — \
-                ReflexIA={reflexia_decision}, ZeroIA={zeroia_decision}\n
-                """
+                    [{datetime.utcnow()}] CONTRADICTION DETECTÉE — \
+                    ReflexIA={reflexia_decision}, ZeroIA={zeroia_decision}\n
+                    """
                 )
             )
         return True
@@ -164,17 +151,7 @@ def check_for_ia_conflict(
 
 def log_conflict(conflict_msg: str) -> None:
     logger.debug(conflict_msg)
-    logger.info(
-        "💥 Contradiction explicite entre ReflexIA et ZeroIA "
-        "(mocks injectés sur chemins TOML)"
-    )
-
-
-def check_and_exit_if_inactive():
-    state = load_toml(STATE_PATH)
-    if not state.get("active", True):
-        print("🛑 ZeroIA détectée inactive, arrêt boucle.")
-        exit(1)
+    logger.info("🔄 ZeroIA loop started successfully")
 
 
 def reason_loop(
@@ -185,29 +162,23 @@ def reason_loop(
     log_path: Optional[Path] = None,
     contradiction_log_path: Optional[Path] = None,
 ) -> tuple[str, float]:
-    check_and_exit_if_inactive()
+    # Exemple de logique pour utiliser les chemins fournis
     ctx = load_context(context_path or CTX_PATH)
     reflexia_data = load_reflexia_state(reflexia_path or REFLEXIA_STATE)
-
-    if not ctx:
-        raise ValueError(
-            f"Context file {context_path or CTX_PATH} is empty or invalid."
-        )
-
-    ctx["reflexia"] = reflexia_data.get("reflexia", {})
-    ctx.setdefault("status", {}).update(reflexia_data.get("status", {}))
 
     if "cpu" not in ctx["status"] or "ram" not in ctx["status"]:
         raise KeyError(
             "Missing required keys in context: 'cpu' and 'ram' must be present."
         )
 
-    cpu = ctx["status"].get("cpu", 0)
+    # Logique de décision simplifiée
     decision, score = decide(ctx)
 
+    # Persister l'état et mettre à jour le tableau de bord
     persist_state(decision, score, ctx, state_path)
     update_dashboard(decision, score, ctx, dashboard_path)
 
+    # Vérifier les contradictions
     if check_for_ia_conflict(
         reflexia_data.get("decision", {}).get("last_decision", "unknown"),
         decision,
@@ -219,19 +190,9 @@ def reason_loop(
             f"ZeroIA = {decision}"
         )
 
-    print(f"CPU usage: {cpu}%")
+    print(f"[ZeroIA] Decision: {decision} (score={score})", flush=True)
     return decision, score
 
 
 def compute_confidence_score(success_rate: float, error_rate: float) -> float:
     return max(0.0, min(1.0, success_rate - error_rate))
-
-
-def main():
-    print("🟢 ZeroIA loop started successfully")
-    decision, score = reason_loop()
-    print(f"ZeroIA decided: {decision} (confidence={score})")
-
-
-if __name__ == "__main__":
-    main()

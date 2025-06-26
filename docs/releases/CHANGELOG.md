@@ -107,3 +107,35 @@ Ce fichier retrace les évolutions majeures du système IA modulaire Arkalia-LUN
 - Ajout d'exemples concrets dans `ollama.md`, `ci-cd.md`, `faqs.md`
 
 ---
+
+## 🔖 v2.5.3 — CI verte + tests 100% (26 juin 2025)
+
+### ✅ Nouveautés
+
+- Ajout des scripts Fail2Ban (jail, filter, test)
+- Intégration complète de ZeroIA (reason_loop, snapshot, orchestrator)
+- Dockerfile sécurisés (cap_drop, no-new-privileges)
+- Couverture de tests portée à 113 tests, 67 %
+- Monitoring actif (Reflexia, dashboard, Prometheus config)
+- Résolution des erreurs TOML invalides dans `snapshot_generator`
+- Tests croisés ReflexIA ↔ ZeroIA : validés
+
+### 🔐 Sécurité
+
+- Mise en place d'une simulation de pare-feu avec bannissement automatique
+- Tests automatisés : `fail2ban_test.sh` validé en CI
+- Fichiers parasites `.DS_Store`, `._*` supprimés
+
+### 📄 Documentation
+
+- `docs/docker_hardening.md` ajouté
+- `deployment/render_helloria.yml` préparé
+
+### 🧪 CI/CD
+
+- Tous les tests (`act` + GitHub Actions) passés
+- pre-commit : `black`, `ruff`, EOF, trailing ✔️
+
+> Version stable, dockerisée, supervisée, avec agents cognitifs coopérants.
+
+---

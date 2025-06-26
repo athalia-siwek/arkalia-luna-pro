@@ -53,12 +53,13 @@ def save_json_if_changed(data: dict, target_path: str):
         json.dump(data, f, indent=2, sort_keys=True)
 
 
-def check_health(file_path):
+def check_health(path: str) -> bool:
     try:
-        data = toml.load(file_path)
-        return data.get("zeroia", {}).get("active", False) is True
-    except Exception as e:
-        print(f"Erreur lors de la vérification de l'état: {e}")
+        data = toml.load(path)
+        return bool(
+            data.get("active") is True or data.get("zeroia", {}).get("active") is True
+        )
+    except Exception:
         return False
 
 

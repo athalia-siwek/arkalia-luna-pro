@@ -47,5 +47,5 @@ def test_toml_parsing_error(tmp_path: Path):
     broken_file = tmp_path / "broken.toml"
     broken_file.write_text("[status\nseverity = 'critical'")  # TOML invalide
 
-    with pytest.raises(ValueError, match=r"Invalid TOML format"):
+    with pytest.raises(ValueError, match=r"\[TOML\] Format invalide dans .*"):
         load_toml(broken_file)

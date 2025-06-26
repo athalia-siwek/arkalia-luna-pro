@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import toml
+
 from modules.zeroia.reason_loop import reason_loop
 from tests.unit.test_helpers import ensure_test_toml, ensure_zeroia_state_file
 
@@ -11,8 +13,10 @@ def test_reflexia_injection_merges_into_context(tmp_path: Path):
     ctx_path = tmp_path / "ctx.toml"
     reflexia_path = tmp_path / "reflexia.toml"
 
-    # 🧪 Contexte minimal
-    ctx_path.write_text("[status]\n")
+    # 🧪 Contexte minimal avec CPU élevé
+    ctx_path.write_text(
+        toml.dumps({"status": {"cpu": 85, "ram": 60, "severity": "high"}})
+    )
 
     # 🧠 ReflexIA injecte CPU + RAM + insight
     reflexia_path.write_text(

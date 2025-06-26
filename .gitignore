@@ -82,3 +82,8 @@ liens_non_listes.txt
 # Exclure le dossier security mais inclure le fichier security.md
 +security/
 !docs/security/security.md
+
+# Local dev tools
+.dev/
+.env
+*.log

@@ -1,5 +1,5 @@
 # 📦 Arkalia Luna Pro — Docker Compose
-# Version modulaire et professionnelle
+# Version modulaire, professionnelle et sécurisée
 
 x-arkalia-defaults: &arkalia-defaults
   build:
@@ -13,7 +13,7 @@ x-arkalia-defaults: &arkalia-defaults
 
 services:
 
-  # 🚀 Serveur principal Arkalia API (Helloria)
+  # 🚀 Helloria — API centrale (FastAPI)
   arkalia-api:
     <<: *arkalia-defaults
     container_name: arkalia-api
@@ -24,12 +24,11 @@ services:
         --reload --reload-dir helloria
         --reload-exclude logs/ --reload-exclude docs/ --reload-exclude site/
     read_only: true
-    cap_drop:
-      - ALL
+    cap_drop: [ ALL ]
     security_opt:
       - no-new-privileges:true
 
-  # 🧠 AssistantIA — IA contextuelle de navigation
+  # 🧠 AssistantIA — Navigation contextuelle
   assistantia:
     <<: *arkalia-defaults
     container_name: assistantia
@@ -41,12 +40,11 @@ services:
     command: >
       uvicorn modules.assistantia.core:app --host 0.0.0.0 --port ${PORT_ASSISTANTIA:-8001}
     read_only: true
-    cap_drop:
-      - ALL
+    cap_drop: [ ALL ]
     security_opt:
       - no-new-privileges:true
 
-  # 🔁 ReflexIA — Boucle adaptative réflexive
+  # 🔁 ReflexIA — Observateur cognitif réflexif
   reflexia:
     <<: *arkalia-defaults
     container_name: reflexia
@@ -57,12 +55,11 @@ services:
     depends_on:
       - assistantia
     read_only: true
-    cap_drop:
-      - ALL
+    cap_drop: [ ALL ]
     security_opt:
       - no-new-privileges:true
 
-  # 🤖 ZeroIA — Service de décision autonome
+  # 🤖 ZeroIA — Décisionneur autonome intelligent
   zeroia:
     <<: *arkalia-defaults
     container_name: zeroia
@@ -71,6 +68,8 @@ services:
       dockerfile: Dockerfile.zeroia
     image: arkalia-luna-zeroia
     command: python modules/zeroia/reason_loop.py
+    environment:
+      - ZEROIA_HOLD_LOOP=true
     depends_on:
       - reflexia
     healthcheck:
@@ -80,7 +79,6 @@ services:
       retries: 3
       start_period: 15s
     read_only: true
-    cap_drop:
-      - ALL
+    cap_drop: [ ALL ]
     security_opt:
       - no-new-privileges:true

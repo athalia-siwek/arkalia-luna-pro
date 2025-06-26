@@ -15,11 +15,18 @@ repos:
         exclude: '^.*(venv|\.DS_Store|\.AppleDouble|^\._).*$'
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v4.4.0
     hooks:
       - id: end-of-file-fixer
-        exclude: 'zeroia_dashboard\.json|zeroia_snapshot\.toml'
+        exclude: |
+          (^modules/zeroia/state/zeroia_state\.toml$|
+           ^state/zeroia_dashboard\.json$|
+           ^logs/failure_analysis\.md$)
       - id: trailing-whitespace
+        exclude: |
+          (^modules/zeroia/state/zeroia_state\.toml$|
+           ^state/zeroia_dashboard\.json$|
+           ^logs/failure_analysis\.md$)
 
 default_stages: [pre-commit]
 exclude: '^(venv|\.venv|env|\.env|\.mypy_cache|\.pytest_cache|site|dist|build)/'

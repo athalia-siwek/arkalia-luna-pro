@@ -32,7 +32,7 @@ arkalia-luna-pro/
 
 ---
 
-## 🔄 Fonctionnement
+## 🛠 Fonctionnement Interne
 
 ZeroIA fonctionne en trois étapes principales :
 
@@ -224,6 +224,41 @@ flowchart TD
 ```
 
 ---
+
+## 🔄 Contradiction ReflexIA
+
+ZeroIA gère les contradictions avec ReflexIA en comparant les décisions prises par les deux systèmes. Si une contradiction est détectée, elle est journalisée pour analyse.
+
+## 📄 TOML + JSON Générés
+
+ZeroIA génère des fichiers TOML et JSON pour stocker les décisions et les états. Voici un exemple de fichier TOML généré :
+
+```toml
+[decision]
+last_decision = "reduce_load"
+confidence_score = 0.75
+justification = "cpu=72.1, severity=warning"
+```
+
+## 📜 Logs
+
+Les logs de ZeroIA fournissent des informations détaillées sur les décisions prises et les états du système. Voici un exemple de log :
+
+```
+2025-06-24 20:43:48.758557 :: FROM REFLEXIA: {'last_snapshot': '⚠️ RAM élevée', 'last_decision': 'monitor'} | CPU=72.1 | SEVERITY=warning → DECISION = monitor
+```
+
+## 🩺 Healthcheck
+
+Le script de healthcheck vérifie l'état de ZeroIA en s'assurant que la dernière décision est valide. Si une décision est présente, le script retourne "OK".
+
+## 🐳 Commandes Docker Utiles
+
+Voici quelques commandes Docker utiles pour gérer ZeroIA :
+
+- `docker exec -it zeroia bash` : Accéder au shell du conteneur ZeroIA.
+- `docker logs zeroia` : Voir les logs de ZeroIA.
+- `docker restart zeroia` : Redémarrer le conteneur ZeroIA.
 
 © 2025 **Athalia** – Tous droits réservés.
 🤖 Powered by Arkalia ReflexIA `v1.x`

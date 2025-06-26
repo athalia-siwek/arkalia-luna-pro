@@ -86,6 +86,7 @@ nav:
       - API FastAPI: api.md
   - 🔐 Sécurité:
       - Sécurité: security/security.md
+      - Durcissement Docker: docker_hardening.md
   - 🧪 Logs & Suivi:
       - Historique Raisonnement: logs/reasoning_history.md
       - Analyse des Échecs: logs/failure_analysis.md
