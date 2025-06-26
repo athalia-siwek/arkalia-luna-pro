@@ -99,6 +99,12 @@ jobs:
           git remote set-url origin https://${{ secrets.ARKALIA_PAT }}@github.com/arkalia-luna-system/arkalia-luna-pro.git
           echo "::endgroup::"
 
+      - name: 🔍 Vérification de la configuration MkDocs
+        run: |
+          echo "::group::Vérification MkDocs"
+          mkdocs build --strict --site-dir /tmp/mkdocs
+          echo "::endgroup::"
+
       - name: 🚀 Déploiement MkDocs
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |

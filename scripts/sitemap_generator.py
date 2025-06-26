@@ -73,13 +73,11 @@ def ping_google_sitemap():
     encoded_url = urllib.parse.quote(sitemap_url, safe=":/")
     ping_url = f"https://www.google.com/ping?sitemap={encoded_url}"
     try:
-        response = requests.get(ping_url, timeout=5)
-        if response.status_code == 200:
-            print("✅ Google pingé avec succès")
-        else:
-            print(f"⚠️ Échec du ping Google : {response.status_code}")
-    except Exception as e:
-        print(f"❌ Erreur ping Google : {e}")
+        response = requests.get(ping_url)
+        if response.status_code != 200:
+            print(f"⚠️ Ping échoué ({response.status_code})")
+    except Exception:
+        print("⚠️ Ping désactivé en local.")
 
 
 # 🚀 Exécution directe

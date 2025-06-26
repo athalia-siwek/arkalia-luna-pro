@@ -2,11 +2,11 @@
 
 import os
 import sys
-import xml.etree.ElementTree as ET
 from unittest.mock import patch
 
 import pytest
 import yaml
+from defusedxml.ElementTree import parse as safe_parse
 
 # 📌 CI skip automatique si sitemap non généré
 CI = os.getenv("CI", "false").lower() == "true"
@@ -39,15 +39,15 @@ def ensure_sitemap_exists():
 def test_sitemap_is_valid_xml():
     ensure_sitemap_exists()
     try:
-        ET.parse(SITEMAP_PATH)
-    except ET.ParseError as e:
+        safe_parse(SITEMAP_PATH)
+    except Exception as e:
         pytest.fail(f"❌ Le fichier sitemap.xml n'est pas un XML valide : {e}")
 
 
 @skip_if_no_sitemap
 def test_sitemap_contains_urls():
     ensure_sitemap_exists()
-    tree = ET.parse(SITEMAP_PATH)
+    tree = safe_parse(SITEMAP_PATH)
     root = tree.getroot()
     urls = root.findall("sm:url", NAMESPACE)
     assert urls, "❌ Aucune balise <url> trouvée dans sitemap.xml"
@@ -67,7 +67,7 @@ def test_sitemap_matches_nav():
     expected_paths = extract_paths(config.get("nav", []))
 
     # 📄 Extraction des URLs actuelles du sitemap
-    tree = ET.parse(SITEMAP_PATH)
+    tree = safe_parse(SITEMAP_PATH)
     root = tree.getroot()
     urls_in_sitemap = {
         loc.text.strip()

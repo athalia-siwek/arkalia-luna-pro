@@ -50,6 +50,42 @@ repos:
         files: ^modules/zeroia/state/zeroia_state\.toml$
         pass_filenames: false  # ⚠️ ← empêche l'envoi du fichier TOML comme arg
 
+      - id: clean-hidden-files
+        name: Clean macOS hidden files
+        entry: bash scripts/ark-clean-hidden.sh
+        language: system
+        types: [file]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.5
+    hooks:
+      - id: bandit
+        name: Security Linter
+        description: Run Bandit security linter
+        entry: bandit -r
+        language: python
+        types: [python]
+        exclude: ^tests/
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.3.0
+    hooks:
+      - id: flake8
+        name: Flake8 Linter
+        description: Run Flake8 linter
+        entry: flake8
+        language: python
+        types: [python]
+
+  - repo: local
+    hooks:
+      - id: run-tests
+        name: Run Tests
+        entry: pytest
+        language: system
+        types: [python]
+        pass_filenames: false
+
 ci:
   skip: false
 

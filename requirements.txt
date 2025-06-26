@@ -38,3 +38,5 @@ pymdown-extensions
 pre-commit
 toml==0.10.2
 tomli==2.2.1
+
+defusedxml

@@ -87,3 +87,6 @@ liens_non_listes.txt
 .dev/
 .env
 *.log
+
+# Ignorer le répertoire gh-pages pour éviter les conflits
+gh-pages/

@@ -9,7 +9,10 @@ import toml
 
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
 from modules.zeroia.utils.backup import save_backup
-from modules.zeroia.utils.state_writer import save_json_if_changed, save_toml_if_changed
+from modules.zeroia.utils.state_writer import (
+    save_json_if_changed,
+    save_toml_if_changed,
+)
 
 # === Chemins par défaut ===
 CTX_PATH = Path("state/global_context.toml")
@@ -20,7 +23,7 @@ DASHBOARD_PATH = Path("state/zeroia_dashboard.json")
 CONFIG_PATH = Path("config/zeroia_config.toml")
 DEFAULT_CONTRADICTION_LOG = Path("logs/zeroia_contradictions.log")
 
-# === Logger contradiction (rotatif)
+# === Logger contradiction (rotatif) ===
 logger = logging.getLogger("zeroia_contradictions")
 logger.setLevel(logging.DEBUG)
 handler = RotatingFileHandler(
@@ -59,19 +62,23 @@ def decide(context: dict) -> tuple[str, float]:
         return "reduce_load", 0.75
     if severity == "critical":
         return "emergency_shutdown", 1.0
-    elif cpu > 80:
+    if cpu > 80:
         return "reduce_load", 0.8
-    elif cpu > 60:
+    if cpu > 60:
         return "monitor", 0.6
     return "normal", 0.4
 
 
 def ensure_parent_dir(path: Path) -> None:
-    (path.parent if path.suffix else path).mkdir(parents=True, exist_ok=True)
+    target = path.parent if path.suffix else path
+    target.mkdir(parents=True, exist_ok=True)
 
 
 def persist_state(
-    decision: str, score: float, ctx: dict, state_path_override: Optional[Path] = None
+    decision: str,
+    score: float,
+    ctx: dict,
+    state_path_override: Optional[Path] = None,
 ) -> None:
     reflexia_summary = ctx.get("reflexia", {})
     status = ctx.get("status", {})
@@ -80,7 +87,6 @@ def persist_state(
 
     state_path = state_path_override or STATE_PATH
     ensure_parent_dir(state_path)
-
     save_backup()
 
     save_toml_if_changed(
@@ -99,8 +105,8 @@ def persist_state(
     with open(LOG_PATH, "a") as f:
         f.write(
             f"{datetime.now()} :: FROM REFLEXIA: {reflexia_summary} | "
-            f"CPU={cpu} | SEVERITY={severity} → DECISION = {decision} "
-            f"(confidence={score})\n"
+            f"CPU={cpu} | SEVERITY={severity} → DECISION = "
+            f"{decision} (confidence={score})\n"
         )
 
 
@@ -135,7 +141,9 @@ def get_configured_contradiction_log() -> Path:
 
 
 def check_for_ia_conflict(
-    reflexia_decision: str, zeroia_decision: str, log_path: Path
+    reflexia_decision: str,
+    zeroia_decision: str,
+    log_path: Path,
 ) -> bool:
     if reflexia_decision != zeroia_decision:
         ensure_parent_dir(log_path)
@@ -143,7 +151,7 @@ def check_for_ia_conflict(
             f.write(
                 textwrap.dedent(
                     f"""
-                    [{datetime.utcnow()}] CONTRADICTION DETECTÉE — \
+                    [{datetime.utcnow()}] CONTRADICTION DETECTÉE —
                     ReflexIA={reflexia_decision}, ZeroIA={zeroia_decision}\n
                     """
                 )
@@ -165,35 +173,35 @@ def reason_loop(
     log_path: Optional[Path] = None,
     contradiction_log_path: Optional[Path] = None,
 ) -> tuple[str, float]:
-    # Exemple de logique pour utiliser les chemins fournis
     ctx = load_context(context_path or CTX_PATH)
     reflexia_data = load_reflexia_state(reflexia_path or REFLEXIA_STATE)
 
-    if "cpu" not in ctx["status"] or "ram" not in ctx["status"]:
+    if "cpu" not in ctx.get("status", {}) or "ram" not in ctx.get("status", {}):
         raise KeyError(
             "Missing required keys in context: 'cpu' and 'ram' must be present."
         )
 
-    # Logique de décision simplifiée
     decision, score = decide(ctx)
-
-    # Persister l'état et mettre à jour le tableau de bord
     persist_state(decision, score, ctx, state_path)
     update_dashboard(decision, score, ctx, dashboard_path)
 
-    # Vérifier les contradictions
+    reflexia_decision = reflexia_data.get("decision", {}).get(
+        "last_decision", "unknown"
+    )
     if check_for_ia_conflict(
-        reflexia_data.get("decision", {}).get("last_decision", "unknown"),
+        reflexia_decision,
         decision,
         log_path=contradiction_log_path or get_configured_contradiction_log(),
     ):
         log_conflict(
-            f"CONTRADICTION DETECTED: ReflexIA = "
-            f"{reflexia_data.get('decision', {}).get('last_decision')}, "
+            f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, "
             f"ZeroIA = {decision}"
         )
 
     print(f"[ZeroIA] Decision: {decision} (score={score})", flush=True)
+    print(
+        f"[TEST DEBUG] Fin de reason_loop() :: Decision = {decision} | Score = {score}"
+    )
     return decision, score
 
 

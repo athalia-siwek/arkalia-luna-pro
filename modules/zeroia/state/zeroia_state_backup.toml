@@ -1,7 +1,8 @@
-timestamp = "2025-06-26 11:51:10"
+timestamp = "2025-06-26 15:21:07"
 
 [decision]
 last_decision = "reduce_load"
 confidence_score = 0.75
 justification = "cpu=85, severity=high"
-timestamp = "2025-06-26T11:51:10.519861"
+timestamp = "2025-06-26T15:21:07.822562"
+

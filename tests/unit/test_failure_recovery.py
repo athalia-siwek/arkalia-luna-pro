@@ -1,3 +1,4 @@
+import shlex
 import shutil
 import subprocess
 from pathlib import Path
@@ -34,10 +35,13 @@ def test_failsafe_recovers_from_corrupt_snapshot():
 
     # Lance le script failsafe
     result = subprocess.run(
-        ["python", "modules/zeroia/failsafe.py"], capture_output=True, text=True
+        shlex.split("python modules/zeroia/failsafe.py"),
+        check=True,
+        capture_output=True,
+        text=True,
     )
 
-    assert "\u26a0\ufe0f Snapshot corrompu ou incomplet" in result.stdout
+    assert "⚠️ Snapshot corrompu ou incomplet" in result.stdout
     assert FAILURE_LOG.exists()
 
     with open(FAILURE_LOG, "r") as f:

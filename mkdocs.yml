@@ -97,6 +97,8 @@ nav:
   - 📦 Releases:
       - Notes de version: releases/index.md
       - CHANGELOG: releases/CHANGELOG.md
+      - Historique technique: changelog.md
+      - Dernières updates: releases/dernieres_updates.md
   - 🧾 Licence:
       - Licence: license.md
   - 📖 FAQs & Aide:
@@ -106,12 +108,9 @@ nav:
   - ✨ Crédits:
       - Crédits: credits/credits.md
       - Contribution: credits/CONTRIBUTING.md
-  - 🔍 Diagnostic:
-      - État de ZeroIA: logs/zeroia_status.md
-  - IA Ops:
-      - ops.md
-  - Rebuild: rebuild.md
-  - Cognitive Levels: cognitive-levels.md
+  - 🧠 IA Ops: ops.md
+  - ♻️ Rebuild: rebuild.md
+  - 🧬 Cognitive Levels: cognitive-levels.md
 
 markdown_extensions:
   - admonition
@@ -146,6 +145,9 @@ extra_javascript:
 
 plugins:
   - search
+  - mkdocs-simple-hooks:
+      hooks:
+        on_pre_build: "scripts.generate_updates_page:run"
   - minify:
       minify_html: true
   - git-revision-date-localized:
@@ -153,4 +155,9 @@ plugins:
       locale: fr
       timezone: Europe/Paris
       fallback_to_build_date: true
+      exclude:
+        - "*.DS_Store"
+        - ".*"
+        - "dernieres_updates.md"
+        - "._dernieres_updates.md"
   - macros

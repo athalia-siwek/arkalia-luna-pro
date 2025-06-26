@@ -1,3 +1,4 @@
+import subprocess
 import tempfile
 from pathlib import Path
 
@@ -82,3 +83,11 @@ def test_rollback_failure(monkeypatch):
     monkeypatch.setattr(zeroia_rollback, "BACKUP_FILE", Path("nonexistent.toml"))
     monkeypatch.setattr(zeroia_rollback, "STATE_FILE", Path("state/zeroia_state.toml"))
     zeroia_rollback.rollback_from_backup()
+
+
+def test_zeroia_rollback_script_runs():
+    result = subprocess.run(
+        ["python", "scripts/zeroia_rollback.py"], capture_output=True, text=True
+    )
+    assert result.returncode == 0
+    assert "🧠 Rollback ZeroIA" in result.stdout

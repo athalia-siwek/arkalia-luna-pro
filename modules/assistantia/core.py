@@ -14,7 +14,7 @@ class MessageInput(BaseModel):
     message: str
 
 
-# 👇 Correction ici : Callable[[str], str], car on n’utilisera qu’un seul argument
+# 👇 Correction ici : Callable[[str], str], car on n'utilisera qu'un seul argument
 def get_query_ollama() -> Callable[[str], str]:
     # On fixe le modèle ici via une fonction curryée
     return lambda prompt: real_query_ollama(prompt, "mistral")

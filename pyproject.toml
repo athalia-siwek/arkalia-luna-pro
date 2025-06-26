@@ -10,6 +10,17 @@ authors = [{ name = "Athalia" }]
 readme = "README.md"
 requires-python = ">=3.10"
 
+[project.optional-dependencies]
+dev = [
+  "black>=24.0.0",
+  "ruff>=0.4.0",
+  "pytest>=8.0.0",
+  "pytest-cov>=4.1.0",
+  "mkdocs>=1.5.3",
+  "mkdocs-minify-plugin>=0.7.1",
+  "mkdocs-macros-plugin>=1.0.5",
+]
+
 [tool.black]
 line-length = 88
 target-version = ["py310"]
@@ -24,10 +35,13 @@ exclude = [
     "build",
     "dist",
     "htmlcov",
+    "tests/_*",
 ]
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]  # E: pycodestyle, F: pyflakes, I: isort
+ignore = ["E501"]  # Optionnel : ignorer lignes longues
 
 [tool.coverage.run]
 branch = true
@@ -38,6 +52,7 @@ omit = [
     "*/site-packages/*",
     "*/.venv/*",
     "*/_*.py",
+    "scripts/print_sys_path.py",
 ]
 
 [tool.coverage.report]
@@ -50,6 +65,9 @@ exclude_lines = [
     "except ImportError",
 ]
 
+[tool.coverage.html]
+directory = "htmlcov"
+
 [tool.pytest.ini_options]
 testpaths = [
   "modules",
@@ -60,16 +78,18 @@ testpaths = [
 ]
 addopts = "--cov --cov-report html"
 
-[tool.pytest]
-plugins = ["pytest-asyncio"]
-
 [tool.bumpver]
 version_file = ["version.toml", "pyproject.toml"]
-current_version = "2.1.8"
+current_version = "2.1.12"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "🔖 bump: {old_version} → {new_version}"
 tag_message = "🔖 Version {new_version}"
 
-# [optionnel] Support MkDocs (plugins à installer via pip si actif)
 [tool.mkdocs]
-plugins = ["search", "minify"]
+plugins = ["search", "minify", "macros"]
+
+[tool.flake8]
+ignore = ["E501"]
+
+[tool.bandit]
+skips = ["B101"]

@@ -1,5 +1,3 @@
-# arkalia/hooks.py
-
 from scripts.sitemap_generator import generate_sitemap_from_site
 
 
@@ -13,8 +11,9 @@ def generate_sitemap(config=None, **kwargs):
 def before_startup() -> None:
     """
     Fonction à exécuter avant le démarrage de l'application.
-    Peut être utilisée pour initialiser des variables ou vérifier des conditions.
+    Utilisée pour initialiser ou vérifier certains éléments.
     """
-    # Exemple d'initialisation ou de vérification
     print("Initialisation avant le démarrage")
+    # Placeholder désactivé pour éviter erreurs F821
+    # Exemple : initialiser base de données, logs, etc.
     return None
