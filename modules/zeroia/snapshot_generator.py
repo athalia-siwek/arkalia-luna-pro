@@ -1,5 +1,7 @@
 # 📄 modules/zeroia/snapshot_generator.py
 
+import subprocess  # nosec
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -69,9 +71,7 @@ def generate_snapshot(
         print(f"[FAILSAFE] Échec snapshot : {e}")
         if fallback and FAILSAFE_SCRIPT.exists():
             print("⚠️ Lancement du mode failsafe.")
-            import subprocess
-
-            subprocess.run(["python", str(FAILSAFE_SCRIPT)])
+            subprocess.run([sys.executable, str(FAILSAFE_SCRIPT)], check=True)  # nosec
         return False
 
 

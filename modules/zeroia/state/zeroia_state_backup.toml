@@ -1,7 +1,0 @@
-timestamp = "2025-06-26 15:25:43"
-
-[decision]
-last_decision = "reduce_load"
-confidence_score = 0.75
-justification = "cpu=85, severity=high"
-timestamp = "2025-06-26T15:25:43.840673"

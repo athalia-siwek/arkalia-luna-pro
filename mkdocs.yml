@@ -147,7 +147,7 @@ plugins:
   - search
   - mkdocs-simple-hooks:
       hooks:
-        on_pre_build: "scripts.generate_updates_page:run"
+        on_pre_build: "scripts.generate_updates_page:main"  # ✅ Génère `dernieres_updates.md` uniquement avant build
   - minify:
       minify_html: true
   - git-revision-date-localized:
@@ -158,6 +158,6 @@ plugins:
       exclude:
         - "*.DS_Store"
         - ".*"
-        - "dernieres_updates.md"
+        - "dernieres_updates.md"   # ✅ évite de la considérer dans l’historique Git
         - "._dernieres_updates.md"
   - macros

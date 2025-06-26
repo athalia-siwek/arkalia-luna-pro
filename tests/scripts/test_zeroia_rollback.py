@@ -1,4 +1,5 @@
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -87,7 +88,11 @@ def test_rollback_failure(monkeypatch):
 
 def test_zeroia_rollback_script_runs():
     result = subprocess.run(
-        ["python", "scripts/zeroia_rollback.py"], capture_output=True, text=True
+        [sys.executable, "scripts/zeroia_rollback.py"],
+        capture_output=True,
+        text=True,
+        check=True,
+        shell=False,
     )
     assert result.returncode == 0
     assert "🧠 Rollback ZeroIA" in result.stdout

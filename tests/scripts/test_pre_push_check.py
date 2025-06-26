@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 
 def test_pre_push_zeroia_check_executes_cleanly():
@@ -7,7 +8,11 @@ def test_pre_push_zeroia_check_executes_cleanly():
     et affiche un message de fin cohérent.
     """
     result = subprocess.run(
-        ["python", "scripts/pre_push_zeroia_check.py"], capture_output=True, text=True
+        [sys.executable, "scripts/pre_push_zeroia_check.py"],
+        capture_output=True,
+        text=True,
+        check=True,
+        shell=False,
     )
 
     # 🧪 Vérifie que le script a bien terminé (code 0 ou géré)

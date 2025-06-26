@@ -2,7 +2,7 @@
 
 import datetime
 import os
-import subprocess
+import subprocess  # nosec
 import sys
 from pathlib import Path
 
@@ -14,7 +14,7 @@ def get_container_logs(container_name: str, tail: int = 50) -> str:
         logs = subprocess.check_output(
             ["docker", "logs", container_name, "--tail", str(tail)],
             stderr=subprocess.DEVNULL,
-        )
+        )  # nosec
         return logs.decode("utf-8", errors="ignore")
     except subprocess.CalledProcessError:
         return ""
@@ -24,7 +24,7 @@ def get_container_status(container_name: str) -> str:
     try:
         status = subprocess.check_output(
             ["docker", "inspect", "-f", "{{.State.Status}}", container_name]
-        )
+        )  # nosec
         return status.decode("utf-8").strip()
     except subprocess.CalledProcessError:
         return "unknown"

@@ -4,7 +4,10 @@ repos:
     hooks:
       - id: black
         language_version: python3
-        exclude: '.*(\.tox|venv|site-packages|\.?__pycache__|\.DS_Store|\.?_)'
+        exclude: |
+          (^modules/zeroia/state/zeroia_.*\.toml$|
+           ^state/zeroia_dashboard\.json$|
+           \.tox|venv|site-packages|\.?__pycache__|\.DS_Store|^\._)
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.12.0
@@ -12,19 +15,23 @@ repos:
       - id: ruff
         args: [--fix]
         language_version: python3.10
-        exclude: '^.*(venv|\.DS_Store|\.AppleDouble|^\._).*$'
+        exclude: |
+          (^modules/zeroia/state/zeroia_.*\.toml$|
+           ^state/zeroia_dashboard\.json$|
+           venv|\.DS_Store|\.AppleDouble|^\._)
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
         exclude: |
-          (^state/.*\.json$|
+          (^logs/failure_analysis\.md$|
+           ^state/.*\.json$|
            ^state/.*\.toml$)
       - id: trailing-whitespace
         exclude: |
-          (^state/zeroia_dashboard\.json$|
-           ^modules/zeroia/state/zeroia_state\.toml$)
+          ^modules/zeroia/state/zeroia_.*\.toml$|
+          ^state/zeroia_dashboard\.json$
 
   - repo: local
     hooks:
@@ -48,7 +55,7 @@ repos:
         entry: python3 scripts/zeroia_rollback.py
         language: system
         files: ^modules/zeroia/state/zeroia_state\.toml$
-        pass_filenames: false  # ⚠️ ← empêche l'envoi du fichier TOML comme arg
+        pass_filenames: false
 
       - id: clean-hidden-files
         name: Clean macOS hidden files
@@ -76,6 +83,9 @@ repos:
         entry: flake8
         language: python
         types: [python]
+        exclude: |
+          ^modules/zeroia/state/zeroia_.*\.toml$|
+          ^state/zeroia_dashboard\.json$
 
   - repo: local
     hooks:
@@ -85,10 +95,18 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
+        exclude: |
+          ^modules/zeroia/state/zeroia_.*\.toml$|
+          ^state/zeroia_dashboard\.json$
 
+# CI
 ci:
   skip: false
 
-exclude: '^(venv|\.venv|env|\.env|\.mypy_cache|\.pytest_cache|site|dist|build|state)/'
+# 🌐 Exclusions globales CI/hooks
+exclude: |
+  ^modules/zeroia/state/zeroia_.*\.toml$|
+  ^state/zeroia_dashboard\.json$
 
+# 🚦 Stages définis
 default_stages: [pre-commit]

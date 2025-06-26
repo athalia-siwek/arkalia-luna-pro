@@ -3,9 +3,18 @@ from pathlib import Path
 
 import pytest
 
-from tests.unit.test_helpers import ensure_test_toml  # ✅ toujours en premier
+try:
+    from tests.unit.test_helpers import ensure_test_toml
+except ImportError:
+    # fallback pour appel direct
+    from unit.test_helpers import ensure_test_toml
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+# ✅ Forcer ajout de la racine du projet dans sys.path AVANT les autres imports
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 
 @pytest.fixture(autouse=True, scope="session")

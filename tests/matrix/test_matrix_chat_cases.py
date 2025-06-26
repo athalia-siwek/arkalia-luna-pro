@@ -18,5 +18,5 @@ client = TestClient(app)
 def test_chat_various_messages(msg):
     """Teste l'endpoint /chat avec divers messages."""
     response = client.post("/chat", json={"message": msg})
-    assert response.status_code == 200
-    assert "réponse" in response.json()
+    assert response.status_code == 200, "Statut inattendu"
+    assert "réponse" in response.json(), "Réponse manquante"

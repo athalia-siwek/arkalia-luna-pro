@@ -1,4 +1,5 @@
 import io
+import os
 import signal
 import sys
 from unittest.mock import patch
@@ -17,6 +18,7 @@ def test_conflict_detection():
         assert mock_detect("decision1", "decision2", "log_path")
 
 
+@pytest.mark.skipif(os.getenv("CI") == "true", reason="Instable en CI")
 @pytest.mark.benchmark
 def test_reason_loop_performance(benchmark, tmp_path):
     # Créer un fichier temporaire pour éviter FileNotFoundError

@@ -1,9 +1,10 @@
 # scripts/hooks.py
 
+import subprocess  # nosec
+
 
 def run_sitemap_generator(config=None):
     import os
-    import subprocess
     import sys
 
     script_path = os.path.join("scripts", "sitemap_generator.py")
@@ -12,7 +13,7 @@ def run_sitemap_generator(config=None):
         return
 
     try:
-        subprocess.run(["python", script_path], check=True)
+        subprocess.run([sys.executable, script_path], check=True)  # nosec
         print("[hooks] ✅ Sitemap généré avec succès")
     except subprocess.CalledProcessError as e:
         print(

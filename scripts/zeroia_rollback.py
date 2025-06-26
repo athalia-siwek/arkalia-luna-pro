@@ -28,8 +28,8 @@ def log(msg: str, silent: bool = False):
     try:
         with LOG_FILE.open("a", encoding="utf-8") as f:
             f.write(f"[rollback] {msg}\n")
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[rollback] Erreur : {e}")
     if not silent:
         print(msg)
 

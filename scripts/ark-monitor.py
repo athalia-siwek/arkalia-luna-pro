@@ -2,7 +2,8 @@
 # Affiche un état synthétique de la cognition ZeroIA
 
 import json
-import subprocess
+import subprocess  # nosec
+import sys
 from pathlib import Path
 
 import requests
@@ -16,8 +17,12 @@ LOG_FILE = Path("logs/failure_analysis.md")
 def check_docker_status():
     try:
         result = subprocess.run(
-            ["docker", "ps"], capture_output=True, text=True, check=True
-        )
+            [sys.executable, "docker_status.py"],
+            capture_output=True,
+            text=True,
+            check=True,
+            shell=False,
+        )  # nosec
         if result.stdout:
             print("\n🐳 Docker — Conteneurs en cours d'exécution")
             print(result.stdout)
@@ -29,7 +34,7 @@ def check_docker_status():
 
 def ping_reflexia():
     try:
-        response = requests.get("http://reflexia-endpoint/ping")
+        response = requests.get("http://reflexia-endpoint/ping", timeout=5)
         if response.status_code == 200:
             print("\n🔗 Reflexia — Actif")
         else:

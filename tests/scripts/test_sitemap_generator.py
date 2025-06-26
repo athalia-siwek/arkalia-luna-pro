@@ -1,22 +1,25 @@
-# tests/scripts/test_sitemap_generator.py
-
 import os
 import sys
-from unittest.mock import patch
+import unittest
+from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
 import yaml
 from defusedxml.ElementTree import parse as safe_parse
 
-# 📌 CI skip automatique si sitemap non généré
-CI = os.getenv("CI", "false").lower() == "true"
-
 # 📌 Injection du path du script pour l'import
 sys.path.insert(
     0, os.path.abspath("/Volumes/T7/devstation/cursor/arkalia-luna-pro/scripts")
 )
-from scripts.sitemap_generator import extract_paths, ping_google_sitemap  # noqa: E402
 
+from scripts.sitemap_generator import (  # noqa: E402
+    extract_paths,
+    generate_sitemap,
+    ping_google_sitemap,
+)
+
+# 📌 CI skip automatique si sitemap non généré
+CI = os.getenv("CI", "false").lower() == "true"
 SITEMAP_PATH = "site/sitemap.xml"
 MKDOCS_CONFIG_PATH = "mkdocs.yml"
 SITE_URL = "https://arkalia-luna-system.github.io/arkalia-luna-pro"
@@ -61,12 +64,10 @@ def test_sitemap_contains_urls():
 @skip_if_no_sitemap
 def test_sitemap_matches_nav():
     ensure_sitemap_exists()
-    # 🔍 Extraction des chemins attendus
     with open(MKDOCS_CONFIG_PATH, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
     expected_paths = extract_paths(config.get("nav", []))
 
-    # 📄 Extraction des URLs actuelles du sitemap
     tree = safe_parse(SITEMAP_PATH)
     root = tree.getroot()
     urls_in_sitemap = {
@@ -95,12 +96,16 @@ def test_extract_paths_basic():
         {"Modules": [{"AssistantIA": "assistantia.md"}, "api.md"]},
     ]
     result = extract_paths(mock_nav)
-    assert all(path in result for path in ("index/", "installation/", "assistantia/"))
+    assert all(
+        path in result for path in ("index/", "installation/", "assistantia/")
+    ), "Chemins manquants"
 
 
 @patch("requests.get")
 def test_ping_google_sitemap_success(mock_get):
-    mock_get.return_value.status_code = 200
+    mock_response = MagicMock()
+    mock_response.status_code = 200
+    mock_get.return_value = mock_response
 
     try:
         ping_google_sitemap()
@@ -108,4 +113,40 @@ def test_ping_google_sitemap_success(mock_get):
         pytest.fail(f"Ping Google a levé une exception : {e}")
 
     mock_get.assert_called_once()
-    assert mock_get.call_args[0][0].startswith("https://www.google.com/ping?sitemap=")
+    assert mock_get.call_args[0][0].startswith(
+        "https://www.google.com/ping?sitemap="
+    ), "Ping Google échoué"
+
+
+@patch("requests.get", side_effect=Exception("Network error"))
+def test_ping_google_sitemap_failure(mock_get):
+    ping_google_sitemap()
+    mock_get.assert_called_once()
+
+
+class TestSitemapGenerator(unittest.TestCase):
+    @patch("builtins.open", new_callable=mock_open)
+    @patch("os.makedirs")
+    @patch(
+        "scripts.sitemap_generator.parse_nav_from_mkdocs",
+        return_value=["path1/", "path2/"],
+    )
+    def test_generate_sitemap(self, mock_parse_nav, mock_makedirs, mock_open):
+        generate_sitemap(site_url="https://example.com", output_dir="test_site")
+
+        mock_open.assert_called_once_with(
+            os.path.join("test_site", "sitemap.xml"), "w", encoding="utf-8"
+        )
+        handle = mock_open()
+        handle.write.assert_any_call('<?xml version="1.0" encoding="UTF-8"?>\n')
+        handle.write.assert_any_call(
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        )
+        handle.write.assert_any_call("  <url>\n")
+        handle.write.assert_any_call("    <loc>https://example.com/path1/</loc>\n")
+        handle.write.assert_any_call("    <lastmod>2025-06-26</lastmod>\n")
+        handle.write.assert_any_call("  </url>\n")
+
+
+if __name__ == "__main__":
+    unittest.main()

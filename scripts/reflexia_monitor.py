@@ -68,7 +68,7 @@ def export_to_grafana(data):
         },
         "overwrite": True,
     }
-    response = requests.post(GRAFANA_API_URL, headers=headers, json=payload)
+    response = requests.post(GRAFANA_API_URL, headers=headers, json=payload, timeout=10)
     if response.status_code == 200:
         print("✅ Exportation vers Grafana réussie.")
     else:

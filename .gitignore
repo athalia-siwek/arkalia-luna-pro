@@ -5,47 +5,55 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*$py.class
 
-# Environnements virtuels
-.env/
+.env
 .venv/
-*.venv/
 env/
 venv/
+*.venv/
 *.egg-info/
 .eggs/
+pip-wheel-metadata/
 
 # ======================================================
-# 🧪 Tests : ignorer les caches et résidus, autoriser les vrais tests
+# 🧪 Tests : ignorer les caches, conserver les vrais tests
 # ======================================================
-
-# ✅ Autoriser les vrais tests Python
 !tests/
 !tests/**/*.py
 
-# ❌ Fichiers de test parasites à ignorer
 tests/**/__pycache__/
 tests/**/*.pyc
 tests/**/.DS_Store
-*.test.*
+tests/**/*.test.*
+.tox/
+.nox/
+.pytest_cache/
 
 # ======================================================
 # 📦 Build, logs, coverage
 # ======================================================
-*.log
-+docs/logs/
-!docs/logs/failure_analysis.md
-!docs/logs/reasoning_history.md
-*.coverage
-.coverage
-coverage.xml
-htmlcov/
 build/
 dist/
-pip-wheel-metadata/
+*.log
+logs/
+!logs/failure_analysis.md
+!logs/reasoning_history.md
 
-# MkDocs : site statique généré
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.cache/
+
+# ======================================================
+# 📘 MkDocs : site statique généré + fichiers auxiliaires
+# ======================================================
 site/
+docs/releases/dernieres_updates.md
+docs_in_nav.txt
+docs_all.txt
+liens_non_listes.txt
 
 # ======================================================
 # ⚙️ IDEs & fichiers temporaires
@@ -61,32 +69,29 @@ docker-compose.override.yml
 Dockerfile*
 
 # ======================================================
-# 🧠 Fichiers de state temporaires (IA)
+# 🧠 Fichiers de state IA (dynamiques à exclure du contrôle Git)
 # ======================================================
 modules/reflexia/state/reflexia_state.toml
 modules/zeroia/state/zeroia_state.toml
 state/zeroia_dashboard.json
+modules/zeroia/state/zeroia_*.toml
 
 # ======================================================
-# 💻 Fichiers système macOS à ignorer
+# 💻 macOS / fichiers système cachés
 # ======================================================
 .DS_Store
 ._*
+.AppleDouble
 
-# 🔁 Fichiers de comparaison temporaires
-docs_in_nav.txt
-docs_all.txt
-liens_non_listes.txt
-.env
-
-# Exclure le dossier security mais inclure le fichier security.md
-+security/
+# ======================================================
+# 🛡️ Exclusions spécifiques (security.md uniquement)
+# ======================================================
+security/*
 !docs/security/security.md
 
-# Local dev tools
+# ======================================================
+# 🧰 Outils locaux / pages GitHub
+# ======================================================
 .dev/
-.env
-*.log
-
-# Ignorer le répertoire gh-pages pour éviter les conflits
 gh-pages/
+logs/failure_analysis.md

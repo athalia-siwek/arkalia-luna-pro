@@ -1,5 +1,6 @@
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 STATE_FILE = Path("modules/reflexia/state/reflexia_state.json")
@@ -25,7 +26,11 @@ def teardown_module(module):
 
 def test_reflexia_monitor_runs():
     result = subprocess.run(
-        ["python3", "scripts/reflexia_monitor.py"], capture_output=True, text=True
+        [sys.executable, "scripts/reflexia_monitor.py"],
+        capture_output=True,
+        text=True,
+        check=True,
+        shell=False,
     )
     output = result.stdout
     assert "ReflexIA Status Monitor" in output

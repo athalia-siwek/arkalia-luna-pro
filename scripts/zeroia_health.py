@@ -1,12 +1,15 @@
+import logging
 from pathlib import Path
 
 import toml
+
+logging.basicConfig(level=logging.INFO)
 
 state_path = Path("modules/zeroia/state/zeroia_state.toml")
 
 try:
     data = toml.load(state_path)
-    print("✅ ZeroIA State: OK")
+    logging.info("✅ ZeroIA State: OK")
 except Exception as e:
-    print(f"💥 ZeroIA State Error: {e}")
+    logging.error(f"💥 ZeroIA State Error: {e}")
     exit(1)

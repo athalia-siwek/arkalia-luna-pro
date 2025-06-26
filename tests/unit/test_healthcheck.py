@@ -1,8 +1,8 @@
-# tests/unit/test_healthcheck.py
-
 import os
 import subprocess
+import sys
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 import toml
@@ -25,10 +25,11 @@ last_decision = "reduce_load"
     )
 
     result = subprocess.run(
-        ["python", "modules/zeroia/healthcheck_zeroia.py"],
-        env={**dict(**os.environ, ZEROIA_STATE_PATH=str(path))},
+        [sys.executable, "modules/zeroia/healthcheck_zeroia.py"],
+        env={**os.environ, "ZEROIA_STATE_PATH": str(path)},
         capture_output=True,
         text=True,
+        shell=False,
     )
 
     assert result.returncode == 0
@@ -48,10 +49,11 @@ last_decision = "monitor"
     )
 
     result = subprocess.run(
-        ["python", "modules/zeroia/healthcheck_zeroia.py"],
-        env={**dict(**os.environ, ZEROIA_STATE_PATH=str(path))},
+        [sys.executable, "modules/zeroia/healthcheck_zeroia.py"],
+        env={**os.environ, "ZEROIA_STATE_PATH": str(path)},
         capture_output=True,
         text=True,
+        shell=False,
     )
 
     assert result.returncode == 1
@@ -59,14 +61,14 @@ last_decision = "monitor"
 
 
 def test_healthcheck_missing(tmp_path):
-    # Chemin inexistant
-    path = tmp_path / "zeroia_state.toml"
+    path = tmp_path / "zeroia_state.toml"  # Ne pas créer le fichier
 
     result = subprocess.run(
-        ["python", "modules/zeroia/healthcheck_zeroia.py"],
-        env={**dict(**os.environ, ZEROIA_STATE_PATH=str(path))},
+        [sys.executable, "modules/zeroia/healthcheck_zeroia.py"],
+        env={**os.environ, "ZEROIA_STATE_PATH": str(path)},
         capture_output=True,
         text=True,
+        shell=False,
     )
 
     assert result.returncode == 1
@@ -76,20 +78,19 @@ def test_healthcheck_missing(tmp_path):
 @pytest.mark.parametrize(
     "state_data, expected",
     [
-        (
-            {"active": True, "decision": {"last_decision": "reduce_load"}},
-            True,
-        ),  # ✅ Actif
-        (
-            {"active": False, "decision": {"last_decision": "monitor"}},
-            False,
-        ),  # ❌ Inactif
-        ({}, False),  # 💥 Clé manquante
-        ({"active": "banana"}, False),  # 🔥 Corruption logique
-        ({"decision": {}}, False),  # 🔧 Clé présente mais pas de 'active'
+        ({"active": True, "decision": {"last_decision": "reduce_load"}}, True),
+        ({"active": False, "decision": {"last_decision": "monitor"}}, False),
+        ({}, False),
+        ({"active": "banana"}, False),
+        ({"decision": {}}, False),
     ],
 )
 def test_check_health_various_states(tmp_path, state_data, expected):
     file = tmp_path / "state.toml"
     file.write_text(toml.dumps(state_data), encoding="utf-8")
     assert check_health(str(file)) == expected
+
+
+@patch.dict(os.environ, {"FORCE_ZEROIA_OK": "1"})
+def test_healthcheck_passes_forced():
+    assert check_health(str(STATE_PATH)) is True

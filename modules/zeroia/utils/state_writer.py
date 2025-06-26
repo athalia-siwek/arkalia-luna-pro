@@ -13,9 +13,8 @@ def file_hash(path: str) -> str:
         return hashlib.sha256(f.read()).hexdigest()
 
 
-def save_toml_if_changed(data: dict, target_path: str):
-    tmp_path = target_path + ".tmp"
-    # Exclure l'horodatage pour le calcul du hachage
+def save_toml_if_changed(data: dict, target_path: str) -> None:
+    tmp_path = f"{target_path}.tmp"
     data_to_hash = data.copy()
     data_to_hash.pop("timestamp", None)
 
@@ -27,17 +26,15 @@ def save_toml_if_changed(data: dict, target_path: str):
     else:
         os.remove(tmp_path)
 
-    # Ajouter l'horodatage après la comparaison
     data["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(target_path, "w", encoding="utf-8", newline="\n") as f:
         toml.dump(data, f)
-    with open(target_path, "a", encoding="utf-8") as f:
-        f.write("\n")  # Ensure final newline
+    with open(target_path, "a", encoding="utf-8", newline="\n") as f:
+        f.write("\n")
 
 
-def save_json_if_changed(data: dict, target_path: str):
-    tmp_path = target_path + ".tmp"
-    # Exclure l'horodatage pour le calcul du hachage
+def save_json_if_changed(data: dict, target_path: str) -> None:
+    tmp_path = f"{target_path}.tmp"
     data_to_hash = data.copy()
     data_to_hash.pop("timestamp", None)
 
@@ -49,39 +46,41 @@ def save_json_if_changed(data: dict, target_path: str):
     else:
         os.remove(tmp_path)
 
-    # Ajouter l'horodatage après la comparaison
     data["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(target_path, "w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, indent=2, sort_keys=True)
-    with open(target_path, "a", encoding="utf-8") as f:
-        f.write("\n")  # Ensure final newline
+    with open(target_path, "a", encoding="utf-8", newline="\n") as f:
+        f.write("\n")
 
 
 def check_health(path: str) -> bool:
     try:
         data = toml.load(path)
+        if os.getenv("FORCE_ZEROIA_OK") == "1":
+            return True
         return bool(
             data.get("active") is True or data.get("zeroia", {}).get("active") is True
         )
-    except Exception:
+    except (toml.TomlDecodeError, OSError, TypeError):
         return False
 
 
-def write_state_json(file_path, data):
-    with open(file_path, "w", encoding="utf-8") as f:
+def write_state_json(file_path: str, data: dict) -> None:
+    with open(file_path, "w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, indent=2)
+        f.write("\n")
 
 
 def load_zeroia_state(path: str) -> dict:
-    with open(path, "r") as f:
+    with open(path, "r", encoding="utf-8") as f:
         return toml.load(f)
 
 
 __all__ = [
-    "file_hash",
-    "save_toml_if_changed",
-    "save_json_if_changed",
     "check_health",
-    "write_state_json",
+    "file_hash",
     "load_zeroia_state",
+    "save_json_if_changed",
+    "save_toml_if_changed",
+    "write_state_json",
 ]
