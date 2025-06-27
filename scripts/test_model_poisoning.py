@@ -11,17 +11,16 @@ import json
 import os
 import sys
 import tempfile
-import toml
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Any
+
+import toml
 
 # Ajout du chemin modules pour import
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "modules"))
 
 from modules.zeroia.model_integrity import (
     get_integrity_monitor,
-    validate_decision_integrity,
 )
 from modules.zeroia.reason_loop import reason_loop
 from tests.security.test_poisoning import FakePoisonedDatasets, ModelPoisoningDetector

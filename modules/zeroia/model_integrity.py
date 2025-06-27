@@ -155,11 +155,7 @@ class ModelIntegrityMonitor:
             reflexia_confidence = reflexia.get("confidence", 0.5)
 
             # Détection injection sophistiquée
-            if (
-                cpu > 90
-                and reflexia_decision == "normal"
-                and reflexia_confidence > 0.8
-            ):
+            if cpu > 90 and reflexia_decision == "normal" and reflexia_confidence > 0.8:
                 coherence_score -= 0.3  # Très suspect
             elif cpu < 40 and reflexia_decision == "emergency_shutdown":
                 coherence_score -= 0.4  # Incohérent
@@ -181,7 +177,7 @@ class ModelIntegrityMonitor:
 
         # Limiter l'historique
         if len(self.decision_history) > self.history_limit:
-            self.decision_history = self.decision_history[-self.history_limit:]
+            self.decision_history = self.decision_history[-self.history_limit :]
 
         # Analyse pattern en temps réel
         self._analyze_pattern()
