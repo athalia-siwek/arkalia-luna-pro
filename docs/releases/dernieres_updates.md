@@ -1,4 +1,6 @@
 # 🔄 Dernières mises à jour
+d82bc5c1 - 🐛 Fix CI: correction erreurs Bandit/Flake8 critiques (2025-06-27)
+f264b8a8 - 🚀 ROADMAP 4 SEMAINES COMPLÉTÉE - Architecture Enterprise (2025-06-27)
 1348c760 - ✨ DOC: Finalisation documentation Model Poisoning Detection (2025-06-27)
 9c482e16 - 🔧 Format final des fichiers model poisoning (2025-06-27)
 b04ba538 - 🛡️ ROADMAP S2: Model Poisoning Detection OPÉRATIONNEL (2025-06-27)
@@ -7,5 +9,3 @@ b04ba538 - 🛡️ ROADMAP S2: Model Poisoning Detection OPÉRATIONNEL (2025-06-
 9bdc44e1 - 🔧 FIX: Correction finale warnings MkDocs (2025-06-27)
 0c4c145e - 🎯 VALIDATION: Script audit documentation automatisé (2025-06-27)
 2e36804a - 🚀 FINAL: Documentation déployée avec succès (2025-06-27)
-e7b31e29 - 📚 DOCS: Audit complet documentation - Phase 3 finalisée (2025-06-27)
-36a795b3 - 🔧 FIX: Correction import prometheus_client + linting final (2025-06-27)

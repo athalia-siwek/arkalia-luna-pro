@@ -78,6 +78,10 @@ nav:
       - Composants: fonctionnement/composants.md
       - Structure: fonctionnement/structure.md
       - Utilisation: fonctionnement/utilisation.md
+  - 🏗️ Architecture:
+      - Flux Décisionnel ZeroIA: architecture/decision_flow.mmd
+  - 🧪 Tests de Chaos:
+      - Suite de Tests: chaos/chaos_test_suite.md
   - 🛠️ Infrastructure:
       - Installation: infrastructure/installation.md
       - Configuration: infrastructure/configuration.md
@@ -95,6 +99,7 @@ nav:
       - Réponse Incidents: security/incident-response.md
       - Backup & Recovery: security/backup-recovery.md
       - Tests Pénétration: security/penetration-testing.md
+      - Politique Log Redaction: security/log_redaction.md
       - Compliance: security/compliance.md
       - Architecture Sécurité: security/architecture.mmd
       - Durcissement Docker: docker_hardening.md
