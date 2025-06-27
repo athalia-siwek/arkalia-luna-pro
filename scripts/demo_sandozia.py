@@ -26,7 +26,7 @@ from pathlib import Path
 # Ajouter le path des modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-# Imports Sandozia  # flake8: noqa: E402
+# Imports Sandozia
 from modules.sandozia.analyzer.behavior import BehaviorAnalyzer
 from modules.sandozia.core.sandozia_core import SandoziaCore
 from modules.sandozia.utils.metrics import SandoziaMetrics
@@ -232,7 +232,6 @@ class SandoziaDemo:
 
         # Générer des séries temporelles
         for i in range(60):  # 60 points
-            timestamp_offset = i * 10  # 10 secondes d'écart
 
             # Métriques corrélées (simulation)
             base_confidence = 0.8 + 0.15 * (i / 60)  # Tendance croissante

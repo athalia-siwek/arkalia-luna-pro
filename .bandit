@@ -1,2 +1,9 @@
-skips:
-  - B101
+[bandit]
+# Configuration Bandit pour Arkalia-LUNA
+# Ignore les warnings de sécurité random dans les demos/tests
+
+skips = B311
+exclude_dirs = tests,scripts/demo_*
+
+# B311: random n'est pas critique pour les demos et tests
+# Les données générées sont pour simulation, pas cryptographie

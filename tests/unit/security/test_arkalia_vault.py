@@ -154,7 +154,7 @@ class TestArkaliaVault:
     def test_vault_integrity_validation(self, vault):
         """Test la validation d'intégrité du vault"""
         vault.store_secret("integrity_test", "value")
-        
+
         # La validation peut échouer car il n'y a pas de manifest dans les tests
         # Tester que l'exception est bien gérée
         try:
