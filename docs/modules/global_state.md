@@ -225,7 +225,7 @@ state_manager.enrich_context({
 - [🧠 Architecture Cognitive](../fonctionnement/kernel.md)
 - [⚡ ZeroIA Integration](zeroia.md)
 - [📊 ReflexIA Monitoring](reflexia.md)
-- [🔒 State Security](../security/SECURITY.md)
+- [🔒 State Security](../security/security.md)
 - [🚀 Performance](../infrastructure/configuration.md)
 
 ---

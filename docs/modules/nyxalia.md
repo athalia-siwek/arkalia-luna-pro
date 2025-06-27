@@ -118,7 +118,7 @@ nyxalia.alert_critical_decision(
 ## 🔗 **Liens & Ressources**
 
 - [🏗️ Architecture Technique](../fonctionnement/structure.md)
-- [🔒 Sécurité Mobile](../security/SECURITY.md)
+- [🔒 Sécurité Mobile](../security/security.md)
 - [📡 API Gateway](../api.md)
 - [🚀 Roadmap](../roadmap/index.md)
 

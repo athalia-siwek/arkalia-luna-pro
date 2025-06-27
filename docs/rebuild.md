@@ -254,7 +254,7 @@ def test_post_rebuild_health():
 
 - [🚨 Incident Response](security/incident-response.md)
 - [💾 Backup Strategy](security/backup-recovery.md)
-- [🔒 Security Procedures](security/SECURITY.md)
+- [🔒 Security Procedures](security/security.md)
 - [🏗️ Infrastructure](infrastructure/deployment.md)
 - [🧪 Testing Framework](infrastructure/ci-cd.md)
 

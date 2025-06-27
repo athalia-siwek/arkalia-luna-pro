@@ -89,7 +89,7 @@ nav:
       - API FastAPI: api.md
   - 🔐 Sécurité:
       - Vue d'ensemble: security/security.md
-      - Guide SECURITY: security/SECURITY.md
+      - Guide SECURITY: security/security.md
       - Réponse Incidents: security/incident-response.md
       - Backup & Recovery: security/backup-recovery.md
       - Tests Pénétration: security/penetration-testing.md
