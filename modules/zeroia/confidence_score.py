@@ -172,8 +172,9 @@ class ConfidenceScorer:
                     similar_contexts += 1
                     if past_decision == decision:
                         consistent_decisions += 1
-            except:
-                continue
+            except Exception:  # nosec B110
+                # Skip invalid pattern data - needed for robustness
+                pass
 
         if similar_contexts == 0:
             return 0.6, "Nouveau type de contexte, apprentissage en cours"

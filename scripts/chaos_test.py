@@ -71,7 +71,7 @@ class ChaosInjector:
             if not file_path.exists():
                 continue
 
-            backup_path = self._backup_file(file_path)
+            self._backup_file(file_path)  # Backup file before corruption
             results["corrupted_files"].append(str(file_path))
 
             if not self.is_dry_run:
@@ -115,7 +115,7 @@ class ChaosInjector:
             if not file_path.exists():
                 continue
 
-            backup_path = self._backup_file(file_path)
+            self._backup_file(file_path)  # Backup file before deletion
             results["deleted_files"].append(str(file_path))
 
             if not self.is_dry_run:
@@ -197,7 +197,9 @@ class ChaosInjector:
                     test_result["accessible"] = result == 0
                     test_result["chaos_injected"] = False
                 else:
-                    test_result["accessible"] = random.choice([True, False])
+                    test_result["accessible"] = random.choice(
+                        [True, False]
+                    )  # nosec B311
                     test_result["chaos_injected"] = True
 
                 print(
@@ -230,7 +232,7 @@ class ChaosInjector:
             if not file_path.exists():
                 continue
 
-            backup_path = self._backup_file(file_path)
+            self._backup_file(file_path)  # Backup file before corruption
             results["files_corrupted"].append(str(file_path))
 
             if not self.is_dry_run:
@@ -248,7 +250,9 @@ class ChaosInjector:
                     ]
 
                     corrupted_content = content + "\n# CHAOS INJECTION\n"
-                    corrupted_content += "\n".join(random.sample(chaos_injections, 2))
+                    corrupted_content += "\n".join(
+                        random.sample(chaos_injections, 2)  # nosec B311
+                    )
 
                     with open(file_path, "w") as f:
                         f.write(corrupted_content)
@@ -283,8 +287,6 @@ class ChaosInjector:
             ("file_deletion", self.chaos_delete_critical_files),
         ]
 
-        backups_created = []
-
         try:
             for scenario_name, chaos_func in chaos_scenarios:
                 print(f"\n🎯 [CHAOS] Scénario: {scenario_name}")
@@ -301,7 +303,7 @@ class ChaosInjector:
                     test_report["overall_success"] = False
 
                 # Attente entre scénarios
-                time.sleep(random.uniform(2, 5))
+                time.sleep(random.uniform(2, 5))  # nosec B311
 
                 # Test de récupération
                 recovery_result = self._test_system_recovery()
@@ -351,7 +353,7 @@ class ChaosInjector:
                 else:
                     test_result = {
                         "module": module_name,
-                        "importable": random.choice([True, False]),
+                        "importable": random.choice([True, False]),  # nosec B311
                     }
 
                 print(
