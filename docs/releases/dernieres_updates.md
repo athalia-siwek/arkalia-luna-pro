@@ -1,4 +1,6 @@
 # 🔄 Dernières mises à jour
+1d9b4fe - 🔧 Fix tests permissions pour CI (skip si root) + format (2025-06-27)
+ff991c1 - 🚀 Amélioration couverture tests ZeroIA (56% total, 235 tests) + docs sécurité (2025-06-27)
 5907c2d - 🔐 Commit de test avec nouvelle clé GPG (2025-06-26)
 6fd1641 - ✅ Finalisation des modifs (pre-commit.yaml corrigé) (2025-06-26)
 2e1e6b8 - ✅ Finalisation v2.5.3 : sécurité, état ZeroIA, nettoyage post-hooks (2025-06-26)
@@ -7,5 +9,3 @@ e5a192d - docs: ajout du fichier CHANGELOG.md manquant (2025-06-26)
 af7be02 - fix: force final newline in state_writer + exclude dashboard from EOF fixer (2025-06-26)
 ceec13d - fix(state): EOF correction finale sur zeroia_dashboard.json (2025-06-26)
 66e5cc4 - test: ajout du script CLI local de rollback (2025-06-26)
-434a110 - fix(ci): fin de ligne et fichiers synchronisés pour CI complète (2025-06-26)
-8a07fcb - fix: dernière passe EOF/rollback state pour v2.1.8 (2025-06-26)
