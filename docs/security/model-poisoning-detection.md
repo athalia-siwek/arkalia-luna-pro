@@ -44,7 +44,7 @@ except Exception as e:
 ### 3. YAML Injection
 **Description** : Tentatives d'injection de code via templates/commandes
 **Détection** : Validation de types et patterns malveillants
-**Patterns** : `{{`, `'; DROP`, `<script>`, `rm -rf`, etc.
+**Patterns** : curly braces, SQL injection, script tags, commandes système, etc.
 
 ### 4. Stealth Poisoning ⭐
 **Description** : Répétition de contextes "presque normaux" pour conditioning
