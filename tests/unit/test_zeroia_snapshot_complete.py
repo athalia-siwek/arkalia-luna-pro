@@ -4,6 +4,7 @@ import tempfile
 from pathlib import Path
 from unittest.mock import mock_open, patch
 
+import pytest
 import toml
 
 from modules.zeroia.snapshot_generator import (
@@ -27,6 +28,12 @@ def test_load_state_file_not_found():
 
 def test_load_state_permission_error():
     """🧠 Test load_state avec erreur de permissions"""
+    import os
+
+    # Skip ce test si on est root (environnements CI)
+    if os.getuid() == 0:
+        pytest.skip("Test skipped when running as root (CI environment)")
+
     with tempfile.TemporaryDirectory() as tmp_dir:
         restricted_file = Path(tmp_dir) / "restricted.toml"
 

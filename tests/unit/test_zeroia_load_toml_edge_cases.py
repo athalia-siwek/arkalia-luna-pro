@@ -46,11 +46,17 @@ def test_load_toml_invalid_syntax(tmp_path):
 
 def test_load_toml_permission_error(tmp_path):
     """🧠 Test avec un fichier sans permissions de lecture"""
+    import os
+
     restricted_file = tmp_path / "restricted.toml"
     restricted_file.write_text("[status]\ncpu = 50")
     restricted_file.chmod(0o000)  # Supprime toutes les permissions
 
     try:
+        # Skip ce test si on est root (environnements CI)
+        if os.getuid() == 0:
+            pytest.skip("Test skipped when running as root (CI environment)")
+
         with pytest.raises(ValueError, match="Erreur lors du chargement"):
             load_toml(restricted_file)
     finally:
