@@ -1,4 +1,6 @@
 # 🔄 Dernières mises à jour
+5907c2d - 🔐 Commit de test avec nouvelle clé GPG (2025-06-26)
+6fd1641 - ✅ Finalisation des modifs (pre-commit.yaml corrigé) (2025-06-26)
 2e1e6b8 - ✅ Finalisation v2.5.3 : sécurité, état ZeroIA, nettoyage post-hooks (2025-06-26)
 8ba5da5 - ✅ Finalisation v2.5.3 : scripts, tests, sécurisation, état ZeroIA (2025-06-26)
 e5a192d - docs: ajout du fichier CHANGELOG.md manquant (2025-06-26)
@@ -7,5 +9,3 @@ ceec13d - fix(state): EOF correction finale sur zeroia_dashboard.json (2025-06-2
 66e5cc4 - test: ajout du script CLI local de rollback (2025-06-26)
 434a110 - fix(ci): fin de ligne et fichiers synchronisés pour CI complète (2025-06-26)
 8a07fcb - fix: dernière passe EOF/rollback state pour v2.1.8 (2025-06-26)
-962d412 - 🔧 Fix exclusion pre-commit (EOF fixer) (2025-06-26)
-2a18952 - ✅ fix(pre-commit): exclude dynamic ZeroIA files from EOF + trailing checks (2025-06-26)

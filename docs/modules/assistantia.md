@@ -146,3 +146,26 @@ Pour des considérations de sécurité, veuillez consulter [la section Sécurit�
 
 © 2025 **Athalia** – Tous droits réservés.
 🤖 Powered by Arkalia ReflexIA `v1.x`
+
+# Documentation du Module Assistantia
+
+## Introduction
+Le module Assistantia est un composant clé du projet Arkalia-LUNA, conçu pour fournir des fonctionnalités avancées d'assistance et d'automatisation. Il joue un rôle crucial dans l'amélioration de l'efficacité opérationnelle et la réduction des erreurs humaines.
+
+## Fonctionnalités
+- **Automatisation des tâches** : Assistantia peut automatiser des tâches répétitives, libérant ainsi du temps pour des activités plus stratégiques.
+- **Intégration transparente** : S'intègre facilement avec d'autres modules pour offrir une expérience utilisateur fluide.
+- **Personnalisation** : Permet une personnalisation avancée pour répondre aux besoins spécifiques des utilisateurs.
+
+## Configuration
+Pour configurer le module Assistantia, modifiez le fichier `assistantia_config.toml` et ajustez les paramètres suivants :
+- `enable_feature_x`: Active ou désactive la fonctionnalité X.
+- `api_key`: Clé API nécessaire pour l'authentification.
+
+## API
+Le module expose plusieurs points d'entrée API :
+- `GET /assistantia/status`: Retourne le statut actuel du module.
+- `POST /assistantia/execute`: Exécute une commande spécifique.
+
+## Dépannage
+En cas de problème avec le module Assistantia, vérifiez les logs dans `logs/assistantia.log` pour des messages d'erreur détaillés. Assurez-vous que toutes les dépendances sont correctement installées.

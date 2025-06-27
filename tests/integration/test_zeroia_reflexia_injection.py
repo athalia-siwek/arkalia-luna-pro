@@ -10,6 +10,12 @@ ensure_test_toml()
 
 def test_reflexia_injection_success(tmp_path: Path):
     """🧪 Injection des données ReflexIA dans le contexte global"""
+    # Réinitialise les variables anti-répétition pour ce test
+    import modules.zeroia.reason_loop as rl
+
+    rl.LAST_DECISION = None
+    rl.LAST_DECISION_TIME = None
+
     ctx_path = tmp_path / "global_context.toml"
     reflexia_path = tmp_path / "reflexia_state.toml"
     state_path = tmp_path / "zeroia_state.toml"

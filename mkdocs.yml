@@ -70,6 +70,9 @@ nav:
       - Nyxalia: modules/nyxalia.md
       - Taskia: modules/taskia.md
       - État Global: modules/global_state.md
+  - 🧠 ZeroIA Avancé:
+      - Vue d'ensemble: zeroia/overview.md
+      - Dépannage: zeroia/troubleshooting.md
   - 🔧 Fonctionnement:
       - Kernel: fonctionnement/kernel.md
       - Composants: fonctionnement/composants.md
@@ -87,6 +90,7 @@ nav:
   - 🔐 Sécurité:
       - Sécurité: security/security.md
       - Durcissement Docker: docker_hardening.md
+      - Sécurité DevOps: devops/security.md
   - 🧪 Logs & Suivi:
       - Historique Raisonnement: logs/reasoning_history.md
       - Analyse des Échecs: logs/failure_analysis.md
@@ -158,6 +162,6 @@ plugins:
       exclude:
         - "*.DS_Store"
         - ".*"
-        - "dernieres_updates.md"   # ✅ évite de la considérer dans l’historique Git
+        - "dernieres_updates.md"   # ✅ évite de la considérer dans l'historique Git
         - "._dernieres_updates.md"
   - macros

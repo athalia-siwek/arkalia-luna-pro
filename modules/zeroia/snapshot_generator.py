@@ -65,6 +65,12 @@ def generate_snapshot(
             toml.dump(snapshot, f)
 
         print(f"✅ Snapshot généré dans {output_file}")
+
+        with open("logs/snapshot_evolution.log", "a") as log_file:
+            timestamp = datetime.utcnow().isoformat()
+            score = snapshot.get("decision", {}).get("confidence_score", "N/A")
+            log_file.write(f"{timestamp} :: Score: {score}\n")
+
         return True
 
     except Exception as e:

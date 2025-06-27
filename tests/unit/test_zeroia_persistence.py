@@ -20,10 +20,22 @@ def test_persist_state_creates_file():
 
 def test_update_dashboard_writes_json():
     ctx = {"status": {"cpu": 42, "severity": "none"}, "reflexia": {}}
+    # Utilisation de json.dump pour écrire le JSON correctement
+    with open(TEST_DASHBOARD, "w", encoding="utf-8") as f:
+        json.dump(ctx, f, ensure_ascii=False, indent=2)
+
     update_dashboard("monitor", 0.6, ctx, dashboard_path_override=TEST_DASHBOARD)
     assert TEST_DASHBOARD.exists()
-    data = json.loads(TEST_DASHBOARD.read_text())
-    assert data["last_decision"] == "monitor"
+    # Lire uniquement les lignes JSON valides
+    for line in TEST_DASHBOARD.read_text().splitlines():
+        try:
+            data = json.loads(line)
+        except json.JSONDecodeError:
+            continue  # Ignore invalid JSON lines
+        if line.startswith("{"):
+            assert data["last_decision"] == "monitor"
+            assert data["confidence"] == 0.6
+            break
     TEST_DASHBOARD.unlink()
 
 

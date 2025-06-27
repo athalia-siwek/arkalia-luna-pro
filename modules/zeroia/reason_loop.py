@@ -1,5 +1,6 @@
 import logging
 import textwrap
+import time
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
@@ -22,6 +23,11 @@ STATE_PATH = Path("modules/zeroia/state/zeroia_state.toml")
 DASHBOARD_PATH = Path("state/zeroia_dashboard.json")
 CONFIG_PATH = Path("config/zeroia_config.toml")
 DEFAULT_CONTRADICTION_LOG = Path("logs/zeroia_contradictions.log")
+
+# === Variables globales pour anti-répétition ===
+LAST_DECISION = None
+LAST_DECISION_TIME = None
+MIN_DECISION_INTERVAL = 30  # seconds - Évite les répétitions trop fréquentes
 
 # === Logger contradiction (rotatif) ===
 logger = logging.getLogger("zeroia_contradictions")
@@ -67,6 +73,33 @@ def decide(context: dict) -> tuple[str, float]:
     if cpu > 60:
         return "monitor", 0.6
     return "normal", 0.4
+
+
+def should_process_decision(new_decision: str) -> bool:
+    """Évite les répétitions excessives de la même décision"""
+    global LAST_DECISION, LAST_DECISION_TIME
+
+    current_time = datetime.now()
+
+    # Si c'est une nouvelle décision différente, on l'accepte
+    if new_decision != LAST_DECISION:
+        LAST_DECISION = new_decision
+        LAST_DECISION_TIME = current_time
+        return True
+
+    # Si c'est la même décision, on vérifie l'intervalle de temps
+    if LAST_DECISION_TIME is None:
+        LAST_DECISION_TIME = current_time
+        return True
+
+    time_diff = (current_time - LAST_DECISION_TIME).total_seconds()
+
+    # On accepte la répétition seulement si assez de temps s'est écoulé
+    if time_diff >= MIN_DECISION_INTERVAL:
+        LAST_DECISION_TIME = current_time
+        return True
+
+    return False
 
 
 def ensure_parent_dir(path: Path) -> None:
@@ -182,6 +215,15 @@ def reason_loop(
         )
 
     decision, score = decide(ctx)
+
+    # Vérifie si on doit traiter cette décision (anti-spam)
+    if not should_process_decision(decision):
+        print(
+            f"[ZeroIA] Décision {decision} ignorée (répétition trop fréquente)",
+            flush=True,
+        )
+        return decision, score
+
     persist_state(decision, score, ctx, state_path)
     update_dashboard(decision, score, ctx, dashboard_path)
 
@@ -198,12 +240,35 @@ def reason_loop(
             f"ZeroIA = {decision}"
         )
 
-    print(f"[ZeroIA] Decision: {decision} (score={score})", flush=True)
+    # Logs modifiés pour éviter le spam
+    status = ctx.get("status", {})
+    cpu = status.get("cpu", "N/A")
+    print(f"✅ ZeroIA decided: {decision} (confidence={score})", flush=True)
     print(
-        f"[TEST DEBUG] Fin de reason_loop() :: Decision = {decision} | Score = {score}"
+        f"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score})", flush=True
     )
+
     return decision, score
 
 
 def compute_confidence_score(success_rate: float, error_rate: float) -> float:
     return max(0.0, min(1.0, success_rate - error_rate))
+
+
+def main_loop() -> None:
+    print("[ZeroIA] loop started", flush=True)
+    try:
+        reason_loop()
+    except Exception as e:
+        print(f"[ZeroIA] 🚨 ERREUR dans reason_loop(): {e}", flush=True)
+        logger.exception(e)
+
+
+if __name__ == "__main__":
+    try:
+        print("[ZeroIA] 🔄 Boucle cognitive initialisée...", flush=True)
+        while True:
+            main_loop()
+            time.sleep(15)  # Augmentation de l'intervalle à 15 secondes
+    except KeyboardInterrupt:
+        print("[ZeroIA] 🧠 Arrêt manuel détecté.")

@@ -36,3 +36,19 @@ docker-compose up reflexia
 
 © 2025 **Athalia** – Tous droits réservés.
 🤖 Powered by Arkalia ReflexIA `v1.x`
+
+# Documentation du Module ReflexIA
+
+## Introduction
+Le module ReflexIA est conçu pour fournir des capacités avancées de surveillance et de réponse automatique aux événements système. Il joue un rôle crucial dans la détection précoce des anomalies et la prévention des pannes.
+
+## Fonctionnalités
+- **Surveillance en Temps Réel** : ReflexIA surveille en continu les métriques système pour détecter les anomalies.
+- **Réponse Automatique** : Lorsqu'une anomalie est détectée, ReflexIA peut déclencher des actions correctives automatiquement.
+- **Rapports Détaillés** : Génère des rapports détaillés sur les événements et les actions prises.
+
+## Configuration
+Pour configurer ReflexIA, modifiez le fichier `reflexia_config.toml` et ajustez les paramètres selon vos besoins.
+
+## Dépannage
+En cas de problème avec ReflexIA, consultez les logs dans `logs/reflexia.log` pour des informations détaillées.

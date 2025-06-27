@@ -17,7 +17,7 @@ def orchestrate_zeroia_loop(max_loops: int | None = None) -> None:
             count += 1
         except Exception as e:
             print(f"[ERROR] An error occurred in the reason loop: {e}")
-        time.sleep(1)
+        time.sleep(1.5)
 
 
 if __name__ == "__main__":

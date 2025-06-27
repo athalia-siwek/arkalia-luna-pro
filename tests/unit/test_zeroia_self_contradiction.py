@@ -10,6 +10,12 @@ ensure_test_toml()
 
 def test_self_contradiction_detected(tmp_path: Path):
     """🧠 Simule une contradiction : ReflexIA ≠ ZeroIA"""
+    # Réinitialise les variables anti-répétition pour ce test
+    import modules.zeroia.reason_loop as rl
+
+    rl.LAST_DECISION = None
+    rl.LAST_DECISION_TIME = None
+
     ctx_path = tmp_path / "global_context.toml"
     reflexia_path = tmp_path / "reflexia_state.toml"
     state_path = tmp_path / "zeroia_state.toml"
