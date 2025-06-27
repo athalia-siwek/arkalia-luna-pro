@@ -564,7 +564,7 @@ groups:
           severity: high
         annotations:
           summary: "Échecs backup détectés"
-          description: "{{ $value }} échecs backup dernière heure"
+                          description: "Échecs backup dernière heure: {value}"
 ```
 
 ---
