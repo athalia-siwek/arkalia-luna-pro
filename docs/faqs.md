@@ -43,4 +43,5 @@ Pour toute autre question, n'hésitez pas à nous contacter via notre [dépôt G
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v1.x`
+**© 2025 Arkalia-LUNA Team** — FAQ Enterprise v3.x
+🧠 *Powered by Sandozia Intelligence Croisée*
