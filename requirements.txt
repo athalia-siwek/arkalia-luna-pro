@@ -40,3 +40,5 @@ toml==0.10.2
 tomli==2.2.1
 
 defusedxml
+
+prometheus_client>=0.22.0
