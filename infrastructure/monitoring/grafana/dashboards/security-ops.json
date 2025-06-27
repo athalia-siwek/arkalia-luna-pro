@@ -1,0 +1,63 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Arkalia-LUNA Security Operations Center",
+    "tags": ["arkalia", "security", "phase4"],
+    "timezone": "browser",
+    "refresh": "5s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Security Threat Level",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "arkalia_security_threats_detected_total",
+            "legendFormat": "Threats Detected"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 1},
+                {"color": "red", "value": 5}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "ZeroIA Decision Rate",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 6, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(arkalia_zeroia_decisions_total[1m])",
+            "legendFormat": "Decisions/sec"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Cognitive Contradictions",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {
+            "expr": "arkalia_zeroia_contradictions_total",
+            "legendFormat": "Contradictions"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+groups:
+  - name: arkalia_security_critical
+    rules:
+      - alert: SecurityIntegrityViolation
+        expr: arkalia_security_integrity_violations_total > 0
+        for: 0s
+        labels:
+          severity: critical
+          component: security
+        annotations:
+          summary: "SECURITY BREACH: Integrity violation detected"
+          description: "File integrity violation detected - immediate investigation required"
+
+      - alert: ZeroIADecisionStall
+        expr: increase(arkalia_zeroia_decisions_total[5m]) == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: zeroia
+        annotations:
+          summary: "ZeroIA decision loop stalled"
+          description: "No ZeroIA decisions in last 5 minutes"
+
+      - alert: CognitiveMismatchHigh
+        expr: arkalia_zeroia_contradictions_total > 10
+        for: 1m
+        labels:
+          severity: warning
+          component: cognitive
+        annotations:
+          summary: "High cognitive contradiction rate"
+          description: "More than 10 contradictions detected"
+
+      - alert: SecuritySandboxBreach
+        expr: arkalia_security_sandbox_violations_total > 0
+        for: 0s
+        labels:
+          severity: critical
+          component: sandbox
+        annotations:
+          summary: "CRITICAL: Sandbox containment breach"
+          description: "LLM sandbox violation - potential security compromise"
+
+  - name: arkalia_performance
+    rules:
+      - alert: HighLatency
+        expr: arkalia_reflexia_latency_ms > 1000
+        for: 30s
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "High system latency detected"
+
+      - alert: CPUStress
+        expr: arkalia_reflexia_cpu_usage_percent > 80
+        for: 2m
+        labels:
+          severity: warning
+          component: resources
+        annotations:
+          summary: "High CPU usage sustained"

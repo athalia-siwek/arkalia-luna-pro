@@ -88,6 +88,7 @@ nav:
   - 📡 API & Intégration:
       - API FastAPI: api.md
   - 🔐 Sécurité:
+      - Phase 4 Roadmap: security/phase4-roadmap.md
       - Vue d'ensemble: security/security.md
       - Guide SECURITY: security/security.md
       - Réponse Incidents: security/incident-response.md
