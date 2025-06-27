@@ -88,7 +88,13 @@ nav:
   - 📡 API & Intégration:
       - API FastAPI: api.md
   - 🔐 Sécurité:
-      - Sécurité: security/security.md
+      - Vue d'ensemble: security/security.md
+      - Guide SECURITY: security/SECURITY.md
+      - Réponse Incidents: security/incident-response.md
+      - Backup & Recovery: security/backup-recovery.md
+      - Tests Pénétration: security/penetration-testing.md
+      - Compliance: security/compliance.md
+      - Architecture Sécurité: security/architecture.mmd
       - Durcissement Docker: docker_hardening.md
       - Sécurité DevOps: devops/security.md
   - 🧪 Logs & Suivi:

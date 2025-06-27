@@ -1,4 +1,7 @@
 # 🔄 Dernières mises à jour
+36a795b - 🔧 FIX: Correction import prometheus_client + linting final (2025-06-27)
+a3afa55 - ✅ SÉCURITÉ: Arkalia-LUNA niveau industriel atteint (2025-06-27)
+6783655 - hotfix temporaire (2025-06-27)
 1d9b4fe - 🔧 Fix tests permissions pour CI (skip si root) + format (2025-06-27)
 ff991c1 - 🚀 Amélioration couverture tests ZeroIA (56% total, 235 tests) + docs sécurité (2025-06-27)
 5907c2d - 🔐 Commit de test avec nouvelle clé GPG (2025-06-26)
@@ -6,6 +9,3 @@ ff991c1 - 🚀 Amélioration couverture tests ZeroIA (56% total, 235 tests) + do
 2e1e6b8 - ✅ Finalisation v2.5.3 : sécurité, état ZeroIA, nettoyage post-hooks (2025-06-26)
 8ba5da5 - ✅ Finalisation v2.5.3 : scripts, tests, sécurisation, état ZeroIA (2025-06-26)
 e5a192d - docs: ajout du fichier CHANGELOG.md manquant (2025-06-26)
-af7be02 - fix: force final newline in state_writer + exclude dashboard from EOF fixer (2025-06-26)
-ceec13d - fix(state): EOF correction finale sur zeroia_dashboard.json (2025-06-26)
-66e5cc4 - test: ajout du script CLI local de rollback (2025-06-26)
