@@ -1,0 +1,36 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: arkalia-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: arkalia-system
+          __path__: /arkalia/logs/*.log
+
+  - job_name: zeroia-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: zeroia
+          component: cognitive
+          __path__: /arkalia/logs/zeroia*.log
+
+  - job_name: security-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: security
+          component: phase4
+          __path__: /arkalia/logs/*security*.log
