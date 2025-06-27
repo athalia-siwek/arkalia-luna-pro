@@ -1,9 +1,7 @@
-[status]
-cpu = 72.1
-ram = 65.4
-latency = 1.7
-severity = "warning"
+last_execution = "2025-06-27T20:03:24.815751"
+recent_errors = []
+status = "active"
 
-[reflexia]
-last_snapshot = "⚠️ RAM élevée"
-last_decision = "monitor"
+[decision_metrics]
+confidence = 0.851443756883566
+accuracy = 0.8802405694581144

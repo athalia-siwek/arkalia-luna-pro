@@ -1,0 +1,15 @@
+
+[monitoring]
+interval_seconds = 5
+coherence_threshold = 0.85
+max_history_size = 100
+
+[modules]
+reflexia_enabled = true
+zeroia_enabled = true
+assistant_enabled = false
+prometheus_enabled = false
+
+[alerting]
+coherence_alert_threshold = 0.70
+behavioral_alert_enabled = true

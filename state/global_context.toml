@@ -1,13 +1,3 @@
-[status]
-cpu = 72.1
-ram = 65.4
-latency = 1.7
-llm_response_quality = "high"
-
-[chat]
-last_prompt = "Analyse l'état du système."
-last_sentiment = "neutre"
-
-[reflexia]
-last_snapshot = "normal"
-last_alert = "none"
+last_update = "2025-06-27T20:03:24.815762"
+system_status = "operational"
+active_modules = [ "reflexia", "zeroia", "assistantia",]

@@ -1,0 +1,212 @@
+{
+  "global_score": 0.7980783813584499,
+  "validator": {
+    "timestamp": "2025-06-27T20:03:24.799928",
+    "coherence_score": 0.9,
+    "total_validations": 1,
+    "issues_by_level": {
+      "critical": 0,
+      "warning": 1,
+      "info": 0,
+      "ok": 0
+    },
+    "modules_analyzed": [
+      "reflexia",
+      "zeroia",
+      "global"
+    ],
+    "validation_results": [
+      {
+        "level": "warning",
+        "module_source": "zeroia",
+        "module_target": "reflexia",
+        "message": "Contradiction: ZeroIA d\u00e9tecte des incoh\u00e9rences mais Reflexia a une confiance \u00e9lev\u00e9e",
+        "details": {
+          "zeroia_contradictions": 2,
+          "reflexia_confidence": 0.9273010858435903,
+          "potential_issue": "Possible blindspot or false positive"
+        },
+        "timestamp": "2025-06-27T20:03:24.799920",
+        "suggested_action": "V\u00e9rifier manuellement la logique des d\u00e9cisions r\u00e9centes"
+      }
+    ],
+    "overall_status": "healthy"
+  },
+  "analyzer": {
+    "timestamp": "2025-06-27T20:03:24.808379",
+    "behavioral_health_score": 0.5,
+    "patterns_detected": 4,
+    "patterns_by_severity": {
+      "high": 1,
+      "medium": 3,
+      "critical": 0
+    },
+    "patterns_by_type": {
+      "performance_regression": 1,
+      "high_frequency_decisions": 2,
+      "repetitive_decisions": 1
+    },
+    "affected_modules": [
+      "reflexia",
+      "zeroia"
+    ],
+    "patterns_detail": [
+      {
+        "pattern_type": "performance_regression",
+        "severity": "high",
+        "description": "R\u00e9gression de performance d\u00e9tect\u00e9e dans response_time: 331.6%",
+        "affected_modules": [
+          "reflexia"
+        ],
+        "confidence": 0.9,
+        "first_detected": "2025-06-27T20:03:24.800253",
+        "last_detected": "2025-06-27T20:03:24.807887",
+        "occurrences": 29,
+        "metadata": {
+          "metric_name": "response_time",
+          "first_half_mean": 0.283614619613699,
+          "second_half_mean": 1.224065170826517,
+          "relative_change": 3.315945251672043,
+          "is_regression_metric": true
+        }
+      },
+      {
+        "pattern_type": "high_frequency_decisions",
+        "severity": "medium",
+        "description": "Fr\u00e9quence de d\u00e9cision \u00e9lev\u00e9e: 0.00s entre d\u00e9cisions",
+        "affected_modules": [
+          "reflexia"
+        ],
+        "confidence": 0.7,
+        "first_detected": "2025-06-27T20:03:24.800006",
+        "last_detected": "2025-06-27T20:03:24.805458",
+        "occurrences": 9,
+        "metadata": {
+          "mean_interval_seconds": 0.0006057777777777778,
+          "min_interval": 1.2e-05,
+          "max_interval": 0.00189
+        }
+      },
+      {
+        "pattern_type": "repetitive_decisions",
+        "severity": "medium",
+        "description": "Pattern r\u00e9p\u00e9titif d\u00e9tect\u00e9: 7 d\u00e9cisions identiques (contradiction_detected)",
+        "affected_modules": [
+          "zeroia"
+        ],
+        "confidence": 0.8,
+        "first_detected": "2025-06-27T20:03:24.807985",
+        "last_detected": "2025-06-27T20:03:24.807987",
+        "occurrences": 7,
+        "metadata": {
+          "decision_type": "contradiction_detected",
+          "repetition_count": 7
+        }
+      },
+      {
+        "pattern_type": "high_frequency_decisions",
+        "severity": "medium",
+        "description": "Fr\u00e9quence de d\u00e9cision \u00e9lev\u00e9e: 0.00s entre d\u00e9cisions",
+        "affected_modules": [
+          "zeroia"
+        ],
+        "confidence": 0.7,
+        "first_detected": "2025-06-27T20:03:24.807985",
+        "last_detected": "2025-06-27T20:03:24.807987",
+        "occurrences": 6,
+        "metadata": {
+          "mean_interval_seconds": 3.333333333333333e-07,
+          "min_interval": 0.0,
+          "max_interval": 1e-06
+        }
+      }
+    ],
+    "metrics_monitored": 4,
+    "decisions_analyzed": 17,
+    "baseline_stats_available": 4
+  },
+  "metrics": {
+    "timestamp": "2025-06-27T20:03:24.809277",
+    "modules": {
+      "reflexia": {
+        "overall_health": 0.7623031205350528,
+        "metrics": {
+          "confidence_score": {
+            "score": 0.868662020413072,
+            "summary": {
+              "count": 60,
+              "mean": 0.868662020413072,
+              "median": 0.8695677932684103,
+              "min": 0.7597068843511702,
+              "max": 0.9815260452290102,
+              "stdev": 0.05176608540772925,
+              "latest": 0.899580550239571,
+              "first_timestamp": "2025-06-27T20:03:24.808457",
+              "last_timestamp": "2025-06-27T20:03:24.808898"
+            }
+          },
+          "response_time": {
+            "score": 0.6559442206570337,
+            "summary": {
+              "count": 60,
+              "mean": 0.6881115586859325,
+              "median": 0.6579314978102465,
+              "min": 0.44223423531537887,
+              "max": 0.9815884848473837,
+              "stdev": 0.15070538826341615,
+              "latest": 0.6414803269916299,
+              "first_timestamp": "2025-06-27T20:03:24.808465",
+              "last_timestamp": "2025-06-27T20:03:24.808903"
+            }
+          }
+        }
+      },
+      "zeroia": {
+        "overall_health": 0.8696796163304575,
+        "metrics": {
+          "confidence_score": {
+            "score": 0.8696796163304575,
+            "summary": {
+              "count": 60,
+              "mean": 0.8696796163304575,
+              "median": 0.8722047753600025,
+              "min": 0.7677655074809361,
+              "max": 0.9737208361832081,
+              "stdev": 0.04912892373847148,
+              "latest": 0.9091644401916568,
+              "first_timestamp": "2025-06-27T20:03:24.808462",
+              "last_timestamp": "2025-06-27T20:03:24.808900"
+            }
+          }
+        }
+      }
+    },
+    "cross_module_coherence": 0.9942351440753497,
+    "available_correlations": 1,
+    "total_metrics": 3
+  },
+  "core": {
+    "running": false,
+    "modules_connected": {
+      "reflexia": true,
+      "zeroia": true,
+      "prometheus": true
+    },
+    "latest_metrics": {
+      "timestamp": "2025-06-27T20:03:29.829023",
+      "coherence_score": 1.0,
+      "cross_validation_passed": 1,
+      "anomalies_detected": 0,
+      "reasoning_alignment": 0.85,
+      "modules_active": [
+        "reflexia",
+        "zeroia",
+        "assistant"
+      ],
+      "total_correlations": 0
+    },
+    "snapshots_collected": 3,
+    "config_loaded": true
+  },
+  "demo_successful": true
+}

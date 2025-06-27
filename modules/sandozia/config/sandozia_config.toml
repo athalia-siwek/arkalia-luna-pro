@@ -1,0 +1,37 @@
+# 🧠 modules/sandozia/config/sandozia_config.toml
+# Configuration Sandozia Intelligence Croisée
+
+[monitoring]
+interval_seconds = 30
+coherence_threshold = 0.85
+anomaly_threshold = 0.15
+max_history_size = 1000
+
+[modules]
+reflexia_enabled = true
+zeroia_enabled = true
+assistant_enabled = true
+prometheus_enabled = true
+
+[alerting]
+coherence_alert_threshold = 0.70
+behavioral_alert_enabled = true
+slack_webhook = ""
+email_notifications = false
+
+[dashboard]
+grafana_dashboard_id = "sandozia-intelligence"
+update_interval = 60
+retention_days = 30
+
+[correlation]
+# Paramètres de corrélation croisée
+time_window_minutes = 15
+confidence_threshold = 0.75
+max_correlations = 100
+
+[reasoning]
+# Paramètres du raisonnement collaboratif
+enable_cross_validation = true
+reasoning_history_size = 500
+consensus_threshold = 0.80

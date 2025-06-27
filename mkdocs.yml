@@ -1,184 +1,129 @@
 site_name: Arkalia-LUNA Documentation
-site_description: Système IA local, modulaire, auto-réflexif — Arkalia-LUNA
-site_author: Athalia 🌙
-site_url: https://arkalia-luna-system.github.io/arkalia-luna-pro
+site_description: Documentation complète du système IA Arkalia-LUNA
+site_author: Arkalia-LUNA Team
+site_url: https://arkalia-luna-system.github.io/arkalia-luna-pro/
+
+repo_name: arkalia-luna-system/arkalia-luna-pro
 repo_url: https://github.com/arkalia-luna-system/arkalia-luna-pro
-edit_uri: edit/main/docs/
 
 theme:
   name: material
-  custom_dir: docs/overrides
-  logo: assets/logo.png
-  favicon: assets/favicon.ico
+  language: fr
   palette:
     - scheme: default
-      primary: blue-grey
-      accent: light-blue
+      primary: blue
+      accent: light blue
       toggle:
-        icon: material/weather-night
-        name: Mode sombre
+        icon: material/brightness-7
+        name: Passer au mode sombre
     - scheme: slate
-      primary: blue-grey
-      accent: light-blue
+      primary: blue
+      accent: light blue
       toggle:
-        icon: material/weather-sunny
-        name: Mode clair
-  font:
-    text: Roboto
-    code: JetBrains Mono
+        icon: material/brightness-4
+        name: Passer au mode clair
   features:
-    - navigation.instant
-    - navigation.sections
     - navigation.tabs
-    - navigation.top
+    - navigation.sections
     - navigation.expand
-    - navigation.collapse
-    - navigation.icons
+    - navigation.top
     - search.highlight
-    - search.suggest
     - content.code.copy
-    - content.action.edit
-    - content.tabs.link
-    - header.autohide
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/arkalia-luna-system
-    - icon: fontawesome/solid/moon
-      link: https://arkalia-luna-system.github.io
-  copyright:
-    text: "© 2025 Arkalia System — Tous droits réservés."
-  last_updated:
-    text: "🕒 Dernière mise à jour :"
-  meta:
-    - name: description
-      content: "Arkalia-LUNA : système IA modulaire, autonome et auto-réflexif pour environnements locaux."
-    - name: keywords
-      content: "IA, Arkalia, LUNA, cognition, modulaire, local, auto-réflexif, documentation"
-    - name: author
-      content: "Athalia 🌙"
-
-nav:
-  - 🧠 Accueil: index.md
-  - 📚 Modules IA:
-      - Aperçu: modules.md
-      - Assistantia: modules/assistantia.md
-      - Reflexia: modules/reflexia.md
-      - ZeroIA: modules/zeroia.md
-      - Helloria: modules/helloria.md
-      - Nyxalia: modules/nyxalia.md
-      - Taskia: modules/taskia.md
-      - État Global: modules/global_state.md
-  - 🧠 ZeroIA Avancé:
-      - Vue d'ensemble: zeroia/overview.md
-      - Dépannage: zeroia/troubleshooting.md
-  - 🔧 Fonctionnement:
-      - Kernel: fonctionnement/kernel.md
-      - Composants: fonctionnement/composants.md
-      - Structure: fonctionnement/structure.md
-      - Utilisation: fonctionnement/utilisation.md
-  - 🏗️ Architecture:
-      - Flux Décisionnel ZeroIA: architecture/decision_flow.mmd
-  - 🧪 Tests de Chaos:
-      - Suite de Tests: chaos/chaos_test_suite.md
-  - 🛠️ Infrastructure:
-      - Installation: infrastructure/installation.md
-      - Configuration: infrastructure/configuration.md
-      - Déploiement: infrastructure/deployment.md
-      - Ollama: infrastructure/ollama.md
-      - Automation: infrastructure/automation.md
-      - CI/CD: infrastructure/ci-cd.md
-  - 🧹 DevOps & Qualité:
-      - Vue d'ensemble: devops/index.md
-      - Sécurité DevOps: devops/security.md
-      - Résolution Linting: devops/linting-resolution.md
-  - 📡 API & Intégration:
-      - API FastAPI: api.md
-  - 🔐 Sécurité:
-      - Phase 4 Roadmap: security/phase4-roadmap.md
-      - Model Poisoning Detection: security/model-poisoning-detection.md
-      - Vue d'ensemble: security/security.md
-      - Guide SECURITY: security/security.md
-      - Réponse Incidents: security/incident-response.md
-      - Backup & Recovery: security/backup-recovery.md
-      - Tests Pénétration: security/penetration-testing.md
-      - Politique Log Redaction: security/log_redaction.md
-      - Compliance: security/compliance.md
-      - Architecture Sécurité: security/architecture.mmd
-      - Durcissement Docker: docker_hardening.md
-  - 🧪 Logs & Suivi:
-      - Historique Raisonnement: logs/reasoning_history.md
-      - Analyse des Échecs: logs/failure_analysis.md
-      - État de ZeroIA: logs/zeroia_status.md
-  - 📅 Roadmap:
-      - Vue d'ensemble: roadmap/index.md
-      - Améliorations prévues: roadmap/ENHANCEMENTS.md
-      - Plan v3.x Structuré: roadmap/v3-structured-plan.md
-  - 📦 Releases:
-      - Notes de version: releases/index.md
-      - CHANGELOG: releases/CHANGELOG.md
-      - Historique technique: changelog.md
-      - Dernières updates: releases/dernieres_updates.md
-  - 🧾 Licence:
-      - Licence: license.md
-  - 📖 FAQs & Aide:
-      - FAQs: faqs.md
-  - 🧑‍🚀 Journal & Checklist:
-      - Checklist: journal/CHECKLIST.md
-  - ✨ Crédits:
-      - Crédits: credits/credits.md
-      - Contribution: credits/CONTRIBUTING.md
-  - 🧠 IA Ops: ops.md
-  - ♻️ Rebuild: rebuild.md
-  - 🧬 Cognitive Levels: cognitive-levels.md
-
-markdown_extensions:
-  - admonition
-  - attr_list
-  - def_list
-  - footnotes
-  - meta
-  - toc:
-      permalink: true
-      toc_depth: 3
-  - pymdownx.superfences
-  - pymdownx.tabbed
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.emoji
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - pymdownx.snippets
-  - pymdownx.details
-  - pymdownx.keys
-  - pymdownx.mark
-  - pymdownx.critic
-
-extra_css:
-  - assets/css/extra.css
-  - https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|JetBrains+Mono&display=swap
-
-extra_javascript:
-  - assets/js/theme.js
-  - https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
-  - assets/js/arkalia-assistant.js
+  logo: assets/logo.png
+  favicon: assets/favicon.ico
 
 plugins:
   - search
-  - mkdocs-simple-hooks:
-      hooks:
-        on_pre_build: "scripts.generate_updates_page:main"  # ✅ Génère `dernieres_updates.md` uniquement avant build
-  - minify:
-      minify_html: true
-  - git-revision-date-localized:
-      type: datetime
-      locale: fr
-      timezone: Europe/Paris
-      fallback_to_build_date: true
-      exclude:
-        - "*.DS_Store"
-        - ".*"
-        - "dernieres_updates.md"   # ✅ évite de la considérer dans l'historique Git
-        - "._dernieres_updates.md"
-  - macros
+
+extra_css:
+  - assets/extra.css
+
+extra_javascript:
+  - assets/js/arkalia-assistant.js
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+
+nav:
+  - Accueil: index.md
+  - 🚀 Releases:
+    - Dernières Updates: releases/dernieres_updates.md
+    - Changelog Complet: releases/CHANGELOG.md
+    - Index: releases/index.md
+  - 🧩 Modules:
+    - Vue d'ensemble: modules/index.md
+    - 🤖 AssistantIA: modules/assistantia.md
+    - 🔄 Reflexia: modules/reflexia.md
+    - 🧠 Sandozia: modules/sandozia.md
+    - ⚡ Taskia: modules/taskia.md
+    - 🧪 ZeroIA: modules/zeroia.md
+    - 🌊 Nyxalia: modules/nyxalia.md
+    - 🌍 Global State: modules/global_state.md
+    - 🎮 Helloria: modules/helloria.md
+  - 🏗️ Architecture:
+    - Fonctionnement:
+      - Structure: fonctionnement/structure.md
+      - Composants: fonctionnement/composants.md
+      - Kernel: fonctionnement/kernel.md
+      - Utilisation: fonctionnement/utilisation.md
+    - Flux de Décision: architecture/decision_flow.mmd
+  - 🛠️ Infrastructure:
+    - Installation: infrastructure/installation.md
+    - Configuration: infrastructure/configuration.md
+    - Déploiement: infrastructure/deployment.md
+    - CI/CD: infrastructure/ci-cd.md
+    - Automation: infrastructure/automation.md
+    - Ollama: infrastructure/ollama.md
+  - 🧹 DevOps & Qualité:
+    - Vue d'ensemble: devops/index.md
+    - Résolution Linting: devops/linting-resolution.md
+    - Sécurité: devops/security.md
+  - 🔐 Sécurité:
+    - Vue d'ensemble: security/security.md
+    - Architecture: security/architecture.mmd
+    - Détection Model Poisoning: security/model-poisoning-detection.md
+    - Tests de Pénétration: security/penetration-testing.md
+    - Réponse aux Incidents: security/incident-response.md
+    - Sauvegarde et Récupération: security/backup-recovery.md
+    - Conformité: security/compliance.md
+    - Redaction des Logs: security/log_redaction.md
+    - Roadmap Phase 4: security/phase4-roadmap.md
+  - 📊 Logs & Monitoring:
+    - Statut ZeroIA: logs/zeroia_status.md
+    - Analyse d'Échecs: logs/failure_analysis.md
+    - Historique Raisonnement: logs/reasoning_history.md
+  - 🧪 Chaos Engineering:
+    - Suite de Tests: chaos/chaos_test_suite.md
+  - 🛣️ Roadmap:
+    - Vue d'ensemble: roadmap/index.md
+    - Plan Structuré v3.x: roadmap/v3-structured-plan.md
+    - Améliorations: roadmap/ENHANCEMENTS.md
+  - 📚 Journal:
+    - Checklist: journal/CHECKLIST.md
+  - 🎭 Credits:
+    - Contributeurs: credits/credits.md
+    - Guide Contribution: credits/CONTRIBUTING.md
+  - 📋 Divers:
+    - API Documentation: api/index.md
+    - Changelog: changelog.md
+    - Niveaux Cognitifs: cognitive-levels.md
+    - FAQ: faqs/index.md
+    - Rebuild: rebuild/index.md
+    - Ops: ops/index.md
+    - Licence: license/index.md
