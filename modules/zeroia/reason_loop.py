@@ -9,6 +9,7 @@ from typing import Optional
 import toml
 
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
+from modules.zeroia.model_integrity import validate_decision_integrity
 from modules.zeroia.utils.backup import save_backup
 from modules.zeroia.utils.state_writer import (
     save_json_if_changed,
@@ -215,6 +216,18 @@ def reason_loop(
         )
 
     decision, score = decide(ctx)
+
+    # 🛡️ VALIDATION INTÉGRITÉ MODÈLE - Roadmap S2
+    try:
+        integrity_valid, integrity_reason = validate_decision_integrity(
+            ctx, decision, score
+        )
+        if not integrity_valid:
+            print(f"🚨 [ZeroIA] INTEGRITY VIOLATION: {integrity_reason}", flush=True)
+            # En cas de compromission, forcer décision sécurisée
+            decision, score = "monitor", 0.3
+    except Exception as e:
+        print(f"⚠️ [ZeroIA] Integrity check failed: {e}", flush=True)
 
     # Vérifie si on doit traiter cette décision (anti-spam)
     if not should_process_decision(decision):
