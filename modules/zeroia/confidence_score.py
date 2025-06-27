@@ -287,7 +287,10 @@ class ConfidenceScorer:
         error_rate = len(error_contexts) / total_decisions
         error_score = max(0, 1.0 - error_rate * 2)  # Pénalité x2 pour erreurs
 
-        explanation = f"Taux d'erreur historique: {error_rate:.1%} ({len(error_contexts)} erreurs)"
+        error_count = len(error_contexts)
+        explanation = (
+            f"Taux d'erreur historique: {error_rate:.1%} ({error_count} erreurs)"
+        )
         return error_score, explanation
 
     def _calculate_context_similarity(self, ctx1: Dict, ctx2: Dict) -> float:
@@ -422,12 +425,11 @@ class ConfidenceScorer:
 
         recent_metrics = metrics[-100:]  # 100 dernières décisions
 
-        avg_confidence = sum(m["confidence_score"] for m in recent_metrics) / len(
-            recent_metrics
-        )
-        avg_processing = sum(m["processing_time_ms"] for m in recent_metrics) / len(
-            recent_metrics
-        )
+        num_metrics = len(recent_metrics)
+        confidence_sum = sum(m["confidence_score"] for m in recent_metrics)
+        processing_sum = sum(m["processing_time_ms"] for m in recent_metrics)
+        avg_confidence = confidence_sum / num_metrics
+        avg_processing = processing_sum / num_metrics
 
         decision_counts = {}
         for m in recent_metrics:
@@ -461,8 +463,9 @@ def main():
 
     print("🧠 [CONFIDENCE SCORER] Test du système...")
 
+    system_metrics = {"cpu": 45.0, "ram": 60.0, "response_time_ms": 120}
     confidence, explanation = scorer.calculate_confidence(
-        test_decision, test_context, {"cpu": 45.0, "ram": 60.0, "response_time_ms": 120}
+        test_decision, test_context, system_metrics
     )
 
     print(f"\n📊 Score de confiance: {confidence:.3f}")

@@ -25,7 +25,7 @@ def check_toml_validity():
         return False
 
 
-def check_PAT_exposure():
+def check_pat_exposure():
     pat_regex = re.compile(r"ghp_[A-Za-z0-9]{36,}")
     for file in ENV_FILES:
         content = file.read_text(errors="ignore")
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     if not check_toml_validity():
         errors.append("Invalid TOML")
 
-    if not check_PAT_exposure():
+    if not check_pat_exposure():
         errors.append("PAT exposé")
 
     if errors:

@@ -89,6 +89,10 @@ nav:
       - Ollama: infrastructure/ollama.md
       - Automation: infrastructure/automation.md
       - CI/CD: infrastructure/ci-cd.md
+  - 🧹 DevOps & Qualité:
+      - Vue d'ensemble: devops/index.md
+      - Sécurité DevOps: devops/security.md
+      - Résolution Linting: devops/linting-resolution.md
   - 📡 API & Intégration:
       - API FastAPI: api.md
   - 🔐 Sécurité:
@@ -103,7 +107,6 @@ nav:
       - Compliance: security/compliance.md
       - Architecture Sécurité: security/architecture.mmd
       - Durcissement Docker: docker_hardening.md
-      - Sécurité DevOps: devops/security.md
   - 🧪 Logs & Suivi:
       - Historique Raisonnement: logs/reasoning_history.md
       - Analyse des Échecs: logs/failure_analysis.md
@@ -111,6 +114,7 @@ nav:
   - 📅 Roadmap:
       - Vue d'ensemble: roadmap/index.md
       - Améliorations prévues: roadmap/ENHANCEMENTS.md
+      - Plan v3.x Structuré: roadmap/v3-structured-plan.md
   - 📦 Releases:
       - Notes de version: releases/index.md
       - CHANGELOG: releases/CHANGELOG.md

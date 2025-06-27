@@ -356,9 +356,8 @@ class ChaosInjector:
                         "importable": random.choice([True, False]),  # nosec B311
                     }
 
-                print(
-                    f"🔍 [RECOVERY] Module {module_name}: {'✅' if test_result['importable'] else '❌'}"
-                )
+                status = "✅" if test_result["importable"] else "❌"
+                print(f"🔍 [RECOVERY] Module {module_name}: {status}")
 
             except Exception as e:
                 test_result = {
@@ -422,18 +421,16 @@ class ChaosInjector:
         )
 
         print("\n📈 [CHAOS] STATISTIQUES:")
+        scenarios_count = len(test_report["chaos_scenarios"])
+        recoveries_count = len(test_report["recovery_tests"])
+        print(f"   💥 Scénarios réussis: {successful_scenarios}/{scenarios_count}")
         print(
-            f"   💥 Scénarios réussis: {successful_scenarios}/{len(test_report['chaos_scenarios'])}"
-        )
-        print(
-            f"   🔄 Récupérations réussies: {successful_recoveries}/{len(test_report['recovery_tests'])}"
+            f"   🔄 Récupérations réussies: {successful_recoveries}/{recoveries_count}"
         )
 
-        resilience_score = (
-            (successful_scenarios + successful_recoveries)
-            / (len(test_report["chaos_scenarios"]) + len(test_report["recovery_tests"]))
-            * 100
-        )
+        total_tests = scenarios_count + recoveries_count
+        total_successes = successful_scenarios + successful_recoveries
+        resilience_score = total_successes / total_tests * 100
         print(f"   🛡️ Score de résilience: {resilience_score:.1f}%")
 
 
@@ -470,9 +467,8 @@ def main():
 
             if args.scenario in scenario_map:
                 result = scenario_map[args.scenario]()
-                print(
-                    f"\n✅ [CHAOS] Scénario {args.scenario} terminé: {'Succès' if result['success'] else 'Échec'}"
-                )
+                status = "Succès" if result["success"] else "Échec"
+                print(f"\n✅ [CHAOS] Scénario {args.scenario} terminé: {status}")
 
         else:
             # Test complet de résilience

@@ -135,7 +135,8 @@ class BuildIntegrityValidator:
                 violations.append(f"MISSING: {file_path}")
             elif current_hash != expected_hash:
                 violations.append(
-                    f"MODIFIED: {file_path} (expected: {expected_hash[:16]}..., got: {current_hash[:16]}...)"
+                    f"MODIFIED: {file_path} (expected: {expected_hash[:16]}..., "
+                    f"got: {current_hash[:16]}...)"
                 )
 
         # Check for new files not in manifest

@@ -42,3 +42,5 @@ tomli==2.2.1
 defusedxml
 
 prometheus_client>=0.22.0
+cryptography>=3.4.8
+PyJWT>=2.4.0

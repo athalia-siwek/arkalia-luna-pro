@@ -200,9 +200,8 @@ class LogScrubber:
     def run(self) -> Dict:
         """Exécute le nettoyage complet des logs"""
         start_time = time.time()
-        print(
-            f"🚀 [SCRUBBER] Démarrage nettoyage logs - Mode: {'DRY RUN' if self.config['dry_run'] else 'LIVE'}"
-        )
+        mode = "DRY RUN" if self.config["dry_run"] else "LIVE"
+        print(f"🚀 [SCRUBBER] Démarrage nettoyage logs - Mode: {mode}")
 
         # Recherche des fichiers de logs
         log_files = self._find_log_files()
@@ -278,9 +277,8 @@ class LogScrubber:
         print("\n📊 [SCRUBBER] RAPPORT FINAL:")
         print(f"   ⏱️ Durée: {duration:.2f}s")
         print(f"   📁 Fichiers traités: {self.stats['files_processed']}")
-        print(
-            f"   🛡️ Données sensibles supprimées: {self.stats['sensitive_data_removed']}"
-        )
+        sensitive_count = self.stats["sensitive_data_removed"]
+        print(f"   🛡️ Données sensibles supprimées: {sensitive_count}")
         print(f"   💾 Octets économisés: {self.stats['bytes_saved']:,}")
         print(f"   📦 Archives créées: {self.stats['archives_created']}")
         print(f"   ❌ Erreurs: {len(self.stats['errors'])}")

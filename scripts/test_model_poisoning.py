@@ -10,20 +10,22 @@ Tests 5 types d'attaques:
 import json
 import os
 import sys
+
+# Configuration du path AVANT tout import
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "modules"))
+
 import tempfile
 from datetime import datetime
 from pathlib import Path
 
 import toml
 
-# Ajout du chemin modules pour import
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "modules"))
-
-from modules.zeroia.model_integrity import (
-    get_integrity_monitor,
-)
+from modules.zeroia.model_integrity import get_integrity_monitor
 from modules.zeroia.reason_loop import reason_loop
-from tests.security.test_poisoning import FakePoisonedDatasets, ModelPoisoningDetector
+from tests.security.test_poisoning import (
+    FakePoisonedDatasets,
+    ModelPoisoningDetector,
+)
 
 
 def test_live_poisoning_attacks():
@@ -127,8 +129,9 @@ def test_live_poisoning_attacks():
                 test_results["oscillation_attack"][
                     "details"
                 ] = f"Oscillation détectée - Confidence: {analysis['confidence']:.2f}"
+                confidence_val = analysis["confidence"]
                 print(
-                    f"✅ Attaque oscillation DÉTECTÉE - Confidence: {analysis['confidence']:.2f}"
+                    f"✅ Attaque oscillation DÉTECTÉE - Confidence: {confidence_val:.2f}"
                 )
             else:
                 test_results["oscillation_attack"]["status"] = "VULNERABLE"
@@ -221,9 +224,10 @@ def test_live_poisoning_attacks():
                 integrity_status = monitor.get_integrity_status()
                 if integrity_status["anomalies_detected"] > 0:
                     test_results["stealth_poisoning"]["status"] = "PROTECTED"
-                    test_results["stealth_poisoning"][
-                        "details"
-                    ] = f"Répétition suspecte détectée - Anomalies: {integrity_status['anomalies_detected']}"
+                    test_results["stealth_poisoning"]["details"] = (
+                        f"Répétition suspecte détectée - "
+                        f"Anomalies: {integrity_status['anomalies_detected']}"
+                    )
                     print("✅ Empoisonnement furtif DÉTECTÉ")
                 else:
                     test_results["stealth_poisoning"]["status"] = "VULNERABLE"
@@ -317,8 +321,10 @@ def test_live_poisoning_attacks():
         print(f"   └─ {result['details']}")
 
     protection_rate = (protected_count / len(test_results)) * 100
+    total_tests = len(test_results)
     print(
-        f"\n📊 TAUX DE PROTECTION: {protection_rate:.1f}% ({protected_count}/{len(test_results)})"
+        f"\n📊 TAUX DE PROTECTION: {protection_rate:.1f}% "
+        f"({protected_count}/{total_tests})"
     )
 
     if protection_rate >= 80:
