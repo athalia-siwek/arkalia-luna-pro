@@ -36,7 +36,7 @@ class SecretMetadata:
         self.expires_at = expires_at
         self.tags = tags or []
         self.access_count = 0
-        self.last_accessed = None
+        self.last_accessed: Optional[datetime] = None
 
     def to_dict(self) -> Dict:
         return {
