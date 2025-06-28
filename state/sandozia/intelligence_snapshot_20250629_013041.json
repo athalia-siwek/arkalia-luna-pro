@@ -1,0 +1,46 @@
+{
+  "reflexia_state": {
+    "active": true,
+    "last_reflection": "2025-06-29T01:30:41.659952",
+    "status": "degraded",
+    "metrics": {
+      "cpu": 29.4,
+      "ram": 66.3,
+      "latency": 1075.01,
+      "containers": 0,
+      "modules_active": 2,
+      "errors": 6
+    },
+    "confidence_level": 0.85
+  },
+  "zeroia_state": {
+    "last_execution": "2025-06-28T23:30:31.259699",
+    "recent_errors": [],
+    "status": "active",
+    "decision_metrics": {
+      "confidence": 0.8300412475138362,
+      "accuracy": 0.8898509149843292
+    },
+    "active": true,
+    "context": {
+      "status": {
+        "severity": "normal"
+      }
+    }
+  },
+  "assistant_state": {
+    "active": true,
+    "session_count": 0,
+    "last_interaction": "2025-06-29T01:30:41.660196"
+  },
+  "coherence_analysis": {
+    "coherence_score": 1.0,
+    "issues": [],
+    "last_analysis": "2025-06-29T01:30:41.660201",
+    "modules_aligned": true
+  },
+  "behavioral_patterns": [],
+  "recommendations": [
+    "Syst\u00e8me d'intelligence crois\u00e9e fonctionnel"
+  ]
+}

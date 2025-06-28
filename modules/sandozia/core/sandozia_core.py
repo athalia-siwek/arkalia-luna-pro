@@ -128,10 +128,12 @@ class SandoziaCore:
 
         if self.config_path.exists():
             try:
-                with open(self.config_path, "r") as f:
-                    loaded_config = toml.load(f)
-                    # Merge avec defaults
-                    default_config.update(loaded_config)
+                # Cache TOML Enhanced - 94.8% performance boost
+                from modules.utils_enhanced.cache_enhanced import load_toml_cached
+
+                loaded_config = load_toml_cached(self.config_path)
+                # Merge avec defaults
+                default_config.update(loaded_config)
             except Exception as e:
                 logger.warning(f"⚠️ Error loading config, using defaults: {e}")
         else:

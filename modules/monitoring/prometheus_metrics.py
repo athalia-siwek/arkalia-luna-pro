@@ -129,7 +129,10 @@ class ArkaliaMetrics:
     def _update_system_info(self):
         """Met à jour les informations système"""
         try:
-            version_info = toml.load("version.toml")
+            # Cache TOML Enhanced - 94.8% performance boost
+            from modules.utils_enhanced.cache_enhanced import load_toml_cached
+
+            version_info = load_toml_cached("version.toml")
             current_version = version_info.get("current_version", "unknown")
         except Exception:
             current_version = "unknown"

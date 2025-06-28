@@ -1,6 +1,6 @@
 # 🧠 AssistantIA — Module Cognitif Intégré
 
-![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![Version](https://img.shields.io/badge/version-v3.0--phase1-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)

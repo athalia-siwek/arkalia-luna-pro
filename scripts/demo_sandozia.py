@@ -468,6 +468,78 @@ behavioral_alert_enabled = true
         print("🧹 Cleanup demo terminé")
 
 
+async def run_daemon_mode(demo: SandoziaDemo):
+    """Mode daemon pour container Docker - boucle infinie"""
+    print("🧠 SANDOZIA INTELLIGENCE CROISÉE - Mode Daemon")
+    print("🐳 Démarrage pour container Docker...")
+    print("=" * 60)
+
+    import time
+
+    cycle_count = 0
+
+    try:
+        while True:  # Boucle infinie pour daemon
+            cycle_count += 1
+            print(f"\n🔄 === CYCLE SANDOZIA DAEMON {cycle_count} ===")
+            print(f"⏰ {time.strftime('%H:%M:%S')}")
+
+            # Exécuter cycle d'analyse complet
+            try:
+                # 1. Validation croisée
+                validator_result = demo.demo_validator()
+
+                # 2. Analyse comportementale
+                analyzer_result = demo.demo_behavior_analyzer()
+
+                # 3. Métriques intégrées
+                metrics_result = demo.demo_metrics()
+
+                # 4. Core snapshot
+                await demo.demo_sandozia_core()
+
+                # Calcul score global
+                scores = [
+                    validator_result["coherence_score"],
+                    analyzer_result["behavioral_health_score"],
+                    metrics_result["cross_module_coherence"],
+                ]
+                global_score = sum(scores) / len(scores)
+
+                print(f"📊 Score global Sandozia: {global_score:.3f}")
+
+                # Status périodique détaillé
+                if cycle_count % 5 == 0:
+                    print(f"🎯 Status après {cycle_count} cycles:")
+                    print(
+                        f"  - Cohérence modules: {validator_result['coherence_score']:.3f}"
+                    )
+                    print(
+                        f"  - Santé comportementale: {analyzer_result['behavioral_health_score']:.3f}"
+                    )
+                    print(
+                        f"  - Métriques cohérentes: {metrics_result['cross_module_coherence']:.3f}"
+                    )
+                    print(f"  - Performance globale: {global_score:.3f}")
+
+            except Exception as e:
+                print(f"⚠️ Erreur cycle {cycle_count}: {e}")
+                # En mode daemon, on continue malgré les erreurs
+
+            # Pause entre cycles (important pour container)
+            print("💤 Pause 15s avant prochain cycle...")
+            await asyncio.sleep(15)
+
+    except KeyboardInterrupt:
+        print("\n⏹️ Daemon Sandozia arrêté proprement")
+    except Exception as e:
+        print(f"\n💥 Erreur daemon: {e}")
+        # En mode daemon, on redémarre automatiquement
+        print("🔄 Redémarrage automatique dans 10s...")
+        await asyncio.sleep(10)
+        await run_daemon_mode(demo)  # Relance recursive
+
+
 async def main():
     """Point d'entrée principal"""
     import argparse
@@ -493,6 +565,9 @@ async def main():
     parser.add_argument(
         "--cleanup", action="store_true", help="Nettoyer les fichiers de demo"
     )
+    parser.add_argument(
+        "--daemon", action="store_true", help="Mode daemon pour container Docker"
+    )
 
     args = parser.parse_args()
 
@@ -503,6 +578,11 @@ async def main():
     try:
         if args.cleanup:
             demo.cleanup()
+            return
+
+        if args.daemon:
+            # Mode daemon pour container Docker
+            await run_daemon_mode(demo)
             return
 
         if args.full_demo or not any(
