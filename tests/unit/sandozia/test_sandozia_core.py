@@ -293,7 +293,7 @@ class TestSandoziaCoreIntegration:
 
             # Test statut
             status = sandozia.get_current_status()
-            assert status["snapshots_collected"] == 1
+            assert status["snapshots_count"] == 1
 
 
 if __name__ == "__main__":
