@@ -367,10 +367,10 @@ behavioral_alert_enabled = true
         # Statut final
         status = self.sandozia_core.get_current_status()
         print("\n📊 Statut final Sandozia:")
-        print(f"   🔄 En fonctionnement: {status['running']}")
-        print(f"   📊 Snapshots collectés: {status['snapshots_collected']}")
+        print(f"   🔄 En fonctionnement: {status['is_running']}")
+        print(f"   📊 Snapshots collectés: {status['snapshots_count']}")
         print(
-            f"   🔌 Modules connectés: {sum(status['modules_connected'].values())}/{len(status['modules_connected'])}"
+            f"   🔌 Modules connectés: {sum(status['modules_available'].values())}/{len(status['modules_available'])}"
         )
 
         return status
@@ -410,7 +410,7 @@ behavioral_alert_enabled = true
                 f"   📈 Cohérence métriques: {metrics_result['cross_module_coherence']:.3f}"
             )
             print(
-                f"   🚀 Core opérationnel: {'✅' if core_result['running'] is False else '✅'}"
+                f"   🚀 Core opérationnel: {'✅' if core_result['is_running'] is False else '✅'}"
             )  # False car arrêté proprement
 
             # Score global Sandozia

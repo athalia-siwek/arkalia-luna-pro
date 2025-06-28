@@ -1,7 +1,7 @@
 {
   "reflexia_state": {
     "active": true,
-    "last_reflection": "2025-06-27T20:56:19.040613",
+    "last_reflection": "2025-06-28T15:03:44.707069",
     "status": "ok",
     "metrics": {
       "cpu": 72.5,
@@ -11,12 +11,12 @@
     "confidence_level": 0.85
   },
   "zeroia_state": {
-    "last_execution": "2025-06-27T20:54:54.634002",
+    "last_execution": "2025-06-28T15:03:14.339552",
     "recent_errors": [],
     "status": "active",
     "decision_metrics": {
-      "confidence": 0.8668691892820163,
-      "accuracy": 0.9481962335149204
+      "confidence": 0.8321990926513163,
+      "accuracy": 0.8571838485177976
     },
     "active": true,
     "context": {
@@ -28,12 +28,12 @@
   "assistant_state": {
     "active": true,
     "session_count": 0,
-    "last_interaction": "2025-06-27T20:56:19.040836"
+    "last_interaction": "2025-06-28T15:03:44.707349"
   },
   "coherence_analysis": {
     "coherence_score": 1.0,
     "issues": [],
-    "last_analysis": "2025-06-27T20:56:19.040840",
+    "last_analysis": "2025-06-28T15:03:44.707352",
     "modules_aligned": true
   },
   "behavioral_patterns": [],

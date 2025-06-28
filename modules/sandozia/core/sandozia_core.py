@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import toml
+from diskcache import Cache
 
 # Imports Arkalia existants (functions disponibles)
 from ...reflexia.core import get_metrics, launch_reflexia_check
@@ -89,7 +90,10 @@ class SandoziaCore:
 
         # Métriques et état
         self.metrics_history: List[SandoziaMetrics] = []
-        self.intelligence_snapshots: List[IntelligenceSnapshot] = []
+        self.intelligence_snapshots = Cache(
+            "./cache/sandozia_snapshots", size_limit=500_000_000
+        )  # 500MB limit
+        self.snapshots_counter = 0  # Compteur simple pour le suivi
         self.active_correlations: Dict[str, Any] = {}
 
         # Intégration modules IA existants (fonctions directes)
@@ -231,12 +235,14 @@ class SandoziaCore:
         )
 
         # Sauvegarder snapshot
-        self.intelligence_snapshots.append(snapshot)
+        self.snapshots_counter += 1
+        snapshot_key = (
+            f"snapshot_{self.snapshots_counter:06d}_{int(datetime.now().timestamp())}"
+        )
+        self.intelligence_snapshots[snapshot_key] = snapshot.to_dict()
 
-        # Limiter l'historique
-        max_snapshots = self.config["monitoring"]["max_history_size"]
-        if len(self.intelligence_snapshots) > max_snapshots:
-            self.intelligence_snapshots = self.intelligence_snapshots[-max_snapshots:]
+        # Nettoyage automatique géré par diskcache (size_limit)
+        # Pas besoin de gestion manuelle, diskcache évince automatiquement
 
         return snapshot
 
@@ -268,27 +274,38 @@ class SandoziaCore:
         """Détecte des patterns comportementaux suspects"""
         patterns = []
 
-        # Analyser l'historique récent
-        if len(self.intelligence_snapshots) >= 3:
-            recent_snapshots = self.intelligence_snapshots[-5:]
+        # Analyser l'historique récent - approche simplifiée
+        recent_snapshots_data = []
+        try:
+            # Prendre quelques snapshots récents si disponibles
+            snapshot_count = 0
+            for key in self.intelligence_snapshots:
+                if snapshot_count >= 5:
+                    break
+                snapshot_data = self.intelligence_snapshots[key]
+                recent_snapshots_data.append(snapshot_data)
+                snapshot_count += 1
 
-            # Pattern : Cohérence en baisse
-            coherence_scores = [
-                s.coherence_analysis.get("coherence_score", 1.0)
-                for s in recent_snapshots
-            ]
+            # Pattern : Cohérence en baisse (si on a assez de données)
+            if len(recent_snapshots_data) >= 3:
+                coherence_scores = [
+                    s.get("coherence_analysis", {}).get("coherence_score", 1.0)
+                    for s in recent_snapshots_data
+                ]
 
-            if len(coherence_scores) >= 3:
-                trend = coherence_scores[-1] - coherence_scores[0]
-                if trend < -0.1:  # Baisse de 10%+
-                    patterns.append(
-                        {
-                            "type": "coherence_decline",
-                            "severity": "medium",
-                            "description": f"Cohérence en baisse: {trend:.2f}",
-                            "detected_at": datetime.now().isoformat(),
-                        }
-                    )
+                if len(coherence_scores) >= 3:
+                    trend = coherence_scores[-1] - coherence_scores[0]
+                    if trend < -0.1:  # Baisse de 10%+
+                        patterns.append(
+                            {
+                                "type": "coherence_decline",
+                                "severity": "medium",
+                                "description": f"Baisse cohérence: {trend:.2f}",
+                                "detected_at": datetime.now().isoformat(),
+                            }
+                        )
+        except Exception as e:
+            logger.warning(f"⚠️ Error analyzing patterns: {e}")
 
         return patterns
 
@@ -403,18 +420,16 @@ class SandoziaCore:
 
     def get_current_status(self) -> Dict:
         """Retourne le statut actuel de Sandozia"""
-        latest_metrics = self.metrics_history[-1] if self.metrics_history else None
 
         return {
-            "running": self.is_running,
-            "modules_connected": {
+            "is_running": self.is_running,
+            "snapshots_count": self.snapshots_counter,
+            "cache_stats": f"Volume: {self.intelligence_snapshots.volume()} bytes",
+            "modules_available": {
                 "reflexia": self.reflexia_available,
                 "zeroia": self.zeroia_available,
-                "prometheus": True,
             },
-            "latest_metrics": latest_metrics.to_dict() if latest_metrics else None,
-            "snapshots_collected": len(self.intelligence_snapshots),
-            "config_loaded": self.config_path.exists(),
+            "last_update": datetime.now().isoformat(),
         }
 
 

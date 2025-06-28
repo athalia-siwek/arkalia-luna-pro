@@ -220,7 +220,7 @@ def reason_loop(
             "ram": status.get("ram", 62),  # RAM par défaut : 62%
             "severity": status.get("severity", "normal"),
             "disk_usage": status.get("disk_usage", 78),
-            "network_latency": status.get("network_latency", 25)
+            "network_latency": status.get("network_latency", 25),
         }
 
     decision, score = decide(ctx)
