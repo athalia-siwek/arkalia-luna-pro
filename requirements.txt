@@ -51,6 +51,6 @@ PyJWT>=2.4.0
 diskcache>=5.6.3
 
 #########################
-# 💾 Cache & Memory Management
+# 🔄 Circuit Breaker & Retries
 #########################
-diskcache>=5.6.3
+tenacity>=8.2.0
