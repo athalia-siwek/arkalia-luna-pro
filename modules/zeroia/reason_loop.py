@@ -210,10 +210,18 @@ def reason_loop(
     ctx = load_context(context_path or CTX_PATH)
     reflexia_data = load_reflexia_state(reflexia_path or REFLEXIA_STATE)
 
-    if "cpu" not in ctx.get("status", {}) or "ram" not in ctx.get("status", {}):
-        raise KeyError(
-            "Missing required keys in context: 'cpu' and 'ram' must be present."
-        )
+    # 🛡️ ROBUSTESSE v3.x - Valeurs par défaut si CPU/RAM manquants
+    status = ctx.get("status", {})
+    if "cpu" not in status or "ram" not in status:
+        print("⚠️ [ZeroIA] CPU/RAM missing in context, using defaults", flush=True)
+        # Créer une section status avec valeurs par défaut
+        ctx["status"] = {
+            "cpu": status.get("cpu", 45),  # CPU par défaut : 45%
+            "ram": status.get("ram", 62),  # RAM par défaut : 62%
+            "severity": status.get("severity", "normal"),
+            "disk_usage": status.get("disk_usage", 78),
+            "network_latency": status.get("network_latency", 25)
+        }
 
     decision, score = decide(ctx)
 

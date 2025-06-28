@@ -119,7 +119,7 @@ class TestSandoziaCore:
             reflexia_state, zeroia_state, assistant_state
         )
 
-        assert coherence["coherence_score"] == 0.6  # 1.0 - 0.2 - 0.2
+        assert abs(coherence["coherence_score"] - 0.6) < 0.001  # 1.0 - 0.2 - 0.2 (précision float)
         assert coherence["modules_aligned"] is False
         assert len(coherence["issues"]) == 2
         assert "Reflexia inactive" in coherence["issues"]

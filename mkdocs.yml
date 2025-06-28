@@ -67,7 +67,8 @@ nav:
     - Changelog Complet: releases/CHANGELOG.md
     - Index: releases/index.md
   - 🧩 Modules:
-    - Vue d'ensemble: modules/index.md
+    - Vue d'ensemble: modules.md
+    - Modules Index: modules/index.md
     - 🤖 AssistantIA: modules/assistantia.md
     - 🔄 Reflexia: modules/reflexia.md
     - 🧠 Sandozia: modules/sandozia.md
@@ -76,6 +77,12 @@ nav:
     - 🌊 Nyxalia: modules/nyxalia.md
     - 🌍 Global State: modules/global_state.md
     - 🎮 Helloria: modules/helloria.md
+  - 🧪 ZeroIA Détaillé:
+    - Vue d'ensemble: zeroia/overview.md
+    - Troubleshooting: zeroia/troubleshooting.md
+  - 🌐 API:
+    - Guide API: api.md
+    - Documentation API: api/index.md
   - 🏗️ Architecture:
     - Fonctionnement:
       - Structure: fonctionnement/structure.md
@@ -104,6 +111,7 @@ nav:
     - Conformité: security/compliance.md
     - Redaction des Logs: security/log_redaction.md
     - Roadmap Phase 4: security/phase4-roadmap.md
+    - Docker Hardening: docker_hardening.md
   - 📊 Logs & Monitoring:
     - Statut ZeroIA: logs/zeroia_status.md
     - Analyse d'Échecs: logs/failure_analysis.md
@@ -119,11 +127,18 @@ nav:
   - 🎭 Credits:
     - Contributeurs: credits/credits.md
     - Guide Contribution: credits/CONTRIBUTING.md
+  - 🛠️ Opérations:
+    - Guide Ops: ops.md
+    - Ops Index: ops/index.md
+  - ♻️ Rebuild:
+    - Guide Rebuild: rebuild.md
+    - Rebuild Index: rebuild/index.md
+  - ❓ FAQ:
+    - FAQ Générale: faqs.md
+    - FAQ Index: faqs/index.md
+  - 📄 Licence:
+    - Licence Complète: license.md
+    - Licence Index: license/index.md
   - 📋 Divers:
-    - API Documentation: api/index.md
     - Changelog: changelog.md
     - Niveaux Cognitifs: cognitive-levels.md
-    - FAQ: faqs/index.md
-    - Rebuild: rebuild/index.md
-    - Ops: ops/index.md
-    - Licence: license/index.md
