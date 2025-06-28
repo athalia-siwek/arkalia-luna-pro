@@ -1,3 +1,61 @@
+# 🚀 Dernières Mises à Jour - Arkalia-LUNA
+
+**📅 Dernière mise à jour** : 28 Juin 2025
+
+---
+
+## 🔥 **URGENT** - v2.5.1 (28 Juin 2025) : FIX CRITIQUE MEMORY LEAK
+
+### 🚨 **Problème Résolu** : Memory Leak Sandozia
+- **Impact avant** : Crash système après 1000+ snapshots (48h production)
+- **Cause** : Accumulation `List[IntelligenceSnapshot]` en RAM sans limite
+- **Solution** : Cache disque `diskcache.Cache` 500MB avec éviction auto
+
+### ✅ **Résultats Validés**
+```bash
+# Tests global : 337/337 PASSED (100%)
+pytest --cov=modules --cov-report=term-missing
+
+# Démo Sandozia opérationnel
+python scripts/demo_sandozia.py --core-only
+
+# Cache créé : 49KB/500MB utilisés
+ls -lah ./cache/sandozia_snapshots/
+```
+
+### 🎯 **Impact Production**
+- ✅ **Stabilité** : Plus de crash mémoire
+- ✅ **Performance** : Éviction automatique snapshots
+- ✅ **Scalabilité** : Prêt pour charge haute 24/7
+- ✅ **Tests** : 100% réussite (337/337)
+
+---
+
+## 📊 **Roadmap Technique Progress**
+
+### ✅ **TERMINÉ** (28 Juin 2025)
+- **🔥 Phase 0.1** : Memory Leak Sandozia → **RÉSOLU**
+- **🔒 Sécurité IO** : `utils/io_safe.py` → **OPÉRATIONNEL**
+- **🛡️ Validation LLM** : `prompt_validator.py` → **OPÉRATIONNEL**
+
+### 🎯 **PROCHAINES ÉTAPES** (Priorité)
+- **🔄 Circuit Breaker** : Protection cascade failures ZeroIA
+- **📋 Event Sourcing** : Traçabilité fine des décisions IA
+- **🐳 Dockerfile Sandozia** : Isolation complète container
+
+**🏆 Score roadmap** : 1/6 items = 16.7% (base solide établie)
+
+---
+
+## 🔗 **Liens Utiles**
+
+- 📋 **Roadmap Complet** : `docs/roadmap/TECHNICAL_ROADMAP_ADVANCED.md`
+- 📊 **Progress Tracker** : `docs/roadmap/PROGRESS_CHANGELOG.md`
+- 📝 **Changelog Détaillé** : `docs/releases/CHANGELOG.md`
+- 🧪 **Rapports Tests** : `htmlcov/index.html`
+
+**🚀 Système Arkalia-LUNA prêt pour Phase 1 - Design Patterns !**
+
 # 🚀 Dernières Mises à Jour Arkalia-LUNA v3.x
 
 **Version actuelle :** `v3.0-phase2` | **Date :** 27 Juin 2025

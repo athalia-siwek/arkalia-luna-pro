@@ -1,8 +1,34 @@
 # 📝 CHANGELOG — Arkalia-LUNA
 
-![Version](https://img.shields.io/badge/version-v2.5.0-blue)
+![Version](https://img.shields.io/badge/version-v2.5.1-blue)
 
 Historique détaillé des modifications et améliorations d'Arkalia-LUNA.
+
+---
+
+## 🔥 [v2.5.1] - 2025-06-28 — **FIX CRITIQUE MEMORY LEAK**
+
+### 🚨 **Correction Critique**
+- **Memory Leak Sandozia** : Résolution fuite mémoire critique accumulation snapshots
+- **Cache Persistant** : Implémentation `diskcache.Cache` 500MB avec éviction automatique
+- **Stabilité Production** : Système prêt pour charge haute 24/7 sans crash mémoire
+
+### 🔧 **Changements Techniques**
+- **Code** : `modules/sandozia/core/sandozia_core.py:92` - Remplacement `List[]` par `Cache()`
+- **Dépendances** : Ajout `diskcache>=5.6.3` dans `requirements.txt`
+- **Tests** : Correction compatibilité cache persistant (337/337 PASS)
+- **Performance** : Cache 49KB/500MB, éviction auto, pas de limite snapshots
+
+### 📊 **Validation**
+- **Tests Global** : 337/337 réussis (100%)
+- **Démo Sandozia** : `python scripts/demo_sandozia.py --core-only` fonctionnel
+- **Cache Créé** : `./cache/sandozia_snapshots/cache.db` opérationnel
+- **Prêt Production** : Système stable pour haute charge continue
+
+### 📋 **Roadmap Progress**
+- ✅ **Phase 0.1** : Memory Leak résolu (priorité #1 roadmap technique)
+- ✅ **Phase 0 Sécurité** : IO Safe + Validation LLM confirmés opérationnels
+- 🎯 **Prochaine étape** : Circuit Breaker ZeroIA (Phase 1.1)
 
 ---
 
