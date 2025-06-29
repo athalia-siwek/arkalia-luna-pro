@@ -55,9 +55,7 @@ def log_failure():
         with FAILURE_LOG.open("a", encoding="utf-8") as f:
             f.write("\n")
             f.write(f"## 🛑 Échec détecté : {datetime.now().isoformat()}\n")
-            f.write(
-                "**Raison :** Restauration du snapshot ZeroIA exécutée manuellement.\n"
-            )
+            f.write("**Raison :** Restauration du snapshot ZeroIA exécutée manuellement.\n")
     except Exception as e:
         log(f"❌ Impossible d'écrire dans le journal d'échec : {e}")
 

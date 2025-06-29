@@ -51,9 +51,7 @@ class ModelPoisoningDetector:
         """Détecte les oscillations rapides suspectes"""
         if len(decisions) < 4:
             return False
-        changes = sum(
-            1 for i in range(1, len(decisions)) if decisions[i] != decisions[i - 1]
-        )
+        changes = sum(1 for i in range(1, len(decisions)) if decisions[i] != decisions[i - 1])
         return changes > len(decisions) * 0.7
 
     def _detect_impossible_decisions(self, decisions: list) -> bool:
@@ -255,9 +253,7 @@ class TestModelPoisoning(unittest.TestCase):
                 toml.dump(poisoned_context, f)
 
             # État reflexia normal
-            reflexia_state = {
-                "decision": {"last_decision": "normal", "confidence": 0.8}
-            }
+            reflexia_state = {"decision": {"last_decision": "normal", "confidence": 0.8}}
             reflexia_path = Path(tmp_dir) / "reflexia.toml"
             with open(reflexia_path, "w") as f:
                 toml.dump(reflexia_state, f)

@@ -28,9 +28,7 @@ def test_clear_old_events(temp_event_store):
         old_timestamp = datetime.now() - timedelta(days=40)
         mock_datetime.now.return_value = old_timestamp
         for i in range(2):
-            temp_event_store.add_event(
-                EventType.CIRCUIT_FAILURE, {"error": f"old_error_{i}"}
-            )
+            temp_event_store.add_event(EventType.CIRCUIT_FAILURE, {"error": f"old_error_{i}"})
     assert temp_event_store.event_counter == 5
     deleted_count = temp_event_store.clear_old_events(days_to_keep=30)
     assert deleted_count >= 0
@@ -47,7 +45,7 @@ def test_export_events(temp_event_store):
         exported_count = temp_event_store.export_events(export_path)
         assert exported_count == 3
         assert export_path.exists()
-        with open(export_path, "r") as f:
+        with open(export_path) as f:
             export_data = json.load(f)
         assert export_data["total_events"] == 3
         assert export_data["event_type_filter"] == "all"
@@ -75,13 +73,11 @@ def test_export_events_by_type(temp_event_store):
             export_path, event_type=EventType.DECISION_MADE
         )
         assert exported_count == 2
-        with open(export_path, "r") as f:
+        with open(export_path) as f:
             export_data = json.load(f)
         assert export_data["total_events"] == 2
         assert export_data["event_type_filter"] == "decision_made"
-        assert all(
-            event["event_type"] == "decision_made" for event in export_data["events"]
-        )
+        assert all(event["event_type"] == "decision_made" for event in export_data["events"])
     finally:
         if export_path.exists():
             export_path.unlink()
@@ -121,18 +117,14 @@ def test_correlation_id_tracking(temp_event_store):
         EventType.CIRCUIT_SUCCESS, {"state": "closed"}, correlation_id=correlation_id
     )
     recent_events = temp_event_store.get_recent_events()
-    correlated_events = [
-        event for event in recent_events if event.correlation_id == correlation_id
-    ]
+    correlated_events = [event for event in recent_events if event.correlation_id == correlation_id]
     assert len(correlated_events) == 2
 
 
 def test_type_index_functionality(temp_event_store):
     """🧪 Test fonctionnalité index par type"""
     for i in range(5):
-        temp_event_store.add_event(
-            EventType.DECISION_MADE, {"decision": f"decision_{i}"}
-        )
+        temp_event_store.add_event(EventType.DECISION_MADE, {"decision": f"decision_{i}"})
     for i in range(3):
         temp_event_store.add_event(EventType.CIRCUIT_SUCCESS, {"state": "closed"})
     decision_events = temp_event_store.get_events_by_type(EventType.DECISION_MADE)
@@ -145,8 +137,6 @@ def test_event_store_persistence(temp_event_store):
     """🧪 Test persistance de l'Event Store"""
     temp_event_store.add_event(EventType.DECISION_MADE, {"decision": "monitor"})
     temp_event_store.add_event(EventType.CIRCUIT_SUCCESS, {"state": "closed"})
-    original_count = temp_event_store.event_counter
-    cache_dir = temp_event_store.cache_dir
     # Pas de méthode close(), on teste juste la persistance via le cache
     recent_events = temp_event_store.get_recent_events()
     assert len(recent_events) == 2

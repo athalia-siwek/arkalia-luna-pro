@@ -42,9 +42,7 @@ def demo_integration():
     # Test 1: Initialisation
     print("\n🔧 === TEST 1: Initialisation des composants ===")
     try:
-        cb, es, error_recovery, graceful_degradation = (
-            initialize_components_with_recovery()
-        )
+        cb, es, error_recovery, graceful_degradation = initialize_components_with_recovery()
         print("✅ Circuit Breaker: initialisé")
         print("✅ Event Store: initialisé")
         print(f"🔄 Error Recovery: {'✅' if error_recovery else '❌'}")

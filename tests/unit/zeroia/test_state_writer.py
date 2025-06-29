@@ -16,12 +16,12 @@ TMP_JSON = "tests/tmp/test_dashboard.json"
 
 
 def read_toml(path):
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return toml.load(f)
 
 
 def read_json(path):
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -86,6 +86,6 @@ def test_write_state_json(tmp_path):
     data = {"status": "ok", "value": 42}
     write_state_json(path, data)
 
-    with open(path, "r") as f:
+    with open(path) as f:
         loaded = json.load(f)
     assert loaded == data

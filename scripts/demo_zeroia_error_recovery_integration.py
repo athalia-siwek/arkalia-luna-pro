@@ -5,13 +5,13 @@ Démontre l'intégration complète du système Error Recovery
 dans la boucle de raisonnement ZeroIA Enhanced.
 """
 
+import asyncio
 import logging
+import pathlib
+import subprocess
 import sys
 import time
 from pathlib import Path
-import subprocess
-import pathlib
-import asyncio
 
 # Ajout du chemin modules
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
@@ -77,9 +77,7 @@ def simulate_context_file(context_data: dict, temp_path: Path) -> None:
         toml.dump(context_data, f)
 
 
-def test_scenario(
-    scenario_name: str, cpu: float, ram: float, expected_behavior: str
-) -> dict:
+def test_scenario(scenario_name: str, cpu: float, ram: float, expected_behavior: str) -> dict:
     """
     Teste un scénario spécifique avec Error Recovery
 
@@ -103,9 +101,7 @@ def test_scenario(
     try:
         # Exécuter boucle avec Error Recovery
         start_time = time.time()
-        decision, score = reason_loop_enhanced_with_recovery(
-            context_path=temp_context_path
-        )
+        decision, score = reason_loop_enhanced_with_recovery(context_path=temp_context_path)
         duration = time.time() - start_time
 
         print(f"✅ Décision: {decision} (confiance: {score:.2f})")
@@ -142,8 +138,22 @@ def test_scenario(
 
 
 def format_generated():
+    """Formate tous les dossiers generated avec isort + black."""
     for d in pathlib.Path(".").rglob("generated"):
-        subprocess.run(["black", str(d), "--quiet"], check=False)
+        try:
+            # Tri des imports avec isort (compatible black)
+            subprocess.run(["isort", str(d), "--profile", "black"], check=True)
+            # Formatage du code avec black
+            subprocess.run(["black", str(d), "--quiet"], check=True)
+            print(f"✅ Formaté: {d}")
+        except subprocess.CalledProcessError as e:
+            print(f"⚠️ Erreur formatage {d}: {e}")
+            # Fallback: essayer au moins isort
+            try:
+                subprocess.run(["isort", str(d), "--fix"], check=False)
+                print(f"⚠️ Fallback isort appliqué: {d}")
+            except Exception:
+                print(f"❌ Fallback échoué: {d}")
 
 
 async def main():
@@ -153,9 +163,7 @@ async def main():
 
     # Initialiser les composants
     try:
-        cb, es, error_recovery, graceful_degradation = (
-            initialize_components_with_recovery()
-        )
+        cb, es, error_recovery, graceful_degradation = initialize_components_with_recovery()
         print("✅ Composants initialisés avec succès")
 
         if error_recovery:
@@ -205,9 +213,7 @@ async def main():
     print(f"📈 Taux de succès: {len(successful_tests)/len(results)*100:.1f}%")
 
     if successful_tests:
-        avg_duration = sum(r["duration"] for r in successful_tests) / len(
-            successful_tests
-        )
+        avg_duration = sum(r["duration"] for r in successful_tests) / len(successful_tests)
         print(f"⏱️ Durée moyenne: {avg_duration:.3f}s")
 
     # Status des composants

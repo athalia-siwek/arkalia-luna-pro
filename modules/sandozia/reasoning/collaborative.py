@@ -28,11 +28,11 @@ class ReasoningResult:
     consensus_reached: bool
     final_decision: str
     confidence: float
-    participating_modules: List[str]
-    reasoning_steps: List[Dict]
+    participating_modules: list[str]
+    reasoning_steps: list[dict]
     timestamp: datetime
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return {
             "consensus_reached": self.consensus_reached,
             "final_decision": self.final_decision,
@@ -54,7 +54,7 @@ class CollaborativeReasoning:
     - Résolution de conflits
     """
 
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config: dict | None = None):
         self.config = config or {
             "consensus_threshold": 0.8,
             "max_reasoning_rounds": 3,
@@ -62,13 +62,11 @@ class CollaborativeReasoning:
             "agreement_weight": 0.3,
         }
 
-        self.reasoning_history: List[ReasoningResult] = []
+        self.reasoning_history: list[ReasoningResult] = []
 
         logger.info("🧠 CollaborativeReasoning initialized")
 
-    def collect_module_reasoning(
-        self, module_decisions: Dict[str, Dict]
-    ) -> Dict[str, Any]:
+    def collect_module_reasoning(self, module_decisions: dict[str, dict]) -> dict[str, Any]:
         """Collecte les raisonnements de chaque module"""
 
         reasoning_data = {}
@@ -83,7 +81,7 @@ class CollaborativeReasoning:
 
         return reasoning_data
 
-    def calculate_consensus(self, reasoning_data: Dict[str, Any]) -> ReasoningResult:
+    def calculate_consensus(self, reasoning_data: dict[str, Any]) -> ReasoningResult:
         """Calcule le consensus entre les modules"""
 
         if not reasoning_data:
@@ -140,9 +138,9 @@ class CollaborativeReasoning:
 
         # Confiance finale
         if best_decision and best_decision in decisions:
-            final_confidence = sum(
-                s["confidence"] for s in decisions[best_decision]
-            ) / len(decisions[best_decision])
+            final_confidence = sum(s["confidence"] for s in decisions[best_decision]) / len(
+                decisions[best_decision]
+            )
         else:
             final_confidence = 0.0
 
@@ -179,7 +177,7 @@ class CollaborativeReasoning:
 
         return result
 
-    def analyze_disagreements(self, reasoning_data: Dict[str, Any]) -> Dict[str, Any]:
+    def analyze_disagreements(self, reasoning_data: dict[str, Any]) -> dict[str, Any]:
         """Analyse les désaccords entre modules"""
 
         disagreements = []
@@ -212,9 +210,7 @@ class CollaborativeReasoning:
             - (len(disagreements) / max(1, len(modules) * (len(modules) - 1) / 2)),
         }
 
-    def run_collaborative_reasoning(
-        self, module_decisions: Dict[str, Dict]
-    ) -> Dict[str, Any]:
+    def run_collaborative_reasoning(self, module_decisions: dict[str, dict]) -> dict[str, Any]:
         """Exécute un cycle complet de raisonnement collaboratif"""
 
         logger.info("🧠 Starting collaborative reasoning...")
@@ -244,12 +240,12 @@ class CollaborativeReasoning:
 
         return summary
 
-    def get_reasoning_history(self, limit: Optional[int] = None) -> List[Dict]:
+    def get_reasoning_history(self, limit: int | None = None) -> list[dict]:
         """Retourne l'historique des raisonnements"""
         history = self.reasoning_history[-limit:] if limit else self.reasoning_history
         return [r.to_dict() for r in history]
 
-    def get_consensus_stats(self) -> Dict[str, Any]:
+    def get_consensus_stats(self) -> dict[str, Any]:
         """Statistiques sur les consensus atteints"""
         if not self.reasoning_history:
             return {"total_reasonings": 0, "consensus_rate": 0.0}
@@ -270,9 +266,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="CollaborativeReasoning CLI")
-    parser.add_argument(
-        "--demo", action="store_true", help="Run demo with synthetic data"
-    )
+    parser.add_argument("--demo", action="store_true", help="Run demo with synthetic data")
 
     args = parser.parse_args()
 

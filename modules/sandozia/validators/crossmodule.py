@@ -47,11 +47,11 @@ class ValidationResult:
     module_source: str
     module_target: str
     message: str
-    details: Dict[str, Any]
+    details: dict[str, Any]
     timestamp: datetime
-    suggested_action: Optional[str] = None
+    suggested_action: str | None = None
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return {
             "level": self.level.value,
             "module_source": self.module_source,
@@ -74,7 +74,7 @@ class CrossModuleValidator:
     - Validation comportementale (patterns)
     """
 
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config: dict | None = None):
         self.config = config or {
             "temporal_tolerance_minutes": 5,
             "confidence_variance_threshold": 0.2,
@@ -82,8 +82,8 @@ class CrossModuleValidator:
             "max_validation_history": 1000,
         }
 
-        self.validation_history: List[ValidationResult] = []
-        self.state_cache: Dict[str, Dict] = {}
+        self.validation_history: list[ValidationResult] = []
+        self.state_cache: dict[str, dict] = {}
 
         # Chemins des états des modules
         self.state_paths = {
@@ -94,21 +94,19 @@ class CrossModuleValidator:
 
         logger.info("🔍 CrossModuleValidator initialized")
 
-    def load_module_states(self) -> Dict[str, Dict]:
+    def load_module_states(self) -> dict[str, dict]:
         """Charge les états actuels de tous les modules"""
         states = {}
 
         for module_name, state_path in self.state_paths.items():
             try:
                 if state_path.exists():
-                    with open(state_path, "r") as f:
+                    with open(state_path) as f:
                         states[module_name] = toml.load(f)
                     logger.debug(f"✅ Loaded {module_name} state")
                 else:
                     states[module_name] = {}
-                    logger.warning(
-                        f"⚠️ {module_name} state file not found: {state_path}"
-                    )
+                    logger.warning(f"⚠️ {module_name} state file not found: {state_path}")
             except Exception as e:
                 logger.error(f"❌ Error loading {module_name} state: {e}")
                 states[module_name] = {}
@@ -117,9 +115,7 @@ class CrossModuleValidator:
         self.state_cache = states.copy()
         return states
 
-    def validate_temporal_coherence(
-        self, states: Dict[str, Dict]
-    ) -> List[ValidationResult]:
+    def validate_temporal_coherence(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide la cohérence temporelle entre modules"""
         results = []
         now = datetime.now()
@@ -195,9 +191,7 @@ class CrossModuleValidator:
 
         return results
 
-    def validate_confidence_coherence(
-        self, states: Dict[str, Dict]
-    ) -> List[ValidationResult]:
+    def validate_confidence_coherence(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide la cohérence des scores de confiance"""
         results = []
         now = datetime.now()
@@ -249,9 +243,7 @@ class CrossModuleValidator:
 
         return results
 
-    def validate_logical_consistency(
-        self, states: Dict[str, Dict]
-    ) -> List[ValidationResult]:
+    def validate_logical_consistency(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide la consistance logique entre modules"""
         results = []
         now = datetime.now()
@@ -272,12 +264,10 @@ class CrossModuleValidator:
                 module_target="reflexia",
                 message="Contradiction: ZeroIA détecte des incohérences mais Reflexia a une confiance élevée",
                 details={
-                    "zeroia_contradictions": zeroia_state.get(
-                        "contradictions_detected", 0
+                    "zeroia_contradictions": zeroia_state.get("contradictions_detected", 0),
+                    "reflexia_confidence": reflexia_state.get("decision_metrics", {}).get(
+                        "confidence", 0.0
                     ),
-                    "reflexia_confidence": reflexia_state.get(
-                        "decision_metrics", {}
-                    ).get("confidence", 0.0),
                     "potential_issue": "Possible blindspot or false positive",
                 },
                 timestamp=now,
@@ -287,10 +277,7 @@ class CrossModuleValidator:
 
         # Reflexia en erreur mais ZeroIA n'a rien détecté
         reflexia_errors = reflexia_state.get("recent_errors", [])
-        if (
-            len(reflexia_errors) > 0
-            and zeroia_state.get("contradictions_detected", 0) == 0
-        ):
+        if len(reflexia_errors) > 0 and zeroia_state.get("contradictions_detected", 0) == 0:
 
             result = ValidationResult(
                 level=ValidationLevel.INFO,
@@ -299,12 +286,8 @@ class CrossModuleValidator:
                 message="Reflexia signale des erreurs mais ZeroIA ne détecte pas de contradictions",
                 details={
                     "reflexia_errors": len(reflexia_errors),
-                    "zeroia_contradictions": zeroia_state.get(
-                        "contradictions_detected", 0
-                    ),
-                    "last_reflexia_error": (
-                        reflexia_errors[-1] if reflexia_errors else None
-                    ),
+                    "zeroia_contradictions": zeroia_state.get("contradictions_detected", 0),
+                    "last_reflexia_error": (reflexia_errors[-1] if reflexia_errors else None),
                 },
                 timestamp=now,
                 suggested_action="Vérifier si ZeroIA doit être plus sensible",
@@ -313,9 +296,7 @@ class CrossModuleValidator:
 
         return results
 
-    def validate_behavioral_patterns(
-        self, states: Dict[str, Dict]
-    ) -> List[ValidationResult]:
+    def validate_behavioral_patterns(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide les patterns comportementaux"""
         results = []
         now = datetime.now()
@@ -347,7 +328,7 @@ class CrossModuleValidator:
 
         return results
 
-    def run_full_validation(self) -> Dict[str, Any]:
+    def run_full_validation(self) -> dict[str, Any]:
         """Exécute une validation complète inter-modules"""
         logger.info("🔍 Starting cross-module validation...")
 
@@ -372,17 +353,11 @@ class CrossModuleValidator:
 
         # Calculer le score global de cohérence
         if all_results:
-            critical_count = sum(
-                1 for r in all_results if r.level == ValidationLevel.CRITICAL
-            )
-            warning_count = sum(
-                1 for r in all_results if r.level == ValidationLevel.WARNING
-            )
+            critical_count = sum(1 for r in all_results if r.level == ValidationLevel.CRITICAL)
+            warning_count = sum(1 for r in all_results if r.level == ValidationLevel.WARNING)
 
             # Score basé sur la gravité des issues
-            coherence_score = max(
-                0.0, 1.0 - (critical_count * 0.3 + warning_count * 0.1)
-            )
+            coherence_score = max(0.0, 1.0 - (critical_count * 0.3 + warning_count * 0.1))
         else:
             coherence_score = 1.0
 
@@ -392,12 +367,8 @@ class CrossModuleValidator:
             "coherence_score": coherence_score,
             "total_validations": len(all_results),
             "issues_by_level": {
-                "critical": sum(
-                    1 for r in all_results if r.level == ValidationLevel.CRITICAL
-                ),
-                "warning": sum(
-                    1 for r in all_results if r.level == ValidationLevel.WARNING
-                ),
+                "critical": sum(1 for r in all_results if r.level == ValidationLevel.CRITICAL),
+                "warning": sum(1 for r in all_results if r.level == ValidationLevel.WARNING),
                 "info": sum(1 for r in all_results if r.level == ValidationLevel.INFO),
                 "ok": sum(1 for r in all_results if r.level == ValidationLevel.OK),
             },
@@ -410,14 +381,10 @@ class CrossModuleValidator:
             ),
         }
 
-        logger.info(
-            f"✅ Cross-module validation complete - Score: {coherence_score:.3f}"
-        )
+        logger.info(f"✅ Cross-module validation complete - Score: {coherence_score:.3f}")
         return summary
 
-    def validate_cross_modules(
-        self, active_modules: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
+    def validate_cross_modules(self, active_modules: list[str] | None = None) -> dict[str, Any]:
         """
         Méthode principale de validation croisée - Interface pour Orchestrateur
 
@@ -466,11 +433,9 @@ class CrossModuleValidator:
             logger.error(f"❌ CrossModule validation error: {e}")
             return {"status": "error", "error": str(e), "coherence_score": 0.0}
 
-    def get_validation_report(self) -> Dict[str, Any]:
+    def get_validation_report(self) -> dict[str, Any]:
         """Génère un rapport de validation"""
-        recent_validations = (
-            self.validation_history[-50:] if self.validation_history else []
-        )
+        recent_validations = self.validation_history[-50:] if self.validation_history else []
 
         return {
             "total_validations_run": len(self.validation_history),
@@ -486,9 +451,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="CrossModuleValidator CLI")
     parser.add_argument("--validate", action="store_true", help="Run full validation")
-    parser.add_argument(
-        "--report", action="store_true", help="Generate validation report"
-    )
+    parser.add_argument("--report", action="store_true", help="Generate validation report")
 
     args = parser.parse_args()
 

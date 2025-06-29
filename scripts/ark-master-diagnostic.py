@@ -21,19 +21,17 @@ class MasterOrchestratorDiagnostic:
     """Diagnostic complet du Master Orchestrator"""
 
     def __init__(self):
-        self.results: Dict[str, Dict] = {}
+        self.results: dict[str, dict] = {}
 
     def print_header(self):
         """Affiche l'en-tête du diagnostic"""
         print("=" * 80)
         print("🔍 ARKALIA MASTER ORCHESTRATOR - DIAGNOSTIC ROBUSTESSE")
         print("=" * 80)
-        print(
-            "⚠️  Élément            | ❓ Question critique                     | ✅ Résultat"
-        )
+        print("⚠️  Élément            | ❓ Question critique                     | ✅ Résultat")
         print("-" * 80)
 
-    async def test_isolation_memoire(self) -> Dict:
+    async def test_isolation_memoire(self) -> dict:
         """Test 1: Isolation mémoire entre modules"""
         print(
             "🧠 Isolation mémoire    | Un bug zeroia crash sandozia ?          | ",
@@ -46,7 +44,7 @@ class MasterOrchestratorDiagnostic:
             # Test des protections existantes
             from modules.arkalia_master.orchestrator_ultimate import ArkaliaOrchestrator
 
-            orchestrator = ArkaliaOrchestrator()
+            ArkaliaOrchestrator()
 
             # Vérifier les mécanismes de protection
             protections = [
@@ -69,7 +67,7 @@ class MasterOrchestratorDiagnostic:
 
         return result
 
-    async def test_redemarrage_partiel(self) -> Dict:
+    async def test_redemarrage_partiel(self) -> dict:
         """Test 2: Redémarrage partiel des modules"""
         print(
             "🔄 Redémarrage partiel  | Relancer module sans conteneur ?        | ",
@@ -100,7 +98,7 @@ class MasterOrchestratorDiagnostic:
 
         return result
 
-    async def test_logs_monitoring(self) -> Dict:
+    async def test_logs_monitoring(self) -> dict:
         """Test 3: Logs et monitoring continuent"""
         print(
             "📊 Logs et monitoring   | Prometheus/Grafana lisent métriques ?   | ",
@@ -131,11 +129,9 @@ class MasterOrchestratorDiagnostic:
 
         return result
 
-    async def test_crash_recovery(self) -> Dict:
+    async def test_crash_recovery(self) -> dict:
         """Test 4: Crash recovery du conteneur"""
-        print(
-            "🛡️ Crash recovery      | ZeroIA plante → conteneur survit ?      | ", end=""
-        )
+        print("🛡️ Crash recovery      | ZeroIA plante → conteneur survit ?      | ", end="")
 
         result = {"status": "PASS", "details": [], "protection_level": "EXCELLENT"}
 
@@ -161,7 +157,7 @@ class MasterOrchestratorDiagnostic:
 
         return result
 
-    async def test_tests_unitaires(self) -> Dict:
+    async def test_tests_unitaires(self) -> dict:
         """Test 5: Tests unitaires passent"""
         print(
             "🧪 Tests unitaires     | Tous les tests OK mode intégré ?        | ",
@@ -192,7 +188,7 @@ class MasterOrchestratorDiagnostic:
 
         return result
 
-    async def test_ameliorations_recommandees(self) -> Dict:
+    async def test_ameliorations_recommandees(self) -> dict:
         """Améliorations recommandées"""
         print("\n🚀 AMÉLIORATIONS RECOMMANDÉES:")
         print("-" * 50)

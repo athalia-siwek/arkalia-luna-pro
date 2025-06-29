@@ -53,11 +53,11 @@ class CognitiveReaction:
     trigger_pattern: str
     action: str
     severity: ReactionSeverity
-    module_target: Optional[str] = None
-    parameters: Dict = field(default_factory=dict)
-    executed_at: Optional[datetime] = None
+    module_target: str | None = None
+    parameters: dict = field(default_factory=dict)
+    executed_at: datetime | None = None
     success: bool = False
-    error_message: Optional[str] = None
+    error_message: str | None = None
 
 
 @dataclass
@@ -67,10 +67,10 @@ class ModuleQuarantine:
     module_name: str
     reason: QuarantineReason
     quarantined_at: datetime
-    until: Optional[datetime] = None
+    until: datetime | None = None
     attempts_count: int = 0
     max_attempts: int = 3
-    metadata: Dict = field(default_factory=dict)
+    metadata: dict = field(default_factory=dict)
 
     @property
     def is_expired(self) -> bool:
@@ -93,15 +93,15 @@ class CognitiveReactor:
     - ZeroIA Circuit Breaker (protection)
     """
 
-    def __init__(self, behavior_analyzer: Optional[BehaviorAnalyzer] = None):
+    def __init__(self, behavior_analyzer: BehaviorAnalyzer | None = None):
         self.behavior_analyzer = behavior_analyzer or BehaviorAnalyzer()
         self.event_store = EventStore()
 
         # État des quarantines actives
-        self.quarantined_modules: Dict[str, ModuleQuarantine] = {}
+        self.quarantined_modules: dict[str, ModuleQuarantine] = {}
 
         # Historique des réactions
-        self.reaction_history: List[CognitiveReaction] = []
+        self.reaction_history: list[CognitiveReaction] = []
 
         # Configuration seuils
         self.config = {
@@ -115,13 +115,13 @@ class CognitiveReactor:
 
         # État berserk
         self.berserk_mode_active = False
-        self.last_berserk_trigger: Optional[datetime] = None
+        self.last_berserk_trigger: datetime | None = None
 
         logger.info("🔥 CognitiveReactor initialized - Réactions automatiques activées")
 
     async def check_and_react(
-        self, context: Dict, decision_pattern_count: int = 0
-    ) -> List[CognitiveReaction]:
+        self, context: dict, decision_pattern_count: int = 0
+    ) -> list[CognitiveReaction]:
         """
         🎯 FONCTION PRINCIPALE - Vérifie et déclenche des réactions automatiques
 
@@ -164,9 +164,7 @@ class CognitiveReactor:
             logger.error(f"❌ Erreur CognitiveReactor: {e}")
             return []
 
-    async def _trigger_cognitive_pause(
-        self, repetition_count: int
-    ) -> Optional[CognitiveReaction]:
+    async def _trigger_cognitive_pause(self, repetition_count: int) -> CognitiveReaction | None:
         """🔥 IMPLÉMENTATION - Pause cognitive automatique"""
 
         reaction = CognitiveReaction(
@@ -190,9 +188,7 @@ class CognitiveReactor:
             reaction.executed_at = datetime.now()
             reaction.success = True
 
-            logger.warning(
-                f"⏸️ PAUSE COGNITIVE ACTIVÉE - {repetition_count} répétitions détectées"
-            )
+            logger.warning(f"⏸️ PAUSE COGNITIVE ACTIVÉE - {repetition_count} répétitions détectées")
 
             # Auto-cleanup après 60 secondes
             asyncio.create_task(self._cleanup_pause_marker(pause_file, 60))
@@ -204,15 +200,13 @@ class CognitiveReactor:
             logger.error(f"❌ Échec pause cognitive: {e}")
             return reaction
 
-    async def _check_berserk_mode(self, context: Dict) -> Optional[CognitiveReaction]:
+    async def _check_berserk_mode(self, context: dict) -> CognitiveReaction | None:
         """🚨 MODE BERSERK - Fail-safe autonome pour effondrements brutaux"""
 
         # Cooldown berserk mode
         if self.last_berserk_trigger:
             cooldown_delta = datetime.now() - self.last_berserk_trigger
-            if cooldown_delta < timedelta(
-                minutes=self.config["berserk_cooldown_minutes"]
-            ):
+            if cooldown_delta < timedelta(minutes=self.config["berserk_cooldown_minutes"]):
                 return None
 
         # Calcul score global système
@@ -243,16 +237,12 @@ class CognitiveReactor:
 
                 # Quarantine automatique tous modules instables
                 for module in ["reflexia", "sandozia", "assistantia"]:
-                    await self.quarantine_module(
-                        module, QuarantineReason.INSTABILITY, 10
-                    )
+                    await self.quarantine_module(module, QuarantineReason.INSTABILITY, 10)
 
                 reaction.executed_at = datetime.now()
                 reaction.success = True
 
-                logger.critical(
-                    f"🚨 MODE BERSERK ACTIVÉ - Score global: {global_score}"
-                )
+                logger.critical(f"🚨 MODE BERSERK ACTIVÉ - Score global: {global_score}")
 
             except Exception as e:
                 reaction.success = False
@@ -266,8 +256,8 @@ class CognitiveReactor:
         self,
         module_name: str,
         reason: QuarantineReason,
-        duration_minutes: Optional[int] = None,
-        metadata: Optional[Dict] = None,
+        duration_minutes: int | None = None,
+        metadata: dict | None = None,
     ):
         """🔒 Met un module en quarantine"""
 
@@ -317,7 +307,7 @@ class CognitiveReactor:
 
         return True
 
-    def get_quarantine_status(self) -> Dict[str, Dict]:
+    def get_quarantine_status(self) -> dict[str, dict]:
         """Retourne l'état de toutes les quarantines"""
         status = {}
         for module, quarantine in self.quarantined_modules.items():
@@ -331,7 +321,7 @@ class CognitiveReactor:
             }
         return status
 
-    def _calculate_global_health_score(self, context: Dict) -> float:
+    def _calculate_global_health_score(self, context: dict) -> float:
         """Calcule un score de santé global du système"""
         try:
             factors = []
@@ -427,16 +417,16 @@ class CognitiveReactor:
             pause_file.unlink()
             logger.info("⏸️ Pause cognitive terminée automatiquement")
 
-    async def _check_module_health(self, context: Dict) -> List[CognitiveReaction]:
+    async def _check_module_health(self, context: dict) -> list[CognitiveReaction]:
         """Vérifie la santé des modules et déclenche des quarantines si nécessaire"""
         reactions = []
 
         for module in ["zeroia", "reflexia", "sandozia"]:
             confidence = context.get(f"{module}_confidence", 0.5)
 
-            if confidence < self.config[
-                "confidence_threshold"
-            ] and not self.is_module_quarantined(module):
+            if confidence < self.config["confidence_threshold"] and not self.is_module_quarantined(
+                module
+            ):
                 await self.quarantine_module(
                     module,
                     QuarantineReason.LOW_CONFIDENCE,
@@ -460,16 +450,14 @@ class CognitiveReactor:
 
 # 🚀 Factory function pour intégration facile
 def create_cognitive_reactor(
-    behavior_analyzer: Optional[BehaviorAnalyzer] = None,
+    behavior_analyzer: BehaviorAnalyzer | None = None,
 ) -> CognitiveReactor:
     """Crée une instance de CognitiveReactor"""
     return CognitiveReactor(behavior_analyzer)
 
 
 # 🧪 Fonction d'intégration avec ton reason_loop existant
-def trigger_cognitive_reaction(
-    context: Dict, decision_pattern_count: int = 0
-) -> List[str]:
+def trigger_cognitive_reaction(context: dict, decision_pattern_count: int = 0) -> list[str]:
     """
     🎯 INTÉGRATION SIMPLE - Appelle depuis ton reason_loop
 
@@ -487,11 +475,7 @@ def trigger_cognitive_reaction(
 
     try:
         # Appel synchrone simple pour intégration
-        import asyncio
-
-        reactions = asyncio.run(
-            reactor.check_and_react(context, decision_pattern_count)
-        )
+        reactions = asyncio.run(reactor.check_and_react(context, decision_pattern_count))
 
         return [f"{r.action}:{r.severity.value}" for r in reactions]
 

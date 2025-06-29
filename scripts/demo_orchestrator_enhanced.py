@@ -12,17 +12,15 @@ FEATURES:
 
 import argparse
 import logging
+import pathlib
+import subprocess
 import sys
 from pathlib import Path
-import subprocess
-import pathlib
 
 # Ajouter le path des modules
 sys.path.append(str(Path(__file__).parent.parent / "modules"))
 
-from modules.zeroia.orchestrator_enhanced import (
-    ZeroIAOrchestrator,
-)
+from modules.zeroia.orchestrator_enhanced import ZeroIAOrchestrator
 
 # Configuration logging
 logging.basicConfig(
@@ -84,7 +82,7 @@ def demo_monitoring() -> None:
     print("📊 DEMO ORCHESTRATOR ENHANCED - Mode Monitoring")
     print("=" * 50)
 
-    orchestrator = ZeroIAOrchestrator(
+    ZeroIAOrchestrator(
         max_loops=10,
         interval_seconds=0.5,
         circuit_failure_threshold=4,
@@ -96,7 +94,7 @@ def demo_monitoring() -> None:
     # Hook pour afficher status périodiquement
     import time
 
-    start_time = time.time()
+    time.time()
 
     try:
         # Lancer en background et monitorer
@@ -153,12 +151,8 @@ def demo_daemon() -> None:
             if cycle_count % 5 == 0:
                 status = orchestrator.get_status()
                 print(f"📊 Status après {cycle_count} cycles:")
-                print(
-                    f"  - Total decisions: {status['session_stats']['total_decisions']}"
-                )
-                print(
-                    f"  - Taux succès: {status['session_stats']['success_rate']:.1f}%"
-                )
+                print(f"  - Total decisions: {status['session_stats']['total_decisions']}")
+                print(f"  - Taux succès: {status['session_stats']['success_rate']:.1f}%")
                 print(f"  - Circuit état: {status['circuit_breaker']['state']}")
 
             # Pause entre cycles (important pour container)
@@ -175,8 +169,22 @@ def demo_daemon() -> None:
 
 
 def format_generated():
+    """Formate tous les dossiers generated avec isort + black."""
     for d in pathlib.Path(".").rglob("generated"):
-        subprocess.run(["black", str(d), "--quiet"], check=False)
+        try:
+            # Tri des imports avec isort (compatible black)
+            subprocess.run(["isort", str(d), "--profile", "black"], check=True)
+            # Formatage du code avec black
+            subprocess.run(["black", str(d), "--quiet"], check=True)
+            print(f"✅ Formaté: {d}")
+        except subprocess.CalledProcessError as e:
+            print(f"⚠️ Erreur formatage {d}: {e}")
+            # Fallback: essayer au moins isort
+            try:
+                subprocess.run(["isort", str(d), "--fix"], check=False)
+                print(f"⚠️ Fallback isort appliqué: {d}")
+            except Exception:
+                print(f"❌ Fallback échoué: {d}")
 
 
 def main():

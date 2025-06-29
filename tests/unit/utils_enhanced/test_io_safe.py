@@ -96,9 +96,7 @@ class TestAtomicWrite:
     def test_atomic_write_error_handling(self, tmp_path):
         """🧠 Test gestion d'erreurs"""
         # Fichier dans un répertoire sans permissions (simulation)
-        with patch(
-            "tempfile.NamedTemporaryFile", side_effect=OSError("Permission denied")
-        ):
+        with patch("tempfile.NamedTemporaryFile", side_effect=OSError("Permission denied")):
             with pytest.raises(AtomicWriteError, match="Erreur écriture atomique"):
                 atomic_write(tmp_path / "test.txt", "data")
 
@@ -209,9 +207,7 @@ class TestSafeWrappers:
         """🧠 Test sauvegarde TOML avec données invalides"""
         test_file = tmp_path / "invalid.toml"
 
-        with pytest.raises(
-            AtomicWriteError, match="Les données doivent être un dictionnaire"
-        ):
+        with pytest.raises(AtomicWriteError, match="Les données doivent être un dictionnaire"):
             save_toml_safe("not a dict", test_file)  # type: ignore
 
     def test_save_json_safe(self, tmp_path):

@@ -6,7 +6,7 @@
 🎯 INTÉGRATION COMPLÈTE - Toutes tes recommandations implémentées
 
 ✅ 1. Réaction automatique (7+ décisions identiques → pause cognitive)
-✅ 2. Timeline cognitive (Chronalia JSONL)
+✅ 2. Timeline cognitive (Chronalia  # noqa: F401 JSONL)
 ✅ 3. Mode quarantine cognitive
 ✅ 4. Heatmap cognitive Grafana
 ✅ 5. Mode Berserk/Recovery pour effondrements brutaux
@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 try:
-    from modules.sandozia.core.chronalia import Chronalia, log_cognitive_cycle
+    from modules.sandozia.core.chronalia import Chronalia
     from modules.sandozia.core.cognitive_reactor import (
         CognitiveReactor,
         QuarantineReason,
@@ -54,16 +54,16 @@ class ArkaliaEnhancedEngine:
     🚀 Moteur Arkalia Enhanced - Intégration complète
 
     Combine toutes tes recommandations :
-    - CognitiveReactor (réactions automatiques)
-    - Chronalia (timeline cognitive)
+    - CognitiveReactor  # noqa: F401 (réactions automatiques)
+    - Chronalia  # noqa: F401 (timeline cognitive)
     - ZeroIA Enhanced (décisions)
     - Métriques pour Grafana heatmap
     """
 
     def __init__(self):
-        self.cognitive_reactor = CognitiveReactor()
-        self.chronalia = Chronalia()
-        self.event_store = EventStore()
+        self.cognitive_reactor = CognitiveReactor  # noqa: F401()
+        self.chronalia = Chronalia  # noqa: F401()
+        self.event_store  # noqa: F401 = EventStore()
 
         # État système
         self.decision_pattern_count = 0
@@ -77,15 +77,15 @@ class ArkaliaEnhancedEngine:
 
         logger.info("🚀 ArkaliaEnhancedEngine initialisé")
 
-    async def run_enhanced_cycle(self, context: Optional[Dict] = None) -> Dict:
+    async def run_enhanced_cycle(self, context: dict | None = None) -> dict:
         """
         🎯 CYCLE ENHANCED COMPLET - Implémentation de tes recommandations
 
         Flux :
-        1. Démarrer cycle Chronalia
+        1. Démarrer cycle Chronalia  # noqa: F401
         2. Analyser contexte et détecter patterns
         3. Décision ZeroIA Enhanced
-        4. Réactions automatiques (CognitiveReactor)
+        4. Réactions automatiques (CognitiveReactor  # noqa: F401)
         5. Enregistrer timeline
         6. Métriques heatmap
         """
@@ -117,9 +117,7 @@ class ArkaliaEnhancedEngine:
             **context,
             "zeroia_decision": decision,
             "confidence": confidence,
-            "decision_pattern": (
-                "identical" if self.decision_pattern_count >= 3 else "normal"
-            ),
+            "decision_pattern": ("identical" if self.decision_pattern_count >= 3 else "normal"),
             "pattern_repetition_count": self.decision_pattern_count,
             "cycle_id": cycle_id,
         }
@@ -140,16 +138,14 @@ class ArkaliaEnhancedEngine:
                 logger.critical(f"🚨 MODE BERSERK DÉCLENCHÉ: {reaction.action}")
 
         # 8. 🕰️ TIMELINE CHRONALIA (TA RECOMMANDATION 2)
-        cycle = self.chronalia.complete_cycle(enhanced_context, reaction_descriptions)
+        self.chronalia.complete_cycle(enhanced_context, reaction_descriptions)
 
         # 9. 🔍 DÉTECTION PATTERNS TEMPORELS
         patterns = self.chronalia.detect_patterns()
         self.global_stats["patterns_detected"] += len(patterns)
 
         # 10. Métriques pour heatmap Grafana
-        heatmap_data = self._generate_heatmap_metrics(
-            enhanced_context, cognitive_reactions
-        )
+        heatmap_data = self._generate_heatmap_metrics(enhanced_context, cognitive_reactions)
 
         # 11. Stats globales
         self.global_stats["total_cycles"] += 1
@@ -162,9 +158,7 @@ class ArkaliaEnhancedEngine:
             "pattern_count": self.decision_pattern_count,
             "cognitive_reactions": reaction_descriptions,
             "patterns_detected": len(patterns),
-            "quarantined_modules": list(
-                self.cognitive_reactor.quarantined_modules.keys()
-            ),
+            "quarantined_modules": list(self.cognitive_reactor.quarantined_modules.keys()),
             "berserk_mode": self.cognitive_reactor.berserk_mode_active,
             "global_stats": self.global_stats.copy(),
             "heatmap_data": heatmap_data,
@@ -174,7 +168,7 @@ class ArkaliaEnhancedEngine:
         logger.info(f"✅ Cycle Enhanced complété: {cycle_id}")
         return result
 
-    def _generate_demo_context(self) -> Dict:
+    def _generate_demo_context(self) -> dict:
         """Génère un contexte de démo réaliste"""
         import random
 
@@ -188,16 +182,14 @@ class ArkaliaEnhancedEngine:
             "system_ram": base_ram,
             "reflexia_score": round(random.uniform(0.6, 1.0), 3),
             "sandozia_health": round(random.uniform(0.7, 0.95), 3),
-            "contradiction": random.choice(
-                [False, False, False, True]
-            ),  # 25% contradictions
+            "contradiction": random.choice([False, False, False, True]),  # 25% contradictions
             "modules_active": ["zeroia", "reflexia", "sandozia"],
             "quarantined_modules": [],
             "berserk_mode": False,
             "global_health_score": round(random.uniform(0.5, 0.9), 3),
         }
 
-    def _generate_heatmap_metrics(self, context: Dict, reactions: List) -> Dict:
+    def _generate_heatmap_metrics(self, context: dict, reactions: list) -> dict:
         """
         📊 GÉNÈRE MÉTRIQUES HEATMAP (TA RECOMMANDATION 4)
 
@@ -276,16 +268,14 @@ class ArkaliaEnhancedEngine:
         logger.info(f"   - {cycles} cycles exécutés")
         logger.info(f"   - {total_reactions} réactions déclenchées")
         logger.info(f"   - {berserk_count} activations berserk")
-        logger.info(
-            f"   - {len(self.cognitive_reactor.quarantined_modules)} modules en quarantine"
-        )
+        logger.info(f"   - {len(self.cognitive_reactor.quarantined_modules)} modules en quarantine")
 
         return results
 
-    def export_timeline_and_heatmap(self, hours_back: int = 1) -> Dict[str, str]:
+    def export_timeline_and_heatmap(self, hours_back: int = 1) -> dict[str, str]:
         """📤 Exporte timeline et données heatmap"""
 
-        # Export timeline Chronalia
+        # Export timeline Chronalia  # noqa: F401
         timeline_file = self.chronalia.export_timeline(hours_back)
 
         # Export données heatmap pour Grafana
@@ -303,19 +293,17 @@ class ArkaliaEnhancedEngine:
 
         return {"timeline_file": str(timeline_file), "heatmap_file": str(heatmap_file)}
 
-    def get_quarantine_status(self) -> Dict:
+    def get_quarantine_status(self) -> dict:
         """🔒 État complet des quarantines"""
         return self.cognitive_reactor.get_quarantine_status()
 
-    def get_system_summary(self) -> Dict:
+    def get_system_summary(self) -> dict:
         """📊 Résumé système complet"""
         return {
             "arkalia_version": "v3.0-phase1",
             "enhanced_features_active": True,
             "global_stats": self.global_stats,
-            "quarantined_modules": list(
-                self.cognitive_reactor.quarantined_modules.keys()
-            ),
+            "quarantined_modules": list(self.cognitive_reactor.quarantined_modules.keys()),
             "berserk_mode_active": self.cognitive_reactor.berserk_mode_active,
             "recent_cycles_count": len(self.chronalia.recent_cycles),
             "last_decision": self.last_decision,
@@ -334,7 +322,7 @@ async def demo_complete_workflow():
     print("=" * 60)
     print("🎯 Implémentation complète de tes recommandations :")
     print("   ✅ 1. Réactions automatiques (7+ répétitions → pause)")
-    print("   ✅ 2. Timeline cognitive (Chronalia JSONL)")
+    print("   ✅ 2. Timeline cognitive (Chronalia  # noqa: F401 JSONL)")
     print("   ✅ 3. Mode quarantine cognitive")
     print("   ✅ 4. Données heatmap Grafana")
     print("   ✅ 5. Mode Berserk/Recovery pour panics")
@@ -346,15 +334,13 @@ async def demo_complete_workflow():
     print("🔄 Exécution 5 cycles normaux...")
     for i in range(5):
         result = await engine.run_enhanced_cycle()
-        print(
-            f"   Cycle {i+1}: {result['decision']} (confiance: {result['confidence']:.2f})"
-        )
+        print(f"   Cycle {i+1}: {result['decision']} (confiance: {result['confidence']:.2f})")
 
     print()
 
     # Test de stress pour déclencher réactions
     print("🧪 Test de stress (patterns répétitifs + dégradation)...")
-    stress_results = await engine.run_stress_test(cycles=15, force_patterns=True)
+    await engine.run_stress_test(cycles=15, force_patterns=True)
 
     print()
 
@@ -362,9 +348,7 @@ async def demo_complete_workflow():
     summary = engine.get_system_summary()
     print("📊 RÉSUMÉ FINAL:")
     print(f"   - Cycles totaux: {summary['global_stats']['total_cycles']}")
-    print(
-        f"   - Réactions déclenchées: {summary['global_stats']['cognitive_reactions_triggered']}"
-    )
+    print(f"   - Réactions déclenchées: {summary['global_stats']['cognitive_reactions_triggered']}")
     print(f"   - Activations berserk: {summary['global_stats']['berserk_activations']}")
     print(f"   - Modules en quarantine: {len(summary['quarantined_modules'])}")
     print(f"   - Patterns détectés: {summary['global_stats']['patterns_detected']}")
@@ -399,9 +383,7 @@ async def integrate_with_zeroia():
         result = await engine.run_enhanced_cycle(context)
 
         if result["cognitive_reactions"]:
-            print(
-                f"🔥 Réactions automatiques cycle {i+1}: {result['cognitive_reactions']}"
-            )
+            print(f"🔥 Réactions automatiques cycle {i+1}: {result['cognitive_reactions']}")
 
     print("✅ Intégration ZeroIA testée avec succès")
 
@@ -411,7 +393,7 @@ def generate_heatmap_sample():
 
     print("📊 Génération données heatmap pour Grafana...")
 
-    chronalia = Chronalia()
+    chronalia = Chronalia  # noqa: F401()
     heatmap_data = chronalia.get_heatmap_data(hours_back=24)
 
     output_file = Path("state/chronalia/grafana_heatmap_sample.json")
@@ -437,9 +419,7 @@ async def main():
     parser.add_argument(
         "--generate-heatmap-data", action="store_true", help="Génère données heatmap"
     )
-    parser.add_argument(
-        "--stress-test", type=int, help="Test de stress (nombre de cycles)"
-    )
+    parser.add_argument("--stress-test", type=int, help="Test de stress (nombre de cycles)")
 
     args = parser.parse_args()
 

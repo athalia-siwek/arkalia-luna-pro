@@ -53,16 +53,16 @@ class TestCacheEnhanced:
         """Test amélioration performance cache"""
         # Premier chargement (cache miss)
         start = time.time()
-        config1 = load_toml_cached(self.test_toml)
+        _config1 = load_toml_cached(self.test_toml)
         time1 = time.time() - start
 
         # Deuxième chargement (cache hit)
         start = time.time()
-        config2 = load_toml_cached(self.test_toml)
+        _config2 = load_toml_cached(self.test_toml)
         time2 = time.time() - start
 
         # Validation
-        assert config1 == config2, "Données cache différentes"
+        assert _config1 == _config2, "Données cache différentes"
         assert time2 < time1, "Cache pas plus rapide"
 
         # Performance target: cache au moins 50% plus rapide
@@ -131,18 +131,18 @@ class TestCacheEnhanced:
     def test_cache_ttl_behavior(self):
         """Test comportement TTL cache"""
         # Charger avec TTL court
-        config1 = load_toml_cached(self.test_toml, max_age=1)
+        _config1 = load_toml_cached(self.test_toml, max_age=1)
 
         # Attendre expiration
         time.sleep(1.1)
 
         # Recharger (doit être cache miss)
         start = time.time()
-        config2 = load_toml_cached(self.test_toml, max_age=1)
+        _config2 = load_toml_cached(self.test_toml, max_age=1)
         reload_time = time.time() - start
 
         # Validation
-        assert config1 == config2, "Contenu différent après TTL"
+        assert _config1 == _config2, "Contenu différent après TTL"
         # Reload doit prendre plus de temps (pas cache hit)
         assert reload_time > 0.0001, "TTL pas respecté"
 
@@ -204,13 +204,13 @@ class TestPerformanceBenchmarks:
 
             # Premier chargement
             start = time.time()
-            config1 = load_toml_cached(f.name)
+            _config1 = load_toml_cached(f.name)
             times.append(time.time() - start)
 
             # Chargements cache
             for _ in range(5):
                 start = time.time()
-                config2 = load_toml_cached(f.name)
+                _config2 = load_toml_cached(f.name)
                 times.append(time.time() - start)
 
             # Validation performance
@@ -218,22 +218,16 @@ class TestPerformanceBenchmarks:
             avg_cache_hit_time = sum(times[1:]) / len(times[1:])
 
             if cache_miss_time > 0:
-                improvement = (
-                    (cache_miss_time - avg_cache_hit_time) / cache_miss_time
-                ) * 100
+                improvement = ((cache_miss_time - avg_cache_hit_time) / cache_miss_time) * 100
                 # Target: au moins 80% amélioration
-                assert (
-                    improvement >= 80.0
-                ), f"Performance {improvement:.1f}% insuffisante"
+                assert improvement >= 80.0, f"Performance {improvement:.1f}% insuffisante"
 
     def test_memory_usage(self):
         """Test usage mémoire cache"""
         # Charger plusieurs fichiers
         temp_files = []
         for i in range(10):
-            with tempfile.NamedTemporaryFile(
-                mode="w", suffix=".toml", delete=False
-            ) as f:
+            with tempfile.NamedTemporaryFile(mode="w", suffix=".toml", delete=False) as f:
                 config = {"file_id": i, "data": f"test_data_{i}"}
                 toml.dump(config, f)
                 temp_files.append(f.name)
@@ -273,7 +267,7 @@ class TestErrorHandling:
 
             config = load_toml_cached(f.name)
             assert config == {}, "Erreur permission doit retourner dict vide"
-        except:
+        except Exception:
             pytest.skip("Impossible de tester permissions sur ce système")
 
 
@@ -309,8 +303,7 @@ class TestRegression:
 
         # Validation cohérence
         hits_delta = (
-            final_stats["performance"]["cache_hits"]
-            - initial_stats["performance"]["cache_hits"]
+            final_stats["performance"]["cache_hits"] - initial_stats["performance"]["cache_hits"]
         )
         requests_delta = (
             final_stats["performance"]["total_requests"]

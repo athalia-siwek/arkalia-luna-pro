@@ -27,7 +27,7 @@ OLD_STATS = [
 def update_file_stats(file_path):
     """Met à jour les statistiques dans un fichier"""
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             content = f.read()
 
         original_content = content
@@ -35,7 +35,9 @@ def update_file_stats(file_path):
         # Remplacer toutes les anciennes statistiques
         for old_stat in OLD_STATS:
             # Pattern pour X/Y tests PASSED (Z%)
-            pattern1 = f"{old_stat['passed']}/{old_stat['total']} tests PASSED \\({old_stat['rate']}\\)"
+            pattern1 = (
+                f"{old_stat['passed']}/{old_stat['total']} tests PASSED \\({old_stat['rate']}\\)"
+            )
             replacement1 = f"{CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} tests PASSED ({CURRENT_STATS['success_rate']})"
             content = re.sub(pattern1, replacement1, content)
 

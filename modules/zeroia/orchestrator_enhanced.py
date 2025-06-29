@@ -41,7 +41,7 @@ class ZeroIAOrchestrator:
 
     def __init__(
         self,
-        max_loops: Optional[int] = None,
+        max_loops: int | None = None,
         interval_seconds: float = 2.5,
         circuit_failure_threshold: int = 10,
         circuit_recovery_timeout: int = 60,
@@ -158,7 +158,7 @@ class ZeroIAOrchestrator:
             module="orchestrator",
         )
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """Retourne le statut complet de l'orchestrateur"""
         uptime = time.time() - self.start_time
         circuit_status = self.circuit_breaker.get_status()
@@ -194,8 +194,7 @@ class ZeroIAOrchestrator:
 
         if self.session_stats["total_decisions"] > 0:
             success_rate = (
-                self.session_stats["successful_decisions"]
-                / self.session_stats["total_decisions"]
+                self.session_stats["successful_decisions"] / self.session_stats["total_decisions"]
             ) * 100
             logger.info(f"📊 Taux succès: {success_rate:.1f}%")
 
@@ -216,7 +215,7 @@ class ZeroIAOrchestrator:
 
 
 def orchestrate_zeroia_enhanced(
-    max_loops: Optional[int] = None,
+    max_loops: int | None = None,
     interval_seconds: float = 1.5,
     circuit_failure_threshold: int = 5,
     circuit_recovery_timeout: int = 30,

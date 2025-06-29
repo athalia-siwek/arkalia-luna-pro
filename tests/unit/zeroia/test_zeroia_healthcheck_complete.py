@@ -68,9 +68,7 @@ def test_check_zeroia_health_active_with_decision():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is True
 
@@ -84,9 +82,7 @@ def test_check_zeroia_health_inactive():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is False
 
@@ -100,9 +96,7 @@ def test_check_zeroia_health_active_no_decision():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is False
 
@@ -119,9 +113,7 @@ def test_check_zeroia_health_missing_decision_section():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is False
 
@@ -136,9 +128,7 @@ def test_check_zeroia_health_force_ok_enabled():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             with patch.dict(os.environ, {"FORCE_ZEROIA_OK": "1"}):
                 result = check_zeroia_health(verbose=True)
                 assert result is True  # Forcé à True par la variable d'environnement
@@ -153,9 +143,7 @@ def test_check_zeroia_health_force_ok_disabled():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             with patch.dict(os.environ, {"FORCE_ZEROIA_OK": "0"}):
                 result = check_zeroia_health(verbose=True)
                 assert result is False  # Pas forcé, suit la logique normale
@@ -169,9 +157,7 @@ def test_check_zeroia_health_toml_parse_error():
         # Écrit un TOML invalide
         state_file.write_text("[invalid toml syntax")
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is False
 
@@ -207,9 +193,7 @@ def test_check_zeroia_health_empty_file():
         # Crée un fichier vide
         state_file.touch()
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is False
 
@@ -223,9 +207,7 @@ def test_check_zeroia_health_null_values():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is False
 
@@ -239,9 +221,7 @@ def test_check_zeroia_health_empty_string_decision():
 
         toml.dump(test_data, state_file.open("w"))
 
-        with patch(
-            "modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file
-        ):
+        with patch("modules.zeroia.healthcheck_zeroia.get_state_path", return_value=state_file):
             result = check_zeroia_health(verbose=True)
             assert result is False  # Chaîne vide évaluée comme False
 
@@ -262,7 +242,7 @@ def test_check_zeroia_health_verbose_false_scenarios():
 
     expected_results = [True, False, False]
 
-    for i, (test_data, expected) in enumerate(zip(scenarios, expected_results)):
+    for i, (test_data, expected) in enumerate(zip(scenarios, expected_results, strict=False)):
         with tempfile.TemporaryDirectory() as tmp_dir:
             state_file = Path(tmp_dir) / f"zeroia_state_{i}.toml"
             toml.dump(test_data, state_file.open("w"))
@@ -272,6 +252,4 @@ def test_check_zeroia_health_verbose_false_scenarios():
                 return_value=state_file,
             ):
                 result = check_zeroia_health(verbose=False)
-                assert (
-                    result is expected
-                ), f"Scenario {i} failed: expected {expected}, got {result}"
+                assert result is expected, f"Scenario {i} failed: expected {expected}, got {result}"

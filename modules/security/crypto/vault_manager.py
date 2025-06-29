@@ -28,38 +28,32 @@ class SecretMetadata:
         self,
         name: str,
         created_at: datetime,
-        expires_at: Optional[datetime] = None,
-        tags: Optional[List[str]] = None,
+        expires_at: datetime | None = None,
+        tags: list[str] | None = None,
     ):
         self.name = name
         self.created_at = created_at
         self.expires_at = expires_at
         self.tags = tags or []
         self.access_count = 0
-        self.last_accessed: Optional[datetime] = None
+        self.last_accessed: datetime | None = None
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return {
             "name": self.name,
             "created_at": self.created_at.isoformat(),
             "expires_at": self.expires_at.isoformat() if self.expires_at else None,
             "tags": self.tags,
             "access_count": self.access_count,
-            "last_accessed": (
-                self.last_accessed.isoformat() if self.last_accessed else None
-            ),
+            "last_accessed": (self.last_accessed.isoformat() if self.last_accessed else None),
         }
 
     @classmethod
-    def from_dict(cls, data: Dict) -> "SecretMetadata":
+    def from_dict(cls, data: dict) -> "SecretMetadata":
         metadata = cls(
             name=data["name"],
             created_at=datetime.fromisoformat(data["created_at"]),
-            expires_at=(
-                datetime.fromisoformat(data["expires_at"])
-                if data["expires_at"]
-                else None
-            ),
+            expires_at=(datetime.fromisoformat(data["expires_at"]) if data["expires_at"] else None),
             tags=data.get("tags", []),
         )
         metadata.access_count = data.get("access_count", 0)
@@ -80,9 +74,7 @@ class ArkaliaVault(BuildIntegrityValidator):
     - Intégration avec l'intégrité existante
     """
 
-    def __init__(
-        self, base_dir: Optional[Path] = None, master_key: Optional[bytes] = None
-    ):
+    def __init__(self, base_dir: Path | None = None, master_key: bytes | None = None):
         # Initialiser la classe parente
         super().__init__(base_dir)
 
@@ -100,11 +92,11 @@ class ArkaliaVault(BuildIntegrityValidator):
         self.cipher_suite = self._initialize_encryption(master_key)
 
         # Charger les métadonnées existantes
-        self.secrets_metadata: Dict[str, SecretMetadata] = self._load_metadata()
+        self.secrets_metadata: dict[str, SecretMetadata] = self._load_metadata()
 
         logger.info("🔐 ArkaliaVault initialized successfully")
 
-    def _initialize_encryption(self, master_key: Optional[bytes] = None) -> Fernet:
+    def _initialize_encryption(self, master_key: bytes | None = None) -> Fernet:
         """Initialise le système de chiffrement"""
         if master_key:
             # Utiliser la clé fournie
@@ -122,13 +114,13 @@ class ArkaliaVault(BuildIntegrityValidator):
 
         return Fernet(key)
 
-    def _load_metadata(self) -> Dict[str, SecretMetadata]:
+    def _load_metadata(self) -> dict[str, SecretMetadata]:
         """Charge les métadonnées des secrets"""
         if not self.metadata_file.exists():
             return {}
 
         try:
-            with open(self.metadata_file, "r") as f:
+            with open(self.metadata_file) as f:
                 data = json.load(f)
 
             metadata = {}
@@ -147,7 +139,7 @@ class ArkaliaVault(BuildIntegrityValidator):
         with open(self.metadata_file, "w") as f:
             json.dump(data, f, indent=2)
 
-    def _load_secrets(self) -> Dict[str, str]:
+    def _load_secrets(self) -> dict[str, str]:
         """Charge et déchiffre tous les secrets"""
         if not self.secrets_file.exists():
             return {}
@@ -160,7 +152,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             logger.error(f"❌ Error loading secrets: {e}")
             raise VaultError(f"Failed to decrypt vault: {e}")
 
-    def _save_secrets(self, secrets: Dict[str, str]):
+    def _save_secrets(self, secrets: dict[str, str]):
         """Chiffre et sauvegarde tous les secrets"""
         try:
             json_data = json.dumps(secrets, indent=2).encode()
@@ -183,8 +175,8 @@ class ArkaliaVault(BuildIntegrityValidator):
         self,
         name: str,
         value: str,
-        expires_in_days: Optional[int] = None,
-        tags: Optional[List[str]] = None,
+        expires_in_days: int | None = None,
+        tags: list[str] | None = None,
         overwrite: bool = False,
     ) -> bool:
         """
@@ -204,9 +196,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             VaultError: Si erreur de stockage
         """
         if not overwrite and name in self.secrets_metadata:
-            raise VaultError(
-                f"Secret '{name}' already exists. Use overwrite=True to replace."
-            )
+            raise VaultError(f"Secret '{name}' already exists. Use overwrite=True to replace.")
 
         # Charger les secrets existants
         secrets = self._load_secrets()
@@ -233,7 +223,7 @@ class ArkaliaVault(BuildIntegrityValidator):
         logger.info(f"🔐 Secret '{name}' stored successfully")
         return True
 
-    def retrieve_secret(self, name: str) -> Optional[str]:
+    def retrieve_secret(self, name: str) -> str | None:
         """
         Récupère un secret du vault
 
@@ -306,7 +296,7 @@ class ArkaliaVault(BuildIntegrityValidator):
         logger.info(f"🗑️ Secret '{name}' deleted successfully")
         return True
 
-    def list_secrets(self, include_expired: bool = False) -> List[SecretMetadata]:
+    def list_secrets(self, include_expired: bool = False) -> list[SecretMetadata]:
         """
         Liste tous les secrets avec leurs métadonnées
 
@@ -345,7 +335,7 @@ class ArkaliaVault(BuildIntegrityValidator):
         logger.info(f"🧹 Cleaned up {len(expired_secrets)} expired secrets")
         return len(expired_secrets)
 
-    def rotate_master_key(self, new_key: Optional[bytes] = None) -> bytes:
+    def rotate_master_key(self, new_key: bytes | None = None) -> bytes:
         """
         Effectue la rotation de la clé maître
 
@@ -371,9 +361,7 @@ class ArkaliaVault(BuildIntegrityValidator):
         new_cipher = Fernet(new_key)
 
         # Sauvegarder l'ancienne clé pour rollback
-        backup_key_file = (
-            self.vault_dir / f".vault_key.backup.{int(datetime.now().timestamp())}"
-        )
+        backup_key_file = self.vault_dir / f".vault_key.backup.{int(datetime.now().timestamp())}"
         if self.key_file.exists():
             backup_key_file.write_bytes(self.key_file.read_bytes())
 
@@ -389,9 +377,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             self._save_secrets(secrets)
 
             # Audit log
-            self._audit_log_entry(
-                "KEY_ROTATION", "SYSTEM", f"secrets_count={len(secrets)}"
-            )
+            self._audit_log_entry("KEY_ROTATION", "SYSTEM", f"secrets_count={len(secrets)}")
 
             logger.info("✅ Master key rotation completed successfully")
             return new_key
@@ -466,12 +452,10 @@ class ArkaliaVault(BuildIntegrityValidator):
         logger.info("✅ Vault integrity validation PASSED")
         return True
 
-    def get_vault_stats(self) -> Dict:
+    def get_vault_stats(self) -> dict:
         """Retourne les statistiques du vault"""
         secrets = self.list_secrets(include_expired=True)
-        expired_count = len(
-            [s for s in secrets if s.expires_at and datetime.now() > s.expires_at]
-        )
+        expired_count = len([s for s in secrets if s.expires_at and datetime.now() > s.expires_at])
 
         return {
             "total_secrets": len(secrets),
@@ -483,12 +467,10 @@ class ArkaliaVault(BuildIntegrityValidator):
             "last_key_rotation": (
                 self.key_file.stat().st_mtime if self.key_file.exists() else None
             ),
-            "audit_log_size": (
-                self.audit_log.stat().st_size if self.audit_log.exists() else 0
-            ),
+            "audit_log_size": (self.audit_log.stat().st_size if self.audit_log.exists() else 0),
         }
 
-    def security_health_check(self) -> Dict:
+    def security_health_check(self) -> dict:
         """
         Vérification de santé sécurisée pour l'orchestrateur enhanced
 
@@ -537,7 +519,7 @@ class ArkaliaVault(BuildIntegrityValidator):
 
 # Fonctions utilitaires pour migration douce depuis .env
 def migrate_from_env_file(
-    env_file_path: Union[str, Path], vault: ArkaliaVault, backup_env: bool = True
+    env_file_path: str | Path, vault: ArkaliaVault, backup_env: bool = True
 ) -> int:
     """
     Migre les secrets depuis un fichier .env vers le vault
@@ -558,17 +540,14 @@ def migrate_from_env_file(
 
     # Backup du fichier .env si demandé
     if backup_env:
-        backup_path = (
-            env_path.parent
-            / f"{env_path.name}.backup.{int(datetime.now().timestamp())}"
-        )
+        backup_path = env_path.parent / f"{env_path.name}.backup.{int(datetime.now().timestamp())}"
         backup_path.write_text(env_path.read_text())
         logger.info(f"📦 .env backed up to: {backup_path}")
 
     # Parser le fichier .env
     secrets_migrated = 0
 
-    with open(env_path, "r") as f:
+    with open(env_path) as f:
         for line_num, line in enumerate(f, 1):
             line = line.strip()
 
@@ -595,12 +574,10 @@ def migrate_from_env_file(
                 except Exception as e:
                     logger.error(f"❌ Failed to migrate {key}: {e}")
 
-    logger.info(
-        f"🚀 Migration completed: {secrets_migrated} secrets migrated from {env_path}"
-    )
+    logger.info(f"🚀 Migration completed: {secrets_migrated} secrets migrated from {env_path}")
     return secrets_migrated
 
 
-def create_arkalia_vault(base_dir: Optional[Path] = None) -> ArkaliaVault:
+def create_arkalia_vault(base_dir: Path | None = None) -> ArkaliaVault:
     """Factory function pour créer une instance ArkaliaVault"""
     return ArkaliaVault(base_dir)

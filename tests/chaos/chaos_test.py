@@ -47,9 +47,7 @@ class ChaosTester:
             self.corrupted_files.append((file_path, backup_path))
 
             # Différents types de corruption
-            corruption_type = random.choice(
-                ["truncate", "random_bytes", "invalid_toml"]
-            )
+            corruption_type = random.choice(["truncate", "random_bytes", "invalid_toml"])
 
             if corruption_type == "truncate":
                 # Tronque le fichier
@@ -259,9 +257,7 @@ class TestSystemLoadChaos:
         execution_time = time.time() - start_time
 
         # Sous charge, le système peut être plus lent mais doit rester fonctionnel
-        assert (
-            execution_time < 30
-        ), f"Système trop lent sous charge: {execution_time:.2f}s"
+        assert execution_time < 30, f"Système trop lent sous charge: {execution_time:.2f}s"
 
     def test_memory_pressure_resilience(self):
         """🧠 Test résilience sous pression mémoire"""
@@ -521,10 +517,7 @@ class TestChaosIntegration:
                 test_file.unlink()
 
         # Métriques de récupération
-        total_ops = (
-            recovery_stats["successful_operations"]
-            + recovery_stats["failed_operations"]
-        )
+        total_ops = recovery_stats["successful_operations"] + recovery_stats["failed_operations"]
         if total_ops > 0:
             success_rate = recovery_stats["successful_operations"] / total_ops
             assert success_rate >= 0.5, f"Taux de succès trop bas: {success_rate:.2%}"

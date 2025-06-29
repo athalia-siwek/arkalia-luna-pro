@@ -188,9 +188,7 @@ class ArkaliaMetrics:
     def record_reflexia_status_change(self, from_status: str, to_status: str):
         """Enregistre un changement de statut ReflexIA"""
         if from_status != to_status:
-            self.reflexia_status_changes.labels(
-                from_status=from_status, to_status=to_status
-            ).inc()
+            self.reflexia_status_changes.labels(from_status=from_status, to_status=to_status).inc()
 
         self.last_reflexia_status = to_status
 
@@ -220,9 +218,7 @@ class ArkaliaMetrics:
 
     def record_file_operation(self, operation: str, file_type: str, status: str):
         """Enregistre une opération de fichier"""
-        self.file_operations.labels(
-            operation=operation, file_type=file_type, status=status
-        ).inc()
+        self.file_operations.labels(operation=operation, file_type=file_type, status=status).inc()
 
     def record_api_request(self, endpoint: str, method: str, status_code: int):
         """Enregistre une requête API"""
@@ -232,9 +228,7 @@ class ArkaliaMetrics:
 
     def record_error(self, module: str, error_type: str, severity: str):
         """Enregistre une erreur système"""
-        self.error_count.labels(
-            module=module, error_type=error_type, severity=severity
-        ).inc()
+        self.error_count.labels(module=module, error_type=error_type, severity=severity).inc()
 
     def update_system_uptime(self):
         """Met à jour le temps de fonctionnement"""
@@ -340,13 +334,9 @@ class ArkaliaMetricsCollector:
         for file_path in critical_files:
             path = Path(file_path)
             if path.exists() and path.stat().st_size > 100:
-                self.metrics.record_file_operation(
-                    "health_check", "critical", "success"
-                )
+                self.metrics.record_file_operation("health_check", "critical", "success")
             else:
-                self.metrics.record_file_operation(
-                    "health_check", "critical", "failure"
-                )
+                self.metrics.record_file_operation("health_check", "critical", "failure")
                 self.metrics.record_error("system", "missing_critical_file", "critical")
 
 
@@ -365,9 +355,7 @@ class PrometheusServer:
         if not self.server_started:
             start_http_server(self.port, addr=self.host)
             self.server_started = True
-            print(
-                f"🔥 Serveur métriques Prometheus démarré sur {self.host}:{self.port}"
-            )
+            print(f"🔥 Serveur métriques Prometheus démarré sur {self.host}:{self.port}")
             print(f"📊 Métriques disponibles: http://{self.host}:{self.port}/metrics")
 
     def collect_and_expose(self):
@@ -388,7 +376,7 @@ class PrometheusServer:
 # === UTILITAIRES D'INTÉGRATION ===
 
 
-def get_metrics_summary() -> Dict[str, Union[str, int, float]]:
+def get_metrics_summary() -> dict[str, str | int | float]:
     """Retourne un résumé des métriques pour API REST"""
     global prometheus_server
     if prometheus_server is None:

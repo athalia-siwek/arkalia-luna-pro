@@ -142,7 +142,7 @@ def generate_summary_report(output_dir="benchmark_results"):
 
     latest_file = max(json_files, key=lambda f: f.stat().st_mtime)
 
-    with open(latest_file, "r") as f:
+    with open(latest_file) as f:
         results = json.load(f)
 
     print("\n📊 RAPPORT DE SYNTHÈSE BENCHMARKS")
@@ -177,9 +177,7 @@ def generate_summary_report(output_dir="benchmark_results"):
 def main():
     """Point d'entrée principal"""
 
-    parser = argparse.ArgumentParser(
-        description="Benchmarks performance Arkalia-LUNA Enhanced"
-    )
+    parser = argparse.ArgumentParser(description="Benchmarks performance Arkalia-LUNA Enhanced")
     parser.add_argument(
         "--output-dir",
         default="benchmark_results",

@@ -22,10 +22,7 @@ import toml
 
 from modules.zeroia.model_integrity import get_integrity_monitor
 from modules.zeroia.reason_loop import reason_loop
-from tests.security.test_poisoning import (
-    FakePoisonedDatasets,
-    ModelPoisoningDetector,
-)
+from tests.security.test_poisoning import FakePoisonedDatasets, ModelPoisoningDetector
 
 
 def test_live_poisoning_attacks():
@@ -60,9 +57,7 @@ def test_live_poisoning_attacks():
                 toml.dump(poisoned_ctx, f)
 
             # Reflexia state normal
-            reflexia_state = {
-                "decision": {"last_decision": "normal", "confidence": 0.8}
-            }
+            reflexia_state = {"decision": {"last_decision": "normal", "confidence": 0.8}}
             with open(reflexia_file, "w") as f:
                 toml.dump(reflexia_state, f)
 
@@ -80,9 +75,7 @@ def test_live_poisoning_attacks():
                 test_results["cpu_injection"][
                     "details"
                 ] = f"Attaque détectée - Status: {integrity_status['status']}"
-                print(
-                    f"✅ Attaque CPU injection DÉTECTÉE - {integrity_status['status']}"
-                )
+                print(f"✅ Attaque CPU injection DÉTECTÉE - {integrity_status['status']}")
             else:
                 test_results["cpu_injection"]["status"] = "VULNERABLE"
                 test_results["cpu_injection"]["details"] = "Attaque non détectée"
@@ -107,9 +100,7 @@ def test_live_poisoning_attacks():
                 with open(ctx_file, "w") as f:
                     toml.dump(ctx, f)
 
-                reflexia_state = {
-                    "decision": {"last_decision": "monitor", "confidence": 0.7}
-                }
+                reflexia_state = {"decision": {"last_decision": "monitor", "confidence": 0.7}}
                 with open(reflexia_file, "w") as f:
                     toml.dump(reflexia_state, f)
 
@@ -130,14 +121,10 @@ def test_live_poisoning_attacks():
                     "details"
                 ] = f"Oscillation détectée - Confidence: {analysis['confidence']:.2f}"
                 confidence_val = analysis["confidence"]
-                print(
-                    f"✅ Attaque oscillation DÉTECTÉE - Confidence: {confidence_val:.2f}"
-                )
+                print(f"✅ Attaque oscillation DÉTECTÉE - Confidence: {confidence_val:.2f}")
             else:
                 test_results["oscillation_attack"]["status"] = "VULNERABLE"
-                test_results["oscillation_attack"][
-                    "details"
-                ] = "Oscillation non détectée"
+                test_results["oscillation_attack"]["details"] = "Oscillation non détectée"
                 print("❌ Attaque oscillation NON DÉTECTÉE")
 
         except Exception as e:
@@ -159,9 +146,7 @@ def test_live_poisoning_attacks():
                 reflexia_file = tmp_path / "reflexia_yaml.toml"
                 state_file = tmp_path / "state_yaml.toml"
 
-                reflexia_state = {
-                    "decision": {"last_decision": "normal", "confidence": 0.8}
-                }
+                reflexia_state = {"decision": {"last_decision": "normal", "confidence": 0.8}}
                 with open(reflexia_file, "w") as f:
                     toml.dump(reflexia_state, f)
 
@@ -173,17 +158,13 @@ def test_live_poisoning_attacks():
 
                 # Si on arrive ici, ZeroIA a résisté
                 test_results["yaml_injection"]["status"] = "PROTECTED"
-                test_results["yaml_injection"][
-                    "details"
-                ] = "Injection gérée gracieusement"
+                test_results["yaml_injection"]["details"] = "Injection gérée gracieusement"
                 print(f"✅ Injection YAML gérée - Decision: {decision}")
 
             except (ValueError, TypeError, toml.TomlDecodeError) as validation_error:
                 # Erreur attendue = protection effective
                 test_results["yaml_injection"]["status"] = "PROTECTED"
-                test_results["yaml_injection"][
-                    "details"
-                ] = f"Injection bloquée: {validation_error}"
+                test_results["yaml_injection"]["details"] = f"Injection bloquée: {validation_error}"
                 print(f"✅ Injection YAML BLOQUÉE: {validation_error}")
 
         except Exception as e:
@@ -206,9 +187,7 @@ def test_live_poisoning_attacks():
                 with open(ctx_file, "w") as f:
                     toml.dump(stealth_ctx, f)
 
-                reflexia_state = {
-                    "decision": {"last_decision": "reduce_load", "confidence": 0.79}
-                }
+                reflexia_state = {"decision": {"last_decision": "reduce_load", "confidence": 0.79}}
                 with open(reflexia_file, "w") as f:
                     toml.dump(reflexia_state, f)
 
@@ -265,9 +244,7 @@ def test_live_poisoning_attacks():
                 with open(ctx_file, "w") as f:
                     toml.dump(ctx, f)
 
-                reflexia_state = {
-                    "decision": {"last_decision": "monitor", "confidence": 0.7}
-                }
+                reflexia_state = {"decision": {"last_decision": "monitor", "confidence": 0.7}}
                 with open(reflexia_file, "w") as f:
                     toml.dump(reflexia_state, f)
 
@@ -281,9 +258,7 @@ def test_live_poisoning_attacks():
             final_status = monitor.get_integrity_status()
             if final_status["status"] == "HEALTHY":
                 test_results["normal_operation"]["status"] = "PASS"
-                test_results["normal_operation"][
-                    "details"
-                ] = "Opération normale non perturbée"
+                test_results["normal_operation"]["details"] = "Opération normale non perturbée"
                 print("✅ Opération normale PRÉSERVÉE")
             else:
                 test_results["normal_operation"]["status"] = "FAIL"
@@ -303,9 +278,7 @@ def test_live_poisoning_attacks():
     print(f"{'='*60}")
 
     protected_count = sum(
-        1
-        for result in test_results.values()
-        if result["status"] in ["PROTECTED", "PASS"]
+        1 for result in test_results.values() if result["status"] in ["PROTECTED", "PASS"]
     )
 
     for test_name, result in test_results.items():
@@ -322,10 +295,7 @@ def test_live_poisoning_attacks():
 
     protection_rate = (protected_count / len(test_results)) * 100
     total_tests = len(test_results)
-    print(
-        f"\n📊 TAUX DE PROTECTION: {protection_rate:.1f}% "
-        f"({protected_count}/{total_tests})"
-    )
+    print(f"\n📊 TAUX DE PROTECTION: {protection_rate:.1f}% " f"({protected_count}/{total_tests})")
 
     if protection_rate >= 80:
         print("🎉 EXCELLENT: ZeroIA résiste aux attaques d'empoisonnement !")

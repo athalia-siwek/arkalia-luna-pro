@@ -28,9 +28,7 @@ def check_zeroia_health(verbose: bool = True) -> bool:
         last_decision = data.get("decision", {}).get("last_decision", None)
 
         if verbose:
-            print(
-                f"🩺 Debug: active={active}, last_decision={last_decision}", flush=True
-            )
+            print(f"🩺 Debug: active={active}, last_decision={last_decision}", flush=True)
 
         # Vérification forcée (ex. pour les tests)
         if os.getenv("FORCE_ZEROIA_OK") == "1":

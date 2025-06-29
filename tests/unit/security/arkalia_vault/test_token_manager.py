@@ -7,12 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.security.crypto import (
-    ArkaliaVault,
-    TokenManager,
-    TokenStatus,
-    TokenType,
-)
+from modules.security.crypto import ArkaliaVault, TokenManager, TokenStatus, TokenType
 
 
 class TestTokenManager:

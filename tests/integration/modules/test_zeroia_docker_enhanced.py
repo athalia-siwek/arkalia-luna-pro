@@ -44,7 +44,7 @@ def check_zeroia_dashboard() -> dict:
     dashboard_path = Path("state/zeroia_dashboard.json")
     try:
         if dashboard_path.exists():
-            with open(dashboard_path, "r") as f:
+            with open(dashboard_path) as f:
                 return json.load(f)
     except Exception:
         pass
@@ -63,9 +63,7 @@ def test_docker_service_availability():
 def test_zeroia_container_exists():
     """Vérifie que le conteneur ZeroIA existe (même s'il n'est pas running)"""
     try:
-        subprocess.check_output(
-            ["docker", "inspect", "zeroia"], stderr=subprocess.DEVNULL
-        )
+        subprocess.check_output(["docker", "inspect", "zeroia"], stderr=subprocess.DEVNULL)
         container_exists = True
     except subprocess.CalledProcessError:
         container_exists = False
@@ -76,9 +74,7 @@ def test_zeroia_container_exists():
 
 
 @pytest.mark.skipif(not docker_available, reason="Docker non installé")
-@pytest.mark.skipif(
-    not is_container_running("zeroia"), reason="ZeroIA container non actif"
-)
+@pytest.mark.skipif(not is_container_running("zeroia"), reason="ZeroIA container non actif")
 def test_zeroia_enhanced_docker_functionality():
     """
     Test robuste de la boucle Enhanced ZeroIA dans Docker.
@@ -108,9 +104,7 @@ def test_zeroia_enhanced_docker_functionality():
     success_indicators = ["loop started", "enhanced", "decision", "zeroia"]
 
     found_indicators = [
-        indicator
-        for indicator in success_indicators
-        if indicator.lower() in logs_output.lower()
+        indicator for indicator in success_indicators if indicator.lower() in logs_output.lower()
     ]
 
     assert len(found_indicators) >= 2, (
@@ -167,9 +161,7 @@ def test_arkalia_modules_integration():
 
         # Chercher des signes d'intégration
         integration_signs = ["reflexia", "enhanced", "module", "circuit"]
-        found_signs = [
-            sign for sign in integration_signs if sign.lower() in logs.lower()
-        ]
+        found_signs = [sign for sign in integration_signs if sign.lower() in logs.lower()]
 
         if found_signs:
             print(f"✅ Signes d'intégration trouvés: {found_signs}")

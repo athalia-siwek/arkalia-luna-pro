@@ -35,9 +35,7 @@ def test_get_system_health_events(temp_event_store):
     """🧪 Test récupération événements de santé système"""
     temp_event_store.add_event(EventType.CIRCUIT_FAILURE, {"error": "overload"})
     temp_event_store.add_event(EventType.SYSTEM_ERROR, {"error": "critical error"})
-    temp_event_store.add_event(
-        EventType.STATE_CHANGE, {"old_state": "closed", "new_state": "open"}
-    )
+    temp_event_store.add_event(EventType.STATE_CHANGE, {"old_state": "closed", "new_state": "open"})
     temp_event_store.add_event(EventType.CALL_BLOCKED, {"reason": "circuit open"})
     temp_event_store.add_event(EventType.DECISION_MADE, {"decision": "monitor"})
     temp_event_store.add_event(EventType.CIRCUIT_SUCCESS, {"state": "closed"})
@@ -58,9 +56,7 @@ def test_detect_anomalies(temp_event_store):
     for i in range(7):
         temp_event_store.add_event(EventType.CIRCUIT_FAILURE, {"error": f"failure_{i}"})
     for i in range(3):
-        temp_event_store.add_event(
-            EventType.SYSTEM_ERROR, {"error": f"system_error_{i}"}
-        )
+        temp_event_store.add_event(EventType.SYSTEM_ERROR, {"error": f"system_error_{i}"})
     anomalies = temp_event_store.detect_anomalies(window_minutes=60)
     assert anomalies["total_events"] == 10
     assert len(anomalies["anomalies"]) >= 2
@@ -70,27 +66,17 @@ def test_detect_anomalies(temp_event_store):
     assert failure_anomaly is not None
     assert failure_anomaly["severity"] == "high"
     assert failure_anomaly["count"] == 7
-    error_anomaly = next(
-        (a for a in anomalies["anomalies"] if a["type"] == "system_errors"), None
-    )
+    error_anomaly = next((a for a in anomalies["anomalies"] if a["type"] == "system_errors"), None)
     assert error_anomaly is not None
     assert error_anomaly["severity"] == "critical"
 
 
 def test_get_analytics(temp_event_store):
     """🧪 Test génération d'analytics"""
-    temp_event_store.add_event(
-        EventType.DECISION_MADE, {"decision": "monitor"}, module="zeroia"
-    )
-    temp_event_store.add_event(
-        EventType.DECISION_MADE, {"decision": "analyze"}, module="reflexia"
-    )
-    temp_event_store.add_event(
-        EventType.CIRCUIT_SUCCESS, {"state": "closed"}, module="zeroia"
-    )
-    temp_event_store.add_event(
-        EventType.CIRCUIT_FAILURE, {"error": "test"}, module="zeroia"
-    )
+    temp_event_store.add_event(EventType.DECISION_MADE, {"decision": "monitor"}, module="zeroia")
+    temp_event_store.add_event(EventType.DECISION_MADE, {"decision": "analyze"}, module="reflexia")
+    temp_event_store.add_event(EventType.CIRCUIT_SUCCESS, {"state": "closed"}, module="zeroia")
+    temp_event_store.add_event(EventType.CIRCUIT_FAILURE, {"error": "test"}, module="zeroia")
     analytics = temp_event_store.get_analytics()
     assert analytics["total_events"] == 4
     assert analytics["recent_events_analyzed"] == 4

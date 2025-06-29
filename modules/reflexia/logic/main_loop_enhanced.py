@@ -22,7 +22,7 @@ from .snapshot import save_snapshot
 logger = logging.getLogger(__name__)
 
 
-def analyze_system_health(metrics: Dict[str, Any]) -> Dict[str, str]:
+def analyze_system_health(metrics: dict[str, Any]) -> dict[str, str]:
     """
     Analyse avancée de la santé du système
 
@@ -117,7 +117,7 @@ def analyze_system_health(metrics: Dict[str, Any]) -> Dict[str, str]:
     return analysis
 
 
-def generate_recommendations(analysis: Dict[str, str], metrics: Dict[str, Any]) -> list:
+def generate_recommendations(analysis: dict[str, str], metrics: dict[str, Any]) -> list:
     """Génère des recommandations basées sur l'analyse"""
     recommendations = []
 
@@ -153,9 +153,7 @@ def generate_recommendations(analysis: Dict[str, str], metrics: Dict[str, Any]) 
                     f"❌ Module {module_name}: Erreur de chargement - Redémarrer"
                 )
             elif status == "warning":
-                recommendations.append(
-                    f"⚠️ Module {module_name}: État instable - Surveiller"
-                )
+                recommendations.append(f"⚠️ Module {module_name}: État instable - Surveiller")
 
         # Recommandations spécifiques par module
         if arkalia_modules.get("zeroia") == "warning":
@@ -174,7 +172,7 @@ def generate_recommendations(analysis: Dict[str, str], metrics: Dict[str, Any]) 
 
 
 def reflexia_loop_enhanced(
-    max_iterations: Optional[int] = None,
+    max_iterations: int | None = None,
     sleep_seconds: float = 10.0,
     verbose: bool = True,
 ) -> None:
@@ -209,9 +207,7 @@ def reflexia_loop_enhanced(
 
             # Analyse système
             health_analysis = analyze_system_health(metrics_enhanced)
-            recommendations = generate_recommendations(
-                health_analysis, metrics_enhanced
-            )
+            recommendations = generate_recommendations(health_analysis, metrics_enhanced)
 
             # Décision via logique existante
             status = monitor_status(metrics_simple)
@@ -223,9 +219,7 @@ def reflexia_loop_enhanced(
             cycle_time = (datetime.now() - cycle_start).total_seconds()
 
             if verbose:
-                print(
-                    f"🔄 [{datetime.now().strftime('%H:%M:%S')}] Reflexia Cycle #{iteration + 1}"
-                )
+                print(f"🔄 [{datetime.now().strftime('%H:%M:%S')}] Reflexia Cycle #{iteration + 1}")
                 print(
                     f"   💻 CPU: {metrics_enhanced['system']['cpu_percent']}% | "
                     f"RAM: {metrics_enhanced['system']['memory_percent']}% | "
@@ -261,16 +255,12 @@ def reflexia_loop_enhanced(
                 logger.info(
                     f"Reflexia Enhanced completed - {iteration} cycles in {total_time:.1f}s"
                 )
-                print(
-                    f"🛑 Reflexia Enhanced terminé - {iteration} cycles en {total_time:.1f}s"
-                )
+                print(f"🛑 Reflexia Enhanced terminé - {iteration} cycles en {total_time:.1f}s")
             break
 
 
 # Alias pour compatibilité
-def reflexia_loop(
-    max_iterations: Optional[int] = None, sleep_seconds: float = 5.0
-) -> None:
+def reflexia_loop(max_iterations: int | None = None, sleep_seconds: float = 5.0) -> None:
     """Alias de compatibilité avec l'ancienne boucle"""
     reflexia_loop_enhanced(max_iterations, sleep_seconds, verbose=True)
 

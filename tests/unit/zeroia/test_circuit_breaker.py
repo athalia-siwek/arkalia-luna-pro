@@ -38,9 +38,7 @@ def mock_event_store():
 @pytest.fixture
 def circuit_breaker(mock_event_store):
     """Circuit breaker de test"""
-    return CircuitBreaker(
-        failure_threshold=3, recovery_timeout=30, event_store=mock_event_store
-    )
+    return CircuitBreaker(failure_threshold=3, recovery_timeout=30, event_store=mock_event_store)
 
 
 def test_circuit_breaker_initialization(circuit_breaker, mock_event_store):
@@ -114,9 +112,7 @@ def test_circuit_opens_after_threshold(circuit_breaker, mock_event_store):
 
     # Vérifier l'event de transition
     calls = mock_event_store.add_event.call_args_list
-    state_change_calls = [
-        call for call in calls if call[0][0] == EventType.STATE_CHANGE
-    ]
+    state_change_calls = [call for call in calls if call[0][0] == EventType.STATE_CHANGE]
     assert len(state_change_calls) > 0
 
 

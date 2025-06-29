@@ -74,12 +74,8 @@ Exemples d'utilisation :
     )
     parser.add_argument("--cycles", type=int, help="Nombre de cycles en mode test")
     parser.add_argument("--verbose", action="store_true", help="Logs détaillés (DEBUG)")
-    parser.add_argument(
-        "--config", type=str, help="Fichier de configuration personnalisé"
-    )
-    parser.add_argument(
-        "--enable-modules", nargs="+", help="Modules à activer (par défaut: tous)"
-    )
+    parser.add_argument("--config", type=str, help="Fichier de configuration personnalisé")
+    parser.add_argument("--enable-modules", nargs="+", help="Modules à activer (par défaut: tous)")
 
     args = parser.parse_args()
 
@@ -144,9 +140,7 @@ Exemples d'utilisation :
                     "initializing": "🔄",
                 }.get(module_info["status"], "❓")
 
-                print(
-                    f"{status_icon} {module_name:12} : {module_info['status'].upper()}"
-                )
+                print(f"{status_icon} {module_name:12} : {module_info['status'].upper()}")
                 if module_info["execution_count"] > 0:
                     print(f"   Executions  : {module_info['execution_count']}")
                     print(f"   Errors      : {module_info['error_count']}")

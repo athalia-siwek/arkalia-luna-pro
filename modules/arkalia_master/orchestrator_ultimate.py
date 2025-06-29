@@ -73,7 +73,7 @@ class OrchestratorConfig:
     """Configuration Master Orchestrator"""
 
     # Cycles adaptatifs
-    cycle_intervals: Dict[CycleMode, float] = field(
+    cycle_intervals: dict[CycleMode, float] = field(
         default_factory=lambda: {
             CycleMode.URGENT: 5.0,
             CycleMode.NORMAL: 30.0,
@@ -87,7 +87,7 @@ class OrchestratorConfig:
     global_recovery_timeout: int = 60
 
     # Modules actifs
-    enabled_modules: List[str] = field(
+    enabled_modules: list[str] = field(
         default_factory=lambda: [
             "zeroia",
             "reflexia",
@@ -118,10 +118,10 @@ class ModuleWrapper:
     name: str
     instance: Any
     status: ModuleStatus = ModuleStatus.INITIALIZING
-    last_execution: Optional[datetime] = None
+    last_execution: datetime | None = None
     execution_count: int = 0
     error_count: int = 0
-    last_error: Optional[str] = None
+    last_error: str | None = None
 
     def update_success(self):
         """Met à jour après exécution réussie"""
@@ -133,9 +133,7 @@ class ModuleWrapper:
         """Met à jour après erreur"""
         self.error_count += 1
         self.last_error = error
-        self.status = (
-            ModuleStatus.DEGRADED if self.error_count < 5 else ModuleStatus.CRITICAL
-        )
+        self.status = ModuleStatus.DEGRADED if self.error_count < 5 else ModuleStatus.CRITICAL
 
 
 class ArkaliaOrchestrator:
@@ -151,7 +149,7 @@ class ArkaliaOrchestrator:
     - Auto-healing & resilience patterns
     """
 
-    def __init__(self, config: Optional[OrchestratorConfig] = None):
+    def __init__(self, config: OrchestratorConfig | None = None):
         self.config = config or OrchestratorConfig()
         self.current_cycle_mode = CycleMode.NORMAL
         self.is_running = False
@@ -170,14 +168,14 @@ class ArkaliaOrchestrator:
         self.failed_operations = 0
 
         # Modules wrappés
-        self.modules: Dict[str, ModuleWrapper] = {}
+        self.modules: dict[str, ModuleWrapper] = {}
 
         # Global State Master
-        self.global_state: Dict[str, Any] = {}
+        self.global_state: dict[str, Any] = {}
 
         # Tasks asyncio
-        self.orchestration_task: Optional[asyncio.Task] = None
-        self.health_check_task: Optional[asyncio.Task] = None
+        self.orchestration_task: asyncio.Task | None = None
+        self.health_check_task: asyncio.Task | None = None
 
         logger.info("🌕 ArkaliaOrchestrator Ultimate v4.0.0 initialized")
 
@@ -207,9 +205,7 @@ class ArkaliaOrchestrator:
                 # Test fonction réflexIA
                 test_metrics = await asyncio.to_thread(get_metrics)
                 if test_metrics:
-                    self.modules["reflexia"] = ModuleWrapper(
-                        "reflexia", launch_reflexia_check
-                    )
+                    self.modules["reflexia"] = ModuleWrapper("reflexia", launch_reflexia_check)
                     initialization_results["reflexia"] = "✅ SUCCESS"
                 else:
                     initialization_results["reflexia"] = "❌ FAILED"
@@ -221,9 +217,7 @@ class ArkaliaOrchestrator:
             try:
                 # Vérifier que le router est disponible
                 if assistantia_router:
-                    self.modules["assistantia"] = ModuleWrapper(
-                        "assistantia", assistantia_router
-                    )
+                    self.modules["assistantia"] = ModuleWrapper("assistantia", assistantia_router)
                     initialization_results["assistantia"] = "✅ SUCCESS"
                 else:
                     initialization_results["assistantia"] = "❌ FAILED"
@@ -286,9 +280,7 @@ class ArkaliaOrchestrator:
         if "monitoring" in self.config.enabled_modules:
             try:
                 arkalia_metrics = ArkaliaMetrics()
-                self.modules["monitoring"] = ModuleWrapper(
-                    "monitoring", arkalia_metrics
-                )
+                self.modules["monitoring"] = ModuleWrapper("monitoring", arkalia_metrics)
                 initialization_results["monitoring"] = "✅ SUCCESS"
             except Exception as e:
                 initialization_results["monitoring"] = f"❌ ERROR: {e}"
@@ -337,26 +329,21 @@ class ArkaliaOrchestrator:
 
         return success_count >= total_modules * 0.7  # 70% minimum pour succès
 
-    async def execute_coordinated_cycle(self) -> Dict[str, Any]:
+    async def execute_coordinated_cycle(self) -> dict[str, Any]:
         """
         Exécute un cycle coordonné de tous les modules actifs
         """
         cycle_start = time.time()
         self.cycle_count += 1
 
-        logger.info(
-            f"🔄 CYCLE #{self.cycle_count} - Mode: {self.current_cycle_mode.value}"
-        )
+        logger.info(f"🔄 CYCLE #{self.cycle_count} - Mode: {self.current_cycle_mode.value}")
 
         cycle_results = {}
         operations_this_cycle = 0
         successful_this_cycle = 0
 
         # === PHASE 1: DÉCISIONS RAPIDES (ZeroIA) ===
-        if (
-            "zeroia" in self.modules
-            and self.modules["zeroia"].status != ModuleStatus.OFFLINE
-        ):
+        if "zeroia" in self.modules and self.modules["zeroia"].status != ModuleStatus.OFFLINE:
             try:
                 zeroia_module = self.modules["zeroia"]
                 decision, confidence = await asyncio.to_thread(
@@ -380,10 +367,7 @@ class ArkaliaOrchestrator:
             operations_this_cycle += 1
 
         # === PHASE 2: MONITORING SYSTÈME (ReflexIA) ===
-        if (
-            "reflexia" in self.modules
-            and self.modules["reflexia"].status != ModuleStatus.OFFLINE
-        ):
+        if "reflexia" in self.modules and self.modules["reflexia"].status != ModuleStatus.OFFLINE:
             try:
                 reflexia_module = self.modules["reflexia"]
                 reflexia_result = await asyncio.to_thread(reflexia_module.instance)
@@ -417,9 +401,7 @@ class ArkaliaOrchestrator:
 
                 cycle_results["sandozia"] = {
                     "coherence_score": sandozia_status.get("coherence_score", 0.0),
-                    "active_correlations": sandozia_status.get(
-                        "active_correlations", 0
-                    ),
+                    "active_correlations": sandozia_status.get("active_correlations", 0),
                     "result": "success",
                 }
 
@@ -452,9 +434,7 @@ class ArkaliaOrchestrator:
                     "reflexia_result": cycle_results.get("reflexia", {}),
                 }
 
-                taskia_result = await asyncio.to_thread(
-                    taskia_module.instance, task_context
-                )
+                taskia_result = await asyncio.to_thread(taskia_module.instance, task_context)
 
                 cycle_results["taskia"] = {
                     "analysis": taskia_result,
@@ -483,9 +463,7 @@ class ArkaliaOrchestrator:
 
                 # Signal basé sur l'état du cycle
                 cycle_signal = "start" if self.cycle_count <= 3 else "ping"
-                signal_result = await asyncio.to_thread(
-                    nyxalia_module.instance, cycle_signal
-                )
+                signal_result = await asyncio.to_thread(nyxalia_module.instance, cycle_signal)
 
                 cycle_results["nyxalia"] = {
                     "signal": cycle_signal,
@@ -510,9 +488,7 @@ class ArkaliaOrchestrator:
         self.failed_operations += operations_this_cycle - successful_this_cycle
 
         # === ADAPTATION CYCLE MODE ===
-        await self._adapt_cycle_mode(
-            cycle_results, successful_this_cycle, operations_this_cycle
-        )
+        await self._adapt_cycle_mode(cycle_results, successful_this_cycle, operations_this_cycle)
 
         # === RÉSULTAT CYCLE ===
         cycle_summary = {
@@ -539,7 +515,7 @@ class ArkaliaOrchestrator:
 
         return cycle_summary
 
-    async def _adapt_cycle_mode(self, cycle_results: Dict, successful: int, total: int):
+    async def _adapt_cycle_mode(self, cycle_results: dict, successful: int, total: int):
         """
         Adapte intelligemment le mode de cycle selon les résultats
         """
@@ -551,10 +527,7 @@ class ArkaliaOrchestrator:
         # Vérifier s'il y a des erreurs critiques
         critical_errors = False
         for module_result in cycle_results.values():
-            if (
-                module_result.get("result") == "error"
-                or module_result.get("status") == "error"
-            ):
+            if module_result.get("result") == "error" or module_result.get("status") == "error":
                 critical_errors = True
                 break
 
@@ -575,9 +548,7 @@ class ArkaliaOrchestrator:
             # Excellente performance + cycle multiple de 10 -> Mode DEEP_ANALYSIS
             if self.current_cycle_mode != CycleMode.DEEP_ANALYSIS:
                 self.current_cycle_mode = CycleMode.DEEP_ANALYSIS
-                logger.info(
-                    "🧠 Switching to DEEP_ANALYSIS mode - excellent performance"
-                )
+                logger.info("🧠 Switching to DEEP_ANALYSIS mode - excellent performance")
 
         elif self.cycle_count % 60 == 0:  # Toutes les 60 cycles
             # Maintenance périodique
@@ -644,12 +615,11 @@ class ArkaliaOrchestrator:
                 module_wrapper.status = ModuleStatus.DEGRADED
             elif (
                 module_wrapper.last_execution
-                and (datetime.now() - module_wrapper.last_execution).total_seconds()
-                > 300
+                and (datetime.now() - module_wrapper.last_execution).total_seconds() > 300
             ):  # 5 minutes
                 module_wrapper.status = ModuleStatus.OFFLINE
 
-    async def _save_global_state(self, cycle_result: Dict):
+    async def _save_global_state(self, cycle_result: dict):
         """Sauvegarde l'état global"""
         try:
             uptime = time.time() - self.start_time
@@ -664,9 +634,7 @@ class ArkaliaOrchestrator:
                     "successful_operations": self.successful_operations,
                     "failed_operations": self.failed_operations,
                     "success_rate": (
-                        round(
-                            self.successful_operations / self.total_operations * 100, 2
-                        )
+                        round(self.successful_operations / self.total_operations * 100, 2)
                         if self.total_operations > 0
                         else 0
                     ),
@@ -677,9 +645,7 @@ class ArkaliaOrchestrator:
                         "execution_count": wrapper.execution_count,
                         "error_count": wrapper.error_count,
                         "last_execution": (
-                            wrapper.last_execution.isoformat()
-                            if wrapper.last_execution
-                            else None
+                            wrapper.last_execution.isoformat() if wrapper.last_execution else None
                         ),
                         "last_error": wrapper.last_error,
                     }
@@ -708,7 +674,7 @@ class ArkaliaOrchestrator:
 
         logger.info("🧹 Arkalia Master Orchestrator cleanup completed")
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """Retourne le statut complet de l'orchestrateur"""
         uptime = time.time() - self.start_time
 
@@ -737,8 +703,7 @@ class ArkaliaOrchestrator:
             "config": {
                 "enabled_modules": self.config.enabled_modules,
                 "cycle_intervals": {
-                    mode.value: interval
-                    for mode, interval in self.config.cycle_intervals.items()
+                    mode.value: interval for mode, interval in self.config.cycle_intervals.items()
                 },
             },
             "timestamp": datetime.now().isoformat(),
@@ -749,7 +714,7 @@ class ArkaliaOrchestrator:
 
 
 async def orchestrate_full_ecosystem(
-    config: Optional[OrchestratorConfig] = None, max_cycles: Optional[int] = None
+    config: OrchestratorConfig | None = None, max_cycles: int | None = None
 ) -> None:
     """
     Lance l'orchestration complète de l'écosystème Arkalia
@@ -765,7 +730,7 @@ async def orchestrate_full_ecosystem(
             # Mode test avec nombre limité de cycles
             await orchestrator.initialize_modules()
             for i in range(max_cycles):
-                cycle_result = await orchestrator.execute_coordinated_cycle()
+                await orchestrator.execute_coordinated_cycle()
                 logger.info(f"Cycle {i+1}/{max_cycles} completed")
 
                 # Attendre selon le mode
@@ -817,8 +782,8 @@ async def main():
     if args.config:
         # Charger config personnalisée
         try:
-            with open(args.config, "r") as f:
-                custom_config = toml.load(f)
+            with open(args.config) as f:
+                toml.load(f)
                 # Merge avec config par défaut
                 # TODO: Implémenter merge intelligent
         except Exception as e:

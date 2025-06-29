@@ -49,12 +49,8 @@ class TestSandoziaCore:
     async def test_initialize_modules(self, sandozia_core):
         """Test initialisation modules"""
         with (
-            patch(
-                "modules.sandozia.core.sandozia_core.get_metrics"
-            ) as mock_get_metrics,
-            patch(
-                "modules.sandozia.core.sandozia_core.load_context"
-            ) as mock_load_context,
+            patch("modules.sandozia.core.sandozia_core.get_metrics") as mock_get_metrics,
+            patch("modules.sandozia.core.sandozia_core.load_context") as mock_load_context,
         ):
 
             mock_get_metrics.return_value = {"cpu": 50, "ram": 60}
@@ -71,12 +67,8 @@ class TestSandoziaCore:
     async def test_collect_intelligence_snapshot(self, sandozia_core):
         """Test collecte snapshot intelligence"""
         with (
-            patch(
-                "modules.sandozia.core.sandozia_core.launch_reflexia_check"
-            ) as mock_reflexia,
-            patch(
-                "modules.sandozia.core.sandozia_core.load_reflexia_state"
-            ) as mock_zeroia_state,
+            patch("modules.sandozia.core.sandozia_core.launch_reflexia_check") as mock_reflexia,
+            patch("modules.sandozia.core.sandozia_core.load_reflexia_state") as mock_zeroia_state,
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_context,
         ):
 
@@ -119,9 +111,7 @@ class TestSandoziaCore:
             reflexia_state, zeroia_state, assistant_state
         )
 
-        assert (
-            abs(coherence["coherence_score"] - 0.6) < 0.001
-        )  # 1.0 - 0.2 - 0.2 (précision float)
+        assert abs(coherence["coherence_score"] - 0.6) < 0.001  # 1.0 - 0.2 - 0.2 (précision float)
         assert coherence["modules_aligned"] is False
         assert len(coherence["issues"]) == 2
         assert "Reflexia inactive" in coherence["issues"]
@@ -175,12 +165,8 @@ class TestSandoziaCore:
     async def test_monitoring_lifecycle(self, sandozia_core):
         """Test cycle de vie monitoring"""
         with (
-            patch(
-                "modules.sandozia.core.sandozia_core.get_metrics"
-            ) as mock_get_metrics,
-            patch(
-                "modules.sandozia.core.sandozia_core.load_context"
-            ) as mock_load_context,
+            patch("modules.sandozia.core.sandozia_core.get_metrics") as mock_get_metrics,
+            patch("modules.sandozia.core.sandozia_core.load_context") as mock_load_context,
         ):
 
             mock_get_metrics.return_value = {"cpu": 50}
@@ -264,16 +250,10 @@ class TestSandoziaCoreIntegration:
         config_path = tmp_path / "integration_config.toml"
 
         with (
-            patch(
-                "modules.sandozia.core.sandozia_core.launch_reflexia_check"
-            ) as mock_reflexia,
-            patch(
-                "modules.sandozia.core.sandozia_core.load_reflexia_state"
-            ) as mock_zeroia_state,
+            patch("modules.sandozia.core.sandozia_core.launch_reflexia_check") as mock_reflexia,
+            patch("modules.sandozia.core.sandozia_core.load_reflexia_state") as mock_zeroia_state,
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_context,
-            patch(
-                "modules.sandozia.core.sandozia_core.get_metrics"
-            ) as mock_get_metrics,
+            patch("modules.sandozia.core.sandozia_core.get_metrics") as mock_get_metrics,
         ):
 
             # Setup mocks

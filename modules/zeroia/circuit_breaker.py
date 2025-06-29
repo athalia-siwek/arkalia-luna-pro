@@ -15,10 +15,11 @@ Fonctionnalités :
 
 import logging
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Dict, Optional
 
 from modules.zeroia.event_store import EventStore, EventType
 
@@ -65,7 +66,7 @@ class CircuitMetrics:
     successful_calls: int = 0
     failed_calls: int = 0
     consecutive_failures: int = 0
-    last_failure_time: Optional[datetime] = None
+    last_failure_time: datetime | None = None
     state_changes: int = 0
     total_trips: int = 0
 
@@ -100,7 +101,7 @@ class CircuitBreaker:
         half_open_timeout: int = 30,
         contradiction_threshold: int = 3,
         expected_exception: tuple = (Exception,),
-        event_store: Optional[EventStore] = None,
+        event_store: EventStore | None = None,
     ):
         self.state = CircuitState.CLOSED
         self.failure_count = 0
@@ -134,9 +135,7 @@ class CircuitBreaker:
             if self.contradiction_count >= self.contradiction_threshold:
                 self.state = CircuitState.OPEN
                 self.metrics.total_trips += 1
-                logger.warning(
-                    f"⚠️ Circuit ouvert après {self.contradiction_count} contradictions"
-                )
+                logger.warning(f"⚠️ Circuit ouvert après {self.contradiction_count} contradictions")
                 return True
 
         return False
@@ -290,9 +289,7 @@ class CircuitBreaker:
         self.state = CircuitState.OPEN
         self.last_failure_time = datetime.now()
         self.metrics.state_changes += 1
-        logger.error(
-            f"🚨 CircuitBreaker: {old_state.value} → {self.state.value} (seuil atteint)"
-        )
+        logger.error(f"🚨 CircuitBreaker: {old_state.value} → {self.state.value} (seuil atteint)")
 
         self.event_store.add_event(
             EventType.STATE_CHANGE,
@@ -309,9 +306,7 @@ class CircuitBreaker:
         old_state = self.state
         self.state = CircuitState.HALF_OPEN
         self.metrics.state_changes += 1
-        logger.info(
-            f"🔄 CircuitBreaker: {old_state.value} → {self.state.value} (test recovery)"
-        )
+        logger.info(f"🔄 CircuitBreaker: {old_state.value} → {self.state.value} (test recovery)")
 
         self.event_store.add_event(
             EventType.STATE_CHANGE,
@@ -356,7 +351,7 @@ class CircuitBreaker:
             {"old_state": old_state.value, "new_state": self.state.value},
         )
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """Retourne le statut complet du circuit breaker"""
         return {
             "state": self.state.value,
@@ -404,8 +399,7 @@ class CircuitBreaker:
             now = datetime.now()
             if (
                 self.last_failure_time
-                and (now - self.last_failure_time).total_seconds()
-                >= self.recovery_timeout
+                and (now - self.last_failure_time).total_seconds() >= self.recovery_timeout
             ):
                 self.state = CircuitState.HALF_OPEN
                 logger.info("🔌 Circuit breaker en mode semi-ouvert")
@@ -433,6 +427,4 @@ class CircuitBreaker:
             self.reset()
 
         if self.event_store:
-            self.event_store.store_event(
-                "circuit_breaker_success", {"state": self.state}
-            )
+            self.event_store.store_event("circuit_breaker_success", {"state": self.state})

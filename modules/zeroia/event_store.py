@@ -49,11 +49,11 @@ class Event:
     event_type: EventType
     timestamp: datetime
     module: str
-    data: Dict[str, Any]
-    correlation_id: Optional[str] = None
+    data: dict[str, Any]
+    correlation_id: str | None = None
     version: str = "1.0"
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convertit l'événement en dictionnaire"""
         return {
             "id": self.id,
@@ -66,7 +66,7 @@ class Event:
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Event":
+    def from_dict(cls, data: dict[str, Any]) -> "Event":
         """Crée un événement depuis un dictionnaire"""
         return cls(
             id=data["id"],
@@ -82,25 +82,21 @@ class Event:
 class EventStore:
     """Stockage des événements pour Arkalia-LUNA"""
 
-    def __init__(
-        self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000
-    ):
+    def __init__(self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.parent.mkdir(parents=True, exist_ok=True)
 
-        self.events: Dict[str, Dict[str, Any]] = {}
+        self.events: dict[str, dict[str, Any]] = {}
         self.event_counter = 0
         self._load_events()
 
-        logger.info(
-            f"🗄️ EventStore initialisé: {self.cache_dir}, compteur: {self.event_counter}"
-        )
+        logger.info(f"🗄️ EventStore initialisé: {self.cache_dir}, compteur: {self.event_counter}")
 
     def _load_events(self) -> None:
         """Charge les événements depuis le stockage"""
         try:
             if self.cache_dir.exists():
-                with open(self.cache_dir, "r") as f:
+                with open(self.cache_dir) as f:
                     data = json.load(f)
                     self.events = data.get("events", {})
                     self.event_counter = data.get("counter", 0)
@@ -113,13 +109,11 @@ class EventStore:
         """Sauvegarde les événements dans le stockage"""
         try:
             with open(self.cache_dir, "w") as f:
-                json.dump(
-                    {"events": self.events, "counter": self.event_counter}, f, indent=2
-                )
+                json.dump({"events": self.events, "counter": self.event_counter}, f, indent=2)
         except Exception as e:
             logger.error(f"❌ Erreur lors de la sauvegarde des événements: {e}")
 
-    def store_event(self, event_type: str, event_data: Dict[str, Any]) -> None:
+    def store_event(self, event_type: str, event_data: dict[str, Any]) -> None:
         """Stocke un nouvel événement"""
         event_id = str(uuid.uuid4())
         event = {
@@ -139,14 +133,10 @@ class EventStore:
 
         self._save_events()
 
-    def get_events(
-        self, event_type: Optional[str] = None, limit: int = 100
-    ) -> List[Dict[str, Any]]:
+    def get_events(self, event_type: str | None = None, limit: int = 100) -> list[dict[str, Any]]:
         """Récupère les événements filtrés par type"""
         if event_type:
-            filtered_events = [
-                e for e in self.events.values() if e["type"] == event_type
-            ]
+            filtered_events = [e for e in self.events.values() if e["type"] == event_type]
         else:
             filtered_events = list(self.events.values())
 
@@ -165,9 +155,9 @@ class EventStore:
     def add_event(
         self,
         event_type: EventType,
-        data: Dict[str, Any],
+        data: dict[str, Any],
         module: str = "zeroia",
-        correlation_id: Optional[str] = None,
+        correlation_id: str | None = None,
     ) -> str:
         """
         Ajoute un événement au store avec gestion d'erreur robuste
@@ -210,7 +200,7 @@ class EventStore:
 
         return event_id
 
-    def get_event(self, event_id: str) -> Optional[Event]:
+    def get_event(self, event_id: str) -> Event | None:
         """Récupère un événement par son ID"""
         try:
             event_data = self.events.get(event_id)
@@ -221,8 +211,8 @@ class EventStore:
         return None
 
     def get_events_by_type(
-        self, event_type: EventType, limit: int = 100, since: Optional[datetime] = None
-    ) -> List[Event]:
+        self, event_type: EventType, limit: int = 100, since: datetime | None = None
+    ) -> list[Event]:
         """
         Récupère les événements par type
 
@@ -250,7 +240,7 @@ class EventStore:
             logger.warning(f"Erreur récupération événements par type {event_type}: {e}")
             return []
 
-    def get_recent_events(self, limit: int = 50) -> List[Event]:
+    def get_recent_events(self, limit: int = 50) -> list[Event]:
         """
         Récupère les événements récents
 
@@ -266,9 +256,7 @@ class EventStore:
         try:
             # Parcourir le cache de manière sécurisée
             for key, event_data in self.events.items():
-                if isinstance(key, str) and key.startswith(
-                    ("zeroia_", "reflexia_", "sandozia_")
-                ):
+                if isinstance(key, str) and key.startswith(("zeroia_", "reflexia_", "sandozia_")):
                     try:
                         event = Event.from_dict(event_data)
                         all_events.append(event)
@@ -284,7 +272,7 @@ class EventStore:
         all_events.sort(key=lambda x: x.timestamp, reverse=True)
         return all_events[:limit]
 
-    def get_events_by_module(self, module: str, limit: int = 100) -> List[Event]:
+    def get_events_by_module(self, module: str, limit: int = 100) -> list[Event]:
         """Récupère les événements par module"""
         events = []
 
@@ -301,11 +289,11 @@ class EventStore:
         events.sort(key=lambda x: x.timestamp, reverse=True)
         return events[:limit]
 
-    def get_decision_history(self, limit: int = 50) -> List[Event]:
+    def get_decision_history(self, limit: int = 50) -> list[Event]:
         """Récupère l'historique des décisions"""
         return self.get_events_by_type(EventType.DECISION_MADE, limit)
 
-    def get_system_health_events(self, limit: int = 20) -> List[Event]:
+    def get_system_health_events(self, limit: int = 20) -> list[Event]:
         """Récupère les événements de santé système"""
         health_types = [
             EventType.CIRCUIT_FAILURE,
@@ -323,7 +311,7 @@ class EventStore:
         all_health_events.sort(key=lambda x: x.timestamp, reverse=True)
         return all_health_events[:limit]
 
-    def detect_anomalies(self, window_minutes: int = 60) -> Dict[str, Any]:
+    def detect_anomalies(self, window_minutes: int = 60) -> dict[str, Any]:
         """
         Détecte des anomalies dans les événements récents
 
@@ -346,9 +334,7 @@ class EventStore:
         }
 
         # Détecter trop d'échecs
-        failures = [
-            e for e in recent_events if e.event_type == EventType.CIRCUIT_FAILURE
-        ]
+        failures = [e for e in recent_events if e.event_type == EventType.CIRCUIT_FAILURE]
         if len(failures) > 5:
             anomalies["anomalies"].append(
                 {
@@ -387,7 +373,7 @@ class EventStore:
 
         return anomalies
 
-    def get_analytics(self) -> Dict[str, Any]:
+    def get_analytics(self) -> dict[str, Any]:
         """Génère des analytics sur les événements"""
         recent_events = self.get_recent_events(limit=1000)
 
@@ -461,9 +447,7 @@ class EventStore:
         )
         return deleted_count
 
-    def export_events(
-        self, filepath: Path, event_type: Optional[EventType] = None
-    ) -> int:
+    def export_events(self, filepath: Path, event_type: EventType | None = None) -> int:
         """
         Exporte les événements vers un fichier JSON
 

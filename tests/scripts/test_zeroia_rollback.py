@@ -21,12 +21,8 @@ def temp_env(monkeypatch):
         failure_log = tmp_path / "failure_analysis.md"
 
         # Initialisation fichiers
-        state_file.write_text(
-            'timestamp = "TEST"\n[decision]\nlast_decision = "noop"\n'
-        )
-        snapshot_file.write_text(
-            'timestamp = "SNAPSHOT"\n[decision]\nlast_decision = "snapshot"\n'
-        )
+        state_file.write_text('timestamp = "TEST"\n[decision]\nlast_decision = "noop"\n')
+        snapshot_file.write_text('timestamp = "SNAPSHOT"\n[decision]\nlast_decision = "snapshot"\n')
 
         # Patch chemins internes du module
         monkeypatch.setattr(zeroia_rollback, "STATE_FILE", state_file)

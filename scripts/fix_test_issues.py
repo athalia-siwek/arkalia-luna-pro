@@ -48,7 +48,7 @@ def fix_event_store_interface() -> bool:
     log("🔧 Correction de l'interface EventStore...")
 
     # Lire le fichier actuel
-    with open(event_store_path, "r") as f:
+    with open(event_store_path) as f:
         content = f.read()
 
     # Sauvegarde
@@ -93,7 +93,7 @@ def fix_circuit_breaker_error_handling() -> bool:
     log("🔧 Ajout gestion d'erreurs inattendues au Circuit Breaker...")
 
     # Lire le fichier actuel
-    with open(circuit_breaker_path, "r") as f:
+    with open(circuit_breaker_path) as f:
         content = f.read()
 
     # Sauvegarde
@@ -170,7 +170,7 @@ def create_mock_server_fixture() -> bool:
     log("🔧 Ajout fixture mock serveur pour tests metrics...")
 
     # Lire le fichier actuel
-    with open(metrics_test_path, "r") as f:
+    with open(metrics_test_path) as f:
         content = f.read()
 
     # Sauvegarde
@@ -178,9 +178,7 @@ def create_mock_server_fixture() -> bool:
 
     # Ajouter les imports nécessaires
     if "from unittest.mock import patch" not in content:
-        content = content.replace(
-            "import pytest", "import pytest\nfrom unittest.mock import patch"
-        )
+        content = content.replace("import pytest", "import pytest\nfrom unittest.mock import patch")
 
     # Ajouter le fixture mock
     mock_fixture = """
@@ -255,7 +253,7 @@ def mark_obsolete_tests() -> bool:
             backup_file(test_file)
 
             # Lire le contenu
-            with open(test_file, "r") as f:
+            with open(test_file) as f:
                 content = f.read()
 
             # Ajouter marqueur skip pour les tests problématiques
@@ -280,7 +278,7 @@ def mark_obsolete_tests() -> bool:
     return True
 
 
-def run_tests_validation() -> Dict[str, Any]:
+def run_tests_validation() -> dict[str, Any]:
     """Lance une validation rapide des tests corrigés"""
     log("🧪 Validation des corrections...")
 

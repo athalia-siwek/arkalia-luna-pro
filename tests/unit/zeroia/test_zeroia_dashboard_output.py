@@ -14,7 +14,7 @@ def test_update_dashboard_creates_json(tmp_path):
 
     update_dashboard("monitor", 0.65, context, dashboard_path_override=path)
     # Lire uniquement les lignes JSON valides
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
     assert data["last_decision"] == "monitor"

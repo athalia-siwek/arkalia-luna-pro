@@ -18,11 +18,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Imports des modules pour éviter les erreurs de type checking
 try:
-    import psutil
-
     from modules.zeroia.circuit_breaker import CircuitBreaker
     from modules.zeroia.event_store import EventStore, EventType
-    from modules.zeroia.reason_loop_enhanced import create_default_context_enhanced
 except ImportError:
     # Les erreurs d'import seront gérées par test_imports()
     pass

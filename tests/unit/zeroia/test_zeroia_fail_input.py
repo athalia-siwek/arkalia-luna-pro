@@ -47,9 +47,6 @@ def test_fail_on_invalid_toml(tmp_path: Path):
 
     with pytest.raises(
         ValueError,
-        match=(
-            r"\[TOML\] Format invalide dans .*: "
-            r"Found invalid character in key name: ':'"
-        ),
+        match=(r"\[TOML\] Format invalide dans .*: " r"Found invalid character in key name: ':'"),
     ):
         reason_loop(context_path=ctx_path, reflexia_path=reflexia_path)

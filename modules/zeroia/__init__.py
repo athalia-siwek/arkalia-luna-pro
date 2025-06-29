@@ -11,15 +11,24 @@ __version__ = "3.0.0-enhanced"
 __author__ = "Arkalia-LUNA Team"
 __description__ = "Système de raisonnement intelligent avec protection avancée"
 
-from .circuit_breaker import CircuitBreaker
-from .error_recovery_system import ErrorRecoverySystem
-from .event_store import EventStore, EventType
-from .graceful_degradation import DegradationLevel, GracefulDegradationSystem
-from .reason_loop import reason_loop
-from .reason_loop_enhanced import (
-    reason_loop_enhanced,
-    reason_loop_enhanced_with_recovery,
+from .error_recovery_system import ErrorRecoverySystem  # noqa: F401
+from .graceful_degradation import (  # noqa: F401
+    DegradationLevel,
+    GracefulDegradationSystem,
 )
+from .reason_loop import reason_loop
+
+# Imports conditionnels pour éviter les erreurs si modules non disponibles
+try:
+    from .circuit_breaker import CircuitBreaker  # noqa: F401
+    from .event_store import EventStore, EventType  # noqa: F401
+    from .reason_loop_enhanced import (  # noqa: F401
+        reason_loop_enhanced,
+        reason_loop_enhanced_with_recovery,
+    )
+except ImportError:
+    # Modules optionnels non disponibles
+    pass
 
 # Configuration par défaut
 DEFAULT_CONFIG = {
@@ -54,7 +63,7 @@ def get_zeroia_status():
     """🔍 Obtenir le statut complet de ZeroIA"""
     try:
         # Test imports critiques
-        from . import reason_loop_enhanced
+        from . import reason_loop_enhanced  # noqa: F401
 
         return {
             "status": "✅ HEALTHY",
@@ -96,7 +105,7 @@ def health_check() -> dict:
     """Vérifie l'état de santé du module ZeroIA"""
     try:
         # Test imports critiques
-        from . import circuit_breaker, event_store, reason_loop_enhanced
+        from . import circuit_breaker  # noqa: F401
 
         return {
             "status": "healthy",

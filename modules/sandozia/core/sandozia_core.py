@@ -39,10 +39,10 @@ class SandoziaMetrics:
     cross_validation_passed: int
     anomalies_detected: int
     reasoning_alignment: float  # 0.0-1.0
-    modules_active: List[str]
+    modules_active: list[str]
     total_correlations: int
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         data = asdict(self)
         data["timestamp"] = self.timestamp.isoformat()
         return data
@@ -52,18 +52,18 @@ class SandoziaMetrics:
 class IntelligenceSnapshot:
     """Snapshot état intelligence globale"""
 
-    reflexia_state: Dict
-    zeroia_state: Dict
-    assistant_state: Dict
-    helloria_state: Dict
-    nyxalia_state: Dict
-    taskia_state: Dict
-    cognitive_state: Dict
-    coherence_analysis: Dict
-    behavioral_patterns: List[Dict]
-    recommendations: List[str]
+    reflexia_state: dict
+    zeroia_state: dict
+    assistant_state: dict
+    helloria_state: dict
+    nyxalia_state: dict
+    taskia_state: dict
+    cognitive_state: dict
+    coherence_analysis: dict
+    behavioral_patterns: list[dict]
+    recommendations: list[str]
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return asdict(self)
 
 
@@ -78,10 +78,8 @@ class SandoziaCore:
     - Recommandations intelligence collaborative
     """
 
-    def __init__(self, config_path: Optional[Path] = None):
-        self.config_path = config_path or Path(
-            "modules/sandozia/config/sandozia_config.toml"
-        )
+    def __init__(self, config_path: Path | None = None):
+        self.config_path = config_path or Path("modules/sandozia/config/sandozia_config.toml")
         self.state_dir = Path("state/sandozia")
         self.logs_dir = Path("logs/sandozia")
 
@@ -93,12 +91,12 @@ class SandoziaCore:
         self.config = self._load_config()
 
         # Métriques et état
-        self.metrics_history: List[SandoziaMetrics] = []
+        self.metrics_history: list[SandoziaMetrics] = []
         self.intelligence_snapshots = Cache(
             "./cache/sandozia_snapshots", size_limit=500_000_000
         )  # 500MB limit
         self.snapshots_counter = 0  # Compteur simple pour le suivi
-        self.active_correlations: Dict[str, Any] = {}
+        self.active_correlations: dict[str, Any] = {}
 
         # Intégration modules IA existants (fonctions directes)
         self.reflexia_available = True
@@ -110,7 +108,7 @@ class SandoziaCore:
 
         logger.info("🧠 SandoziaCore initialized - Intelligence Croisée ready")
 
-    def _load_config(self) -> Dict:
+    def _load_config(self) -> dict:
         """Charge la configuration Sandozia"""
         default_config = {
             "monitoring": {
@@ -275,9 +273,7 @@ class SandoziaCore:
 
         # Sauvegarder snapshot
         self.snapshots_counter += 1
-        snapshot_key = (
-            f"snapshot_{self.snapshots_counter:06d}_{int(datetime.now().timestamp())}"
-        )
+        snapshot_key = f"snapshot_{self.snapshots_counter:06d}_{int(datetime.now().timestamp())}"
         self.intelligence_snapshots[snapshot_key] = snapshot.to_dict()
 
         # Nettoyage automatique géré par diskcache (size_limit)
@@ -286,8 +282,8 @@ class SandoziaCore:
         return snapshot
 
     async def _analyze_coherence(
-        self, reflexia_state: Dict, zeroia_state: Dict, assistant_state: Dict
-    ) -> Dict:
+        self, reflexia_state: dict, zeroia_state: dict, assistant_state: dict
+    ) -> dict:
         """Analyse la cohérence entre les modules IA"""
 
         coherence_score = 1.0
@@ -309,7 +305,7 @@ class SandoziaCore:
             "modules_aligned": len(issues) == 0,
         }
 
-    async def _detect_behavioral_patterns(self) -> List[Dict]:
+    async def _detect_behavioral_patterns(self) -> list[dict]:
         """Détecte des patterns comportementaux suspects"""
         patterns = []
 
@@ -349,8 +345,8 @@ class SandoziaCore:
         return patterns
 
     async def _generate_recommendations(
-        self, coherence_analysis: Dict, patterns: List[Dict]
-    ) -> List[str]:
+        self, coherence_analysis: dict, patterns: list[dict]
+    ) -> list[str]:
         """Génère des recommandations basées sur l'analyse"""
         recommendations = []
 
@@ -409,9 +405,7 @@ class SandoziaCore:
                 # Générer métriques
                 metrics = SandoziaMetrics(
                     timestamp=datetime.now(),
-                    coherence_score=snapshot.coherence_analysis.get(
-                        "coherence_score", 0.0
-                    ),
+                    coherence_score=snapshot.coherence_analysis.get("coherence_score", 0.0),
                     cross_validation_passed=(
                         1 if snapshot.coherence_analysis.get("modules_aligned") else 0
                     ),
@@ -420,9 +414,7 @@ class SandoziaCore:
                     modules_active=[
                         mod
                         for mod in ["reflexia", "zeroia", "assistant"]
-                        if snapshot.__dict__.get(f"{mod}_state", {}).get(
-                            "active", False
-                        )
+                        if snapshot.__dict__.get(f"{mod}_state", {}).get("active", False)
                     ],
                     total_correlations=len(self.active_correlations),
                 )
@@ -441,9 +433,7 @@ class SandoziaCore:
 
             await asyncio.sleep(interval)
 
-    async def _save_state(
-        self, snapshot: IntelligenceSnapshot, metrics: SandoziaMetrics
-    ):
+    async def _save_state(self, snapshot: IntelligenceSnapshot, metrics: SandoziaMetrics):
         """Sauvegarde l'état et métriques"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -457,7 +447,7 @@ class SandoziaCore:
         with open(metrics_file, "w") as f:
             json.dump(metrics.to_dict(), f, indent=2)
 
-    def get_current_status(self) -> Dict:
+    def get_current_status(self) -> dict:
         """Retourne le statut actuel de Sandozia"""
 
         return {

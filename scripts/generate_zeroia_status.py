@@ -58,9 +58,7 @@ def get_file_info(filepath):
     if not p.exists():
         return f"- ❌ {filepath} (not found)"
     size = p.stat().st_size
-    mtime = datetime.datetime.fromtimestamp(p.stat().st_mtime).strftime(
-        "%Y-%m-%d %H:%M"
-    )
+    mtime = datetime.datetime.fromtimestamp(p.stat().st_mtime).strftime("%Y-%m-%d %H:%M")
     return f"- ✅ `{filepath}` — **{size} bytes**, modifié le *{mtime}*"
 
 

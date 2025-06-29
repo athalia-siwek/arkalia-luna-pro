@@ -98,9 +98,7 @@ def test_zeroia_decision_time_under_2s(performance_metrics, temp_paths):
     context = create_default_context_enhanced()
 
     # Mock des fichiers pour éviter I/O
-    with patch(
-        "modules.zeroia.reason_loop_enhanced.load_toml_enhanced_cache"
-    ) as mock_load:
+    with patch("modules.zeroia.reason_loop_enhanced.load_toml_enhanced_cache") as mock_load:
         mock_load.return_value = context
 
         with patch("modules.zeroia.reason_loop_enhanced.persist_state_enhanced"):
@@ -124,9 +122,7 @@ def test_zeroia_decision_time_under_2s(performance_metrics, temp_paths):
     elapsed = performance_metrics.elapsed_time
     threshold = float(os.getenv("ZEROIA_DECISION_THRESHOLD", "2.0"))
 
-    assert (
-        elapsed < threshold
-    ), f"❌ ZeroIA trop lent : {elapsed:.3f}s (limite : {threshold}s)"
+    assert elapsed < threshold, f"❌ ZeroIA trop lent : {elapsed:.3f}s (limite : {threshold}s)"
 
     print(f"✅ ZeroIA décision en {elapsed:.3f}s (objectif < {threshold}s)")
     memory_delta = performance_metrics.memory_delta
@@ -231,9 +227,7 @@ def test_event_store_write_performance(performance_metrics, tmp_path):
 
     print(f"✅ Event Store - {events_count} événements écrits")
     print(f"📊 Moyenne: {avg_write_ms:.2f}ms | Max: {max_write_ms:.2f}ms")
-    print(
-        f"🚀 Throughput: {events_count / performance_metrics.elapsed_time:.0f} events/sec"
-    )
+    print(f"🚀 Throughput: {events_count / performance_metrics.elapsed_time:.0f} events/sec")
 
 
 @pytest.mark.performance

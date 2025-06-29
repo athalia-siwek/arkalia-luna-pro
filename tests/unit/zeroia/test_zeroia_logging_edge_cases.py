@@ -31,9 +31,7 @@ def test_get_configured_contradiction_log_with_config(tmp_path):
 
 def test_get_configured_contradiction_log_missing_config():
     """🧠 Test avec un fichier de config manquant - doit utiliser le défaut"""
-    with patch(
-        "modules.zeroia.reason_loop.CONFIG_PATH", Path("/nonexistent/config.toml")
-    ):
+    with patch("modules.zeroia.reason_loop.CONFIG_PATH", Path("/nonexistent/config.toml")):
         result = get_configured_contradiction_log()
         assert result == DEFAULT_CONTRADICTION_LOG
 

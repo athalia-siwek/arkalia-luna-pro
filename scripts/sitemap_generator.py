@@ -10,7 +10,7 @@ import yaml
 
 def parse_nav_from_mkdocs(mkdocs_yml_path="mkdocs.yml"):
     """Charge la config MkDocs et extrait les chemins de navigation."""
-    with open(mkdocs_yml_path, "r", encoding="utf-8") as f:
+    with open(mkdocs_yml_path, encoding="utf-8") as f:
         config = yaml.safe_load(f)  # 🔒 Utilise SafeLoader par défaut
     return extract_paths(config.get("nav", []))
 

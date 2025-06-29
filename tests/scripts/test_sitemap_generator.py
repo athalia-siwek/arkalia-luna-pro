@@ -8,11 +8,9 @@ import yaml
 from defusedxml.ElementTree import parse as safe_parse
 
 # 📌 Injection du path du script pour l'import
-sys.path.insert(
-    0, os.path.abspath("/Volumes/T7/devstation/cursor/arkalia-luna-pro/scripts")
-)
+sys.path.insert(0, os.path.abspath("/Volumes/T7/devstation/cursor/arkalia-luna-pro/scripts"))
 
-from scripts.sitemap_generator import (  # noqa: E402
+from scripts.sitemap_generator import (
     extract_paths,
     generate_sitemap,
     ping_google_sitemap,
@@ -33,9 +31,7 @@ skip_if_no_sitemap = pytest.mark.skipif(
 
 def ensure_sitemap_exists():
     if not os.path.exists(SITEMAP_PATH):
-        pytest.fail(
-            f"❌ Le fichier {SITEMAP_PATH} est introuvable. Exécute 'mkdocs build'."
-        )
+        pytest.fail(f"❌ Le fichier {SITEMAP_PATH} est introuvable. Exécute 'mkdocs build'.")
 
 
 @skip_if_no_sitemap
@@ -64,7 +60,7 @@ def test_sitemap_contains_urls():
 @skip_if_no_sitemap
 def test_sitemap_matches_nav():
     ensure_sitemap_exists()
-    with open(MKDOCS_CONFIG_PATH, "r", encoding="utf-8") as f:
+    with open(MKDOCS_CONFIG_PATH, encoding="utf-8") as f:
         config = yaml.safe_load(f)
     expected_paths = extract_paths(config.get("nav", []))
 

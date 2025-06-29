@@ -30,8 +30,8 @@ class ArkaliaModulesAnalyzer:
         }
 
         # Composants trouvés
-        self.discovered_modules: Dict[str, List[str]] = {}
-        self.missing_integrations: List[Dict] = []
+        self.discovered_modules: dict[str, list[str]] = {}
+        self.missing_integrations: list[dict] = []
 
     def scan_all_modules(self):
         """Scan complet de tous les modules disponibles"""
@@ -58,9 +58,7 @@ class ArkaliaModulesAnalyzer:
         components = []
 
         for file_path in module_path.rglob("*.py"):
-            if file_path.name != "__init__.py" and not file_path.name.startswith(
-                "test_"
-            ):
+            if file_path.name != "__init__.py" and not file_path.name.startswith("test_"):
                 relative_path = file_path.relative_to(module_path)
                 component_name = str(relative_path).replace(".py", "").replace("/", ".")
                 components.append(component_name)
@@ -70,7 +68,7 @@ class ArkaliaModulesAnalyzer:
         # Identifier les composants spéciaux
         self.identify_special_components(module_name, components)
 
-    def identify_special_components(self, module_name: str, components: List[str]):
+    def identify_special_components(self, module_name: str, components: list[str]):
         """Identifie les composants spéciaux qui pourraient être intégrés"""
 
         special_patterns = {
@@ -115,15 +113,13 @@ class ArkaliaModulesAnalyzer:
         """Vérifie si un composant est déjà intégré dans l'orchestrateur"""
 
         # Lecture de l'orchestrateur pour vérifier les imports
-        orchestrator_file = (
-            self.project_root / "modules/arkalia_master/orchestrator_ultimate.py"
-        )
+        orchestrator_file = self.project_root / "modules/arkalia_master/orchestrator_ultimate.py"
 
         if not orchestrator_file.exists():
             return False
 
         try:
-            with open(orchestrator_file, "r") as f:
+            with open(orchestrator_file) as f:
                 content = f.read()
 
             # Vérifier si le composant est importé ou utilisé
@@ -189,12 +185,8 @@ class ArkaliaModulesAnalyzer:
         print("=" * 80)
 
         # Trier par priorité
-        high_priority = [
-            m for m in self.missing_integrations if m["priority"] == "HIGH"
-        ]
-        medium_priority = [
-            m for m in self.missing_integrations if m["priority"] == "MEDIUM"
-        ]
+        high_priority = [m for m in self.missing_integrations if m["priority"] == "HIGH"]
+        medium_priority = [m for m in self.missing_integrations if m["priority"] == "MEDIUM"]
         low_priority = [m for m in self.missing_integrations if m["priority"] == "LOW"]
 
         # Afficher par priorité
@@ -218,9 +210,7 @@ class ArkaliaModulesAnalyzer:
         print("\n🚀 CODE D'INTÉGRATION SUGGÉRÉ")
         print("=" * 60)
 
-        high_priority = [
-            m for m in self.missing_integrations if m["priority"] == "HIGH"
-        ]
+        high_priority = [m for m in self.missing_integrations if m["priority"] == "HIGH"]
 
         if high_priority:
             print("# === IMPORTS À AJOUTER ===")

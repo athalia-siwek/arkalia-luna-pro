@@ -17,7 +17,7 @@ def check_state_file():
         return 2
 
     try:
-        with open(STATE_PATH, "r") as f:
+        with open(STATE_PATH) as f:
             data = toml.load(f)
     except toml.TomlDecodeError as e:
         print(f"❌ Erreur TOML : {e}")

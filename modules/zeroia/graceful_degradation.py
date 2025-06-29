@@ -13,11 +13,12 @@ Fonctionnalités :
 import asyncio
 import json
 import logging
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -59,9 +60,9 @@ class ServiceDefinition:
 
     name: str
     priority: ServicePriority
-    dependencies: List[str] = field(default_factory=list)
-    health_check: Optional[Callable] = None
-    graceful_shutdown: Optional[Callable] = None
+    dependencies: list[str] = field(default_factory=list)
+    health_check: Callable | None = None
+    graceful_shutdown: Callable | None = None
     resource_cost: float = 1.0  # Coût en ressources (CPU/RAM)
     description: str = ""
 
@@ -76,9 +77,9 @@ class ServiceMetrics:
 
     name: str
     status: ServiceStatus
-    last_health_check: Optional[datetime] = None
+    last_health_check: datetime | None = None
     failure_count: int = 0
-    last_failure: Optional[datetime] = None
+    last_failure: datetime | None = None
     uptime: float = 0.0
     resource_usage: float = 0.0
     response_time: float = 0.0
@@ -95,8 +96,8 @@ class DegradationMetrics:
     disabled_services: int = 0
     total_resource_usage: float = 0.0
     system_health_score: float = 0.0
-    last_level_change: Optional[datetime] = None
-    degradation_triggers: List[str] = field(default_factory=list)
+    last_level_change: datetime | None = None
+    degradation_triggers: list[str] = field(default_factory=list)
 
 
 class GracefulDegradationSystem:
@@ -110,9 +111,9 @@ class GracefulDegradationSystem:
     - Métriques détaillées en temps réel
     """
 
-    def __init__(self, config_path: Optional[str] = None):
-        self.services: Dict[str, ServiceDefinition] = {}
-        self.service_metrics: Dict[str, ServiceMetrics] = {}
+    def __init__(self, config_path: str | None = None):
+        self.services: dict[str, ServiceDefinition] = {}
+        self.service_metrics: dict[str, ServiceMetrics] = {}
         self.degradation_metrics = DegradationMetrics(DegradationLevel.NORMAL)
 
         # Configuration des seuils
@@ -129,8 +130,8 @@ class GracefulDegradationSystem:
         self.initialization_cooldown = 30  # secondes
 
         # Callbacks
-        self.degradation_callbacks: List[Callable] = []
-        self.recovery_callbacks: List[Callable] = []
+        self.degradation_callbacks: list[Callable] = []
+        self.recovery_callbacks: list[Callable] = []
 
         # Métriques
         self.metrics = {
@@ -164,7 +165,7 @@ class GracefulDegradationSystem:
 
         logger.info("📉 GracefulDegradationSystem initialisé")
 
-    def _load_thresholds(self, config_path: Optional[str]) -> Dict[str, float]:
+    def _load_thresholds(self, config_path: str | None) -> dict[str, float]:
         """Charge les seuils de dégradation"""
         default_thresholds = {
             "cpu_usage": 80.0,  # % CPU pour déclencher dégradation
@@ -399,40 +400,24 @@ class GracefulDegradationSystem:
 
         if level in [DegradationLevel.LIGHT_DEGRADATION]:
             # Désactiver seulement les services optionnels
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.OPTIONAL)
-            )
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.OPTIONAL))
 
         elif level == DegradationLevel.MODERATE_DEGRADATION:
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.OPTIONAL)
-            )
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.LOW)
-            )
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.OPTIONAL))
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.LOW))
 
         elif level == DegradationLevel.HEAVY_DEGRADATION:
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.OPTIONAL)
-            )
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.LOW)
-            )
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.OPTIONAL))
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.LOW))
             # Dégrader services medium priorité
             medium_services = self._get_services_by_priority(ServicePriority.MEDIUM)
             for service_name in medium_services:
                 await self._degrade_service(service_name)
 
         elif level == DegradationLevel.EMERGENCY:
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.OPTIONAL)
-            )
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.LOW)
-            )
-            services_to_disable.update(
-                self._get_services_by_priority(ServicePriority.MEDIUM)
-            )
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.OPTIONAL))
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.LOW))
+            services_to_disable.update(self._get_services_by_priority(ServicePriority.MEDIUM))
 
         elif level == DegradationLevel.SURVIVAL:
             # Garder seulement les services critiques
@@ -452,13 +437,9 @@ class GracefulDegradationSystem:
             f"📉 Niveau {level.value} appliqué: {len(services_to_disable)} services suspendus"
         )
 
-    def _get_services_by_priority(self, priority: ServicePriority) -> List[str]:
+    def _get_services_by_priority(self, priority: ServicePriority) -> list[str]:
         """Retourne les services d'une priorité donnée"""
-        return [
-            name
-            for name, service in self.services.items()
-            if service.priority == priority
-        ]
+        return [name for name, service in self.services.items() if service.priority == priority]
 
     async def _suspend_service(self, service_name: str):
         """Suspend un service"""
@@ -531,9 +512,7 @@ class GracefulDegradationSystem:
         else:
             # Rollback si récupération échoue
             await self._apply_degradation_level(self.current_level)
-            logger.warning(
-                f"⚠️ Récupération échouée, rollback vers {self.current_level.value}"
-            )
+            logger.warning(f"⚠️ Récupération échouée, rollback vers {self.current_level.value}")
             return False
 
     def _get_recovery_level(self) -> DegradationLevel:
@@ -607,7 +586,7 @@ class GracefulDegradationSystem:
         self.degradation_metrics.disabled_services = disabled
         self.degradation_metrics.total_resource_usage = total_resources
 
-    def get_system_status(self) -> Dict[str, Any]:
+    def get_system_status(self) -> dict[str, Any]:
         """Retourne l'état complet du système"""
         return {
             "degradation_level": self.current_level.value,
@@ -626,12 +605,10 @@ class GracefulDegradationSystem:
                 else None
             ),
             "auto_recovery": self.auto_recovery_enabled,
-            "recent_triggers": self.degradation_metrics.degradation_triggers[
-                -5:
-            ],  # 5 derniers
+            "recent_triggers": self.degradation_metrics.degradation_triggers[-5:],  # 5 derniers
         }
 
-    def get_service_details(self) -> Dict[str, Any]:
+    def get_service_details(self) -> dict[str, Any]:
         """Retourne les détails de tous les services"""
         services_detail = {}
 
@@ -644,9 +621,7 @@ class GracefulDegradationSystem:
                 "description": service.description,
                 "failure_count": metrics.failure_count,
                 "last_health_check": (
-                    metrics.last_health_check.isoformat()
-                    if metrics.last_health_check
-                    else None
+                    metrics.last_health_check.isoformat() if metrics.last_health_check else None
                 ),
                 "resource_usage": metrics.resource_usage,
                 "response_time": metrics.response_time,
@@ -662,7 +637,7 @@ class GracefulDegradationSystem:
         """Ajoute un callback appelé lors de récupérations"""
         self.recovery_callbacks.append(callback)
 
-    async def health_check(self) -> Dict[str, Any]:
+    async def health_check(self) -> dict[str, Any]:
         """Vérification de santé du système de dégradation"""
         try:
             health_score = await self.assess_system_health()
@@ -691,9 +666,7 @@ class GracefulDegradationSystem:
             return False
 
         # Vérifier le délai depuis la dernière initialisation
-        if (
-            now - self.last_initialization
-        ).total_seconds() < self.initialization_cooldown:
+        if (now - self.last_initialization).total_seconds() < self.initialization_cooldown:
             return False
 
         return True
@@ -729,7 +702,7 @@ class GracefulDegradationSystem:
 
 # Factory function
 def create_graceful_degradation_system(
-    config_path: Optional[str] = None,
+    config_path: str | None = None,
 ) -> GracefulDegradationSystem:
     """Factory pour créer un système de dégradation configuré"""
     return GracefulDegradationSystem(config_path)

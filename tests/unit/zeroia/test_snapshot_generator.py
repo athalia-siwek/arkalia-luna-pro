@@ -53,6 +53,4 @@ def test_snapshot_generator_returns_valid_path(tmp_path):
     valid_path.write_text("fake = 'value'")
 
     result = generate_snapshot(input_path=valid_path, fallback=True)
-    assert result, (
-        "Snapshot non généré malgré fallback=True " "et un fichier TOML valide."
-    )
+    assert result, "Snapshot non généré malgré fallback=True " "et un fichier TOML valide."

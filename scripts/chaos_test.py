@@ -53,7 +53,7 @@ class ChaosInjector:
             shutil.copy2(backup_path, original_path)
             print(f"🔄 [CHAOS] Restored: {backup_path} → {original_path}")
 
-    def chaos_corrupt_config(self) -> Dict:
+    def chaos_corrupt_config(self) -> dict:
         """💥 Corrompt les fichiers de configuration"""
         print("💥 [CHAOS] Corruption fichiers configuration...")
 
@@ -77,7 +77,7 @@ class ChaosInjector:
             if not self.is_dry_run:
                 try:
                     # Corruption du fichier (ajout caractères invalides)
-                    with open(file_path, "r") as f:
+                    with open(file_path) as f:
                         content = f.read()
 
                     corrupted_content = (
@@ -97,7 +97,7 @@ class ChaosInjector:
 
         return results
 
-    def chaos_delete_critical_files(self) -> Dict:
+    def chaos_delete_critical_files(self) -> dict:
         """🗑️ Supprime des fichiers critiques temporairement"""
         print("🗑️ [CHAOS] Suppression fichiers critiques...")
 
@@ -128,7 +128,7 @@ class ChaosInjector:
 
         return results
 
-    def chaos_memory_stress(self, duration_seconds: int = 30) -> Dict:
+    def chaos_memory_stress(self, duration_seconds: int = 30) -> dict:
         """🧠 Surcharge mémoire pour tester la résilience"""
         print(f"🧠 [CHAOS] Surcharge mémoire pendant {duration_seconds}s...")
 
@@ -168,7 +168,7 @@ class ChaosInjector:
 
         return results
 
-    def chaos_network_simulation(self) -> Dict:
+    def chaos_network_simulation(self) -> dict:
         """🌐 Simule des erreurs réseau"""
         print("🌐 [CHAOS] Simulation erreurs réseau...")
 
@@ -197,14 +197,10 @@ class ChaosInjector:
                     test_result["accessible"] = result == 0
                     test_result["chaos_injected"] = False
                 else:
-                    test_result["accessible"] = random.choice(
-                        [True, False]
-                    )  # nosec B311
+                    test_result["accessible"] = random.choice([True, False])  # nosec B311
                     test_result["chaos_injected"] = True
 
-                print(
-                    f"🔗 [CHAOS] {service}: {'✅' if test_result['accessible'] else '❌'}"
-                )
+                print(f"🔗 [CHAOS] {service}: {'✅' if test_result['accessible'] else '❌'}")
 
             except Exception as e:
                 test_result["accessible"] = False
@@ -215,7 +211,7 @@ class ChaosInjector:
 
         return results
 
-    def chaos_zeroia_state_corruption(self) -> Dict:
+    def chaos_zeroia_state_corruption(self) -> dict:
         """🤖 Corrompt l'état de ZeroIA"""
         print("🤖 [CHAOS] Corruption état ZeroIA...")
 
@@ -238,7 +234,7 @@ class ChaosInjector:
             if not self.is_dry_run:
                 try:
                     # Injection de chaos spécifique ZeroIA
-                    with open(file_path, "r") as f:
+                    with open(file_path) as f:
                         content = f.read()
 
                     # Corruption ciblée
@@ -250,9 +246,7 @@ class ChaosInjector:
                     ]
 
                     corrupted_content = content + "\n# CHAOS INJECTION\n"
-                    corrupted_content += "\n".join(
-                        random.sample(chaos_injections, 2)  # nosec B311
-                    )
+                    corrupted_content += "\n".join(random.sample(chaos_injections, 2))  # nosec B311
 
                     with open(file_path, "w") as f:
                         f.write(corrupted_content)
@@ -265,7 +259,7 @@ class ChaosInjector:
 
         return results
 
-    def run_resilience_test(self, test_duration: int = 60) -> Dict:
+    def run_resilience_test(self, test_duration: int = 60) -> dict:
         """🧪 Exécute un test de résilience complet"""
         print(f"🧪 [CHAOS] Démarrage test résilience ({test_duration}s)...")
 
@@ -330,7 +324,7 @@ class ChaosInjector:
 
         return test_report
 
-    def _test_system_recovery(self) -> Dict:
+    def _test_system_recovery(self) -> dict:
         """🔄 Teste la capacité de récupération du système"""
         recovery_result = {
             "timestamp": datetime.now().isoformat(),
@@ -392,7 +386,7 @@ class ChaosInjector:
             except Exception as e:
                 print(f"❌ [CHAOS] Erreur restauration {backup_file}: {e}")
 
-    def _generate_chaos_report(self, test_report: Dict):
+    def _generate_chaos_report(self, test_report: dict):
         """📊 Génère le rapport de test de chaos"""
         report_dir = Path("logs/chaos_reports")
         report_dir.mkdir(parents=True, exist_ok=True)
@@ -407,9 +401,7 @@ class ChaosInjector:
         print(f"   ⏱️ Durée: {test_report.get('actual_duration', 0):.2f}s")
         print(f"   🎯 Scénarios: {len(test_report['chaos_scenarios'])}")
         print(f"   🔄 Tests récupération: {len(test_report['recovery_tests'])}")
-        print(
-            f"   ✅ Succès global: {'OUI' if test_report['overall_success'] else 'NON'}"
-        )
+        print(f"   ✅ Succès global: {'OUI' if test_report['overall_success'] else 'NON'}")
         print(f"   📄 Rapport: {report_file}")
 
         # Statistiques détaillées
@@ -424,9 +416,7 @@ class ChaosInjector:
         scenarios_count = len(test_report["chaos_scenarios"])
         recoveries_count = len(test_report["recovery_tests"])
         print(f"   💥 Scénarios réussis: {successful_scenarios}/{scenarios_count}")
-        print(
-            f"   🔄 Récupérations réussies: {successful_recoveries}/{recoveries_count}"
-        )
+        print(f"   🔄 Récupérations réussies: {successful_recoveries}/{recoveries_count}")
 
         total_tests = scenarios_count + recoveries_count
         total_successes = successful_scenarios + successful_recoveries
@@ -440,9 +430,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="🧪 Arkalia-LUNA Chaos Testing")
     parser.add_argument("--dry-run", action="store_true", help="Mode simulation")
-    parser.add_argument(
-        "--duration", type=int, default=60, help="Durée du test (secondes)"
-    )
+    parser.add_argument("--duration", type=int, default=60, help="Durée du test (secondes)")
     parser.add_argument(
         "--scenario",
         choices=["config", "memory", "network", "zeroia", "files"],

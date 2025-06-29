@@ -23,7 +23,7 @@ class ModelIntegrityMonitor:
 
     def __init__(self, history_limit: int = 50):
         self.history_limit = history_limit
-        self.decision_history: List[Dict] = []
+        self.decision_history: list[dict] = []
         self.anomaly_threshold = 0.6
         self.confidence_baseline = 0.6
         self.logger = self._setup_logger()
@@ -45,7 +45,7 @@ class ModelIntegrityMonitor:
 
         return logger
 
-    def validate_context_integrity(self, context: Dict) -> Tuple[bool, str, float]:
+    def validate_context_integrity(self, context: dict) -> tuple[bool, str, float]:
         """
         Valide l'intégrité du contexte d'entrée en temps réel
 
@@ -76,7 +76,7 @@ class ModelIntegrityMonitor:
             self.logger.error(f"Integrity validation error: {e}")
             return False, f"Validation error: {e}", 0.0
 
-    def _validate_structure(self, context: Dict) -> bool:
+    def _validate_structure(self, context: dict) -> bool:
         """Valide la structure du contexte - Compatible tests existants"""
         if not isinstance(context, dict):
             return False
@@ -91,7 +91,7 @@ class ModelIntegrityMonitor:
 
         return required_cpu and has_severity_or_ram
 
-    def _validate_values(self, context: Dict) -> bool:
+    def _validate_values(self, context: dict) -> bool:
         """Valide les valeurs pour détecter injections"""
         status = context.get("status", {})
 
@@ -131,7 +131,7 @@ class ModelIntegrityMonitor:
 
         return True
 
-    def _check_coherence(self, context: Dict) -> float:
+    def _check_coherence(self, context: dict) -> float:
         """Vérifie la cohérence du contexte avec l'historique"""
         status = context.get("status", {})
         cpu = status.get("cpu", 0)
@@ -162,7 +162,7 @@ class ModelIntegrityMonitor:
 
         return max(0.0, coherence_score)
 
-    def record_decision(self, context: Dict, decision: str, confidence: float) -> None:
+    def record_decision(self, context: dict, decision: str, confidence: float) -> None:
         """Enregistre une décision pour analyse de pattern"""
         record = {
             "timestamp": datetime.now().isoformat(),
@@ -182,7 +182,7 @@ class ModelIntegrityMonitor:
         # Analyse pattern en temps réel
         self._analyze_pattern()
 
-    def _hash_context(self, context: Dict) -> str:
+    def _hash_context(self, context: dict) -> str:
         """Génère un hash simple du contexte pour détection répétition"""
         status = context.get("status", {})
         key_data = f"{status.get('cpu', 0)}_{status.get('severity', 'none')}"
@@ -225,28 +225,20 @@ class ModelIntegrityMonitor:
         # Détection emergency_shutdown fréquent (plus strict)
         emergency_count = recent_decisions.count("emergency_shutdown")
         if emergency_count > 2:  # Plus strict (était 3)
-            msg = (
-                f"Excessive emergency shutdowns: "
-                f"{emergency_count}/{len(recent_decisions)}"
-            )
+            msg = f"Excessive emergency shutdowns: " f"{emergency_count}/{len(recent_decisions)}"
             self.logger.error(msg)
 
         # Nouvelle détection: CPU élevé mais décision normale
         for i, (decision, cpu) in enumerate(
-            zip(recent_decisions[-5:], recent_cpus[-5:])
+            zip(recent_decisions[-5:], recent_cpus[-5:], strict=False)
         ):
             if cpu > 85 and decision == "normal":
-                msg = (
-                    f"Suspicious: High CPU ({cpu}%) but normal decision "
-                    f"- possible injection"
-                )
+                msg = f"Suspicious: High CPU ({cpu}%) but normal decision " f"- possible injection"
                 self.logger.warning(msg)
 
         # Nouvelle détection: Répétition même décision avec CPU variable
         if len(recent_decisions) >= 4:
-            same_decision_count = sum(
-                1 for d in recent_decisions[-4:] if d == recent_decisions[-1]
-            )
+            same_decision_count = sum(1 for d in recent_decisions[-4:] if d == recent_decisions[-1])
             if same_decision_count >= 3:
                 cpu_variance = max(recent_cpus[-4:]) - min(recent_cpus[-4:])
                 if cpu_variance > 20:  # CPU très variable
@@ -256,7 +248,7 @@ class ModelIntegrityMonitor:
                     )
                     self.logger.warning(msg)
 
-    def get_integrity_status(self) -> Dict:
+    def get_integrity_status(self) -> dict:
         """Retourne le statut d'intégrité actuel"""
         if len(self.decision_history) < 3:
             return {
@@ -301,7 +293,7 @@ class ModelIntegrityMonitor:
             "last_updated": datetime.now().isoformat(),
         }
 
-    def create_integrity_report(self) -> Dict:
+    def create_integrity_report(self) -> dict:
         """Génère un rapport d'intégrité complet"""
         status = self.get_integrity_status()
 
@@ -312,9 +304,7 @@ class ModelIntegrityMonitor:
                 decision_counts[decision] = decision_counts.get(decision, 0) + 1
 
             status["decision_distribution"] = decision_counts
-            status["most_frequent_decision"] = max(
-                decision_counts.items(), key=lambda x: x[1]
-            )
+            status["most_frequent_decision"] = max(decision_counts.items(), key=lambda x: x[1])
 
         return status
 
@@ -332,8 +322,8 @@ def get_integrity_monitor() -> ModelIntegrityMonitor:
 
 
 def validate_decision_integrity(
-    context: Dict, decision: str, confidence: float
-) -> Tuple[bool, str]:
+    context: dict, decision: str, confidence: float
+) -> tuple[bool, str]:
     """
     Point d'entrée principal pour validation d'intégrité
     À appeler depuis reason_loop avant chaque décision
@@ -352,9 +342,7 @@ def validate_decision_integrity(
     # Vérification status général
     status = monitor.get_integrity_status()
     if status["status"] == "COMPROMISED":
-        monitor.logger.critical(
-            "Model integrity compromised - potential poisoning detected"
-        )
+        monitor.logger.critical("Model integrity compromised - potential poisoning detected")
         return False, "Model integrity compromised"
 
     return True, "Integrity validated"

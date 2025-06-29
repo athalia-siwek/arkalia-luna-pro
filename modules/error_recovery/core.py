@@ -24,8 +24,8 @@ class ModuleError(BaseModel):
     error_type: str
     error_message: str
     timestamp: datetime
-    stack_trace: Optional[str] = None
-    context: Dict = {}
+    stack_trace: str | None = None
+    context: dict = {}
 
 
 class RecoveryAction(BaseModel):
@@ -33,7 +33,7 @@ class RecoveryAction(BaseModel):
 
     module_name: str
     action_type: str
-    parameters: Dict
+    parameters: dict
     timestamp: datetime
     priority: int = 1
 
@@ -52,12 +52,12 @@ class ErrorRecoverySystem:
     """Système de récupération d'erreurs"""
 
     def __init__(self):
-        self.active_errors: Dict[str, List[ModuleError]] = {}
-        self.recovery_history: List[RecoveryResult] = []
+        self.active_errors: dict[str, list[ModuleError]] = {}
+        self.recovery_history: list[RecoveryResult] = []
         self.is_running = False
         self.max_retries = 3
 
-    async def register_error(self, error: ModuleError) -> Dict:
+    async def register_error(self, error: ModuleError) -> dict:
         """Enregistre une nouvelle erreur"""
         if error.module_name not in self.active_errors:
             self.active_errors[error.module_name] = []
@@ -76,7 +76,7 @@ class ErrorRecoverySystem:
 
         return {"status": "error_registered", "pending_recovery": True}
 
-    def _plan_recovery_action(self, error: ModuleError) -> Optional[RecoveryAction]:
+    def _plan_recovery_action(self, error: ModuleError) -> RecoveryAction | None:
         """Planifie une action de récupération"""
         module_errors = self.active_errors.get(error.module_name, [])
 
@@ -122,9 +122,7 @@ class ErrorRecoverySystem:
 
     async def execute_recovery(self, action: RecoveryAction) -> RecoveryResult:
         """Exécute une action de récupération"""
-        logger.info(
-            f"🔄 Exécution récupération: {action.module_name} - {action.action_type}"
-        )
+        logger.info(f"🔄 Exécution récupération: {action.module_name} - {action.action_type}")
 
         try:
             # Simulation des actions (à remplacer par vraies actions)
@@ -223,8 +221,7 @@ async def get_status():
     return {
         "status": "running" if recovery_system.is_running else "stopped",
         "active_errors": {
-            module: len(errors)
-            for module, errors in recovery_system.active_errors.items()
+            module: len(errors) for module, errors in recovery_system.active_errors.items()
         },
         "recovery_history": len(recovery_system.recovery_history),
         "last_recovery": (

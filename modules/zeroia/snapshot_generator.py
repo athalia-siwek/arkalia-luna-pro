@@ -35,8 +35,8 @@ def is_valid_toml(data: dict) -> bool:
 
 
 def generate_snapshot(
-    input_path: Optional[Path] = None,
-    output_path: Optional[Path] = None,
+    input_path: Path | None = None,
+    output_path: Path | None = None,
     fallback: bool = True,
 ) -> bool:
     input_file = input_path or STATE_FILE

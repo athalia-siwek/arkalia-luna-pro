@@ -25,9 +25,7 @@ def test_chat_post_ok(test_client):
         # nosec: assert_used
         assert res.status_code == 200, "Statut inattendu"  # nosec
         # nosec: assert_used
-        assert (
-            res.json()["réponse"] == "Tu as dit : Hello"
-        ), "Réponse inattendue"  # nosec
+        assert res.json()["réponse"] == "Tu as dit : Hello", "Réponse inattendue"  # nosec
     finally:
         app.dependency_overrides.clear()
 

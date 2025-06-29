@@ -67,15 +67,9 @@ def test_get_events_by_type(temp_event_store):
 
 def test_get_events_by_module(temp_event_store):
     """🧪 Test récupération événements par module"""
-    temp_event_store.add_event(
-        EventType.DECISION_MADE, {"decision": "monitor"}, module="zeroia"
-    )
-    temp_event_store.add_event(
-        EventType.DECISION_MADE, {"decision": "analyze"}, module="reflexia"
-    )
-    temp_event_store.add_event(
-        EventType.CIRCUIT_SUCCESS, {"state": "closed"}, module="zeroia"
-    )
+    temp_event_store.add_event(EventType.DECISION_MADE, {"decision": "monitor"}, module="zeroia")
+    temp_event_store.add_event(EventType.DECISION_MADE, {"decision": "analyze"}, module="reflexia")
+    temp_event_store.add_event(EventType.CIRCUIT_SUCCESS, {"state": "closed"}, module="zeroia")
     zeroia_events = temp_event_store.get_events_by_module("zeroia")
     assert len(zeroia_events) == 2
     assert all(event.module == "zeroia" for event in zeroia_events)

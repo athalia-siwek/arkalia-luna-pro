@@ -298,9 +298,7 @@ class ErrorRecoveryDemo:
         tasks = []
         for i in range(10):
             for error in stress_errors:
-                task = self.recovery_system.handle_error(
-                    error, "stress_test", f"batch_{i}"
-                )
+                task = self.recovery_system.handle_error(error, "stress_test", f"batch_{i}")
                 tasks.append(task)
 
         print(f"🚀 Launching {len(tasks)} recovery tasks...")
@@ -340,9 +338,7 @@ class ErrorRecoveryDemo:
 
             # Test avec le système intégré
             test_error = CognitiveOverloadError("Integration test error")
-            result = await integrated_system.handle_error(
-                test_error, "integration_test", "main"
-            )
+            result = await integrated_system.handle_error(test_error, "integration_test", "main")
 
             if result:
                 print("✅ Integration test: SUCCESS")
@@ -369,9 +365,7 @@ async def main():
     """Point d'entrée principal"""
     parser = argparse.ArgumentParser(description="Error Recovery System Demo")
     parser.add_argument("--stress-test", action="store_true", help="Run stress test")
-    parser.add_argument(
-        "--integration-test", action="store_true", help="Run integration test"
-    )
+    parser.add_argument("--integration-test", action="store_true", help="Run integration test")
 
     args = parser.parse_args()
 

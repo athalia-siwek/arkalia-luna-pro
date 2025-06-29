@@ -43,17 +43,17 @@ class TokenMetadata:
     token_type: TokenType
     status: TokenStatus
     created_at: datetime
-    expires_at: Optional[datetime]
-    last_used_at: Optional[datetime]
+    expires_at: datetime | None
+    last_used_at: datetime | None
     usage_count: int
-    max_usage_count: Optional[int]
-    associated_user: Optional[str]
-    associated_service: Optional[str]
-    permissions: List[str]
-    client_info: Dict[str, str]  # IP, User-Agent, etc.
-    tags: List[str]
+    max_usage_count: int | None
+    associated_user: str | None
+    associated_service: str | None
+    permissions: list[str]
+    client_info: dict[str, str]  # IP, User-Agent, etc.
+    tags: list[str]
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         """Conversion en dictionnaire pour sérialisation"""
         data = asdict(self)
         # Convertir les enums en strings
@@ -68,7 +68,7 @@ class TokenMetadata:
         return data
 
     @classmethod
-    def from_dict(cls, data: Dict) -> "TokenMetadata":
+    def from_dict(cls, data: dict) -> "TokenMetadata":
         """Création depuis un dictionnaire"""
         return cls(
             token_id=data["token_id"],
@@ -76,14 +76,10 @@ class TokenMetadata:
             status=TokenStatus(data["status"]),
             created_at=datetime.fromisoformat(data["created_at"]),
             expires_at=(
-                datetime.fromisoformat(data["expires_at"])
-                if data.get("expires_at")
-                else None
+                datetime.fromisoformat(data["expires_at"]) if data.get("expires_at") else None
             ),
             last_used_at=(
-                datetime.fromisoformat(data["last_used_at"])
-                if data.get("last_used_at")
-                else None
+                datetime.fromisoformat(data["last_used_at"]) if data.get("last_used_at") else None
             ),
             usage_count=data.get("usage_count", 0),
             max_usage_count=data.get("max_usage_count"),
@@ -131,8 +127,8 @@ class TokenManager:
     def __init__(self, vault: ArkaliaVault, jwt_secret_name: str = "jwt_master_secret"):
         self.vault = vault
         self.jwt_secret_name = jwt_secret_name
-        self.token_metadata: Dict[str, TokenMetadata] = {}
-        self.revoked_tokens: Set[str] = set()
+        self.token_metadata: dict[str, TokenMetadata] = {}
+        self.revoked_tokens: set[str] = set()
 
         # Initialiser le secret JWT si nécessaire
         self._ensure_jwt_secret()
@@ -183,10 +179,7 @@ class TokenManager:
     def _save_token_metadata(self):
         """Sauvegarde les métadonnées des tokens dans le vault"""
         try:
-            data = {
-                token_id: meta.to_dict()
-                for token_id, meta in self.token_metadata.items()
-            }
+            data = {token_id: meta.to_dict() for token_id, meta in self.token_metadata.items()}
             metadata_json = json.dumps(data, indent=2)
 
             self.vault.store_secret(
@@ -201,14 +194,14 @@ class TokenManager:
     def generate_token(
         self,
         token_type: TokenType,
-        user_id: Optional[str] = None,
-        service_id: Optional[str] = None,
-        permissions: Optional[List[str]] = None,
-        expires_in_hours: Optional[int] = None,
-        max_usage_count: Optional[int] = None,
-        client_info: Optional[Dict[str, str]] = None,
-        custom_claims: Optional[Dict] = None,
-    ) -> Tuple[str, str]:
+        user_id: str | None = None,
+        service_id: str | None = None,
+        permissions: list[str] | None = None,
+        expires_in_hours: int | None = None,
+        max_usage_count: int | None = None,
+        client_info: dict[str, str] | None = None,
+        custom_claims: dict | None = None,
+    ) -> tuple[str, str]:
         """
         Génère un nouveau token
 
@@ -281,7 +274,7 @@ class TokenManager:
         return token_id, token_value
 
     def _generate_jwt_token(
-        self, metadata: TokenMetadata, custom_claims: Optional[Dict] = None
+        self, metadata: TokenMetadata, custom_claims: dict | None = None
     ) -> str:
         """Génère un token JWT"""
         jwt_secret = self._get_jwt_secret()
@@ -315,8 +308,8 @@ class TokenManager:
         return f"{prefix}_{suffix}"
 
     def validate_token(
-        self, token_value: str, required_permissions: Optional[List[str]] = None
-    ) -> Tuple[bool, Optional[TokenMetadata], str]:
+        self, token_value: str, required_permissions: list[str] | None = None
+    ) -> tuple[bool, TokenMetadata | None, str]:
         """
         Valide un token
 
@@ -358,16 +351,12 @@ class TokenManager:
 
             # Vérifier la validité
             if not metadata.is_valid():
-                reason = (
-                    "Token expired" if metadata.is_expired() else "Usage limit exceeded"
-                )
+                reason = "Token expired" if metadata.is_expired() else "Usage limit exceeded"
                 return False, metadata, reason
 
             # Vérifier les permissions
             if required_permissions:
-                if not all(
-                    perm in metadata.permissions for perm in required_permissions
-                ):
+                if not all(perm in metadata.permissions for perm in required_permissions):
                     return False, metadata, "Insufficient permissions"
 
             # Mettre à jour les statistiques d'usage
@@ -422,10 +411,7 @@ class TokenManager:
         revoked_count = 0
 
         for token_id, metadata in self.token_metadata.items():
-            if (
-                metadata.associated_user == user_id
-                and metadata.status == TokenStatus.ACTIVE
-            ):
+            if metadata.associated_user == user_id and metadata.status == TokenStatus.ACTIVE:
                 if self.revoke_token(token_id, f"User {user_id} tokens revoked"):
                     revoked_count += 1
 
@@ -453,7 +439,7 @@ class TokenManager:
         logger.info(f"🧹 Cleaned up {cleaned_count} expired tokens")
         return cleaned_count
 
-    def refresh_token(self, refresh_token: str) -> Tuple[Optional[str], Optional[str]]:
+    def refresh_token(self, refresh_token: str) -> tuple[str | None, str | None]:
         """
         Renouvelle un token d'accès avec un refresh token
 
@@ -487,7 +473,7 @@ class TokenManager:
         logger.info(f"🔄 Token refreshed for user {metadata.associated_user}")
         return new_token_id, new_token_value
 
-    def get_token_stats(self) -> Dict:
+    def get_token_stats(self) -> dict:
         """Retourne les statistiques des tokens"""
         stats = {
             "total_tokens": len(self.token_metadata),
@@ -521,7 +507,7 @@ class TokenManager:
 
         return stats
 
-    def list_active_tokens(self, user_id: Optional[str] = None) -> List[TokenMetadata]:
+    def list_active_tokens(self, user_id: str | None = None) -> list[TokenMetadata]:
         """
         Liste les tokens actifs
 
@@ -547,9 +533,9 @@ def create_session_token(
     user_id: str,
     client_ip: str,
     user_agent: str,
-    permissions: List[str],
+    permissions: list[str],
     session_duration_hours: int = 24,
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """Crée un token de session utilisateur"""
     return token_manager.generate_token(
         token_type=TokenType.SESSION,
@@ -563,9 +549,9 @@ def create_session_token(
 def create_api_key(
     token_manager: TokenManager,
     service_id: str,
-    permissions: List[str],
-    max_requests_per_day: Optional[int] = None,
-) -> Tuple[str, str]:
+    permissions: list[str],
+    max_requests_per_day: int | None = None,
+) -> tuple[str, str]:
     """Crée une clé API pour un service"""
     return token_manager.generate_token(
         token_type=TokenType.API_KEY,

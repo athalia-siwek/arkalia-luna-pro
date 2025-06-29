@@ -6,7 +6,7 @@ import toml
 STATE_FILE = Path("modules/zeroia/state/zeroia_state.toml")
 
 
-def load_state(path: Path = STATE_FILE) -> Dict[str, Any]:
+def load_state(path: Path = STATE_FILE) -> dict[str, Any]:
     """
     Charge un fichier TOML en tant qu'état. Retourne un dict vide si absent.
     """
@@ -15,7 +15,7 @@ def load_state(path: Path = STATE_FILE) -> Dict[str, Any]:
     return toml.load(path)
 
 
-def save_state(path: Path, data: Dict[str, Any]) -> None:
+def save_state(path: Path, data: dict[str, Any]) -> None:
     """
     Sauvegarde les données de l'état au format TOML.
     """

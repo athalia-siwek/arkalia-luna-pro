@@ -17,12 +17,12 @@ import json
 import logging
 import os
 import re
+import subprocess
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
-import subprocess
 
 # === Configuration du logging ===
 logging.basicConfig(
@@ -72,7 +72,7 @@ class GenerativeAI:
 
         logger.info(f"🚀 GenerativeAI initialisé en mode {mode}")
 
-    def _load_code_templates(self) -> Dict[str, str]:
+    def _load_code_templates(self) -> dict[str, str]:
         """Charge les templates de code"""
         return {
             "module": '''#!/usr/bin/env python3
@@ -149,17 +149,16 @@ class Test{class_name}:
 ''',
         }
 
-    def _load_test_templates(self) -> Dict[str, str]:
+    def _load_test_templates(self) -> dict[str, str]:
         """Charge les templates de tests"""
         return {
-            "unit_test": '''import pytest
-from modules.{module_name} import {class_name}
+            "unit_test": '''from modules.{module_name} import {class_name}
 
 def test_{function_name}():
     """Test de {function_name}"""
-    {class_name}_instance = {class_name}()
+    instance = {class_name}()
     # TODO: Ajouter les assertions
-    assert True
+    assert instance is not None
 ''',
             "integration_test": '''import pytest
 from fastapi.testclient import TestClient
@@ -174,7 +173,7 @@ def test_{endpoint_name}_endpoint():
 ''',
         }
 
-    def analyze_codebase(self) -> Dict[str, Any]:
+    def analyze_codebase(self) -> dict[str, Any]:
         """Analyse la base de code existante"""
         analysis = {
             "modules": [],
@@ -205,10 +204,10 @@ def test_{endpoint_name}_endpoint():
 
         return analysis
 
-    def _analyze_module(self, module_path: Path) -> Dict[str, Any]:
+    def _analyze_module(self, module_path: Path) -> dict[str, Any]:
         """Analyse un module Python"""
         try:
-            with open(module_path, "r", encoding="utf-8") as f:
+            with open(module_path, encoding="utf-8") as f:
                 content = f.read()
 
             return {
@@ -218,9 +217,7 @@ def test_{endpoint_name}_endpoint():
                 "lines": len(content.splitlines()),
                 "classes": len(re.findall(r"class\s+\w+", content)),
                 "functions": len(re.findall(r"def\s+\w+", content)),
-                "imports": len(
-                    re.findall(r"^import\s+|^from\s+", content, re.MULTILINE)
-                ),
+                "imports": len(re.findall(r"^import\s+|^from\s+", content, re.MULTILINE)),
                 "complexity": self._calculate_complexity(content),
             }
         except Exception as e:
@@ -232,15 +229,11 @@ def test_{endpoint_name}_endpoint():
         complexity = 1  # Base complexity
 
         # Ajouter pour chaque structure de contrôle
-        complexity += len(
-            re.findall(r"\bif\b|\bfor\b|\bwhile\b|\band\b|\bor\b", content)
-        )
+        complexity += len(re.findall(r"\bif\b|\bfor\b|\bwhile\b|\band\b|\bor\b", content))
 
         return complexity
 
-    def _detect_code_patterns(
-        self, modules: List[Dict[str, Any]]
-    ) -> List[Dict[str, Any]]:
+    def _detect_code_patterns(self, modules: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Détecte les patterns dans le code"""
         patterns = []
 
@@ -282,8 +275,8 @@ def test_{endpoint_name}_endpoint():
         return any(path.exists() for path in test_paths)
 
     def _find_optimization_opportunities(
-        self, modules: List[Dict[str, Any]]
-    ) -> List[Dict[str, Any]]:
+        self, modules: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
         """Trouve les opportunités d'optimisation"""
         opportunities = []
 
@@ -310,9 +303,7 @@ def test_{endpoint_name}_endpoint():
 
         return opportunities
 
-    def _find_missing_tests(
-        self, modules: List[Dict[str, Any]]
-    ) -> List[Dict[str, Any]]:
+    def _find_missing_tests(self, modules: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Trouve les tests manquants"""
         missing_tests = []
 
@@ -330,13 +321,23 @@ def test_{endpoint_name}_endpoint():
         return missing_tests
 
     def _format_generated_files(self):
-        """Formate tous les fichiers générés avec black."""
+        """Formate tous les fichiers générés avec isort + black."""
         try:
+            # Tri des imports avec isort (compatible black)
+            subprocess.run(["isort", str(self.generated_dir), "--profile", "black"], check=True)
+            # Formatage du code avec black
             subprocess.run(["black", str(self.generated_dir), "--quiet"], check=True)
-        except Exception as e:
-            print(f"⚠️ Formatage black échoué: {e}")
+            logger.info("✅ Fichiers générés formatés avec succès (isort + black)")
+        except subprocess.CalledProcessError as e:
+            logger.error(f"❌ Erreur formatage: {e}")
+            # Fallback: essayer de corriger au moins les imports
+            try:
+                subprocess.run(["isort", str(self.generated_dir), "--fix"], check=False)
+                logger.info("⚠️ Fallback: imports corrigés avec isort")
+            except Exception as fallback_error:
+                logger.error(f"❌ Fallback échoué: {fallback_error}")
 
-    def generate_code(self, template_type: str, parameters: Dict[str, Any]) -> str:
+    def generate_code(self, template_type: str, parameters: dict[str, Any]) -> str:
         """Génère du code basé sur un template"""
         try:
             if template_type not in self.code_templates:
@@ -383,9 +384,7 @@ def test_{endpoint_name}_endpoint():
             logger.error(f"Erreur génération tests: {e}")
             return f"# Erreur de génération de tests: {e}"
 
-    def create_optimized_module(
-        self, module_name: str, description: str
-    ) -> Dict[str, Any]:
+    def create_optimized_module(self, module_name: str, description: str) -> dict[str, Any]:
         """Crée un module optimisé"""
         try:
             class_name = "".join(word.capitalize() for word in module_name.split("_"))
@@ -428,14 +427,14 @@ def test_{endpoint_name}_endpoint():
             logger.error(f"Erreur création module: {e}")
             return {"error": str(e)}
 
-    def optimize_existing_code(self, module_path: str) -> Dict[str, Any]:
+    def optimize_existing_code(self, module_path: str) -> dict[str, Any]:
         """Optimise le code existant"""
         try:
             path = Path(module_path)
             if not path.exists():
                 return {"error": "Module non trouvé"}
 
-            with open(path, "r") as f:
+            with open(path) as f:
                 content = f.read()
 
             # Optimisations basiques
@@ -480,9 +479,7 @@ def test_{endpoint_name}_endpoint():
 
                 # === Génération basée sur l'analyse ===
                 if analysis["missing_tests"]:
-                    logger.info(
-                        f"🧪 Tests manquants détectés: {len(analysis['missing_tests'])}"
-                    )
+                    logger.info(f"🧪 Tests manquants détectés: {len(analysis['missing_tests'])}")
 
                     # Générer des tests pour les modules prioritaires
                     high_priority = [
@@ -505,9 +502,7 @@ def test_{endpoint_name}_endpoint():
 
                     # Optimiser les modules prioritaires
                     high_priority = [
-                        o
-                        for o in analysis["optimization_opportunities"]
-                        if o["priority"] == "high"
+                        o for o in analysis["optimization_opportunities"] if o["priority"] == "high"
                     ]
                     if high_priority:
                         module_to_optimize = high_priority[0]["module"]
@@ -539,7 +534,7 @@ def test_{endpoint_name}_endpoint():
         except Exception as e:
             logger.error(f"Erreur sauvegarde état: {e}")
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """Retourne le statut du système génératif"""
         return {
             "active": self.enabled,
@@ -559,9 +554,7 @@ async def main():
         "--mode", default="production", choices=["production", "development", "test"]
     )
     parser.add_argument("--daemon", action="store_true", help="Mode daemon")
-    parser.add_argument(
-        "--max-generations", type=int, default=50, help="Nombre max de générations"
-    )
+    parser.add_argument("--max-generations", type=int, default=50, help="Nombre max de générations")
     parser.add_argument(
         "--interval",
         type=int,

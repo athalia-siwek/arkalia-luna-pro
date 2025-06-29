@@ -159,9 +159,7 @@ def test_generate_snapshot_defaults_paths():
             "decision": {"last_decision": "monitor"},
         }
 
-        with patch(
-            "modules.zeroia.snapshot_generator.is_valid_toml", return_value=True
-        ):
+        with patch("modules.zeroia.snapshot_generator.is_valid_toml", return_value=True):
             with patch("builtins.open", mock_open()):
                 with patch.object(Path, "mkdir"):
                     result = generate_snapshot()  # Utilise les chemins par défaut
@@ -181,9 +179,7 @@ def test_generate_snapshot_validation_failure():
         toml.dump(state_data, input_file.open("w"))
 
         # Force l'échec de validation
-        with patch(
-            "modules.zeroia.snapshot_generator.is_valid_toml", return_value=False
-        ):
+        with patch("modules.zeroia.snapshot_generator.is_valid_toml", return_value=False):
             result = generate_snapshot(input_file, output_file, fallback=False)
 
         assert result is False
@@ -206,9 +202,7 @@ def test_generate_snapshot_with_failsafe_fallback():
         with patch("modules.zeroia.snapshot_generator.is_valid_toml") as mock_valid:
             mock_valid.side_effect = Exception("Validation failed")
 
-            with patch(
-                "modules.zeroia.snapshot_generator.FAILSAFE_SCRIPT", failsafe_script
-            ):
+            with patch("modules.zeroia.snapshot_generator.FAILSAFE_SCRIPT", failsafe_script):
                 with patch("subprocess.run") as mock_subprocess:
                     result = generate_snapshot(input_file, output_file, fallback=True)
 
@@ -234,9 +228,7 @@ def test_generate_snapshot_failsafe_script_missing():
         with patch("modules.zeroia.snapshot_generator.is_valid_toml") as mock_valid:
             mock_valid.side_effect = Exception("Validation failed")
 
-            with patch(
-                "modules.zeroia.snapshot_generator.FAILSAFE_SCRIPT", missing_failsafe
-            ):
+            with patch("modules.zeroia.snapshot_generator.FAILSAFE_SCRIPT", missing_failsafe):
                 result = generate_snapshot(input_file, output_file, fallback=True)
 
         assert result is False
@@ -297,7 +289,7 @@ def test_generate_snapshot_exception_in_log_writing():
         # Simule une erreur lors de l'ouverture du fichier de log
         def mock_open_side_effect(filename, mode="r"):
             if "snapshot_evolution.log" in str(filename):
-                raise IOError("Cannot write to log file")
+                raise OSError("Cannot write to log file")
             return mock_open().return_value
 
         with patch("builtins.open", side_effect=mock_open_side_effect):

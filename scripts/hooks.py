@@ -16,6 +16,4 @@ def run_sitemap_generator(config=None):
         subprocess.run([sys.executable, script_path], check=True)  # nosec
         print("[hooks] ✅ Sitemap généré avec succès")
     except subprocess.CalledProcessError as e:
-        print(
-            f"[hooks] ❌ Erreur lors de l'exécution du sitemap : {e}", file=sys.stderr
-        )
+        print(f"[hooks] ❌ Erreur lors de l'exécution du sitemap : {e}", file=sys.stderr)

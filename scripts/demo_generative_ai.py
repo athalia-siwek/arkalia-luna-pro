@@ -8,10 +8,10 @@ Script de démonstration pour tester les capacités d'auto-génération de code.
 
 import argparse
 import asyncio
+import pathlib
+import subprocess
 import sys
 from pathlib import Path
-import subprocess
-import pathlib
 
 # Ajouter le répertoire modules au path
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
@@ -40,9 +40,7 @@ async def demo_generative_ai():
 
     print(f"📊 Modules analysés: {len(analysis['modules'])}")
     print(f"🔍 Patterns détectés: {len(analysis['patterns'])}")
-    print(
-        f"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}"
-    )
+    print(f"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}")
     print(f"🧪 Tests manquants: {len(analysis['missing_tests'])}")
 
     # === Génération de code ===
@@ -108,9 +106,7 @@ async def demo_generative_ai():
     print(f"🚀 Générations effectuées: {status['generation_count']}")
     print(f"📝 Code généré: {status['generative_state']['code_generated']}")
     print(f"🧪 Tests générés: {status['generative_state']['tests_generated']}")
-    print(
-        f"🔧 Optimisations appliquées: {status['generative_state']['optimizations_applied']}"
-    )
+    print(f"🔧 Optimisations appliquées: {status['generative_state']['optimizations_applied']}")
     print(f"📁 Fichiers générés: {status['generated_files']}")
 
     # === Sauvegarde de l'état ===
@@ -132,9 +128,7 @@ def demo_quick():
     print(f"📊 {len(analysis['modules'])} modules analysés")
 
     # Génération d'un module simple
-    result = generative_ai.create_optimized_module(
-        "quick_demo", "Module de démonstration rapide"
-    )
+    result = generative_ai.create_optimized_module("quick_demo", "Module de démonstration rapide")
 
     if "error" not in result:
         print(f"✅ Module généré: {result['module_path']}")
@@ -168,9 +162,7 @@ def demo_analysis():
     for pattern in analysis["patterns"]:
         print(f"  - {pattern['type']}: {pattern['description']}")
 
-    print(
-        f"\n🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}"
-    )
+    print(f"\n🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}")
     for opp in analysis["optimization_opportunities"][:3]:
         print(f"  - {opp['module']}: {opp['description']}")
 
@@ -180,15 +172,27 @@ def demo_analysis():
 
 
 def format_generated():
+    """Formate tous les dossiers generated avec isort + black."""
     for d in pathlib.Path(".").rglob("generated"):
-        subprocess.run(["black", str(d), "--quiet"], check=False)
+        try:
+            # Tri des imports avec isort (compatible black)
+            subprocess.run(["isort", str(d), "--profile", "black"], check=True)
+            # Formatage du code avec black
+            subprocess.run(["black", str(d), "--quiet"], check=True)
+            print(f"✅ Formaté: {d}")
+        except subprocess.CalledProcessError as e:
+            print(f"⚠️ Erreur formatage {d}: {e}")
+            # Fallback: essayer au moins isort
+            try:
+                subprocess.run(["isort", str(d), "--fix"], check=False)
+                print(f"⚠️ Fallback isort appliqué: {d}")
+            except Exception:
+                print(f"❌ Fallback échoué: {d}")
 
 
 async def main():
     """Fonction principale"""
-    parser = argparse.ArgumentParser(
-        description="Démonstration Intelligence Générative"
-    )
+    parser = argparse.ArgumentParser(description="Démonstration Intelligence Générative")
     parser.add_argument("--mode", default="full", choices=["full", "quick", "analysis"])
     parser.add_argument("--output", help="Fichier de sortie pour les résultats")
 

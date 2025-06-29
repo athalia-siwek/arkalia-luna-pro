@@ -36,14 +36,14 @@ class BehaviorPattern:
     pattern_type: str
     severity: str  # "low", "medium", "high", "critical"
     description: str
-    affected_modules: List[str]
+    affected_modules: list[str]
     confidence: float  # 0.0-1.0
     first_detected: datetime
     last_detected: datetime
     occurrences: int
-    metadata: Dict[str, Any]
+    metadata: dict[str, Any]
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return {
             "pattern_type": self.pattern_type,
             "severity": self.severity,
@@ -68,7 +68,7 @@ class BehaviorAnalyzer:
     - Corrélations suspectes
     """
 
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config: dict | None = None):
         self.config = config or {
             "window_size_minutes": 60,
             "anomaly_threshold": 2.0,  # Écarts-types
@@ -77,13 +77,13 @@ class BehaviorAnalyzer:
             "max_pattern_history": 500,
         }
 
-        self.pattern_history: List[BehaviorPattern] = []
-        self.metrics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
+        self.pattern_history: list[BehaviorPattern] = []
+        self.metrics_buffer: dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self.decision_history: deque = deque(maxlen=500)
 
         # État statistique
-        self.baseline_stats: Dict[str, Dict] = {}
-        self.anomaly_counters: Dict[str, int] = defaultdict(int)
+        self.baseline_stats: dict[str, dict] = {}
+        self.anomaly_counters: dict[str, int] = defaultdict(int)
 
         logger.info("🧠 BehaviorAnalyzer initialized")
 
@@ -92,7 +92,7 @@ class BehaviorAnalyzer:
         module_name: str,
         metric_name: str,
         value: float,
-        timestamp: Optional[datetime] = None,
+        timestamp: datetime | None = None,
     ):
         """Ajoute un échantillon de métrique pour analyse"""
         timestamp = timestamp or datetime.now()
@@ -104,7 +104,7 @@ class BehaviorAnalyzer:
         if len(self.metrics_buffer[key]) >= 30:
             self._update_baseline_stats(key)
 
-    def add_decision_event(self, module_name: str, decision_data: Dict):
+    def add_decision_event(self, module_name: str, decision_data: dict):
         """Ajoute un événement de décision pour analyse"""
         decision_event = {
             "module": module_name,
@@ -129,7 +129,7 @@ class BehaviorAnalyzer:
                 "last_updated": datetime.now(),
             }
 
-    def detect_statistical_anomalies(self) -> List[BehaviorPattern]:
+    def detect_statistical_anomalies(self) -> list[BehaviorPattern]:
         """Détecte des anomalies statistiques dans les métriques"""
         patterns = []
         now = datetime.now()
@@ -184,7 +184,7 @@ class BehaviorAnalyzer:
 
         return patterns
 
-    def detect_performance_regression(self) -> List[BehaviorPattern]:
+    def detect_performance_regression(self) -> list[BehaviorPattern]:
         """Détecte des régressions de performance"""
         patterns = []
 
@@ -227,16 +227,14 @@ class BehaviorAnalyzer:
 
                         # Détecter régression
                         threshold = 0.2  # 20% de dégradation
-                        is_regression = (
-                            is_regression_metric and relative_change > threshold
-                        ) or (not is_regression_metric and relative_change < -threshold)
+                        is_regression = (is_regression_metric and relative_change > threshold) or (
+                            not is_regression_metric and relative_change < -threshold
+                        )
 
                         if is_regression:
                             pattern = BehaviorPattern(
                                 pattern_type="performance_regression",
-                                severity=(
-                                    "medium" if abs(relative_change) < 0.4 else "high"
-                                ),
+                                severity=("medium" if abs(relative_change) < 0.4 else "high"),
                                 description=f"Régression de performance détectée dans {metric_name}: {relative_change:.1%}",
                                 affected_modules=[module_name],
                                 confidence=min(0.9, abs(relative_change) * 2),
@@ -255,7 +253,7 @@ class BehaviorAnalyzer:
 
         return patterns
 
-    def detect_decision_patterns(self) -> List[BehaviorPattern]:
+    def detect_decision_patterns(self) -> list[BehaviorPattern]:
         """Détecte des patterns suspects dans les décisions"""
         patterns = []
 
@@ -275,9 +273,7 @@ class BehaviorAnalyzer:
             recent_decisions = decisions[-10:]  # 10 dernières décisions
 
             # Analyser la diversité des décisions
-            decision_types = [
-                d["data"].get("decision_type", "unknown") for d in recent_decisions
-            ]
+            decision_types = [d["data"].get("decision_type", "unknown") for d in recent_decisions]
 
             # Si toutes les décisions sont identiques -> potentiel problème
             unique_types = set(decision_types)
@@ -330,7 +326,7 @@ class BehaviorAnalyzer:
 
         return patterns
 
-    def detect_correlation_anomalies(self) -> List[BehaviorPattern]:
+    def detect_correlation_anomalies(self) -> list[BehaviorPattern]:
         """Détecte des anomalies dans les corrélations entre modules"""
         patterns = []
 
@@ -339,9 +335,7 @@ class BehaviorAnalyzer:
         for metric_key in self.metrics_buffer:
             if "confidence" in metric_key.lower():
                 module_name = metric_key.split(".")[0]
-                recent_samples = [
-                    s["value"] for s in list(self.metrics_buffer[metric_key])[-10:]
-                ]
+                recent_samples = [s["value"] for s in list(self.metrics_buffer[metric_key])[-10:]]
                 if recent_samples:
                     confidence_metrics[module_name] = statistics.mean(recent_samples)
 
@@ -357,9 +351,7 @@ class BehaviorAnalyzer:
                 high_conf_modules = [
                     m for m, c in confidence_metrics.items() if c == max_confidence
                 ]
-                low_conf_modules = [
-                    m for m, c in confidence_metrics.items() if c == min_confidence
-                ]
+                low_conf_modules = [m for m, c in confidence_metrics.items() if c == min_confidence]
 
                 pattern = BehaviorPattern(
                     pattern_type="confidence_divergence",
@@ -381,7 +373,7 @@ class BehaviorAnalyzer:
 
         return patterns
 
-    def analyze_behavior(self) -> Dict[str, Any]:
+    def analyze_behavior(self) -> dict[str, Any]:
         """Exécute une analyse complète des comportements"""
         logger.info("🔍 Starting behavior analysis...")
 
@@ -434,12 +426,12 @@ class BehaviorAnalyzer:
         logger.info(f"✅ Behavior analysis complete - Health score: {health_score:.3f}")
         return summary
 
-    def get_pattern_history(self, limit: Optional[int] = None) -> List[Dict]:
+    def get_pattern_history(self, limit: int | None = None) -> list[dict]:
         """Retourne l'historique des patterns détectés"""
         patterns = self.pattern_history[-limit:] if limit else self.pattern_history
         return [p.to_dict() for p in patterns]
 
-    def get_metrics_summary(self) -> Dict[str, Any]:
+    def get_metrics_summary(self) -> dict[str, Any]:
         """Retourne un résumé des métriques surveillées"""
         summary = {}
 
@@ -465,9 +457,7 @@ if __name__ == "__main__":
     import time
 
     parser = argparse.ArgumentParser(description="BehaviorAnalyzer CLI")
-    parser.add_argument(
-        "--demo", action="store_true", help="Run demo with synthetic data"
-    )
+    parser.add_argument("--demo", action="store_true", help="Run demo with synthetic data")
     parser.add_argument("--analyze", action="store_true", help="Run behavior analysis")
 
     args = parser.parse_args()
@@ -481,17 +471,11 @@ if __name__ == "__main__":
         # Générer des données synthétiques
         for i in range(50):
             # Métriques normales
-            analyzer.add_metric_sample(
-                "reflexia", "confidence_score", random.uniform(0.7, 0.95)
-            )
-            analyzer.add_metric_sample(
-                "zeroia", "confidence_score", random.uniform(0.6, 0.9)
-            )
+            analyzer.add_metric_sample("reflexia", "confidence_score", random.uniform(0.7, 0.95))
+            analyzer.add_metric_sample("zeroia", "confidence_score", random.uniform(0.6, 0.9))
 
             # Temps de réponse
-            analyzer.add_metric_sample(
-                "reflexia", "response_time", random.uniform(0.1, 0.5)
-            )
+            analyzer.add_metric_sample("reflexia", "response_time", random.uniform(0.1, 0.5))
 
             time.sleep(0.01)  # Petit délai
 

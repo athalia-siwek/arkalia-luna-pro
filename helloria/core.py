@@ -6,9 +6,7 @@ import logging
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
 
-from modules.monitoring.prometheus_metrics import (
-    get_metrics_summary,
-)
+from modules.monitoring.prometheus_metrics import get_metrics_summary
 
 # 📦 Import des routes externes (modules IA)
 from modules.reflexia.core_api import router as reflexia_router
@@ -32,9 +30,7 @@ async def chat(request: Request):
         prompt = data.get("message", "").strip()
 
         if not prompt:
-            return JSONResponse(
-                status_code=400, content={"error": "Aucun message reçu."}
-            )
+            return JSONResponse(status_code=400, content={"error": "Aucun message reçu."})
 
         # Placeholder IA
         response_text = f"Tu as dit : '{prompt}' (réponse IA à coder 🎯)"
@@ -42,9 +38,7 @@ async def chat(request: Request):
 
     except Exception as e:
         logging.error(f"Erreur interne : {str(e)}")
-        return JSONResponse(
-            status_code=500, content={"error": f"Erreur interne : {str(e)}"}
-        )
+        return JSONResponse(status_code=500, content={"error": f"Erreur interne : {str(e)}"})
 
 
 # 🌐 Racine API

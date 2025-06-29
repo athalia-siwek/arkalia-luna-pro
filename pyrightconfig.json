@@ -1,58 +1,86 @@
 {
     "include": [
         "modules",
-        "tests",
-        "scripts"
+        "scripts",
+        "tests"
     ],
     "exclude": [
+        "**/node_modules",
         "**/__pycache__",
+        "**/venv",
         "**/.venv",
-        "build",
-        "dist",
-        "site",
-        "app",
-        "tools",
-        "strict_backup",
-        "**/site",
-        "**/app",
-        "**/tools",
-        "**/strict_backup"
+        "**/generated",
+        "**/cache",
+        "**/logs",
+        "**/state",
+        "**/htmlcov",
+        "**/benchmark_results"
     ],
-    "venvPath": "/Volumes/T7",
-    "venv": "arkalia-luna-venv",
-    "pythonVersion": "3.10",
-    "executionEnvironments": [
-        {
-            "root": "./",
-            "extraPaths": [
-                "./modules"
-            ]
-        }
+    "ignore": [
+        "**/generated/**",
+        "**/venv/**",
+        "**/.venv/**",
+        "**/__pycache__/**"
     ],
-    "reportMissingImports": true,
-    "reportMissingModuleSource": true,
-    "reportUnknownParameterType": false,
-    "reportUnknownArgumentType": false,
-    "reportUnknownMemberType": false,
-    "reportMissingParameterType": false,
-    "reportMissingTypeArgument": false,
-    "reportUnknownVariableType": false,
-    "reportAny": false,
-    "reportCallInDefaultInitializer": false,
-    "reportDeprecated": false,
-    "reportUnnecessaryComparison": false,
-    "reportUnusedParameter": false,
-    "reportImplicitStringConcatenation": false,
-    "reportImportCycles": false,
+    "defineConstant": {
+        "DEBUG": true
+    },
+    "typeCheckingMode": "basic",
+    "useLibraryCodeForTypes": true,
+    "autoImportCompletions": true,
+    "reportMissingImports": "warning",
+    "reportMissingTypeStubs": false,
+    "reportUnusedImport": "warning",
+    "reportUnusedClass": "warning",
+    "reportUnusedFunction": "warning",
+    "reportDuplicateImport": "warning",
     "reportOptionalSubscript": false,
     "reportOptionalMemberAccess": false,
-    "reportOptionalCall": false,
     "reportOptionalIterable": false,
     "reportOptionalContextManager": false,
     "reportOptionalOperand": false,
+    "reportUnknownParameterType": false,
+    "reportMissingParameterType": true,
+    "reportUnknownVariableType": true,
+    "reportUnknownArgumentType": false,
+    "reportUnknownMemberType": false,
+    "reportMissingTypeArgument": false,
     "reportPrivateImportUsage": false,
-    "reportUnboundVariable": true,
-    "reportUnusedVariable": false,
     "reportGeneralTypeIssues": false,
-    "typeCheckingMode": "basic"
+    "reportUnboundVariable": true,
+    "reportUnusedVariable": "warning",
+    "reportUnusedParameter": "warning",
+    "reportConstantRedefinition": "warning",
+    "reportIncompatibleMethodOverride": "warning",
+    "reportIncompatibleVariableOverride": "warning",
+    "reportInconsistentConstructor": "warning",
+    "reportMissingSuperCall": "warning",
+    "reportUninitializedInstanceVariable": "warning",
+    "reportInvalidStringEscapeSequence": "warning",
+    "reportUnknownLambdaType": false,
+    "reportInvalidTypeVarUse": "warning",
+    "reportCallInDefaultInitializer": false,
+    "reportUnnecessaryIsInstance": "warning",
+    "reportUnnecessaryCast": "warning",
+    "reportUnnecessaryComparison": false,
+    "reportAssertAlwaysTrue": "warning",
+    "reportSelfClsParameterName": "warning",
+    "reportImplicitStringConcatenation": false,
+    "reportUndefinedVariable": "warning",
+    "reportUnusedExpression": "warning",
+    "reportUnusedCoroutine": "warning",
+    "reportWildcardImportFromLibrary": "warning",
+    "pythonVersion": "3.10",
+    "pythonPlatform": "Darwin",
+    "executionEnvironments": [
+        {
+            "root": ".",
+            "pythonVersion": "3.10",
+            "pythonPlatform": "Darwin",
+            "extraPaths": [
+                "./modules",
+                "./scripts"
+            ]
+        }
+    ]
 }

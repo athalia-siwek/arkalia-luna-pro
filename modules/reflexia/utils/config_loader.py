@@ -29,7 +29,7 @@ def load_config(file_path: str):
         raise FileNotFoundError(f"Configuration file not found: {file_path}")
 
     try:
-        with open(file_path, "r") as f:
+        with open(file_path) as f:
             return toml.load(f)
     except toml.TomlDecodeError as e:
         raise Exception(f"Invalid TOML format in {file_path}: {e}")

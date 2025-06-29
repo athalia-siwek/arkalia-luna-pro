@@ -21,7 +21,7 @@ class QuickDemo:
         self.name = "quick_demo"
         logger.info("🚀 QuickDemo initialisé")
 
-    def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def process(self, data: dict[str, Any]) -> dict[str, Any]:
         """
         Traite les données d'entrée
         """

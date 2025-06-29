@@ -33,13 +33,13 @@ class ConfidenceScorer:
         }
         self.memory = self._load_memory()
 
-    def _load_memory(self) -> Dict:
+    def _load_memory(self) -> dict:
         """Charge la mémoire décisionnelle"""
         if self.state_file.exists():
             try:
                 import toml
 
-                with open(self.state_file, "r") as f:
+                with open(self.state_file) as f:
                     return toml.load(f)
             except Exception as e:
                 print(f"⚠️ [CONFIDENCE] Erreur chargement mémoire: {e}")
@@ -67,8 +67,8 @@ class ConfidenceScorer:
             print(f"❌ [CONFIDENCE] Erreur sauvegarde mémoire: {e}")
 
     def calculate_confidence(
-        self, decision: str, context: Dict, system_metrics: Optional[Dict] = None
-    ) -> Tuple[float, Dict]:
+        self, decision: str, context: dict, system_metrics: dict | None = None
+    ) -> tuple[float, dict]:
         """
         Calcule le score de confiance avec explication détaillée
 
@@ -90,9 +90,7 @@ class ConfidenceScorer:
         explanations = {}
 
         # 1. Score de cohérence avec l'historique
-        consistency_score, consistency_explanation = self._score_consistency(
-            decision, context
-        )
+        consistency_score, consistency_explanation = self._score_consistency(decision, context)
         scores["consistency"] = consistency_score
         explanations["consistency"] = consistency_explanation
 
@@ -107,16 +105,12 @@ class ConfidenceScorer:
         explanations["response_time"] = response_explanation
 
         # 4. Score d'efficacité ressources
-        efficiency_score, efficiency_explanation = self._score_resource_efficiency(
-            system_metrics
-        )
+        efficiency_score, efficiency_explanation = self._score_resource_efficiency(system_metrics)
         scores["resource_efficiency"] = efficiency_score
         explanations["resource_efficiency"] = efficiency_explanation
 
         # 5. Score de pertinence contextuelle
-        relevance_score, relevance_explanation = self._score_context_relevance(
-            decision, context
-        )
+        relevance_score, relevance_explanation = self._score_context_relevance(decision, context)
         scores["context_relevance"] = relevance_score
         explanations["context_relevance"] = relevance_explanation
 
@@ -127,8 +121,7 @@ class ConfidenceScorer:
 
         # Score de confiance final pondéré
         final_score = sum(
-            scores[factor] * self.memory["learning_weights"][factor]
-            for factor in scores
+            scores[factor] * self.memory["learning_weights"][factor] for factor in scores
         )
 
         # Normalisation entre 0 et 1
@@ -155,7 +148,7 @@ class ConfidenceScorer:
 
         return final_score, explanation
 
-    def _score_consistency(self, decision: str, context: Dict) -> Tuple[float, str]:
+    def _score_consistency(self, decision: str, context: dict) -> tuple[float, str]:
         """Score la cohérence avec les décisions passées"""
         if not self.memory["decision_patterns"]:
             return 0.5, "Pas d'historique disponible pour comparaison"
@@ -188,7 +181,7 @@ class ConfidenceScorer:
 
         return consistency_ratio, explanation
 
-    def _score_system_health(self, metrics: Dict) -> Tuple[float, str]:
+    def _score_system_health(self, metrics: dict) -> tuple[float, str]:
         """Score la santé système actuelle"""
         cpu = metrics.get("cpu", 50.0)
         ram = metrics.get("ram", 50.0)
@@ -211,7 +204,7 @@ class ConfidenceScorer:
 
         return health_score, explanation
 
-    def _score_response_time(self, metrics: Dict) -> Tuple[float, str]:
+    def _score_response_time(self, metrics: dict) -> tuple[float, str]:
         """Score le temps de réponse"""
         response_time = metrics.get("response_time_ms", 100)
 
@@ -235,7 +228,7 @@ class ConfidenceScorer:
         explanation = f"Temps de réponse: {response_time}ms - {level}"
         return score, explanation
 
-    def _score_resource_efficiency(self, metrics: Dict) -> Tuple[float, str]:
+    def _score_resource_efficiency(self, metrics: dict) -> tuple[float, str]:
         """Score l'efficacité des ressources"""
         cpu = metrics.get("cpu", 50.0)
         ram = metrics.get("ram", 50.0)
@@ -249,14 +242,10 @@ class ConfidenceScorer:
 
         efficiency = (cpu_efficiency + ram_efficiency) / 2
 
-        explanation = (
-            f"Efficacité ressources: CPU {cpu_efficiency:.1%}, RAM {ram_efficiency:.1%}"
-        )
+        explanation = f"Efficacité ressources: CPU {cpu_efficiency:.1%}, RAM {ram_efficiency:.1%}"
         return efficiency, explanation
 
-    def _score_context_relevance(
-        self, decision: str, context: Dict
-    ) -> Tuple[float, str]:
+    def _score_context_relevance(self, decision: str, context: dict) -> tuple[float, str]:
         """Score la pertinence du contexte pour la décision"""
         required_fields = ["cpu", "ram"]
         present_fields = sum(1 for field in required_fields if field in context)
@@ -276,7 +265,7 @@ class ConfidenceScorer:
 
         return relevance, explanation
 
-    def _score_error_rate(self, decision: str) -> Tuple[float, str]:
+    def _score_error_rate(self, decision: str) -> tuple[float, str]:
         """Score basé sur le taux d'erreur historique"""
         error_contexts = self.memory.get("error_contexts", [])
         total_decisions = len(self.memory.get("decision_patterns", {}))
@@ -288,12 +277,10 @@ class ConfidenceScorer:
         error_score = max(0, 1.0 - error_rate * 2)  # Pénalité x2 pour erreurs
 
         error_count = len(error_contexts)
-        explanation = (
-            f"Taux d'erreur historique: {error_rate:.1%} ({error_count} erreurs)"
-        )
+        explanation = f"Taux d'erreur historique: {error_rate:.1%} ({error_count} erreurs)"
         return error_score, explanation
 
-    def _calculate_context_similarity(self, ctx1: Dict, ctx2: Dict) -> float:
+    def _calculate_context_similarity(self, ctx1: dict, ctx2: dict) -> float:
         """Calcule la similarité entre deux contextes"""
         common_keys = set(ctx1.keys()) & set(ctx2.keys())
         if not common_keys:
@@ -330,7 +317,7 @@ class ConfidenceScorer:
         else:
             return "Très faible"
 
-    def _generate_recommendations(self, scores: Dict, final_score: float) -> List[str]:
+    def _generate_recommendations(self, scores: dict, final_score: float) -> list[str]:
         """Génère des recommandations d'amélioration"""
         recommendations = []
 
@@ -338,13 +325,9 @@ class ConfidenceScorer:
         for factor, score in scores.items():
             if score < 0.4:
                 if factor == "system_health":
-                    recommendations.append(
-                        "🔧 Optimiser l'utilisation des ressources système"
-                    )
+                    recommendations.append("🔧 Optimiser l'utilisation des ressources système")
                 elif factor == "response_time":
-                    recommendations.append(
-                        "⚡ Améliorer les performances de traitement"
-                    )
+                    recommendations.append("⚡ Améliorer les performances de traitement")
                 elif factor == "consistency":
                     recommendations.append("🎯 Réviser la cohérence décisionnelle")
                 elif factor == "context_relevance":
@@ -360,9 +343,7 @@ class ConfidenceScorer:
 
         return recommendations
 
-    def _update_memory(
-        self, decision: str, context: Dict, score: float, explanation: Dict
-    ):
+    def _update_memory(self, decision: str, context: dict, score: float, explanation: dict):
         """Met à jour la mémoire décisionnelle"""
         try:
             # Ajouter à l'historique des patterns
@@ -385,9 +366,7 @@ class ConfidenceScorer:
 
             # Limiter l'historique (garder 1000 dernières entrées)
             if len(self.memory["performance_metrics"]) > 1000:
-                self.memory["performance_metrics"] = self.memory["performance_metrics"][
-                    -1000:
-                ]
+                self.memory["performance_metrics"] = self.memory["performance_metrics"][-1000:]
 
             # Apprentissage adaptatif des poids
             self._adaptive_weight_learning(score, explanation["factor_scores"])
@@ -398,7 +377,7 @@ class ConfidenceScorer:
         except Exception as e:
             print(f"❌ [CONFIDENCE] Erreur mise à jour mémoire: {e}")
 
-    def _adaptive_weight_learning(self, final_score: float, factor_scores: Dict):
+    def _adaptive_weight_learning(self, final_score: float, factor_scores: dict):
         """Apprentissage adaptatif des poids basé sur la performance"""
         if final_score > 0.8:  # Bonne décision
             # Renforcer les facteurs qui ont bien scoré
@@ -416,7 +395,7 @@ class ConfidenceScorer:
         for factor in self.memory["learning_weights"]:
             self.memory["learning_weights"][factor] /= total_weight
 
-    def get_memory_summary(self) -> Dict:
+    def get_memory_summary(self) -> dict:
         """Retourne un résumé de la mémoire décisionnelle"""
         metrics = self.memory.get("performance_metrics", [])
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 """
 🚀 Lancement du serveur FastAPI et de la boucle réflexive pour ReflexIA
@@ -59,9 +58,7 @@ def run_reflexia_loop():
 if __name__ == "__main__":
     # Démarrer la boucle réflexive dans un thread séparé
     reflexia_thread = threading.Thread(target=run_reflexia_loop)
-    reflexia_thread.daemon = (
-        True  # Le thread s'arrêtera quand le programme principal s'arrête
-    )
+    reflexia_thread.daemon = True  # Le thread s'arrêtera quand le programme principal s'arrête
     reflexia_thread.start()
 
     # Démarrer le serveur FastAPI dans le thread principal

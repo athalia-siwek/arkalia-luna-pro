@@ -6,20 +6,39 @@ Demo Reflexia Enhanced v2.6.0
 Test de la nouvelle version avec vraies métriques système
 """
 
+import pathlib
+import subprocess
 import sys
 from pathlib import Path
-import subprocess
-import pathlib
 
 # Ajouter le répertoire racine au path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from modules.reflexia.logic.main_loop_enhanced import reflexia_loop_enhanced
+try:
+    from modules.reflexia.logic.main_loop_enhanced import reflexia_loop_enhanced
+except ImportError as e:
+    print(f"❌ Erreur import Reflexia Enhanced: {e}")
+    print("💡 Vérifier que le module reflexia est installé")
+    sys.exit(1)
 
 
 def format_generated():
+    """Formate tous les dossiers generated avec isort + black."""
     for d in pathlib.Path(".").rglob("generated"):
-        subprocess.run(["black", str(d), "--quiet"], check=False)
+        try:
+            # Tri des imports avec isort (compatible black)
+            subprocess.run(["isort", str(d), "--profile", "black"], check=True)
+            # Formatage du code avec black
+            subprocess.run(["black", str(d), "--quiet"], check=True)
+            print(f"✅ Formaté: {d}")
+        except subprocess.CalledProcessError as e:
+            print(f"⚠️ Erreur formatage {d}: {e}")
+            # Fallback: essayer au moins isort
+            try:
+                subprocess.run(["isort", str(d), "--fix"], check=False)
+                print(f"⚠️ Fallback isort appliqué: {d}")
+            except Exception:
+                print(f"❌ Fallback échoué: {d}")
 
 
 def main():
@@ -34,8 +53,12 @@ def main():
 
     except KeyboardInterrupt:
         print("\n🛑 Demo interrompu par l'utilisateur")
+    except ImportError as e:
+        print(f"\n❌ Erreur import: {e}")
+        print("💡 Vérifier les dépendances Reflexia")
     except Exception as e:
         print(f"\n❌ Erreur demo: {e}")
+        print("💡 Vérifier la configuration Reflexia")
 
 
 if __name__ == "__main__":

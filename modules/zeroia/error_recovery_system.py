@@ -91,7 +91,7 @@ class RecoveryMetrics(TypedDict):
     successful_recoveries: int
     failed_recoveries: int
     contradiction_count: int
-    last_error_time: Optional[str]
+    last_error_time: str | None
 
 
 class RecoveryAttempt(TypedDict):
@@ -125,7 +125,7 @@ class ErrorRecoverySystem:
 
     def __init__(self):
         self.error_count = 0
-        self.recovery_attempts: Dict[str, RecoveryAttempt] = {}
+        self.recovery_attempts: dict[str, RecoveryAttempt] = {}
         self.metrics: RecoveryMetrics = {
             "total_errors": 0,
             "successful_recoveries": 0,
@@ -149,7 +149,7 @@ class ErrorRecoverySystem:
 
         logger.info("🔄 ErrorRecoverySystem initialisé")
 
-    def _load_error_strategies(self) -> Dict[str, Dict]:
+    def _load_error_strategies(self) -> dict[str, dict]:
         """Charge la configuration des stratégies d'erreur"""
         default_config = {
             "ZeroIAError": {
@@ -181,9 +181,7 @@ class ErrorRecoverySystem:
 
         return default_config
 
-    async def _exponential_backoff(
-        self, error_context: Optional[ErrorContext] = None
-    ) -> Optional[Any]:
+    async def _exponential_backoff(self, error_context: ErrorContext | None = None) -> Any | None:
         """Stratégie : Backoff exponentiel"""
         if error_context is None:
             logger.warning("⚠️ Aucun contexte d'erreur fourni pour exponential_backoff")
@@ -195,22 +193,18 @@ class ErrorRecoverySystem:
         return {"status": "backoff_completed", "delay": delay}
 
     async def _circuit_break_recovery(
-        self, error_context: Optional[ErrorContext] = None
-    ) -> Optional[Any]:
+        self, error_context: ErrorContext | None = None
+    ) -> Any | None:
         """Stratégie : Récupération via Circuit Breaker"""
         if error_context is None:
-            logger.warning(
-                "⚠️ Aucun contexte d'erreur fourni pour circuit_break_recovery"
-            )
+            logger.warning("⚠️ Aucun contexte d'erreur fourni pour circuit_break_recovery")
             return None
 
         logger.info(f"🔄 Circuit breaker recovery pour {error_context.error_message}")
         await asyncio.sleep(5)  # Attente de stabilisation
         return {"status": "circuit_reset", "strategy": "circuit_break"}
 
-    async def _graceful_degradation(
-        self, error_context: Optional[ErrorContext] = None
-    ) -> Optional[Any]:
+    async def _graceful_degradation(self, error_context: ErrorContext | None = None) -> Any | None:
         """Stratégie : Dégradation gracieuse"""
         if error_context is None:
             logger.warning("⚠️ Aucun contexte d'erreur fourni pour graceful_degradation")
@@ -223,31 +217,23 @@ class ErrorRecoverySystem:
             "features_disabled": ["advanced", "analytics"],
         }
 
-    async def _system_restart(
-        self, error_context: Optional[ErrorContext] = None
-    ) -> Optional[Any]:
+    async def _system_restart(self, error_context: ErrorContext | None = None) -> Any | None:
         """Stratégie : Redémarrage système (simulé)"""
         if error_context is None:
             logger.warning("⚠️ Aucun contexte d'erreur fourni pour system_restart")
             return None
 
-        logger.critical(
-            f"🔄 Redémarrage système requis pour {error_context.error_message}"
-        )
+        logger.critical(f"🔄 Redémarrage système requis pour {error_context.error_message}")
         await asyncio.sleep(10)
         return {"status": "system_restarted", "timestamp": datetime.now().isoformat()}
 
-    async def _manual_intervention(
-        self, error_context: Optional[ErrorContext] = None
-    ) -> Optional[Any]:
+    async def _manual_intervention(self, error_context: ErrorContext | None = None) -> Any | None:
         """Stratégie : Intervention manuelle requise"""
         if error_context is None:
             logger.warning("⚠️ Aucun contexte d'erreur fourni pour manual_intervention")
             return None
 
-        logger.critical(
-            f"🚨 INTERVENTION MANUELLE REQUISE: {error_context.error_message}"
-        )
+        logger.critical(f"🚨 INTERVENTION MANUELLE REQUISE: {error_context.error_message}")
         incident_id = f"INC-{datetime.now().strftime('%Y%m%d%H%M%S')}"
         return {
             "status": "manual_intervention_required",
@@ -255,9 +241,7 @@ class ErrorRecoverySystem:
             "contact": "admin@arkalia-luna.com",
         }
 
-    async def handle_error(
-        self, error_type: ErrorType, error_message: str
-    ) -> Optional[Any]:
+    async def handle_error(self, error_type: ErrorType, error_message: str) -> Any | None:
         """Main error handling entry point"""
         error_context = ErrorContext(error_type, error_message)
 
@@ -275,14 +259,14 @@ class ErrorRecoverySystem:
             logger.error(f"❌ Error during recovery: {e}")
             return None
 
-    async def _handle_timeout(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _handle_timeout(self, error_context: ErrorContext) -> Any | None:
         """Handle timeout errors"""
         logger.info(f"Handling timeout error: {error_context.error_message}")
         # Add delay before retry
         await asyncio.sleep(5)
         return await self._immediate_retry(error_context)
 
-    async def _handle_memory_error(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _handle_memory_error(self, error_context: ErrorContext) -> Any | None:
         """Handle memory-related errors"""
         logger.info(f"Handling memory error: {error_context.error_message}")
         # Trigger garbage collection
@@ -291,14 +275,14 @@ class ErrorRecoverySystem:
         gc.collect()
         return await self._immediate_retry(error_context)
 
-    async def _handle_contradiction(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _handle_contradiction(self, error_context: ErrorContext) -> Any | None:
         """Handle contradiction errors"""
         logger.info(f"Handling contradiction error: {error_context.error_message}")
         # Increment contradiction count
         self.metrics["contradiction_count"] += 1
         return await self._immediate_retry(error_context)
 
-    async def _immediate_retry(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _immediate_retry(self, error_context: ErrorContext) -> Any | None:
         """Retry immediately with the same parameters"""
         logger.info(f"Attempting immediate retry: {error_context.error_message}")
 
@@ -322,9 +306,7 @@ class ErrorRecoverySystem:
         self.metrics["contradiction_count"] += 1
 
         # Log contradiction details
-        logger.warning(
-            f"Handling contradiction: ZeroIA={zeroia_state}, ReflexIA={reflexia_state}"
-        )
+        logger.warning(f"Handling contradiction: ZeroIA={zeroia_state}, ReflexIA={reflexia_state}")
 
         # Record recovery attempt
         self.recovery_attempts[datetime.utcnow().isoformat()] = {
@@ -351,7 +333,7 @@ class ErrorRecoverySystem:
         except Exception as e:
             logger.error(f"Failed to save error recovery metrics: {e}")
 
-    def get_recovery_status(self) -> Dict[str, Any]:
+    def get_recovery_status(self) -> dict[str, Any]:
         """Return current recovery system status"""
         return {
             "metrics": {
@@ -365,13 +347,12 @@ class ErrorRecoverySystem:
                 "healthy"
                 if self.metrics["successful_recoveries"] > 0
                 and self.metrics["total_errors"] > 0
-                and self.metrics["successful_recoveries"] / self.metrics["total_errors"]
-                > 0.8
+                and self.metrics["successful_recoveries"] / self.metrics["total_errors"] > 0.8
                 else "degraded"
             ),
         }
 
-    async def health_check(self) -> Dict[str, Any]:
+    async def health_check(self) -> dict[str, Any]:
         """Vérification de santé du système de récupération"""
         try:
             # Test basic recovery

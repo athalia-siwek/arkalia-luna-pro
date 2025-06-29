@@ -30,10 +30,7 @@ def main(**kwargs):
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
         new_content = "# 🔄 Dernières mises à jour\n" + result.stdout.strip() + "\n"
-        if (
-            output_file.exists()
-            and output_file.read_text(encoding="utf-8") == new_content
-        ):
+        if output_file.exists() and output_file.read_text(encoding="utf-8") == new_content:
             print("✅ Aucun changement détecté, pas d'écriture nécessaire.")
             return
 

@@ -28,7 +28,7 @@ class BuildIntegrityValidator:
     - Alerting sécurité automatique
     """
 
-    def __init__(self, base_dir: Optional[Path] = None):
+    def __init__(self, base_dir: Path | None = None):
         self.base_dir = Path(base_dir or ".")
         self.critical_extensions = {".py", ".so", ".dll", ".dylib", ".exe", ".jar"}
         self.manifest_file = self.base_dir / "security" / "checksums.manifest.json"
@@ -38,7 +38,7 @@ class BuildIntegrityValidator:
         self.manifest_file.parent.mkdir(parents=True, exist_ok=True)
         self.violations_log.parent.mkdir(parents=True, exist_ok=True)
 
-    def generate_checksums(self, target_dir: Optional[Path] = None) -> Dict[str, str]:
+    def generate_checksums(self, target_dir: Path | None = None) -> dict[str, str]:
         """
         Génère checksums SHA256 pour tous les fichiers critiques
 
@@ -66,9 +66,7 @@ class BuildIntegrityValidator:
         logger.info(f"✅ Generated checksums for {len(checksums)} files")
         return checksums
 
-    def save_manifest(
-        self, checksums: Dict[str, str], metadata: Optional[Dict] = None
-    ) -> Path:
+    def save_manifest(self, checksums: dict[str, str], metadata: dict | None = None) -> Path:
         """
         Sauvegarde manifest de checksums avec métadonnées
 
@@ -98,7 +96,7 @@ class BuildIntegrityValidator:
         logger.info(f"💾 Manifest saved: {self.manifest_file}")
         return self.manifest_file
 
-    def validate_integrity(self, manifest_path: Optional[Path] = None) -> bool:
+    def validate_integrity(self, manifest_path: Path | None = None) -> bool:
         """
         Valide intégrité complète vs manifest de référence
 
@@ -146,16 +144,12 @@ class BuildIntegrityValidator:
 
         if violations:
             self._log_violations(violations, manifest_data.get("metadata", {}))
-            raise SecurityError(
-                f"Integrity violations detected: {len(violations)} issues"
-            )
+            raise SecurityError(f"Integrity violations detected: {len(violations)} issues")
 
         logger.info("✅ Integrity validation PASSED")
         return True
 
-    def quick_check(
-        self, critical_files: Optional[List[str]] = None
-    ) -> Dict[str, bool]:
+    def quick_check(self, critical_files: list[str] | None = None) -> dict[str, bool]:
         """
         Vérification rapide d'un sous-ensemble de fichiers critiques
 
@@ -241,7 +235,7 @@ class BuildIntegrityValidator:
             pass
         return "unknown"
 
-    def _get_critical_files_list(self) -> List[str]:
+    def _get_critical_files_list(self) -> list[str]:
         """Liste des fichiers ultra-critiques pour quick check"""
         return [
             "modules/zeroia/core.py",
@@ -252,7 +246,7 @@ class BuildIntegrityValidator:
             "docker-compose.yml",
         ]
 
-    def _log_violations(self, violations: List[str], metadata: Dict):
+    def _log_violations(self, violations: list[str], metadata: dict):
         """Log les violations d'intégrité avec détails"""
         timestamp = datetime.now().isoformat()
         log_entry = {
@@ -267,13 +261,11 @@ class BuildIntegrityValidator:
         with open(self.violations_log, "a") as f:
             f.write(json.dumps(log_entry) + "\n")
 
-        logger.critical(
-            f"🚨 SECURITY VIOLATION: {len(violations)} integrity issues logged"
-        )
+        logger.critical(f"🚨 SECURITY VIOLATION: {len(violations)} integrity issues logged")
 
 
 # Fonctions utilitaires
-def generate_build_manifest(output_path: Optional[Path] = None) -> Path:
+def generate_build_manifest(output_path: Path | None = None) -> Path:
     """Génère manifest pour le build courant"""
     validator = BuildIntegrityValidator()
     checksums = validator.generate_checksums()

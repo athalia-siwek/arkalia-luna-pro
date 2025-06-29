@@ -21,7 +21,7 @@ class ModuleState(BaseModel):
     """État d'un module pour validation"""
 
     module_name: str
-    state: Dict
+    state: dict
     timestamp: datetime
     version: str
     health_score: float
@@ -31,8 +31,8 @@ class ValidationResult(BaseModel):
     """Résultat de validation croisée"""
 
     coherence_score: float
-    conflicts: List[Dict]
-    recommendations: List[str]
+    conflicts: list[dict]
+    recommendations: list[str]
     timestamp: datetime
 
 
@@ -40,12 +40,12 @@ class CrossModuleValidator:
     """Validateur de cohérence inter-modules"""
 
     def __init__(self):
-        self.module_states: Dict[str, ModuleState] = {}
-        self.last_validation: Optional[ValidationResult] = None
+        self.module_states: dict[str, ModuleState] = {}
+        self.last_validation: ValidationResult | None = None
         self.is_running = False
         self.validation_threshold = 0.75
 
-    async def register_state(self, state: ModuleState) -> Dict:
+    async def register_state(self, state: ModuleState) -> dict:
         """Enregistre l'état d'un module"""
         self.module_states[state.module_name] = state
         validation = await self.validate_states()

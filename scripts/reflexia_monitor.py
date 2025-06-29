@@ -60,9 +60,7 @@ def export_to_grafana(data):
                 {
                     "type": "graph",
                     "title": "Last Decision",
-                    "targets": [
-                        {"refId": "B", "target": data.get("last_decision", "N/A")}
-                    ],
+                    "targets": [{"refId": "B", "target": data.get("last_decision", "N/A")}],
                 },
             ],
         },

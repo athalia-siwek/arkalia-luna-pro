@@ -44,15 +44,15 @@ class CognitiveCycle:
     confidence: float
     system_cpu: int
     system_ram: int
-    modules_active: List[str]
-    quarantined_modules: List[str]
+    modules_active: list[str]
+    quarantined_modules: list[str]
     berserk_mode: bool
-    cognitive_reactions: List[str]
+    cognitive_reactions: list[str]
 
     # Métadonnées pour analyse
-    cycle_duration_ms: Optional[int] = None
-    pattern_repetition_count: Optional[int] = None
-    global_health_score: Optional[float] = None
+    cycle_duration_ms: int | None = None
+    pattern_repetition_count: int | None = None
+    global_health_score: float | None = None
 
 
 class Chronalia:
@@ -75,8 +75,8 @@ class Chronalia:
         self.patterns_file = self.timeline_dir / "detected_patterns.jsonl"
 
         # État en mémoire pour performance
-        self.recent_cycles: List[CognitiveCycle] = []
-        self.current_cycle_start: Optional[datetime] = None
+        self.recent_cycles: list[CognitiveCycle] = []
+        self.current_cycle_start: datetime | None = None
 
         logger.info(f"🕰️ Chronalia initialized - Timeline: {timeline_dir}")
 
@@ -88,7 +88,7 @@ class Chronalia:
         return cycle_id
 
     def complete_cycle(
-        self, context: Dict[str, Any], cognitive_reactions: Optional[List[str]] = None
+        self, context: dict[str, Any], cognitive_reactions: list[str] | None = None
     ) -> CognitiveCycle:
         """✅ Complète et persiste un cycle cognitif"""
 
@@ -114,14 +114,10 @@ class Chronalia:
             confidence=context.get("confidence", 0.5),
             system_cpu=context.get("system_cpu", 50),
             system_ram=context.get("system_ram", 50),
-            modules_active=context.get(
-                "modules_active", ["zeroia", "reflexia", "sandozia"]
-            ),
+            modules_active=context.get("modules_active", ["zeroia", "reflexia", "sandozia"]),
             quarantined_modules=context.get("quarantined_modules", []),
             berserk_mode=context.get("berserk_mode", False),
-            cognitive_reactions=(
-                cognitive_reactions if cognitive_reactions is not None else []
-            ),
+            cognitive_reactions=(cognitive_reactions if cognitive_reactions is not None else []),
             cycle_duration_ms=cycle_duration_ms,
             pattern_repetition_count=context.get("pattern_repetition_count", 0),
             global_health_score=context.get("global_health_score", 0.5),
@@ -141,7 +137,7 @@ class Chronalia:
         logger.info(f"✅ Cycle cognitif complété - Durée: {cycle_duration_ms}ms")
         return cycle
 
-    def get_heatmap_data(self, hours_back: int = 24) -> Dict[str, Any]:
+    def get_heatmap_data(self, hours_back: int = 24) -> dict[str, Any]:
         """📊 Génère données heatmap cognitive pour Grafana"""
 
         since = datetime.now() - timedelta(hours=hours_back)
@@ -215,7 +211,7 @@ class Chronalia:
             },
         }
 
-    def detect_patterns(self, window_minutes: int = 30) -> List[Dict[str, Any]]:
+    def detect_patterns(self, window_minutes: int = 30) -> list[dict[str, Any]]:
         """🔍 Détecte patterns temporels automatiquement"""
 
         since = datetime.now() - timedelta(minutes=window_minutes)
@@ -294,7 +290,7 @@ class Chronalia:
         except Exception as e:
             logger.error(f"❌ Erreur persistence cycle: {e}")
 
-    def _persist_pattern(self, pattern: Dict[str, Any]):
+    def _persist_pattern(self, pattern: dict[str, Any]):
         """💾 Persiste pattern détecté"""
         try:
             with self.patterns_file.open("a") as f:
@@ -302,7 +298,7 @@ class Chronalia:
         except Exception as e:
             logger.error(f"❌ Erreur persistence pattern: {e}")
 
-    def _load_cycles_since(self, since: datetime) -> List[CognitiveCycle]:
+    def _load_cycles_since(self, since: datetime) -> list[CognitiveCycle]:
         """📖 Charge cycles depuis une date"""
         cycles = []
 
@@ -330,7 +326,7 @@ def create_chronalia(timeline_dir: str = "state/chronalia") -> Chronalia:
 
 
 def log_cognitive_cycle(
-    context: Dict[str, Any], cognitive_reactions: Optional[List[str]] = None
+    context: dict[str, Any], cognitive_reactions: list[str] | None = None
 ) -> CognitiveCycle:
     """
     🧪 INTÉGRATION SIMPLE avec ton reason_loop

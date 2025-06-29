@@ -52,9 +52,7 @@ class ZeroIACore:
 
             while retry_count < max_retries:
                 try:
-                    logger.info(
-                        f"🔄 Initialization attempt {retry_count + 1}/{max_retries}"
-                    )
+                    logger.info(f"🔄 Initialization attempt {retry_count + 1}/{max_retries}")
                     self.components = initialize_components_with_recovery()
                     self.initialized = True
                     logger.info("🚀 ZeroIA Core initialisé avec succès")
@@ -62,9 +60,7 @@ class ZeroIACore:
                 except Exception as e:
                     retry_count += 1
                     if retry_count >= max_retries:
-                        logger.error(
-                            f"❌ Échec initialisation après {max_retries} tentatives: {e}"
-                        )
+                        logger.error(f"❌ Échec initialisation après {max_retries} tentatives: {e}")
                         return False
                     logger.warning(f"⚠️ Tentative {retry_count} échouée: {e}")
                     time.sleep(min(5 * retry_count, 30))  # Exponential backoff
@@ -74,9 +70,7 @@ class ZeroIACore:
             logger.error(f"❌ Erreur critique initialisation ZeroIA Core: {e}")
             return False
 
-    def run_decision_cycle(
-        self, context_path: Optional[Path] = None
-    ) -> Tuple[str, float]:
+    def run_decision_cycle(self, context_path: Path | None = None) -> tuple[str, float]:
         """
         Exécute un cycle de décision complet
 
@@ -96,7 +90,7 @@ class ZeroIACore:
             logger.error(f"❌ Erreur cycle de décision: {e}")
             return "error", 0.0
 
-    def get_status(self) -> Dict:
+    def get_status(self) -> dict:
         """
         Retourne l'état complet du système ZeroIA
 
@@ -126,7 +120,7 @@ class ZeroIACore:
 
 
 # Instance globale (singleton pattern simple)
-_zeroia_core_instance: Optional[ZeroIACore] = None
+_zeroia_core_instance: ZeroIACore | None = None
 
 
 def get_zeroia_core() -> ZeroIACore:
@@ -144,7 +138,7 @@ def get_zeroia_core() -> ZeroIACore:
     return _zeroia_core_instance
 
 
-def quick_decision(context_path: Optional[Path] = None) -> Tuple[str, float]:
+def quick_decision(context_path: Path | None = None) -> tuple[str, float]:
     """
     Interface rapide pour une décision ZeroIA
 
@@ -162,7 +156,7 @@ def quick_decision(context_path: Optional[Path] = None) -> Tuple[str, float]:
     return core.run_decision_cycle(context_path)
 
 
-def health_check() -> Dict:
+def health_check() -> dict:
     """
     Vérifie l'état de santé du core ZeroIA
 

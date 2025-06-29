@@ -24,9 +24,9 @@ class ValidationResult:
 
     is_valid: bool
     security_score: float  # 0.0 = dangereux, 1.0 = sûr
-    issues: List[str]
+    issues: list[str]
     sanitized_prompt: str
-    blocked_patterns: List[str]
+    blocked_patterns: list[str]
 
 
 class PromptValidator:
@@ -35,7 +35,7 @@ class PromptValidator:
     def __init__(self, security_level: SecurityLevel = SecurityLevel.MEDIUM):
         self.security_level = security_level
         self._load_patterns()
-        self._rate_limit_cache: Dict[str, List[float]] = {}
+        self._rate_limit_cache: dict[str, list[float]] = {}
 
     def _load_patterns(self):
         """Charge les patterns d'injection selon le niveau de sécurité"""
@@ -218,7 +218,7 @@ class PromptValidator:
 
         return sanitized
 
-    def detect_injection_patterns(self, text: str) -> List[str]:
+    def detect_injection_patterns(self, text: str) -> list[str]:
         """
         Détecte les patterns d'injection dans un texte
 
@@ -241,9 +241,7 @@ class PromptValidator:
         self, prompt: str, max_requests: int = 10, window_seconds: int = 60
     ) -> bool:
         """Vérifie le rate limiting basé sur le hash du prompt"""
-        prompt_hash = hashlib.md5(
-            prompt.encode(), usedforsecurity=False
-        ).hexdigest()  # nosec B324
+        prompt_hash = hashlib.md5(prompt.encode(), usedforsecurity=False).hexdigest()  # nosec B324
         current_time = time.time()
 
         if prompt_hash not in self._rate_limit_cache:
@@ -251,9 +249,7 @@ class PromptValidator:
 
         # Nettoie les anciens timestamps
         self._rate_limit_cache[prompt_hash] = [
-            ts
-            for ts in self._rate_limit_cache[prompt_hash]
-            if current_time - ts < window_seconds
+            ts for ts in self._rate_limit_cache[prompt_hash] if current_time - ts < window_seconds
         ]
 
         # Vérifie la limite
@@ -319,7 +315,7 @@ def sanitize_prompt(prompt: str) -> str:
     return default_validator.sanitize_prompt(prompt)
 
 
-def detect_injection_patterns(text: str) -> List[str]:
+def detect_injection_patterns(text: str) -> list[str]:
     """
     Fonction simple de détection (interface de compatibilité)
 

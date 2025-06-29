@@ -144,9 +144,7 @@ def test_load_toml_nested_structures(tmp_path):
     """🧠 Test avec des structures TOML très imbriquées"""
     nested_file = tmp_path / "nested.toml"
     nested_data = {
-        "level1": {
-            "level2": {"level3": {"level4": {"cpu": 75, "data": ["a", "b", "c"]}}}
-        }
+        "level1": {"level2": {"level3": {"level4": {"cpu": 75, "data": ["a", "b", "c"]}}}}
     }
 
     toml.dump(nested_data, nested_file.open("w"))

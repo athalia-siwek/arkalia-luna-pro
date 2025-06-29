@@ -68,12 +68,12 @@ class CognitiveReactor:
 
         logger.info(f"🧠 CognitiveReactor initialisé en mode {mode}")
 
-    def load_cognitive_state(self) -> Dict[str, Any]:
+    def load_cognitive_state(self) -> dict[str, Any]:
         """Charge l'état cognitif depuis le fichier"""
         state_file = self.state_dir / "cognitive_state.json"
         try:
             if state_file.exists():
-                with open(state_file, "r") as f:
+                with open(state_file) as f:
                     return json.load(f)
         except Exception as e:
             logger.warning(f"Impossible de charger l'état cognitif: {e}")
@@ -88,7 +88,7 @@ class CognitiveReactor:
         except Exception as e:
             logger.error(f"Erreur lors de la sauvegarde de l'état: {e}")
 
-    def analyze_system_context(self) -> Dict[str, Any]:
+    def analyze_system_context(self) -> dict[str, Any]:
         """Analyse le contexte système global"""
         context = {
             "timestamp": datetime.now().isoformat(),
@@ -100,7 +100,7 @@ class CognitiveReactor:
         }
         return context
 
-    def _load_module_state(self, module_name: str) -> Dict[str, Any]:
+    def _load_module_state(self, module_name: str) -> dict[str, Any]:
         """Charge l'état d'un module spécifique"""
         try:
             state_file = Path(f"state/{module_name}_state.toml")
@@ -113,7 +113,7 @@ class CognitiveReactor:
             logger.debug(f"Impossible de charger l'état de {module_name}: {e}")
         return {"active": False, "error": "state_unavailable"}
 
-    def _get_system_metrics(self) -> Dict[str, Any]:
+    def _get_system_metrics(self) -> dict[str, Any]:
         """Récupère les métriques système"""
         try:
             import psutil
@@ -126,9 +126,7 @@ class CognitiveReactor:
         except ImportError:
             return {"cpu_percent": 0, "memory_percent": 0, "disk_usage": 0}
 
-    def detect_cognitive_patterns(
-        self, context: Dict[str, Any]
-    ) -> List[Dict[str, Any]]:
+    def detect_cognitive_patterns(self, context: dict[str, Any]) -> list[dict[str, Any]]:
         """Détecte les patterns cognitifs dans le contexte"""
         patterns = []
 
@@ -172,9 +170,7 @@ class CognitiveReactor:
 
         return patterns
 
-    def generate_cognitive_reactions(
-        self, patterns: List[Dict[str, Any]]
-    ) -> List[Dict[str, Any]]:
+    def generate_cognitive_reactions(self, patterns: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Génère des réactions cognitives basées sur les patterns"""
         reactions = []
 
@@ -214,7 +210,7 @@ class CognitiveReactor:
 
         return reactions
 
-    def execute_cognitive_reaction(self, reaction: Dict[str, Any]) -> bool:
+    def execute_cognitive_reaction(self, reaction: dict[str, Any]) -> bool:
         """Exécute une réaction cognitive"""
         try:
             logger.info(f"🧠 Exécution réaction cognitive: {reaction['type']}")
@@ -234,7 +230,7 @@ class CognitiveReactor:
             logger.error(f"Erreur lors de l'exécution de la réaction: {e}")
             return False
 
-    def _adjust_threshold(self, parameters: Dict[str, Any]) -> bool:
+    def _adjust_threshold(self, parameters: dict[str, Any]) -> bool:
         """Ajuste les seuils adaptatifs"""
         try:
             # Intégration avec ZeroIA pour ajuster les seuils
@@ -254,7 +250,7 @@ class CognitiveReactor:
             logger.error(f"Erreur redémarrage module: {e}")
             return False
 
-    def _suggest_alternative(self, parameters: Dict[str, Any]) -> bool:
+    def _suggest_alternative(self, parameters: dict[str, Any]) -> bool:
         """Suggère des alternatives"""
         try:
             logger.info(f"💡 Suggestion alternative: {parameters}")
@@ -263,11 +259,9 @@ class CognitiveReactor:
             logger.error(f"Erreur suggestion alternative: {e}")
             return False
 
-    def learn_from_reactions(
-        self, reactions: List[Dict[str, Any]], outcomes: List[bool]
-    ):
+    def learn_from_reactions(self, reactions: list[dict[str, Any]], outcomes: list[bool]):
         """Apprend des réactions précédentes"""
-        for reaction, outcome in zip(reactions, outcomes):
+        for reaction, outcome in zip(reactions, outcomes, strict=False):
             learning_entry = {
                 "timestamp": datetime.now().isoformat(),
                 "reaction": reaction,
@@ -281,7 +275,7 @@ class CognitiveReactor:
         if len(self.reaction_history) > 1000:
             self.reaction_history = self.reaction_history[-500:]
 
-    def predict_future_patterns(self) -> List[Dict[str, Any]]:
+    def predict_future_patterns(self) -> list[dict[str, Any]]:
         """Prédit les patterns futurs basés sur l'apprentissage"""
         predictions = []
 
@@ -353,7 +347,7 @@ class CognitiveReactor:
 
         logger.info("🧠 Boucle cognitive terminée")
 
-    def get_status(self) -> Dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """Retourne le statut du réacteur cognitif"""
         return {
             "active": self.enabled,
@@ -369,16 +363,12 @@ class CognitiveReactor:
 
 async def main():
     """Fonction principale"""
-    parser = argparse.ArgumentParser(
-        description="Cognitive Reactor - Intelligence Avancée"
-    )
+    parser = argparse.ArgumentParser(description="Cognitive Reactor - Intelligence Avancée")
     parser.add_argument(
         "--mode", default="production", choices=["production", "development", "test"]
     )
     parser.add_argument("--daemon", action="store_true", help="Mode daemon")
-    parser.add_argument(
-        "--max-reactions", type=int, default=100, help="Nombre max de réactions"
-    )
+    parser.add_argument("--max-reactions", type=int, default=100, help="Nombre max de réactions")
     parser.add_argument(
         "--interval", type=int, default=30, help="Intervalle entre réactions (secondes)"
     )

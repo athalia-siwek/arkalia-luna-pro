@@ -23,7 +23,7 @@ from typing import Dict, List, Optional
 class LogScrubber:
     """Nettoyeur intelligent de logs Arkalia-LUNA"""
 
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path: Path | None = None):
         self.config = self._load_config(config_path)
         self.stats = {
             "files_processed": 0,
@@ -33,7 +33,7 @@ class LogScrubber:
             "errors": [],
         }
 
-    def _load_config(self, config_path: Optional[Path]) -> Dict:
+    def _load_config(self, config_path: Path | None) -> dict:
         """Charge la configuration du scrubber"""
         default_config = {
             "log_directories": [
@@ -68,7 +68,7 @@ class LogScrubber:
 
         return default_config
 
-    def _find_log_files(self) -> List[Path]:
+    def _find_log_files(self) -> list[Path]:
         """Trouve tous les fichiers de logs à traiter"""
         log_files = []
         base_path = Path(".")
@@ -118,7 +118,7 @@ class LogScrubber:
         except Exception:
             return False
 
-    def _archive_log_file(self, log_file: Path) -> Optional[Path]:
+    def _archive_log_file(self, log_file: Path) -> Path | None:
         """Archive un fichier de log en le compressant"""
         try:
             archive_dir = Path(self.config["archive_directory"])
@@ -155,15 +155,13 @@ class LogScrubber:
             print(f"🧹 [SCRUBBER] Traitement: {log_file}")
 
             # Lecture du contenu
-            with open(log_file, "r", encoding="utf-8", errors="ignore") as f:
+            with open(log_file, encoding="utf-8", errors="ignore") as f:
                 original_content = f.read()
 
             original_size = len(original_content)
 
             # Nettoyage des données sensibles
-            scrubbed_content, removed_count = self._scrub_sensitive_data(
-                original_content
-            )
+            scrubbed_content, removed_count = self._scrub_sensitive_data(original_content)
 
             # Archivage si nécessaire
             if self._should_archive(log_file):
@@ -197,7 +195,7 @@ class LogScrubber:
             print(f"❌ [SCRUBBER] {error_msg}")
             return False
 
-    def run(self) -> Dict:
+    def run(self) -> dict:
         """Exécute le nettoyage complet des logs"""
         start_time = time.time()
         mode = "DRY RUN" if self.config["dry_run"] else "LIVE"
@@ -240,13 +238,9 @@ class LogScrubber:
                     if not self.config["dry_run"]:
                         archive_file.unlink()
                     removed_count += 1
-                    print(
-                        f"🗑️ [SCRUBBER] Archive ancienne supprimée: {archive_file.name}"
-                    )
+                    print(f"🗑️ [SCRUBBER] Archive ancienne supprimée: {archive_file.name}")
             except Exception as e:
-                self.stats["errors"].append(
-                    f"Erreur suppression archive {archive_file}: {e}"
-                )
+                self.stats["errors"].append(f"Erreur suppression archive {archive_file}: {e}")
 
         if removed_count > 0:
             print(f"🧹 [SCRUBBER] Archives anciennes supprimées: {removed_count}")

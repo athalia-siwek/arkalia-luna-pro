@@ -45,6 +45,6 @@ def test_failsafe_recovers_from_corrupt_snapshot():
     assert "⚠️ Snapshot corrompu ou incomplet" in result.stdout
     assert FAILURE_LOG.exists()
 
-    with open(FAILURE_LOG, "r") as f:
+    with open(FAILURE_LOG) as f:
         content = f.read()
         assert "Backup restaur\u00e9" in content or "Aucun backup disponible" in content

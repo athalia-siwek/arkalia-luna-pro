@@ -30,8 +30,8 @@ import toml
 logger = logging.getLogger(__name__)
 
 # Cache global Enhanced pour tous les modules
-_TOML_CACHE_ENHANCED: Dict[str, Dict[str, Any]] = {}
-_CACHE_TIMESTAMPS: Dict[str, float] = {}
+_TOML_CACHE_ENHANCED: dict[str, dict[str, Any]] = {}
+_CACHE_TIMESTAMPS: dict[str, float] = {}
 _CACHE_STATS = {
     "hits": 0,
     "misses": 0,
@@ -46,8 +46,8 @@ MAX_CACHE_SIZE = 100  # Limite mémoire raisonnable
 
 
 def load_toml_cached(
-    file_path: Path | str, max_age: Optional[int] = None, force_reload: bool = False
-) -> Dict[str, Any]:
+    file_path: Path | str, max_age: int | None = None, force_reload: bool = False
+) -> dict[str, Any]:
     """
     Charge fichier TOML avec cache intelligent Enhanced.
 
@@ -76,11 +76,7 @@ def load_toml_cached(
     _CACHE_STATS["total_requests"] += 1
 
     # Vérifier cache hit et validité
-    if (
-        not force_reload
-        and path_str in _TOML_CACHE_ENHANCED
-        and path_str in _CACHE_TIMESTAMPS
-    ):
+    if not force_reload and path_str in _TOML_CACHE_ENHANCED and path_str in _CACHE_TIMESTAMPS:
 
         cache_age = current_time - _CACHE_TIMESTAMPS[path_str]
 
@@ -103,7 +99,7 @@ def load_toml_cached(
         # Mesurer performance chargement
         start_time = time.time()
 
-        with open(path_str, "r", encoding="utf-8") as f:
+        with open(path_str, encoding="utf-8") as f:
             data = toml.load(f)
 
         load_time = (time.time() - start_time) * 1000
@@ -125,12 +121,12 @@ def load_toml_cached(
         return {}  # Retourner dict vide en cas d'erreur
 
 
-def load_toml_with_cache(file_path: Path | str, max_age: int = 30) -> Dict[str, Any]:
+def load_toml_with_cache(file_path: Path | str, max_age: int = 30) -> dict[str, Any]:
     """Alias pour compatibilité avec ZeroIA Enhanced."""
     return load_toml_cached(file_path, max_age)
 
 
-def get_cache_stats() -> Dict[str, Any]:
+def get_cache_stats() -> dict[str, Any]:
     """
     Retourne statistiques performance cache.
 

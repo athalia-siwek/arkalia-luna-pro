@@ -44,10 +44,7 @@ def failsafe_mode():
         if success:
             print("✅ Restauration réussie.")
         else:
-            print(
-                "❌ Aucune restauration possible. "
-                "ZeroIA doit être relancé manuellement."
-            )
+            print("❌ Aucune restauration possible. " "ZeroIA doit être relancé manuellement.")
     else:
         print("✅ Snapshot valide. Aucun failsafe nécessaire.")
 

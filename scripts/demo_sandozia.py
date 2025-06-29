@@ -19,10 +19,10 @@ import asyncio
 import json
 import logging
 import random
+import subprocess
 import sys
 import time
 from pathlib import Path
-import subprocess
 
 # Ajouter le path des modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -116,12 +116,8 @@ class SandoziaDemo:
         print("✅ Validation terminée:")
         print(f"   🎯 Score de cohérence: {validation_result['coherence_score']:.3f}")
         print(f"   📊 Validations: {validation_result['total_validations']}")
-        print(
-            f"   ⚠️  Issues critiques: {validation_result['issues_by_level']['critical']}"
-        )
-        print(
-            f"   ⚠️  Issues warnings: {validation_result['issues_by_level']['warning']}"
-        )
+        print(f"   ⚠️  Issues critiques: {validation_result['issues_by_level']['critical']}")
+        print(f"   ⚠️  Issues warnings: {validation_result['issues_by_level']['warning']}")
         print(f"   📈 Statut global: {validation_result['overall_status']}")
 
         # Afficher quelques détails
@@ -153,21 +149,15 @@ class SandoziaDemo:
             )
 
             # Temps de réponse normaux
-            self.analyzer.add_metric_sample(
-                "reflexia", "response_time", random.uniform(0.1, 0.5)
-            )
-            self.analyzer.add_metric_sample(
-                "zeroia", "response_time", random.uniform(0.2, 0.8)
-            )
+            self.analyzer.add_metric_sample("reflexia", "response_time", random.uniform(0.1, 0.5))
+            self.analyzer.add_metric_sample("zeroia", "response_time", random.uniform(0.2, 0.8))
 
             # Décisions normales
             if i % 5 == 0:
                 self.analyzer.add_decision_event(
                     "reflexia",
                     {
-                        "decision_type": random.choice(
-                            ["analyze", "reflect", "decide"]
-                        ),
+                        "decision_type": random.choice(["analyze", "reflect", "decide"]),
                         "confidence": random.uniform(0.7, 0.9),
                     },
                 )
@@ -177,9 +167,7 @@ class SandoziaDemo:
 
         # Anomalies de confiance
         for i in range(5):
-            self.analyzer.add_metric_sample(
-                "reflexia", "confidence_score", 0.1
-            )  # Très bas
+            self.analyzer.add_metric_sample("reflexia", "confidence_score", 0.1)  # Très bas
 
         # Régression de performance
         for i in range(8):
@@ -206,9 +194,7 @@ class SandoziaDemo:
         print(
             f"   🔴 Patterns critiques: {analysis_result['patterns_by_severity'].get('critical', 0)}"
         )
-        print(
-            f"   🟡 Patterns moyens: {analysis_result['patterns_by_severity'].get('medium', 0)}"
-        )
+        print(f"   🟡 Patterns moyens: {analysis_result['patterns_by_severity'].get('medium', 0)}")
         print(f"   📈 Modules affectés: {len(analysis_result['affected_modules'])}")
 
         # Afficher détails des patterns
@@ -254,9 +240,7 @@ class SandoziaDemo:
             )
 
             # Temps de réponse inverse (moins de confiance = plus lent)
-            response_time = max(
-                0.1, 2.0 - reflexia_conf * 1.5 + random.uniform(-0.2, 0.2)
-            )
+            response_time = max(0.1, 2.0 - reflexia_conf * 1.5 + random.uniform(-0.2, 0.2))
             self.metrics.add_metric(
                 "reflexia_response_time",
                 response_time,
@@ -337,15 +321,9 @@ behavioral_alert_enabled = true
         snapshot = await self.sandozia_core.collect_intelligence_snapshot()
 
         print("✅ Snapshot collecté:")
-        print(
-            f"   🧠 État Reflexia: {'✅' if snapshot.reflexia_state.get('active') else '❌'}"
-        )
-        print(
-            f"   🔍 État ZeroIA: {'✅' if snapshot.zeroia_state.get('active', True) else '❌'}"
-        )
-        print(
-            f"   🎯 Score cohérence: {snapshot.coherence_analysis['coherence_score']:.3f}"
-        )
+        print(f"   🧠 État Reflexia: {'✅' if snapshot.reflexia_state.get('active') else '❌'}")
+        print(f"   🔍 État ZeroIA: {'✅' if snapshot.zeroia_state.get('active', True) else '❌'}")
+        print(f"   🎯 Score cohérence: {snapshot.coherence_analysis['coherence_score']:.3f}")
         print(f"   ⚠️  Issues détectées: {len(snapshot.coherence_analysis['issues'])}")
         print(f"   🔮 Patterns comportementaux: {len(snapshot.behavioral_patterns)}")
         print(f"   💡 Recommandations: {len(snapshot.recommendations)}")
@@ -404,12 +382,8 @@ behavioral_alert_enabled = true
 
             print("\n📊 RÉSUMÉ DES PERFORMANCES:")
             print(f"   🔍 Cohérence modules: {validator_result['coherence_score']:.3f}")
-            print(
-                f"   🧠 Santé comportementale: {analyzer_result['behavioral_health_score']:.3f}"
-            )
-            print(
-                f"   📈 Cohérence métriques: {metrics_result['cross_module_coherence']:.3f}"
-            )
+            print(f"   🧠 Santé comportementale: {analyzer_result['behavioral_health_score']:.3f}")
+            print(f"   📈 Cohérence métriques: {metrics_result['cross_module_coherence']:.3f}")
             print(
                 f"   🚀 Core opérationnel: {'✅' if core_result['is_running'] is False else '✅'}"
             )  # False car arrêté proprement
@@ -425,9 +399,7 @@ behavioral_alert_enabled = true
             print(f"\n🎯 SCORE GLOBAL SANDOZIA: {global_score:.3f}/1.0")
 
             if global_score > 0.8:
-                print(
-                    "🌟 EXCELLENT - Sandozia Intelligence Croisée pleinement opérationnelle!"
-                )
+                print("🌟 EXCELLENT - Sandozia Intelligence Croisée pleinement opérationnelle!")
             elif global_score > 0.6:
                 print(
                     "👍 BIEN - Sandozia fonctionne correctement avec quelques optimisations possibles"
@@ -435,9 +407,7 @@ behavioral_alert_enabled = true
             else:
                 print("⚠️  ATTENTION - Sandozia nécessite des ajustements")
 
-            print(
-                "\n🚀 PHASE 2 PRÊTE POUR SEMAINE 2: CrossModuleValidator + Dashboard Grafana"
-            )
+            print("\n🚀 PHASE 2 PRÊTE POUR SEMAINE 2: CrossModuleValidator + Dashboard Grafana")
 
             return {
                 "global_score": global_score,
@@ -512,9 +482,7 @@ async def run_daemon_mode(demo: SandoziaDemo):
                 # Status périodique détaillé
                 if cycle_count % 5 == 0:
                     print(f"🎯 Status après {cycle_count} cycles:")
-                    print(
-                        f"  - Cohérence modules: {validator_result['coherence_score']:.3f}"
-                    )
+                    print(f"  - Cohérence modules: {validator_result['coherence_score']:.3f}")
                     print(
                         f"  - Santé comportementale: {analyzer_result['behavioral_health_score']:.3f}"
                     )
@@ -542,38 +510,38 @@ async def run_daemon_mode(demo: SandoziaDemo):
 
 
 def format_generated():
+    """Formate tous les dossiers generated avec isort + black."""
     for d in Path(".").rglob("generated"):
-        subprocess.run(["black", str(d), "--quiet"], check=False)
+        try:
+            # Tri des imports avec isort (compatible black)
+            subprocess.run(["isort", str(d), "--profile", "black"], check=True)
+            # Formatage du code avec black
+            subprocess.run(["black", str(d), "--quiet"], check=True)
+            print(f"✅ Formaté: {d}")
+        except subprocess.CalledProcessError as e:
+            print(f"⚠️ Erreur formatage {d}: {e}")
+            # Fallback: essayer au moins isort
+            try:
+                subprocess.run(["isort", str(d), "--fix"], check=False)
+                print(f"⚠️ Fallback isort appliqué: {d}")
+            except Exception:
+                print(f"❌ Fallback échoué: {d}")
 
 
 async def main():
     """Point d'entrée principal"""
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Démonstration Sandozia Intelligence Croisée"
-    )
-    parser.add_argument(
-        "--full-demo", action="store_true", help="Démonstration complète"
-    )
+    parser = argparse.ArgumentParser(description="Démonstration Sandozia Intelligence Croisée")
+    parser.add_argument("--full-demo", action="store_true", help="Démonstration complète")
     parser.add_argument(
         "--validator-only", action="store_true", help="CrossModuleValidator uniquement"
     )
-    parser.add_argument(
-        "--analyzer-only", action="store_true", help="BehaviorAnalyzer uniquement"
-    )
-    parser.add_argument(
-        "--metrics-only", action="store_true", help="SandoziaMetrics uniquement"
-    )
-    parser.add_argument(
-        "--core-only", action="store_true", help="SandoziaCore uniquement"
-    )
-    parser.add_argument(
-        "--cleanup", action="store_true", help="Nettoyer les fichiers de demo"
-    )
-    parser.add_argument(
-        "--daemon", action="store_true", help="Mode daemon pour container Docker"
-    )
+    parser.add_argument("--analyzer-only", action="store_true", help="BehaviorAnalyzer uniquement")
+    parser.add_argument("--metrics-only", action="store_true", help="SandoziaMetrics uniquement")
+    parser.add_argument("--core-only", action="store_true", help="SandoziaCore uniquement")
+    parser.add_argument("--cleanup", action="store_true", help="Nettoyer les fichiers de demo")
+    parser.add_argument("--daemon", action="store_true", help="Mode daemon pour container Docker")
 
     args = parser.parse_args()
 

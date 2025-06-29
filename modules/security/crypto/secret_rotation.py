@@ -4,10 +4,11 @@
 import logging
 import secrets
 import string
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from .vault_manager import ArkaliaVault
 
@@ -29,13 +30,13 @@ class RotationPolicy:
 
     name: str
     strategy: RotationStrategy
-    interval_days: Optional[int] = None
-    max_access_count: Optional[int] = None
-    condition_callback: Optional[Callable] = None
+    interval_days: int | None = None
+    max_access_count: int | None = None
+    condition_callback: Callable | None = None
     auto_generate: bool = True
     generation_pattern: str = "secure_random"  # secure_random, alphanumeric, custom
-    custom_generator: Optional[Callable] = None
-    notification_callback: Optional[Callable] = None
+    custom_generator: Callable | None = None
+    notification_callback: Callable | None = None
 
 
 class SecretGenerator:
@@ -79,8 +80,8 @@ class RotationManager:
 
     def __init__(self, vault: ArkaliaVault):
         self.vault = vault
-        self.policies: Dict[str, RotationPolicy] = {}
-        self.rotation_history: List[Dict] = []
+        self.policies: dict[str, RotationPolicy] = {}
+        self.rotation_history: list[dict] = []
 
     def add_policy(self, policy: RotationPolicy):
         """Ajoute une politique de rotation"""
@@ -93,7 +94,7 @@ class RotationManager:
             del self.policies[secret_name]
             logger.info(f"🗑️ Rotation policy removed for: {secret_name}")
 
-    def check_rotation_needed(self, secret_name: str) -> Tuple[bool, str]:
+    def check_rotation_needed(self, secret_name: str) -> tuple[bool, str]:
         """
         Vérifie si un secret nécessite une rotation
 
@@ -133,10 +134,7 @@ class RotationManager:
                 )
 
         # Stratégie CONDITIONAL
-        if (
-            policy.strategy == RotationStrategy.CONDITIONAL
-            and policy.condition_callback
-        ):
+        if policy.strategy == RotationStrategy.CONDITIONAL and policy.condition_callback:
             try:
                 if policy.condition_callback(secret_metadata):
                     return True, "Conditional rotation triggered"
@@ -145,7 +143,7 @@ class RotationManager:
 
         return False, "No rotation needed"
 
-    def rotate_secret(self, secret_name: str, new_value: Optional[str] = None) -> bool:
+    def rotate_secret(self, secret_name: str, new_value: str | None = None) -> bool:
         """
         Effectue la rotation d'un secret
 
@@ -248,7 +246,7 @@ class RotationManager:
             # Fallback sécurisé
             return SecretGenerator.generate_secure_random()
 
-    def bulk_rotation_check(self) -> Dict[str, Tuple[bool, str]]:
+    def bulk_rotation_check(self) -> dict[str, tuple[bool, str]]:
         """
         Vérifie tous les secrets avec des politiques de rotation
 
@@ -262,7 +260,7 @@ class RotationManager:
 
         return results
 
-    def auto_rotate_due_secrets(self) -> Dict[str, bool]:
+    def auto_rotate_due_secrets(self) -> dict[str, bool]:
         """
         Effectue la rotation automatique de tous les secrets éligibles
 
@@ -361,10 +359,7 @@ class RotationManager:
         deleted_count = 0
 
         for backup_meta in self.vault.list_secrets(include_expired=True):
-            if (
-                "rotation_backup" in backup_meta.tags
-                and backup_meta.created_at < cutoff_date
-            ):
+            if "rotation_backup" in backup_meta.tags and backup_meta.created_at < cutoff_date:
 
                 if self.vault.delete_secret(backup_meta.name):
                     deleted_count += 1
@@ -372,7 +367,7 @@ class RotationManager:
         logger.info(f"🧹 Cleaned up {deleted_count} old rotation backups")
         return deleted_count
 
-    def get_rotation_stats(self) -> Dict:
+    def get_rotation_stats(self) -> dict:
         """Retourne les statistiques de rotation"""
         total_policies = len(self.policies)
         total_rotations = len(self.rotation_history)
@@ -396,9 +391,7 @@ class RotationManager:
             "total_rotations": total_rotations,
             "recent_rotations_7d": len(recent_rotations),
             "strategy_distribution": strategy_stats,
-            "last_rotation": (
-                self.rotation_history[-1] if self.rotation_history else None
-            ),
+            "last_rotation": (self.rotation_history[-1] if self.rotation_history else None),
         }
 
 
@@ -436,9 +429,7 @@ def create_monthly_rotation_policy(secret_name: str) -> RotationPolicy:
     )
 
 
-def create_access_based_policy(
-    secret_name: str, max_accesses: int = 100
-) -> RotationPolicy:
+def create_access_based_policy(secret_name: str, max_accesses: int = 100) -> RotationPolicy:
     """Politique de rotation basée sur le nombre d'accès"""
     return RotationPolicy(
         name=secret_name,

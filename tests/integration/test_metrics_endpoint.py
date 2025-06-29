@@ -69,9 +69,7 @@ class TestMetricsEndpoint:
             # Vérifications format Prometheus
             help_lines = [line for line in lines if line.startswith("# HELP")]
             type_lines = [line for line in lines if line.startswith("# TYPE")]
-            metric_lines = [
-                line for line in lines if not line.startswith("#") and line.strip()
-            ]
+            metric_lines = [line for line in lines if not line.startswith("#") and line.strip()]
 
             assert len(help_lines) > 0, "Aucune ligne HELP trouvée"
             assert len(type_lines) > 0, "Aucune ligne TYPE trouvée"
@@ -113,9 +111,7 @@ class TestMetricsEndpoint:
 
             if "arkalia_critical_files_count" in metrics:
                 files_count = metrics["arkalia_critical_files_count"]
-                assert (
-                    0 <= files_count <= 10
-                ), f"Nombre de fichiers suspect: {files_count}"
+                assert 0 <= files_count <= 10, f"Nombre de fichiers suspect: {files_count}"
 
             if "arkalia_zeroia_confidence" in metrics:
                 confidence = metrics["arkalia_zeroia_confidence"]
@@ -148,9 +144,7 @@ class TestFallbackMetrics:
 
         for metric in required_metrics:
             assert metric in metrics, f"Métrique manquante: {metric}"
-            assert isinstance(
-                metrics[metric], (int, float)
-            ), f"Type invalide pour {metric}"
+            assert isinstance(metrics[metric], (int, float)), f"Type invalide pour {metric}"
 
     def test_fallback_metrics_values(self):
         """🎯 Test cohérence des valeurs de métriques"""

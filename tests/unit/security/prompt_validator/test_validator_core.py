@@ -1,10 +1,7 @@
 # 🧪 tests/unit/security/prompt_validator/test_validator_core.py
 # Tests pour le core du validateur de prompts
 
-from modules.assistantia.security.prompt_validator import (
-    PromptValidator,
-    SecurityLevel,
-)
+from modules.assistantia.security.prompt_validator import PromptValidator, SecurityLevel
 
 
 class TestPromptValidator:

@@ -35,6 +35,14 @@ repos:
 
   - repo: local
     hooks:
+      - id: format-generated
+        name: Format generated files
+        description: Format all generated directories with isort + black
+        entry: bash -c 'find . -name "generated" -type d -exec sh -c "isort {} --profile black && black {} --quiet" \;'
+        language: system
+        files: ^modules/.*/generated/
+        pass_filenames: false
+
       - id: zeroia-healthcheck
         name: ZeroIA TOML Health Check
         entry: python3 scripts/zeroia_health.py
@@ -95,18 +103,10 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
-        exclude: |
-          ^modules/zeroia/state/zeroia_.*\.toml$|
-          ^state/zeroia_dashboard\.json$
 
 # CI
 ci:
   skip: false
-
-# 🌐 Exclusions globales CI/hooks
-exclude: |
-  ^modules/zeroia/state/zeroia_.*\.toml$|
-  ^state/zeroia_dashboard\.json$
 
 # 🚦 Stages définis
 default_stages: [pre-commit]

@@ -41,9 +41,7 @@ def demo_basic_vault_operations():
     vault.store_secret(
         "api_key", "ak_prod_12345abcdef", expires_in_days=30, tags=["api", "external"]
     )
-    vault.store_secret(
-        "jwt_secret", "super_secret_jwt_key_2024", tags=["jwt", "session"]
-    )
+    vault.store_secret("jwt_secret", "super_secret_jwt_key_2024", tags=["jwt", "session"])
 
     print("   ✅ Stocké: database_url")
     print("   ✅ Stocké: api_key (expire dans 30 jours)")
@@ -61,9 +59,7 @@ def demo_basic_vault_operations():
     print("\n📋 3. LISTAGE DES SECRETS")
     secrets = vault.list_secrets()
     for secret in secrets:
-        print(
-            f"   📝 {secret.name} - Tags: {secret.tags} - Accès: {secret.access_count}"
-        )
+        print(f"   📝 {secret.name} - Tags: {secret.tags} - Accès: {secret.access_count}")
 
     # 4. Statistiques du vault
     print("\n📊 4. STATISTIQUES DU VAULT")
@@ -258,9 +254,7 @@ DEBUG=false
 
     # Vérifier les secrets migrés
     print("\n📋 SECRETS MIGRÉS:")
-    migrated_secrets = [
-        s for s in vault.list_secrets() if "migrated_from_env" in s.tags
-    ]
+    migrated_secrets = [s for s in vault.list_secrets() if "migrated_from_env" in s.tags]
     for secret in migrated_secrets:
         value = vault.retrieve_secret(secret.name)
         print(f"   📝 {secret.name}: {value}")

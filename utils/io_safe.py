@@ -42,8 +42,8 @@ def _get_file_lock(file_path: Path) -> threading.Lock:
 
 
 def atomic_write(
-    file_path: Union[str, Path],
-    data: Union[str, bytes, Dict[str, Any]],
+    file_path: str | Path,
+    data: str | bytes | dict[str, Any],
     encoding: str = "utf-8",
     mode: str = "w",
 ) -> bool:
@@ -121,11 +121,11 @@ def atomic_write(
 
 
 def locked_read(
-    file_path: Union[str, Path],
+    file_path: str | Path,
     encoding: str = "utf-8",
     timeout: float = 5.0,
     mode: str = "r",
-) -> Union[str, bytes, Dict[str, Any]]:
+) -> str | bytes | dict[str, Any]:
     """
     Lecture thread-safe avec verrou et timeout
 
@@ -185,7 +185,7 @@ def locked_read(
         file_lock.release()
 
 
-def save_toml_safe(data: Dict[str, Any], file_path: Union[str, Path]) -> bool:
+def save_toml_safe(data: dict[str, Any], file_path: str | Path) -> bool:
     """
     Sauvegarde TOML sécurisée avec validation
 
@@ -200,9 +200,7 @@ def save_toml_safe(data: Dict[str, Any], file_path: Union[str, Path]) -> bool:
         AtomicWriteError: En cas d'erreur
     """
     if not isinstance(data, dict):
-        raise AtomicWriteError(
-            f"Les données doivent être un dictionnaire, reçu: {type(data)}"
-        )
+        raise AtomicWriteError(f"Les données doivent être un dictionnaire, reçu: {type(data)}")
 
     # Validation TOML avant écriture
     try:
@@ -213,7 +211,7 @@ def save_toml_safe(data: Dict[str, Any], file_path: Union[str, Path]) -> bool:
     return atomic_write(file_path, data)
 
 
-def save_json_safe(data: Dict[str, Any], file_path: Union[str, Path]) -> bool:
+def save_json_safe(data: dict[str, Any], file_path: str | Path) -> bool:
     """
     Sauvegarde JSON sécurisée avec validation
 
@@ -228,9 +226,7 @@ def save_json_safe(data: Dict[str, Any], file_path: Union[str, Path]) -> bool:
         AtomicWriteError: En cas d'erreur
     """
     if not isinstance(data, dict):
-        raise AtomicWriteError(
-            f"Les données doivent être un dictionnaire, reçu: {type(data)}"
-        )
+        raise AtomicWriteError(f"Les données doivent être un dictionnaire, reçu: {type(data)}")
 
     # Validation JSON avant écriture
     try:
@@ -241,7 +237,7 @@ def save_json_safe(data: Dict[str, Any], file_path: Union[str, Path]) -> bool:
     return atomic_write(file_path, data)
 
 
-def read_state_safe(file_path: Union[str, Path]) -> Dict[str, Any]:
+def read_state_safe(file_path: str | Path) -> dict[str, Any]:
     """
     Lecture sécurisée d'un fichier d'état (JSON/TOML)
 

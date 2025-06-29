@@ -16,9 +16,7 @@ def test_reflexia_check(client):
     response = client.get("/reflexia/check")
 
     # ✅ Statut HTTP attendu
-    assert (
-        response.status_code == 200
-    ), f"Erreur HTTP : {response.status_code} - {response.text}"
+    assert response.status_code == 200, f"Erreur HTTP : {response.status_code} - {response.text}"
 
     # ✅ Structure de la réponse attendue
     data = response.json()

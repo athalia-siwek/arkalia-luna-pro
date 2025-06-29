@@ -11,10 +11,7 @@ import toml
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
 from modules.zeroia.model_integrity import validate_decision_integrity
 from modules.zeroia.utils.backup import save_backup
-from modules.zeroia.utils.state_writer import (
-    save_json_if_changed,
-    save_toml_if_changed,
-)
+from modules.zeroia.utils.state_writer import save_json_if_changed, save_toml_if_changed
 
 # === Chemins par défaut ===
 CTX_PATH = Path("state/global_context.toml")
@@ -37,9 +34,7 @@ _CACHE_TIMESTAMPS = {}
 # === Logger contradiction (rotatif) ===
 logger = logging.getLogger("zeroia_contradictions")
 logger.setLevel(logging.DEBUG)
-handler = RotatingFileHandler(
-    DEFAULT_CONTRADICTION_LOG, maxBytes=5 * 1024 * 1024, backupCount=5
-)
+handler = RotatingFileHandler(DEFAULT_CONTRADICTION_LOG, maxBytes=5 * 1024 * 1024, backupCount=5)
 formatter = logging.Formatter("%(asctime)s :: %(levelname)s :: %(message)s")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
@@ -188,7 +183,7 @@ def persist_state(
     decision: str,
     score: float,
     ctx: dict,
-    state_path_override: Optional[Path] = None,
+    state_path_override: Path | None = None,
 ) -> None:
     reflexia_summary = ctx.get("reflexia", {})
     status = ctx.get("status", {})
@@ -224,7 +219,7 @@ def update_dashboard(
     decision: str,
     score: float,
     ctx: dict,
-    dashboard_path_override: Optional[Path] = None,
+    dashboard_path_override: Path | None = None,
 ) -> None:
     dashboard_path = dashboard_path_override or DASHBOARD_PATH
     ensure_parent_dir(dashboard_path)
@@ -276,12 +271,12 @@ def log_conflict(conflict_msg: str) -> None:
 
 
 def reason_loop(
-    context_path: Optional[Path] = None,
-    reflexia_path: Optional[Path] = None,
-    state_path: Optional[Path] = None,
-    dashboard_path: Optional[Path] = None,
-    log_path: Optional[Path] = None,
-    contradiction_log_path: Optional[Path] = None,
+    context_path: Path | None = None,
+    reflexia_path: Path | None = None,
+    state_path: Path | None = None,
+    dashboard_path: Path | None = None,
+    log_path: Path | None = None,
+    contradiction_log_path: Path | None = None,
 ) -> tuple[str, float]:
     ctx = load_context(context_path or CTX_PATH)
     reflexia_data = load_reflexia_state(reflexia_path or REFLEXIA_STATE)
@@ -303,9 +298,7 @@ def reason_loop(
 
     # 🛡️ VALIDATION INTÉGRITÉ MODÈLE - Roadmap S2
     try:
-        integrity_valid, integrity_reason = validate_decision_integrity(
-            ctx, decision, score
-        )
+        integrity_valid, integrity_reason = validate_decision_integrity(ctx, decision, score)
         if not integrity_valid:
             print(f"🚨 [ZeroIA] INTEGRITY VIOLATION: {integrity_reason}", flush=True)
             # En cas de compromission, forcer décision sécurisée
@@ -324,26 +317,21 @@ def reason_loop(
     persist_state(decision, score, ctx, state_path)
     update_dashboard(decision, score, ctx, dashboard_path)
 
-    reflexia_decision = reflexia_data.get("decision", {}).get(
-        "last_decision", "unknown"
-    )
+    reflexia_decision = reflexia_data.get("decision", {}).get("last_decision", "unknown")
     if check_for_ia_conflict(
         reflexia_decision,
         decision,
         log_path=contradiction_log_path or get_configured_contradiction_log(),
     ):
         log_conflict(
-            f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, "
-            f"ZeroIA = {decision}"
+            f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, " f"ZeroIA = {decision}"
         )
 
     # Logs modifiés pour éviter le spam
     status = ctx.get("status", {})
     cpu = status.get("cpu", "N/A")
     print(f"✅ ZeroIA decided: {decision} (confidence={score})", flush=True)
-    print(
-        f"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score})", flush=True
-    )
+    print(f"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score})", flush=True)
 
     return decision, score
 

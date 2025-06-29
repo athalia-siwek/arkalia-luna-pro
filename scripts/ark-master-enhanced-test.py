@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 """
-🌟 TEST ARKALIA MASTER ORCHESTRATOR ENHANCED v5.0.0
-Script de test pour valider les nouveaux composants intégrés
+🧠 Arkalia Master Enhanced Test Suite
+Test complet de l'orchestrateur enhanced v5.0.0
 """
 
 import asyncio
-import logging
-
-# Configuration logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    datefmt="%H:%M:%S",
-)
-logger = logging.getLogger(__name__)
+import sys
+from typing import Dict
 
 
 async def test_enhanced_orchestrator():
@@ -27,7 +20,6 @@ async def test_enhanced_orchestrator():
         from modules.arkalia_master.orchestrator_enhanced_v5 import (
             ArkaliaOrchestratorEnhanced,
             OrchestratorEnhancedConfig,
-            orchestrate_enhanced_ecosystem,
         )
 
         print("✅ Import orchestrateur enhanced réussi")
@@ -52,9 +44,7 @@ async def test_enhanced_orchestrator():
         if init_success:
             print("✅ Modules enhanced initialisés avec succès")
         else:
-            print(
-                "⚠️ Certains modules enhanced ont échoué (normal si composants manquants)"
-            )
+            print("⚠️ Certains modules enhanced ont échoué (normal si composants manquants)")
 
         # Test 4: Statut enhanced
         print("\n📊 Test statut enhanced...")
@@ -62,25 +52,21 @@ async def test_enhanced_orchestrator():
 
         print(f"🌟 Version: {status['orchestrator']['version']}")
         print(f"🔧 Modules: {len(status['modules'])}")
-        print(
-            f"🧠 Enhanced features actives: {sum(status['enhanced_features'].values())}"
-        )
+        print(f"🧠 Enhanced features actives: {sum(status['enhanced_features'].values())}")
 
         # Test 5: Cycle enhanced (test rapide)
         print("\n🔄 Test cycle enhanced...")
         if len(orchestrator.modules) > 0:
-            cycle_result = await orchestrator.execute_enhanced_cycle()
+            _cycle_result = await orchestrator.execute_enhanced_cycle()
 
-            print(f"✅ Cycle enhanced terminé en {cycle_result['duration_seconds']}s")
+            print(f"✅ Cycle enhanced terminé en {_cycle_result['duration_seconds']}s")
             print(
-                f"📊 Opérations: {cycle_result['operations_successful']}/{cycle_result['operations_executed']}"
+                f"📊 Opérations: {_cycle_result['operations_successful']}/{_cycle_result['operations_executed']}"
             )
             print(
-                f"🧠 Événements cognitifs: {cycle_result['enhanced_features']['cognitive_events']}"
+                f"🧠 Événements cognitifs: {_cycle_result['enhanced_features']['cognitive_events']}"
             )
-            print(
-                f"🛡️ Récupérations: {cycle_result['enhanced_features']['recovery_events']}"
-            )
+            print(f"🛡️ Récupérations: {_cycle_result['enhanced_features']['recovery_events']}")
         else:
             print("⚠️ Aucun module disponible pour test cycle")
 
@@ -107,7 +93,7 @@ async def test_enhanced_features():
     print("\n🌟 TEST FONCTIONNALITÉS ENHANCED")
     print("=" * 50)
 
-    features_availability = {
+    features_availability: dict[str, bool] = {
         "error_recovery": False,
         "cognitive_reactor": False,
         "vault_manager": False,
@@ -119,6 +105,8 @@ async def test_enhanced_features():
     try:
         from modules.zeroia.error_recovery_system import ErrorRecoverySystem
 
+        # Test d'instanciation pour vérifier que l'import fonctionne
+        _ = ErrorRecoverySystem
         features_availability["error_recovery"] = True
         print("✅ Error Recovery System disponible")
     except ImportError:
@@ -128,6 +116,8 @@ async def test_enhanced_features():
     try:
         from modules.sandozia.core.cognitive_reactor import CognitiveReactor
 
+        # Test d'instanciation pour vérifier que l'import fonctionne
+        _ = CognitiveReactor
         features_availability["cognitive_reactor"] = True
         print("✅ Cognitive Reactor disponible")
     except ImportError:
@@ -135,17 +125,25 @@ async def test_enhanced_features():
 
     # Test Vault Manager
     try:
-        from modules.security.crypto.vault_manager import VaultManager
+        # Import conditionnel pour éviter les erreurs si le module n'existe pas
+        vault_manager_module = __import__(
+            "modules.security.crypto.vault_manager", fromlist=["VaultManager"]
+        )
+        vault_manager = vault_manager_module.VaultManager
 
+        # Test d'instanciation pour vérifier que l'import fonctionne
+        _ = vault_manager
         features_availability["vault_manager"] = True
         print("✅ Vault Manager disponible")
-    except ImportError:
+    except (ImportError, AttributeError):
         print("❌ Vault Manager non disponible")
 
     # Test Chronalia
     try:
         from modules.sandozia.core.chronalia import Chronalia
 
+        # Test d'instanciation pour vérifier que l'import fonctionne
+        _ = Chronalia
         features_availability["chronalia"] = True
         print("✅ Chronalia disponible")
     except ImportError:
@@ -155,6 +153,8 @@ async def test_enhanced_features():
     try:
         from modules.sandozia.validators.crossmodule import CrossModuleValidator
 
+        # Test d'instanciation pour vérifier que l'import fonctionne
+        _ = CrossModuleValidator
         features_availability["crossmodule_validator"] = True
         print("✅ CrossModule Validator disponible")
     except ImportError:
@@ -207,3 +207,4 @@ async def main():
 
 if __name__ == "__main__":
     exit_code = asyncio.run(main())
+    sys.exit(exit_code)

@@ -1,8 +1,8 @@
 {
   "active": true,
   "mode": "production",
-  "reactions_triggered": 56,
-  "learning_cycles": 56,
-  "predictions_made": 24,
-  "last_update": "2025-06-29T10:45:48.876838"
+  "reactions_triggered": 100,
+  "learning_cycles": 100,
+  "predictions_made": 46,
+  "last_update": "2025-06-29T13:18:21.555609"
 }

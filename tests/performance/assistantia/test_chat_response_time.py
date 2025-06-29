@@ -67,6 +67,4 @@ def test_chat_response_time_with_real_ollama():
 
     # ⏱️ Contrôle de la latence (< 10s avec Ollama réel)
     threshold = float(os.getenv("CHAT_LATENCY_THRESHOLD_REAL", "10.0"))
-    assert (
-        elapsed < threshold
-    ), f"❌ Réponse trop lente : {elapsed:.2f}s (limite : {threshold}s)"
+    assert elapsed < threshold, f"❌ Réponse trop lente : {elapsed:.2f}s (limite : {threshold}s)"

@@ -22,11 +22,11 @@ Version: Enhanced v2.7.1-performance
 """
 
 import argparse
+import pathlib
+import subprocess
 import sys
 import time
 from pathlib import Path
-import subprocess
-import pathlib
 
 # Ajouter le path des modules
 sys.path.append(str(Path(__file__).parent.parent / "modules"))
@@ -68,12 +68,12 @@ def demo_cache_performance():
         try:
             # Premier chargement (cache miss)
             start = time.time()
-            config1 = load_toml_cached(file_path)
+            load_toml_cached(file_path)
             time1 = (time.time() - start) * 1000
 
             # Deuxième chargement (cache hit)
             start = time.time()
-            config2 = load_toml_cached(file_path)
+            load_toml_cached(file_path)
             time2 = (time.time() - start) * 1000
 
             print(f"  🔄 Premier: {time1:.2f}ms")
@@ -115,7 +115,7 @@ def demo_modules_integration():
     try:
         from zeroia.reason_loop_enhanced import load_toml_enhanced_cache
 
-        config = load_toml_enhanced_cache(Path("state/global_context.toml"))
+        load_toml_enhanced_cache(Path("state/global_context.toml"))
         modules_status["ZeroIA"] = "✅ Enhanced v2.7.1"
         print("  ✅ ZeroIA Enhanced opérationnel")
     except Exception as e:
@@ -177,9 +177,9 @@ def demo_quick():
     configs_loaded = 0
     for i in range(3):
         try:
-            config = load_toml_cached("config/settings.toml")
+            load_toml_cached("config/settings.toml")
             configs_loaded += 1
-        except:
+        except Exception:
             pass
 
     duration = (time.time() - start) * 1000
@@ -219,8 +219,22 @@ def demo_full():
 
 
 def format_generated():
+    """Formate tous les dossiers generated avec isort + black."""
     for d in pathlib.Path(".").rglob("generated"):
-        subprocess.run(["black", str(d), "--quiet"], check=False)
+        try:
+            # Tri des imports avec isort (compatible black)
+            subprocess.run(["isort", str(d), "--profile", "black"], check=True)
+            # Formatage du code avec black
+            subprocess.run(["black", str(d), "--quiet"], check=True)
+            print(f"✅ Formaté: {d}")
+        except subprocess.CalledProcessError as e:
+            print(f"⚠️ Erreur formatage {d}: {e}")
+            # Fallback: essayer au moins isort
+            try:
+                subprocess.run(["isort", str(d), "--fix"], check=False)
+                print(f"⚠️ Fallback isort appliqué: {d}")
+            except Exception:
+                print(f"❌ Fallback échoué: {d}")
 
 
 def main():

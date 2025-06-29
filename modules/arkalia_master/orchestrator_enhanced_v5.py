@@ -90,7 +90,7 @@ class OrchestratorEnhancedConfig:
     """Configuration Master Orchestrator Enhanced"""
 
     # Cycles adaptatifs enhanced
-    cycle_intervals: Dict[CycleMode, float] = field(
+    cycle_intervals: dict[CycleMode, float] = field(
         default_factory=lambda: {
             CycleMode.URGENT: 5.0,
             CycleMode.NORMAL: 30.0,
@@ -105,7 +105,7 @@ class OrchestratorEnhancedConfig:
     global_recovery_timeout: int = 60
 
     # Modules actifs enhanced
-    enabled_modules: List[str] = field(
+    enabled_modules: list[str] = field(
         default_factory=lambda: [
             "zeroia",
             "reflexia",
@@ -148,10 +148,10 @@ class ModuleWrapperEnhanced:
     name: str
     instance: Any
     status: ModuleStatus = ModuleStatus.INITIALIZING
-    last_execution: Optional[datetime] = None
+    last_execution: datetime | None = None
     execution_count: int = 0
     error_count: int = 0
-    last_error: Optional[str] = None
+    last_error: str | None = None
     recovery_attempts: int = 0  # Nouveau: tentatives de récupération
     cognitive_score: float = 0.0  # Nouveau: score cognitif
 
@@ -194,7 +194,7 @@ class ArkaliaOrchestratorEnhanced:
     - Mode COGNITIVE_BOOST
     """
 
-    def __init__(self, config: Optional[OrchestratorEnhancedConfig] = None):
+    def __init__(self, config: OrchestratorEnhancedConfig | None = None):
         self.config = config or OrchestratorEnhancedConfig()
         self.current_cycle_mode = CycleMode.NORMAL
         self.is_running = False
@@ -215,23 +215,23 @@ class ArkaliaOrchestratorEnhanced:
         self.recovery_events = 0  # Nouveau: récupérations
 
         # Modules wrappés enhanced
-        self.modules: Dict[str, ModuleWrapperEnhanced] = {}
+        self.modules: dict[str, ModuleWrapperEnhanced] = {}
 
         # Global State Master enhanced
-        self.global_state: Dict[str, Any] = {}
-        self.cognitive_state: Dict[str, Any] = {}  # Nouveau: état cognitif
+        self.global_state: dict[str, Any] = {}
+        self.cognitive_state: dict[str, Any] = {}  # Nouveau: état cognitif
 
         # Tasks asyncio
-        self.orchestration_task: Optional[asyncio.Task] = None
-        self.health_check_task: Optional[asyncio.Task] = None
-        self.cognitive_task: Optional[asyncio.Task] = None  # Nouveau: task cognitive
+        self.orchestration_task: asyncio.Task | None = None
+        self.health_check_task: asyncio.Task | None = None
+        self.cognitive_task: asyncio.Task | None = None  # Nouveau: task cognitive
 
         # Enhanced components
-        self.error_recovery_system: Optional[Any] = None
-        self.cognitive_reactor: Optional[Any] = None
-        self.vault_manager: Optional[Any] = None
-        self.chronalia: Optional[Any] = None
-        self.crossmodule_validator: Optional[Any] = None
+        self.error_recovery_system: Any | None = None
+        self.cognitive_reactor: Any | None = None
+        self.vault_manager: Any | None = None
+        self.chronalia: Any | None = None
+        self.crossmodule_validator: Any | None = None
 
         logger.info("🌟 ArkaliaOrchestrator Enhanced v5.0.0 initialized")
 
@@ -250,9 +250,7 @@ class ArkaliaOrchestratorEnhanced:
             try:
                 zeroia_core = ZeroIACore()
                 if await asyncio.to_thread(zeroia_core.initialize):
-                    self.modules["zeroia"] = ModuleWrapperEnhanced(
-                        "zeroia", zeroia_core
-                    )
+                    self.modules["zeroia"] = ModuleWrapperEnhanced("zeroia", zeroia_core)
                     initialization_results["zeroia"] = "✅ SUCCESS"
                 else:
                     initialization_results["zeroia"] = "❌ FAILED"
@@ -313,9 +311,7 @@ class ArkaliaOrchestratorEnhanced:
         ):
             try:
                 self.chronalia = Chronalia()
-                self.modules["chronalia"] = ModuleWrapperEnhanced(
-                    "chronalia", self.chronalia
-                )
+                self.modules["chronalia"] = ModuleWrapperEnhanced("chronalia", self.chronalia)
                 initialization_results["chronalia"] = "✅ SUCCESS (Enhanced)"
                 logger.info("⏰ Chronalia activé")
             except Exception as e:
@@ -332,27 +328,21 @@ class ArkaliaOrchestratorEnhanced:
                 self.modules["crossmodule_validator"] = ModuleWrapperEnhanced(
                     "crossmodule_validator", self.crossmodule_validator
                 )
-                initialization_results["crossmodule_validator"] = (
-                    "✅ SUCCESS (Enhanced)"
-                )
+                initialization_results["crossmodule_validator"] = "✅ SUCCESS (Enhanced)"
                 logger.info("✅ CrossModule Validator activé")
             except Exception as e:
                 initialization_results["crossmodule_validator"] = f"❌ ERROR: {e}"
 
         # === LOG RÉSULTATS ===
-        enhanced_count = sum(
-            1 for r in initialization_results.values() if "Enhanced" in r
-        )
-        total_success = sum(
-            1 for r in initialization_results.values() if "SUCCESS" in r
-        )
+        enhanced_count = sum(1 for r in initialization_results.values() if "Enhanced" in r)
+        total_success = sum(1 for r in initialization_results.values() if "SUCCESS" in r)
 
         logger.info(f"🌟 Enhanced modules: {enhanced_count}")
         logger.info(f"✅ Total success: {total_success}/{len(initialization_results)}")
 
         return total_success > 0
 
-    async def execute_enhanced_cycle(self) -> Dict[str, Any]:
+    async def execute_enhanced_cycle(self) -> dict[str, Any]:
         """
         Exécute un cycle coordonné Enhanced avec les nouveaux composants
         """
@@ -368,10 +358,7 @@ class ArkaliaOrchestratorEnhanced:
         successful_this_cycle = 0
 
         # === PHASE 0: COGNITIVE REACTOR (si mode cognitif) ===
-        if (
-            self.cognitive_reactor
-            and self.current_cycle_mode == CycleMode.COGNITIVE_BOOST
-        ):
+        if self.cognitive_reactor and self.current_cycle_mode == CycleMode.COGNITIVE_BOOST:
             try:
                 cognitive_result = await asyncio.to_thread(
                     self.cognitive_reactor.process_cognitive_cycle, self.global_state
@@ -430,9 +417,7 @@ class ArkaliaOrchestratorEnhanced:
                             self.modules[module_name].status = ModuleStatus.HEALTHY
                             self.modules[module_name].error_count = 0
 
-                    logger.info(
-                        f"🛡️ Modules recovered: {len(recovery_result.get('recovered', []))}"
-                    )
+                    logger.info(f"🛡️ Modules recovered: {len(recovery_result.get('recovered', []))}")
 
             except Exception as e:
                 logger.error(f"❌ Error Recovery error: {e}")
@@ -444,8 +429,7 @@ class ArkaliaOrchestratorEnhanced:
         if (
             self.chronalia
             and self.config.temporal_analysis_enabled
-            and self.current_cycle_mode
-            in [CycleMode.DEEP_ANALYSIS, CycleMode.COGNITIVE_BOOST]
+            and self.current_cycle_mode in [CycleMode.DEEP_ANALYSIS, CycleMode.COGNITIVE_BOOST]
         ):
             try:
                 temporal_result = await asyncio.to_thread(
@@ -461,9 +445,7 @@ class ArkaliaOrchestratorEnhanced:
                 self.modules["chronalia"].update_success()
                 successful_this_cycle += 1
 
-                logger.info(
-                    f"⏰ Temporal patterns: {temporal_result.get('patterns', 0)}"
-                )
+                logger.info(f"⏰ Temporal patterns: {temporal_result.get('patterns', 0)}")
 
             except Exception as e:
                 logger.error(f"❌ Chronalia error: {e}")
@@ -489,9 +471,7 @@ class ArkaliaOrchestratorEnhanced:
                 self.modules["crossmodule_validator"].update_success()
                 successful_this_cycle += 1
 
-                logger.info(
-                    f"✅ Cross-validation score: {validation_result.get('score', 0.0):.2f}"
-                )
+                logger.info(f"✅ Cross-validation score: {validation_result.get('score', 0.0):.2f}")
 
             except Exception as e:
                 logger.error(f"❌ CrossModule Validator error: {e}")
@@ -506,9 +486,7 @@ class ArkaliaOrchestratorEnhanced:
         # === PHASE 4: VAULT SECURITY CHECK ===
         if self.vault_manager:
             try:
-                security_result = await asyncio.to_thread(
-                    self.vault_manager.security_health_check
-                )
+                security_result = await asyncio.to_thread(self.vault_manager.security_health_check)
 
                 cycle_results["vault_manager"] = {
                     "security_score": security_result.get("score", 0.0),
@@ -519,9 +497,7 @@ class ArkaliaOrchestratorEnhanced:
                 self.modules["vault_manager"].update_success()
                 successful_this_cycle += 1
 
-                logger.info(
-                    f"🔐 Security score: {security_result.get('score', 0.0):.2f}"
-                )
+                logger.info(f"🔐 Security score: {security_result.get('score', 0.0):.2f}")
 
             except Exception as e:
                 logger.error(f"❌ Vault Manager error: {e}")
@@ -574,9 +550,7 @@ class ArkaliaOrchestratorEnhanced:
 
         return cycle_summary
 
-    async def _adapt_cycle_mode_enhanced(
-        self, cycle_results: Dict, successful: int, total: int
-    ):
+    async def _adapt_cycle_mode_enhanced(self, cycle_results: dict, successful: int, total: int):
         """
         Adapte intelligemment le mode de cycle Enhanced
         """
@@ -586,14 +560,10 @@ class ArkaliaOrchestratorEnhanced:
         success_rate = successful / total
 
         # Vérifier événements cognitifs
-        cognitive_activity = any(
-            "cognitive" in str(result) for result in cycle_results.values()
-        )
+        cognitive_activity = any("cognitive" in str(result) for result in cycle_results.values())
 
         # Vérifier erreurs critiques
-        critical_errors = any(
-            result.get("status") == "error" for result in cycle_results.values()
-        )
+        critical_errors = any(result.get("status") == "error" for result in cycle_results.values())
 
         # Logique d'adaptation Enhanced
         if critical_errors or success_rate < 0.5:
@@ -620,7 +590,7 @@ class ArkaliaOrchestratorEnhanced:
                 self.current_cycle_mode = CycleMode.NORMAL
                 logger.info("🔄 Returning to NORMAL mode")
 
-    def get_enhanced_status(self) -> Dict[str, Any]:
+    def get_enhanced_status(self) -> dict[str, Any]:
         """Retourne le statut complet Enhanced"""
         uptime = time.time() - self.start_time
 
@@ -641,11 +611,7 @@ class ArkaliaOrchestratorEnhanced:
                     "cognitive_events": self.cognitive_events,
                     "recovery_events": self.recovery_events,
                     "enhanced_modules_count": len(
-                        [
-                            m
-                            for m in self.modules.values()
-                            if hasattr(m, "cognitive_score")
-                        ]
+                        [m for m in self.modules.values() if hasattr(m, "cognitive_score")]
                     ),
                 },
             },
@@ -674,8 +640,8 @@ class ArkaliaOrchestratorEnhanced:
 
 
 async def orchestrate_enhanced_ecosystem(
-    config: Optional[OrchestratorEnhancedConfig] = None,
-    max_cycles: Optional[int] = None,
+    config: OrchestratorEnhancedConfig | None = None,
+    max_cycles: int | None = None,
 ) -> None:
     """
     Lance l'orchestration Enhanced complète
@@ -687,7 +653,7 @@ async def orchestrate_enhanced_ecosystem(
 
         if max_cycles:
             for i in range(max_cycles):
-                cycle_result = await orchestrator.execute_enhanced_cycle()
+                await orchestrator.execute_enhanced_cycle()
                 logger.info(f"Enhanced Cycle {i+1}/{max_cycles} completed")
 
                 sleep_duration = orchestrator.config.cycle_intervals[
@@ -700,7 +666,7 @@ async def orchestrate_enhanced_ecosystem(
             orchestrator.is_running = True
 
             while orchestrator.is_running:
-                cycle_result = await orchestrator.execute_enhanced_cycle()
+                await orchestrator.execute_enhanced_cycle()
 
                 sleep_duration = orchestrator.config.cycle_intervals[
                     orchestrator.current_cycle_mode
@@ -717,9 +683,7 @@ async def orchestrate_enhanced_ecosystem(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Arkalia Master Orchestrator Enhanced v5.0.0"
-    )
+    parser = argparse.ArgumentParser(description="Arkalia Master Orchestrator Enhanced v5.0.0")
     parser.add_argument("--cycles", type=int, help="Nombre de cycles (mode test)")
     parser.add_argument("--verbose", action="store_true", help="Logs détaillés")
 

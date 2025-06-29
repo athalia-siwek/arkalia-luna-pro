@@ -169,6 +169,4 @@ def test_ensure_parent_dir_empty_path():
         assert True
     except Exception as e:
         # Si une exception est levée, elle doit être gérée gracieusement
-        assert isinstance(
-            e, (OSError, ValueError)
-        ), f"Unexpected exception type: {type(e)}"
+        assert isinstance(e, (OSError, ValueError)), f"Unexpected exception type: {type(e)}"

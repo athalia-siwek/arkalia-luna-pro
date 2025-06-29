@@ -47,7 +47,7 @@ def file_hash(path: str) -> str:
         return hashlib.sha256(f.read()).hexdigest()
 
 
-def save_toml_if_changed(data: Dict[str, Any], target_path: str) -> None:
+def save_toml_if_changed(data: dict[str, Any], target_path: str) -> None:
     """
     Sauvegarde un fichier TOML seulement s'il y a des changements.
 
@@ -85,7 +85,7 @@ def save_toml_if_changed(data: Dict[str, Any], target_path: str) -> None:
         f.write("\n")
 
 
-def save_json_if_changed(data: Dict[str, Any], target_path: str) -> None:
+def save_json_if_changed(data: dict[str, Any], target_path: str) -> None:
     """
     Sauvegarde un fichier JSON seulement s'il y a des changements.
 
@@ -146,14 +146,12 @@ def check_health(path: str) -> bool:
         data = toml.load(path)
         if os.getenv("FORCE_ZEROIA_OK") == "1":
             return True
-        return bool(
-            data.get("active") is True or data.get("zeroia", {}).get("active") is True
-        )
+        return bool(data.get("active") is True or data.get("zeroia", {}).get("active") is True)
     except (toml.TomlDecodeError, OSError, TypeError):
         return False
 
 
-def write_state_json(file_path: str, data: Dict[str, Any]) -> None:
+def write_state_json(file_path: str, data: dict[str, Any]) -> None:
     """
     Écrit directement un fichier JSON d'état avec formatage consistant.
 
@@ -177,7 +175,7 @@ def write_state_json(file_path: str, data: Dict[str, Any]) -> None:
         f.write("\n")
 
 
-def load_zeroia_state(path: str) -> Dict[str, Any]:
+def load_zeroia_state(path: str) -> dict[str, Any]:
     """
     Charge un fichier d'état ZeroIA TOML avec gestion d'erreurs.
 
@@ -199,7 +197,7 @@ def load_zeroia_state(path: str) -> Dict[str, Any]:
         >>> state = load_zeroia_state("modules/zeroia/state/zeroia_state.toml")
         >>> last_decision = state.get("decision", {}).get("last_decision")
     """
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return toml.load(f)
 
 

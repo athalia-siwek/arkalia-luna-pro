@@ -5,12 +5,10 @@ from typing import Dict
 
 import toml
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-def check_state_file() -> Dict:
+def check_state_file() -> dict:
     """Check the ZeroIA state file"""
     state_path = Path("modules/zeroia/state/zeroia_state.toml")
     try:
@@ -22,7 +20,7 @@ def check_state_file() -> Dict:
         return {}
 
 
-def check_component_health(state_data: Dict) -> bool:
+def check_component_health(state_data: dict) -> bool:
     """Verify component health status"""
     try:
         if not state_data.get("health", {}).get("is_healthy", False):
@@ -43,7 +41,7 @@ def check_component_health(state_data: Dict) -> bool:
         return False
 
 
-def check_performance(state_data: Dict) -> bool:
+def check_performance(state_data: dict) -> bool:
     """Check performance metrics"""
     try:
         perf = state_data.get("performance", {})

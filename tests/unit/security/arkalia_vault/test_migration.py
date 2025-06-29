@@ -41,10 +41,7 @@ SECRET_TOKEN="token_with_quotes"
         env_file.write_text(env_content)
         migrated_count = migrate_from_env_file(env_file, vault)
         assert migrated_count == 4
-        assert (
-            vault.retrieve_secret("env_DATABASE_URL")
-            == "postgresql://user:pass@localhost/db"
-        )
+        assert vault.retrieve_secret("env_DATABASE_URL") == "postgresql://user:pass@localhost/db"
         assert vault.retrieve_secret("env_API_KEY") == "secret_api_key_12345"
         assert vault.retrieve_secret("env_DEBUG") == "true"
         assert vault.retrieve_secret("env_SECRET_TOKEN") == "token_with_quotes"

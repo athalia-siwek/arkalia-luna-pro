@@ -28,9 +28,9 @@ class MetricPoint:
 
     timestamp: datetime
     value: float
-    labels: Dict[str, str]
+    labels: dict[str, str]
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         return {
             "timestamp": self.timestamp.isoformat(),
             "value": self.value,
@@ -51,14 +51,12 @@ class SandoziaMetrics:
 
     def __init__(self, retention_hours: int = 24):
         self.retention_hours = retention_hours
-        self.metrics_store: Dict[str, List[MetricPoint]] = defaultdict(list)
-        self.correlations_cache: Dict[str, float] = {}
+        self.metrics_store: dict[str, list[MetricPoint]] = defaultdict(list)
+        self.correlations_cache: dict[str, float] = {}
 
         logger.info("📊 SandoziaMetrics initialized")
 
-    def add_metric(
-        self, name: str, value: float, labels: Optional[Dict[str, str]] = None
-    ):
+    def add_metric(self, name: str, value: float, labels: dict[str, str] | None = None):
         """Ajoute une métrique"""
         labels = labels or {}
         timestamp = datetime.now()
@@ -75,14 +73,10 @@ class SandoziaMetrics:
         cutoff = datetime.now() - timedelta(hours=self.retention_hours)
 
         self.metrics_store[metric_name] = [
-            point
-            for point in self.metrics_store[metric_name]
-            if point.timestamp > cutoff
+            point for point in self.metrics_store[metric_name] if point.timestamp > cutoff
         ]
 
-    def get_metric_values(
-        self, name: str, time_window_minutes: Optional[int] = None
-    ) -> List[float]:
+    def get_metric_values(self, name: str, time_window_minutes: int | None = None) -> list[float]:
         """Récupère les valeurs d'une métrique"""
         if name not in self.metrics_store:
             return []
@@ -97,7 +91,7 @@ class SandoziaMetrics:
 
     def calculate_correlation(
         self, metric1: str, metric2: str, time_window_minutes: int = 60
-    ) -> Optional[float]:
+    ) -> float | None:
         """Calcule la corrélation entre deux métriques"""
         values1 = self.get_metric_values(metric1, time_window_minutes)
         values2 = self.get_metric_values(metric2, time_window_minutes)
@@ -110,7 +104,9 @@ class SandoziaMetrics:
             mean1 = statistics.mean(values1)
             mean2 = statistics.mean(values2)
 
-            numerator = sum((x - mean1) * (y - mean2) for x, y in zip(values1, values2))
+            numerator = sum(
+                (x - mean1) * (y - mean2) for x, y in zip(values1, values2, strict=False)
+            )
 
             sum_sq1 = sum((x - mean1) ** 2 for x in values1)
             sum_sq2 = sum((y - mean2) ** 2 for y in values2)
@@ -132,7 +128,7 @@ class SandoziaMetrics:
             logger.warning(f"⚠️ Correlation calculation failed: {e}")
             return None
 
-    def get_metric_summary(self, name: str) -> Optional[Dict[str, Any]]:
+    def get_metric_summary(self, name: str) -> dict[str, Any] | None:
         """Résumé statistique d'une métrique"""
         values = self.get_metric_values(name)
 
@@ -181,7 +177,7 @@ class SandoziaMetrics:
 
         return "\n".join(lines)
 
-    def export_grafana_json(self) -> Dict[str, Any]:
+    def export_grafana_json(self) -> dict[str, Any]:
         """Exporte au format JSON pour Grafana"""
         series = []
 
@@ -203,7 +199,7 @@ class SandoziaMetrics:
             "retention_hours": self.retention_hours,
         }
 
-    def get_cross_module_health(self) -> Dict[str, Any]:
+    def get_cross_module_health(self) -> dict[str, Any]:
         """Calcule la santé cross-modules"""
         health_metrics = {}
 
@@ -225,9 +221,7 @@ class SandoziaMetrics:
                     elif metric in ["response_time"]:
                         # Inverser pour temps de réponse (moins = mieux)
                         max_acceptable = 2.0  # 2 secondes max
-                        health_score = max(
-                            0.0, 1.0 - (summary["mean"] / max_acceptable)
-                        )
+                        health_score = max(0.0, 1.0 - (summary["mean"] / max_acceptable))
                     elif metric == "success_rate":
                         health_score = summary["mean"]
                     else:
@@ -267,7 +261,7 @@ class SandoziaMetrics:
             "total_metrics": len(self.metrics_store),
         }
 
-    def get_all_metrics(self) -> Dict[str, Any]:
+    def get_all_metrics(self) -> dict[str, Any]:
         """Retourne toutes les métriques et métadonnées"""
         return {
             "metrics_count": len(self.metrics_store),
@@ -275,19 +269,11 @@ class SandoziaMetrics:
             "retention_hours": self.retention_hours,
             "correlations_cached": len(self.correlations_cache),
             "oldest_metric": min(
-                (
-                    points[0].timestamp
-                    for points in self.metrics_store.values()
-                    if points
-                ),
+                (points[0].timestamp for points in self.metrics_store.values() if points),
                 default=datetime.now(),
             ).isoformat(),
             "latest_metric": max(
-                (
-                    points[-1].timestamp
-                    for points in self.metrics_store.values()
-                    if points
-                ),
+                (points[-1].timestamp for points in self.metrics_store.values() if points),
                 default=datetime.now(),
             ).isoformat(),
         }
@@ -350,9 +336,7 @@ def demo_metrics():
     # Export Prometheus
     prometheus_data = metrics.export_prometheus_format()
     print(f"\n📤 Prometheus export ({len(prometheus_data.split())} metrics):")
-    print(
-        prometheus_data[:200] + "..." if len(prometheus_data) > 200 else prometheus_data
-    )
+    print(prometheus_data[:200] + "..." if len(prometheus_data) > 200 else prometheus_data)
 
 
 if __name__ == "__main__":

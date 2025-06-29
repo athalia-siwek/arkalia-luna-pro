@@ -23,16 +23,14 @@ except ImportError:
     psutil = None
 
 
-def get_system_metrics() -> Dict:
+def get_system_metrics() -> dict:
     """Collecte les vraies métriques système"""
     if psutil:
         return {
             "cpu_percent": round(psutil.cpu_percent(interval=1), 1),
             "memory_percent": round(psutil.virtual_memory().percent, 1),
             "disk_usage": round(psutil.disk_usage("/").percent, 1),
-            "load_avg": (
-                list(os.getloadavg()) if hasattr(os, "getloadavg") else [0, 0, 0]
-            ),
+            "load_avg": (list(os.getloadavg()) if hasattr(os, "getloadavg") else [0, 0, 0]),
         }
     else:
         # Fallback sans psutil
@@ -44,7 +42,7 @@ def get_system_metrics() -> Dict:
         }
 
 
-def get_arkalia_containers_status() -> Dict:
+def get_arkalia_containers_status() -> dict:
     """Vérifie l'état des containers Arkalia"""
     try:
         result = subprocess.run(
@@ -70,9 +68,7 @@ def get_arkalia_containers_status() -> Dict:
                     if len(parts) >= 2:
                         name = parts[0].strip()
                         status = parts[1].strip()
-                        containers[name] = (
-                            "healthy" if "healthy" in status else "running"
-                        )
+                        containers[name] = "healthy" if "healthy" in status else "running"
             return containers
         else:
             return {"error": "Docker unavailable"}
@@ -81,7 +77,7 @@ def get_arkalia_containers_status() -> Dict:
         return {"error": f"Container check failed: {str(e)}"}
 
 
-def get_arkalia_modules_health() -> Dict:
+def get_arkalia_modules_health() -> dict:
     """Vérifie la santé des modules Arkalia"""
     health = {}
 
@@ -126,7 +122,7 @@ def get_arkalia_modules_health() -> Dict:
     return health
 
 
-def analyze_error_logs() -> Dict:
+def analyze_error_logs() -> dict:
     """Analyse les logs d'erreur récents"""
     error_count = 0
     warning_count = 0
@@ -136,7 +132,7 @@ def analyze_error_logs() -> Dict:
     if error_log.exists():
         try:
             # Lire les 100 dernières lignes
-            with open(error_log, "r") as f:
+            with open(error_log) as f:
                 lines = f.readlines()[-100:]
 
             for line in lines:
@@ -155,7 +151,7 @@ def analyze_error_logs() -> Dict:
     }
 
 
-def read_metrics_enhanced() -> Dict:
+def read_metrics_enhanced() -> dict:
     """
     Collecte complète des métriques Reflexia Enhanced
 
@@ -185,7 +181,7 @@ def read_metrics_enhanced() -> Dict:
 
 
 # Alias pour compatibilité avec l'ancien code
-def read_metrics() -> Dict:
+def read_metrics() -> dict:
     """Interface compatible avec l'ancienne version"""
     enhanced = read_metrics_enhanced()
 

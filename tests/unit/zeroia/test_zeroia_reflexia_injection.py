@@ -14,9 +14,7 @@ def test_reflexia_injection_merges_into_context(tmp_path: Path):
     reflexia_path = tmp_path / "reflexia.toml"
 
     # 🧪 Contexte minimal avec CPU élevé
-    ctx_path.write_text(
-        toml.dumps({"status": {"cpu": 85, "ram": 60, "severity": "high"}})
-    )
+    ctx_path.write_text(toml.dumps({"status": {"cpu": 85, "ram": 60, "severity": "high"}}))
 
     # 🧠 ReflexIA injecte CPU + RAM + insight
     reflexia_path.write_text(

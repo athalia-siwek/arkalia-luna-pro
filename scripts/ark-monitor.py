@@ -48,9 +48,7 @@ def display_recent_errors():
     if LOG_FILE.exists():
         with LOG_FILE.open("r", encoding="utf-8") as f:
             lines = f.readlines()
-            print(
-                "".join(lines[-5:])
-            )  # Affiche les 5 dernières lignes du fichier de log
+            print("".join(lines[-5:]))  # Affiche les 5 dernières lignes du fichier de log
     else:
         print("Aucune erreur connue.")
 

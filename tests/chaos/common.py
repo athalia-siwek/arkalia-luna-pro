@@ -39,9 +39,7 @@ class ChaosTester:
             self.corrupted_files.append((file_path, backup_path))
 
             # Différents types de corruption
-            corruption_type = random.choice(
-                ["truncate", "random_bytes", "invalid_toml"]
-            )
+            corruption_type = random.choice(["truncate", "random_bytes", "invalid_toml"])
 
             if corruption_type == "truncate":
                 # Tronque le fichier
