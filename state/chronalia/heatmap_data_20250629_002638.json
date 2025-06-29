@@ -1,0 +1,34 @@
+{
+  "heatmap_data": [
+    {
+      "timestamp": "2025-06-29T01:50:00",
+      "cycles_count": 20,
+      "avg_confidence": 0.4000000000000001,
+      "contradictions_count": 6,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.16,
+      "decisions": {
+        "normal": 20
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:25:00",
+      "cycles_count": 200,
+      "avg_confidence": 0.4000000000000003,
+      "contradictions_count": 81,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.1915000000000001,
+      "decisions": {
+        "normal": 200
+      }
+    }
+  ],
+  "summary": {
+    "total_cycles": 220,
+    "time_range_hours": 1,
+    "resolution_minutes": 5,
+    "generated_at": "2025-06-29T00:26:38.823599"
+  }
+}

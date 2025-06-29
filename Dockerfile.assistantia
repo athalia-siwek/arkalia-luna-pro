@@ -1,11 +1,67 @@
-FROM python:3.10-slim
+# 🤖 Dockerfile.assistantia - AssistantIA Optimisé
+# Stage 1: Builder
+FROM python:3.10-slim as builder
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PIP_NO_CACHE_DIR=1
+
+# Installation des outils de build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Création d'un environnement virtuel
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Installation des dépendances
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Stage 2: Runtime
+FROM python:3.10-slim as runtime
+
+# Métadonnées
+LABEL maintainer="Athalia <athalia@arkalia.ai>"
+LABEL description="AssistantIA - Navigation Contextuelle"
+LABEL version="2.6.0"
+
+# Variables d'environnement
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PATH="/opt/venv/bin:$PATH"
+ENV PYTHONPATH=/app
+ENV ASSISTANTIA_ENV=production
+
+# Création utilisateur non-root
+RUN groupadd -r assistantia && \
+    useradd -r -g assistantia -d /app -s /bin/bash assistantia && \
+    mkdir -p /app/logs /app/state && \
+    chown -R assistantia:assistantia /app
+
+# Copie du venv
+COPY --from=builder /opt/venv /opt/venv
 
 WORKDIR /app
-COPY . .
 
-RUN pip install --no-cache-dir fastapi uvicorn
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Copie sélective du code
+COPY --chown=assistantia:assistantia modules/assistantia ./modules/assistantia
+COPY --chown=assistantia:assistantia modules/__init__.py ./modules/
+COPY --chown=assistantia:assistantia config ./config
+COPY --chown=assistantia:assistantia state ./state
 
+# Switch vers utilisateur non-root
+USER assistantia
+
+# Healthcheck amélioré
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:8001/health', timeout=3)" || exit 1
+
+# Port exposé
 EXPOSE 8001
 
-CMD ["uvicorn", "modules.assistantia.core:app", "--host", "0.0.0.0", "--port", "8001"]
+# Point d'entrée optimisé
+CMD ["uvicorn", "modules.assistantia.core:app", "--host", "0.0.0.0", "--port", "8001", \
+    "--workers", "1", "--access-log", "--log-level", "info"]

@@ -50,9 +50,11 @@ class PerformanceMetrics:
         self.memory_end = process.memory_info().rss / 1024 / 1024  # MB
 
     @property
-    def elapsed_time(self):
+    def elapsed_time(self) -> float | None:
         """Temps écoulé en secondes"""
-        return self.end_time - self.start_time if self.end_time else None
+        if self.end_time is not None and self.start_time is not None:
+            return float(self.end_time) - float(self.start_time)
+        return None
 
     @property
     def memory_delta(self) -> float | None:

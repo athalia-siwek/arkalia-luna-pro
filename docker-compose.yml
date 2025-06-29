@@ -1,34 +1,61 @@
-# 📦 Arkalia Luna Pro — Docker Compose
-# Version modulaire, professionnelle et sécurisée
+# 🚀 Arkalia Luna Pro — Docker Compose Optimisé v3.0
+# Configuration haute performance avec sécurité renforcée
 
 x-arkalia-defaults: &arkalia-defaults
   build:
     context: .
   volumes:
-    - .:/app
+    - ./logs:/app/logs
+    - ./state:/app/state:rw
+    - ./config:/app/config:ro
   working_dir: /app
   environment:
     - PYTHONUNBUFFERED=1
+    - PYTHONDONTWRITEBYTECODE=1
   restart: unless-stopped
+  networks:
+    - arkalia_network
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  read_only: false # Changé pour permettre l'écriture dans /app/logs
 
 services:
 
-  # 🚀 Helloria — API centrale (FastAPI)
+  # 🚀 Helloria — API centrale (FastAPI) Optimisée
   arkalia-api:
     <<: *arkalia-defaults
     container_name: arkalia-api
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "${PORT_API:-8000}:${PORT_API:-8000}"
+      - "${PORT_API:-8000}:8000"
     command: >
-      uvicorn helloria.core:app --host 0.0.0.0 --port ${PORT_API:-8000}
+      uvicorn helloria.core:app --host 0.0.0.0 --port 8000
+        --workers 2 --access-log --log-level info
         --reload --reload-dir helloria
-        --reload-exclude logs/ --reload-exclude docs/ --reload-exclude site/
-    read_only: true
-    cap_drop: [ ALL ]
-    security_opt:
-      - no-new-privileges:true
+        --reload-exclude logs/ --reload-exclude docs/
+    environment:
+      - ARKALIA_ENV=development
+      - ARKALIA_LOG_LEVEL=INFO
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health', timeout=3)" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
 
-  # 🧠 AssistantIA — Navigation contextuelle
+  # 🧠 AssistantIA — Navigation contextuelle Optimisée
   assistantia:
     <<: *arkalia-defaults
     container_name: assistantia
@@ -36,15 +63,29 @@ services:
       context: .
       dockerfile: Dockerfile.assistantia
     ports:
-      - "${PORT_ASSISTANTIA:-8001}:${PORT_ASSISTANTIA:-8001}"
+      - "${PORT_ASSISTANTIA:-8001}:8001"
     command: >
-      uvicorn modules.assistantia.core:app --host 0.0.0.0 --port ${PORT_ASSISTANTIA:-8001}
-    read_only: true
-    cap_drop: [ ALL ]
-    security_opt:
-      - no-new-privileges:true
+      uvicorn modules.assistantia.core:app --host 0.0.0.0 --port 8001
+        --workers 1 --access-log --log-level info
+    environment:
+      - ASSISTANTIA_ENV=development
+      - ASSISTANTIA_LOG_LEVEL=INFO
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import requests; requests.get('http://localhost:8001/health', timeout=3)" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 384M
+          cpus: '0.8'
+        reservations:
+          memory: 192M
+          cpus: '0.4'
 
-  # 🔁 ReflexIA — Observateur cognitif réflexif
+  # 🔁 ReflexIA — Observateur cognitif réflexif Optimisé
   reflexia:
     <<: *arkalia-defaults
     container_name: reflexia
@@ -52,59 +93,125 @@ services:
       context: .
       dockerfile: Dockerfile-reflexia
     command: python run_reflexia.py
+    environment:
+      - REFLEXIA_ENV=development
+      - REFLEXIA_MONITORING_ENABLED=true
     depends_on:
-      - assistantia
-    read_only: true
-    cap_drop: [ ALL ]
-    security_opt:
-      - no-new-privileges:true
+      assistantia:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "python", "-c", "from modules.reflexia.core import ReflexiaCore; core = ReflexiaCore(); print('OK')" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.8'
+        reservations:
+          memory: 256M
+          cpus: '0.4'
 
-  # 🤖 ZeroIA — Décisionneur autonome intelligent Enhanced v2.6.0
+  # 🤖 ZeroIA — Décisionneur autonome Enhanced v2.6.0 Optimisé
   zeroia:
     <<: *arkalia-defaults
     container_name: zeroia
     build:
       context: .
       dockerfile: Dockerfile.zeroia
-    image: arkalia-luna-zeroia
+    image: arkalia-luna-zeroia:optimized
     command: python scripts/demo_orchestrator_enhanced.py --mode daemon
     environment:
+      - ZEROIA_ENV=development
       - ZEROIA_HOLD_LOOP=true
+      - ZEROIA_ENHANCED_MODE=true
+      - ZEROIA_LOG_LEVEL=INFO
     depends_on:
-      - reflexia
+      reflexia:
+        condition: service_healthy
     healthcheck:
-      test: [ "CMD", "python", "-c", "print(\"ZeroIA Enhanced OK\")" ]
+      test: [ "CMD", "python", "-c", "from modules.zeroia.state.zeroia_state import ZeroiaState; state = ZeroiaState(); print('OK')" ]
       interval: 30s
-      timeout: 5s
+      timeout: 10s
       retries: 3
       start_period: 15s
-    read_only: true
-    cap_drop: [ ALL ]
-    security_opt:
-      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+          cpus: '1.2'
+        reservations:
+          memory: 384M
+          cpus: '0.6'
 
-  # 🧠 Sandozia — Intelligence Croisée Enterprise v2.6.0
+  # 🧠 Sandozia — Intelligence Croisée Enterprise v2.6.0 Optimisée
   sandozia:
     <<: *arkalia-defaults
     container_name: sandozia
     build:
       context: .
       dockerfile: Dockerfile.sandozia
-    image: arkalia-luna-sandozia
+    image: arkalia-luna-sandozia:optimized
     command: python scripts/demo_sandozia.py --daemon
     environment:
-      - SANDOZIA_ENV=production
+      - SANDOZIA_ENV=development
       - SANDOZIA_MONITORING_ENABLED=true
+      - SANDOZIA_LOG_LEVEL=INFO
+      - SANDOZIA_ENHANCED_MODE=true
     depends_on:
-      - zeroia
-      - reflexia
+      zeroia:
+        condition: service_healthy
+      reflexia:
+        condition: service_healthy
     healthcheck:
       test: [ "CMD", "python", "-c", "from modules.sandozia.core.sandozia_core import SandoziaCore; print('OK')" ]
       interval: 45s
       timeout: 10s
       retries: 3
       start_period: 20s
-    read_only: true
-    cap_drop: [ ALL ]
-    security_opt:
-      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.5'
+        reservations:
+          memory: 512M
+          cpus: '0.8'
+
+  # 🧠 Cognitive Reactor — Nouveau service pour les réactions automatiques
+  cognitive-reactor:
+    <<: *arkalia-defaults
+    container_name: cognitive-reactor
+    build:
+      context: .
+      dockerfile: Dockerfile.sandozia
+    image: arkalia-luna-sandozia:optimized
+    command: python scripts/arkalia_enhanced_integration.py --integrate-with-zeroia
+    environment:
+      - COGNITIVE_REACTOR_ENV=development
+      - COGNITIVE_REACTOR_ENABLED=true
+      - CHRONALIA_ENABLED=true
+    depends_on:
+      sandozia:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "python", "-c", "from modules.sandozia.core.cognitive_reactor import CognitiveReactor; print('OK')" ]
+      interval: 60s
+      timeout: 15s
+      retries: 2
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 384M
+          cpus: '0.6'
+        reservations:
+          memory: 192M
+          cpus: '0.3'
+
+networks:
+  arkalia_network:
+    driver: bridge
+    name: arkalia_network

@@ -1,0 +1,70 @@
+{
+  "heatmap_data": [
+    {
+      "timestamp": "2025-06-29T01:50:00",
+      "cycles_count": 20,
+      "avg_confidence": 0.4000000000000001,
+      "contradictions_count": 6,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.16,
+      "decisions": {
+        "normal": 20
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:25:00",
+      "cycles_count": 420,
+      "avg_confidence": 0.40000000000000313,
+      "contradictions_count": 169,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.19071428571428578,
+      "decisions": {
+        "normal": 420
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:30:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 43,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.19900000000000007,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:35:00",
+      "cycles_count": 80,
+      "avg_confidence": 0.39999999999999936,
+      "contradictions_count": 41,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.22375000000000003,
+      "decisions": {
+        "normal": 80
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:40:00",
+      "cycles_count": 40,
+      "avg_confidence": 0.4000000000000002,
+      "contradictions_count": 17,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.19749999999999998,
+      "decisions": {
+        "normal": 40
+      }
+    }
+  ],
+  "summary": {
+    "total_cycles": 660,
+    "time_range_hours": 1,
+    "resolution_minutes": 5,
+    "generated_at": "2025-06-29T00:41:13.069561"
+  }
+}

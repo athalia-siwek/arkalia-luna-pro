@@ -1,23 +1,65 @@
-# 🐍 Base légère Python 3.10
-FROM python:3.10-slim
+# 🚀 Dockerfile Arkalia-LUNA Optimisé - Multi-stage Build
+# Stage 1: Builder - Installation des dépendances
+FROM python:3.10-slim AS builder
 
-# 📁 Dossier de travail dans le conteneur
+# Variables d'optimisation
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PIP_NO_CACHE_DIR=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Installation des outils de build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Création d'un environnement virtuel
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copie et installation des dépendances
+COPY requirements.txt ./
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Stage 2: Runtime - Image finale légère
+FROM python:3.10-slim AS runtime
+
+# Métadonnées
+LABEL maintainer="Athalia <athalia@arkalia.ai>"
+LABEL description="Arkalia-LUNA API Core"
+LABEL version="3.0.0"
+
+# Variables d'environnement
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Création utilisateur non-root
+RUN groupadd -r arkalia && \
+    useradd -r -g arkalia -d /app -s /bin/bash arkalia && \
+    mkdir -p /app/logs /app/state && \
+    chown -R arkalia:arkalia /app
+
+# Copie du venv depuis le builder
+COPY --from=builder /opt/venv /opt/venv
+
+# Répertoire de travail
 WORKDIR /app
 
-# 📦 Pré-copie requirements.txt pour cache Docker optimisé
-COPY requirements.txt .
+# Copie du code avec permissions correctes
+COPY --chown=arkalia:arkalia helloria ./helloria
+COPY --chown=arkalia:arkalia modules ./modules
+COPY --chown=arkalia:arkalia state ./state
+COPY --chown=arkalia:arkalia config ./config
 
-# 🔁 Installation des dépendances sans cache
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+# Switch vers utilisateur non-root
+USER arkalia
 
-# 🧠 Copie du code source
-COPY helloria /app/helloria
-COPY modules /app/modules
-COPY state /app/state
-COPY config /app/config
-
-# 🌐 Port exposé pour Uvicorn
+# Port exposé
 EXPOSE 8000
 
-# 🚀 Lancement du serveur API Helloria
-CMD ["uvicorn", "helloria.core:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "helloria", "--reload-exclude", "logs/", "--reload-exclude", "docs/", "--reload-exclude", "site/"]
+# Point d'entrée optimisé (sans healthcheck pour éviter les erreurs de build)
+CMD ["uvicorn", "helloria.core:app", "--host", "0.0.0.0", "--port", "8000", \
+    "--workers", "1", "--access-log", "--log-level", "info"]
