@@ -1,0 +1,61 @@
+tests/unit/test_circuit_breaker.py::test_unexpected_error_handling FAILED [ 15%]
+tests/unit/test_cross_module_enhanced.py::TestCrossModuleIntegration::test_sandozia_integration SKIPPED [ 20%]
+tests/unit/test_event_store.py::test_event_store_initialization ERROR    [ 22%]
+tests/unit/test_event_store.py::test_add_event ERROR                     [ 23%]
+tests/unit/test_event_store.py::test_get_event_by_id ERROR               [ 23%]
+tests/unit/test_event_store.py::test_get_events_by_type ERROR            [ 23%]
+tests/unit/test_event_store.py::test_get_events_by_module ERROR          [ 24%]
+tests/unit/test_event_store.py::test_get_recent_events ERROR             [ 24%]
+tests/unit/test_event_store.py::test_get_decision_history ERROR          [ 24%]
+tests/unit/test_event_store.py::test_get_system_health_events ERROR      [ 24%]
+tests/unit/test_event_store.py::test_detect_anomalies ERROR              [ 25%]
+tests/unit/test_event_store.py::test_get_analytics ERROR                 [ 25%]
+tests/unit/test_event_store.py::test_clear_old_events ERROR              [ 25%]
+tests/unit/test_event_store.py::test_export_events ERROR                 [ 25%]
+tests/unit/test_event_store.py::test_export_events_by_type ERROR         [ 26%]
+tests/unit/test_event_store.py::test_correlation_id_tracking ERROR       [ 26%]
+tests/unit/test_event_store.py::test_type_index_functionality ERROR      [ 26%]
+tests/unit/test_event_store.py::test_event_store_persistence ERROR       [ 27%]
+tests/integration/test_metrics_endpoint.py::TestMetricsEndpoint::test_metrics_endpoint_accessibility FAILED [ 92%]
+tests/integration/test_metrics_endpoint.py::TestMetricsEndpoint::test_metrics_format_prometheus FAILED [ 92%]
+tests/integration/test_metrics_endpoint.py::TestMetricsEndpoint::test_metrics_content_validation FAILED [ 92%]
+tests/performance/test_zeroia_performance.py::test_event_store_write_performance FAILED [ 99%]
+==================================== ERRORS ====================================
+______________ ERROR at setup of test_event_store_initialization _______________
+_______________________ ERROR at setup of test_add_event _______________________
+____________________ ERROR at setup of test_get_event_by_id ____________________
+__________________ ERROR at setup of test_get_events_by_type ___________________
+_________________ ERROR at setup of test_get_events_by_module __________________
+___________________ ERROR at setup of test_get_recent_events ___________________
+_________________ ERROR at setup of test_get_decision_history __________________
+_______________ ERROR at setup of test_get_system_health_events ________________
+___________________ ERROR at setup of test_detect_anomalies ____________________
+_____________________ ERROR at setup of test_get_analytics _____________________
+___________________ ERROR at setup of test_clear_old_events ____________________
+_____________________ ERROR at setup of test_export_events _____________________
+_________________ ERROR at setup of test_export_events_by_type _________________
+________________ ERROR at setup of test_correlation_id_tracking ________________
+_______________ ERROR at setup of test_type_index_functionality ________________
+________________ ERROR at setup of test_event_store_persistence ________________
+SKIPPED [1] tests/unit/test_cross_module_enhanced.py:179: Module Sandozia non disponible
+ERROR tests/unit/test_event_store.py::test_event_store_initialization - TypeE...
+ERROR tests/unit/test_event_store.py::test_add_event - TypeError: EventStore....
+ERROR tests/unit/test_event_store.py::test_get_event_by_id - TypeError: Event...
+ERROR tests/unit/test_event_store.py::test_get_events_by_type - TypeError: Ev...
+ERROR tests/unit/test_event_store.py::test_get_events_by_module - TypeError: ...
+ERROR tests/unit/test_event_store.py::test_get_recent_events - TypeError: Eve...
+ERROR tests/unit/test_event_store.py::test_get_decision_history - TypeError: ...
+ERROR tests/unit/test_event_store.py::test_get_system_health_events - TypeErr...
+ERROR tests/unit/test_event_store.py::test_detect_anomalies - TypeError: Even...
+ERROR tests/unit/test_event_store.py::test_get_analytics - TypeError: EventSt...
+ERROR tests/unit/test_event_store.py::test_clear_old_events - TypeError: Even...
+ERROR tests/unit/test_event_store.py::test_export_events - TypeError: EventSt...
+ERROR tests/unit/test_event_store.py::test_export_events_by_type - TypeError:...
+ERROR tests/unit/test_event_store.py::test_correlation_id_tracking - TypeErro...
+ERROR tests/unit/test_event_store.py::test_type_index_functionality - TypeErr...
+ERROR tests/unit/test_event_store.py::test_event_store_persistence - TypeErro...
+FAILED tests/unit/test_circuit_breaker.py::test_unexpected_error_handling - V...
+FAILED tests/integration/test_metrics_endpoint.py::TestMetricsEndpoint::test_metrics_endpoint_accessibility
+FAILED tests/integration/test_metrics_endpoint.py::TestMetricsEndpoint::test_metrics_format_prometheus
+FAILED tests/integration/test_metrics_endpoint.py::TestMetricsEndpoint::test_metrics_content_validation
+FAILED tests/performance/test_zeroia_performance.py::test_event_store_write_performance

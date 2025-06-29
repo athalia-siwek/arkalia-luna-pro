@@ -488,6 +488,52 @@ class ArkaliaVault(BuildIntegrityValidator):
             ),
         }
 
+    def security_health_check(self) -> Dict:
+        """
+        Vérification de santé sécurisée pour l'orchestrateur enhanced
+        
+        Returns:
+            Dict avec score de sécurité et statistiques
+        """
+        try:
+            # Validation de l'intégrité du vault
+            integrity_ok = self.validate_vault_integrity()
+            
+            # Statistiques du vault
+            stats = self.get_vault_stats()
+            
+            # Calcul du score de sécurité (0.0 à 1.0)
+            score = 1.0
+            if not integrity_ok:
+                score -= 0.5
+            if stats["expired_secrets"] > 0:
+                score -= 0.2
+            if stats["total_secrets"] == 0:
+                score -= 0.1
+                
+            # Nettoyer les secrets expirés automatiquement
+            cleaned = self.cleanup_expired_secrets()
+            
+            return {
+                "score": max(score, 0.0),
+                "secrets_count": stats["total_secrets"], 
+                "active_secrets": stats["active_secrets"],
+                "expired_cleaned": cleaned,
+                "integrity_status": "ok" if integrity_ok else "corrupted",
+                "vault_size_mb": round(stats["vault_size_bytes"] / 1024 / 1024, 2),
+                "audit_entries": stats.get("audit_log_size", 0),
+                "last_check": datetime.now().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"❌ Security health check failed: {e}")
+            return {
+                "score": 0.0,
+                "error": str(e),
+                "secrets_count": 0,
+                "last_check": datetime.now().isoformat()
+            }
+
 
 # Fonctions utilitaires pour migration douce depuis .env
 def migrate_from_env_file(

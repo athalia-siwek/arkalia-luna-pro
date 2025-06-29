@@ -122,13 +122,45 @@ class GracefulDegradationSystem:
         self.current_level = DegradationLevel.NORMAL
         self.last_health_check = datetime.now()
         self.auto_recovery_enabled = True
+        self.initialization_count = 0
+        self.max_initializations = 3
+        self.initialization_timeout = 120  # secondes
+        self.last_initialization = datetime.now()
+        self.initialization_cooldown = 30  # secondes
 
         # Callbacks
         self.degradation_callbacks: List[Callable] = []
         self.recovery_callbacks: List[Callable] = []
 
+        # Métriques
+        self.metrics = {
+            'cpu_usage': 0.0,
+            'memory_usage': 0.0,
+            'response_time': 0.0,
+            'error_count': 0,
+            'service_count': 0
+        }
+
+        # État de santé
+        self.health_status = {
+            'is_healthy': True,
+            'last_error': None,
+            'error_count': 0,
+            'last_recovery': None
+        }
+
+        # Configuration de la dégradation
+        self.degradation_config = {
+            'auto_recovery': True,
+            'max_retries': 3,
+            'retry_delay': 5,
+            'cooldown_period': 30
+        }
+
         # Services par défaut
-        self._register_default_services()
+        if self.initialization_count < self.max_initializations:
+            self._register_default_services()
+            self.initialization_count += 1
 
         logger.info("📉 GracefulDegradationSystem initialisé")
 
@@ -649,6 +681,48 @@ class GracefulDegradationSystem:
                 "error": str(e),
                 "timestamp": datetime.now().isoformat(),
             }
+
+    def can_initialize(self) -> bool:
+        """Vérifie si le système peut être initialisé"""
+        now = datetime.now()
+        
+        # Vérifier le nombre d'initialisations
+        if self.initialization_count >= self.max_initializations:
+            return False
+            
+        # Vérifier le délai depuis la dernière initialisation
+        if (now - self.last_initialization).total_seconds() < self.initialization_cooldown:
+            return False
+            
+        return True
+
+    def initialize(self) -> bool:
+        """Initialise le système avec protection contre les boucles"""
+        if not self.can_initialize():
+            logger.warning("🚫 Initialisation bloquée (protection anti-boucle)")
+            return False
+            
+        self.initialization_count += 1
+        self.last_initialization = datetime.now()
+        
+        # Réinitialisation des métriques
+        self.metrics = {
+            'cpu_usage': 0.0,
+            'memory_usage': 0.0,
+            'response_time': 0.0,
+            'error_count': 0,
+            'service_count': 0
+        }
+        
+        # Réinitialisation de l'état de santé
+        self.health_status = {
+            'is_healthy': True,
+            'last_error': None,
+            'error_count': 0,
+            'last_recovery': None
+        }
+        
+        return True
 
 
 # Factory function

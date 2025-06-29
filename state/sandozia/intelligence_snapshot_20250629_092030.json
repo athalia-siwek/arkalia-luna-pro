@@ -1,0 +1,66 @@
+{
+  "reflexia_state": {
+    "active": true,
+    "last_reflection": "2025-06-29T09:20:30.995539",
+    "status": "degraded",
+    "metrics": {
+      "cpu": 23.4,
+      "ram": 67.7,
+      "latency": 1099.68,
+      "containers": 0,
+      "modules_active": 2,
+      "errors": 6
+    },
+    "confidence_level": 0.85
+  },
+  "zeroia_state": {
+    "last_execution": "2025-06-29T07:20:27.544103",
+    "recent_errors": [],
+    "status": "active",
+    "decision_metrics": {
+      "confidence": 0.8635051085919172,
+      "accuracy": 0.9098498656750252
+    },
+    "active": true,
+    "context": {
+      "status": {
+        "severity": "normal"
+      }
+    }
+  },
+  "assistant_state": {
+    "active": true,
+    "session_count": 0,
+    "last_interaction": "2025-06-29T09:20:30.995823"
+  },
+  "helloria_state": {
+    "active": true,
+    "api_ready": true,
+    "last_check": "2025-06-29T09:20:30.995825"
+  },
+  "nyxalia_state": {
+    "active": true,
+    "monitoring": "enabled",
+    "last_check": "2025-06-29T09:20:30.995826"
+  },
+  "taskia_state": {
+    "active": true,
+    "queue_size": 0,
+    "last_check": "2025-06-29T09:20:30.995827"
+  },
+  "cognitive_state": {
+    "active": true,
+    "reactions_enabled": true,
+    "last_check": "2025-06-29T09:20:30.995828"
+  },
+  "coherence_analysis": {
+    "coherence_score": 1.0,
+    "issues": [],
+    "last_analysis": "2025-06-29T09:20:30.995832",
+    "modules_aligned": true
+  },
+  "behavioral_patterns": [],
+  "recommendations": [
+    "Syst\u00e8me d'intelligence crois\u00e9e fonctionnel"
+  ]
+}

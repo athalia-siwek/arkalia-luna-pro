@@ -1,0 +1,173 @@
+# 🌕 ARKALIA MASTER ORCHESTRATOR CONFIG v4.0.0
+# Configuration complète du Master Orchestrator
+
+[orchestrator]
+version = "4.0.0"
+name = "arkalia_master_ultimate"
+description = "Orchestrateur Maître Arkalia-LUNA coordonnant 10 modules IA"
+
+# === CYCLES ADAPTATIFS ===
+[cycles]
+# Intervalles en secondes pour chaque mode
+urgent = 5.0           # Décisions critiques rapides
+normal = 30.0          # Opérations standard  
+deep_analysis = 300.0  # Analyse approfondie (5 min)
+maintenance = 1800.0   # Maintenance système (30 min)
+
+# Mode par défaut au démarrage
+default_mode = "normal"
+
+# === CIRCUIT BREAKER GLOBAL ===
+[circuit_breaker]
+# Seuil d'échecs pour ouvrir le circuit
+failure_threshold = 10
+
+# Timeout de récupération en secondes
+recovery_timeout = 60
+
+# Seuil critique nécessitant intervention
+critical_threshold = 20
+
+# === MODULES CONFIGURATION ===
+[modules]
+# Modules activés par défaut
+enabled = [
+    "zeroia",      # Décisions & raisonnement
+    "reflexia",    # Monitoring & auto-réflexion
+    "assistantia", # Chat & interactions utilisateur
+    "sandozia",    # Intelligence croisée
+    "taskia",      # Coordination tâches
+    "helloria",    # API & routing principal
+    "nyxalia",     # Interprétation signaux
+    "security",    # Cryptographie & sécurité
+    "monitoring",  # Métriques Prometheus
+    "utils"        # Cache & utilitaires
+]
+
+# Priorités d'exécution (1 = plus haute priorité)
+[modules.priorities]
+zeroia = 1      # Décisions critiques en premier
+reflexia = 2    # Monitoring immédiatement après
+security = 3    # Sécurité prioritaire
+assistantia = 4 # Interactions utilisateur
+sandozia = 5    # Intelligence croisée
+taskia = 6      # Coordination
+helloria = 7    # API
+monitoring = 8  # Métriques
+nyxalia = 9     # Signaux
+utils = 10      # Utilitaires
+
+# Dépendances entre modules
+[modules.dependencies]
+sandozia = ["zeroia", "reflexia"]  # SandozIA a besoin de ZeroIA et ReflexIA
+taskia = ["zeroia", "reflexia", "sandozia"]  # TaskIA coordonne après analyse
+assistantia = ["security"]  # AssistantIA nécessite Security
+
+# === PERFORMANCE ===
+[performance]
+# Nombre max d'opérations concurrentes
+max_concurrent_operations = 5
+
+# Timeout par opération (secondes)
+operation_timeout = 30.0
+
+# Intervalle health check (secondes)
+health_check_interval = 60.0
+
+# Taille cache résultats
+results_cache_size = 1000
+
+# === PERSISTANCE ===
+[persistence]
+# Fichier état global
+state_file = "state/arkalia_master_state.toml"
+
+# Répertoire logs
+log_directory = "logs/"
+
+# Fichier log principal
+log_file = "logs/arkalia_master.log"
+
+# Rotation logs (MB)
+log_max_size = 100
+
+# Nombre fichiers log à conserver
+log_backup_count = 5
+
+# === MONITORING & ALERTING ===
+[monitoring]
+# Activer métriques Prometheus
+prometheus_enabled = true
+
+# Port métriques (si différent du monitoring principal)
+metrics_port = 9091
+
+# Alertes critiques
+[monitoring.alerts]
+# Seuil succès critique (%)
+critical_success_rate = 50.0
+
+# Seuil modules offline critique
+critical_modules_offline = 3
+
+# Temps max sans cycle (secondes)
+max_time_without_cycle = 300
+
+# === SÉCURITÉ ===
+[security]
+# Activer validation checksums
+checksum_validation = true
+
+# Rotation automatique secrets
+auto_secret_rotation = true
+
+# Intervalle rotation (heures)
+secret_rotation_interval = 24
+
+# === DÉVELOPPEMENT & DEBUG ===
+[development]
+# Mode debug
+debug_mode = false
+
+# Logs détaillés
+verbose_logging = false
+
+# Simulation erreurs (pour tests)
+simulate_errors = false
+
+# Taux simulation erreurs (%)
+error_simulation_rate = 5.0
+
+# === DOCKER & CONTAINER ===
+[docker]
+# Mode container optimisé
+container_mode = true
+
+# Healthcheck interval container (secondes)
+container_healthcheck_interval = 30
+
+# Grace period arrêt container (secondes)
+container_shutdown_grace = 60
+
+# === INTÉGRATIONS EXTERNES ===
+[integrations]
+# Slack notifications
+slack_enabled = false
+slack_webhook_url = ""
+
+# Email alerts
+email_enabled = false
+smtp_server = ""
+smtp_port = 587
+
+# Discord notifications
+discord_enabled = false
+discord_webhook_url = ""
+
+# === MÉTADONNÉES ===
+[metadata]
+created_by = "Athalia"
+created_at = "2025-01-29T04:00:00Z"
+project = "arkalia-luna-pro"
+environment = "production"
+version_config = "4.0.0" 

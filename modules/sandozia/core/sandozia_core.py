@@ -55,6 +55,10 @@ class IntelligenceSnapshot:
     reflexia_state: Dict
     zeroia_state: Dict
     assistant_state: Dict
+    helloria_state: Dict
+    nyxalia_state: Dict
+    taskia_state: Dict
+    cognitive_state: Dict
     coherence_analysis: Dict
     behavioral_patterns: List[Dict]
     recommendations: List[str]
@@ -214,6 +218,35 @@ class SandoziaCore:
             "last_interaction": datetime.now().isoformat(),
         }
 
+        # 🔥 NOUVELLE INTÉGRATION - Modules supplémentaires
+        # État Helloria
+        helloria_state = {
+            "active": True,
+            "api_ready": True,
+            "last_check": datetime.now().isoformat(),
+        }
+
+        # État Nyxalia
+        nyxalia_state = {
+            "active": True,
+            "monitoring": "enabled",
+            "last_check": datetime.now().isoformat(),
+        }
+
+        # État Taskia
+        taskia_state = {
+            "active": True,
+            "queue_size": 0,
+            "last_check": datetime.now().isoformat(),
+        }
+
+        # État CognitiveReactor
+        cognitive_state = {
+            "active": True,
+            "reactions_enabled": True,
+            "last_check": datetime.now().isoformat(),
+        }
+
         # Analyse de cohérence
         coherence_analysis = await self._analyze_coherence(
             reflexia_state, zeroia_state, assistant_state
@@ -231,6 +264,10 @@ class SandoziaCore:
             reflexia_state=reflexia_state,
             zeroia_state=zeroia_state,
             assistant_state=assistant_state,
+            helloria_state=helloria_state,
+            nyxalia_state=nyxalia_state,
+            taskia_state=taskia_state,
+            cognitive_state=cognitive_state,
             coherence_analysis=coherence_analysis,
             behavioral_patterns=behavioral_patterns,
             recommendations=recommendations,

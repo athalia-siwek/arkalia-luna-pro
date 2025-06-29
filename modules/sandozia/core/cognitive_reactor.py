@@ -459,4 +459,60 @@ def trigger_cognitive_reaction(context: Dict, decision_pattern_count: int = 0) -
         
     except Exception as e:
         logger.error(f"❌ Erreur trigger_cognitive_reaction: {e}")
-        return [] 
+        return []
+
+
+# 🚀 Mode daemon pour conteneur Docker
+async def run_daemon():
+    """Lance le CognitiveReactor en mode daemon"""
+    import argparse
+    import signal
+    import sys
+    
+    parser = argparse.ArgumentParser(description="CognitiveReactor Daemon")
+    parser.add_argument("--daemon", action="store_true", help="Mode daemon")
+    args = parser.parse_args()
+    
+    if not args.daemon:
+        print("Usage: python -m modules.sandozia.core.cognitive_reactor --daemon")
+        sys.exit(1)
+    
+    reactor = create_cognitive_reactor()
+    logger.info("🔥 CognitiveReactor daemon démarré")
+    
+    # Gestion signal d'arrêt
+    def signal_handler(signum, frame):
+        logger.info("🛑 Arrêt du daemon CognitiveReactor")
+        sys.exit(0)
+    
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    
+    try:
+        while True:
+            # Cycle de monitoring toutes les 30 secondes
+            context = {
+                "timestamp": datetime.now().isoformat(),
+                "system_cpu": 50,
+                "system_ram": 60,
+                "zeroia_confidence": 0.8,
+                "reflexia_confidence": 0.7,
+                "sandozia_confidence": 0.9
+            }
+            
+            reactions = await reactor.check_and_react(context, 0)
+            if reactions:
+                logger.info(f"🔥 {len(reactions)} réactions déclenchées")
+            
+            await asyncio.sleep(30)
+            
+    except KeyboardInterrupt:
+        logger.info("🛑 Daemon arrêté par l'utilisateur")
+    except Exception as e:
+        logger.error(f"❌ Erreur daemon: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(run_daemon()) 

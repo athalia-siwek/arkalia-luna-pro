@@ -22,6 +22,7 @@ from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+import uuid
 
 from diskcache import Cache
 
@@ -82,100 +83,80 @@ class Event:
 
 
 class EventStore:
-    """
-    Event Store pour ZeroIA
+    """Stockage des événements pour Arkalia-LUNA"""
 
-    Stocke et gère tous les événements du système avec :
-    - Persistance sur disque (diskcache)
-    - Requêtes par type, période, module
-    - Analytics et métriques
-    - Détection d'anomalies
-    """
-
-    def __init__(
-        self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 100_000_000
-    ):
-        """
-        Initialise l'Event Store avec gestion d'erreur robuste
-
-        Args:
-            cache_dir: Répertoire de cache
-            size_limit: Limite de taille du cache
-        """
-        self.cache_dir = cache_dir
-
-        # Créer le répertoire s'il n'existe pas
-        Path(cache_dir).mkdir(parents=True, exist_ok=True)
-
-        # Initialiser les caches avec gestion d'erreur
-        self.events_cache = self._initialize_cache(f"{cache_dir}/events", size_limit)
-        self.type_index = self._initialize_cache(
-            f"{cache_dir}/type_index", size_limit // 10
-        )
-
-        # Compteur d'événements
+    def __init__(self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000):
+        self.cache_dir = Path(cache_dir)
+        self.cache_dir.parent.mkdir(parents=True, exist_ok=True)
+        
+        self.events: Dict[str, Dict[str, Any]] = {}
         self.event_counter = 0
-        self._load_counter()
+        self._load_events()
+        
+        logger.info(f"🗄️ EventStore initialisé: {self.cache_dir}, compteur: {self.event_counter}")
 
-        logger.info(
-            f"🗄️ EventStore initialisé: {cache_dir}, compteur: {self.event_counter}"
-        )
-
-    def _initialize_cache(self, cache_path: str, size_limit: int) -> Cache:
-        """Initialise un cache avec gestion d'erreur pour corruption SQLite"""
+    def _load_events(self) -> None:
+        """Charge les événements depuis le stockage"""
         try:
-            return Cache(cache_path, size_limit=size_limit)
-        except sqlite3.DatabaseError:
-            logger.warning(f"🔧 Cache corrompu détecté: {cache_path}, recréation...")
-
-            # Supprimer le cache corrompu de façon plus robuste
-            self._safe_remove_cache(cache_path)
-
-            # Recréer le cache
-            Path(cache_path).mkdir(parents=True, exist_ok=True)
-            return Cache(cache_path, size_limit=size_limit)
+            if self.cache_dir.exists():
+                with open(self.cache_dir, 'r') as f:
+                    data = json.load(f)
+                    self.events = data.get('events', {})
+                    self.event_counter = data.get('counter', 0)
         except Exception as e:
-            logger.error(f"❌ Erreur inattendue initialisation cache {cache_path}: {e}")
-            # Fallback: créer un cache temporaire
-            import tempfile
+            logger.error(f"❌ Erreur lors du chargement des événements: {e}")
+            self.events = {}
+            self.event_counter = 0
 
-            temp_dir = tempfile.mkdtemp()
-            logger.warning(f"🔧 Utilisation cache temporaire: {temp_dir}")
-            return Cache(temp_dir, size_limit=size_limit)
-
-    def _safe_remove_cache(self, cache_path: str) -> None:
-        """Supprime un cache de façon sécurisée en ignorant les fichiers cachés macOS"""
-        import os
-        import shutil
-
-        if not Path(cache_path).exists():
-            return
-
+    def _save_events(self) -> None:
+        """Sauvegarde les événements dans le stockage"""
         try:
-            # Supprimer d'abord les fichiers cachés macOS qui causent des problèmes
-            for root, dirs, files in os.walk(cache_path):
-                for file in files:
-                    if file.startswith("._"):
-                        try:
-                            os.remove(os.path.join(root, file))
-                        except FileNotFoundError:
-                            pass  # Ignorer si déjà supprimé
-
-            # Maintenant supprimer le répertoire
-            shutil.rmtree(cache_path, ignore_errors=True)
-
+            with open(self.cache_dir, 'w') as f:
+                json.dump({
+                    'events': self.events,
+                    'counter': self.event_counter
+                }, f, indent=2)
         except Exception as e:
-            logger.warning(
-                f"⚠️ Erreur suppression cache {cache_path}: {e}, continuons..."
-            )
+            logger.error(f"❌ Erreur lors de la sauvegarde des événements: {e}")
 
-            # Fallback: renommer le répertoire pour l'ignorer
-            try:
-                backup_path = f"{cache_path}_corrupted_{int(time.time())}"
-                os.rename(cache_path, backup_path)
-                logger.warning(f"🔄 Cache renommé vers {backup_path}")
-            except Exception:
-                pass  # Ignorer si même le renommage échoue
+    def store_event(self, event_type: str, event_data: Dict[str, Any]) -> None:
+        """Stocke un nouvel événement"""
+        event_id = str(uuid.uuid4())
+        event = {
+            'id': event_id,
+            'type': event_type,
+            'timestamp': datetime.now().isoformat(),
+            'data': event_data
+        }
+        
+        self.events[event_id] = event
+        self.event_counter += 1
+        
+        # Limiter le nombre d'événements stockés
+        if len(self.events) > 1000:
+            oldest_key = next(iter(self.events))
+            del self.events[oldest_key]
+            
+        self._save_events()
+
+    def get_events(self, event_type: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+        """Récupère les événements filtrés par type"""
+        if event_type:
+            filtered_events = [e for e in self.events.values() if e['type'] == event_type]
+        else:
+            filtered_events = list(self.events.values())
+            
+        return filtered_events[-limit:]
+
+    def clear_events(self) -> None:
+        """Efface tous les événements"""
+        self.events.clear()
+        self.event_counter = 0
+        self._save_events()
+
+    def get_event_count(self) -> int:
+        """Retourne le nombre total d'événements"""
+        return self.event_counter
 
     def add_event(
         self,
@@ -211,21 +192,15 @@ class EventStore:
 
         # Stocker dans le cache avec gestion d'erreur SQLite
         try:
-            self.events_cache[event_id] = event.to_dict()
+            self.events[event_id] = event.to_dict()
         except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
             logger.warning(f"⚠️ Erreur cache événement {event_id}: {e}")
             # Continuer sans stocker - l'événement sera perdu mais le système continue
             return event_id
 
-        # Mettre à jour l'index par type
-        try:
-            self._update_type_index(event_type, event_id)
-        except Exception as e:
-            logger.warning(f"⚠️ Erreur index type {event_type}: {e}")
-
         # Sauvegarder le compteur
         try:
-            self._save_counter()
+            self._save_events()
         except Exception as e:
             logger.warning(f"⚠️ Erreur sauvegarde compteur: {e}")
 
@@ -234,7 +209,7 @@ class EventStore:
     def get_event(self, event_id: str) -> Optional[Event]:
         """Récupère un événement par son ID"""
         try:
-            event_data = self.events_cache.get(event_id)
+            event_data = self.events.get(event_id)
             if event_data and isinstance(event_data, dict):
                 return Event.from_dict(event_data)
         except Exception as e:
@@ -256,23 +231,17 @@ class EventStore:
             Liste des événements
         """
         try:
-            event_ids_data = self.type_index.get(event_type.value, [])
-            # S'assurer que c'est une liste
-            if not isinstance(event_ids_data, list):
-                return []
-
             events = []
-            for event_id in reversed(
-                event_ids_data[-limit:]
-            ):  # Plus récents en premier
-                if isinstance(event_id, str):
-                    event = self.get_event(event_id)
-                    if event:
-                        if since and event.timestamp < since:
-                            continue
-                        events.append(event)
+            for event_id, event_data in self.events.items():
+                if event_data["event_type"] == event_type.value:
+                    event = Event.from_dict(event_data)
+                    if since and event.timestamp < since:
+                        continue
+                    events.append(event)
 
-            return events
+            # Trier par timestamp décroissant et limiter
+            events.sort(key=lambda x: x.timestamp, reverse=True)
+            return events[:limit]
         except Exception as e:
             logger.warning(f"Erreur récupération événements par type {event_type}: {e}")
             return []
@@ -292,15 +261,13 @@ class EventStore:
         # Utiliser l'approche correcte pour diskcache - parcours sécurisé
         try:
             # Parcourir le cache de manière sécurisée
-            for key in self.events_cache:
+            for key, event_data in self.events.items():
                 if isinstance(key, str) and key.startswith(
                     ("zeroia_", "reflexia_", "sandozia_")
                 ):
                     try:
-                        value = self.events_cache.get(key)
-                        if value and isinstance(value, dict):
-                            event = Event.from_dict(value)
-                            all_events.append(event)
+                        event = Event.from_dict(event_data)
+                        all_events.append(event)
                     except Exception as e:
                         # Ignorer les événements corrompus
                         logger.warning(f"Event corrompu ignoré {key}: {e}")
@@ -318,9 +285,9 @@ class EventStore:
         events = []
 
         try:
-            for key in self.events_cache:
+            for key, event_data in self.events.items():
                 if isinstance(key, str) and key.startswith(f"{module}_"):
-                    event = self.get_event(key)
+                    event = Event.from_dict(event_data)
                     if event and len(events) < limit:
                         events.append(event)
         except Exception as e:
@@ -439,18 +406,9 @@ class EventStore:
 
         # Calculer les tailles de cache de manière sécurisée
         try:
-            events_cache_size = 0
-            for _ in self.events_cache:
-                events_cache_size += 1
+            events_cache_size = len(self.events)
         except Exception:
             events_cache_size = 0
-
-        try:
-            type_index_size = 0
-            for _ in self.type_index:
-                type_index_size += 1
-        except Exception:
-            type_index_size = 0
 
         return {
             "total_events": self.event_counter,
@@ -460,53 +418,8 @@ class EventStore:
             "events_by_hour": hourly_counts,
             "cache_info": {
                 "events_cache_size": events_cache_size,
-                "type_index_size": type_index_size,
             },
         }
-
-    def _update_type_index(self, event_type: EventType, event_id: str) -> None:
-        """Met à jour l'index par type d'événement"""
-        try:
-            type_key = event_type.value
-            current_ids_data = self.type_index.get(type_key, [])
-
-            # S'assurer que c'est une liste
-            if isinstance(current_ids_data, list):
-                current_ids = current_ids_data
-            else:
-                current_ids = []
-
-            current_ids.append(event_id)
-
-            # Garder seulement les 1000 derniers IDs par type
-            if len(current_ids) > 1000:
-                current_ids = current_ids[-1000:]
-
-            self.type_index[type_key] = current_ids
-        except Exception as e:
-            logger.warning(f"Erreur mise à jour index type {event_type}: {e}")
-
-    def _load_counter(self) -> None:
-        """Charge le compteur d'événements"""
-        try:
-            counter_data = self.events_cache.get("_event_counter", 0)
-            # S'assurer que le compteur est toujours un entier
-            if isinstance(counter_data, int):
-                self.event_counter = counter_data
-            elif isinstance(counter_data, str) and counter_data.isdigit():
-                self.event_counter = int(counter_data)
-            else:
-                self.event_counter = 0
-        except Exception:
-            # Si erreur, repartir de 0
-            self.event_counter = 0
-
-    def _save_counter(self) -> None:
-        """Sauvegarde le compteur d'événements"""
-        try:
-            self.events_cache["_event_counter"] = self.event_counter
-        except Exception as e:
-            logger.warning(f"Erreur sauvegarde compteur: {e}")
 
     def clear_old_events(self, days_to_keep: int = 30) -> int:
         """
@@ -524,7 +437,7 @@ class EventStore:
         try:
             # Récupérer toutes les clés du cache de manière sécurisée
             keys_to_check = []
-            for key in self.events_cache:
+            for key in self.events:
                 if isinstance(key, str) and key.startswith("event_"):
                     keys_to_check.append(key)
 
@@ -532,7 +445,7 @@ class EventStore:
                 event = self.get_event(key)
                 if event and event.timestamp < cutoff_date:
                     try:
-                        del self.events_cache[key]
+                        del self.events[key]
                         deleted_count += 1
                     except Exception:
                         continue

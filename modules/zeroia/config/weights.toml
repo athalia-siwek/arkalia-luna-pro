@@ -1,0 +1,46 @@
+# ===================================================================
+# 🧠 CONFIGURATION DES POIDS ZEROIA - v3.0
+# ===================================================================
+# Configuration des poids pour le système de scoring de confiance
+# Utilisé par modules/zeroia/confidence_score.py
+
+[pattern_weights]
+# Poids pour le calcul du score de confiance (total = 1.0)
+consistency = 0.30          # Cohérence avec l'historique des décisions
+system_health = 0.25        # État de santé du système (CPU, RAM)
+response_time = 0.15        # Temps de réponse des opérations
+resource_efficiency = 0.15  # Efficacité d'utilisation des ressources
+context_relevance = 0.10    # Pertinence par rapport au contexte
+error_rate = 0.05          # Taux d'erreur historique
+
+[thresholds]
+# Seuils pour la classification des scores
+excellent = 0.85   # Score excellent (> 0.85)
+good = 0.70       # Score bon (0.70 - 0.85)
+degraded = 0.50   # Score dégradé (0.50 - 0.70)
+critical = 0.30   # Score critique (< 0.30)
+
+[response_time_targets]
+# Cibles de temps de réponse (en millisecondes)
+optimal = 100     # Temps optimal (< 100ms)
+good = 250       # Temps acceptable (< 250ms)
+acceptable = 500  # Temps limite acceptable (< 500ms)
+slow = 1000      # Considéré comme lent (> 1000ms)
+
+[system_health_limits]
+# Limites pour la santé système (en pourcentage)
+cpu_critical = 85    # CPU critique (> 85%)
+cpu_warning = 70     # CPU attention (> 70%)
+ram_critical = 80    # RAM critique (> 80%)
+ram_warning = 65     # RAM attention (> 65%)
+
+[learning]
+# Paramètres d'apprentissage adaptatif
+weight_adjustment = 0.10  # Facteur d'ajustement des poids (10%)
+min_samples = 5          # Nombre minimum d'échantillons pour apprentissage
+similarity_threshold = 0.8  # Seuil de similarité pour comparaison contexte
+
+[version]
+config_version = "3.0.1"
+last_updated = "2025-06-29T05:47:00Z"
+description = "Configuration optimisée des poids ZeroIA pour scoring de confiance"

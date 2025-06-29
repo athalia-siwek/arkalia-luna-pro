@@ -457,3 +457,33 @@ graph TB
 
 *Diagrammes maintenus par Arkalia-LUNA Architecture Team — Version sécurité renforcée*
 *🏗️ "Architecture défensive, sécurité par conception" — Arkalia Security Design*
+
+sequenceDiagram
+    participant Z as ZeroIA
+    participant S as Sandozia
+    participant C as CognitiveReactor
+    participant V as CrossValidator
+    participant R as ReflexIA
+    participant E as ErrorRecovery
+    participant T as Chronalia
+    participant M as Monitoring
+
+    Note over Z,M: Cycle de décision standard
+    Z->>S: Détection pattern
+    S->>C: Analyse pattern
+    C->>V: Demande validation
+    V->>R: Vérification cohérence
+    R-->>E: Si erreur détectée
+    E-->>Z: Recovery si nécessaire
+    
+    par Flux parallèles
+        Z->>M: Métriques décision
+    and
+        S->>M: Métriques pattern
+    and
+        R->>M: Métriques système
+    end
+
+    T->>M: Archivage timeline
+    
+    Note over Z,M: Boucle cognitive complète

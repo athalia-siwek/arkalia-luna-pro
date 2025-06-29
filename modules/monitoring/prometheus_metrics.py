@@ -390,7 +390,10 @@ class PrometheusServer:
 
 def get_metrics_summary() -> Dict[str, Union[str, int, float]]:
     """Retourne un résumé des métriques pour API REST"""
-    # collector = ArkaliaMetricsCollector(ArkaliaMetrics())  # Future use
+    global prometheus_server
+    if prometheus_server is None:
+        prometheus_server = get_prometheus_server()
+    metrics_instance = prometheus_server.metrics
 
     summary = {
         "timestamp": datetime.now().isoformat(),
@@ -419,7 +422,7 @@ def get_metrics_summary() -> Dict[str, Union[str, int, float]]:
 
         # Système
         summary["system"] = {
-            "uptime_hours": (time.time() - ArkaliaMetrics().start_time) / 3600,
+            "uptime_hours": (time.time() - metrics_instance.start_time) / 3600,
             "critical_files_ok": all(
                 Path(f).exists()
                 for f in [

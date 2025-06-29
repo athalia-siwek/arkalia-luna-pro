@@ -27,7 +27,12 @@ def test_chat_post(test_client: TestClient):
     try:
         response = test_client.post("/chat", json={"message": "Bonjour"})
         assert response.status_code == 200
-        assert response.json()["réponse"] == "Tu as dit : Bonjour"
+        response_data = response.json()
+        assert "réponse" in response_data
+        assert "Tu as dit : Bonjour" in response_data["réponse"]
+        # Accepte aussi le contexte système enrichi
+        if "Contexte système" in response_data["réponse"]:
+            assert "ZeroIA" in response_data["réponse"]
     finally:
         app.dependency_overrides.clear()
 

@@ -6,16 +6,39 @@ import time
 from pathlib import Path
 
 import pytest
+from unittest.mock import patch
 import requests
 import toml
 
+
+
+@pytest.fixture
+def mock_metrics_server():
+    """Mock du serveur de métriques pour les tests"""
+    with patch('requests.get') as mock_get:
+        # Réponse mock pour /metrics
+        mock_response = type('MockResponse', (), {
+            'status_code': 200,
+            'text': '''# HELP arkalia_system_health System health status
+# TYPE arkalia_system_health gauge
+arkalia_system_health 1
+# HELP arkalia_critical_files_count Number of critical files
+# TYPE arkalia_critical_files_count gauge
+arkalia_critical_files_count 5
+# HELP arkalia_zeroia_confidence ZeroIA confidence level
+# TYPE arkalia_zeroia_confidence gauge
+arkalia_zeroia_confidence 0.85''',
+            'headers': {'content-type': 'text/plain; version=0.0.4; charset=utf-8'}
+        })()
+        mock_get.return_value = mock_response
+        yield mock_get
 
 class TestMetricsEndpoint:
     """Tests pour l'endpoint /metrics et le système de monitoring"""
 
     BASE_URL = "http://localhost:8000"
 
-    def test_metrics_endpoint_accessibility(self):
+    def test_metrics_endpoint_accessibility(self, mock_metrics_server):
         """🌐 Test d'accessibilité de l'endpoint /metrics"""
         try:
             response = requests.get(f"{self.BASE_URL}/metrics", timeout=5)
@@ -31,7 +54,7 @@ class TestMetricsEndpoint:
         except requests.exceptions.ConnectionError:
             pytest.skip("Serveur API non démarré - normal en CI/CD")
 
-    def test_metrics_format_prometheus(self):
+    def test_metrics_format_prometheus(self, mock_metrics_server):
         """📊 Test du format des métriques Prometheus"""
         try:
             response = requests.get(f"{self.BASE_URL}/metrics", timeout=5)
@@ -58,7 +81,7 @@ class TestMetricsEndpoint:
         except requests.exceptions.ConnectionError:
             pytest.skip("Serveur API non démarré")
 
-    def test_metrics_content_validation(self):
+    def test_metrics_content_validation(self, mock_metrics_server):
         """🔍 Test du contenu et cohérence des métriques"""
         try:
             response = requests.get(f"{self.BASE_URL}/metrics", timeout=5)

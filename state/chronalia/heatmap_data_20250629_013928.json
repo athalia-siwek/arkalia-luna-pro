@@ -1,0 +1,166 @@
+{
+  "heatmap_data": [
+    {
+      "timestamp": "2025-06-29T01:50:00",
+      "cycles_count": 20,
+      "avg_confidence": 0.4000000000000001,
+      "contradictions_count": 6,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.16,
+      "decisions": {
+        "normal": 20
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:40:00",
+      "cycles_count": 80,
+      "avg_confidence": 0.39999999999999936,
+      "contradictions_count": 34,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.1975,
+      "decisions": {
+        "normal": 80
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:45:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 41,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.19299999999999998,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:50:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 41,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.19299999999999998,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T00:55:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 46,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.20799999999999993,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:00:00",
+      "cycles_count": 80,
+      "avg_confidence": 0.39999999999999936,
+      "contradictions_count": 31,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.18624999999999997,
+      "decisions": {
+        "normal": 80
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:05:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 47,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.21100000000000002,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:10:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 40,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.19000000000000003,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:15:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 35,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.17499999999999993,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:20:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 52,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.22599999999999998,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:25:00",
+      "cycles_count": 80,
+      "avg_confidence": 0.39999999999999936,
+      "contradictions_count": 32,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.18999999999999997,
+      "decisions": {
+        "normal": 80
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:30:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 39,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.187,
+      "decisions": {
+        "normal": 100
+      }
+    },
+    {
+      "timestamp": "2025-06-29T01:35:00",
+      "cycles_count": 100,
+      "avg_confidence": 0.39999999999999925,
+      "contradictions_count": 37,
+      "berserk_count": 0,
+      "quarantined_modules": 0,
+      "modules_noise_level": 0.18099999999999997,
+      "decisions": {
+        "normal": 100
+      }
+    }
+  ],
+  "summary": {
+    "total_cycles": 1160,
+    "time_range_hours": 1,
+    "resolution_minutes": 5,
+    "generated_at": "2025-06-29T01:39:28.682027"
+  }
+}

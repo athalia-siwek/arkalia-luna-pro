@@ -26,22 +26,20 @@ def test_process_input_normal():
 
 
 def test_chat_post(test_client: TestClient):
-    """✅ Teste l'endpoint /chat avec une dépendance mockée."""
-
+    """Teste l'endpoint /chat avec une dépendance mockée."""
     def mock_query_ollama(msg: str, model: str = "mistral") -> str:
-        return msg  # pas de doublon, le formatting se fait dans process_input
+        return msg
+
+    app.dependency_overrides[get_query_ollama] = lambda: mock_query_ollama
 
     try:
-        # 🧪 Surcharge de la dépendance
-        app.dependency_overrides[get_query_ollama] = lambda: mock_query_ollama
-
         response = test_client.post("/chat", json={"message": "Bonjour"})
         assert response.status_code == 200
-
         json_data = response.json()
         assert "réponse" in json_data
-        assert json_data["réponse"] == "Tu as dit : Bonjour"
-
+        assert "Tu as dit : Bonjour" in json_data["réponse"]
+        # Accepte aussi le contexte système enrichi
+        if "Contexte système" in json_data["réponse"]:
+            assert "ZeroIA" in json_data["réponse"]
     finally:
-        # 🧼 Nettoyage dans tous les cas
         app.dependency_overrides.clear()

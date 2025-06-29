@@ -16,6 +16,9 @@ scrape_configs:
         labels:
           job: arkalia-system
           __path__: /arkalia/logs/*.log
+    pipeline_stages:
+      - drop:
+          expression: '._.*'
 
   - job_name: zeroia-logs
     static_configs:
@@ -25,6 +28,9 @@ scrape_configs:
           job: zeroia
           component: cognitive
           __path__: /arkalia/logs/zeroia*.log
+    pipeline_stages:
+      - drop:
+          expression: '._.*'
 
   - job_name: security-logs
     static_configs:
@@ -34,3 +40,6 @@ scrape_configs:
           job: security
           component: phase4
           __path__: /arkalia/logs/*security*.log
+    pipeline_stages:
+      - drop:
+          expression: '._.*'

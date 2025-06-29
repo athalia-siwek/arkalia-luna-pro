@@ -1,5 +1,5 @@
 site_name: Arkalia-LUNA Documentation
-site_description: Documentation complète du système IA Arkalia-LUNA - v3.0-phase1 Optimisée
+site_description: Documentation complète du système IA Arkalia-LUNA - v2.8.0 Production Ready
 site_author: Arkalia-LUNA Team
 site_url: https://arkalia-luna-system.github.io/arkalia-luna-pro/
 
@@ -111,22 +111,28 @@ nav:
     - Kernel: fonctionnement/kernel.md
     - Usage: fonctionnement/utilisation.md
     - Decision Flow: architecture/decision_flow.mmd
-  - Modules:
+  - Modules v2.8.0:
     - Overview: modules.md
     - Core Modules:
+      - Helloria: modules/helloria.md
       - AssistantIA: modules/assistantia.md
+      - ReflexIA: modules/reflexia.md
       - ZeroIA: modules/zeroia.md
       - Sandozia: modules/sandozia.md
-      - ReflexIA: modules/reflexia.md
-    - Additional Modules:
+    - Advanced Modules:
+      - Cognitive Reactor: modules/cognitive_reactor.md
+      - Generative AI: modules/generative_ai.md
       - Taskia: modules/taskia.md
       - Nyxalia: modules/nyxalia.md
-      - Helloria: modules/helloria.md
       - Global State: modules/global_state.md
-    - Advanced:
+    - Enhanced Features:
       - Cross Module Enhanced: modules/cross_module_enhanced.md
       - Sandozia Container: modules/sandozia/container_integration.md
       - ZeroIA Orchestrator: modules/zeroia/orchestrator_enhanced.md
+  - Intelligence Avancée:
+    - Cognitive Reactor: INTELLIGENCE_AVANCEE_ACTIVEE.md
+    - Generative AI: INTELLIGENCE_GENERATIVE_AVANCEE.md
+    - Final Report: ARKALIA_LUNA_V2.8.0_FINAL_REPORT.md
   - ZeroIA Deep Dive:
     - Overview: zeroia/overview.md
     - Troubleshooting: zeroia/troubleshooting.md

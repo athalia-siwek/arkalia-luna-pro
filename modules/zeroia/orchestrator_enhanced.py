@@ -42,9 +42,9 @@ class ZeroIAOrchestrator:
     def __init__(
         self,
         max_loops: Optional[int] = None,
-        interval_seconds: float = 1.5,
-        circuit_failure_threshold: int = 5,
-        circuit_recovery_timeout: int = 30,
+        interval_seconds: float = 2.5,
+        circuit_failure_threshold: int = 10,
+        circuit_recovery_timeout: int = 60,
     ):
         self.max_loops = max_loops
         self.interval_seconds = interval_seconds

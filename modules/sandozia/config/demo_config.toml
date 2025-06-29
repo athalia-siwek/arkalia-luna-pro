@@ -1,15 +1,21 @@
-
 [monitoring]
-interval_seconds = 5
+interval_seconds = 30
 coherence_threshold = 0.85
 max_history_size = 100
+max_repetitions = 3
 
 [modules]
 reflexia_enabled = true
 zeroia_enabled = true
-assistant_enabled = false
-prometheus_enabled = false
+assistant_enabled = true
+prometheus_enabled = true
 
 [alerting]
 coherence_alert_threshold = 0.70
 behavioral_alert_enabled = true
+max_cognitive_pause = 300  # 5 minutes
+
+[performance]
+cpu_threshold = 80.0
+memory_threshold = 85.0
+response_time_threshold = 2000  # ms

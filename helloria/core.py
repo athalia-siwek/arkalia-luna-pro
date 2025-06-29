@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse, PlainTextResponse
 
 # 📦 Import des routes externes (modules IA)
 from modules.reflexia.core_api import router as reflexia_router
+from modules.monitoring.prometheus_metrics import get_metrics_summary, get_prometheus_server
 
 # 🚦 Router principal
 router = APIRouter()
@@ -57,38 +58,17 @@ async def metrics():
     Format: OpenMetrics/Prometheus standard
     """
     try:
-        # Import dynamique pour éviter erreur si prometheus_client absent
+        # Version JSON simplifiée des métriques pour compatibilité
+        metrics_data = get_metrics_summary()
         try:
-            from modules.monitoring.prometheus_metrics import get_metrics_summary
-
-            # Version JSON simplifiée des métriques pour compatibilité
-            metrics_data = get_metrics_summary()
-
-            # Format Prometheus basique (si prometheus_client disponible)
-            try:
-                from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
-
-                from modules.monitoring.prometheus_metrics import get_prometheus_server
-
-                server = get_prometheus_server()
-                server.collector.collect_all_metrics()
-
-                # Retourne format Prometheus natif
-                return PlainTextResponse(
-                    generate_latest().decode("utf-8"), media_type=CONTENT_TYPE_LATEST
-                )
-
-            except ImportError:
-                # Fallback: format JSON avec métriques basiques
-                prometheus_text = _convert_to_prometheus_format(metrics_data)
-                return PlainTextResponse(prometheus_text, media_type="text/plain")
-
+            from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+            # Utilise l'instance globale déjà initialisée
+            return PlainTextResponse(
+                generate_latest().decode("utf-8"), media_type=CONTENT_TYPE_LATEST
+            )
         except ImportError:
-            # Fallback complet: métriques manuelles
-            fallback_metrics = _get_fallback_metrics()
-            prometheus_text = _convert_to_prometheus_format(fallback_metrics)
+            prometheus_text = _convert_to_prometheus_format(metrics_data)
             return PlainTextResponse(prometheus_text, media_type="text/plain")
-
     except Exception as e:
         logging.error(f"Erreur endpoint /metrics: {e}")
         return JSONResponse(
@@ -110,6 +90,9 @@ def _get_fallback_metrics():
         ).exists(),
         "modules/zeroia/reason_loop.py": Path("modules/zeroia/reason_loop.py").exists(),
         "modules/reflexia/core.py": Path("modules/reflexia/core.py").exists(),
+        "modules/sandozia/core/sandozia_core.py": Path("modules/sandozia/core/sandozia_core.py").exists(),
+        "modules/nyxalia/core.py": Path("modules/nyxalia/core.py").exists(),
+        "modules/taskia/core.py": Path("modules/taskia/core.py").exists(),
     }
 
     # Lecture état ZeroIA si disponible
@@ -138,12 +121,49 @@ def _get_fallback_metrics():
     except Exception:  # nosec B110
         pass
 
+    # 🔥 NOUVELLES MÉTRIQUES - Modules supplémentaires
+    # État Sandozia
+    sandozia_active = 0
+    try:
+        sandozia_state = Path("state/sandozia")
+        sandozia_active = 1 if sandozia_state.exists() else 0
+    except Exception:
+        pass
+
+    # État AssistantIA
+    assistantia_active = 0
+    try:
+        assistantia_state = Path("modules/assistantia/core.py")
+        assistantia_active = 1 if assistantia_state.exists() else 0
+    except Exception:
+        pass
+
+    # État Nyxalia
+    nyxalia_active = 0
+    try:
+        nyxalia_state = Path("modules/nyxalia/core.py")
+        nyxalia_active = 1 if nyxalia_state.exists() else 0
+    except Exception:
+        pass
+
+    # État Taskia
+    taskia_active = 0
+    try:
+        taskia_state = Path("modules/taskia/core.py")
+        taskia_active = 1 if taskia_state.exists() else 0
+    except Exception:
+        pass
+
     return {
         "arkalia_system_health": 1 if all(critical_files.values()) else 0,
         "arkalia_critical_files_count": sum(critical_files.values()),
         "arkalia_zeroia_confidence": zeroia_confidence,
         "arkalia_reflexia_cpu_percent": reflexia_cpu,
         "arkalia_reflexia_ram_percent": reflexia_ram,
+        "arkalia_sandozia_active": sandozia_active,
+        "arkalia_assistantia_active": assistantia_active,
+        "arkalia_nyxalia_active": nyxalia_active,
+        "arkalia_taskia_active": taskia_active,
         "arkalia_api_uptime_seconds": time.time(),
         "arkalia_endpoints_available": 4,  # /, /chat, /metrics, /zeroia/status
     }
@@ -178,6 +198,9 @@ app = FastAPI(
 app.include_router(router)
 app.include_router(reflexia_router)  # ✅ Active le endpoint /reflexia/check
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.get("/zeroia/status", tags=["ZeroIA"])
 def zeroia_status():

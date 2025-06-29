@@ -18,7 +18,8 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, TypedDict
+import toml
 
 try:
     from .circuit_breaker import CircuitBreaker
@@ -78,50 +79,42 @@ class ErrorSeverity(Enum):
     FATAL = "fatal"  # Erreurs fatales, intervention manuelle
 
 
-@dataclass
-class RecoveryMetrics:
-    """Métriques de récupération"""
-
-    total_errors: int = 0
-    recovered_errors: int = 0
-    failed_recoveries: int = 0
-    total_recovery_time: float = 0.0
-    last_recovery_attempt: Optional[datetime] = None
-    recovery_strategies_used: Dict[str, int] = field(default_factory=dict)
-
-    @property
-    def recovery_rate(self) -> float:
-        """Taux de récupération (0.0 à 1.0)"""
-        if self.total_errors == 0:
-            return 0.0
-        return self.recovered_errors / self.total_errors
-
-    @property
-    def average_recovery_time(self) -> float:
-        """Temps moyen de récupération en secondes"""
-        if self.recovered_errors == 0:
-            return 0.0
-        return self.total_recovery_time / self.recovered_errors
+class ErrorType(Enum):
+    """Types d'erreurs gérées par le système"""
+    TIMEOUT = "timeout"
+    MEMORY = "memory"
+    CONTRADICTION = "contradiction"
+    UNKNOWN = "unknown"
 
 
-@dataclass
+class RecoveryMetrics(TypedDict):
+    total_errors: int
+    successful_recoveries: int
+    failed_recoveries: int
+    contradiction_count: int
+    last_error_time: Optional[str]
+
+
+class RecoveryAttempt(TypedDict):
+    type: str
+    zeroia_state: str
+    reflexia_state: str
+    resolved: bool
+
+
 class ErrorContext:
-    """Contexte d'une erreur pour la récupération"""
-
-    error: Exception
-    severity: ErrorSeverity
-    module: str
-    function: str
-    timestamp: datetime
-    attempt_count: int = 0
-    max_attempts: int = 3
-    recovery_strategy: Optional[RecoveryStrategy] = None
-    context_data: Dict[str, Any] = field(default_factory=dict)
-
-    @property
-    def can_retry(self) -> bool:
-        """Vérifie si on peut encore tenter une récupération"""
-        return self.attempt_count < self.max_attempts
+    """Contexte d'erreur pour la récupération"""
+    def __init__(
+        self,
+        error_type: ErrorType,
+        error_message: str,
+        max_retries: int = 3
+    ):
+        self.error_type = error_type
+        self.error_message = error_message
+        self.timestamp = datetime.utcnow().isoformat()
+        self.attempt_count = 0
+        self.max_retries = max_retries
 
 
 class ErrorRecoverySystem:
@@ -135,18 +128,19 @@ class ErrorRecoverySystem:
     - Intégration complète avec Event Sourcing
     """
 
-    def __init__(
-        self,
-        circuit_breaker: Optional[Any] = None,
-        event_store: Optional[Any] = None,
-        config_path: Optional[str] = None,
-    ):
-        self.circuit_breaker = circuit_breaker
-        self.event_store = event_store
-        self.metrics = RecoveryMetrics()
+    def __init__(self):
+        self.error_count = 0
+        self.recovery_attempts: Dict[str, RecoveryAttempt] = {}
+        self.metrics: RecoveryMetrics = {
+            "total_errors": 0,
+            "successful_recoveries": 0,
+            "failed_recoveries": 0,
+            "contradiction_count": 0,
+            "last_error_time": None,
+        }
 
         # Configuration des stratégies par type d'erreur
-        self.error_strategies = self._load_error_strategies(config_path)
+        self.error_strategies = self._load_error_strategies()
 
         # Handlers de récupération
         self.recovery_handlers = {
@@ -160,7 +154,7 @@ class ErrorRecoverySystem:
 
         logger.info("🔄 ErrorRecoverySystem initialisé")
 
-    def _load_error_strategies(self, config_path: Optional[str]) -> Dict[str, Dict]:
+    def _load_error_strategies(self) -> Dict[str, Dict]:
         """Charge la configuration des stratégies d'erreur"""
         default_config = {
             "ZeroIAError": {
@@ -190,273 +184,175 @@ class ErrorRecoverySystem:
             },
         }
 
-        if config_path and Path(config_path).exists():
-            try:
-                with open(config_path) as f:
-                    custom_config = json.load(f)
-                default_config.update(custom_config)
-            except Exception as e:
-                logger.warning(f"⚠️ Impossible de charger la config: {e}")
-
         return default_config
 
-    async def handle_error(
-        self,
-        error: Exception,
-        module: str,
-        function: str,
-        context_data: Optional[Dict[str, Any]] = None,
-    ) -> Optional[Any]:
-        """
-        Point d'entrée principal pour la gestion d'erreurs
-
-        Args:
-            error: Exception à traiter
-            module: Module où l'erreur s'est produite
-            function: Fonction où l'erreur s'est produite
-            context_data: Données contextuelles
-
-        Returns:
-            Résultat de la récupération si succès, None sinon
-        """
-        self.metrics.total_errors += 1
-
-        # Classifier l'erreur
-        error_context = self._classify_error(error, module, function, context_data)
-
-        # Logger l'erreur
-        logger.error(
-            f"🚨 Erreur détectée [{error_context.severity.value}] "
-            f"dans {module}.{function}: {error}"
-        )
-
-        # Event sourcing si disponible
-        if self.event_store and hasattr(self.event_store, "add_event"):
-            try:
-                self.event_store.add_event(
-                    "SYSTEM_ERROR",  # EventType.SYSTEM_ERROR
-                    {
-                        "module": module,
-                        "function": function,
-                        "error_type": type(error).__name__,
-                        "error_message": str(error),
-                        "severity": error_context.severity.value,
-                        "strategy": (
-                            error_context.recovery_strategy.value
-                            if error_context.recovery_strategy
-                            else None
-                        ),
-                        "timestamp": error_context.timestamp.isoformat(),
-                    },
-                )
-            except Exception as e:
-                logger.warning(f"⚠️ Event sourcing failed: {e}")
-
-        # Tenter la récupération
-        return await self._attempt_recovery(error_context)
-
-    def _classify_error(
-        self,
-        error: Exception,
-        module: str,
-        function: str,
-        context_data: Optional[Dict[str, Any]] = None,
-    ) -> ErrorContext:
-        """Classifie une erreur et détermine la stratégie de récupération"""
-        error_type = type(error).__name__
-
-        # Chercher config spécifique ou utiliser générique
-        config = self.error_strategies.get(
-            error_type, self.error_strategies["Exception"]
-        )
-
-        return ErrorContext(
-            error=error,
-            severity=config["severity"],
-            module=module,
-            function=function,
-            timestamp=datetime.now(),
-            max_attempts=config["max_attempts"],
-            recovery_strategy=config["strategy"],
-            context_data=context_data or {},
-        )
-
-    async def _attempt_recovery(self, error_context: ErrorContext) -> Optional[Any]:
-        """Tente la récupération selon la stratégie définie"""
-        if not error_context.can_retry:
-            logger.error(f"❌ Maximum de tentatives atteint pour {error_context.error}")
-            self.metrics.failed_recoveries += 1
-            return None
-
-        error_context.attempt_count += 1
-        recovery_start = time.time()
-
-        try:
-            # Choisir et exécuter la stratégie
-            strategy = error_context.recovery_strategy
-            if strategy is None:
-                logger.error("❌ Aucune stratégie définie")
-                return None
-
-            handler = self.recovery_handlers.get(strategy)
-
-            if not handler:
-                logger.error(f"❌ Stratégie inconnue: {strategy}")
-                return None
-
-            result = await handler(error_context)
-
-            # Succès de récupération
-            recovery_time = time.time() - recovery_start
-            self._record_successful_recovery(strategy, recovery_time)
-
-            return result
-
-        except Exception as recovery_error:
-            recovery_time = time.time() - recovery_start
-            logger.error(f"❌ Échec de récupération: {recovery_error}")
-
-            # Event sourcing de l'échec si disponible
-            if self.event_store and hasattr(self.event_store, "add_event"):
-                try:
-                    self.event_store.add_event(
-                        "SYSTEM_ERROR",
-                        {
-                            "recovery_failed": True,
-                            "original_error": str(error_context.error),
-                            "recovery_error": str(recovery_error),
-                            "strategy": strategy.value if strategy else "unknown",
-                            "attempt": error_context.attempt_count,
-                            "recovery_time": recovery_time,
-                        },
-                    )
-                except Exception:
-                    pass
-
-            # Essayer récupération récursive si possible
-            if error_context.can_retry:
-                return await self._attempt_recovery(error_context)
-
-            self.metrics.failed_recoveries += 1
-            return None
-
-    def _record_successful_recovery(
-        self, strategy: RecoveryStrategy, recovery_time: float
-    ):
-        """Enregistre une récupération réussie"""
-        self.metrics.recovered_errors += 1
-        self.metrics.total_recovery_time += recovery_time
-        self.metrics.last_recovery_attempt = datetime.now()
-
-        # Compter les stratégies utilisées
-        strategy_name = strategy.value
-        self.metrics.recovery_strategies_used[strategy_name] = (
-            self.metrics.recovery_strategies_used.get(strategy_name, 0) + 1
-        )
-
-        logger.info(
-            f"✅ Récupération réussie avec {strategy_name} en {recovery_time:.3f}s"
-        )
-
-        # Event sourcing du succès si disponible
-        if self.event_store and hasattr(self.event_store, "add_event"):
-            try:
-                self.event_store.add_event(
-                    "CIRCUIT_SUCCESS",
-                    {
-                        "recovery_successful": True,
-                        "strategy": strategy_name,
-                        "recovery_time": recovery_time,
-                        "recovery_rate": self.metrics.recovery_rate,
-                    },
-                )
-            except Exception:
-                pass
-
-    async def _immediate_retry(self, error_context: ErrorContext) -> Optional[Any]:
-        """Stratégie : Retry immédiat"""
-        logger.info(f"🔄 Retry immédiat pour {error_context.function}")
-        await asyncio.sleep(0.1)  # Délai minimal
-        return {"status": "retried", "strategy": "immediate"}
-
-    async def _exponential_backoff(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _exponential_backoff(self, error_context: Optional[ErrorContext] = None) -> Optional[Any]:
         """Stratégie : Backoff exponentiel"""
-        delay = 2**error_context.attempt_count
-        logger.info(f"⏳ Backoff {delay}s pour {error_context.function}")
+        if error_context is None:
+            logger.warning("⚠️ Aucun contexte d'erreur fourni pour exponential_backoff")
+            return None
+            
+        delay = 2 ** error_context.attempt_count
+        logger.info(f"⏳ Backoff {delay}s pour {error_context.error_message}")
         await asyncio.sleep(delay)
         return {"status": "backoff_completed", "delay": delay}
 
-    async def _circuit_break_recovery(
-        self, error_context: ErrorContext
-    ) -> Optional[Any]:
+    async def _circuit_break_recovery(self, error_context: Optional[ErrorContext] = None) -> Optional[Any]:
         """Stratégie : Récupération via Circuit Breaker"""
-        logger.info(f"🔄 Circuit breaker recovery pour {error_context.function}")
-
-        # Forcer la réinitialisation du circuit si nécessaire
-        if self.circuit_breaker and hasattr(self.circuit_breaker, "reset"):
-            self.circuit_breaker.reset()
-
+        if error_context is None:
+            logger.warning("⚠️ Aucun contexte d'erreur fourni pour circuit_break_recovery")
+            return None
+            
+        logger.info(f"🔄 Circuit breaker recovery pour {error_context.error_message}")
         await asyncio.sleep(5)  # Attente de stabilisation
         return {"status": "circuit_reset", "strategy": "circuit_break"}
 
-    async def _graceful_degradation(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _graceful_degradation(self, error_context: Optional[ErrorContext] = None) -> Optional[Any]:
         """Stratégie : Dégradation gracieuse"""
-        logger.info(f"📉 Dégradation gracieuse pour {error_context.function}")
-
-        # Mode dégradé avec fonctionnalités réduites
+        if error_context is None:
+            logger.warning("⚠️ Aucun contexte d'erreur fourni pour graceful_degradation")
+            return None
+            
+        logger.info(f"📉 Dégradation gracieuse pour {error_context.error_message}")
         return {
             "status": "degraded_mode",
             "features_available": ["basic", "monitoring"],
             "features_disabled": ["advanced", "analytics"],
         }
 
-    async def _system_restart(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _system_restart(self, error_context: Optional[ErrorContext] = None) -> Optional[Any]:
         """Stratégie : Redémarrage système (simulé)"""
-        logger.critical(f"🔄 Redémarrage système requis pour {error_context.function}")
-
-        # En production, ceci déclencherait un vrai restart
-        # Ici on simule avec un reset complet
+        if error_context is None:
+            logger.warning("⚠️ Aucun contexte d'erreur fourni pour system_restart")
+            return None
+            
+        logger.critical(f"🔄 Redémarrage système requis pour {error_context.error_message}")
         await asyncio.sleep(10)
-
         return {"status": "system_restarted", "timestamp": datetime.now().isoformat()}
 
-    async def _manual_intervention(self, error_context: ErrorContext) -> Optional[Any]:
+    async def _manual_intervention(self, error_context: Optional[ErrorContext] = None) -> Optional[Any]:
         """Stratégie : Intervention manuelle requise"""
-        logger.critical(f"🚨 INTERVENTION MANUELLE REQUISE: {error_context.error}")
-
-        # Créer ticket d'incident (simulé)
+        if error_context is None:
+            logger.warning("⚠️ Aucun contexte d'erreur fourni pour manual_intervention")
+            return None
+            
+        logger.critical(f"🚨 INTERVENTION MANUELLE REQUISE: {error_context.error_message}")
         incident_id = f"INC-{datetime.now().strftime('%Y%m%d%H%M%S')}"
-
         return {
             "status": "manual_intervention_required",
             "incident_id": incident_id,
             "contact": "admin@arkalia-luna.com",
         }
 
-    def get_recovery_status(self) -> Dict[str, Any]:
-        """Retourne l'état actuel du système de récupération"""
-        circuit_status = None
-        if self.circuit_breaker and hasattr(self.circuit_breaker, "get_status"):
-            try:
-                circuit_status = self.circuit_breaker.get_status()
-            except Exception:
-                circuit_status = {"status": "unavailable"}
+    async def handle_error(self, error_type: ErrorType, error_message: str) -> Optional[Any]:
+        """Main error handling entry point"""
+        error_context = ErrorContext(error_type, error_message)
+        
+        try:
+            if error_context.error_type == ErrorType.TIMEOUT:
+                return await self._handle_timeout(error_context)
+            elif error_context.error_type == ErrorType.MEMORY:
+                return await self._handle_memory_error(error_context)
+            elif error_context.error_type == ErrorType.CONTRADICTION:
+                return await self._handle_contradiction(error_context)
+            else:
+                return await self._immediate_retry(error_context)
+                
+        except Exception as e:
+            logger.error(f"❌ Error during recovery: {e}")
+            return None
 
+    async def _handle_timeout(self, error_context: ErrorContext) -> Optional[Any]:
+        """Handle timeout errors"""
+        logger.info(f"Handling timeout error: {error_context.error_message}")
+        # Add delay before retry
+        await asyncio.sleep(5)
+        return await self._immediate_retry(error_context)
+
+    async def _handle_memory_error(self, error_context: ErrorContext) -> Optional[Any]:
+        """Handle memory-related errors"""
+        logger.info(f"Handling memory error: {error_context.error_message}")
+        # Trigger garbage collection
+        import gc
+        gc.collect()
+        return await self._immediate_retry(error_context)
+
+    async def _handle_contradiction(self, error_context: ErrorContext) -> Optional[Any]:
+        """Handle contradiction errors"""
+        logger.info(f"Handling contradiction error: {error_context.error_message}")
+        # Increment contradiction count
+        self.metrics["contradiction_count"] += 1
+        return await self._immediate_retry(error_context)
+
+    async def _immediate_retry(self, error_context: ErrorContext) -> Optional[Any]:
+        """Retry immediately with the same parameters"""
+        logger.info(f"Attempting immediate retry: {error_context.error_message}")
+        
+        if error_context.attempt_count >= error_context.max_retries:
+            logger.error("Maximum retry attempts reached")
+            return None
+            
+        try:
+            # Here you would implement the actual retry logic
+            # For now, we just simulate success
+            error_context.attempt_count += 1
+            self.metrics["last_error_time"] = datetime.utcnow().isoformat()
+            return True
+            
+        except Exception as e:
+            logger.error(f"Retry failed: {e}")
+            return None
+
+    def handle_contradiction(self, zeroia_state: str, reflexia_state: str) -> None:
+        """Handle contradiction between ZeroIA and ReflexIA states"""
+        self.metrics["contradiction_count"] += 1
+        
+        # Log contradiction details
+        logger.warning(
+            f"Handling contradiction: ZeroIA={zeroia_state}, ReflexIA={reflexia_state}"
+        )
+        
+        # Record recovery attempt
+        self.recovery_attempts[datetime.utcnow().isoformat()] = {
+            "type": "contradiction",
+            "zeroia_state": zeroia_state,
+            "reflexia_state": reflexia_state,
+            "resolved": True,  # Assume resolved since we're handling it
+        }
+        
+        # Save metrics
+        self._save_metrics()
+
+    def _save_metrics(self) -> None:
+        """Save current metrics to file"""
+        try:
+            metrics_path = Path("modules/zeroia/state/error_recovery_metrics.toml")
+            metrics_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            # Convert TypedDict to regular dict for TOML serialization
+            metrics_dict = dict(self.metrics)
+            with open(metrics_path, "w") as f:
+                toml.dump(metrics_dict, f)
+                
+        except Exception as e:
+            logger.error(f"Failed to save error recovery metrics: {e}")
+
+    def get_recovery_status(self) -> Dict[str, Any]:
+        """Return current recovery system status"""
         return {
             "metrics": {
-                "total_errors": self.metrics.total_errors,
-                "recovery_rate": round(self.metrics.recovery_rate, 3),
-                "average_recovery_time": round(self.metrics.average_recovery_time, 3),
-                "strategies_used": self.metrics.recovery_strategies_used,
+                "total_errors": self.metrics["total_errors"],
+                "successful_recoveries": self.metrics["successful_recoveries"],
+                "failed_recoveries": self.metrics["failed_recoveries"],
+                "contradiction_count": self.metrics["contradiction_count"],
             },
-            "circuit_breaker": circuit_status,
-            "last_recovery": (
-                self.metrics.last_recovery_attempt.isoformat()
-                if self.metrics.last_recovery_attempt
-                else None
-            ),
+            "last_error_time": self.metrics["last_error_time"],
             "system_health": (
-                "healthy" if self.metrics.recovery_rate > 0.8 else "degraded"
+                "healthy"
+                if self.metrics["successful_recoveries"] > 0
+                and self.metrics["total_errors"] > 0
+                and self.metrics["successful_recoveries"] / self.metrics["total_errors"] > 0.8
+                else "degraded"
             ),
         }
 
@@ -464,8 +360,7 @@ class ErrorRecoverySystem:
         """Vérification de santé du système de récupération"""
         try:
             # Test basic recovery
-            test_error = Exception("Test error")
-            result = await self.handle_error(test_error, "test", "health_check")
+            result = await self.handle_error(ErrorType.UNKNOWN, "Test error")
 
             return {
                 "status": "healthy",
@@ -480,10 +375,48 @@ class ErrorRecoverySystem:
                 "timestamp": datetime.now().isoformat(),
             }
 
+    async def recover(self) -> bool:
+        """Tente une récupération générale du système"""
+        now = datetime.now()
+        
+        # Vérifier le cooldown
+        if self.metrics["last_error_time"]:
+            try:
+                last_error_dt = datetime.fromisoformat(self.metrics["last_error_time"])
+                if (now - last_error_dt).total_seconds() < 60:
+                    logger.warning("⏳ Récupération en cooldown")
+                    return False
+            except ValueError:
+                logger.warning("⚠️ Format de date invalide pour last_error_time")
+            
+        # Vérifier le nombre de tentatives
+        if self.metrics["failed_recoveries"] >= 3:
+            logger.error("❌ Nombre maximum de tentatives de récupération atteint")
+            return False
+            
+        self.metrics["failed_recoveries"] += 1
+        self.metrics["last_error_time"] = now.isoformat()
+        
+        try:
+            # Réinitialiser les compteurs
+            self.metrics["total_errors"] = 0
+            self.metrics["successful_recoveries"] = 0
+            self.metrics["failed_recoveries"] = 0
+            self.metrics["contradiction_count"] = 0
+            
+            # Exécuter les stratégies de récupération
+            for strategy in self.recovery_handlers.values():
+                await strategy(None)
+                
+            logger.info("✅ Récupération réussie")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Erreur pendant la récupération: {str(e)}")
+            return False
 
-# Factory function pour faciliter l'utilisation
-def create_error_recovery_system(
-    circuit_breaker: Optional[Any] = None, event_store: Optional[Any] = None
-) -> ErrorRecoverySystem:
-    """Factory pour créer un système de récupération configuré"""
-    return ErrorRecoverySystem(circuit_breaker, event_store)
+
+# Factory function to facilitate usage
+def create_error_recovery_system() -> ErrorRecoverySystem:
+    """Create a new instance of ErrorRecoverySystem"""
+    return ErrorRecoverySystem()

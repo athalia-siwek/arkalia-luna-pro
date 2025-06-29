@@ -4,183 +4,33 @@
 version: '3.8'
 
 services:
-  # 🚀 API Arkalia - Version simplifiée mais optimisée
-  arkalia-api:
+  arkalia-master-enhanced:
     build:
       context: .
-      dockerfile_inline: |
-        FROM python:3.10-slim
-        WORKDIR /app
-        COPY requirements.txt ./
-        RUN pip install --no-cache-dir -r requirements.txt
-        COPY helloria ./helloria
-        COPY modules ./modules
-        COPY config ./config
-        COPY state ./state
-        EXPOSE 8000
-        CMD ["uvicorn", "helloria.core:app", "--host", "0.0.0.0", "--port", "8000"]
-    container_name: arkalia-api-optimized
+      dockerfile: Dockerfile.master
+    container_name: arkalia-master-enhanced
+    restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "8000:8000" # Port principal
+      - "9091:9091" # Port métriques Master
     volumes:
       - ./logs:/app/logs
       - ./state:/app/state
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: '1.0'
-
-  # 🤖 AssistantIA - Version simplifiée
-  assistantia:
-    build:
-      context: .
-      dockerfile_inline: |
-        FROM python:3.10-slim
-        WORKDIR /app
-        COPY requirements.txt ./
-        RUN pip install --no-cache-dir -r requirements.txt
-        COPY modules/assistantia ./modules/assistantia
-        COPY modules/__init__.py ./modules/
-        COPY config ./config
-        COPY state ./state
-        ENV PYTHONPATH=/app
-        EXPOSE 8001
-        CMD ["uvicorn", "modules.assistantia.core:app", "--host", "0.0.0.0", "--port", "8001"]
-    container_name: assistantia-optimized
-    ports:
-      - "8001:8001"
-    volumes:
-      - ./logs:/app/logs
-      - ./state:/app/state
-    depends_on:
-      - arkalia-api
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 384M
-          cpus: '0.8'
-
-  # 🔄 ReflexIA - Version simplifiée  
-  reflexia:
-    build:
-      context: .
-      dockerfile_inline: |
-        FROM python:3.10-slim
-        WORKDIR /app
-        COPY requirements.txt ./
-        RUN pip install --no-cache-dir -r requirements.txt
-        COPY modules/reflexia ./modules/reflexia
-        COPY modules/__init__.py ./modules/
-        COPY run_reflexia.py ./
-        COPY config ./config
-        COPY state ./state
-        ENV PYTHONPATH=/app
-        CMD ["python", "run_reflexia.py"]
-    container_name: reflexia-optimized
-    volumes:
-      - ./logs:/app/logs
-      - ./state:/app/state
-    depends_on:
-      - assistantia
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 384M
-          cpus: '0.6'
-
-  # 🧠 ZeroIA - Version Enhanced simplifiée
-  zeroia:
-    build:
-      context: .
-      dockerfile_inline: |
-        FROM python:3.10-slim
-        WORKDIR /app
-        COPY requirements.txt ./
-        RUN pip install --no-cache-dir -r requirements.txt
-        COPY modules/zeroia ./modules/zeroia
-        COPY modules/__init__.py ./modules/
-        COPY scripts/demo_orchestrator_enhanced.py ./scripts/
-        COPY config ./config
-        COPY state ./state
-        ENV PYTHONPATH=/app
-        CMD ["python", "scripts/demo_orchestrator_enhanced.py", "--mode", "daemon"]
-    container_name: zeroia-optimized
-    volumes:
-      - ./logs:/app/logs
-      - ./state:/app/state
-    depends_on:
-      - reflexia
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 768M
-          cpus: '1.2'
-
-  # 🧬 Sandozia - Version Intelligence Croisée simplifiée
-  sandozia:
-    build:
-      context: .
-      dockerfile_inline: |
-        FROM python:3.10-slim
-        WORKDIR /app
-        COPY requirements.txt ./
-        RUN pip install --no-cache-dir -r requirements.txt
-        COPY modules/sandozia ./modules/sandozia
-        COPY modules/__init__.py ./modules/
-        COPY scripts/demo_sandozia.py ./scripts/
-        COPY config ./config
-        COPY state ./state
-        ENV PYTHONPATH=/app
-        CMD ["python", "scripts/demo_sandozia.py", "--daemon"]
-    container_name: sandozia-optimized
-    volumes:
-      - ./logs:/app/logs
-      - ./state:/app/state
-    depends_on:
-      - zeroia
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-          cpus: '1.5'
-
-  # 🧠 Cognitive Reactor - Réactions automatiques
-  cognitive-reactor:
-    build:
-      context: .
-      dockerfile_inline: |
-        FROM python:3.10-slim
-        WORKDIR /app
-        COPY requirements.txt ./
-        RUN pip install --no-cache-dir -r requirements.txt
-        COPY modules/sandozia ./modules/sandozia
-        COPY modules/__init__.py ./modules/
-        COPY scripts/arkalia_enhanced_integration.py ./scripts/
-        COPY config ./config
-        COPY state ./state
-        ENV PYTHONPATH=/app
-        ENV COGNITIVE_REACTOR_ENABLED=true
-        ENV CHRONALIA_ENABLED=true
-        CMD ["python", "scripts/arkalia_enhanced_integration.py", "--mode", "daemon"]
-    container_name: cognitive-reactor-optimized
-    volumes:
-      - ./logs:/app/logs
-      - ./state:/app/state
-    depends_on:
-      - sandozia
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 384M
-          cpus: '0.6'
+      - ./cache:/app/cache
+      - ./config:/app/config
+    environment:
+      - PYTHONPATH=/app/modules:/app
+      - PYTHONUNBUFFERED=1
+      - ARKALIA_MODE=daemon
+    healthcheck:
+      test: [ "CMD", "python", "scripts/ark-master-orchestrator.py", "--mode", "status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - arkalia-network
 
 networks:
-  default:
-    name: arkalia_optimized_network
+  arkalia-network:
+    driver: bridge

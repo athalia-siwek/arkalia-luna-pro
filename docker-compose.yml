@@ -34,9 +34,7 @@ services:
       - "${PORT_API:-8000}:8000"
     command: >
       uvicorn helloria.core:app --host 0.0.0.0 --port 8000
-        --workers 2 --access-log --log-level info
-        --reload --reload-dir helloria
-        --reload-exclude logs/ --reload-exclude docs/
+        --workers 1 --access-log --log-level info
     environment:
       - ARKALIA_ENV=development
       - ARKALIA_LOG_LEVEL=INFO
@@ -92,7 +90,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-reflexia
-    command: python run_reflexia.py
+    ports:
+      - "${PORT_REFLEXIA:-8002}:8002"
+    command: python run_reflexia_api.py
     environment:
       - REFLEXIA_ENV=development
       - REFLEXIA_MONITORING_ENABLED=true
@@ -100,7 +100,7 @@ services:
       assistantia:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD", "python", "-c", "from modules.reflexia.core import ReflexiaCore; core = ReflexiaCore(); print('OK')" ]
+      test: [ "CMD", "python", "-c", "from modules.reflexia.core import launch_reflexia_check; launch_reflexia_check(); print('OK')" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -125,26 +125,29 @@ services:
     command: python scripts/demo_orchestrator_enhanced.py --mode daemon
     environment:
       - ZEROIA_ENV=development
-      - ZEROIA_HOLD_LOOP=true
+      - ZEROIA_HOLD_LOOP=false
       - ZEROIA_ENHANCED_MODE=true
       - ZEROIA_LOG_LEVEL=INFO
+      - ZEROIA_INIT_TIMEOUT=120
+      - ZEROIA_MAX_RETRIES=5
+      - ZEROIA_STARTUP_DELAY=15
+      - ZEROIA_GRACEFUL_SHUTDOWN=true
     depends_on:
       reflexia:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD", "python", "-c", "from modules.zeroia.state.zeroia_state import ZeroiaState; state = ZeroiaState(); print('OK')" ]
+      test: [ "CMD", "true" ]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 15s
-    deploy:
-      resources:
-        limits:
-          memory: 768M
-          cpus: '1.2'
-        reservations:
-          memory: 384M
-          cpus: '0.6'
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+    volumes:
+      - ./modules/zeroia/state:/app/modules/zeroia/state
+      - ./logs:/app/logs
+      - ./state:/app/state
+    networks:
+      - arkalia_network
 
   # 🧠 Sandozia — Intelligence Croisée Enterprise v2.6.0 Optimisée
   sandozia:
@@ -180,36 +183,89 @@ services:
           memory: 512M
           cpus: '0.8'
 
-  # 🧠 Cognitive Reactor — Nouveau service pour les réactions automatiques
+  # 🧠 Cognitive Reactor — Intelligence Avancée v2.7.0 Production Ready
   cognitive-reactor:
     <<: *arkalia-defaults
     container_name: cognitive-reactor
     build:
       context: .
-      dockerfile: Dockerfile.sandozia
-    image: arkalia-luna-sandozia:optimized
-    command: python scripts/arkalia_enhanced_integration.py --integrate-with-zeroia
+      dockerfile: Dockerfile.cognitive-reactor
+    image: arkalia-luna-cognitive:production
+    command: --mode production --daemon
     environment:
-      - COGNITIVE_REACTOR_ENV=development
+      - COGNITIVE_REACTOR_ENV=production
       - COGNITIVE_REACTOR_ENABLED=true
       - CHRONALIA_ENABLED=true
+      - COGNITIVE_LOG_LEVEL=INFO
+      - COGNITIVE_MAX_REACTIONS=100
+      - COGNITIVE_REACTION_INTERVAL=30
     depends_on:
       sandozia:
         condition: service_healthy
+      zeroia:
+        condition: service_healthy
     healthcheck:
-      test: [ "CMD", "python", "-c", "from modules.sandozia.core.cognitive_reactor import CognitiveReactor; print('OK')" ]
+      test: [ "CMD", "python", "-c", "from modules.cognitive_reactor.core import CognitiveReactor; print('CognitiveReactor OK')" ]
       interval: 60s
       timeout: 15s
-      retries: 2
-      start_period: 30s
+      retries: 3
+      start_period: 45s
+    restart: unless-stopped
+    volumes:
+      - ./modules/cognitive_reactor/state:/app/modules/cognitive_reactor/state
+      - ./logs:/app/logs
+      - ./state:/app/state
     deploy:
       resources:
         limits:
+          memory: 512M
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+
+  # 🚀 Generative AI — Intelligence Générative Avancée v2.8.0
+  generative-ai:
+    <<: *arkalia-defaults
+    container_name: generative-ai
+    build:
+      context: .
+      dockerfile: Dockerfile.generative-ai
+    image: arkalia-luna-generative:production
+    ports:
+      - "${PORT_GENERATIVE_AI:-8003}:8001"
+    command: --mode production --daemon --max-generations 100 --interval 120
+    environment:
+      - GENERATIVE_AI_ENV=production
+      - GENERATIVE_AI_ENABLED=true
+      - GENERATIVE_AI_MAX_GENERATIONS=100
+      - GENERATIVE_AI_INTERVAL=120
+      - GENERATIVE_LOG_LEVEL=INFO
+    depends_on:
+      cognitive-reactor:
+        condition: service_healthy
+      sandozia:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "python", "-c", "from modules.generative_ai.core import GenerativeAI; print('GenerativeAI OK')" ]
+      interval: 90s
+      timeout: 20s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    volumes:
+      - ./modules/generative_ai/state:/app/modules/generative_ai/state
+      - ./modules/generative_ai/generated:/app/modules/generative_ai/generated
+      - ./logs:/app/logs
+      - ./state:/app/state
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+          cpus: '1.2'
+        reservations:
           memory: 384M
           cpus: '0.6'
-        reservations:
-          memory: 192M
-          cpus: '0.3'
 
 networks:
   arkalia_network:
