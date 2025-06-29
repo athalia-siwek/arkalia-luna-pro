@@ -32,10 +32,10 @@ async def post_chat(
     try:
         # 🔥 NOUVELLE INTÉGRATION - Contexte Arkalia
         arkalia_context = get_arkalia_context()
-        
+
         # Enrichir le message avec le contexte
         enriched_message = f"{message}\n\nContexte système: {arkalia_context}"
-        
+
         processed = process_input(enriched_message)
         response = query_ollama(processed)  # 👈 Appel direct avec un seul argument
         return {"réponse": response}
@@ -48,12 +48,12 @@ async def post_chat(
 def get_arkalia_context() -> str:
     """Récupère le contexte des autres modules Arkalia"""
     context_parts = []
-    
+
     try:
         # État ZeroIA
-        from pathlib import Path
         import json
-        
+        from pathlib import Path
+
         zeroia_dashboard = Path("state/zeroia_dashboard.json")
         if zeroia_dashboard.exists():
             with open(zeroia_dashboard) as f:
@@ -61,17 +61,18 @@ def get_arkalia_context() -> str:
             context_parts.append(f"ZeroIA: {dashboard.get('last_decision', 'unknown')}")
     except Exception:
         context_parts.append("ZeroIA: unavailable")
-    
+
     try:
         # État Reflexia
         import toml
+
         reflexia_state = Path("state/reflexia_state.toml")
         if reflexia_state.exists():
             reflexia_data = toml.load(reflexia_state)
             context_parts.append(f"Reflexia: {reflexia_data.get('status', 'unknown')}")
     except Exception:
         context_parts.append("Reflexia: unavailable")
-    
+
     try:
         # État Sandozia
         sandozia_state = Path("state/sandozia")
@@ -81,12 +82,13 @@ def get_arkalia_context() -> str:
             context_parts.append("Sandozia: inactive")
     except Exception:
         context_parts.append("Sandozia: unavailable")
-    
+
     return " | ".join(context_parts) if context_parts else "Système Arkalia-LUNA"
 
 
 app = FastAPI()
 app.include_router(router)
+
 
 @app.get("/health")
 def health():

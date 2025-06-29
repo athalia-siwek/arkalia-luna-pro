@@ -49,9 +49,9 @@ def test_imports():
 
             from modules.zeroia.circuit_breaker import CircuitBreaker  # noqa: F401
             from modules.zeroia.event_store import EventStore, EventType  # noqa: F401
-            from modules.zeroia.reason_loop_enhanced import (
+            from modules.zeroia.reason_loop_enhanced import (  # noqa: F401
                 create_default_context_enhanced,
-            )  # noqa: F401
+            )
 
             print("✅ Réimport réussi")
             return True

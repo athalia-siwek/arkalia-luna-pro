@@ -415,44 +415,56 @@ class CrossModuleValidator:
         )
         return summary
 
-    def validate_cross_modules(self, active_modules: Optional[List[str]] = None) -> Dict[str, Any]:
+    def validate_cross_modules(
+        self, active_modules: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
         """
         Méthode principale de validation croisée - Interface pour Orchestrateur
-        
+
         Args:
             active_modules: Liste des modules actifs à valider
-            
+
         Returns:
             Dict avec résultats de validation
         """
         try:
             # Charger les états et effectuer la validation
             validation_results = self.run_full_validation()
-            
+
             # Adapter la validation selon les modules actifs
             if active_modules:
-                logger.info(f"🔍 Validating cross-module coherence for: {', '.join(active_modules)}")
-            
+                logger.info(
+                    f"🔍 Validating cross-module coherence for: {', '.join(active_modules)}"
+                )
+
             # Simplifier la réponse pour l'orchestrateur
             return {
                 "status": "success",
                 "active_modules": active_modules or [],
                 "total_validations": len(validation_results.get("results", [])),
-                "critical_count": len([r for r in validation_results.get("results", []) 
-                                     if r.get("level") == "critical"]),
-                "warning_count": len([r for r in validation_results.get("results", []) 
-                                    if r.get("level") == "warning"]),
+                "critical_count": len(
+                    [
+                        r
+                        for r in validation_results.get("results", [])
+                        if r.get("level") == "critical"
+                    ]
+                ),
+                "warning_count": len(
+                    [
+                        r
+                        for r in validation_results.get("results", [])
+                        if r.get("level") == "warning"
+                    ]
+                ),
                 "coherence_score": validation_results.get("coherence_score", 0.8),
-                "score": validation_results.get("coherence_score", 0.8),  # Alias pour l'orchestrateur
-                "details": validation_results
+                "score": validation_results.get(
+                    "coherence_score", 0.8
+                ),  # Alias pour l'orchestrateur
+                "details": validation_results,
             }
         except Exception as e:
             logger.error(f"❌ CrossModule validation error: {e}")
-            return {
-                "status": "error",
-                "error": str(e),
-                "coherence_score": 0.0
-            }
+            return {"status": "error", "error": str(e), "coherence_score": 0.0}
 
     def get_validation_report(self) -> Dict[str, Any]:
         """Génère un rapport de validation"""

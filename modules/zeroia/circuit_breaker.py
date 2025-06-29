@@ -14,11 +14,11 @@ Fonctionnalités :
 """
 
 import logging
+import time
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 from typing import Any, Callable, Dict, Optional
-import time
 
 from modules.zeroia.event_store import EventStore, EventType
 
@@ -116,23 +116,29 @@ class CircuitBreaker:
         self.event_store = event_store or EventStore()
         self.metrics = CircuitMetrics()
 
-        logger.info(f"🔄 CircuitBreaker initialisé: seuil={failure_threshold}, timeout={recovery_timeout}s")
+        logger.info(
+            f"🔄 CircuitBreaker initialisé: seuil={failure_threshold}, timeout={recovery_timeout}s"
+        )
 
-    def handle_contradiction(self, service1: str, service2: str, decision1: str, decision2: str) -> bool:
+    def handle_contradiction(
+        self, service1: str, service2: str, decision1: str, decision2: str
+    ) -> bool:
         """Gère une contradiction entre deux services"""
         contradiction_key = f"{service1}:{service2}:{decision1}:{decision2}"
-        
+
         if contradiction_key not in self.contradiction_pairs:
             self.contradiction_pairs.add(contradiction_key)
             self.contradiction_count += 1
             self.last_contradiction_time = time.time()
-            
+
             if self.contradiction_count >= self.contradiction_threshold:
                 self.state = CircuitState.OPEN
                 self.metrics.total_trips += 1
-                logger.warning(f"⚠️ Circuit ouvert après {self.contradiction_count} contradictions")
+                logger.warning(
+                    f"⚠️ Circuit ouvert après {self.contradiction_count} contradictions"
+                )
                 return True
-                
+
         return False
 
     def reset_contradictions(self):
@@ -378,27 +384,34 @@ class CircuitBreaker:
         self.state = CircuitState.OPEN
         self.last_failure_time = datetime.now()
         logger.warning("🔌 Circuit breaker déclenché")
-        
+
         if self.event_store:
-            self.event_store.store_event("circuit_breaker_tripped", {
-                'state': self.state,
-                'failure_count': self.failure_count,
-                'last_failure': self.last_failure_time
-            })
+            self.event_store.store_event(
+                "circuit_breaker_tripped",
+                {
+                    "state": self.state,
+                    "failure_count": self.failure_count,
+                    "last_failure": self.last_failure_time,
+                },
+            )
 
     def allow_request(self) -> bool:
         """Vérifie si une requête peut être autorisée"""
         if self.state == CircuitState.CLOSED:
             return True
-            
+
         if self.state == CircuitState.OPEN:
             now = datetime.now()
-            if self.last_failure_time and (now - self.last_failure_time).total_seconds() >= self.recovery_timeout:
+            if (
+                self.last_failure_time
+                and (now - self.last_failure_time).total_seconds()
+                >= self.recovery_timeout
+            ):
                 self.state = CircuitState.HALF_OPEN
                 logger.info("🔌 Circuit breaker en mode semi-ouvert")
                 return True
             return False
-            
+
         # État HALF_OPEN
         return True
 
@@ -407,19 +420,19 @@ class CircuitBreaker:
         self.failure_count += 1
         if self.failure_count >= self.failure_threshold:
             self.trip()
-        
+
         if self.event_store:
-            self.event_store.store_event("circuit_breaker_failure", {
-                'failure_count': self.failure_count,
-                'state': self.state
-            })
+            self.event_store.store_event(
+                "circuit_breaker_failure",
+                {"failure_count": self.failure_count, "state": self.state},
+            )
 
     def record_success(self) -> None:
         """Enregistre un succès"""
         if self.state == CircuitState.HALF_OPEN:
             self.reset()
-        
+
         if self.event_store:
-            self.event_store.store_event("circuit_breaker_success", {
-                'state': self.state
-            })
+            self.event_store.store_event(
+                "circuit_breaker_success", {"state": self.state}
+            )

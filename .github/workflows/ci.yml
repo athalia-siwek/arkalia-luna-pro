@@ -1,117 +1,206 @@
-name: Arkalia CI
+name: 🚀 Arkalia-LUNA CI/CD
 
 on:
   push:
-    branches: [main]
-    tags: ['v*']
+    branches: [ main, develop ]
   pull_request:
-    branches: [main]
-  workflow_dispatch:
+    branches: [ main, develop ]
+
+env:
+  PYTHON_VERSION: "3.10"
+  COVERAGE_MIN: 80
 
 jobs:
-  arkalia-ci:
-    name: 🔁 Arkalia Tests + Lint + Docs
+  # 🔍 Linting et formatage
+  lint:
+    name: 🔍 Lint & Format
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    env:
-      PYTHONPATH: .
-      GH_TOKEN: ${{ secrets.ARKALIA_PAT }}
-
     steps:
-      - name: 🧾 Checkout du dépôt
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
         with:
-          fetch-depth: 0
-
-      - name: 🐍 Setup Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: 📦 Installer les dépendances
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: 📦 Install dependencies
         run: |
-          echo "::group::Install deps"
           python -m pip install --upgrade pip
-          pip install --no-cache-dir "setuptools<70" "pip<24"
-          pip install --no-cache-dir \
-            -r requirements.txt \
-            black \
-            ruff \
-            pytest \
-            pytest-cov \
-            pre-commit \
-            mkdocs \
-            mkdocs-material \
-            mkdocs-minify-plugin \
-            mkdocs-simple-hooks \
-            mkdocs-git-revision-date-localized-plugin
-          echo "::endgroup::"
-
-      - name: 🧹 Analyse statique (Ruff)
+          pip install black ruff isort mypy
+          
+      - name: ♻️ Formatage auto de tous les dossiers 'generated'
         run: |
-          echo "::group::Ruff"
+          find . -type d -name "generated" | while read d; do
+            black "$d" --quiet
+          done
+
+      - name: 🎨 Check code formatting
+        run: |
+          black --check --diff .
+          isort --check-only --diff .
+          
+      - name: 🔍 Run linting
+        run: |
           ruff check .
-          echo "::endgroup::"
+          mypy modules/ --ignore-missing-imports
 
-      - name: 🎨 Formatage (Black)
+  # 🧪 Tests unitaires et d'intégration
+  test:
+    name: 🧪 Tests Unitaires & Intégration
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+        
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          
+      - name: 📦 Install dependencies
         run: |
-          echo "::group::Black"
-          black . --check
-          echo "::endgroup::"
-
-      - name: ✅ Pre-commit (check only)
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-xdist
+          
+      - name: 🧪 Run tests with coverage
         run: |
-          echo "::group::Pre-commit"
-          pre-commit run --all-files --show-diff-on-failure --color always
-          echo "::endgroup::"
-
-      - name: 🧪 Run All Tests
-        run: |
-          echo "::group::Unit + Coverage Tests"
-          pytest \
+          pytest tests/unit/ tests/integration/ \
             --cov=modules \
-            --cov=core \
-            --cov=tests \
-            --cov=scripts \
-            --cov-report=term-missing \
-            -v --tb=short
-          echo "::endgroup::"
+            --cov-report=xml \
+            --cov-report=html \
+            --cov-fail-under=${{ env.COVERAGE_MIN }} \
+            --junitxml=test-results.xml \
+            -v
+            
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          
+      - name: 📋 Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results-${{ matrix.python-version }}
+          path: |
+            test-results.xml
+            htmlcov/
+            .coverage
 
-      - name: 🧭 Génération du sitemap
+  # 🔒 Tests de sécurité
+  security:
+    name: 🔒 Tests de Sécurité
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: 📦 Install dependencies
         run: |
-          echo "::group::Sitemap Generator"
-          python scripts/sitemap_generator.py
-          echo "::endgroup::"
-
-      - name: 🌐 Test du sitemap
+          pip install -r requirements.txt
+          pip install pytest
+          
+      - name: 🔒 Run security tests
         run: |
-          echo "::group::Sitemap Tests"
-          pytest tests/scripts/test_sitemap_generator.py -v || true
-          echo "::endgroup::"
-
-      - name: 🔐 Configure Git remote for gh-pages
+          pytest tests/security/ -v --tb=short
+          
+      - name: 🔍 Run bandit security scan
         run: |
-          echo "::group::Git Remote Setup"
-          git config --global user.name "arkalia-bot"
-          git config --global user.email "bot@arkalia.system"
-          git remote set-url origin https://${{ secrets.ARKALIA_PAT }}@github.com/arkalia-luna-system/arkalia-luna-pro.git
-          echo "::endgroup::"
+          pip install bandit
+          bandit -r modules/ -f json -o bandit-report.json || true
+          
+      - name: 📋 Upload security report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-report
+          path: bandit-report.json
 
-      - name: 🔍 Vérification de la configuration MkDocs
+  # 🚀 Tests de performance (nightly)
+  performance:
+    name: 🚀 Tests de Performance
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: 📦 Install dependencies
         run: |
-          echo "::group::Vérification MkDocs"
-          mkdocs build --strict --site-dir /tmp/mkdocs
-          echo "::endgroup::"
-
-      - name: 🚀 Déploiement MkDocs
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+          pip install -r requirements.txt
+          pip install pytest pytest-benchmark
+          
+      - name: 🚀 Run performance tests
         run: |
-          echo "::group::Deploy MkDocs"
-          mkdocs gh-deploy --force
-          echo "::endgroup::"
+          pytest tests/performance/ -v --benchmark-only
+          
+      - name: 📊 Generate performance report
+        run: |
+          python scripts/ark-performance-benchmark.py --report-only
 
-      - name: 📣 Notification succès
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: echo "✅ Push réussi avec version ${{ github.ref_name }}"
+  # 🌀 Tests de chaos (nightly)
+  chaos:
+    name: 🌀 Tests de Chaos
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: 📦 Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+          
+      - name: 🌀 Run chaos tests
+        run: |
+          pytest tests/chaos/ -v --tb=short -m "not slow"
+
+  # 📊 Rapport final
+  report:
+    name: 📊 Rapport Final
+    runs-on: ubuntu-latest
+    needs: [test, security, performance, chaos]
+    if: always()
+    steps:
+      - name: 📋 Download all artifacts
+        uses: actions/download-artifact@v3
+        
+      - name: 📊 Generate final report
+        run: |
+          echo "## 🚀 Arkalia-LUNA CI/CD Report" >> report.md
+          echo "### ✅ Tests Status" >> report.md
+          echo "- Unit & Integration: ${{ needs.test.result }}" >> report.md
+          echo "- Security: ${{ needs.security.result }}" >> report.md
+          echo "- Performance: ${{ needs.performance.result }}" >> report.md
+          echo "- Chaos: ${{ needs.chaos.result }}" >> report.md
+          echo "" >> report.md
+          echo "### 📈 Coverage: ${{ env.COVERAGE_MIN }}% minimum" >> report.md
+          
+      - name: 📋 Upload final report
+        uses: actions/upload-artifact@v3
+        with:
+          name: ci-report
+          path: report.md

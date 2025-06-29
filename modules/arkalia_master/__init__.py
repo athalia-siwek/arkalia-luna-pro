@@ -16,9 +16,9 @@ Architecture :
 
 from .orchestrator_ultimate import (
     ArkaliaOrchestrator,
-    OrchestratorConfig,
-    ModuleStatus,
     CycleMode,
+    ModuleStatus,
+    OrchestratorConfig,
     orchestrate_full_ecosystem,
 )
 
@@ -27,8 +27,8 @@ __author__ = "Athalia - Arkalia-LUNA"
 
 __all__ = [
     "ArkaliaOrchestrator",
-    "OrchestratorConfig", 
+    "OrchestratorConfig",
     "ModuleStatus",
     "CycleMode",
     "orchestrate_full_ecosystem",
-] 
+]

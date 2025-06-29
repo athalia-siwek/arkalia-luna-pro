@@ -9,6 +9,9 @@ import logging
 import sys
 import time
 from pathlib import Path
+import subprocess
+import pathlib
+import asyncio
 
 # Ajout du chemin modules
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
@@ -138,7 +141,12 @@ def test_scenario(
         }
 
 
-def main():
+def format_generated():
+    for d in pathlib.Path(".").rglob("generated"):
+        subprocess.run(["black", str(d), "--quiet"], check=False)
+
+
+async def main():
     """Fonction principale du demo"""
     print("🔄 DEMO: ZeroIA Enhanced + Error Recovery Integration v2.7.0")
     print("=" * 70)
@@ -237,10 +245,12 @@ def main():
     print("\n🎉 Demo terminé avec succès !")
     print("💡 L'Error Recovery System est maintenant intégré dans ZeroIA Enhanced")
 
+    format_generated()
+
 
 if __name__ == "__main__":
     try:
-        main()
+        asyncio.run(main())
     except KeyboardInterrupt:
         print("\n🛑 Demo interrompu manuellement")
     except Exception as e:

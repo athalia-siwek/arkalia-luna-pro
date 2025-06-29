@@ -8,11 +8,18 @@ Test de la nouvelle version avec vraies métriques système
 
 import sys
 from pathlib import Path
+import subprocess
+import pathlib
 
 # Ajouter le répertoire racine au path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from modules.reflexia.logic.main_loop_enhanced import reflexia_loop_enhanced
+
+
+def format_generated():
+    for d in pathlib.Path(".").rglob("generated"):
+        subprocess.run(["black", str(d), "--quiet"], check=False)
 
 
 def main():
@@ -23,6 +30,7 @@ def main():
     try:
         reflexia_loop_enhanced(max_iterations=3, sleep_seconds=3, verbose=True)
         print("\n✅ Demo Reflexia Enhanced terminé avec succès !")
+        format_generated()
 
     except KeyboardInterrupt:
         print("\n🛑 Demo interrompu par l'utilisateur")

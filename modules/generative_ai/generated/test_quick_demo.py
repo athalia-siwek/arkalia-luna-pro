@@ -1,5 +1,5 @@
-import pytest
 from modules.quick_demo import QuickDemo
+
 
 def test_basic_functionality():
     """Test de basic_functionality"""

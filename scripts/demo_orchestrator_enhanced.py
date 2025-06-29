@@ -14,6 +14,8 @@ import argparse
 import logging
 import sys
 from pathlib import Path
+import subprocess
+import pathlib
 
 # Ajouter le path des modules
 sys.path.append(str(Path(__file__).parent.parent / "modules"))
@@ -172,6 +174,11 @@ def demo_daemon() -> None:
         demo_daemon()  # Relance recursive
 
 
+def format_generated():
+    for d in pathlib.Path(".").rglob("generated"):
+        subprocess.run(["black", str(d), "--quiet"], check=False)
+
+
 def main():
     """Point d'entrée principal"""
     parser = argparse.ArgumentParser(description="Demo Orchestrator ZeroIA Enhanced")
@@ -209,6 +216,8 @@ def main():
         import traceback
 
         traceback.print_exc()
+
+    format_generated()
 
 
 if __name__ == "__main__":

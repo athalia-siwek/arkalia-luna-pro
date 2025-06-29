@@ -38,21 +38,21 @@
     <div class="module-card">
         <div class="module-icon">🤖</div>
         <h3>ZeroIA</h3>
-        <p>Décisionneur autonome Enhanced v2.6.0</p>
+        <p>Décisionneur autonome Enhanced v2.8.0</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
     
     <div class="module-card">
         <div class="module-icon">🧠</div>
         <h3>Sandozia</h3>
-        <p>Intelligence croisée Enterprise v2.6.0</p>
+        <p>Intelligence croisée Enterprise v2.8.0</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
     
     <div class="module-card">
         <div class="module-icon">🧠</div>
         <h3>Cognitive Reactor</h3>
-        <p>Intelligence avancée v2.7.0</p>
+        <p>Intelligence avancée v2.8.0</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
     
@@ -69,8 +69,8 @@
 <div class="metrics-grid">
     <div class="metric-card">
         <div class="metric-icon">🧪</div>
-        <div class="metric-value">99.5%</div>
-        <div class="metric-label">Tests unitaires</div>
+        <div class="metric-value">455</div>
+        <div class="metric-label">Tests collectés</div>
     </div>
     
     <div class="metric-card">
@@ -81,8 +81,8 @@
     
     <div class="metric-card">
         <div class="metric-icon">🔧</div>
-        <div class="metric-value">63</div>
-        <div class="metric-label">Modules analysés</div>
+        <div class="metric-value">82</div>
+        <div class="metric-label">Modules Python</div>
     </div>
     
     <div class="metric-card">
@@ -120,7 +120,7 @@
 ## 🏁 Démarrage rapide
 
 <div class="quick-links">
-    <a href="quick-start.md" class="quick-link primary">
+    <a href="getting-started/quick-start.md" class="quick-link primary">
         <span class="link-icon">⚡</span>
         <div class="link-content">
             <h4>Installation rapide</h4>
@@ -136,7 +136,7 @@
         </div>
     </a>
     
-    <a href="modules.md" class="quick-link">
+    <a href="core/modules.md" class="quick-link">
         <span class="link-icon">📚</span>
         <div class="link-content">
             <h4>Documentation modules</h4>
@@ -144,7 +144,7 @@
         </div>
     </a>
     
-    <a href="api.md" class="quick-link">
+    <a href="reference/api.md" class="quick-link">
         <span class="link-icon">🔌</span>
         <div class="link-content">
             <h4>API Reference</h4>
@@ -152,7 +152,7 @@
         </div>
     </a>
     
-    <a href="INTELLIGENCE_GENERATIVE_AVANCEE.md" class="quick-link">
+    <a href="modules/advanced/generative_ai.md" class="quick-link">
         <span class="link-icon">🚀</span>
         <div class="link-content">
             <h4>Intelligence Générative</h4>
@@ -160,7 +160,7 @@
         </div>
     </a>
     
-    <a href="INTELLIGENCE_AVANCEE_ACTIVEE.md" class="quick-link">
+    <a href="modules/advanced/cognitive_reactor.md" class="quick-link">
         <span class="link-icon">🧠</span>
         <div class="link-content">
             <h4>Cognitive Reactor</h4>

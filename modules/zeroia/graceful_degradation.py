@@ -134,27 +134,27 @@ class GracefulDegradationSystem:
 
         # Métriques
         self.metrics = {
-            'cpu_usage': 0.0,
-            'memory_usage': 0.0,
-            'response_time': 0.0,
-            'error_count': 0,
-            'service_count': 0
+            "cpu_usage": 0.0,
+            "memory_usage": 0.0,
+            "response_time": 0.0,
+            "error_count": 0,
+            "service_count": 0,
         }
 
         # État de santé
         self.health_status = {
-            'is_healthy': True,
-            'last_error': None,
-            'error_count': 0,
-            'last_recovery': None
+            "is_healthy": True,
+            "last_error": None,
+            "error_count": 0,
+            "last_recovery": None,
         }
 
         # Configuration de la dégradation
         self.degradation_config = {
-            'auto_recovery': True,
-            'max_retries': 3,
-            'retry_delay': 5,
-            'cooldown_period': 30
+            "auto_recovery": True,
+            "max_retries": 3,
+            "retry_delay": 5,
+            "cooldown_period": 30,
         }
 
         # Services par défaut
@@ -685,15 +685,17 @@ class GracefulDegradationSystem:
     def can_initialize(self) -> bool:
         """Vérifie si le système peut être initialisé"""
         now = datetime.now()
-        
+
         # Vérifier le nombre d'initialisations
         if self.initialization_count >= self.max_initializations:
             return False
-            
+
         # Vérifier le délai depuis la dernière initialisation
-        if (now - self.last_initialization).total_seconds() < self.initialization_cooldown:
+        if (
+            now - self.last_initialization
+        ).total_seconds() < self.initialization_cooldown:
             return False
-            
+
         return True
 
     def initialize(self) -> bool:
@@ -701,27 +703,27 @@ class GracefulDegradationSystem:
         if not self.can_initialize():
             logger.warning("🚫 Initialisation bloquée (protection anti-boucle)")
             return False
-            
+
         self.initialization_count += 1
         self.last_initialization = datetime.now()
-        
+
         # Réinitialisation des métriques
         self.metrics = {
-            'cpu_usage': 0.0,
-            'memory_usage': 0.0,
-            'response_time': 0.0,
-            'error_count': 0,
-            'service_count': 0
+            "cpu_usage": 0.0,
+            "memory_usage": 0.0,
+            "response_time": 0.0,
+            "error_count": 0,
+            "service_count": 0,
         }
-        
+
         # Réinitialisation de l'état de santé
         self.health_status = {
-            'is_healthy': True,
-            'last_error': None,
-            'error_count': 0,
-            'last_recovery': None
+            "is_healthy": True,
+            "last_error": None,
+            "error_count": 0,
+            "last_recovery": None,
         }
-        
+
         return True
 
 

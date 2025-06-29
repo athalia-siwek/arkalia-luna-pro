@@ -1,8 +1,8 @@
-# Modules Arkalia-LUNA Enhanced v2.7.1
+# Modules Arkalia-LUNA Enhanced v2.8.0
 
-Bienvenue dans la documentation des modules d'Arkalia-LUNA Enhanced v2.7.1 avec **Framework Enhanced révolutionnaire**.
+Bienvenue dans la documentation des modules d'Arkalia-LUNA Enhanced v2.8.0 avec **Framework Enhanced révolutionnaire**.
 
-## 🚀 Architecture Enhanced v2.7.1
+## 🚀 Architecture Enhanced v2.8.0
 
 Arkalia-LUNA Enhanced est conçu selon une architecture modulaire révolutionnaire où chaque module bénéficie du **Framework Enhanced** avec :
 - **Error Recovery automatique**
@@ -12,8 +12,8 @@ Arkalia-LUNA Enhanced est conçu selon une architecture modulaire révolutionnai
 
 ## 🎯 Modules Enhanced Principaux
 
-### [🚀 ZeroIA Orchestrator Enhanced](zeroia.md) ⭐ **NOUVEAU**
-**Version** : Enhanced v2.6.0 | **Status** : ✅ **100% Opérationnel**
+### [🚀 ZeroIA Orchestrator Enhanced](core/zeroia.md) ⭐ **NOUVEAU**
+**Version** : Enhanced v2.8.0 | **Status** : ✅ **100% Opérationnel**
 
 Module de raisonnement cognitif révolutionnaire avec Framework Enhanced :
 - **Orchestrator Enhanced** : Boucle optimisée 100% succès
@@ -29,8 +29,8 @@ ark-error-recovery         # Test récupération d'erreur
 ark-degradation-status     # Status degradation
 ```
 
-### [🧠 Sandozia Intelligence Croisée](sandozia.md)
-**Version** : v3.0-phase2 | **Status** : ✅ **Phase 2 Active**
+### [🧠 Sandozia Intelligence Croisée](core/sandozia.md)
+**Version** : v2.8.0 | **Status** : ✅ **Phase 2 Active**
 
 Intelligence collaborative nouvelle génération :
 - **CrossModuleValidator** : Validation croisée inter-modules
@@ -40,8 +40,8 @@ Intelligence collaborative nouvelle génération :
 
 **Score Global** : `0.831/1.0` ✅ **EXCELLENT**
 
-### [🔄 Reflexia Engine](reflexia.md)
-**Version** : v3.0 | **Status** : ✅ **Opérationnel** | **Coverage** : 98%
+### [🔄 Reflexia Engine](core/reflexia.md)
+**Version** : v2.8.0 | **Status** : ✅ **Opérationnel** | **Coverage** : 98%
 
 Moteur de réflexion et prise de décision autonome :
 - Boucle décisionnelle auto-adaptative
@@ -49,8 +49,8 @@ Moteur de réflexion et prise de décision autonome :
 - Auto-apprentissage continu
 - Intégration Framework Enhanced
 
-### [🤖 AssistantIA](assistantia.md)
-**Version** : v3.0 | **Status** : ✅ **Multi-modèles** | **Coverage** : 94%
+### [🤖 AssistantIA](core/assistantia.md)
+**Version** : v2.8.0 | **Status** : ✅ **Multi-modèles** | **Coverage** : 94%
 
 Assistant conversationnel multi-modèles avec sécurité renforcée :
 - Support Ollama local optimisé
@@ -58,8 +58,8 @@ Assistant conversationnel multi-modèles avec sécurité renforcée :
 - API REST standardisée
 - Protection contre injections
 
-### [⚡ Taskia Async](taskia.md)
-**Version** : v3.0 | **Status** : ✅ **Workflows** | **Coverage** : 92%
+### [⚡ Taskia Async](advanced/taskia.md)
+**Version** : v2.8.0 | **Status** : ✅ **Workflows** | **Coverage** : 92%
 
 Gestionnaire de tâches asynchrones haute performance :
 - Workflows complexes avec retry automatique
@@ -67,8 +67,8 @@ Gestionnaire de tâches asynchrones haute performance :
 - Intégration Event Store Enhanced
 - Resilience patterns
 
-### [🌊 Nyxalia Analytics](nyxalia.md)
-**Version** : v3.0 | **Status** : ✅ **Données** | **Coverage** : 93%
+### [🌊 Nyxalia Analytics](advanced/nyxalia.md)
+**Version** : v2.8.0 | **Status** : ✅ **Données** | **Coverage** : 93%
 
 Traitement de données et analytics avancées :
 - Pipelines ETL optimisés
@@ -78,8 +78,8 @@ Traitement de données et analytics avancées :
 
 ## 🏗️ Modules Support Enhanced
 
-### [🌍 Global State](global_state.md)
-**Version** : v3.0 | **Status** : ✅ **Synchronisé** | **Coverage** : 99%
+### [🌍 Global State](advanced/global_state.md)
+**Version** : v2.8.0 | **Status** : ✅ **Synchronisé** | **Coverage** : 99%
 
 Gestionnaire d'état global avec persistance garantie :
 - TOML configuration avec cache intelligent
@@ -87,8 +87,8 @@ Gestionnaire d'état global avec persistance garantie :
 - Cohérence ACID garantie
 - Backup automatique
 
-### [🎮 Helloria API](helloria.md)
-**Version** : v3.0 | **Status** : ✅ **REST Endpoint** | **Coverage** : 97%
+### [🎮 Helloria API](core/helloria.md)
+**Version** : v2.8.0 | **Status** : ✅ **REST Endpoint** | **Coverage** : 97%
 
 Interface utilisateur et API REST moderne :
 - FastAPI avec performance optimisée
@@ -126,10 +126,10 @@ Chaque module Enhanced est conçu pour être :
 - **Consensus IA** : Décisions collaboratives
 - **Validation Croisée** : Cohérence inter-modules
 
-## 📈 **Métriques Globales Enhanced v2.7.1**
+## 📈 **Métriques Globales Enhanced v2.8.0**
 
 ### 🏆 **Performance Exceptionnelle**
-- **Tests PASSED** : 373/374 (99.7%) ✅
+- **Tests PASSED** : 99.5% ✅
 - **Orchestrator Enhanced** : 100% taux de succès 🚀
 - **Circuit Breaker** : 0 ouverture (parfait) 🔒
 - **Event Store** : Auto-recovery opérationnel 📊
@@ -172,13 +172,13 @@ ark-sandozia-analyzer      # Analyse comportementale
 
 ## 🔗 **Navigation Documentation**
 
-- **[🚀 ZeroIA Enhanced](zeroia.md)** - Orchestrateur révolutionnaire
-- **[🧠 Sandozia](sandozia.md)** - Intelligence croisée
-- **[🔄 Reflexia](reflexia.md)** - Moteur décisionnel
-- **[🤖 AssistantIA](assistantia.md)** - Assistant IA
-- **[⚡ Taskia](taskia.md)** - Gestionnaire async
-- **[🌊 Nyxalia](nyxalia.md)** - Analytics avancées
-- **[🌍 Global State](global_state.md)** - État global
-- **[🎮 Helloria](helloria.md)** - API REST
+- **[🚀 ZeroIA Enhanced](core/zeroia.md)** - Orchestrateur révolutionnaire
+- **[🧠 Sandozia](core/sandozia.md)** - Intelligence croisée
+- **[🔄 Reflexia](core/reflexia.md)** - Moteur décisionnel
+- **[🤖 AssistantIA](core/assistantia.md)** - Assistant IA
+- **[⚡ Taskia](advanced/taskia.md)** - Gestionnaire async
+- **[🌊 Nyxalia](advanced/nyxalia.md)** - Analytics avancées
+- **[🌍 Global State](advanced/global_state.md)** - État global
+- **[🎮 Helloria](core/helloria.md)** - API REST
 
 **🌟 Consultez la documentation spécifique de chaque module pour découvrir toutes les fonctionnalités Enhanced !**

@@ -18,7 +18,7 @@ import textwrap
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Optional, Tuple, Dict, Any
+from typing import Optional, Tuple
 
 import toml
 
@@ -29,8 +29,8 @@ from modules.zeroia.circuit_breaker import (
     DecisionIntegrityError,
     SystemRebootRequired,
 )
-from modules.zeroia.event_store import EventStore, EventType
 from modules.zeroia.error_recovery_system import ErrorRecoverySystem
+from modules.zeroia.event_store import EventStore, EventType
 from modules.zeroia.graceful_degradation import GracefulDegradationSystem
 from modules.zeroia.utils.backup import save_backup
 from modules.zeroia.utils.state_writer import (
@@ -69,7 +69,7 @@ logger = logging.getLogger(__name__)
 
 # Importer Error Recovery System
 try:
-    from .error_recovery_system import ErrorRecoverySystem, create_error_recovery_system
+    from .error_recovery_system import ErrorRecoverySystem
 
     ERROR_RECOVERY_AVAILABLE = True
 except ImportError:
@@ -91,7 +91,10 @@ except ImportError:
 
 # === NOUVELLE INTÉGRATION COGNITIVE REACTOR ===
 try:
-    from modules.sandozia.core.cognitive_reactor import CognitiveReactor, trigger_cognitive_reaction
+    from modules.sandozia.core.cognitive_reactor import (
+        CognitiveReactor,
+        trigger_cognitive_reaction,
+    )
 
     COGNITIVE_REACTOR_AVAILABLE = True
     logger.info("🔥 CognitiveReactor intégré dans ZeroIA")
@@ -109,19 +112,19 @@ def initialize_components() -> Tuple[CircuitBreaker, EventStore]:
 def initialize_components_with_recovery():
     """Initialize components with singleton pattern to prevent repeated initialization"""
     global circuit_breaker, event_store, error_recovery, graceful_degradation
-    
+
     if circuit_breaker is not None and event_store is not None:
         return circuit_breaker, event_store, error_recovery, graceful_degradation
-        
+
     try:
         circuit_breaker = CircuitBreaker()
         event_store = EventStore()
         error_recovery = ErrorRecoverySystem()
         graceful_degradation = GracefulDegradationSystem()
-        
+
         logger.info("🚀 Composants Enhanced + Error Recovery initialisés")
         return circuit_breaker, event_store, error_recovery, graceful_degradation
-        
+
     except Exception as e:
         logger.error(f"❌ Erreur initialisation composants: {e}")
         raise
@@ -140,7 +143,15 @@ def create_default_context_enhanced() -> dict:
     return {
         "last_update": current_time,
         "system_status": "operational",
-        "active_modules": ["reflexia", "zeroia", "assistantia", "sandozia", "helloria", "taskia", "nyxalia"],
+        "active_modules": [
+            "reflexia",
+            "zeroia",
+            "assistantia",
+            "sandozia",
+            "helloria",
+            "taskia",
+            "nyxalia",
+        ],
         "version": "3.0.0-enhanced",
         "status": {
             "cpu": 45.2,  # CPU par défaut : 45% (charge normale container)
@@ -162,36 +173,28 @@ def create_default_context_enhanced() -> dict:
         },
         "modules": {
             "sandozia": {
-                "status": "active", 
+                "status": "active",
                 "intelligence_level": "adaptive",
-                "health": "healthy"
+                "health": "healthy",
             },
             "assistantia": {
-                "status": "active", 
+                "status": "active",
                 "response_time": "optimal",
                 "health": "healthy",
-                "port": 8001
+                "port": 8001,
             },
-            "helloria": {
-                "status": "active", 
-                "api_ready": True,
-                "health": "healthy"
-            },
+            "helloria": {"status": "active", "api_ready": True, "health": "healthy"},
             "nyxalia": {
-                "status": "active", 
+                "status": "active",
                 "monitoring": "enabled",
-                "health": "healthy"
+                "health": "healthy",
             },
-            "taskia": {
-                "status": "active", 
-                "queue_size": 0,
-                "health": "healthy"
-            },
+            "taskia": {"status": "active", "queue_size": 0, "health": "healthy"},
             "zeroia": {
                 "status": "active",
                 "reason_loop": "enhanced",
                 "health": "healthy",
-                "circuit_breaker": "closed"
+                "circuit_breaker": "closed",
             },
         },
         "metadata": {
@@ -459,10 +462,10 @@ def check_for_ia_conflict_enhanced(
 ) -> bool:
     """Détection de conflit IA avec gestion améliorée"""
     global circuit_breaker, event_store, error_recovery
-    
+
     if reflexia_decision != zeroia_decision and reflexia_decision != "unknown":
         ensure_parent_dir(log_path)
-        
+
         # Log the contradiction
         with open(log_path, "a") as f:
             f.write(
@@ -473,7 +476,7 @@ def check_for_ia_conflict_enhanced(
                     """
                 )
             )
-            
+
         # Event sourcing de la contradiction
         if event_store is not None:
             event_store.add_event(
@@ -485,24 +488,23 @@ def check_for_ia_conflict_enhanced(
                     "timestamp": datetime.utcnow().isoformat(),
                 },
             )
-            
+
         # Trigger error recovery if available
         if error_recovery is not None:
             error_recovery.handle_contradiction(
-                zeroia_state=zeroia_decision,
-                reflexia_state=reflexia_decision
+                zeroia_state=zeroia_decision, reflexia_state=reflexia_decision
             )
-            
+
         # Trip circuit breaker to prevent cascading failures
         if circuit_breaker is not None:
             circuit_breaker.record_failure()
-            
+
         logger.warning(
             f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, "
             f"ZeroIA = {zeroia_decision}"
         )
         return True
-        
+
     return False
 
 
@@ -608,27 +610,31 @@ def reason_loop_enhanced_with_recovery(
                     "system_health": system_health,
                     "cpu": cpu,
                     "ram": ram,
-                    "reflexia_decision": reflexia_data.get("decision", {}).get("last_decision", "unknown"),
-                    "decision_pattern_count": 0  # Sera calculé par CognitiveReactor
+                    "reflexia_decision": reflexia_data.get("decision", {}).get(
+                        "last_decision", "unknown"
+                    ),
+                    "decision_pattern_count": 0,  # Sera calculé par CognitiveReactor
                 }
-                
+
                 # Déclencher les réactions automatiques (version synchrone)
                 cognitive_reactions = trigger_cognitive_reaction(cognitive_context, 0)
-                
+
                 if cognitive_reactions:
-                    logger.info(f"🔥 Réactions automatiques déclenchées: {cognitive_reactions}")
-                    
+                    logger.info(
+                        f"🔥 Réactions automatiques déclenchées: {cognitive_reactions}"
+                    )
+
                     # Event sourcing des réactions cognitives
                     es.add_event(
                         EventType.DECISION_MADE,
                         {
                             "cognitive_reactions": cognitive_reactions,
                             "trigger_context": cognitive_context,
-                            "reaction_count": len(cognitive_reactions)
+                            "reaction_count": len(cognitive_reactions),
                         },
-                        module="cognitive_reactor"
+                        module="cognitive_reactor",
                     )
-                    
+
             except Exception as e:
                 logger.warning(f"⚠️ Erreur CognitiveReactor: {e}")
 
@@ -725,27 +731,27 @@ def reason_loop_enhanced_with_recovery(
 def main_loop_enhanced() -> None:
     """Boucle principale améliorée avec gestion d'erreurs robuste"""
     global circuit_breaker, event_store
-    
+
     if circuit_breaker is None or event_store is None:
         cb, es, _, _ = initialize_components_with_recovery()
         circuit_breaker = cb
         event_store = es
-    
+
     try:
         decision, score = reason_loop_enhanced_with_recovery()
-        
+
         # Event sourcing de succès
         event_store.add_event(
             EventType.CIRCUIT_SUCCESS,
             {"decision": decision, "confidence": score, "loop_iteration": "successful"},
         )
-        
+
         # Ajouter un délai pour éviter les boucles trop rapides
         time.sleep(2)
-        
+
     except SystemRebootRequired as e:
         print(f"[ZeroIA Enhanced] 🔄 REDÉMARRAGE REQUIS: {e}", flush=True)
-        
+
         # Event sourcing critique
         event_store.add_event(
             EventType.SYSTEM_ERROR,
@@ -756,26 +762,26 @@ def main_loop_enhanced() -> None:
                 "action_required": "system_restart",
             },
         )
-        
+
         # Attendre avant retry
         time.sleep(60)
-        
+
     except (CognitiveOverloadError, DecisionIntegrityError) as e:
         print(f"[ZeroIA Enhanced] ⚠️ SURCHARGE: {e}", flush=True)
-        
+
         # Graceful degradation
         time.sleep(30)
-        
+
     except Exception as e:
         print(f"[ZeroIA Enhanced] 🚨 ERREUR: {e}", flush=True)
         logger.exception(e)
-        
+
         # Event sourcing d'erreur
         event_store.add_event(
             EventType.SYSTEM_ERROR,
             {"error_type": "main_loop_error", "error": str(e), "severity": "high"},
         )
-        
+
         # Attendre avant retry
         time.sleep(10)
 
@@ -876,86 +882,84 @@ class ReasonLoopEnhanced:
         self.circuit_breaker = CircuitBreaker()
         self.error_recovery = ErrorRecoverySystem()
         self.graceful_degradation = GracefulDegradationSystem()
-        
+
         # Configuration
         self.config = {
-            'contradiction_threshold': 3,
-            'contradiction_cooldown': 60,
-            'min_confidence_score': 0.6,
-            'decision_timeout': 30,
-            'max_retries': 3,
-            'sync_interval': 5,  # secondes
-            'sync_timeout': 10,  # secondes
-            'sync_retries': 3
+            "contradiction_threshold": 3,
+            "contradiction_cooldown": 60,
+            "min_confidence_score": 0.6,
+            "decision_timeout": 30,
+            "max_retries": 3,
+            "sync_interval": 5,  # secondes
+            "sync_timeout": 10,  # secondes
+            "sync_retries": 3,
         }
-        
+
         # État
         self.last_decision = None
         self.decision_count = 0
         self.contradiction_count = 0
         self.last_contradiction = None
         self.confidence_score = 0.85
-        self.sync_state = {
-            'reflexia': 'unknown',
-            'last_sync': None,
-            'sync_failures': 0
-        }
+        self.sync_state = {"reflexia": "unknown", "last_sync": None, "sync_failures": 0}
 
     def handle_contradiction(self, zeroia_state: str, reflexia_state: str) -> None:
         """Gère une contradiction entre ZeroIA et ReflexIA"""
         now = datetime.now()
-        
+
         # Incrémenter le compteur de contradictions
         self.contradiction_count += 1
         self.last_contradiction = now
-        
+
         # Réduire le score de confiance
         self.confidence_score *= 0.8
-        
+
         # Logger la contradiction
-        logger.warning(f"⚠️ CONTRADICTION: ZeroIA={zeroia_state}, ReflexIA={reflexia_state}")
-        
+        logger.warning(
+            f"⚠️ CONTRADICTION: ZeroIA={zeroia_state}, ReflexIA={reflexia_state}"
+        )
+
         # Vérifier si nous devons déclencher une récupération
-        if self.contradiction_count >= self.config['contradiction_threshold']:
+        if self.contradiction_count >= self.config["contradiction_threshold"]:
             self._trigger_recovery()
-            
+
     def _trigger_recovery(self) -> None:
         """Déclenche une procédure de récupération"""
         logger.info("🔄 Déclenchement de la procédure de récupération")
-        
+
         # Réinitialiser les compteurs
         self.contradiction_count = 0
         self.decision_count = 0
-        
+
         # Forcer une synchronisation avec ReflexIA
         self._sync_with_reflexia()
-        
+
         # Activer le circuit breaker
         self.circuit_breaker.trip()
-        
+
         # Déclencher la récupération d'erreur
         self.error_recovery.recover()
-        
+
     def _sync_with_reflexia(self) -> bool:
         """Synchronise l'état avec ReflexIA"""
         retries = 0
-        while retries < self.config['sync_retries']:
+        while retries < self.config["sync_retries"]:
             try:
                 # Tenter la synchronisation
                 reflexia_state = self._get_reflexia_state()
                 if reflexia_state:
-                    self.sync_state['reflexia'] = reflexia_state
-                    self.sync_state['last_sync'] = datetime.now()
-                    self.sync_state['sync_failures'] = 0
+                    self.sync_state["reflexia"] = reflexia_state
+                    self.sync_state["last_sync"] = datetime.now()
+                    self.sync_state["sync_failures"] = 0
                     return True
             except Exception as e:
                 logger.error(f"❌ Erreur de synchronisation: {str(e)}")
                 retries += 1
-                self.sync_state['sync_failures'] += 1
+                self.sync_state["sync_failures"] += 1
                 time.sleep(1)
-        
+
         return False
-        
+
     def _get_reflexia_state(self) -> Optional[str]:
         """Récupère l'état actuel de ReflexIA"""
         try:
@@ -963,7 +967,9 @@ class ReasonLoopEnhanced:
             # Par exemple, via une API ou un fichier partagé
             return "normal"  # À remplacer par la vraie implémentation
         except Exception as e:
-            logger.error(f"❌ Erreur lors de la récupération de l'état ReflexIA: {str(e)}")
+            logger.error(
+                f"❌ Erreur lors de la récupération de l'état ReflexIA: {str(e)}"
+            )
             return None
 
 

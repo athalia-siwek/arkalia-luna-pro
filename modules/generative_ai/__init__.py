@@ -9,4 +9,4 @@ from .core import GenerativeAI
 
 __version__ = "2.8.0"
 __author__ = "Athalia - Arkalia-LUNA"
-__all__ = ["GenerativeAI"] 
+__all__ = ["GenerativeAI"]

@@ -13,8 +13,8 @@
 - [x] Coverage > 80 %
 
 ## 🌐 Site
-- [x] Docs/modules.md → diagramme mermaid OK
-- [x] Docs/api.md → routes exposées
+- [x] Docs//core//core/modules.md → diagramme mermaid OK
+- [x] Docs//reference//reference/api.md → routes exposées
 - [ ] Docs/perf.md (à créer ?)
 
 ## 🔐 Sécurité

@@ -71,7 +71,7 @@ extra:
             <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro/issues/new" target="_blank" rel="noopener">créant une issue</a>.
   
   # PWA Configuration
-  manifest: manifest.json
+  manifest: assets/docs/manifest.json
 
 # 📊 SEO & Performance
 use_directory_urls: true
@@ -104,42 +104,39 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Getting Started: quick-start.md
+  - Getting Started:
+    - Quick Start: getting-started/quick-start.md
+    - Cognitive Levels: getting-started/cognitive-levels.md
   - Architecture:
     - Overview: fonctionnement/structure.md
     - Components: fonctionnement/composants.md
     - Kernel: fonctionnement/kernel.md
     - Usage: fonctionnement/utilisation.md
     - Decision Flow: architecture/decision_flow.mmd
+  - Core:
+    - Modules Overview: core/modules.md
+    - Changelog: core/changelog.md
+    - Detailed Changelog: core/changelog-detailed.md
   - Modules v2.8.0:
-    - Overview: modules.md
+    - Overview: modules/index.md
     - Core Modules:
-      - Helloria: modules/helloria.md
-      - AssistantIA: modules/assistantia.md
-      - ReflexIA: modules/reflexia.md
-      - ZeroIA: modules/zeroia.md
-      - Sandozia: modules/sandozia.md
+      - Helloria: modules/core/helloria.md
+      - AssistantIA: modules/core/assistantia.md
+      - ReflexIA: modules/core/reflexia.md
+      - ZeroIA: modules/core/zeroia.md
+      - Sandozia: modules/core/sandozia.md
     - Advanced Modules:
-      - Cognitive Reactor: modules/cognitive_reactor.md
-      - Generative AI: modules/generative_ai.md
-      - Taskia: modules/taskia.md
-      - Nyxalia: modules/nyxalia.md
-      - Global State: modules/global_state.md
+      - Cognitive Reactor: modules/advanced/cognitive_reactor.md
+      - Generative AI: modules/advanced/generative_ai.md
+      - Taskia: modules/advanced/taskia.md
+      - Nyxalia: modules/advanced/nyxalia.md
+      - Global State: modules/advanced/global_state.md
     - Enhanced Features:
-      - Cross Module Enhanced: modules/cross_module_enhanced.md
-      - Sandozia Container: modules/sandozia/container_integration.md
-      - ZeroIA Orchestrator: modules/zeroia/orchestrator_enhanced.md
-  - Intelligence Avancée:
-    - Cognitive Reactor: INTELLIGENCE_AVANCEE_ACTIVEE.md
-    - Generative AI: INTELLIGENCE_GENERATIVE_AVANCEE.md
-    - Final Report: ARKALIA_LUNA_V2.8.0_FINAL_REPORT.md
-  - ZeroIA Deep Dive:
-    - Overview: zeroia/overview.md
-    - Troubleshooting: zeroia/troubleshooting.md
-    - Comprehensive Audit: audit_zeroia_comprehensive.md
-  - API Reference:
-    - API Guide: api.md
-    - API Documentation: api/index.md
+      - Cross Module Enhanced: modules/enhanced/cross_module_enhanced.md
+      - Sandozia Container: modules/enhanced/sandozia/container_integration.md
+      - ZeroIA Orchestrator: modules/enhanced/zeroia/orchestrator_enhanced.md
+  - Reference:
+    - API Documentation: reference/api.md
   - Infrastructure:
     - Installation: infrastructure/installation.md
     - Configuration: infrastructure/configuration.md
@@ -156,36 +153,37 @@ nav:
     - Backup & Recovery: security/backup-recovery.md
     - Compliance: security/compliance.md
     - Log Redaction: security/log_redaction.md
-    - Docker Hardening: docker_hardening.md
     - Phase 4 Roadmap: security/phase4-roadmap.md
   - Operations:
     - DevOps Overview: devops/index.md
-    - Monitoring: logs/zeroia_status.md
-    - Failure Analysis: logs/failure_analysis.md
-    - Reasoning History: logs/reasoning_history.md
     - Linting Resolution: devops/linting-resolution.md
     - DevOps Security: devops/security.md
     - Chaos Testing: chaos/chaos_test_suite.md
+  - Guides:
+    - Docker Hardening: guides/docker_hardening.md
+    - Operations Guide: guides/ops-guide.md
+    - Rebuild Guide: guides/rebuild-guide.md
   - Releases:
-    - Latest Updates: releases/dernieres_updates.md
-    - Changelog: releases/CHANGELOG.md
     - Cross Module v2.7.1: releases/cross_module_enhanced_v2.7.1.md
     - All Releases: releases/index.md
-  - Roadmap:
-    - Overview: roadmap/index.md
-    - v3.0 Phase 2: roadmap/OPTIMISATION_v3.0-phase2.md
-    - Structured Plan: roadmap/v3-structured-plan.md
-    - Enhancements: roadmap/ENHANCEMENTS.md
-    - Progress Log: roadmap/PROGRESS_CHANGELOG.md
-    - Technical Roadmap: roadmap/TECHNICAL_ROADMAP_ADVANCED.md
+  - Planning:
+    - Roadmap Overview: planning/roadmap/index.md
+    - v3.0 Phase 2: planning/roadmap/OPTIMISATION_v3.0-phase2.md
+    - Enhancements: planning/roadmap/ENHANCEMENTS.md
+    - Technical Roadmap: planning/roadmap/TECHNICAL_ROADMAP_ADVANCED.md
+  - Reports:
+    - Technical Reports:
+      - Final Report v2.8.0: reports/technical/ARKALIA_LUNA_V2.8.0_FINAL_REPORT.md
+      - Bilan v3.0: reports/technical/bilan_v3.0-phase1.md
+    - Performance Reports:
+      - Performance Optimization: reports/performance/OPTIMISATION_PERFORMANCE_FINAL.md
+    - Documentation Reports:
+      - Documentation Optimization: reports/documentation/DOCUMENTATION_OPTIMISATION_V2.8.0.md
   - Support:
-    - FAQ: faqs.md
-    - FAQ Index: faqs/index.md
+    - FAQ: support/faqs.md
     - Journal Checklist: journal/CHECKLIST.md
-    - Operations Guide: ops.md
-    - Rebuild Guide: rebuild.md
-    - Cognitive Levels: cognitive-levels.md
+    - Cognitive Levels: getting-started/cognitive-levels.md
   - Legal:
-    - License: license.md
+    - License: legal/license.md
     - Contributing: credits/CONTRIBUTING.md
     - Credits: credits/credits.md

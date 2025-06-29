@@ -7,19 +7,20 @@ Module quick_demo généré automatiquement
 """
 
 import logging
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict
 
 logger = logging.getLogger(__name__)
+
 
 class QuickDemo:
     """
     Classe principale pour quick_demo
     """
-    
+
     def __init__(self):
         self.name = "quick_demo"
-        logger.info(f"🚀 QuickDemo initialisé")
-    
+        logger.info("🚀 QuickDemo initialisé")
+
     def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Traite les données d'entrée

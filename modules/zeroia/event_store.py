@@ -16,15 +16,12 @@ Fonctionnalités :
 import json
 import logging
 import sqlite3
-import time
+import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-import uuid
-
-from diskcache import Cache
 
 logger = logging.getLogger(__name__)
 
@@ -85,24 +82,28 @@ class Event:
 class EventStore:
     """Stockage des événements pour Arkalia-LUNA"""
 
-    def __init__(self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000):
+    def __init__(
+        self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000
+    ):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.parent.mkdir(parents=True, exist_ok=True)
-        
+
         self.events: Dict[str, Dict[str, Any]] = {}
         self.event_counter = 0
         self._load_events()
-        
-        logger.info(f"🗄️ EventStore initialisé: {self.cache_dir}, compteur: {self.event_counter}")
+
+        logger.info(
+            f"🗄️ EventStore initialisé: {self.cache_dir}, compteur: {self.event_counter}"
+        )
 
     def _load_events(self) -> None:
         """Charge les événements depuis le stockage"""
         try:
             if self.cache_dir.exists():
-                with open(self.cache_dir, 'r') as f:
+                with open(self.cache_dir, "r") as f:
                     data = json.load(f)
-                    self.events = data.get('events', {})
-                    self.event_counter = data.get('counter', 0)
+                    self.events = data.get("events", {})
+                    self.event_counter = data.get("counter", 0)
         except Exception as e:
             logger.error(f"❌ Erreur lors du chargement des événements: {e}")
             self.events = {}
@@ -111,11 +112,10 @@ class EventStore:
     def _save_events(self) -> None:
         """Sauvegarde les événements dans le stockage"""
         try:
-            with open(self.cache_dir, 'w') as f:
-                json.dump({
-                    'events': self.events,
-                    'counter': self.event_counter
-                }, f, indent=2)
+            with open(self.cache_dir, "w") as f:
+                json.dump(
+                    {"events": self.events, "counter": self.event_counter}, f, indent=2
+                )
         except Exception as e:
             logger.error(f"❌ Erreur lors de la sauvegarde des événements: {e}")
 
@@ -123,29 +123,33 @@ class EventStore:
         """Stocke un nouvel événement"""
         event_id = str(uuid.uuid4())
         event = {
-            'id': event_id,
-            'type': event_type,
-            'timestamp': datetime.now().isoformat(),
-            'data': event_data
+            "id": event_id,
+            "type": event_type,
+            "timestamp": datetime.now().isoformat(),
+            "data": event_data,
         }
-        
+
         self.events[event_id] = event
         self.event_counter += 1
-        
+
         # Limiter le nombre d'événements stockés
         if len(self.events) > 1000:
             oldest_key = next(iter(self.events))
             del self.events[oldest_key]
-            
+
         self._save_events()
 
-    def get_events(self, event_type: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
+    def get_events(
+        self, event_type: Optional[str] = None, limit: int = 100
+    ) -> List[Dict[str, Any]]:
         """Récupère les événements filtrés par type"""
         if event_type:
-            filtered_events = [e for e in self.events.values() if e['type'] == event_type]
+            filtered_events = [
+                e for e in self.events.values() if e["type"] == event_type
+            ]
         else:
             filtered_events = list(self.events.values())
-            
+
         return filtered_events[-limit:]
 
     def clear_events(self) -> None:

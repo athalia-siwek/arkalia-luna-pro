@@ -11,4 +11,4 @@ __description__ = "Intelligence Avancée - Réactions Cognitives Automatiques"
 
 from .core import CognitiveReactor
 
-__all__ = ["CognitiveReactor"] 
+__all__ = ["CognitiveReactor"]

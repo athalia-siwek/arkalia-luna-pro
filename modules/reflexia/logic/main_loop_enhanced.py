@@ -77,7 +77,7 @@ def analyze_system_health(metrics: Dict[str, Any]) -> Dict[str, str]:
 
     # 🔥 NOUVELLE ANALYSE - Modules Arkalia spécifiques
     analysis["arkalia_modules"] = {}
-    
+
     # Vérifier les modules principaux
     arkalia_modules = {
         "zeroia": "modules/zeroia/state/zeroia_state.toml",
@@ -85,19 +85,21 @@ def analyze_system_health(metrics: Dict[str, Any]) -> Dict[str, str]:
         "assistantia": "modules/assistantia",
         "helloria": "helloria",
         "nyxalia": "modules/nyxalia",
-        "taskia": "modules/taskia"
+        "taskia": "modules/taskia",
     }
-    
+
     for module_name, module_path in arkalia_modules.items():
         try:
             from pathlib import Path
+
             path = Path(module_path)
-            
+
             if path.exists():
                 if module_name == "zeroia":
                     # Vérifier l'état ZeroIA spécifiquement
                     try:
                         import toml
+
                         zeroia_state = toml.load(path)
                         if zeroia_state.get("decision", {}).get("last_decision"):
                             analysis["arkalia_modules"][module_name] = "ok"
@@ -139,23 +141,29 @@ def generate_recommendations(analysis: Dict[str, str], metrics: Dict[str, Any]) 
 
     # 🔥 NOUVELLES RECOMMANDATIONS - Modules Arkalia
     arkalia_modules = analysis.get("arkalia_modules", {})
-    
+
     if isinstance(arkalia_modules, dict):
         for module_name, status in arkalia_modules.items():
             if status == "missing":
-                recommendations.append(f"🔧 Module {module_name}: Fichiers manquants - Vérifier installation")
+                recommendations.append(
+                    f"🔧 Module {module_name}: Fichiers manquants - Vérifier installation"
+                )
             elif status == "error":
-                recommendations.append(f"❌ Module {module_name}: Erreur de chargement - Redémarrer")
+                recommendations.append(
+                    f"❌ Module {module_name}: Erreur de chargement - Redémarrer"
+                )
             elif status == "warning":
-                recommendations.append(f"⚠️ Module {module_name}: État instable - Surveiller")
-        
+                recommendations.append(
+                    f"⚠️ Module {module_name}: État instable - Surveiller"
+                )
+
         # Recommandations spécifiques par module
         if arkalia_modules.get("zeroia") == "warning":
             recommendations.append("🧠 ZeroIA: Vérifier la boucle de raisonnement")
-        
+
         if arkalia_modules.get("sandozia") == "missing":
             recommendations.append("🧠 Sandozia: Initialiser l'intelligence croisée")
-        
+
         if arkalia_modules.get("assistantia") == "error":
             recommendations.append("💬 AssistantIA: Vérifier la connexion Ollama")
 

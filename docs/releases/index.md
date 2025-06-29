@@ -53,9 +53,8 @@ Historique des versions et releases d'Arkalia-LUNA.
 
 ## 🔗 Liens Utiles
 
-- [📝 CHANGELOG Détaillé](CHANGELOG.md)
-- [🆕 Dernières Updates](dernieres_updates.md)
-- [🗺️ Roadmap](../roadmap/index.md)
+- [📝 CHANGELOG Détaillé](../core/changelog-detailed.md)
+- [🗺️ Roadmap](../planning/roadmap/index.md)
 - [🔒 Sécurité](../security/security.md)
 
 ---

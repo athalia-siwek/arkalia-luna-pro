@@ -14,11 +14,11 @@ Fonctionnalités :
 """
 
 import logging
+import time
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 from typing import Any, Callable, Dict, Optional
-import time
 
 from modules.zeroia.event_store import EventStore, EventType
 

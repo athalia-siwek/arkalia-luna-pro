@@ -72,7 +72,7 @@ Arkalia-LUNA est une **IA personnelle, cognitive et 100 % locale**, conçue pour
 ## 📜 Licence
 
 Le projet Arkalia-LUNA est sous licence propriétaire.
-Pour plus de détails, veuillez consulter le fichier [license.md](../license.md).
+Pour plus de détails, veuillez consulter le fichier [/legal//legal/license.md](../legal/license.md).
 
 ---
 

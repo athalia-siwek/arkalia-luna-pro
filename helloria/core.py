@@ -6,9 +6,12 @@ import logging
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
 
+from modules.monitoring.prometheus_metrics import (
+    get_metrics_summary,
+)
+
 # 📦 Import des routes externes (modules IA)
 from modules.reflexia.core_api import router as reflexia_router
-from modules.monitoring.prometheus_metrics import get_metrics_summary, get_prometheus_server
 
 # 🚦 Router principal
 router = APIRouter()
@@ -62,6 +65,7 @@ async def metrics():
         metrics_data = get_metrics_summary()
         try:
             from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+
             # Utilise l'instance globale déjà initialisée
             return PlainTextResponse(
                 generate_latest().decode("utf-8"), media_type=CONTENT_TYPE_LATEST
@@ -90,7 +94,9 @@ def _get_fallback_metrics():
         ).exists(),
         "modules/zeroia/reason_loop.py": Path("modules/zeroia/reason_loop.py").exists(),
         "modules/reflexia/core.py": Path("modules/reflexia/core.py").exists(),
-        "modules/sandozia/core/sandozia_core.py": Path("modules/sandozia/core/sandozia_core.py").exists(),
+        "modules/sandozia/core/sandozia_core.py": Path(
+            "modules/sandozia/core/sandozia_core.py"
+        ).exists(),
         "modules/nyxalia/core.py": Path("modules/nyxalia/core.py").exists(),
         "modules/taskia/core.py": Path("modules/taskia/core.py").exists(),
     }
@@ -198,9 +204,11 @@ app = FastAPI(
 app.include_router(router)
 app.include_router(reflexia_router)  # ✅ Active le endpoint /reflexia/check
 
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
 
 @app.get("/zeroia/status", tags=["ZeroIA"])
 def zeroia_status():

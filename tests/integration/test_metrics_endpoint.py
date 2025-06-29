@@ -4,22 +4,24 @@
 import json
 import time
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
-from unittest.mock import patch
 import requests
 import toml
-
 
 
 @pytest.fixture
 def mock_metrics_server():
     """Mock du serveur de métriques pour les tests"""
-    with patch('requests.get') as mock_get:
+    with patch("requests.get") as mock_get:
         # Réponse mock pour /metrics
-        mock_response = type('MockResponse', (), {
-            'status_code': 200,
-            'text': '''# HELP arkalia_system_health System health status
+        mock_response = type(
+            "MockResponse",
+            (),
+            {
+                "status_code": 200,
+                "text": """# HELP arkalia_system_health System health status
 # TYPE arkalia_system_health gauge
 arkalia_system_health 1
 # HELP arkalia_critical_files_count Number of critical files
@@ -27,11 +29,13 @@ arkalia_system_health 1
 arkalia_critical_files_count 5
 # HELP arkalia_zeroia_confidence ZeroIA confidence level
 # TYPE arkalia_zeroia_confidence gauge
-arkalia_zeroia_confidence 0.85''',
-            'headers': {'content-type': 'text/plain; version=0.0.4; charset=utf-8'}
-        })()
+arkalia_zeroia_confidence 0.85""",
+                "headers": {"content-type": "text/plain; version=0.0.4; charset=utf-8"},
+            },
+        )()
         mock_get.return_value = mock_response
         yield mock_get
+
 
 class TestMetricsEndpoint:
     """Tests pour l'endpoint /metrics et le système de monitoring"""

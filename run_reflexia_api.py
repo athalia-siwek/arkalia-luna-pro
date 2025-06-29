@@ -16,40 +16,53 @@ Endpoints exposés :
 """
 
 import threading
+
 import uvicorn
 from fastapi import FastAPI
-from modules.reflexia.core import launch_reflexia_check, get_metrics, launch_reflexia_loop
+
+from modules.reflexia.core import (
+    get_metrics,
+    launch_reflexia_check,
+    launch_reflexia_loop,
+)
 
 app = FastAPI(
     title="ReflexIA API",
     description="API REST pour le module réflexif d'Arkalia",
-    version="2.6.0"
+    version="2.6.0",
 )
+
 
 @app.get("/health")
 async def health_check():
     """Endpoint de santé pour le healthcheck Docker"""
     return {"status": "healthy"}
 
+
 @app.get("/metrics")
 async def get_system_metrics():
     """Retourne les métriques système actuelles"""
     return get_metrics()
+
 
 @app.get("/status")
 async def get_system_status():
     """Lance une vérification réflexive et retourne le statut"""
     return launch_reflexia_check()
 
+
 def run_reflexia_loop():
     """Lance la boucle réflexive dans un thread séparé"""
     launch_reflexia_loop()
 
+
 if __name__ == "__main__":
     # Démarrer la boucle réflexive dans un thread séparé
     reflexia_thread = threading.Thread(target=run_reflexia_loop)
-    reflexia_thread.daemon = True  # Le thread s'arrêtera quand le programme principal s'arrête
+    reflexia_thread.daemon = (
+        True  # Le thread s'arrêtera quand le programme principal s'arrête
+    )
     reflexia_thread.start()
 
     # Démarrer le serveur FastAPI dans le thread principal
-    uvicorn.run(app, host="0.0.0.0", port=8002) 
+    uvicorn.run(app, host="0.0.0.0", port=8002)

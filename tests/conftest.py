@@ -4,10 +4,10 @@ from pathlib import Path
 import pytest
 
 try:
-    from tests.unit.test_helpers import ensure_test_toml
+    from tests.common.helpers import ensure_test_toml
 except ImportError:
     # fallback pour appel direct
-    from unit.test_helpers import ensure_test_toml
+    from common.helpers import ensure_test_toml
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))

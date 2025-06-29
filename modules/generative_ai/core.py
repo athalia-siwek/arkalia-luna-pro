@@ -21,30 +21,32 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Any, Dict, List
+import subprocess
 
 # === Configuration du logging ===
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler('logs/generative_ai.log'),
-        logging.StreamHandler(sys.stdout)
-    ]
+        logging.FileHandler("logs/generative_ai.log"),
+        logging.StreamHandler(sys.stdout),
+    ],
 )
 logger = logging.getLogger(__name__)
+
 
 class GenerativeAI:
     """
     🚀 Intelligence Générative Avancée pour Arkalia-LUNA
     """
-    
+
     def __init__(self, mode: str = "production"):
         self.mode = mode
         self.enabled = os.getenv("GENERATIVE_AI_ENABLED", "true").lower() == "true"
         self.max_generations = int(os.getenv("GENERATIVE_AI_MAX_GENERATIONS", "50"))
         self.generation_interval = int(os.getenv("GENERATIVE_AI_INTERVAL", "60"))
-        
+
         # === États et métriques ===
         self.generation_count = 0
         self.start_time = time.time()
@@ -55,21 +57,21 @@ class GenerativeAI:
             "tests_generated": 0,
             "models_created": 0,
             "optimizations_applied": 0,
-            "last_update": datetime.now().isoformat()
+            "last_update": datetime.now().isoformat(),
         }
-        
+
         # === Répertoires ===
         self.state_dir = Path("modules/generative_ai/state")
         self.state_dir.mkdir(parents=True, exist_ok=True)
         self.generated_dir = Path("modules/generative_ai/generated")
         self.generated_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # === Templates et patterns ===
         self.code_templates = self._load_code_templates()
         self.test_templates = self._load_test_templates()
-        
+
         logger.info(f"🚀 GenerativeAI initialisé en mode {mode}")
-    
+
     def _load_code_templates(self) -> Dict[str, str]:
         """Charge les templates de code"""
         return {
@@ -144,9 +146,9 @@ class Test{class_name}:
         result = self.{instance_name}.process(test_data)
         assert result["status"] == "processed"
         assert "data" in result
-'''
+''',
         }
-    
+
     def _load_test_templates(self) -> Dict[str, str]:
         """Charge les templates de tests"""
         return {
@@ -169,9 +171,9 @@ def test_{endpoint_name}_endpoint():
     """Test d'intégration pour {endpoint_name}"""
     response = client.{method}("/{endpoint_path}")
     assert response.status_code == 200
-'''
+''',
         }
-    
+
     def analyze_codebase(self) -> Dict[str, Any]:
         """Analyse la base de code existante"""
         analysis = {
@@ -179,9 +181,9 @@ def test_{endpoint_name}_endpoint():
             "patterns": [],
             "optimization_opportunities": [],
             "missing_tests": [],
-            "complexity_score": 0
+            "complexity_score": 0,
         }
-        
+
         # Analyse des modules existants
         modules_dir = Path("modules")
         if modules_dir.exists():
@@ -189,138 +191,178 @@ def test_{endpoint_name}_endpoint():
                 if module_path.name != "__init__.py":
                     module_info = self._analyze_module(module_path)
                     analysis["modules"].append(module_info)
-        
+
         # Détection de patterns
         analysis["patterns"] = self._detect_code_patterns(analysis["modules"])
-        
+
         # Opportunités d'optimisation
-        analysis["optimization_opportunities"] = self._find_optimization_opportunities(analysis["modules"])
-        
+        analysis["optimization_opportunities"] = self._find_optimization_opportunities(
+            analysis["modules"]
+        )
+
         # Tests manquants
         analysis["missing_tests"] = self._find_missing_tests(analysis["modules"])
-        
+
         return analysis
-    
+
     def _analyze_module(self, module_path: Path) -> Dict[str, Any]:
         """Analyse un module Python"""
         try:
-            with open(module_path, 'r', encoding='utf-8') as f:
+            with open(module_path, "r", encoding="utf-8") as f:
                 content = f.read()
-            
+
             return {
                 "path": str(module_path),
                 "name": module_path.stem,
                 "size": len(content),
                 "lines": len(content.splitlines()),
-                "classes": len(re.findall(r'class\s+\w+', content)),
-                "functions": len(re.findall(r'def\s+\w+', content)),
-                "imports": len(re.findall(r'^import\s+|^from\s+', content, re.MULTILINE)),
-                "complexity": self._calculate_complexity(content)
+                "classes": len(re.findall(r"class\s+\w+", content)),
+                "functions": len(re.findall(r"def\s+\w+", content)),
+                "imports": len(
+                    re.findall(r"^import\s+|^from\s+", content, re.MULTILINE)
+                ),
+                "complexity": self._calculate_complexity(content),
             }
         except Exception as e:
             logger.error(f"Erreur analyse module {module_path}: {e}")
             return {"path": str(module_path), "error": str(e)}
-    
+
     def _calculate_complexity(self, content: str) -> int:
         """Calcule la complexité cyclomatique"""
         complexity = 1  # Base complexity
-        
+
         # Ajouter pour chaque structure de contrôle
-        complexity += len(re.findall(r'\bif\b|\bfor\b|\bwhile\b|\band\b|\bor\b', content))
-        
+        complexity += len(
+            re.findall(r"\bif\b|\bfor\b|\bwhile\b|\band\b|\bor\b", content)
+        )
+
         return complexity
-    
-    def _detect_code_patterns(self, modules: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _detect_code_patterns(
+        self, modules: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
         """Détecte les patterns dans le code"""
         patterns = []
-        
+
         # Pattern: Modules sans tests
-        modules_without_tests = [m for m in modules if m.get("name") and not self._has_tests(m["name"])]
+        modules_without_tests = [
+            m for m in modules if m.get("name") and not self._has_tests(m["name"])
+        ]
         if modules_without_tests:
-            patterns.append({
-                "type": "missing_tests",
-                "modules": [m["name"] for m in modules_without_tests],
-                "severity": "medium",
-                "description": "Modules sans tests unitaires"
-            })
-        
+            patterns.append(
+                {
+                    "type": "missing_tests",
+                    "modules": [m["name"] for m in modules_without_tests],
+                    "severity": "medium",
+                    "description": "Modules sans tests unitaires",
+                }
+            )
+
         # Pattern: Modules complexes
         complex_modules = [m for m in modules if m.get("complexity", 0) > 10]
         if complex_modules:
-            patterns.append({
-                "type": "high_complexity",
-                "modules": [m["name"] for m in complex_modules],
-                "severity": "high",
-                "description": "Modules avec complexité élevée"
-            })
-        
+            patterns.append(
+                {
+                    "type": "high_complexity",
+                    "modules": [m["name"] for m in complex_modules],
+                    "severity": "high",
+                    "description": "Modules avec complexité élevée",
+                }
+            )
+
         return patterns
-    
+
     def _has_tests(self, module_name: str) -> bool:
         """Vérifie si un module a des tests"""
         test_paths = [
             Path(f"tests/unit/test_{module_name}.py"),
             Path(f"tests/integration/test_{module_name}.py"),
-            Path(f"tests/test_{module_name}.py")
+            Path(f"tests/test_{module_name}.py"),
         ]
         return any(path.exists() for path in test_paths)
-    
-    def _find_optimization_opportunities(self, modules: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _find_optimization_opportunities(
+        self, modules: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
         """Trouve les opportunités d'optimisation"""
         opportunities = []
-        
+
         for module in modules:
             if module.get("complexity", 0) > 15:
-                opportunities.append({
-                    "module": module["name"],
-                    "type": "complexity_reduction",
-                    "description": f"Réduire la complexité de {module['name']}",
-                    "priority": "high"
-                })
-            
+                opportunities.append(
+                    {
+                        "module": module["name"],
+                        "type": "complexity_reduction",
+                        "description": f"Réduire la complexité de {module['name']}",
+                        "priority": "high",
+                    }
+                )
+
             if module.get("size", 0) > 1000:
-                opportunities.append({
-                    "module": module["name"],
-                    "type": "code_splitting",
-                    "description": f"Diviser le module {module['name']} en sous-modules",
-                    "priority": "medium"
-                })
-        
+                opportunities.append(
+                    {
+                        "module": module["name"],
+                        "type": "code_splitting",
+                        "description": f"Diviser le module {module['name']} en sous-modules",
+                        "priority": "medium",
+                    }
+                )
+
         return opportunities
-    
-    def _find_missing_tests(self, modules: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _find_missing_tests(
+        self, modules: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
         """Trouve les tests manquants"""
         missing_tests = []
-        
+
         for module in modules:
             if module.get("name") and not self._has_tests(module["name"]):
-                missing_tests.append({
-                    "module": module["name"],
-                    "type": "unit_tests",
-                    "description": f"Tests unitaires pour {module['name']}",
-                    "priority": "high"
-                })
-        
+                missing_tests.append(
+                    {
+                        "module": module["name"],
+                        "type": "unit_tests",
+                        "description": f"Tests unitaires pour {module['name']}",
+                        "priority": "high",
+                    }
+                )
+
         return missing_tests
-    
+
+    def _format_generated_files(self):
+        """Formate tous les fichiers générés avec black."""
+        try:
+            subprocess.run([
+                "black",
+                str(self.generated_dir),
+                "--quiet"
+            ], check=True)
+        except Exception as e:
+            print(f"⚠️ Formatage black échoué: {e}")
+
     def generate_code(self, template_type: str, parameters: Dict[str, Any]) -> str:
         """Génère du code basé sur un template"""
         try:
             if template_type not in self.code_templates:
                 raise ValueError(f"Template {template_type} non trouvé")
-            
+
             template = self.code_templates[template_type]
             generated_code = template.format(**parameters)
-            
+
             self.generative_state["code_generated"] += 1
             logger.info(f"🚀 Code généré: {template_type}")
-            
+
+            module_path = self.generated_dir / f"{parameters['module_name']}.py"
+            with open(module_path, "w") as f:
+                f.write(generated_code)
+            self._format_generated_files()
+
             return generated_code
-            
+
         except Exception as e:
             logger.error(f"Erreur génération code: {e}")
             return f"# Erreur de génération: {e}"
-    
+
     def generate_tests(self, module_name: str, class_name: str) -> str:
         """Génère des tests pour un module"""
         try:
@@ -328,157 +370,179 @@ def test_{endpoint_name}_endpoint():
             generated_tests = template.format(
                 module_name=module_name,
                 class_name=class_name,
-                function_name="basic_functionality"
+                function_name="basic_functionality",
             )
-            
+
             self.generative_state["tests_generated"] += 1
             logger.info(f"🧪 Tests générés pour {module_name}")
-            
+
+            test_path = self.generated_dir / f"test_{module_name}.py"
+            with open(test_path, "w") as f:
+                f.write(generated_tests)
+            self._format_generated_files()
+
             return generated_tests
-            
+
         except Exception as e:
             logger.error(f"Erreur génération tests: {e}")
             return f"# Erreur de génération de tests: {e}"
-    
-    def create_optimized_module(self, module_name: str, description: str) -> Dict[str, Any]:
+
+    def create_optimized_module(
+        self, module_name: str, description: str
+    ) -> Dict[str, Any]:
         """Crée un module optimisé"""
         try:
             class_name = "".join(word.capitalize() for word in module_name.split("_"))
-            
+
             # Générer le code du module
-            module_code = self.generate_code("module", {
-                "module_name": module_name,
-                "description": description,
-                "detailed_description": f"Module {module_name} généré automatiquement",
-                "class_name": class_name,
-                "class_description": f"Classe principale pour {module_name}"
-            })
-            
+            module_code = self.generate_code(
+                "module",
+                {
+                    "module_name": module_name,
+                    "description": description,
+                    "detailed_description": f"Module {module_name} généré automatiquement",
+                    "class_name": class_name,
+                    "class_description": f"Classe principale pour {module_name}",
+                },
+            )
+
             # Générer les tests
             test_code = self.generate_tests(module_name, class_name)
-            
+
             # Sauvegarder les fichiers
             module_path = self.generated_dir / f"{module_name}.py"
             test_path = self.generated_dir / f"test_{module_name}.py"
-            
-            with open(module_path, 'w') as f:
+
+            with open(module_path, "w") as f:
                 f.write(module_code)
-            
-            with open(test_path, 'w') as f:
+
+            with open(test_path, "w") as f:
                 f.write(test_code)
-            
+
             self.generative_state["models_created"] += 1
-            
+
             return {
                 "module_path": str(module_path),
                 "test_path": str(test_path),
                 "class_name": class_name,
-                "status": "created"
+                "status": "created",
             }
-            
+
         except Exception as e:
             logger.error(f"Erreur création module: {e}")
             return {"error": str(e)}
-    
+
     def optimize_existing_code(self, module_path: str) -> Dict[str, Any]:
         """Optimise le code existant"""
         try:
             path = Path(module_path)
             if not path.exists():
                 return {"error": "Module non trouvé"}
-            
-            with open(path, 'r') as f:
+
+            with open(path, "r") as f:
                 content = f.read()
-            
+
             # Optimisations basiques
             optimizations = []
-            
+
             # Supprimer les imports inutilisés
             if "import os" in content and "os." not in content:
                 content = content.replace("import os\n", "")
                 optimizations.append("Suppression import os inutilisé")
-            
+
             # Simplifier les conditions
             if "if True:" in content:
                 content = content.replace("if True:", "# Code simplifié")
                 optimizations.append("Simplification condition if True")
-            
+
             # Sauvegarder le code optimisé
-            backup_path = path.with_suffix('.py.backup')
-            with open(backup_path, 'w') as f:
+            backup_path = path.with_suffix(".py.backup")
+            with open(backup_path, "w") as f:
                 f.write(content)
-            
+
             self.generative_state["optimizations_applied"] += 1
-            
+
             return {
                 "original_path": str(path),
                 "backup_path": str(backup_path),
                 "optimizations": optimizations,
-                "status": "optimized"
+                "status": "optimized",
             }
-            
+
         except Exception as e:
             logger.error(f"Erreur optimisation: {e}")
             return {"error": str(e)}
-    
+
     async def generative_loop(self):
         """Boucle principale de génération"""
         logger.info("🚀 Démarrage de la boucle générative")
-        
+
         while self.enabled and self.generation_count < self.max_generations:
             try:
                 # === Analyse de la base de code ===
                 analysis = self.analyze_codebase()
-                
+
                 # === Génération basée sur l'analyse ===
                 if analysis["missing_tests"]:
-                    logger.info(f"🧪 Tests manquants détectés: {len(analysis['missing_tests'])}")
-                    
+                    logger.info(
+                        f"🧪 Tests manquants détectés: {len(analysis['missing_tests'])}"
+                    )
+
                     # Générer des tests pour les modules prioritaires
-                    high_priority = [t for t in analysis["missing_tests"] if t["priority"] == "high"]
+                    high_priority = [
+                        t for t in analysis["missing_tests"] if t["priority"] == "high"
+                    ]
                     if high_priority:
                         module_to_test = high_priority[0]["module"]
-                        test_code = self.generate_tests(module_to_test, f"Test{module_to_test.capitalize()}")
-                        
+                        test_code = self.generate_tests(
+                            module_to_test, f"Test{module_to_test.capitalize()}"
+                        )
+
                         test_path = self.generated_dir / f"test_{module_to_test}.py"
-                        with open(test_path, 'w') as f:
+                        with open(test_path, "w") as f:
                             f.write(test_code)
-                
+
                 if analysis["optimization_opportunities"]:
-                    logger.info(f"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}")
-                    
+                    logger.info(
+                        f"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}"
+                    )
+
                     # Optimiser les modules prioritaires
-                    high_priority = [o for o in analysis["optimization_opportunities"] if o["priority"] == "high"]
+                    high_priority = [
+                        o
+                        for o in analysis["optimization_opportunities"]
+                        if o["priority"] == "high"
+                    ]
                     if high_priority:
                         module_to_optimize = high_priority[0]["module"]
                         module_path = f"modules/{module_to_optimize}/core.py"
                         if Path(module_path).exists():
                             self.optimize_existing_code(module_path)
-                
+
                 # === Mise à jour de l'état ===
                 self.generative_state["last_update"] = datetime.now().isoformat()
                 self.save_generative_state()
-                
+
                 self.generation_count += 1
-                
+
                 # === Attente ===
                 await asyncio.sleep(self.generation_interval)
-                
+
             except Exception as e:
                 logger.error(f"Erreur dans la boucle générative: {e}")
                 await asyncio.sleep(10)
-        
+
         logger.info("🚀 Boucle générative terminée")
-    
+
     def save_generative_state(self):
         """Sauvegarde l'état génératif"""
         state_file = self.state_dir / "generative_state.json"
         try:
-            with open(state_file, 'w') as f:
+            with open(state_file, "w") as f:
                 json.dump(self.generative_state, f, indent=2)
         except Exception as e:
             logger.error(f"Erreur sauvegarde état: {e}")
-    
+
     def get_status(self) -> Dict[str, Any]:
         """Retourne le statut du système génératif"""
         return {
@@ -488,30 +552,40 @@ def test_{endpoint_name}_endpoint():
             "max_generations": self.max_generations,
             "uptime_hours": (time.time() - self.start_time) / 3600,
             "generative_state": self.generative_state,
-            "generated_files": len(list(self.generated_dir.glob("*.py")))
+            "generated_files": len(list(self.generated_dir.glob("*.py"))),
         }
+
 
 async def main():
     """Fonction principale"""
     parser = argparse.ArgumentParser(description="Intelligence Générative Avancée")
-    parser.add_argument("--mode", default="production", choices=["production", "development", "test"])
+    parser.add_argument(
+        "--mode", default="production", choices=["production", "development", "test"]
+    )
     parser.add_argument("--daemon", action="store_true", help="Mode daemon")
-    parser.add_argument("--max-generations", type=int, default=50, help="Nombre max de générations")
-    parser.add_argument("--interval", type=int, default=60, help="Intervalle entre générations (secondes)")
-    
+    parser.add_argument(
+        "--max-generations", type=int, default=50, help="Nombre max de générations"
+    )
+    parser.add_argument(
+        "--interval",
+        type=int,
+        default=60,
+        help="Intervalle entre générations (secondes)",
+    )
+
     args = parser.parse_args()
-    
+
     # === Configuration ===
     os.environ["GENERATIVE_AI_MAX_GENERATIONS"] = str(args.max_generations)
     os.environ["GENERATIVE_AI_INTERVAL"] = str(args.interval)
-    
+
     # === Initialisation ===
     generative_ai = GenerativeAI(mode=args.mode)
-    
+
     if not generative_ai.enabled:
         logger.warning("🚀 Intelligence Générative désactivée")
         return
-    
+
     # === Démarrage ===
     try:
         await generative_ai.generative_loop()
@@ -523,5 +597,6 @@ async def main():
     finally:
         logger.info("🚀 Intelligence Générative arrêtée")
 
+
 if __name__ == "__main__":
-    asyncio.run(main()) 
+    asyncio.run(main())

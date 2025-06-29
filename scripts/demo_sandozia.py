@@ -22,6 +22,7 @@ import random
 import sys
 import time
 from pathlib import Path
+import subprocess
 
 # Ajouter le path des modules
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -540,6 +541,11 @@ async def run_daemon_mode(demo: SandoziaDemo):
         await run_daemon_mode(demo)  # Relance recursive
 
 
+def format_generated():
+    for d in Path(".").rglob("generated"):
+        subprocess.run(["black", str(d), "--quiet"], check=False)
+
+
 async def main():
     """Point d'entrée principal"""
     import argparse
@@ -604,6 +610,10 @@ async def main():
             demo.demo_metrics()
         elif args.core_only:
             await demo.demo_sandozia_core()
+
+        format_generated()
+
+        return result
 
     finally:
         if not args.cleanup:
