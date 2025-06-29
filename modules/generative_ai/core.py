@@ -332,11 +332,7 @@ def test_{endpoint_name}_endpoint():
     def _format_generated_files(self):
         """Formate tous les fichiers générés avec black."""
         try:
-            subprocess.run([
-                "black",
-                str(self.generated_dir),
-                "--quiet"
-            ], check=True)
+            subprocess.run(["black", str(self.generated_dir), "--quiet"], check=True)
         except Exception as e:
             print(f"⚠️ Formatage black échoué: {e}")
 
