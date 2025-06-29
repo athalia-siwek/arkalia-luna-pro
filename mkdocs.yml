@@ -11,32 +11,41 @@ theme:
   language: fr
   palette:
     - scheme: default
-      primary: blue
-      accent: light blue
+      primary: indigo
+      accent: deep purple
       toggle:
         icon: material/brightness-7
         name: Passer au mode sombre
     - scheme: slate
-      primary: blue
-      accent: light blue
+      primary: indigo
+      accent: deep purple
       toggle:
         icon: material/brightness-4
         name: Passer au mode clair
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.expand
-    - navigation.top
-    - search.highlight
-    - content.code.copy
   logo: assets/logo.png
   favicon: assets/favicon.ico
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - navigation.path
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
 
 plugins:
   - search
 
 extra_css:
   - assets/extra.css
+  - assets/arkalia-luna-theme.css
 
 extra_javascript:
   - assets/js/arkalia-assistant.js
@@ -63,6 +72,7 @@ markdown_extensions:
 nav:
   - Accueil: index.md
   - 🚀 Quick Start: quick-start.md
+  - 🎨 Style Demo: style-demo.md
   - 🚀 Releases:
     - Dernières Updates: releases/dernieres_updates.md
     - Changelog Complet: releases/CHANGELOG.md
