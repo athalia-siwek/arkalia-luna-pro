@@ -95,3 +95,12 @@ security/*
 .dev/
 gh-pages/
 logs/failure_analysis.md
+
+# Sandozia temporary snapshots
+state/sandozia/intelligence_snapshot_*.json
+state/sandozia/heatmap_data_*.json
+state/sandozia/detected_patterns.jsonl
+
+# Keep only the latest valid files
+!state/sandozia/last_snapshot.json
+!state/sandozia/latest_metrics.json
