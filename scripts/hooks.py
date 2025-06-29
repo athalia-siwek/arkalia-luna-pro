@@ -3,7 +3,7 @@
 import subprocess  # nosec
 
 
-def run_sitemap_generator(config=None):
+def run_sitemap_generator(config=None) -> None:
     import os
     import sys
 

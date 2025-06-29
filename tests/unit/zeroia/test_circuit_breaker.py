@@ -53,7 +53,7 @@ def test_circuit_breaker_initialization(circuit_breaker, mock_event_store):
 def test_successful_call(circuit_breaker, mock_event_store):
     """🧪 Test appel réussi"""
 
-    def dummy_function(x, y):
+    def dummy_function(x, y) -> None:
         return x + y
 
     result = circuit_breaker.call(dummy_function, 2, 3)
@@ -74,7 +74,7 @@ def test_successful_call(circuit_breaker, mock_event_store):
 def test_failure_handling(circuit_breaker, mock_event_store):
     """🧪 Test gestion d'échec"""
 
-    def failing_function():
+    def failing_function() -> None:
         raise CognitiveOverloadError("Test overload")
 
     with pytest.raises(CognitiveOverloadError):
@@ -99,7 +99,7 @@ def test_failure_handling(circuit_breaker, mock_event_store):
 def test_circuit_opens_after_threshold(circuit_breaker, mock_event_store):
     """🧪 Test ouverture circuit après seuil d'échecs"""
 
-    def failing_function():
+    def failing_function() -> None:
         raise CognitiveOverloadError("Test failure")
 
     # Atteindre le seuil d'échecs (3)
@@ -119,7 +119,7 @@ def test_circuit_opens_after_threshold(circuit_breaker, mock_event_store):
 def test_circuit_blocks_calls_when_open(circuit_breaker, mock_event_store):
     """🧪 Test blocage appels quand circuit ouvert"""
 
-    def failing_function():
+    def failing_function() -> None:
         raise CognitiveOverloadError("Test failure")
 
     # Ouvrir le circuit
@@ -142,7 +142,7 @@ def test_circuit_blocks_calls_when_open(circuit_breaker, mock_event_store):
 def test_circuit_transitions_to_half_open(circuit_breaker, mock_event_store):
     """🧪 Test transition vers HALF_OPEN après timeout"""
 
-    def failing_function():
+    def failing_function() -> None:
         raise CognitiveOverloadError("Test failure")
 
     # Ouvrir le circuit
@@ -155,7 +155,7 @@ def test_circuit_transitions_to_half_open(circuit_breaker, mock_event_store):
     # Simuler expiration du timeout
     circuit_breaker.last_failure_time = datetime.now() - timedelta(seconds=31)
 
-    def successful_function():
+    def successful_function() -> None:
         return "success"
 
     result = circuit_breaker.call(successful_function)
@@ -170,7 +170,7 @@ def test_half_open_to_closed_on_success(circuit_breaker, mock_event_store):
     circuit_breaker.state = CircuitState.HALF_OPEN
     circuit_breaker.metrics.consecutive_failures = 2
 
-    def successful_function():
+    def successful_function() -> None:
         return "recovery success"
 
     result = circuit_breaker.call(successful_function)
@@ -186,7 +186,7 @@ def test_half_open_to_open_on_failure(circuit_breaker, mock_event_store):
     circuit_breaker.state = CircuitState.HALF_OPEN
     circuit_breaker.metrics.consecutive_failures = 2
 
-    def failing_function():
+    def failing_function() -> None:
         raise CognitiveOverloadError("Still failing")
 
     with pytest.raises(CognitiveOverloadError):
@@ -199,7 +199,7 @@ def test_half_open_to_open_on_failure(circuit_breaker, mock_event_store):
 def test_unexpected_error_handling(circuit_breaker, mock_event_store):
     """🧪 Test gestion erreurs inattendues"""
 
-    def unexpected_error_function():
+    def unexpected_error_function() -> None:
         raise ValueError("Unexpected error")
 
     # Le circuit breaker ne transforme pas les erreurs inattendues
@@ -214,7 +214,7 @@ def test_unexpected_error_handling(circuit_breaker, mock_event_store):
 def test_manual_reset(circuit_breaker, mock_event_store):
     """🧪 Test réinitialisation manuelle"""
 
-    def failing_function():
+    def failing_function() -> None:
         raise CognitiveOverloadError("Test failure")
 
     # Ouvrir le circuit
@@ -241,7 +241,7 @@ def test_retry_mechanism_with_tenacity(circuit_breaker, mock_event_store):
     """🧪 Test mécanisme de retry avec tenacity"""
     call_count = 0
 
-    def flaky_function():
+    def flaky_function() -> None:
         nonlocal call_count
         call_count += 1
         if call_count <= 2:
@@ -260,10 +260,10 @@ def test_retry_mechanism_with_tenacity(circuit_breaker, mock_event_store):
 def test_metrics_calculation(circuit_breaker, mock_event_store):
     """🧪 Test calcul des métriques"""
 
-    def successful_function():
+    def successful_function() -> None:
         return "success"
 
-    def failing_function():
+    def failing_function() -> None:
         raise CognitiveOverloadError("failure")
 
     # 3 succès, 2 échecs
@@ -300,10 +300,10 @@ def test_get_status(circuit_breaker, mock_event_store):
 def test_different_exception_types(circuit_breaker, mock_event_store):
     """🧪 Test gestion différents types d'exceptions"""
 
-    def integrity_error_function():
+    def integrity_error_function() -> None:
         raise DecisionIntegrityError("Integrity compromised")
 
-    def cognitive_overload_function():
+    def cognitive_overload_function() -> None:
         raise CognitiveOverloadError("Too much load")
 
     # Test DecisionIntegrityError
@@ -322,7 +322,7 @@ def test_different_exception_types(circuit_breaker, mock_event_store):
 async def test_concurrent_calls(circuit_breaker, mock_event_store):
     """🧪 Test appels concurrents (simulation)"""
 
-    def test_function(value):
+    def test_function(value) -> None:
         if value % 2 == 0:
             raise CognitiveOverloadError(f"Even number {value}")
         return f"Odd number {value}"

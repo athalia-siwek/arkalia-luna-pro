@@ -74,7 +74,7 @@ class CrossModuleValidator:
     - Validation comportementale (patterns)
     """
 
-    def __init__(self, config: dict | None = None):
+    def __init__(self, config: dict | None = None) -> None:
         self.config = config or {
             "temporal_tolerance_minutes": 5,
             "confidence_variance_threshold": 0.2,
@@ -262,7 +262,10 @@ class CrossModuleValidator:
                 level=ValidationLevel.WARNING,
                 module_source="zeroia",
                 module_target="reflexia",
-                message="Contradiction: ZeroIA détecte des incohérences mais Reflexia a une confiance élevée",
+                message=(
+                    "Contradiction: ZeroIA détecte des incohérences mais "
+                    "Reflexia a une confiance élevée"
+                ),
                 details={
                     "zeroia_contradictions": zeroia_state.get("contradictions_detected", 0),
                     "reflexia_confidence": reflexia_state.get("decision_metrics", {}).get(
@@ -315,7 +318,10 @@ class CrossModuleValidator:
                     level=ValidationLevel.CRITICAL,
                     module_source="pattern_analyzer",
                     module_target="system",
-                    message=f"Pattern comportemental suspect: {critical_count} erreurs critiques récentes",
+                    message=(
+                        f"Pattern comportemental suspect: {critical_count} "
+                        f"erreurs critiques récentes"
+                    ),
                     details={
                         "critical_errors_count": critical_count,
                         "validation_window": 10,

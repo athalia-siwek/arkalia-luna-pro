@@ -161,7 +161,7 @@ def demo_daemon() -> None:
     except KeyboardInterrupt:
         print("\n⏹️ Daemon arrêté proprement")
     except Exception as e:
-        print(f"\n💥 Erreur daemon: {e}")
+        raise RuntimeError(f"Erreur daemon: {e}") from e
         # En mode daemon, on redémarre automatiquement
         print("🔄 Redémarrage automatique dans 5s...")
         time.sleep(5)
@@ -220,10 +220,7 @@ def main():
     except KeyboardInterrupt:
         print("\n⏹️ Demo interrompue par l'utilisateur")
     except Exception as e:
-        print(f"\n💥 Erreur demo: {e}")
-        import traceback
-
-        traceback.print_exc()
+        raise RuntimeError(f"Erreur demo orchestrator enhanced: {e}") from e
 
     format_generated()
 

@@ -32,7 +32,7 @@ class ValidationResult:
 class PromptValidator:
     """Validateur principal pour les prompts LLM"""
 
-    def __init__(self, security_level: SecurityLevel = SecurityLevel.MEDIUM):
+    def __init__(self, security_level: SecurityLevel = SecurityLevel.MEDIUM) -> None:
         self.security_level = security_level
         self._load_patterns()
         self._rate_limit_cache: dict[str, list[float]] = {}

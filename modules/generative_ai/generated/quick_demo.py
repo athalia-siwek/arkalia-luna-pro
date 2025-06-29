@@ -17,7 +17,7 @@ class QuickDemo:
     Classe principale pour quick_demo
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.name = "quick_demo"
         logger.info("🚀 QuickDemo initialisé")
 

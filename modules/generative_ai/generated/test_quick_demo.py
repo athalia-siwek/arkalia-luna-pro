@@ -1,4 +1,4 @@
-from modules.quick_demo import QuickDemo
+from modules.quick_demo import QuickDemo  # type: ignore
 
 
 def test_basic_functionality():

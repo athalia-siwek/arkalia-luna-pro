@@ -2,7 +2,7 @@
 from modules.reflexia.core import launch_reflexia_check
 
 
-def test_launch_reflexia_check_runs():
+def test_launch_reflexia_check_runs() -> None:
     result = launch_reflexia_check()
     assert isinstance(result, dict)
     assert "status" in result

@@ -6,7 +6,7 @@ from pathlib import Path
 STATE_FILE = Path("modules/reflexia/state/reflexia_state.json")
 
 
-def setup_module(module):
+def setup_module(module) -> None:
     # Crée un état mock de ReflexIA
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     state = {
@@ -18,13 +18,13 @@ def setup_module(module):
         json.dump(state, f)
 
 
-def teardown_module(module):
+def teardown_module(module) -> None:
     # Nettoie le fichier mock après test
     if STATE_FILE.exists():
         STATE_FILE.unlink()
 
 
-def test_reflexia_monitor_runs():
+def test_reflexia_monitor_runs() -> None:
     result = subprocess.run(
         [sys.executable, "scripts/reflexia_monitor.py"],
         capture_output=True,

@@ -54,7 +54,7 @@ class CollaborativeReasoning:
     - Résolution de conflits
     """
 
-    def __init__(self, config: dict | None = None):
+    def __init__(self, config: dict | None = None) -> None:
         self.config = config or {
             "consensus_threshold": 0.8,
             "max_reasoning_rounds": 3,

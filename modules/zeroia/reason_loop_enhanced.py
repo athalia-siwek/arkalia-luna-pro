@@ -248,9 +248,11 @@ def load_toml_enhanced_cache(path: Path, max_age: int | None = None) -> dict:
         return data
 
     except toml.TomlDecodeError as e:
-        raise DecisionIntegrityError(f"[TOML Enhanced] Format invalide dans {path}: {e}")
+        raise DecisionIntegrityError(f"[TOML Enhanced] Format invalide dans {path}: {e}") from e
     except Exception as e:
-        raise CognitiveOverloadError(f"[TOML Enhanced] Erreur lors du chargement de {path}: {e}")
+        raise CognitiveOverloadError(
+            f"[TOML Enhanced] Erreur lors du chargement de {path}: {e}"
+        ) from e
 
 
 def load_toml(path: Path) -> dict:
@@ -831,7 +833,7 @@ reason_loop_enhanced = reason_loop_enhanced_with_recovery
 class ReasonLoopEnhanced:
     """Boucle de raisonnement améliorée pour ZeroIA"""
 
-    def __init__(self, config_path: str | None = None):
+    def __init__(self, config_path: str | None = None) -> None:
         self.event_store = EventStore()
         self.circuit_breaker = CircuitBreaker()
         self.error_recovery = ErrorRecoverySystem()

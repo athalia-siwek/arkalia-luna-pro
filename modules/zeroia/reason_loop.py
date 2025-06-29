@@ -84,9 +84,9 @@ def load_toml_with_cache(path: Path, max_age: int = 30) -> dict:
         return data
 
     except toml.TomlDecodeError as e:
-        raise ValueError(f"[TOML] Format invalide dans {path}: {e}")
+        raise ValueError(f"[TOML] Format invalide dans {path}: {e}") from e
     except Exception as e:
-        raise ValueError(f"[TOML] Erreur lors du chargement de {path}: {e}")
+        raise ValueError(f"[TOML] Erreur lors du chargement de {path}: {e}") from e
 
 
 def create_default_context() -> dict:

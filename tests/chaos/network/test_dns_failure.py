@@ -1,13 +1,13 @@
 # 🔥 Test de résilience DNS
-from tests.chaos.common import ChaosTestConfig, ChaosTester
+from tests.chaos.chaos_common import ChaosTestConfig, ChaosTester
 
 
 class TestNetworkChaos:
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
     def test_dns_failure_resilience(self):

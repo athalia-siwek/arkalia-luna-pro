@@ -31,7 +31,7 @@ class Uutils_enhancedConfig:
 class Uutils_enhancedCore:
     """Core logic pour utils_enhanced"""
 
-    def __init__(self, config: Uutils_enhancedConfig):
+    def __init__(self, config: Uutils_enhancedConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("arkalia.utils_enhanced.core")
         self._initialize()

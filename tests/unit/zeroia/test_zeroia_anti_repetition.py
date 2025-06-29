@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import pytest
 
 from modules.zeroia.reason_loop import should_process_decision
-from tests.common.helpers import ensure_test_toml
+from tests.common.test_helpers import ensure_test_toml
 
 ensure_test_toml()
 

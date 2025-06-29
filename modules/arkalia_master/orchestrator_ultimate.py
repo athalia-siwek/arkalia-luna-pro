@@ -149,7 +149,7 @@ class ArkaliaOrchestrator:
     - Auto-healing & resilience patterns
     """
 
-    def __init__(self, config: OrchestratorConfig | None = None):
+    def __init__(self, config: OrchestratorConfig | None = None) -> None:
         self.config = config or OrchestratorConfig()
         self.current_cycle_mode = CycleMode.NORMAL
         self.is_running = False

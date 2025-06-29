@@ -11,7 +11,7 @@ from typing import Any, Optional
 class ArkaliaModulesAnalyzer:
     """Analyse complète des modules Arkalia disponibles vs intégrés"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.project_root = Path(".")
         self.modules_dir = self.project_root / "modules"
 
@@ -227,14 +227,21 @@ class ArkaliaModulesAnalyzer:
                 print("    try:")
                 print(f'        {item["module"]}_component = {component_name}()')
                 print(
-                    f'        self.modules["{item["module"]}_{component_name.lower()}"] = ModuleWrapper("{item["module"]}_{component_name.lower()}", {item["module"]}_component)'
+                    f'        initialization_results["{item["module"]}_'
+                    f'{component_name.lower()}"] = '
+                    f'ModuleWrapper("{item["module"]}_{component_name.lower()}", '
+                    f'{item["module"]}_component)'
                 )
                 print(
-                    f'        initialization_results["{item["module"]}_{component_name.lower()}"] = "✅ SUCCESS"'
+                    f'        initialization_results["{item["module"]}_'
+                    f'{component_name.lower()}"] = '
+                    f'"✅ SUCCESS"'
                 )
                 print("    except Exception as e:")
                 print(
-                    f'        initialization_results["{item["module"]}_{component_name.lower()}"] = f"❌ ERROR: {{e}}"'
+                    f'        initialization_results["{item["module"]}_'
+                    f'{component_name.lower()}"] = '
+                    f'f"❌ ERROR: {{e}}"'
                 )
                 print()
 

@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 try:
-    from tests.common.helpers import ensure_test_toml
+    from tests.common.test_helpers import ensure_test_toml
 except ImportError:
     # fallback pour appel direct
     from common.helpers import ensure_test_toml
@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 
 @pytest.fixture(autouse=True, scope="session")
-def ensure_state_file():
+def ensure_state_file() -> None:
     """
     Fixture auto-injectée : crée le fichier TOML global pour tous les tests.
     """

@@ -7,11 +7,11 @@ from helloria.core import app  # ou là où tu exposes FastAPI
 
 
 @pytest.fixture
-def client():
+def client() -> None:
     return TestClient(app)
 
 
-def test_reflexia_check(client):
+def test_reflexia_check(client) -> None:
     # 🔎 Appel du endpoint Reflexia
     response = client.get("/reflexia/check")
 

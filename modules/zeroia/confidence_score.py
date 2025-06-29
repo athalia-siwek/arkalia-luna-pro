@@ -20,7 +20,7 @@ from typing import Any, Optional
 class ConfidenceScorer:
     """Système de scoring de confiance avec mémoire explicable pour ZeroIA"""
 
-    def __init__(self, state_file: str = "modules/zeroia/state/confidence_memory.toml"):
+    def __init__(self, state_file: str = "modules/zeroia/state/confidence_memory.toml") -> None:
         self.state_file = Path(state_file)
         self.decision_history = []
         self.pattern_weights = {

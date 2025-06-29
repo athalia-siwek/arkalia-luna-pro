@@ -213,8 +213,7 @@ async def main():
     except KeyboardInterrupt:
         print("\n⚠️  Démonstration interrompue par l'utilisateur")
     except Exception as e:
-        print(f"\n❌ Erreur lors de la démonstration: {e}")
-        sys.exit(1)
+        raise RuntimeError(f"Erreur demo generative AI: {e}") from e
 
 
 if __name__ == "__main__":

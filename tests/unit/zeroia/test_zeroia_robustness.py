@@ -6,7 +6,7 @@ from modules.zeroia.reason_loop import (
     persist_state,
     update_dashboard,
 )
-from tests.common.helpers import ensure_test_toml, ensure_zeroia_state_file
+from tests.common.test_helpers import ensure_test_toml, ensure_zeroia_state_file
 
 ensure_test_toml()
 

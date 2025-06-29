@@ -49,8 +49,7 @@ def fix_typing_errors(file_path: Path) -> bool:
 
         return False
     except Exception as e:
-        print(f"❌ Erreur lors du traitement de {file_path}: {e}")
-        return False
+        raise RuntimeError(f"Erreur lors de la correction typing: {e}") from e
 
 
 def main():

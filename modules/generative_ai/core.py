@@ -41,7 +41,7 @@ class GenerativeAI:
     🚀 Intelligence Générative Avancée pour Arkalia-LUNA
     """
 
-    def __init__(self, mode: str = "production"):
+    def __init__(self, mode: str = "production") -> None:
         self.mode = mode
         self.enabled = os.getenv("GENERATIVE_AI_ENABLED", "true").lower() == "true"
         self.max_generations = int(os.getenv("GENERATIVE_AI_MAX_GENERATIONS", "50"))
@@ -93,7 +93,7 @@ class {class_name}:
     {class_description}
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.name = "{module_name}"
         logger.info(f"🚀 {class_name} initialisé")
     
@@ -497,7 +497,8 @@ def test_{endpoint_name}_endpoint():
 
                 if analysis["optimization_opportunities"]:
                     logger.info(
-                        f"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}"
+                        f"🔧 Opportunités d'optimisation: "
+                        f"{len(analysis['optimization_opportunities'])}"
                     )
 
                     # Optimiser les modules prioritaires

@@ -49,7 +49,7 @@ class SandoziaMetrics:
     - Export formats Grafana/Prometheus
     """
 
-    def __init__(self, retention_hours: int = 24):
+    def __init__(self, retention_hours: int = 24) -> None:
         self.retention_hours = retention_hours
         self.metrics_store: dict[str, list[MetricPoint]] = defaultdict(list)
         self.correlations_cache: dict[str, float] = {}

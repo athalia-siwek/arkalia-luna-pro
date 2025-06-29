@@ -3,7 +3,7 @@ import json
 from modules.reflexia.logic.snapshot import save_snapshot
 
 
-def test_snapshot_file_creation(tmp_path):
+def test_snapshot_file_creation(tmp_path) -> None:
     # Remplace le chemin du fichier temporairement
     test_file = tmp_path / "reflexia_state.toml"
 

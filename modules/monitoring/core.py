@@ -31,7 +31,7 @@ class UmonitoringConfig:
 class UmonitoringCore:
     """Core logic pour monitoring"""
 
-    def __init__(self, config: UmonitoringConfig):
+    def __init__(self, config: UmonitoringConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("arkalia.monitoring.core")
         self._initialize()

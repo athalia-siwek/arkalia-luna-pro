@@ -7,25 +7,25 @@ from modules.helloria.core import app
 client = TestClient(app)
 
 
-def test_root():
+def test_root() -> None:
     response = client.get("/")
     assert response.status_code == 200
     assert "message" in response.json()
 
 
-def test_echo():
+def test_echo() -> None:
     response = client.post("/echo", json={"message": "Salut"})
     assert response.status_code == 200
     assert response.json()["echo"] == "Salut"
 
 
-def test_ping():
+def test_ping() -> None:
     response = client.get("/")
     assert response.status_code == 200
     assert "message" in response.json()
 
 
-def test_status():
+def test_status() -> None:
     response = client.get("/status")
     assert response.status_code == 200
     assert response.json()["status"] == "Helloria est opérationnel"

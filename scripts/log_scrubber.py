@@ -23,7 +23,7 @@ from typing import Any, Optional
 class LogScrubber:
     """Nettoyeur intelligent de logs Arkalia-LUNA"""
 
-    def __init__(self, config_path: Path | None = None):
+    def __init__(self, config_path: Path | None = None) -> None:
         self.config = self._load_config(config_path)
         self.stats = {
             "files_processed": 0,
@@ -313,8 +313,7 @@ def main():
         print("\n🛑 [SCRUBBER] Interruption utilisateur")
         exit(130)
     except Exception as e:
-        print(f"💥 [SCRUBBER] Erreur fatale: {e}")
-        exit(1)
+        raise RuntimeError(f"Erreur log scrubber: {e}") from e
 
 
 if __name__ == "__main__":

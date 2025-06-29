@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 class MasterOrchestratorDiagnostic:
     """Diagnostic complet du Master Orchestrator"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.results: dict[str, dict] = {}
 
     def print_header(self):

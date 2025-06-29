@@ -74,7 +74,7 @@ class ArkaliaVault(BuildIntegrityValidator):
     - Intégration avec l'intégrité existante
     """
 
-    def __init__(self, base_dir: Path | None = None, master_key: bytes | None = None):
+    def __init__(self, base_dir: Path | None = None, master_key: bytes | None = None) -> None:
         # Initialiser la classe parente
         super().__init__(base_dir)
 
@@ -150,7 +150,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             return json.loads(decrypted_data.decode())
         except Exception as e:
             logger.error(f"❌ Error loading secrets: {e}")
-            raise VaultError(f"Failed to decrypt vault: {e}")
+            raise VaultError(f"Failed to decrypt vault: {e}") from e
 
     def _save_secrets(self, secrets: dict[str, str]):
         """Chiffre et sauvegarde tous les secrets"""
@@ -161,7 +161,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             os.chmod(self.secrets_file, 0o600)
         except Exception as e:
             logger.error(f"❌ Error saving secrets: {e}")
-            raise VaultError(f"Failed to encrypt vault: {e}")
+            raise VaultError(f"Failed to encrypt vault: {e}") from e
 
     def _audit_log_entry(self, action: str, secret_name: str, details: str = ""):
         """Enregistre une entrée dans l'audit log"""
@@ -389,7 +389,7 @@ class ArkaliaVault(BuildIntegrityValidator):
                 self.cipher_suite = self._initialize_encryption()
 
             logger.error(f"❌ Key rotation failed: {e}")
-            raise VaultError(f"Key rotation failed: {e}")
+            raise VaultError(f"Key rotation failed: {e}") from e
 
     def validate_vault_integrity(self) -> bool:
         """
@@ -410,7 +410,7 @@ class ArkaliaVault(BuildIntegrityValidator):
         try:
             super().validate_integrity()
         except SecurityError as e:
-            raise VaultError(f"Base integrity validation failed: {e}")
+            raise VaultError(f"Base integrity validation failed: {e}") from e
 
         # 2. Validation spécifique du vault
         violations = []

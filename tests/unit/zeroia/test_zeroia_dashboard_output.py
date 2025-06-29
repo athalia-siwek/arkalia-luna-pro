@@ -4,7 +4,7 @@ import json
 from modules.zeroia.reason_loop import update_dashboard
 
 
-def test_update_dashboard_creates_json(tmp_path):
+def test_update_dashboard_creates_json(tmp_path) -> None:
     path = tmp_path / "dashboard.json"
     context = {"reflexia": {}, "status": {"cpu": 72, "severity": "medium"}}
 

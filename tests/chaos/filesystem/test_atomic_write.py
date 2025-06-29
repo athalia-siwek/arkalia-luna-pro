@@ -4,16 +4,16 @@ from pathlib import Path
 
 import toml
 
-from tests.chaos.common import ChaosTestConfig, ChaosTester
+from tests.chaos.chaos_common import ChaosTestConfig, ChaosTester
 from utils.io_safe import atomic_write
 
 
 class TestFileSystemChaos:
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
     def test_atomic_write_resilience(self):

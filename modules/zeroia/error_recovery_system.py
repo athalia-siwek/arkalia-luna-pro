@@ -104,7 +104,7 @@ class RecoveryAttempt(TypedDict):
 class ErrorContext:
     """Contexte d'erreur pour la récupération"""
 
-    def __init__(self, error_type: ErrorType, error_message: str, max_retries: int = 3):
+    def __init__(self, error_type: ErrorType, error_message: str, max_retries: int = 3) -> None:
         self.error_type = error_type
         self.error_message = error_message
         self.timestamp = datetime.utcnow().isoformat()
@@ -123,7 +123,7 @@ class ErrorRecoverySystem:
     - Intégration complète avec Event Sourcing
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.error_count = 0
         self.recovery_attempts: dict[str, RecoveryAttempt] = {}
         self.metrics: RecoveryMetrics = {

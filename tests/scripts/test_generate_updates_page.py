@@ -8,7 +8,7 @@ from scripts.generate_updates_page import main as run
 
 class TestGenerateUpdatesPage(unittest.TestCase):
     @patch("subprocess.run")
-    def test_run_success(self, mock_subprocess_run):
+    def test_run_success(self, mock_subprocess_run) -> None:
         # Mock the subprocess.run to simulate git log output
         mock_result = MagicMock()
         mock_result.stdout = "abc123 - Fix bug (2023-10-01)\n"
@@ -29,7 +29,7 @@ class TestGenerateUpdatesPage(unittest.TestCase):
         "subprocess.run",
         side_effect=subprocess.CalledProcessError(1, "git log", "Error"),
     )
-    def test_run_failure(self, mock_subprocess_run):
+    def test_run_failure(self, mock_subprocess_run) -> None:
         # Run the function and capture the output
         with self.assertLogs(level="INFO") as log:
             run()

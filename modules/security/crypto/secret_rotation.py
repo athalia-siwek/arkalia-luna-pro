@@ -78,7 +78,7 @@ class RotationManager:
     - Audit trail complet
     """
 
-    def __init__(self, vault: ArkaliaVault):
+    def __init__(self, vault: ArkaliaVault) -> None:
         self.vault = vault
         self.policies: dict[str, RotationPolicy] = {}
         self.rotation_history: list[dict] = []

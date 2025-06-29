@@ -66,10 +66,10 @@ class TestTaskiaCore:
     def test_taskia_main_error_handling(self):
         """Test de gestion d'erreurs"""
         with patch("modules.taskia.core.format_summary") as mock_format:
-            mock_format.side_effect = Exception("Format error")
+            mock_format.side_effect = ValueError("Format error")
 
             context = {"test": "data"}
-            with pytest.raises(Exception):
+            with pytest.raises(ValueError):
                 taskia_main(context)
 
 

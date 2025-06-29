@@ -66,7 +66,7 @@ class Chronalia:
     - Patterns temporels automatiques
     """
 
-    def __init__(self, timeline_dir: str = "state/chronalia"):
+    def __init__(self, timeline_dir: str = "state/chronalia") -> None:
         self.timeline_dir = Path(timeline_dir)
         self.timeline_dir.mkdir(parents=True, exist_ok=True)
 
@@ -229,7 +229,9 @@ class Chronalia:
             pattern = {
                 "pattern_type": "repetitive_decisions",
                 "severity": "high",
-                "description": f"{len(recent_decisions)} décisions identiques: {list(unique_decisions)[0]}",
+                "description": (
+                    f"{len(recent_decisions)} décisions identiques: " f"{list(unique_decisions)[0]}"
+                ),
                 "detected_at": datetime.now().isoformat(),
                 "repetition_count": len(recent_decisions),
                 "trigger_cognitive_pause": True,
@@ -247,7 +249,9 @@ class Chronalia:
                 pattern = {
                     "pattern_type": "confidence_collapse",
                     "severity": "critical",
-                    "description": f"Confiance effondrée: {confidences[0]:.2f} → {confidences[-1]:.2f}",
+                    "description": (
+                        f"Confiance effondrée: {confidences[0]:.2f} → " f"{confidences[-1]:.2f}"
+                    ),
                     "detected_at": datetime.now().isoformat(),
                     "trigger_berserk_check": True,
                 }

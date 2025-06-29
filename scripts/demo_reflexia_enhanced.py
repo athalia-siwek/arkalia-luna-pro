@@ -41,7 +41,7 @@ def format_generated():
                 print(f"❌ Fallback échoué: {d}")
 
 
-def main():
+def main() -> None:
     print("🧠 === DEMO REFLEXIA ENHANCED v2.6.0 ===")
     print("   Vraies métriques système + containers Docker")
     print("   Test avec 3 cycles, pause 3s entre chaque\n")
@@ -57,8 +57,7 @@ def main():
         print(f"\n❌ Erreur import: {e}")
         print("💡 Vérifier les dépendances Reflexia")
     except Exception as e:
-        print(f"\n❌ Erreur demo: {e}")
-        print("💡 Vérifier la configuration Reflexia")
+        raise RuntimeError(f"Erreur demo reflexia enhanced: {e}") from e
 
 
 if __name__ == "__main__":

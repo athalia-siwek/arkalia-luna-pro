@@ -7,7 +7,7 @@ import toml
 from modules.zeroia.snapshot_generator import generate_snapshot
 
 
-def test_snapshot_generation(tmp_path: Path):
+def test_snapshot_generation(tmp_path: Path) -> None:
     # 🧪 Création d’un état minimal de ZeroIA
     state_data = {
         "inputs": {

@@ -150,12 +150,7 @@ Exemples d'utilisation :
         print("✅ Orchestration terminée proprement")
 
     except Exception as e:
-        print(f"\n💥 ERREUR: {e}")
-        if args.verbose:
-            import traceback
-
-            traceback.print_exc()
-        sys.exit(1)
+        raise RuntimeError(f"Erreur orchestrator: {e}") from e
 
 
 if __name__ == "__main__":

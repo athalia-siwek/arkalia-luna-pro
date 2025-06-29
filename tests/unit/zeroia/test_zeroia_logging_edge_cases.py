@@ -11,7 +11,7 @@ from modules.zeroia.reason_loop import (
     get_configured_contradiction_log,
     log_conflict,
 )
-from tests.common.helpers import ensure_test_toml
+from tests.common.test_helpers import ensure_test_toml
 
 ensure_test_toml()
 
@@ -85,7 +85,7 @@ def test_log_conflict_with_empty_message():
         log_conflict("")
         assert True
     except Exception as e:
-        pytest.fail(f"log_conflict failed with empty message: {e}")
+        raise AssertionError(f"log_conflict failed with empty message: {e}") from e
 
 
 def test_log_conflict_with_long_message():
@@ -95,7 +95,7 @@ def test_log_conflict_with_long_message():
         log_conflict(long_message)
         assert True
     except Exception as e:
-        pytest.fail(f"log_conflict failed with long message: {e}")
+        raise AssertionError(f"log_conflict failed with long message: {e}") from e
 
 
 def test_log_conflict_with_special_characters():
@@ -108,7 +108,7 @@ def test_log_conflict_with_special_characters():
         log_conflict(special_message)
         assert True
     except Exception as e:
-        pytest.fail(f"log_conflict failed with special characters: {e}")
+        raise AssertionError(f"log_conflict failed with special characters: {e}") from e
 
 
 @patch("modules.zeroia.reason_loop.logger")

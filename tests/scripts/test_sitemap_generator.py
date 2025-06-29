@@ -29,13 +29,13 @@ skip_if_no_sitemap = pytest.mark.skipif(
 )
 
 
-def ensure_sitemap_exists():
+def ensure_sitemap_exists() -> None:
     if not os.path.exists(SITEMAP_PATH):
         pytest.fail(f"❌ Le fichier {SITEMAP_PATH} est introuvable. Exécute 'mkdocs build'.")
 
 
 @skip_if_no_sitemap
-def test_sitemap_is_valid_xml():
+def test_sitemap_is_valid_xml() -> None:
     ensure_sitemap_exists()
     try:
         safe_parse(SITEMAP_PATH)
@@ -44,7 +44,7 @@ def test_sitemap_is_valid_xml():
 
 
 @skip_if_no_sitemap
-def test_sitemap_contains_urls():
+def test_sitemap_contains_urls() -> None:
     ensure_sitemap_exists()
     tree = safe_parse(SITEMAP_PATH)
     root = tree.getroot()
@@ -58,7 +58,7 @@ def test_sitemap_contains_urls():
 
 
 @skip_if_no_sitemap
-def test_sitemap_matches_nav():
+def test_sitemap_matches_nav() -> None:
     ensure_sitemap_exists()
     with open(MKDOCS_CONFIG_PATH, encoding="utf-8") as f:
         config = yaml.safe_load(f)
@@ -85,7 +85,7 @@ def test_sitemap_matches_nav():
     assert not missing_urls, f"❌ Pages manquantes dans sitemap.xml : {missing_urls}"
 
 
-def test_extract_paths_basic():
+def test_extract_paths_basic() -> None:
     mock_nav = [
         "index.md",
         {"Démarrage": ["installation.md", "configuration.md"]},
@@ -98,7 +98,7 @@ def test_extract_paths_basic():
 
 
 @patch("requests.get")
-def test_ping_google_sitemap_success(mock_get):
+def test_ping_google_sitemap_success(mock_get) -> None:
     mock_response = MagicMock()
     mock_response.status_code = 200
     mock_get.return_value = mock_response
@@ -115,7 +115,7 @@ def test_ping_google_sitemap_success(mock_get):
 
 
 @patch("requests.get", side_effect=Exception("Network error"))
-def test_ping_google_sitemap_failure(mock_get):
+def test_ping_google_sitemap_failure(mock_get) -> None:
     ping_google_sitemap()
     mock_get.assert_called_once()
 
@@ -127,7 +127,7 @@ class TestSitemapGenerator(unittest.TestCase):
         "scripts.sitemap_generator.parse_nav_from_mkdocs",
         return_value=["path1/", "path2/"],
     )
-    def test_generate_sitemap(self, mock_parse_nav, mock_makedirs, mock_open):
+    def test_generate_sitemap(self, mock_parse_nav, mock_makedirs, mock_open) -> None:
         generate_sitemap(site_url="https://example.com", output_dir="test_site")
 
         mock_open.assert_called_once_with(

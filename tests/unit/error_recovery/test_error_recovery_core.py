@@ -20,7 +20,7 @@ from modules.error_recovery.core import (
 class TestErrorRecoverySystem:
     """Tests pour la classe principale ErrorRecoverySystem"""
 
-    def test_error_recovery_system_initialization(self):
+    def test_error_recovery_system_initialization(self) -> None:
         """Test d'initialisation du système de récupération d'erreurs"""
         recovery_system = ErrorRecoverySystem()
         assert recovery_system is not None
@@ -46,7 +46,7 @@ class TestErrorRecoverySystem:
         assert "status" in result
         assert result["status"] in ["recovery_attempted", "error_registered"]
 
-    def test_error_recovery_system_plan_recovery_action_connection_lost(self):
+    def test_error_recovery_system_plan_recovery_action_connection_lost(self) -> None:
         """Test de planification d'action pour erreur de connexion"""
         recovery_system = ErrorRecoverySystem()
         error = ModuleError(
@@ -62,7 +62,7 @@ class TestErrorRecoverySystem:
         assert action.module_name == "zeroia"
         assert action.priority == 2
 
-    def test_error_recovery_system_plan_recovery_action_state_corrupted(self):
+    def test_error_recovery_system_plan_recovery_action_state_corrupted(self) -> None:
         """Test de planification d'action pour état corrompu"""
         recovery_system = ErrorRecoverySystem()
         error = ModuleError(
@@ -78,7 +78,7 @@ class TestErrorRecoverySystem:
         assert action.module_name == "reflexia"
         assert action.priority == 3
 
-    def test_error_recovery_system_plan_recovery_action_deadlock(self):
+    def test_error_recovery_system_plan_recovery_action_deadlock(self) -> None:
         """Test de planification d'action pour deadlock"""
         recovery_system = ErrorRecoverySystem()
         error = ModuleError(
@@ -94,7 +94,7 @@ class TestErrorRecoverySystem:
         assert action.module_name == "sandozia"
         assert action.priority == 1
 
-    def test_error_recovery_system_plan_recovery_action_max_retries(self):
+    def test_error_recovery_system_plan_recovery_action_max_retries(self) -> None:
         """Test de planification d'action après max retries"""
         recovery_system = ErrorRecoverySystem()
         recovery_system.active_errors["zeroia"] = [
@@ -186,7 +186,7 @@ class TestErrorRecoverySystem:
 class TestModuleError:
     """Tests pour la classe ModuleError"""
 
-    def test_module_error_creation(self):
+    def test_module_error_creation(self) -> None:
         """Test de création d'une erreur de module"""
         error = ModuleError(
             module_name="zeroia",
@@ -199,7 +199,7 @@ class TestModuleError:
         assert error.error_message == "Connection timeout"
         assert error.timestamp is not None
 
-    def test_module_error_with_optional_fields(self):
+    def test_module_error_with_optional_fields(self) -> None:
         """Test de création d'erreur avec champs optionnels"""
         error = ModuleError(
             module_name="reflexia",
@@ -217,7 +217,7 @@ class TestModuleError:
 class TestRecoveryAction:
     """Tests pour la classe RecoveryAction"""
 
-    def test_recovery_action_creation(self):
+    def test_recovery_action_creation(self) -> None:
         """Test de création d'une action de récupération"""
         action = RecoveryAction(
             module_name="zeroia",
@@ -231,7 +231,7 @@ class TestRecoveryAction:
         assert action.parameters["timeout"] == 30
         assert action.priority == 2
 
-    def test_recovery_action_default_priority(self):
+    def test_recovery_action_default_priority(self) -> None:
         """Test de création d'action avec priorité par défaut"""
         action = RecoveryAction(
             module_name="reflexia",
@@ -245,7 +245,7 @@ class TestRecoveryAction:
 class TestRecoveryResult:
     """Tests pour la classe RecoveryResult"""
 
-    def test_recovery_result_creation(self):
+    def test_recovery_result_creation(self) -> None:
         """Test de création d'un résultat de récupération"""
         action = RecoveryAction(
             module_name="zeroia",
@@ -290,7 +290,7 @@ class TestErrorRecoveryIntegration:
             assert result["success"] is True
             assert result["action"] == "reconnect"
 
-    def test_error_recovery_system_error_tracking(self):
+    def test_error_recovery_system_error_tracking(self) -> None:
         """Test du suivi des erreurs"""
         recovery_system = ErrorRecoverySystem()
 
@@ -315,7 +315,7 @@ class TestErrorRecoveryIntegration:
         assert len(recovery_system.active_errors["zeroia"]) == 1
         assert len(recovery_system.active_errors["reflexia"]) == 1
 
-    def test_error_recovery_system_history_tracking(self):
+    def test_error_recovery_system_history_tracking(self) -> None:
         """Test du suivi de l'historique"""
         recovery_system = ErrorRecoverySystem()
 

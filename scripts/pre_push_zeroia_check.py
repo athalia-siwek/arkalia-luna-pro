@@ -4,9 +4,10 @@
 import re
 
 try:
-    import tomllib
+    import tomllib  # type: ignore
 except ModuleNotFoundError:
-    import tomli as tomllib
+    import tomli as tomllib  # type: ignore
+
 from pathlib import Path
 
 STATE_FILE = Path("modules/zeroia/state/zeroia_state.toml")
@@ -14,7 +15,7 @@ DASHBOARD_FILE = Path("state/zeroia_dashboard.json")
 ENV_FILES = list(Path(".").rglob("*.env"))
 
 
-def check_toml_validity():
+def check_toml_validity() -> None:
     try:
         with STATE_FILE.open("rb") as f:
             tomllib.load(f)
@@ -25,7 +26,7 @@ def check_toml_validity():
         return False
 
 
-def check_pat_exposure():
+def check_pat_exposure() -> None:
     pat_regex = re.compile(r"ghp_[A-Za-z0-9]{36,}")
     for file in ENV_FILES:
         content = file.read_text(errors="ignore")

@@ -6,7 +6,7 @@ MODULES = ROOT / "modules"
 ENV_FILE = ROOT / ".env"
 
 
-def ensure_init_py():
+def ensure_init_py() -> None:
     init_path = MODULES / "__init__.py"
     if not init_path.exists():
         init_path.touch()
@@ -15,7 +15,7 @@ def ensure_init_py():
         print(f"✔️ Déjà présent : {init_path}")
 
 
-def ensure_env_py_path():
+def ensure_env_py_path() -> None:
     if ENV_FILE.exists():
         content = ENV_FILE.read_text()
         if "PYTHONPATH" in content:
@@ -26,7 +26,7 @@ def ensure_env_py_path():
     print(f"✅ PYTHONPATH ajouté à {ENV_FILE}")
 
 
-def main():
+def main() -> None:
     print("🔧 Patch Pyright / Cursor en cours…")
     ensure_init_py()
     ensure_env_py_path()

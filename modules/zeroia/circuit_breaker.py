@@ -170,7 +170,8 @@ class CircuitBreaker:
             else:
                 self._log_blocked_call()
                 raise SystemRebootRequired(
-                    f"Circuit breaker OPEN - trop d'échecs consécutifs ({self.metrics.consecutive_failures})"
+                    f"Circuit breaker OPEN - trop d'échecs consécutifs "
+                    f"({self.metrics.consecutive_failures})"
                 )
 
         try:
@@ -226,7 +227,8 @@ class CircuitBreaker:
         self.failure_count += 1  # Incrémenter le compteur failure_count pour les tests
 
         logger.warning(
-            f"🚨 CircuitBreaker échec: {exception} (consécutif: {self.metrics.consecutive_failures})"
+            f"🚨 CircuitBreaker échec: {exception} "
+            f"(consécutif: {self.metrics.consecutive_failures})"
         )
 
         # Vérifier si on doit ouvrir le circuit

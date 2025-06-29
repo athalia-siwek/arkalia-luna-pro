@@ -8,7 +8,7 @@ for file in Path("docs/releases").glob("._*"):
     file.unlink()
 
 
-def main(**kwargs):
+def main(**kwargs) -> None:
     print("✅ Hook exécuté : génération des updates")
 
     repo_path = Path.cwd()  # Assure que le chemin actuel est un dépôt Git

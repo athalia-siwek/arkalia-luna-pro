@@ -72,7 +72,7 @@ class TestAtomicWrite:
         test_file = tmp_path / "concurrent.txt"
         results = []
 
-        def write_data(data):
+        def write_data(data) -> None:
             try:
                 result = atomic_write(test_file, f"Thread-{data}")
                 results.append(result)
@@ -149,7 +149,7 @@ class TestLockedRead:
 
         results = []
 
-        def read_data():
+        def read_data() -> None:
             try:
                 result = locked_read(test_file)
                 results.append(result)
@@ -184,6 +184,8 @@ class TestLockedRead:
         try:
             with pytest.raises(LockedReadError, match="Timeout lors de l'acquisition"):
                 locked_read(test_file, timeout=0.1)
+        except Exception as e:
+            raise AssertionError(f"Erreur inattendue: {e}") from e
         finally:
             file_lock.release()
 
@@ -276,11 +278,11 @@ class TestIntegration:
         """🧠 Test opérations concurrent écriture-lecture"""
         test_file = tmp_path / "concurrent_ops.json"
 
-        def writer_thread(data_id):
+        def writer_thread(data_id) -> None:
             data = {"thread_id": data_id, "timestamp": time.time()}
             atomic_write(test_file, data)
 
-        def reader_thread():
+        def reader_thread() -> None:
             try:
                 return locked_read(test_file)
             except FileNotFoundError:

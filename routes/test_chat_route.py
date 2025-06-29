@@ -9,7 +9,7 @@ def override_success(msg: str, model: str = "mistral") -> str:
     return msg
 
 
-def override_timeout(*args, **kwargs):
+def override_timeout(*args, **kwargs) -> None:
     raise requests.exceptions.Timeout()
 
 
@@ -18,7 +18,7 @@ def test_client():
     return TestClient(app)
 
 
-def test_chat_post_ok(test_client):
+def test_chat_post_ok(test_client) -> None:
     app.dependency_overrides[get_query_ollama] = lambda: override_success
     try:
         res = test_client.post("/chat", json={"message": "Hello"})
@@ -30,7 +30,7 @@ def test_chat_post_ok(test_client):
         app.dependency_overrides.clear()
 
 
-def test_chat_post_empty(test_client):
+def test_chat_post_empty(test_client) -> None:
     res = test_client.post("/chat", json={"message": ""})
     # nosec: assert_used
     assert res.status_code == 400, "Statut inattendu"  # nosec
@@ -38,13 +38,13 @@ def test_chat_post_empty(test_client):
     assert "Message vide" in res.json()["detail"], "Détail inattendu"  # nosec
 
 
-def test_chat_post_bad_payload(test_client):
+def test_chat_post_bad_payload(test_client) -> None:
     res = test_client.post("/chat", json={"msg": "Hello"})
     # nosec: assert_used
     assert res.status_code == 422, "Statut inattendu"  # nosec
 
 
-def test_chat_post_timeout(test_client):
+def test_chat_post_timeout(test_client) -> None:
     app.dependency_overrides[get_query_ollama] = lambda: override_timeout
     try:
         res = test_client.post("/chat", json={"message": "Hello"})

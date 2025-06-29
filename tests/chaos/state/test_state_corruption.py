@@ -5,11 +5,11 @@ from tests.chaos.common import ChaosTestConfig, ChaosTester
 
 
 class TestStatePersistenceChaos:
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
     def test_state_corruption_recovery(self):

@@ -194,7 +194,7 @@ class ArkaliaOrchestratorEnhanced:
     - Mode COGNITIVE_BOOST
     """
 
-    def __init__(self, config: OrchestratorEnhancedConfig | None = None):
+    def __init__(self, config: OrchestratorEnhancedConfig | None = None) -> None:
         self.config = config or OrchestratorEnhancedConfig()
         self.current_cycle_mode = CycleMode.NORMAL
         self.is_running = False

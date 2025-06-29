@@ -16,8 +16,10 @@ def fix_line_length_errors():
     fixes = [
         # modules/crossmodule_validator/core.py:145
         (
-            r'f"✅ Validation: score={validation.coherence_score:.2f}, conflits={len(validation.conflicts)}"',
-            'f"✅ Validation: score={validation.coherence_score:.2f}, conflits={len(validation.conflicts)}"',
+            r'f"✅ Validation: score={validation.coherence_score:.2f}, '
+            r'conflits={len(validation.conflicts)}"',
+            'f"✅ Validation: score={validation.coherence_score:.2f}, '
+            'conflits={len(validation.conflicts)}"',
         ),
         # modules/generative_ai/core.py:500
         (
@@ -36,8 +38,10 @@ def fix_line_length_errors():
         ),
         # modules/sandozia/analyzer/behavior.py:284
         (
-            r'f"Pattern répétitif détecté: {len(recent_decisions)} décisions identiques ({list(unique_types)[0]})"',
-            'f"Pattern répétitif détecté: {len(recent_decisions)} décisions identiques ({list(unique_types)[0]})"',
+            r'f"Pattern répétitif détecté: {len(recent_decisions)} décisions identiques '
+            r'({list(unique_types)[0]})"',
+            'f"Pattern répétitif détecté: {len(recent_decisions)} décisions identiques '
+            '({list(unique_types)[0]})"',
         ),
         # modules/sandozia/analyzer/behavior.py:313
         (
@@ -56,8 +60,10 @@ def fix_line_length_errors():
         ),
         # modules/sandozia/validators/crossmodule.py:265
         (
-            r'"Contradiction: ZeroIA détecte des incohérences mais Reflexia a une confiance élevée"',
-            '"Contradiction: ZeroIA détecte des incohérences mais Reflexia a une confiance élevée"',
+            r'"Contradiction: ZeroIA détecte des incohérences mais '
+            r'Reflexia a une confiance élevée"',
+            '"Contradiction: ZeroIA détecte des incohérences mais '
+            'Reflexia a une confiance élevée"',
         ),
         # modules/sandozia/validators/crossmodule.py:318
         (
@@ -66,13 +72,17 @@ def fix_line_length_errors():
         ),
         # modules/zeroia/circuit_breaker.py:173
         (
-            r'f"Circuit breaker OPEN - trop d\'échecs consécutifs ({self.metrics.consecutive_failures})"',
-            'f"Circuit breaker OPEN - trop d\'échecs consécutifs ({self.metrics.consecutive_failures})"',
+            r'f"Circuit breaker OPEN - trop d\'échecs consécutifs '
+            r'({self.metrics.consecutive_failures})"',
+            "f\"Circuit breaker OPEN - trop d'échecs consécutifs "
+            '({self.metrics.consecutive_failures})"',
         ),
         # modules/zeroia/circuit_breaker.py:229
         (
-            r'f"🚨 CircuitBreaker échec: {exception} (consécutif: {self.metrics.consecutive_failures})"',
-            'f"🚨 CircuitBreaker échec: {exception} (consécutif: {self.metrics.consecutive_failures})"',
+            r'f"🚨 CircuitBreaker échec: {exception} '
+            r'(consécutif: {self.metrics.consecutive_failures})"',
+            'f"🚨 CircuitBreaker échec: {exception} '
+            '(consécutif: {self.metrics.consecutive_failures})"',
         ),
         # modules/zeroia/event_store.py:370
         (
@@ -81,8 +91,10 @@ def fix_line_length_errors():
         ),
         # modules/zeroia/event_store.py:446
         (
-            r'f"📋 Nettoyage EventStore: {deleted_count} événements supprimés (> {days_to_keep} jours)"',
-            'f"📋 Nettoyage EventStore: {deleted_count} événements supprimés (> {days_to_keep} jours)"',
+            r'f"📋 Nettoyage EventStore: {deleted_count} événements supprimés '
+            r'(> {days_to_keep} jours)"',
+            'f"📋 Nettoyage EventStore: {deleted_count} événements supprimés '
+            '(> {days_to_keep} jours)"',
         ),
     ]
 
@@ -108,7 +120,7 @@ def fix_line_length_errors():
                                 f.write(content)
                             print(f"✅ Corrigé: {file_path}")
                     except Exception as e:
-                        print(f"❌ Erreur {file_path}: {e}")
+                        raise RuntimeError(f"Erreur lors de la correction finale: {e}") from e
 
 
 def fix_import_errors():
@@ -131,7 +143,7 @@ def fix_import_errors():
                 f.write(content)
             print(f"✅ Import corrigé: {test_core_path}")
         except Exception as e:
-            print(f"❌ Erreur {test_core_path}: {e}")
+            raise RuntimeError(f"Erreur lors de la correction finale: {e}") from e
 
 
 def fix_noqa_directives():
@@ -152,7 +164,7 @@ def fix_noqa_directives():
                     f.write(content)
                 print(f"✅ Noqa corrigé: {file_path}")
             except Exception as e:
-                print(f"❌ Erreur {file_path}: {e}")
+                raise RuntimeError(f"Erreur lors de la correction finale: {e}") from e
 
 
 def main():

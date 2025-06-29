@@ -38,17 +38,26 @@ def update_file_stats(file_path):
             pattern1 = (
                 f"{old_stat['passed']}/{old_stat['total']} tests PASSED \\({old_stat['rate']}\\)"
             )
-            replacement1 = f"{CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} tests PASSED ({CURRENT_STATS['success_rate']})"
+            replacement1 = (
+                f"{CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} "
+                f"tests PASSED ({CURRENT_STATS['success_rate']})"
+            )
             content = re.sub(pattern1, replacement1, content)
 
             # Pattern pour X/Y PASSED (Z%)
             pattern2 = f"{old_stat['passed']}/{old_stat['total']} PASSED \\({old_stat['rate']}\\)"
-            replacement2 = f"{CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} PASSED ({CURRENT_STATS['success_rate']})"
+            replacement2 = (
+                f"{CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} "
+                f"tests PASSED ({CURRENT_STATS['success_rate']})"
+            )
             content = re.sub(pattern2, replacement2, content)
 
             # Pattern pour Tests : X/Y (Z%)
             pattern3 = f"Tests : {old_stat['passed']}/{old_stat['total']} \\({old_stat['rate']}\\)"
-            replacement3 = f"Tests : {CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} ({CURRENT_STATS['success_rate']})"
+            replacement3 = (
+                f"Tests : {CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} "
+                f"({CURRENT_STATS['success_rate']})"
+            )
             content = re.sub(pattern3, replacement3, content)
 
         # Remplacer les badges de coverage
@@ -79,8 +88,7 @@ def update_file_stats(file_path):
             return False
 
     except Exception as e:
-        print(f"❌ Erreur avec {file_path}: {e}")
-        return False
+        raise RuntimeError(f"Erreur update docs stats: {e}") from e
 
 
 def main():
@@ -89,7 +97,9 @@ def main():
     updated_files = 0
 
     print(
-        f"🔄 Mise à jour des statistiques vers {CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} ({CURRENT_STATS['success_rate']})"
+        f"🔄 Mise à jour des statistiques vers "
+        f"{CURRENT_STATS['tests_passed']}/{CURRENT_STATS['tests_total']} "
+        f"({CURRENT_STATS['success_rate']})"
     )
     print(f"📊 Coverage : {CURRENT_STATS['coverage']}")
     print()

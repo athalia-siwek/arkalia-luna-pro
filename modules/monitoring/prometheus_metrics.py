@@ -14,7 +14,7 @@ from prometheus_client import Counter, Gauge, Histogram, Info, start_http_server
 class ArkaliaMetrics:
     """Collecteur centralisé de métriques Arkalia-LUNA"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         # === MÉTRIQUES ZEROIA ===
         self.zeroia_decisions = Counter(
             "arkalia_zeroia_decisions_total",
@@ -239,7 +239,7 @@ class ArkaliaMetrics:
 class ArkaliaMetricsCollector:
     """Collecteur automatique de métriques depuis les fichiers état"""
 
-    def __init__(self, metrics: ArkaliaMetrics):
+    def __init__(self, metrics: ArkaliaMetrics) -> None:
         self.metrics = metrics
         self.state_paths = {
             "zeroia_state": Path("modules/zeroia/state/zeroia_state.toml"),
@@ -343,7 +343,7 @@ class ArkaliaMetricsCollector:
 class PrometheusServer:
     """Serveur HTTP Prometheus pour exposition des métriques"""
 
-    def __init__(self, port: int = 8001, host: str = "localhost"):
+    def __init__(self, port: int = 8001, host: str = "localhost") -> None:
         self.port = port
         self.host = host
         self.metrics = ArkaliaMetrics()

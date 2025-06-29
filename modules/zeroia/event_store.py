@@ -82,7 +82,9 @@ class Event:
 class EventStore:
     """Stockage des événements pour Arkalia-LUNA"""
 
-    def __init__(self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000):
+    def __init__(
+        self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000
+    ) -> None:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.parent.mkdir(parents=True, exist_ok=True)
 
@@ -367,7 +369,9 @@ class EventStore:
                     "type": "high_contradictions",
                     "severity": "medium",
                     "count": len(contradictions),
-                    "description": f"{len(contradictions)} contradictions IA en {window_minutes}min",
+                    "description": (
+                        f"{len(contradictions)} contradictions IA en {window_minutes}min"
+                    ),
                 }
             )
 
@@ -443,7 +447,8 @@ class EventStore:
             logger.warning(f"Erreur nettoyage événements: {e}")
 
         logger.info(
-            f"📋 Nettoyage EventStore: {deleted_count} événements supprimés (> {days_to_keep} jours)"
+            f"📋 Nettoyage EventStore: {deleted_count} événements supprimés "
+            f"(> {days_to_keep} jours)"
         )
         return deleted_count
 

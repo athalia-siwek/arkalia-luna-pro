@@ -10,7 +10,7 @@ from scripts import zeroia_rollback
 
 # 📁 Setup de répertoires temporaires pour simuler l'état ZeroIA
 @pytest.fixture
-def temp_env(monkeypatch):
+def temp_env(monkeypatch) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp_path = Path(tmpdir)
 
@@ -40,35 +40,35 @@ def temp_env(monkeypatch):
         }
 
 
-def test_backup_current_state(temp_env):
+def test_backup_current_state(temp_env) -> None:
     zeroia_rollback.backup_current_state()
     assert temp_env["backup_file"].exists()
     assert "timestamp" in temp_env["backup_file"].read_text()
 
 
-def test_restore_snapshot_success(temp_env):
+def test_restore_snapshot_success(temp_env) -> None:
     assert zeroia_rollback.restore_snapshot() is True
     assert temp_env["state_file"].read_text().find("snapshot") != -1
 
 
-def test_restore_snapshot_failure(monkeypatch, temp_env):
+def test_restore_snapshot_failure(monkeypatch, temp_env) -> None:
     monkeypatch.setattr(zeroia_rollback, "SNAPSHOT_FILE", Path("nonexistent.toml"))
     assert zeroia_rollback.restore_snapshot() is False
 
 
-def test_log_failure(temp_env):
+def test_log_failure(temp_env) -> None:
     zeroia_rollback.log_failure()
     assert temp_env["failure_log"].exists()
     assert "Échec détecté" in temp_env["failure_log"].read_text()
 
 
-def test_log(temp_env):
+def test_log(temp_env) -> None:
     zeroia_rollback.log("test log line")
     content = temp_env["log_file"].read_text()
     assert "[rollback] test log line" in content
 
 
-def test_rollback_success(temp_env):
+def test_rollback_success(temp_env) -> None:
     temp_env["backup_file"].write_text(
         'timestamp = "BACKUP"\n[decision]\nlast_decision = "rollback"\n'
     )
@@ -76,13 +76,13 @@ def test_rollback_success(temp_env):
     assert "rollback" in temp_env["state_file"].read_text()
 
 
-def test_rollback_failure(monkeypatch):
+def test_rollback_failure(monkeypatch) -> None:
     monkeypatch.setattr(zeroia_rollback, "BACKUP_FILE", Path("nonexistent.toml"))
     monkeypatch.setattr(zeroia_rollback, "STATE_FILE", Path("state/zeroia_state.toml"))
     zeroia_rollback.rollback_from_backup()
 
 
-def test_zeroia_rollback_script_runs():
+def test_zeroia_rollback_script_runs() -> None:
     result = subprocess.run(
         [sys.executable, "scripts/zeroia_rollback.py"],
         capture_output=True,

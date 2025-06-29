@@ -5,13 +5,14 @@ from pathlib import Path
 import pytest
 
 from modules.zeroia.reason_loop import reason_loop
-from tests.common.helpers import ensure_test_toml, ensure_zeroia_state_file
+from tests.common.test_helpers import ensure_test_toml, ensure_zeroia_state_file
 
 ensure_test_toml()
 
 
 def test_fail_on_missing_keys(tmp_path: Path):
-    """💥 Depuis la correction ZeroIA, les clés manquantes utilisent des defaults au lieu de lever KeyError."""
+    """💥 Depuis la correction ZeroIA, les clés manquantes utilisent des defaults
+    au lieu de lever KeyError."""
     ctx_path = tmp_path / "ctx.toml"
     reflexia_path = tmp_path / "reflexia.toml"
 

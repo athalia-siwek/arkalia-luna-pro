@@ -1,34 +1,35 @@
 # 📄 tests/common/fixtures.py
 # Fixtures partagées pour tous les tests
 
+from collections.abc import Generator, Iterator
 from pathlib import Path
 
 import pytest
 
-from .helpers import ensure_test_toml, ensure_zeroia_state_file
+from tests.common.test_helpers import ensure_test_toml, ensure_zeroia_state_file
 
 
 @pytest.fixture(scope="session")
-def test_data_dir():
+def test_data_dir() -> Path:
     """Répertoire temporaire pour les données de test."""
     return Path("tests/data")
 
 
 @pytest.fixture(scope="session")
-def mock_config():
+def mock_config() -> dict:
     """Configuration de test standard."""
     return {"test_mode": True, "debug": True, "timeout": 5}
 
 
 @pytest.fixture(autouse=True)
-def setup_test_environment():
+def setup_test_environment() -> None:
     """Setup automatique de l'environnement de test."""
     ensure_test_toml()
     ensure_zeroia_state_file()
 
 
 @pytest.fixture
-def clean_state_files():
+def clean_state_files() -> Generator[None, None, None]:
     """Nettoie les fichiers d'état après les tests."""
     yield
     # Cleanup après les tests

@@ -12,7 +12,7 @@ from modules.zeroia.utils.state_writer import check_health
 STATE_PATH = Path("modules/zeroia/state/zeroia_state.toml")
 
 
-def test_healthcheck_active(tmp_path):
+def test_healthcheck_active(tmp_path) -> None:
     path = tmp_path / "zeroia_state.toml"
     path.write_text(
         """
@@ -36,7 +36,7 @@ last_decision = "reduce_load"
     assert "✅" in result.stdout
 
 
-def test_healthcheck_inactive(tmp_path):
+def test_healthcheck_inactive(tmp_path) -> None:
     path = tmp_path / "zeroia_state.toml"
     path.write_text(
         """
@@ -60,7 +60,7 @@ last_decision = "monitor"
     assert "❌" in result.stdout
 
 
-def test_healthcheck_missing(tmp_path):
+def test_healthcheck_missing(tmp_path) -> None:
     path = tmp_path / "zeroia_state.toml"  # Ne pas créer le fichier
 
     result = subprocess.run(
@@ -85,12 +85,12 @@ def test_healthcheck_missing(tmp_path):
         ({"decision": {}}, False),
     ],
 )
-def test_check_health_various_states(tmp_path, state_data, expected):
+def test_check_health_various_states(tmp_path, state_data, expected) -> None:
     file = tmp_path / "state.toml"
     file.write_text(toml.dumps(state_data), encoding="utf-8")
     assert check_health(str(file)) == expected
 
 
 @patch.dict(os.environ, {"FORCE_ZEROIA_OK": "1"})
-def test_healthcheck_passes_forced():
+def test_healthcheck_passes_forced() -> None:
     assert check_health(str(STATE_PATH)) is True

@@ -15,27 +15,27 @@ TMP_TOML = "tests/tmp/test_state.toml"
 TMP_JSON = "tests/tmp/test_dashboard.json"
 
 
-def read_toml(path):
+def read_toml(path) -> None:
     with open(path, encoding="utf-8") as f:
         return toml.load(f)
 
 
-def read_json(path):
+def read_json(path) -> None:
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def setup_module(module):
+def setup_module(module) -> None:
     Path("tests/tmp").mkdir(parents=True, exist_ok=True)
 
 
-def teardown_module(module):
+def teardown_module(module) -> None:
     for path in [TMP_TOML, TMP_JSON]:
         if os.path.exists(path):
             os.remove(path)
 
 
-def test_save_toml_changes_written():
+def test_save_toml_changes_written() -> None:
     state = {"foo": "bar"}
     save_toml_if_changed(state.copy(), TMP_TOML)
     initial = read_toml(TMP_TOML)
@@ -58,7 +58,7 @@ def test_save_toml_changes_written():
     assert modified["foo"] == "baz", "Change should be written"
 
 
-def test_save_json_changes_written():
+def test_save_json_changes_written() -> None:
     dashboard = {"status": "ok"}
     save_json_if_changed(dashboard.copy(), TMP_JSON)
     initial = read_json(TMP_JSON)
@@ -81,7 +81,7 @@ def test_save_json_changes_written():
     assert modified["status"] == "updated", "Change should be written"
 
 
-def test_write_state_json(tmp_path):
+def test_write_state_json(tmp_path) -> None:
     path = tmp_path / "test_state.json"
     data = {"status": "ok", "value": 42}
     write_state_json(path, data)

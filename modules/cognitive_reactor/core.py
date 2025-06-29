@@ -22,6 +22,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
+import tomli  # type: ignore
+
 # === Configuration du logging ===
 logging.basicConfig(
     level=logging.INFO,
@@ -39,7 +41,7 @@ class CognitiveReactor:
     🧠 Réacteur cognitif avancé pour Arkalia-LUNA
     """
 
-    def __init__(self, mode: str = "production"):
+    def __init__(self, mode: str = "production") -> None:
         self.mode = mode
         self.enabled = os.getenv("COGNITIVE_REACTOR_ENABLED", "true").lower() == "true"
         self.max_reactions = int(os.getenv("COGNITIVE_MAX_REACTIONS", "100"))
@@ -105,8 +107,6 @@ class CognitiveReactor:
         try:
             state_file = Path(f"state/{module_name}_state.toml")
             if state_file.exists():
-                import tomli
-
                 with open(state_file, "rb") as f:
                     return tomli.load(f)
         except Exception as e:
@@ -387,7 +387,7 @@ async def main():
         return
 
     # === Gestion des signaux ===
-    def signal_handler(signum, frame):
+    def signal_handler(signum, frame) -> None:
         logger.info("🧠 Signal de terminaison reçu")
         reactor.enabled = False
 

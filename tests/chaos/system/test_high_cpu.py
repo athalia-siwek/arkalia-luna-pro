@@ -1,13 +1,13 @@
 # 🔥 Test de charge CPU élevée
-from tests.chaos.common import ChaosTestConfig, ChaosTester
+from tests.chaos.chaos_common import ChaosTestConfig, ChaosTester
 
 
 class TestSystemLoadChaos:
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
     def test_system_under_high_cpu_load(self):

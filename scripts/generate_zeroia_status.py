@@ -53,7 +53,7 @@ def write_markdown(status: str, decisions: list[str]) -> None:
     print(f"✅ Statut écrit dans {OUTPUT_FILE}")
 
 
-def get_file_info(filepath):
+def get_file_info(filepath) -> None:
     p = Path(filepath)
     if not p.exists():
         return f"- ❌ {filepath} (not found)"
@@ -62,7 +62,7 @@ def get_file_info(filepath):
     return f"- ✅ `{filepath}` — **{size} bytes**, modifié le *{mtime}*"
 
 
-def main():
+def main() -> None:
     container = "zeroia"
     if not os.path.exists("docs/logs"):
         os.makedirs("docs/logs")

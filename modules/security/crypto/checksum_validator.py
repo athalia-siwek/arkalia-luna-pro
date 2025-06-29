@@ -28,7 +28,7 @@ class BuildIntegrityValidator:
     - Alerting sécurité automatique
     """
 
-    def __init__(self, base_dir: Path | None = None):
+    def __init__(self, base_dir: Path | None = None) -> None:
         self.base_dir = Path(base_dir or ".")
         self.critical_extensions = {".py", ".so", ".dll", ".dylib", ".exe", ".jar"}
         self.manifest_file = self.base_dir / "security" / "checksums.manifest.json"

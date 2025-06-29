@@ -68,7 +68,7 @@ class BehaviorAnalyzer:
     - Corrélations suspectes
     """
 
-    def __init__(self, config: dict | None = None):
+    def __init__(self, config: dict | None = None) -> None:
         self.config = config or {
             "window_size_minutes": 60,
             "anomaly_threshold": 2.0,  # Écarts-types
@@ -165,7 +165,10 @@ class BehaviorAnalyzer:
                     pattern = BehaviorPattern(
                         pattern_type="statistical_anomaly",
                         severity=severity,
-                        description=f"Anomalie statistique détectée dans {metric_name} (z-score: {z_score:.2f})",
+                        description=(
+                            f"Anomalie statistique détectée dans {metric_name} "
+                            f"(z-score: {z_score:.2f})"
+                        ),
                         affected_modules=[module_name],
                         confidence=min(0.95, z_score / (threshold * 2)),
                         first_detected=recent_samples[0]["timestamp"],
@@ -235,7 +238,10 @@ class BehaviorAnalyzer:
                             pattern = BehaviorPattern(
                                 pattern_type="performance_regression",
                                 severity=("medium" if abs(relative_change) < 0.4 else "high"),
-                                description=f"Régression de performance détectée dans {metric_name}: {relative_change:.1%}",
+                                description=(
+                                    f"Régression de performance détectée dans {metric_name}: "
+                                    f"{relative_change:.1%}"
+                                ),
                                 affected_modules=[module_name],
                                 confidence=min(0.9, abs(relative_change) * 2),
                                 first_detected=samples[mid]["timestamp"],
@@ -281,7 +287,10 @@ class BehaviorAnalyzer:
                 pattern = BehaviorPattern(
                     pattern_type="repetitive_decisions",
                     severity="medium",
-                    description=f"Pattern répétitif détecté: {len(recent_decisions)} décisions identiques ({list(unique_types)[0]})",
+                    description=(
+                        f"Pattern répétitif détecté: {len(recent_decisions)} décisions identiques "
+                        f"({list(unique_types)[0]})"
+                    ),
                     affected_modules=[module_name],
                     confidence=0.8,
                     first_detected=recent_decisions[0]["timestamp"],
@@ -310,7 +319,10 @@ class BehaviorAnalyzer:
                         pattern = BehaviorPattern(
                             pattern_type="high_frequency_decisions",
                             severity="medium",
-                            description=f"Fréquence de décision élevée: {mean_interval:.2f}s entre décisions",
+                            description=(
+                                f"Fréquence de décision élevée: {mean_interval:.2f}s "
+                                f"entre décisions"
+                            ),
                             affected_modules=[module_name],
                             confidence=0.7,
                             first_detected=timestamps[0],

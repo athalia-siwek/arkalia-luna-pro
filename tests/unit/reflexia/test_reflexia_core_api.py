@@ -3,7 +3,7 @@
 from modules.reflexia.core_api import get_reflexia_status
 
 
-def test_get_reflexia_status_returns_dict():
+def test_get_reflexia_status_returns_dict() -> None:
     result = get_reflexia_status()
     assert isinstance(result, dict)
     assert "status" in result

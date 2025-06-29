@@ -61,7 +61,8 @@ async def test_enhanced_orchestrator():
 
             print(f"✅ Cycle enhanced terminé en {_cycle_result['duration_seconds']}s")
             print(
-                f"📊 Opérations: {_cycle_result['operations_successful']}/{_cycle_result['operations_executed']}"
+                f"📊 Opérations: {_cycle_result['operations_successful']}/"
+                f"{_cycle_result['operations_executed']}"
             )
             print(
                 f"🧠 Événements cognitifs: {_cycle_result['enhanced_features']['cognitive_events']}"
@@ -80,11 +81,7 @@ async def test_enhanced_orchestrator():
         return False
 
     except Exception as e:
-        print(f"❌ Erreur test: {e}")
-        import traceback
-
-        traceback.print_exc()
-        return False
+        raise RuntimeError(f"Erreur test master enhanced: {e}") from e
 
 
 async def test_enhanced_features():

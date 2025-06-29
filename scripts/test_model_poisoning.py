@@ -85,6 +85,7 @@ def test_live_poisoning_attacks():
             test_results["cpu_injection"]["status"] = "ERROR"
             test_results["cpu_injection"]["details"] = str(e)
             print(f"⚠️ Erreur test CPU injection: {e}")
+            raise RuntimeError(f"Erreur test model poisoning: {e}") from e
 
         # Test 2: Oscillation Attack
         print("\n🌀 Test 2: Oscillation Attack")
@@ -131,6 +132,7 @@ def test_live_poisoning_attacks():
             test_results["oscillation_attack"]["status"] = "ERROR"
             test_results["oscillation_attack"]["details"] = str(e)
             print(f"⚠️ Erreur test oscillation: {e}")
+            raise RuntimeError(f"Erreur test model poisoning: {e}") from e
 
         # Test 3: YAML Injection
         print("\n💉 Test 3: YAML Injection Attack")
@@ -171,6 +173,7 @@ def test_live_poisoning_attacks():
             test_results["yaml_injection"]["status"] = "ERROR"
             test_results["yaml_injection"]["details"] = str(e)
             print(f"⚠️ Erreur test YAML injection: {e}")
+            raise RuntimeError(f"Erreur test model poisoning: {e}") from e
 
         # Test 4: Stealth Poisoning
         print("\n🥷 Test 4: Stealth Poisoning")
@@ -225,6 +228,7 @@ def test_live_poisoning_attacks():
             test_results["stealth_poisoning"]["status"] = "ERROR"
             test_results["stealth_poisoning"]["details"] = str(e)
             print(f"⚠️ Erreur test stealth: {e}")
+            raise RuntimeError(f"Erreur test model poisoning: {e}") from e
 
         # Test 5: Opération normale (baseline)
         print("\n✅ Test 5: Normal Operation Baseline")
@@ -271,6 +275,7 @@ def test_live_poisoning_attacks():
             test_results["normal_operation"]["status"] = "ERROR"
             test_results["normal_operation"]["details"] = str(e)
             print(f"⚠️ Erreur test normal: {e}")
+            raise RuntimeError(f"Erreur test model poisoning: {e}") from e
 
     # Rapport final
     print(f"\n{'='*60}")

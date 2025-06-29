@@ -23,8 +23,11 @@ def get_query_ollama() -> Callable[[str], str]:
 @router.post("/chat")
 async def post_chat(
     data: MessageInput,
-    query_ollama: Callable[[str], str] = Depends(get_query_ollama),
+    query_ollama: Callable[[str], str] = None,
 ) -> dict[str, str]:
+    if query_ollama is None:
+        query_ollama = get_query_ollama()
+
     message = data.message.strip()
     if not message:
         raise HTTPException(status_code=400, detail="Message vide")
@@ -40,9 +43,9 @@ async def post_chat(
         response = query_ollama(processed)  # 👈 Appel direct avec un seul argument
         return {"réponse": response}
     except requests.exceptions.Timeout:
-        raise HTTPException(status_code=500, detail="Erreur : délai dépassé")
+        raise HTTPException(status_code=500, detail="Erreur : délai dépassé") from None
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur interne : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur interne : {str(e)}") from e
 
 
 def get_arkalia_context() -> str:
@@ -91,5 +94,5 @@ app.include_router(router)
 
 
 @app.get("/health")
-def health():
+def health() -> None:
     return {"status": "ok"}

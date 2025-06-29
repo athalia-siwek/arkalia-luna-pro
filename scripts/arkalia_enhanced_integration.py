@@ -60,7 +60,7 @@ class ArkaliaEnhancedEngine:
     - Métriques pour Grafana heatmap
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.cognitive_reactor = CognitiveReactor  # noqa: F401
         self.chronalia = Chronalia  # noqa: F401
         self.event_store = EventStore()  # noqa: F401
@@ -102,8 +102,7 @@ class ArkaliaEnhancedEngine:
             decision, confidence = reason_loop_enhanced_with_recovery()
             logger.info(f"🧠 Décision ZeroIA: {decision} (confiance: {confidence})")
         except Exception as e:
-            logger.error(f"❌ Erreur ZeroIA: {e}")
-            decision, confidence = "monitor", 0.1
+            raise RuntimeError(f"Erreur d'intégration Arkalia: {e}") from e
 
         # 4. Détection pattern répétitif (TA RECOMMANDATION CLEF)
         if decision == self.last_decision:

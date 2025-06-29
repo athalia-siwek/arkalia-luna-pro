@@ -66,7 +66,7 @@ class ServiceDefinition:
     resource_cost: float = 1.0  # Coût en ressources (CPU/RAM)
     description: str = ""
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.description:
             self.description = f"Service {self.name}"
 
@@ -111,7 +111,7 @@ class GracefulDegradationSystem:
     - Métriques détaillées en temps réel
     """
 
-    def __init__(self, config_path: str | None = None):
+    def __init__(self, config_path: str | None = None) -> None:
         self.services: dict[str, ServiceDefinition] = {}
         self.service_metrics: dict[str, ServiceMetrics] = {}
         self.degradation_metrics = DegradationMetrics(DegradationLevel.NORMAL)

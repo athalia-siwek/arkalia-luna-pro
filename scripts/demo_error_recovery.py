@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 class ErrorRecoveryDemo:
     """Démonstration du système Error Recovery"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.recovery_system = ErrorRecoverySystem()
         self.demo_stats = {
             "scenarios_tested": 0,
@@ -68,7 +68,7 @@ class ErrorRecoveryDemo:
                 self.demo_stats["failures"] += 1
 
         except Exception as e:
-            print(f"❌ Immediate retry error: {e}")
+            raise RuntimeError(f"Erreur demo error recovery: {e}") from e
             self.demo_stats["failures"] += 1
 
         self.demo_stats["scenarios_tested"] += 1
@@ -96,7 +96,7 @@ class ErrorRecoveryDemo:
                 self.demo_stats["failures"] += 1
 
         except Exception as e:
-            print(f"❌ Exponential backoff error: {e}")
+            raise RuntimeError(f"Erreur demo error recovery: {e}") from e
             self.demo_stats["failures"] += 1
 
         self.demo_stats["scenarios_tested"] += 1
@@ -125,7 +125,7 @@ class ErrorRecoveryDemo:
                 self.demo_stats["failures"] += 1
 
         except Exception as e:
-            print(f"❌ Graceful degradation error: {e}")
+            raise RuntimeError(f"Erreur demo error recovery: {e}") from e
             self.demo_stats["failures"] += 1
 
         self.demo_stats["scenarios_tested"] += 1
@@ -154,7 +154,7 @@ class ErrorRecoveryDemo:
                 self.demo_stats["failures"] += 1
 
         except Exception as e:
-            print(f"❌ System restart error: {e}")
+            raise RuntimeError(f"Erreur demo error recovery: {e}") from e
             self.demo_stats["failures"] += 1
 
         self.demo_stats["scenarios_tested"] += 1
@@ -194,7 +194,7 @@ class ErrorRecoveryDemo:
                 self.demo_stats["failures"] += 1
 
         except Exception as e:
-            print(f"❌ Manual intervention error: {e}")
+            raise RuntimeError(f"Erreur demo error recovery: {e}") from e
             self.demo_stats["failures"] += 1
 
         self.demo_stats["scenarios_tested"] += 1
@@ -216,7 +216,7 @@ class ErrorRecoveryDemo:
                 self.demo_stats["failures"] += 1
 
         except Exception as e:
-            print(f"❌ Health check error: {e}")
+            raise RuntimeError(f"Erreur demo error recovery: {e}") from e
             self.demo_stats["failures"] += 1
 
         self.demo_stats["scenarios_tested"] += 1

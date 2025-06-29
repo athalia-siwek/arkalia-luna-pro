@@ -19,11 +19,7 @@ import threading
 import uvicorn
 from fastapi import FastAPI
 
-from modules.reflexia.core import (
-    get_metrics,
-    launch_reflexia_check,
-    launch_reflexia_loop,
-)
+from modules.reflexia.core import get_metrics, launch_reflexia_check, launch_reflexia_loop
 
 app = FastAPI(
     title="ReflexIA API",
@@ -33,24 +29,24 @@ app = FastAPI(
 
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> dict:
     """Endpoint de santé pour le healthcheck Docker"""
     return {"status": "healthy"}
 
 
 @app.get("/metrics")
-async def get_system_metrics():
+async def get_system_metrics() -> dict:
     """Retourne les métriques système actuelles"""
     return get_metrics()
 
 
 @app.get("/status")
-async def get_system_status():
+async def get_system_status() -> dict:
     """Lance une vérification réflexive et retourne le statut"""
     return launch_reflexia_check()
 
 
-def run_reflexia_loop():
+def run_reflexia_loop() -> None:
     """Lance la boucle réflexive dans un thread séparé"""
     launch_reflexia_loop()
 

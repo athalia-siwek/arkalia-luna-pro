@@ -5,7 +5,7 @@ import toml
 LOG_PATH = Path("modules/zeroia/state/zeroia_decision_log.toml")
 
 
-def load_decision_log():
+def load_decision_log() -> None:
     if LOG_PATH.exists():
         return toml.load(LOG_PATH).get("decisions", [])
     return []

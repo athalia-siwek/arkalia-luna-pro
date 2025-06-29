@@ -5,13 +5,13 @@ import toml
 from modules.reflexia.core import monitor_status
 
 
-def test_monitor_status():
+def test_monitor_status() -> None:
     assert monitor_status({"cpu": 95}) == "🛑 surcharge CPU"
     assert monitor_status({"cpu": 0, "ram": 85, "latency": 0}) == "⚠️ haute mémoire"
     assert monitor_status({"cpu": 30, "ram": 40, "latency": 0}) == "ok"
 
 
-def test_reflexia_metrics_logging(tmp_path):
+def test_reflexia_metrics_logging(tmp_path) -> None:
     state_path = tmp_path / "reflexia_state.toml"
     # Simuler l'initialisation de Reflexia et l'écriture dans le fichier TOML
     metrics = {"cpu": 70, "memory": 60}

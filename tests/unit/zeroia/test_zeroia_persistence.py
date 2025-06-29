@@ -9,7 +9,7 @@ TEST_STATE = Path("tests/tmp/test_state.toml")
 TEST_DASHBOARD = Path("tests/tmp/test_dashboard.json")
 
 
-def test_persist_state_creates_file():
+def test_persist_state_creates_file() -> None:
     ctx = {"status": {"cpu": 42, "severity": "none"}, "reflexia": {}}
     persist_state("monitor", 0.6, ctx, state_path_override=TEST_STATE)
     assert TEST_STATE.exists()
@@ -18,7 +18,7 @@ def test_persist_state_creates_file():
     TEST_STATE.unlink()
 
 
-def test_update_dashboard_writes_json():
+def test_update_dashboard_writes_json() -> None:
     ctx = {"status": {"cpu": 42, "severity": "none"}, "reflexia": {}}
     # Utilisation de json.dump pour écrire le JSON correctement
     with open(TEST_DASHBOARD, "w", encoding="utf-8") as f:
@@ -39,7 +39,7 @@ def test_update_dashboard_writes_json():
     TEST_DASHBOARD.unlink()
 
 
-def test_persist_state_creates_valid_toml(tmp_path):
+def test_persist_state_creates_valid_toml(tmp_path) -> None:
     path = tmp_path / "state.toml"
     context = {"status": {"cpu": 80, "severity": "high"}}
     persist_state("reduce_load", 0.75, context, state_path_override=path)

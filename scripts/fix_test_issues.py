@@ -59,7 +59,10 @@ def fix_event_store_interface() -> bool:
 
     # Remplacer l'interface
     old_init = """    def __init__(self, store_path: str = "./cache/zeroia_events"):"""
-    new_init = """    def __init__(self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000):"""
+    new_init = (
+        """    def __init__(self, cache_dir: str = "./cache/zeroia_events", """
+        """size_limit: int = 10_000_000):"""
+    )
 
     if old_init in content:
         content = content.replace(old_init, new_init)
@@ -151,7 +154,8 @@ def fix_circuit_breaker_error_handling() -> bool:
             # Ajouter après les exceptions connues
             content = content.replace(
                 "        raise",
-                "        raise\n        except Exception as e:\n            self._handle_unexpected_error(e)\n            raise",
+                "        raise\n        except Exception as e:\n            "
+                "self._handle_unexpected_error(e)\n            raise",
             )
 
     # Écrire les modifications
@@ -186,7 +190,7 @@ def create_mock_server_fixture() -> bool:
     # Ajouter le fixture mock
     mock_fixture = """
 @pytest.fixture
-def mock_metrics_server():
+def mock_metrics_server() -> None:
     \"\"\"Mock du serveur de métriques pour les tests\"\"\"
     with patch('requests.get') as mock_get:
         # Réponse mock pour /metrics
@@ -263,13 +267,15 @@ def mark_obsolete_tests() -> bool:
             if "test_sandozia_integration" in content:
                 content = content.replace(
                     "def test_sandozia_integration(self):",
-                    '@pytest.mark.skip(reason="Test obsolète - module Sandozia non disponible")\ndef test_sandozia_integration(self):',
+                    'pytest.skip("Test obsolète - module Sandozia non disponible")\n'
+                    "def test_sandozia_integration(self):",
                 )
 
             if "test_event_store_write_performance" in content:
                 content = content.replace(
                     "def test_event_store_write_performance(performance_metrics, tmp_path):",
-                    '@pytest.mark.skip(reason="Test obsolète - dépend d\'EventStore incompatible")\ndef test_event_store_write_performance(performance_metrics, tmp_path):',
+                    'pytest.skip("EventStore incompatible")\n'
+                    "def test_event_store_write_performance(performance_metrics, tmp_path):",
                 )
 
             # Écrire les modifications
@@ -344,8 +350,7 @@ def run_tests_validation() -> dict[str, Any]:
         }
 
     except Exception as e:
-        log(f"Erreur lors de la validation : {e}", "ERROR")
-        return {"error": str(e)}
+        raise RuntimeError(f"Erreur lors de la correction des tests: {e}") from e
 
 
 def main() -> None:

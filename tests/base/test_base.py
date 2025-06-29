@@ -7,7 +7,7 @@ from helloria.core import app  # Assure-toi que helloria/core.py expose bien `ap
 client = TestClient(app)
 
 
-def test_root_endpoint():
+def test_root_endpoint() -> None:
     response = client.get("/")
     data = response.json()
     assert response.status_code == 200

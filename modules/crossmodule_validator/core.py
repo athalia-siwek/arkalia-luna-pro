@@ -39,7 +39,7 @@ class ValidationResult(BaseModel):
 class CrossModuleValidator:
     """Validateur de cohérence inter-modules"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.module_states: dict[str, ModuleState] = {}
         self.last_validation: ValidationResult | None = None
         self.is_running = False
@@ -142,7 +142,8 @@ class CrossModuleValidator:
             try:
                 validation = await self.validate_states()
                 logger.info(
-                    f"✅ Validation: score={validation.coherence_score:.2f}, conflits={len(validation.conflicts)}"
+                    f"✅ Validation: score={validation.coherence_score:.2f}, "
+                    f"conflits={len(validation.conflicts)}"
                 )
                 await asyncio.sleep(30)  # Validation toutes les 30 secondes
             except Exception as e:
@@ -162,7 +163,7 @@ async def register_module_state(state: ModuleState):
         result = await validator.register_state(state)
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.get("/validate")
@@ -172,7 +173,7 @@ async def get_validation():
         result = await validator.validate_states()
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.get("/status")

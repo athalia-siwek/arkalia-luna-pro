@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 class TestZeroiaHealth(unittest.TestCase):
     @patch("toml.load")
-    def test_zeroia_state_ok(self, mock_toml_load):
+    def test_zeroia_state_ok(self, mock_toml_load) -> None:
         # Mock the toml.load to simulate successful loading
         mock_toml_load.return_value = {"key": "value"}
 
@@ -17,7 +17,7 @@ class TestZeroiaHealth(unittest.TestCase):
                 self.fail("Aucun message de log capturé.")
 
     @patch("toml.load", side_effect=Exception("File not found"))
-    def test_zeroia_state_error(self, mock_toml_load):
+    def test_zeroia_state_error(self, mock_toml_load) -> None:
         # Capture the output
         with self.assertLogs(level="INFO") as log:
             with self.assertRaises(SystemExit):

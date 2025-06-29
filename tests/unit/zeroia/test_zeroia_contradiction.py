@@ -3,7 +3,7 @@ import toml
 from modules.zeroia.reason_loop import check_for_ia_conflict
 
 
-def write_toml(path, content):
+def write_toml(path, content) -> None:
     with open(path, "w") as f:
         toml.dump(content, f)
 

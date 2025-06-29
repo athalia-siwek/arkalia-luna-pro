@@ -31,7 +31,7 @@ from modules.zeroia.reason_loop_enhanced import (
 class PerformanceMetrics:
     """Collecteur de métriques de performance"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.start_time = None
         self.end_time = None
         self.memory_start = None
@@ -141,7 +141,7 @@ def test_circuit_breaker_latency_under_10ms(performance_metrics):
     """
     circuit_breaker = CircuitBreaker(failure_threshold=5, recovery_timeout=60)
 
-    def fast_function():
+    def fast_function() -> None:
         return "success"
 
     # Mesure de 100 appels pour moyenne fiable

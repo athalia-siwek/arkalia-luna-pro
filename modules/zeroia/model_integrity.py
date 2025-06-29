@@ -21,7 +21,7 @@ INTEGRITY_STATE = Path("modules/zeroia/state/integrity_state.toml")
 class ModelIntegrityMonitor:
     """Monitor d'intégrité temps réel pour ZeroIA"""
 
-    def __init__(self, history_limit: int = 50):
+    def __init__(self, history_limit: int = 50) -> None:
         self.history_limit = history_limit
         self.decision_history: list[dict] = []
         self.anomaly_threshold = 0.6

@@ -31,7 +31,7 @@ class UsecurityConfig:
 class UsecurityCore:
     """Core logic pour security"""
 
-    def __init__(self, config: UsecurityConfig):
+    def __init__(self, config: UsecurityConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("arkalia.security.core")
         self._initialize()

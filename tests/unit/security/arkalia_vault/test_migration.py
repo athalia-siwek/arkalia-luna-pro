@@ -18,16 +18,16 @@ class TestMigrationFunctions:
     """Tests pour les fonctions de migration"""
 
     @pytest.fixture
-    def temp_vault_dir(self):
+    def temp_vault_dir(self) -> None:
         temp_dir = tempfile.mkdtemp()
         yield Path(temp_dir)
         shutil.rmtree(temp_dir)
 
     @pytest.fixture
-    def vault(self, temp_vault_dir):
+    def vault(self, temp_vault_dir) -> None:
         return ArkaliaVault(base_dir=temp_vault_dir)
 
-    def test_migrate_from_env_file(self, vault, temp_vault_dir):
+    def test_migrate_from_env_file(self, vault, temp_vault_dir) -> None:
         env_file = temp_vault_dir / "test.env"
         env_content = """
 # Test environment file
@@ -48,7 +48,7 @@ SECRET_TOKEN="token_with_quotes"
         for secret_meta in vault.list_secrets():
             assert "migrated_from_env" in secret_meta.tags
 
-    def test_create_arkalia_vault_factory(self, temp_vault_dir):
+    def test_create_arkalia_vault_factory(self, temp_vault_dir) -> None:
         vault = create_arkalia_vault(temp_vault_dir)
         assert isinstance(vault, ArkaliaVault)
         assert vault.base_dir == temp_vault_dir

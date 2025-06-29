@@ -1,7 +1,7 @@
 from modules.zeroia import adaptive_thresholds
 
 
-def test_should_lower_cpu_threshold():
+def test_should_lower_cpu_threshold() -> None:
     # Simule 9 décisions "monitor"
     adaptive_thresholds.LOG_PATH.write_text(
         """

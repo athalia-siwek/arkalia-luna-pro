@@ -31,7 +31,7 @@ class UsandoziaConfig:
 class UsandoziaCore:
     """Core logic pour sandozia"""
 
-    def __init__(self, config: UsandoziaConfig):
+    def __init__(self, config: UsandoziaConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("arkalia.sandozia.core")
         self._initialize()

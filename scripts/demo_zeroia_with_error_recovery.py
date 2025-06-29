@@ -48,7 +48,7 @@ def demo_integration():
         print(f"🔄 Error Recovery: {'✅' if error_recovery else '❌'}")
         print(f"📉 Graceful Degradation: {'✅' if graceful_degradation else '❌'}")
     except Exception as e:
-        print(f"❌ Erreur initialisation: {e}")
+        raise RuntimeError(f"Erreur demo zeroia with error recovery: {e}") from e
         return
 
     # Test 2: Status des systèmes
@@ -60,7 +60,7 @@ def demo_integration():
         error_status = get_error_recovery_status()
         print(f"🔄 Error Recovery: {error_status.get('status', 'unknown')}")
     except Exception as e:
-        print(f"⚠️ Erreur status: {e}")
+        raise RuntimeError(f"Erreur demo zeroia with error recovery: {e}") from e
 
     # Test 3: Boucle avec contexte normal
     print("\n🧪 === TEST 3: Boucle normale ===")
@@ -68,7 +68,7 @@ def demo_integration():
         decision, score = reason_loop_enhanced_with_recovery()
         print(f"✅ Décision: {decision} (confiance: {score:.2f})")
     except Exception as e:
-        print(f"⚠️ Erreur boucle: {e}")
+        raise RuntimeError(f"Erreur demo zeroia with error recovery: {e}") from e
 
     print("\n🎉 Demo terminé - Error Recovery intégré avec succès !")
     print("💡 ZeroIA Enhanced peut maintenant récupérer automatiquement des erreurs")

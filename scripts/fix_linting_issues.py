@@ -116,7 +116,7 @@ def run_ruff_fix() -> list[str]:
         else:
             return [f"Ruff auto-fix issues: {result.stderr}"]
     except Exception as e:
-        return [f"Error running ruff: {e}"]
+        raise RuntimeError(f"Erreur lors de la correction linting: {e}") from e
 
 
 def main():
@@ -162,7 +162,7 @@ def main():
         print("\n📊 Statistiques finales:")
         print(result.stdout)
     except Exception as e:
-        print(f"Erreur lors de la vérification finale: {e}")
+        raise RuntimeError(f"Erreur lors de la correction linting: {e}") from e
 
     print(f"\n✅ Corrections appliquées: {len(fixes)}")
     for fix in fixes:

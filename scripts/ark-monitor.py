@@ -14,7 +14,7 @@ DASHBOARD_PATH = Path("state/zeroia_dashboard.json")
 LOG_FILE = Path("logs/failure_analysis.md")
 
 
-def check_docker_status():
+def check_docker_status() -> None:
     try:
         result = subprocess.run(
             [sys.executable, "docker_status.py"],
@@ -32,7 +32,7 @@ def check_docker_status():
         print(f"💥 Erreur Docker : {e}")
 
 
-def ping_reflexia():
+def ping_reflexia() -> None:
     try:
         response = requests.get("http://reflexia-endpoint/ping", timeout=5)
         if response.status_code == 200:
@@ -43,7 +43,7 @@ def ping_reflexia():
         print(f"💥 Erreur Reflexia : {e}")
 
 
-def display_recent_errors():
+def display_recent_errors() -> None:
     print("\n📝 Dernières erreurs connues")
     if LOG_FILE.exists():
         with LOG_FILE.open("r", encoding="utf-8") as f:

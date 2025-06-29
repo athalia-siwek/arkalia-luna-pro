@@ -32,6 +32,6 @@ def load_config(file_path: str):
         with open(file_path) as f:
             return toml.load(f)
     except toml.TomlDecodeError as e:
-        raise Exception(f"Invalid TOML format in {file_path}: {e}")
+        raise Exception(f"Invalid TOML format in {file_path}: {e}") from e
     except Exception as e:
-        raise Exception(f"Error loading config {file_path}: {e}")
+        raise Exception(f"Error loading config {file_path}: {e}") from e

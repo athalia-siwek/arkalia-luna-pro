@@ -12,7 +12,7 @@ __author__ = "Athalia"
 
 # Import des composants principaux
 try:
-    from .core import *
+    from .core import CrossModuleValidator, validate_states
 except ImportError:
     pass
 

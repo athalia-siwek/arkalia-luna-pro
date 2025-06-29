@@ -34,7 +34,7 @@ def log(msg: str, silent: bool = False):
         print(msg)
 
 
-def backup_current_state(silent: bool = False):
+def backup_current_state(silent: bool = False) -> None:
     if STATE_FILE.exists():
         shutil.copy2(STATE_FILE, BACKUP_FILE)
         log(f"🗄️  Backup du fichier actuel effectué : {BACKUP_FILE}", silent)
@@ -49,7 +49,7 @@ def restore_snapshot(silent: bool = False) -> bool:
     return True
 
 
-def log_failure():
+def log_failure() -> None:
     FAILURE_LOG.parent.mkdir(parents=True, exist_ok=True)
     try:
         with FAILURE_LOG.open("a", encoding="utf-8") as f:
@@ -60,7 +60,7 @@ def log_failure():
         log(f"❌ Impossible d'écrire dans le journal d'échec : {e}")
 
 
-def rollback_from_backup(silent: bool = False):
+def rollback_from_backup(silent: bool = False) -> None:
     if not BACKUP_FILE.exists():
         log("❌ Rollback impossible : aucun backup trouvé.", silent)
         return
@@ -71,7 +71,7 @@ def rollback_from_backup(silent: bool = False):
         log(f"❌ Erreur lors du rollback : {e}", silent)
 
 
-def parse_arguments():
+def parse_arguments() -> None:
     parser = argparse.ArgumentParser(description="ZeroIA Rollback Script")
     parser.add_argument(
         "--no-rollback",
@@ -86,7 +86,7 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_arguments()
     backup_current_state(silent=args.silent)
     if args.no_rollback:

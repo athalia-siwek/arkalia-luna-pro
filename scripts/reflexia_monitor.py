@@ -11,7 +11,7 @@ GRAFANA_API_URL = "http://your-grafana-instance/api/dashboards/db"
 GRAFANA_API_KEY = "your_grafana_api_key"
 
 
-def read_state():
+def read_state() -> None:
     if not STATE_FILE.exists():
         return {"status": "💥", "error": "Fichier reflexia_state.json introuvable."}
 
@@ -23,7 +23,7 @@ def read_state():
         return {"status": "💥", "error": f"Erreur JSON: {e}"}
 
 
-def display_info(result):
+def display_info(result) -> None:
     if result["status"] != "✅":
         print(f"[ERREUR] {result['error']}")
         return
@@ -37,7 +37,7 @@ def display_info(result):
     print(f"📜 Historique décisions   : {data.get('previous', [])}")
 
 
-def export_to_grafana(data):
+def export_to_grafana(data) -> None:
     headers = {
         "Authorization": f"Bearer {GRAFANA_API_KEY}",
         "Content-Type": "application/json",

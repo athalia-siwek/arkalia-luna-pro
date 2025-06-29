@@ -3,7 +3,7 @@ from unittest.mock import patch
 import modules.zeroia.healthcheck_zeroia
 
 
-def test_healthcheck_zeroia_missing_file(monkeypatch, capsys):
+def test_healthcheck_zeroia_missing_file(monkeypatch, capsys) -> None:
     monkeypatch.setattr("sys.exit", lambda x: x)
     with patch("pathlib.Path.exists", return_value=False):
         modules.zeroia.healthcheck_zeroia.check_zeroia_health()
@@ -11,7 +11,7 @@ def test_healthcheck_zeroia_missing_file(monkeypatch, capsys):
         assert "❌ Fichier zeroia_state.toml manquant." in out
 
 
-def test_healthcheck_zeroia_active(monkeypatch, capsys):
+def test_healthcheck_zeroia_active(monkeypatch, capsys) -> None:
     monkeypatch.setattr("sys.exit", lambda x: x)
     mock_data = {"active": True, "decision": {"last_decision": "some_decision"}}
     with patch("pathlib.Path.exists", return_value=True):
@@ -21,7 +21,7 @@ def test_healthcheck_zeroia_active(monkeypatch, capsys):
             assert "✅ ZeroIA est active." in out
 
 
-def test_healthcheck_zeroia_inactive(monkeypatch, capsys):
+def test_healthcheck_zeroia_inactive(monkeypatch, capsys) -> None:
     monkeypatch.setattr("sys.exit", lambda x: x)
     mock_data = {"active": False, "decision": {}}
     with patch("pathlib.Path.exists", return_value=True):

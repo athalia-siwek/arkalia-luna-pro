@@ -177,7 +177,7 @@ async def main():
             print("⚠️ Graceful Degradation: NON DISPONIBLE")
 
     except Exception as e:
-        print(f"❌ Erreur initialisation: {e}")
+        raise RuntimeError(f"Erreur initialisation: {e}") from e
         return
 
     # Scénarios de test
@@ -262,3 +262,4 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"❌ Erreur dans demo: {e}")
         print(f"❌ Erreur inattendue: {e}")
+        raise RuntimeError(f"Erreur demo zeroia error recovery integration: {e}") from e

@@ -11,7 +11,7 @@ from pathlib import Path
 class ChaosTestConfig:
     """Configuration pour les tests de chaos"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.base_dir = Path(".")
         self.state_dir = Path("state")
         self.logs_dir = Path("logs")
@@ -22,7 +22,7 @@ class ChaosTestConfig:
 class ChaosTester:
     """Générateur de chaos pour tests de résilience"""
 
-    def __init__(self, config: ChaosTestConfig):
+    def __init__(self, config: ChaosTestConfig) -> None:
         self.config = config
         self.active_processes = []
         self.corrupted_files = []
@@ -87,7 +87,7 @@ class ChaosTester:
 import time
 import threading
 
-def cpu_stress():
+def cpu_stress() -> None:
     end_time = time.time() + {duration}
     while time.time() < end_time:
         pass

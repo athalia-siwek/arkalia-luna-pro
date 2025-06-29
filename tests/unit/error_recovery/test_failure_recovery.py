@@ -8,7 +8,7 @@ BACKUP = Path("state/zeroia_snapshot_backup.toml")
 FAILURE_LOG = Path("logs/failure_analysis.md")
 
 
-def setup_module(module):
+def setup_module(module) -> None:
     # Sauvegarde des versions originales
     if SNAPSHOT.exists():
         shutil.copy(SNAPSHOT, SNAPSHOT.with_suffix(".toml.original"))
@@ -16,7 +16,7 @@ def setup_module(module):
         shutil.copy(BACKUP, BACKUP.with_suffix(".toml.original"))
 
 
-def teardown_module(module):
+def teardown_module(module) -> None:
     # Restaure les fichiers d'origine
     original_snapshot = SNAPSHOT.with_suffix(".toml.original")
     original_backup = BACKUP.with_suffix(".toml.original")
@@ -28,7 +28,7 @@ def teardown_module(module):
         original_backup.unlink()
 
 
-def test_failsafe_recovers_from_corrupt_snapshot():
+def test_failsafe_recovers_from_corrupt_snapshot() -> None:
     # Écrit un snapshot corrompu
     with open(SNAPSHOT, "w") as f:
         f.write("::corruption::")

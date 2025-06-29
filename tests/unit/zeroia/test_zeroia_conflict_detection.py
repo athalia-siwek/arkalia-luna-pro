@@ -1,13 +1,13 @@
 from pathlib import Path
 
 from modules.zeroia.reason_loop import check_for_ia_conflict
-from tests.common.helpers import ensure_test_toml
+from tests.common.test_helpers import ensure_test_toml
 
 # Setup TOML minimal au cas où certains tests accèdent aux chemins globaux
 ensure_test_toml()
 
 
-def test_check_for_ia_conflict_detected(tmp_path: Path):
+def test_check_for_ia_conflict_detected(tmp_path: Path) -> None:
     log_path = tmp_path / "zeroia_contradictions.log"
     reflexia_decision = "monitor"
     zeroia_decision = "shutdown"

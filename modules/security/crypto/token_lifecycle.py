@@ -124,7 +124,7 @@ class TokenManager:
     - Rate limiting par token
     """
 
-    def __init__(self, vault: ArkaliaVault, jwt_secret_name: str = "jwt_master_secret"):
+    def __init__(self, vault: ArkaliaVault, jwt_secret_name: str = "jwt_master_secret") -> None:
         self.vault = vault
         self.jwt_secret_name = jwt_secret_name
         self.token_metadata: dict[str, TokenMetadata] = {}

@@ -3,7 +3,7 @@
 from modules.nyxalia.core import interpret_signal
 
 
-def test_interpret_signal():
+def test_interpret_signal() -> None:
     assert interpret_signal("ping") == "pong"
     assert interpret_signal("start") == "module nyxalia activé"
     assert interpret_signal("hello") == "signal inconnu"

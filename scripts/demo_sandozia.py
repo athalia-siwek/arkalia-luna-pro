@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 class SandoziaDemo:
     """Démonstration complète Sandozia"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.sandozia_core = None
         self.validator = None
         self.analyzer = None
@@ -399,7 +399,8 @@ behavioral_alert_enabled = true
                 print("🌟 EXCELLENT - Sandozia Intelligence Croisée pleinement opérationnelle!")
             elif global_score > 0.6:
                 print(
-                    "👍 BIEN - Sandozia fonctionne correctement avec quelques optimisations possibles"
+                    "👍 BIEN - Sandozia fonctionne correctement avec "
+                    "quelques optimisations possibles"
                 )
             else:
                 print("⚠️  ATTENTION - Sandozia nécessite des ajustements")

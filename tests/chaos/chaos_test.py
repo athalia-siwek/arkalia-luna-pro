@@ -19,7 +19,7 @@ from utils.io_safe import atomic_write, locked_read
 class ChaosTestConfig:
     """Configuration pour les tests de chaos"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.base_dir = Path(".")
         self.state_dir = Path("state")
         self.logs_dir = Path("logs")
@@ -30,10 +30,10 @@ class ChaosTestConfig:
 class ChaosTester:
     """Générateur de chaos pour tests de résilience"""
 
-    def __init__(self, config: ChaosTestConfig):
+    def __init__(self, config: ChaosTestConfig) -> None:
         self.config = config
-        self.active_processes = []
-        self.corrupted_files = []
+        self.active_processes: list = []
+        self.corrupted_files: list = []
 
     def corrupt_file(self, file_path: Path) -> bool:
         """Corrompt un fichier de manière contrôlée"""
@@ -76,7 +76,7 @@ class ChaosTester:
             print(f"⚠️ Erreur corruption {file_path}: {e}")
             return False
 
-    def restore_files(self):
+    def restore_files(self) -> None:
         """Restaure tous les fichiers corrompus"""
         for original_path, backup_path in self.corrupted_files:
             try:
@@ -95,7 +95,7 @@ class ChaosTester:
 import time
 import threading
 
-def cpu_stress():
+def cpu_stress() -> None:
     end_time = time.time() + {duration}
     while time.time() < end_time:
         pass
@@ -142,7 +142,7 @@ for t in threads:
             print("⚠️ Mémoire insuffisante pour le test")
             return []
 
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Nettoie tous les processus et fichiers de test"""
         # Termine les processus actifs
         for process in self.active_processes:
@@ -167,14 +167,14 @@ for t in threads:
 class TestFileSystemChaos:
     """Tests de résilience du système de fichiers"""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
-    def test_atomic_write_resilience(self):
+    def test_atomic_write_resilience(self) -> None:
         """🔥 Test résilience écriture atomique sous charge"""
         test_file = Path("test_atomic_chaos.toml")
 
@@ -197,7 +197,7 @@ class TestFileSystemChaos:
             if test_file.exists():
                 test_file.unlink()
 
-    def test_locked_read_corruption_resilience(self):
+    def test_locked_read_corruption_resilience(self) -> None:
         """🔥 Test résilience lecture verrouillée avec corruption"""
         test_file = Path("test_locked_chaos.toml")
 
@@ -226,14 +226,14 @@ class TestFileSystemChaos:
 class TestSystemLoadChaos:
     """Tests sous charge système extrême"""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
-    def test_system_under_high_cpu_load(self):
+    def test_system_under_high_cpu_load(self) -> None:
         """🔥 Test système sous charge CPU élevée"""
         try:
             # Test simple de fonctionnement du reason loop
@@ -242,7 +242,7 @@ class TestSystemLoadChaos:
         except MemoryError:
             pytest.skip("Mémoire insuffisante pour le test")
 
-    def test_performance_under_load(self):
+    def test_performance_under_load(self) -> None:
         """⚡ Test performance sous charge"""
         start_time = time.time()
 
@@ -259,7 +259,7 @@ class TestSystemLoadChaos:
         # Sous charge, le système peut être plus lent mais doit rester fonctionnel
         assert execution_time < 30, f"Système trop lent sous charge: {execution_time:.2f}s"
 
-    def test_memory_pressure_resilience(self):
+    def test_memory_pressure_resilience(self) -> None:
         """🧠 Test résilience sous pression mémoire"""
         try:
             # Alloue mémoire pour créer pression
@@ -288,14 +288,14 @@ class TestSystemLoadChaos:
 class TestNetworkChaos:
     """Tests de résilience réseau"""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
-    def test_system_offline_resilience(self):
+    def test_system_offline_resilience(self) -> None:
         """📡 Test résilience système hors ligne"""
         with patch("socket.gethostbyname") as mock_dns:
             # Simule échec DNS
@@ -306,7 +306,7 @@ class TestNetworkChaos:
 
             assert load_context() is not None
 
-    def test_dns_failure_resilience(self):
+    def test_dns_failure_resilience(self) -> None:
         """🌐 Test résilience échec DNS"""
         with patch("socket.getaddrinfo") as mock_getaddr:
             mock_getaddr.side_effect = OSError("DNS resolution failed")
@@ -320,14 +320,14 @@ class TestNetworkChaos:
 class TestStatePersistenceChaos:
     """Tests de persistance d'état sous chaos"""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
-    def test_state_corruption_recovery(self):
+    def test_state_corruption_recovery(self) -> None:
         """💾 Test récupération corruption état"""
         state_file = Path("test_state_chaos.toml")
 
@@ -356,7 +356,7 @@ class TestStatePersistenceChaos:
             if state_file.exists():
                 state_file.unlink()
 
-    def test_concurrent_state_access_chaos(self):
+    def test_concurrent_state_access_chaos(self) -> None:
         """🔄 Test accès concurrent état avec chaos"""
         state_file = Path("test_concurrent_chaos.toml")
 
@@ -366,7 +366,7 @@ class TestStatePersistenceChaos:
             atomic_write(state_file, toml.dumps(initial_state))
 
             # Fonction de stress concurrent
-            def stress_state_access():
+            def stress_state_access() -> None:
                 for _i in range(5):
                     try:
                         # Lecture
@@ -415,14 +415,14 @@ class TestStatePersistenceChaos:
 class TestCriticalSystemChaos:
     """Tests de chaos sur fonctions critiques système"""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
-    def test_critical_decision_under_chaos(self):
+    def test_critical_decision_under_chaos(self) -> None:
         """⚠️ Test décision critique sous chaos"""
         # Crée contexte dégradé
         degraded_context = {
@@ -441,14 +441,14 @@ class TestCriticalSystemChaos:
 class TestChaosIntegration:
     """Tests d'intégration chaos complets"""
 
-    def setup_method(self):
+    def setup_method(self) -> None:
         self.config = ChaosTestConfig()
         self.chaos = ChaosTester(self.config)
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         self.chaos.cleanup()
 
-    def test_full_system_chaos_simulation(self):
+    def test_full_system_chaos_simulation(self) -> None:
         """🌪️ Test simulation chaos système complet"""
         try:
             # Phase 1: Stress multi-facteur
@@ -475,7 +475,7 @@ class TestChaosIntegration:
         except MemoryError:
             pytest.skip("Ressources système insuffisantes")
 
-    def test_chaos_recovery_metrics(self):
+    def test_chaos_recovery_metrics(self) -> None:
         """📊 Test métriques de récupération chaos"""
         recovery_stats = {
             "corrupted_files": 0,
@@ -526,13 +526,13 @@ class TestChaosIntegration:
 # === UTILITAIRES CHAOS ===
 
 
-def create_chaos_environment():
+def create_chaos_environment() -> None:
     """Crée un environnement de test chaos"""
     config = ChaosTestConfig()
     return ChaosTester(config)
 
 
-def run_chaos_suite():
+def run_chaos_suite() -> None:
     """Lance la suite complète de tests chaos"""
     print("🌀 Démarrage suite tests chaos Arkalia-LUNA")
 

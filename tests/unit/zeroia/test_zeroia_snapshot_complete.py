@@ -13,7 +13,7 @@ from modules.zeroia.snapshot_generator import (
     is_valid_toml,
     load_state,
 )
-from tests.common.helpers import ensure_test_toml
+from tests.common.test_helpers import ensure_test_toml
 
 ensure_test_toml()
 
@@ -287,7 +287,7 @@ def test_generate_snapshot_exception_in_log_writing():
         toml.dump(state_data, input_file.open("w"))
 
         # Simule une erreur lors de l'ouverture du fichier de log
-        def mock_open_side_effect(filename, mode="r"):
+        def mock_open_side_effect(filename, mode="r") -> None:
             if "snapshot_evolution.log" in str(filename):
                 raise OSError("Cannot write to log file")
             return mock_open().return_value

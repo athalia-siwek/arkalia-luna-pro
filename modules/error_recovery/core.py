@@ -51,7 +51,7 @@ class RecoveryResult(BaseModel):
 class ErrorRecoverySystem:
     """Système de récupération d'erreurs"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_errors: dict[str, list[ModuleError]] = {}
         self.recovery_history: list[RecoveryResult] = []
         self.is_running = False
@@ -202,7 +202,7 @@ async def report_error(error: ModuleError):
         result = await recovery_system.register_error(error)
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.post("/recover")
@@ -212,7 +212,7 @@ async def force_recovery(action: RecoveryAction):
         result = await recovery_system.execute_recovery(action)
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.get("/status")

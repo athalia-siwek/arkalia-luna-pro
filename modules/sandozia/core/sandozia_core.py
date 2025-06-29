@@ -20,8 +20,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
 
+import diskcache  # type: ignore
 import toml
-from diskcache import Cache
 
 # Imports Arkalia existants (functions disponibles)
 from ...reflexia.core import get_metrics, launch_reflexia_check
@@ -78,7 +78,7 @@ class SandoziaCore:
     - Recommandations intelligence collaborative
     """
 
-    def __init__(self, config_path: Path | None = None):
+    def __init__(self, config_path: Path | None = None) -> None:
         self.config_path = config_path or Path("modules/sandozia/config/sandozia_config.toml")
         self.state_dir = Path("state/sandozia")
         self.logs_dir = Path("logs/sandozia")
@@ -92,7 +92,7 @@ class SandoziaCore:
 
         # Métriques et état
         self.metrics_history: list[SandoziaMetrics] = []
-        self.intelligence_snapshots = Cache(
+        self.intelligence_snapshots = diskcache.Cache(
             "./cache/sandozia_snapshots", size_limit=500_000_000
         )  # 500MB limit
         self.snapshots_counter = 0  # Compteur simple pour le suivi

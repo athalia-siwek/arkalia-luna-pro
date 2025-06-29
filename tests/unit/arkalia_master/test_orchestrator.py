@@ -3,12 +3,12 @@ from unittest.mock import patch
 from modules.zeroia.orchestrator import orchestrate_zeroia_loop
 
 
-def test_orchestrate_zeroia_loop_max_loops():
+def test_orchestrate_zeroia_loop_max_loops() -> None:
     with patch("modules.zeroia.orchestrator.reason_loop", return_value=("decision", 0.9)):
         orchestrate_zeroia_loop(max_loops=3)
 
 
-def test_orchestrate_zeroia_loop_exception_handling():
+def test_orchestrate_zeroia_loop_exception_handling() -> None:
     with patch(
         "modules.zeroia.orchestrator.reason_loop",
         side_effect=Exception("Test exception"),

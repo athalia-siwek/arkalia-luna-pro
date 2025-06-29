@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 from modules.zeroia.reason_loop import ensure_parent_dir
-from tests.common.helpers import ensure_test_toml
+from tests.common.test_helpers import ensure_test_toml
 
 ensure_test_toml()
 
@@ -107,8 +107,7 @@ def test_ensure_parent_dir_root_path():
         # C'est attendu si on n'a pas les permissions root
         assert True
     except Exception as e:
-        # Autres exceptions non attendues
-        raise AssertionError(f"Unexpected exception: {e}")
+        raise AssertionError(f"Unexpected exception: {e}") from e
 
 
 def test_ensure_parent_dir_relative_path(tmp_path):

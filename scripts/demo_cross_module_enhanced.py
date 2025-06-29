@@ -267,10 +267,7 @@ def main():
     except KeyboardInterrupt:
         print("\n⏹️ Demo interrompue par l'utilisateur")
     except Exception as e:
-        print(f"\n💥 Erreur demo: {e}")
-        import traceback
-
-        traceback.print_exc()
+        raise RuntimeError(f"Erreur demo cross module: {e}") from e
 
     format_generated()
 

@@ -30,7 +30,7 @@ import toml
 class ChaosInjector:
     """Injecteur de chaos pour tests de résilience Arkalia-LUNA"""
 
-    def __init__(self, target_directory: str = "."):
+    def __init__(self, target_directory: str = ".") -> None:
         self.target_dir = Path(target_directory)
         self.backup_dir = Path("chaos_backups")
         self.backup_dir.mkdir(exist_ok=True)
@@ -314,9 +314,7 @@ class ChaosInjector:
             test_report["interrupted"] = True
 
         except Exception as e:
-            print(f"💥 [CHAOS] Erreur fatale: {e}")
-            test_report["fatal_error"] = str(e)
-            test_report["overall_success"] = False
+            raise RuntimeError(f"Erreur chaos test: {e}") from e
 
         finally:
             # Restauration des fichiers

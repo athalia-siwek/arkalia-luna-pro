@@ -20,7 +20,7 @@ from modules.zeroia.reason_loop import decide, reason_loop
 class ModelPoisoningDetector:
     """Détecteur d'empoisonnement de modèle pour ZeroIA"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.anomaly_threshold = 0.85
         self.decision_history = []
         self.confidence_baseline = 0.6
@@ -149,7 +149,7 @@ class FakePoisonedDatasets:
 class TestModelPoisoning(unittest.TestCase):
     """Tests de détection d'empoisonnement de modèle"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.detector = ModelPoisoningDetector()
         self.fake_data = FakePoisonedDatasets()
 

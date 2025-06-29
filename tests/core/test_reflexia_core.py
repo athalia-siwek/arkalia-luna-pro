@@ -4,7 +4,7 @@ import modules.reflexia.core as reflexia_core
 from modules.reflexia.core import launch_reflexia_loop
 
 
-def test_launch_reflexia_check_mocked():
+def test_launch_reflexia_check_mocked() -> None:
     """
     🧪 Test simulé : vérifie launch_reflexia_check avec des mocks pour chaque composant.
     """
@@ -19,14 +19,14 @@ def test_launch_reflexia_check_mocked():
                 mock_save.assert_called_once_with(mocked_metrics, mocked_status)
 
 
-def test_launch_reflexia_loop(monkeypatch):
+def test_launch_reflexia_loop(monkeypatch) -> None:
     """
     🔁 Test isolé : vérifie que la fonction reflexia_loop est bien appelée via
     launch_reflexia_loop.
     """
     called = {}
 
-    def fake_loop():
+    def fake_loop() -> None:
         called["executed"] = True
         return True
 
@@ -35,14 +35,14 @@ def test_launch_reflexia_loop(monkeypatch):
     assert called.get("executed") is True
 
 
-def test_launch_reflexia_check_realistic():
+def test_launch_reflexia_check_realistic() -> None:
     """
     🧬 Test réel : exécute launch_reflexia_check avec un mock de save_snapshot
     pour vérifier qu'il est bien appelé dans des conditions réalistes.
     """
     state_log = []
 
-    def mock_save_snapshot(metrics, status):
+    def mock_save_snapshot(metrics, status) -> None:
         state_log.append({"metrics": metrics, "status": status})
 
     with patch("modules.reflexia.core.save_snapshot", new=mock_save_snapshot):

@@ -11,7 +11,7 @@ STATE_PATH = "modules/zeroia/state/zeroia_state.toml"
 REQUIRED_FIELDS = ["last_decision", "confidence_score", "justification", "timestamp"]
 
 
-def check_state_file():
+def check_state_file() -> None:
     if not os.path.exists(STATE_PATH):
         print("❌ Fichier d'état introuvable.")
         return 2

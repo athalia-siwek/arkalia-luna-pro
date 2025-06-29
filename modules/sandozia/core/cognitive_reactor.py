@@ -93,7 +93,7 @@ class CognitiveReactor:
     - ZeroIA Circuit Breaker (protection)
     """
 
-    def __init__(self, behavior_analyzer: BehaviorAnalyzer | None = None):
+    def __init__(self, behavior_analyzer: BehaviorAnalyzer | None = None) -> None:
         self.behavior_analyzer = behavior_analyzer or BehaviorAnalyzer()
         self.event_store = EventStore()
 
@@ -503,7 +503,7 @@ async def run_daemon():
     logger.info("🔥 CognitiveReactor daemon démarré")
 
     # Gestion signal d'arrêt
-    def signal_handler(signum, frame):
+    def signal_handler(signum, frame) -> None:
         logger.info("🛑 Arrêt du daemon CognitiveReactor")
         sys.exit(0)
 

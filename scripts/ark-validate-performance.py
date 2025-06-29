@@ -65,7 +65,7 @@ def test_circuit_breaker_basic():
         circuit = CircuitBreaker(failure_threshold=3, recovery_timeout=30)
 
         # Test fonction simple
-        def simple_func():
+        def simple_func() -> None:
             return "success"
 
         start = time.perf_counter()

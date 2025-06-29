@@ -24,7 +24,7 @@ logging.basicConfig(
 
 # 🎯 Endpoint principal IA
 @router.post("/chat", tags=["IA"])
-async def chat(request: Request):
+async def chat(request: Request) -> dict:
     try:
         data = await request.json()
         prompt = data.get("message", "").strip()
@@ -38,18 +38,19 @@ async def chat(request: Request):
 
     except Exception as e:
         logging.error(f"Erreur interne : {str(e)}")
+        raise Exception(f"Erreur Helloria: {e}") from e
         return JSONResponse(status_code=500, content={"error": f"Erreur interne : {str(e)}"})
 
 
 # 🌐 Racine API
 @router.get("/", tags=["Root"])
-async def root():
+async def root() -> dict:
     return {"message": "Arkalia-LUNA API active"}
 
 
 # 📊 Endpoint métriques Prometheus
 @router.get("/metrics", tags=["Monitoring"])
-async def metrics():
+async def metrics() -> str:
     """
     Endpoint Prometheus pour exposition des métriques Arkalia-LUNA
     Format: OpenMetrics/Prometheus standard
@@ -69,13 +70,14 @@ async def metrics():
             return PlainTextResponse(prometheus_text, media_type="text/plain")
     except Exception as e:
         logging.error(f"Erreur endpoint /metrics: {e}")
+        raise Exception(f"Erreur Helloria: {e}") from e
         return JSONResponse(
             status_code=500,
             content={"error": "Erreur collecte métriques", "details": str(e)},
         )
 
 
-def _get_fallback_metrics():
+def _get_fallback_metrics() -> dict:
     """Métriques de base sans dépendances externes"""
     import time
     from pathlib import Path
@@ -169,7 +171,7 @@ def _get_fallback_metrics():
     }
 
 
-def _convert_to_prometheus_format(metrics_dict):
+def _convert_to_prometheus_format(metrics_dict: dict) -> str:
     """Convertit un dict de métriques en format Prometheus"""
     lines = []
 
@@ -200,11 +202,16 @@ app.include_router(reflexia_router)  # ✅ Active le endpoint /reflexia/check
 
 
 @app.get("/health")
-def health():
+def health() -> dict:
     return {"status": "ok"}
 
 
 @app.get("/zeroia/status", tags=["ZeroIA"])
-def zeroia_status():
+def zeroia_status() -> dict:
     with open("state/zeroia_dashboard.json") as f:
         return json.load(f)
+
+
+def _get_metrics() -> dict:
+    # Implementation of _get_metrics function
+    pass
