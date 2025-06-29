@@ -49,4 +49,4 @@ isort . --profile black --skip-glob "*/generated/*" --skip-glob "*/venv/*" || tr
 echo ""
 echo "✅ === CORRECTION STYLE TERMINÉE ==="
 echo "💡 Vérifie les imports qui ont été supprimés automatiquement"
-echo "🚀 Lance 'ruff check .' pour voir les erreurs restantes" 
+echo "🚀 Lance 'ruff check .' pour voir les erreurs restantes"

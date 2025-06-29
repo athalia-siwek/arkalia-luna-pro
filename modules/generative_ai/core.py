@@ -92,11 +92,11 @@ class {class_name}:
     """
     {class_description}
     """
-    
+
     def __init__(self) -> None:
         self.name = "{module_name}"
         logger.info(f"🚀 {class_name} initialisé")
-    
+
     def process(self, data: dict[str, Any]) -> dict[str, Any]:
         """
         Traite les données d'entrée
@@ -131,15 +131,15 @@ from modules.{module_path} import {class_name}
 
 class Test{class_name}:
     """Tests pour {class_name}"""
-    
+
     def setup_method(self):
         """Configuration avant chaque test"""
         self.{instance_name} = {class_name}()
-    
+
     def test_initialization(self):
         """Test d'initialisation"""
         assert self.{instance_name}.name == "{module_name}"
-    
+
     def test_process(self):
         """Test de traitement"""
         test_data = {{"test": "data"}}

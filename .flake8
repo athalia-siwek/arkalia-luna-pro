@@ -6,7 +6,7 @@
 max-line-length = 100
 
 # Chemins à exclure
-exclude = 
+exclude =
     venv,
     .venv,
     __pycache__,
@@ -23,35 +23,35 @@ exclude =
     dist
 
 # Règles à ignorer (faux positifs)
-ignore = 
+ignore =
     # Imports conditionnels dans les scripts de demo (normaux)
     E402,  # module level import not at top of file
-    
+
     # Variables de test intentionnellement inutilisées
     F841,  # local variable is assigned to but never used
-    
+
     # Espaces en fin de ligne (corrigés automatiquement)
     W293,  # blank line contains whitespace
-    
+
     # Imports inutilisés dans les scripts de demo
     F401,  # imported but unused
-    
+
     # Redéfinitions mineures
     F811,  # redefinition of unused
-    
+
     # Variables globales dans les scripts
     F824,  # global statement is unused
 
 # Règles spécifiques par fichier
-per-file-ignores = 
+per-file-ignores =
     # Scripts de démonstration - imports conditionnels normaux
     scripts/demo_*.py:E402,F401
     scripts/arkalia_enhanced_integration.py:F401
     scripts/ark-master-*.py:E402,F401
-    
+
     # Tests - variables intentionnellement inutilisées
     tests/**/*.py:F841,E402
-    
+
     # Modules principaux - focus sur les vraies erreurs
     modules/**/*.py:W293
 

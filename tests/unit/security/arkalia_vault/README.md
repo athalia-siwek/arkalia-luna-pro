@@ -44,4 +44,4 @@ class TestArkaliaVault:
 ```
 
 ## Conseil
-Ces tests valident la sécurité et la robustesse du système de gestion des secrets critique. 
+Ces tests valident la sécurité et la robustesse du système de gestion des secrets critique.

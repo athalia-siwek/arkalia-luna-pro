@@ -175,3 +175,22 @@ exclude = [
     "tests/chaos/chaos_common\\.py$",
     "tests/common/test_helpers\\.py$",
 ]
+
+[tool.flake8]
+max-line-length = 100
+ignore = ["E402", "F841", "W293", "F401", "F811", "E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.egg-info",
+    "venv",
+    ".venv",
+    "generated",
+    "cache",
+    "logs",
+    "state",
+    "htmlcov",
+    "benchmark_results"
+]

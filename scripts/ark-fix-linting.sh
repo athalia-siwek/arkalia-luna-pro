@@ -102,4 +102,4 @@ ruff check . --exclude "generated,venv,.venv,__pycache__" --output-format=concis
 echo ""
 echo "✅ === NETTOYAGE TERMINÉ ==="
 echo "💡 Si des erreurs persistent, elles nécessitent une correction manuelle"
-echo "🚀 Tu peux maintenant relancer tes tests !" 
+echo "🚀 Tu peux maintenant relancer tes tests !"

@@ -217,11 +217,11 @@ class QuickDemo:
     """
     Classe principale pour quick_demo
     """
-    
+
     def __init__(self):
         self.name = "quick_demo"
         logger.info(f"🚀 QuickDemo initialisé")
-    
+
     def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Traite les données d'entrée
@@ -311,4 +311,4 @@ L'**Intelligence Générative Avancée** d'Arkalia-LUNA v2.8.0 représente une a
 
 **Status :** ✅ **OPÉRATIONNEL ET PRODUCTION READY**
 
-**Prochaine étape :** 🚀 **Écosystème Enterprise et Intelligence Générative Avancée** 
+**Prochaine étape :** 🚀 **Écosystème Enterprise et Intelligence Générative Avancée**

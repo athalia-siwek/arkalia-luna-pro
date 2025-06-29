@@ -88,4 +88,4 @@ echo -e "${GREEN}• acmt${NC} - Commit style Arkalia"
 echo -e "${GREEN}• adoc${NC} - Documentation de fonction"
 echo -e "${GREEN}• atodo${NC} - TODO structuré"
 
-echo -e "\n${PURPLE}🌕 Arkalia-LUNA est maintenant prêt pour le développement IA !${NC}\n" 
+echo -e "\n${PURPLE}🌕 Arkalia-LUNA est maintenant prêt pour le développement IA !${NC}\n"

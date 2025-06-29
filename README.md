@@ -334,4 +334,4 @@ http://localhost:9093  # AlertManager
 
 **🌟 Arkalia-LUNA v2.8.0 - Production Ready avec Intelligence Générative Avancée !**
 
-*7 modules IA opérationnels • Intelligence Générative • Cognitive Reactor • Monitoring complet • Sécurité enterprise* 
+*7 modules IA opérationnels • Intelligence Générative • Cognitive Reactor • Monitoring complet • Sécurité enterprise*

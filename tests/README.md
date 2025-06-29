@@ -199,4 +199,4 @@ rm -rf .pytest_cache/
 2. **Ajouter des tests de performance** pour tous les modules critiques
 3. **Renforcer les tests de sécurité** avec plus de cas d'usage
 4. **Étendre les tests de chaos** pour une meilleure résilience
-5. **Automatiser les tests** dans la CI/CD 
+5. **Automatiser les tests** dans la CI/CD

@@ -2,7 +2,7 @@
 const CACHE_NAME = "arkalia-v3.1";
 const CACHE_FILES = [
     "/",
-    "/assets/arkalia-luna-theme.css", 
+    "/assets/arkalia-luna-theme.css",
     "/assets/js/arkalia-assistant.js",
     "/assets/logo.svg",
     "/assets/favicon.svg"
@@ -20,7 +20,7 @@ self.addEventListener("install", (e) => {
 // 🔄 Activation
 self.addEventListener("activate", (e) => {
     e.waitUntil(
-        caches.keys().then(names => 
+        caches.keys().then(names =>
             Promise.all(
                 names.filter(name => name !== CACHE_NAME)
                      .map(name => caches.delete(name))

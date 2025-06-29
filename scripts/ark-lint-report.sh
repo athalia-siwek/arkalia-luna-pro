@@ -58,4 +58,4 @@ isort . --check-only --profile black --skip-glob "*/generated/*" --skip-glob "*/
 echo ""
 echo "✅ === RAPPORT TERMINÉ ==="
 echo "💡 Utilise './scripts/ark-fix-linting.sh' pour corriger automatiquement"
-echo "💡 Utilise './scripts/ark-fix-style.sh' pour corriger le style" 
+echo "💡 Utilise './scripts/ark-fix-style.sh' pour corriger le style"

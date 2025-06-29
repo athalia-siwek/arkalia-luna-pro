@@ -137,7 +137,7 @@
 # Tests unitaires
 pytest tests/unit/ --cov=modules --cov-report=html
 
-# Tests d'intégration  
+# Tests d'intégration
 pytest tests/integration/ -v
 
 # Tests de performance
@@ -285,4 +285,4 @@ Le système démontre une **intelligence collective** où chaque module contribu
 
 **Status Final :** 🌟 **ARKALIA-LUNA v2.8.0 - MISSION ACCOMPLIE** 🌟
 
-**Prochaine mission :** 🚀 **Écosystème Enterprise et Intelligence Générative Avancée** 
+**Prochaine mission :** 🚀 **Écosystème Enterprise et Intelligence Générative Avancée**

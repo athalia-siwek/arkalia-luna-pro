@@ -73,14 +73,14 @@ for module in "${expected_modules[@]}"; do
     if [[ -d "modules/$module" ]]; then
         ark_echo "$ARKALIA_GREEN" "✅" "$module"
         ((found_modules++))
-        
+
         # Vérification des fichiers essentiels
         if [[ -f "modules/$module/__init__.py" ]]; then
             ark_echo "$ARKALIA_CYAN" "   📄" "__init__.py présent"
         else
             ark_echo "$ARKALIA_RED" "   ❌" "__init__.py manquant"
         fi
-        
+
         if [[ -f "modules/$module/core.py" ]] || [[ -d "modules/$module/core" ]]; then
             ark_echo "$ARKALIA_CYAN" "   🧠" "Core présent"
             ((working_modules++))
@@ -88,14 +88,14 @@ for module in "${expected_modules[@]}"; do
             ark_echo "$ARKALIA_RED" "   ❌" "Core manquant"
             ((broken_modules++))
         fi
-        
+
         # Vérification des tests
         if [[ -d "tests/unit/$module" ]] || [[ -d "tests/integration/$module" ]]; then
             ark_echo "$ARKALIA_CYAN" "   🧪" "Tests présents"
         else
             ark_echo "$ARKALIA_RED" "   ❌" "Tests manquants"
         fi
-        
+
     else
         ark_echo "$ARKALIA_RED" "❌" "$module (manquant)"
         missing_modules+=("$module")
@@ -228,4 +228,4 @@ if [[ -f "scripts/ark-motivation.sh" ]]; then
     ./scripts/ark-motivation.sh
 fi
 
-exit 0 
+exit 0

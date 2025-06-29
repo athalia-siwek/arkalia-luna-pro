@@ -36,4 +36,4 @@ def test_poisoning_attack():
 ```
 
 ## Conseil
-Lance les tests de sécurité régulièrement et après chaque modification sensible. 
+Lance les tests de sécurité régulièrement et après chaque modification sensible.

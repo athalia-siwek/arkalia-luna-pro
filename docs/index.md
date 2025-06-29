@@ -20,42 +20,42 @@
         <p>API centrale FastAPI optimisée</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
-    
+
     <div class="module-card">
         <div class="module-icon">🧠</div>
         <h3>AssistantIA</h3>
         <p>Navigation contextuelle avec Ollama</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
-    
+
     <div class="module-card">
         <div class="module-icon">🔁</div>
         <h3>ReflexIA</h3>
         <p>Observateur cognitif réflexif</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
-    
+
     <div class="module-card">
         <div class="module-icon">🤖</div>
         <h3>ZeroIA</h3>
         <p>Décisionneur autonome Enhanced v2.8.0</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
-    
+
     <div class="module-card">
         <div class="module-icon">🧠</div>
         <h3>Sandozia</h3>
         <p>Intelligence croisée Enterprise v2.8.0</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
-    
+
     <div class="module-card">
         <div class="module-icon">🧠</div>
         <h3>Cognitive Reactor</h3>
         <p>Intelligence avancée v2.8.0</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
-    
+
     <div class="module-card">
         <div class="module-icon">🚀</div>
         <h3>Generative AI</h3>
@@ -72,19 +72,19 @@
         <div class="metric-value">455</div>
         <div class="metric-label">Tests collectés</div>
     </div>
-    
+
     <div class="metric-card">
         <div class="metric-icon">⚡</div>
         <div class="metric-value">&lt; 2s</div>
         <div class="metric-label">Décisions ZeroIA</div>
     </div>
-    
+
     <div class="metric-card">
         <div class="metric-icon">🔧</div>
         <div class="metric-value">82</div>
         <div class="metric-label">Modules Python</div>
     </div>
-    
+
     <div class="metric-card">
         <div class="metric-icon">🚀</div>
         <div class="metric-value">7/7</div>
@@ -127,7 +127,7 @@
             <p>Opérationnel en 5 minutes</p>
         </div>
     </a>
-    
+
     <a href="fonctionnement/structure.md" class="quick-link">
         <span class="link-icon">🏗️</span>
         <div class="link-content">
@@ -135,7 +135,7 @@
             <p>Comprendre le système</p>
         </div>
     </a>
-    
+
     <a href="core/modules.md" class="quick-link">
         <span class="link-icon">📚</span>
         <div class="link-content">
@@ -143,7 +143,7 @@
             <p>Référence détaillée</p>
         </div>
     </a>
-    
+
     <a href="reference/api.md" class="quick-link">
         <span class="link-icon">🔌</span>
         <div class="link-content">
@@ -151,7 +151,7 @@
             <p>Points d'intégration</p>
         </div>
     </a>
-    
+
     <a href="modules/advanced/generative_ai.md" class="quick-link">
         <span class="link-icon">🚀</span>
         <div class="link-content">
@@ -159,7 +159,7 @@
             <p>Auto-génération de code</p>
         </div>
     </a>
-    
+
     <a href="modules/advanced/cognitive_reactor.md" class="quick-link">
         <span class="link-icon">🧠</span>
         <div class="link-content">
@@ -177,19 +177,19 @@
         <h4>Intelligence Générative Avancée</h4>
         <p>Auto-génération de code Python, création de modèles personnalisés, génération de tests automatiques</p>
     </div>
-    
+
     <div class="feature-card">
         <div class="feature-icon">🧠</div>
         <h4>Cognitive Reactor</h4>
         <p>Réactions cognitives automatiques, apprentissage continu, prédictions intelligentes</p>
     </div>
-    
+
     <div class="feature-card">
         <div class="feature-icon">📊</div>
         <h4>Monitoring Complet</h4>
         <p>Grafana, Prometheus, Loki, AlertManager - Observabilité totale</p>
     </div>
-    
+
     <div class="feature-card">
         <div class="feature-icon">🔒</div>
         <h4>Sécurité Enterprise</h4>
@@ -207,7 +207,7 @@
             <p>Guides complets et références</p>
         </div>
     </div>
-    
+
     <div class="support-item">
         <span class="support-icon">🐛</span>
         <div>
@@ -215,7 +215,7 @@
             <p><a href="https://github.com/arkalia-luna-system/arkalia-luna-pro/issues">GitHub Issues</a></p>
         </div>
     </div>
-    
+
     <div class="support-item">
         <span class="support-icon">🤝</span>
         <div>
@@ -223,7 +223,7 @@
             <p><a href="credits/CONTRIBUTING.md">Guidelines</a></p>
         </div>
     </div>
-    
+
     <div class="support-item">
         <span class="support-icon">📊</span>
         <div>

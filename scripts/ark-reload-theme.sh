@@ -8,10 +8,10 @@ echo "🌕 [ARKALIA] Rechargement du thème sombre..."
 # Vérifier si VSCode est ouvert
 if pgrep -x "Code" > /dev/null; then
     echo "✅ VSCode détecté, rechargement en cours..."
-    
+
     # Recharger la fenêtre VSCode
     code --command workbench.action.reloadWindow
-    
+
     echo "🎨 Thème sombre appliqué !"
     echo "   - Fond noir doux (#1e1e1e)"
     echo "   - Texte bleu doux (#87CEEB)"
@@ -28,4 +28,4 @@ else
 fi
 
 echo ""
-echo "🌕 [ARKALIA] Configuration du thème terminée !" 
+echo "🌕 [ARKALIA] Configuration du thème terminée !"

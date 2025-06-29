@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ════════════════════════════════════════════════════════════════════════════
-# 🚀 ARKALIA-LUNA CONTAINERS MANAGEMENT - VERSION FIXED 
+# 🚀 ARKALIA-LUNA CONTAINERS MANAGEMENT - VERSION FIXED
 # Script de gestion des conteneurs Docker optimisés et corrigés
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -31,7 +31,7 @@ log() {
     shift
     local message="$*"
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    
+
     case $level in
         "INFO")  echo -e "${GREEN}[INFO]${NC} $message" ;;
         "WARN")  echo -e "${YELLOW}[WARN]${NC} $message" ;;
@@ -39,7 +39,7 @@ log() {
         "DEBUG") echo -e "${BLUE}[DEBUG]${NC} $message" ;;
         *)       echo -e "${CYAN}[LOG]${NC} $message" ;;
     esac
-    
+
     # Log vers fichier
     mkdir -p "$(dirname "$LOG_FILE")"
     echo "[$timestamp] [$level] $message" >> "$LOG_FILE"
@@ -47,36 +47,36 @@ log() {
 
 check_requirements() {
     log "INFO" "🔍 Vérification des prérequis..."
-    
+
     if ! command -v docker &> /dev/null; then
         log "ERROR" "Docker n'est pas installé"
         exit 1
     fi
-    
+
     if ! command -v docker-compose &> /dev/null; then
         log "ERROR" "Docker Compose n'est pas installé"
         exit 1
     fi
-    
+
     if [[ ! -f "$COMPOSE_FILE" ]]; then
         log "ERROR" "Fichier docker-compose.fixed.yml introuvable: $COMPOSE_FILE"
         exit 1
     fi
-    
+
     log "INFO" "✅ Prérequis validés"
 }
 
 cleanup_system() {
     log "INFO" "🧹 Nettoyage du système Docker..."
-    
+
     # Nettoyer les fichiers cachés macOS
     find "$PROJECT_DIR" -name "._*" -delete 2>/dev/null || true
     find "$PROJECT_DIR" -name ".DS_Store" -delete 2>/dev/null || true
-    
+
     # Nettoyer Docker
     docker system prune -f --volumes || true
     docker builder prune -f || true
-    
+
     log "INFO" "✅ Nettoyage terminé"
 }
 
@@ -87,24 +87,24 @@ cleanup_system() {
 ark-start-fixed() {
     log "INFO" "🚀 Démarrage des conteneurs Arkalia-LUNA (FIXED)..."
     check_requirements
-    
+
     # Nettoyage préalable
     cleanup_system
-    
+
     # Construire et démarrer
     log "INFO" "🔨 Construction des images..."
     docker-compose -f "$COMPOSE_FILE" build --no-cache
-    
+
     log "INFO" "▶️ Démarrage des services..."
     docker-compose -f "$COMPOSE_FILE" up -d
-    
+
     # Attendre que les services soient prêts
     log "INFO" "⏳ Attente de la disponibilité des services..."
     sleep 15
-    
+
     # Vérifier le statut
     ark-status-fixed
-    
+
     log "INFO" "✅ Tous les conteneurs sont démarrés !"
     log "INFO" "🌐 API disponible sur: http://localhost:8000"
     log "INFO" "🤖 AssistantIA disponible sur: http://localhost:8001"
@@ -112,71 +112,71 @@ ark-start-fixed() {
 
 ark-stop-fixed() {
     log "INFO" "🛑 Arrêt des conteneurs Arkalia-LUNA (FIXED)..."
-    
+
     docker-compose -f "$COMPOSE_FILE" down -v || true
-    
+
     log "INFO" "✅ Tous les conteneurs sont arrêtés"
 }
 
 ark-rebuild-fixed() {
     log "INFO" "🔄 Reconstruction complète des conteneurs..."
-    
+
     # Arrêt complet
     ark-stop-fixed
-    
+
     # Nettoyage approfondi
     cleanup_system
-    
+
     # Supprimer les images existantes
     log "INFO" "🗑️ Suppression des anciennes images..."
     docker images | grep arkalia-luna-pro | awk '{print $3}' | xargs -r docker rmi -f || true
-    
+
     # Redémarrage
     ark-start-fixed
-    
+
     log "INFO" "✅ Reconstruction terminée"
 }
 
 ark-status-fixed() {
     log "INFO" "📊 Statut des conteneurs Arkalia-LUNA (FIXED)..."
-    
+
     echo -e "\n${CYAN}═══════════════════════════════════════════════════════════════════${NC}"
     echo -e "${CYAN}              ARKALIA-LUNA CONTAINERS STATUS (FIXED)              ${NC}"
     echo -e "${CYAN}═══════════════════════════════════════════════════════════════════${NC}"
-    
+
     # Statut Docker Compose
     docker-compose -f "$COMPOSE_FILE" ps
-    
+
     echo -e "\n${PURPLE}🔍 Tests de connectivité:${NC}"
-    
+
     # Test API principale
     if curl -s -f http://localhost:8000/health &>/dev/null; then
         echo -e "  ${GREEN}✅${NC} API Arkalia (port 8000) - ${GREEN}Fonctionnelle${NC}"
     else
         echo -e "  ${RED}❌${NC} API Arkalia (port 8000) - ${RED}Non disponible${NC}"
     fi
-    
+
     # Test AssistantIA
     if curl -s -f http://localhost:8001/health &>/dev/null; then
         echo -e "  ${GREEN}✅${NC} AssistantIA (port 8001) - ${GREEN}Fonctionnelle${NC}"
     else
         echo -e "  ${RED}❌${NC} AssistantIA (port 8001) - ${RED}Non disponible${NC}"
     fi
-    
+
     # Afficher les tailles des images
     echo -e "\n${PURPLE}📦 Tailles des images:${NC}"
     docker images | grep -E "(arkalia-luna-pro|REPOSITORY)" | head -10
-    
+
     # Utilisation des ressources
     echo -e "\n${PURPLE}💾 Utilisation des ressources:${NC}"
     docker stats --no-stream --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}" || true
-    
+
     echo -e "\n${CYAN}═══════════════════════════════════════════════════════════════════${NC}"
 }
 
 ark-logs-fixed() {
     local service=${1:-""}
-    
+
     if [[ -n "$service" ]]; then
         log "INFO" "📋 Logs du service: $service"
         docker-compose -f "$COMPOSE_FILE" logs -f --tail=100 "$service"
@@ -188,37 +188,37 @@ ark-logs-fixed() {
 
 ark-restart-service-fixed() {
     local service=${1:-""}
-    
+
     if [[ -z "$service" ]]; then
         log "ERROR" "Usage: ark-restart-service-fixed <service_name>"
         log "INFO" "Services disponibles: arkalia-api-fixed, assistantia-fixed, reflexia-fixed, zeroia-fixed, sandozia-fixed, cognitive-reactor-fixed"
         return 1
     fi
-    
+
     log "INFO" "🔄 Redémarrage du service: $service"
     docker-compose -f "$COMPOSE_FILE" restart "$service"
-    
+
     sleep 5
     docker-compose -f "$COMPOSE_FILE" ps "$service"
-    
+
     log "INFO" "✅ Service $service redémarré"
 }
 
 ark-shell-fixed() {
     local service=${1:-"arkalia-api-fixed"}
-    
+
     log "INFO" "🐚 Ouverture d'un shell dans le conteneur: $service"
     docker-compose -f "$COMPOSE_FILE" exec "$service" /bin/bash
 }
 
 ark-health-check-fixed() {
     log "INFO" "🏥 Vérification de santé complète..."
-    
+
     local all_healthy=true
-    
+
     # Check des services principaux
     services=("arkalia-api-fixed" "assistantia-fixed" "reflexia-fixed" "zeroia-fixed" "sandozia-fixed" "cognitive-reactor-fixed")
-    
+
     for service in "${services[@]}"; do
         if docker-compose -f "$COMPOSE_FILE" ps "$service" | grep -q "Up"; then
             echo -e "  ${GREEN}✅${NC} $service - Running"
@@ -227,24 +227,24 @@ ark-health-check-fixed() {
             all_healthy=false
         fi
     done
-    
+
     # Test des endpoints
     echo -e "\n${PURPLE}🌐 Tests des endpoints:${NC}"
-    
+
     if curl -s -f http://localhost:8000/health &>/dev/null; then
         echo -e "  ${GREEN}✅${NC} http://localhost:8000/health"
     else
         echo -e "  ${RED}❌${NC} http://localhost:8000/health"
         all_healthy=false
     fi
-    
+
     if curl -s -f http://localhost:8001/health &>/dev/null; then
         echo -e "  ${GREEN}✅${NC} http://localhost:8001/health"
     else
         echo -e "  ${RED}❌${NC} http://localhost:8001/health"
         all_healthy=false
     fi
-    
+
     if $all_healthy; then
         log "INFO" "✅ Tous les services sont en bonne santé"
         return 0
@@ -303,4 +303,4 @@ main() {
 # Permettre l'utilisation directe des fonctions
 if [[ "${BASH_SOURCE[0]:-$0}" == "${0}" ]]; then
     main "$@"
-fi 
+fi

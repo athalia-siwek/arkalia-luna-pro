@@ -3,4 +3,4 @@
 # Raccourci pour ark-fix-linting.sh
 
 cd /Volumes/T7/devstation/cursor/arkalia-luna-pro
-./scripts/ark-fix-linting.sh 
+./scripts/ark-fix-linting.sh

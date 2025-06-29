@@ -34,20 +34,20 @@ log_error() {
 
 start_containers() {
     log_info "🚀 Démarrage des conteneurs Arkalia-LUNA..."
-    
+
     if [[ ! -f "$COMPOSE_FILE" ]]; then
         log_error "Fichier $COMPOSE_FILE introuvable"
         return 1
     fi
-    
+
     # Nettoyage préalable
     find . -name "._*" -delete 2>/dev/null || true
     find . -name ".DS_Store" -delete 2>/dev/null || true
-    
+
     # Construction et démarrage
     docker-compose -f "$COMPOSE_FILE" build --no-cache
     docker-compose -f "$COMPOSE_FILE" up -d
-    
+
     log_info "✅ Conteneurs démarrés"
     log_info "🌐 API disponible sur: http://localhost:8000"
     log_info "🤖 AssistantIA disponible sur: http://localhost:8001"
@@ -71,14 +71,14 @@ show_status() {
     echo ""
     docker-compose -f "$COMPOSE_FILE" ps
     echo ""
-    
+
     # Test de connectivité
     if curl -s -f http://localhost:8000/health &>/dev/null; then
         echo -e "  ${GREEN}✅${NC} API (port 8000) - Fonctionnelle"
     else
         echo -e "  ${RED}❌${NC} API (port 8000) - Non disponible"
     fi
-    
+
     if curl -s -f http://localhost:8001/health &>/dev/null; then
         echo -e "  ${GREEN}✅${NC} AssistantIA (port 8001) - Fonctionnelle"
     else
@@ -99,9 +99,9 @@ show_logs() {
 
 health_check() {
     log_info "🏥 Vérification de santé..."
-    
+
     local all_healthy=true
-    
+
     # Test des services
     if docker-compose -f "$COMPOSE_FILE" ps | grep -q "Up"; then
         echo -e "  ${GREEN}✅${NC} Services Docker - Running"
@@ -109,7 +109,7 @@ health_check() {
         echo -e "  ${RED}❌${NC} Services Docker - Stopped"
         all_healthy=false
     fi
-    
+
     # Test des endpoints
     if curl -s -f http://localhost:8000/health &>/dev/null; then
         echo -e "  ${GREEN}✅${NC} API Health Check"
@@ -117,7 +117,7 @@ health_check() {
         echo -e "  ${RED}❌${NC} API Health Check"
         all_healthy=false
     fi
-    
+
     if $all_healthy; then
         log_info "✅ Système en bonne santé"
     else
@@ -155,4 +155,4 @@ case "${1:-help}" in
     "logs")         show_logs "${2:-}" ;;
     "health")       health_check ;;
     "help"|*)       show_help ;;
-esac 
+esac

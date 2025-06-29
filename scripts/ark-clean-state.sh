@@ -14,4 +14,4 @@ find state/sandozia/ -name "detected_patterns.jsonl" -delete
 echo "- Suppression du cache metrics (latest_metrics.json)"
 rm -f state/sandozia/latest_metrics.json
 
-echo "✅ Nettoyage terminé. Seuls les états critiques sont conservés." 
+echo "✅ Nettoyage terminé. Seuls les états critiques sont conservés."

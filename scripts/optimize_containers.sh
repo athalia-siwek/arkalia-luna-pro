@@ -101,4 +101,4 @@ fi
 echo ""
 echo "🎉 [SUCCESS] Optimisation des conteneurs terminée !"
 echo "📝 [INFO] Utilisez 'docker ps' pour voir l'état des conteneurs"
-echo "🔍 [INFO] Utilisez 'docker logs <container>' pour les logs détaillés" 
+echo "🔍 [INFO] Utilisez 'docker logs <container>' pour les logs détaillés"

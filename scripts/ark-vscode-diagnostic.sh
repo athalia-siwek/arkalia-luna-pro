@@ -41,7 +41,7 @@ CONFIG_FILES=(
 for file in "${CONFIG_FILES[@]}"; do
     if [[ -f "$file" ]]; then
         echo "   ✅ $file"
-        
+
         # Validation JSON pour les fichiers JSON
         if [[ "$file" == *.json ]]; then
             if python3 -m json.tool "$file" > /dev/null 2>&1; then
@@ -97,7 +97,7 @@ echo "🐍 Vérification de l'environnement Python..."
 # Vérification du venv
 if [[ -d "/Volumes/T7/arkalia-luna-venv" ]]; then
     echo "   ✅ Venv trouvé : /Volumes/T7/arkalia-luna-venv"
-    
+
     # Vérification de l'interpréteur Python
     if [[ -f "/Volumes/T7/arkalia-luna-venv/bin/python" ]]; then
         echo "   ✅ Interpréteur Python trouvé"
@@ -182,4 +182,4 @@ echo ""
 echo "🚀 Commandes utiles :"
 echo "   • Recharger config : ./scripts/ark-vscode-reload.sh"
 echo "   • Installer extensions : ./scripts/ark-install-extensions.sh"
-echo "   • Nettoyer système : ./scripts/ark-clean-system.sh" 
+echo "   • Nettoyer système : ./scripts/ark-clean-system.sh"

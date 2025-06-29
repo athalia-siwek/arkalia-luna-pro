@@ -88,7 +88,7 @@ http://localhost:9093  # AlertManager
 
 #### 🌟 **Modules Opérationnels v2.8.0**
 1. **Helloria** ✅ HEALTHY (port 8000) - API centrale
-2. **AssistantIA** ✅ HEALTHY (port 8001) - Navigation contextuelle  
+2. **AssistantIA** ✅ HEALTHY (port 8001) - Navigation contextuelle
 3. **ReflexIA** ✅ HEALTHY (port 8002) - Observateur cognitif
 4. **ZeroIA** ✅ HEALTHY - Décisionneur autonome Enhanced v2.8.0
 5. **Sandozia** ✅ HEALTHY - Intelligence croisée Enterprise v2.8.0

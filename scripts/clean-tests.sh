@@ -134,4 +134,4 @@ echo "   • pytest tests/ -v (relancer les tests)"
 echo "   • git add . && git commit -m '🧹 Clean tests'"
 echo ""
 
-log_success "🧹 Nettoyage automatique terminé avec succès !" 
+log_success "🧹 Nettoyage automatique terminé avec succès !"

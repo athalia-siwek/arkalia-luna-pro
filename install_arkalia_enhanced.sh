@@ -45,7 +45,7 @@ python -c "from modules.sandozia.core.cognitive_reactor import CognitiveReactor;
 
 # Test Chronalia
 python -c "from modules.sandozia.core.chronalia import Chronalia; print('✅ Chronalia OK')" 2>/dev/null || {
-    echo "❌ Erreur: Chronalia non fonctionnel" 
+    echo "❌ Erreur: Chronalia non fonctionnel"
     exit 1
 }
 
@@ -80,7 +80,7 @@ if grep -q "ARKALIA ENHANCED" "$HOME/.zshrc" 2>/dev/null; then
         echo "⏭️  Installation annulée"
         exit 0
     fi
-    
+
     # Supprimer ancienne installation
     sed -i.bak '/# ARKALIA ENHANCED START/,/# ARKALIA ENHANCED END/d' "$HOME/.zshrc"
 fi
@@ -100,7 +100,7 @@ alias ark-cognitive-test='python scripts/arkalia_enhanced_integration.py --stres
 alias ark-chronalia-timeline='echo "📊 Timeline cognitive:" && tail -n 5 state/chronalia/mind_timeline.jsonl 2>/dev/null || echo "Aucun cycle enregistré"'
 alias ark-chronalia-patterns='echo "🔍 Patterns détectés:" && tail -n 3 state/chronalia/detected_patterns.jsonl 2>/dev/null || echo "Aucun pattern détecté"'
 
-# 🌡️ HEATMAP COGNITIVE - Données Grafana  
+# 🌡️ HEATMAP COGNITIVE - Données Grafana
 alias ark-heatmap-export='python scripts/arkalia_enhanced_integration.py --generate-heatmap-data'
 
 # 🎯 INTÉGRATION COMPLÈTE - Workflow Enhanced
@@ -166,7 +166,7 @@ echo "==========================================="
 echo ""
 echo "📋 RÉSUMÉ DE L'INSTALLATION:"
 echo "   ✅ Modules Enhanced installés et testés"
-echo "   ✅ Alias ajoutés au .zshrc"  
+echo "   ✅ Alias ajoutés au .zshrc"
 echo "   ✅ Répertoires timeline créés"
 echo "   ✅ Test fonctionnel réussi"
 echo ""
@@ -197,4 +197,4 @@ read -r reload_response
 if [[ "$reload_response" =~ ^[Yy]$ ]] || [[ -z "$reload_response" ]]; then
     echo "🔄 Rechargement du shell..."
     exec zsh
-fi 
+fi

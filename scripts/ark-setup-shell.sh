@@ -19,7 +19,7 @@ ARKALIA_ALIASES="# === ARKALIA-LUNA ALIASES === #"
 if grep -q "ARKALIA-LUNA ALIASES" "$ZSHRC"; then
     echo -e "${YELLOW}⚠️  Les alias Arkalia existent déjà dans .zshrc${NC}"
     echo -e "${BLUE}🔄 Mise à jour des alias...${NC}"
-    
+
     # Supprimer l'ancienne section
     sed -i.bak '/# === ARKALIA-LUNA ALIASES === #/,/# === FIN ARKALIA-LUNA === #/d' "$ZSHRC"
 fi
@@ -106,4 +106,4 @@ echo -e "\n${BLUE}🔄 Pour activer les alias, exécute :${NC}"
 echo -e "${YELLOW}source ~/.zshrc${NC}"
 echo -e "\n${BLUE}🧠 Ou redémarre ton terminal${NC}"
 echo -e "\n${GREEN}🎉 Configuration terminée !${NC}"
-echo -e "${BLUE}🌕 Teste avec : ark-motivation${NC}\n" 
+echo -e "${BLUE}🌕 Teste avec : ark-motivation${NC}\n"

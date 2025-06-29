@@ -74,7 +74,7 @@ echo ""
 create_init_py() {
     local module_path=$1
     local module_name=$2
-    
+
     cat > "$module_path/__init__.py" << EOF
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -127,7 +127,7 @@ create_core_py() {
     local module_path=$1
     local module_name=$2
     local capitalized_name=$(echo "$module_name" | sed 's/^./\U&/')
-    
+
     cat > "$module_path/core.py" << EOF
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -159,16 +159,16 @@ class ${capitalized_name}Config:
 
 class ${capitalized_name}Core:
     """Core logic pour $module_name"""
-    
+
     def __init__(self, config: ${capitalized_name}Config):
         self.config = config
         self.logger = logging.getLogger(f"arkalia.$module_name.core")
         self._initialize()
-    
+
     def _initialize(self) -> None:
         """Initialisation du core"""
         self.logger.info("🧠 ${capitalized_name}Core initialisé")
-    
+
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Traitement principal"""
         try:
@@ -178,7 +178,7 @@ class ${capitalized_name}Core:
         except Exception as e:
             self.logger.error(f"❌ Erreur: {e}")
             return {"status": "error", "error": str(e), "module": "$module_name"}
-    
+
     def health_check(self) -> Dict[str, Any]:
         """Vérification de santé"""
         return {
@@ -199,11 +199,11 @@ async def main():
     """Fonction principale"""
     config = ${capitalized_name}Config()
     core = ${capitalized_name}Core(config)
-    
+
     # Test du module
     result = await core.process({"test": "data"})
     print(f"✅ Résultat: {result}")
-    
+
     health = core.health_check()
     print(f"🏥 Santé: {health}")
 
@@ -217,7 +217,7 @@ ark_echo "$ARKALIA_BLUE" "🔧" "Vérification et correction des modules..."
 
 for module in "${modules_to_check[@]}"; do
     module_path="modules/$module"
-    
+
     if [[ ! -d "$module_path" ]]; then
         ark_echo "$ARKALIA_BLUE" "📁" "Création du module $module..."
         mkdir -p "$module_path"
@@ -227,21 +227,21 @@ for module in "${modules_to_check[@]}"; do
         ((created_modules++))
     else
         ark_echo "$ARKALIA_GREEN" "✅" "Module $module existe"
-        
+
         # Vérification des fichiers essentiels
         if [[ ! -f "$module_path/__init__.py" ]]; then
             ark_echo "$ARKALIA_BLUE" "📄" "Création __init__.py pour $module..."
             create_init_py "$module_path" "$module"
             ((fixed_modules++))
         fi
-        
+
         if [[ ! -f "$module_path/core.py" ]]; then
             ark_echo "$ARKALIA_BLUE" "🧠" "Création core.py pour $module..."
             create_core_py "$module_path" "$module"
             ((fixed_modules++))
         fi
     fi
-    
+
     # Test d'import
     if python -c "import modules.$module" 2>/dev/null; then
         ark_echo "$ARKALIA_CYAN" "   ✅" "Import réussi"
@@ -315,4 +315,4 @@ if [[ -f "scripts/ark-motivation.sh" ]]; then
     ./scripts/ark-motivation.sh
 fi
 
-exit 0 
+exit 0

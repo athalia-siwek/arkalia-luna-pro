@@ -475,7 +475,7 @@ sequenceDiagram
     V->>R: Vérification cohérence
     R-->>E: Si erreur détectée
     E-->>Z: Recovery si nécessaire
-    
+
     par Flux parallèles
         Z->>M: Métriques décision
     and
@@ -485,5 +485,5 @@ sequenceDiagram
     end
 
     T->>M: Archivage timeline
-    
+
     Note over Z,M: Boucle cognitive complète

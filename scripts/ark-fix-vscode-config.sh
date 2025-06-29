@@ -37,4 +37,4 @@ echo "🚀 Ouverture du projet dans Cursor..."
 open -a Cursor /Volumes/T7/devstation/cursor/arkalia-luna-pro
 
 echo "✅ Configuration VSCode/Cursor corrigée et redémarrée"
-echo "💡 Si l'erreur persiste, redémarre Cursor manuellement" 
+echo "💡 Si l'erreur persiste, redémarre Cursor manuellement"

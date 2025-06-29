@@ -273,7 +273,7 @@ Optimiser complètement la documentation Arkalia-LUNA pour refléter la version 
 
 ---
 
-**📅 Date d'optimisation :** 29 Juin 2025  
-**🔄 Version documentée :** v2.8.0  
-**🌐 Site web :** https://arkalia-luna-system.github.io/arkalia-luna-pro/  
-**📊 Statut :** ✅ **OPTIMISATION COMPLÈTE ET VALIDÉE** 
+**📅 Date d'optimisation :** 29 Juin 2025
+**🔄 Version documentée :** v2.8.0
+**🌐 Site web :** https://arkalia-luna-system.github.io/arkalia-luna-pro/
+**📊 Statut :** ✅ **OPTIMISATION COMPLÈTE ET VALIDÉE**

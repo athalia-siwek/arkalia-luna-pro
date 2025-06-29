@@ -10,7 +10,7 @@ description = "Orchestrateur Maître Arkalia-LUNA coordonnant 10 modules IA"
 [cycles]
 # Intervalles en secondes pour chaque mode
 urgent = 5.0           # Décisions critiques rapides
-normal = 30.0          # Opérations standard  
+normal = 30.0          # Opérations standard
 deep_analysis = 300.0  # Analyse approfondie (5 min)
 maintenance = 1800.0   # Maintenance système (30 min)
 
@@ -170,4 +170,4 @@ created_by = "Athalia"
 created_at = "2025-01-29T04:00:00Z"
 project = "arkalia-luna-pro"
 environment = "production"
-version_config = "4.0.0" 
+version_config = "4.0.0"

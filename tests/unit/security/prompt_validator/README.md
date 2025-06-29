@@ -43,4 +43,4 @@ def test_validate_injection_prompt():
 ```
 
 ## Conseil
-Ces tests sont critiques pour la sécurité de l'AssistantIA contre les attaques par injection. 
+Ces tests sont critiques pour la sécurité de l'AssistantIA contre les attaques par injection.

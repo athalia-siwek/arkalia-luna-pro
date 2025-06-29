@@ -42,7 +42,7 @@ ark-status-optimized() {
     else
         echo "⚠️ API principale non accessible"
     fi
-    
+
     if curl -f http://localhost:8001 2>/dev/null; then
         echo "✅ AssistantIA accessible (port 8001)"
     else
@@ -66,7 +66,7 @@ ark-start-cognitive() {
 
 # === EXPORT DES FONCTIONS ===
 export -f ark-start-optimized
-export -f ark-stop-optimized  
+export -f ark-stop-optimized
 export -f ark-rebuild-optimized
 export -f ark-status-optimized
 export -f ark-logs-optimized
@@ -79,4 +79,4 @@ echo "   ark-stop-optimized      - Arrête tous les conteneurs"
 echo "   ark-rebuild-optimized   - Reconstruit tout"
 echo "   ark-status-optimized    - Statut détaillé"
 echo "   ark-logs-optimized      - Voir les logs"
-echo "   ark-start-cognitive     - IA cognitives seulement" 
+echo "   ark-start-cognitive     - IA cognitives seulement"

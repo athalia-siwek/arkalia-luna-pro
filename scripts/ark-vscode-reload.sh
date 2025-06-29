@@ -136,4 +136,4 @@ if [[ -f "scripts/ark-motivation.sh" ]]; then
     ./scripts/ark-motivation.sh
 fi
 
-exit 0 
+exit 0

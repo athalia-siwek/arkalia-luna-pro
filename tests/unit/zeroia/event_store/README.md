@@ -44,4 +44,4 @@ def test_add_event(temp_event_store):
 ```
 
 ## Conseil
-Ces tests valident la fiabilité du système de stockage d'événements critique pour le monitoring. 
+Ces tests valident la fiabilité du système de stockage d'événements critique pour le monitoring.

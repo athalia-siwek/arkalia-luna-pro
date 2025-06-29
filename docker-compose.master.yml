@@ -70,7 +70,7 @@ services:
     labels:
       - "arkalia.master-managed=true"
 
-  # ReflexIA - connecté au master  
+  # ReflexIA - connecté au master
   reflexia:
     extends:
       file: docker-compose.yml

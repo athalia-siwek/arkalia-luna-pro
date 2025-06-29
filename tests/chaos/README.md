@@ -47,4 +47,4 @@ class TestFileSystemChaos:
 ```
 
 ## Conseil
-Lance les tests de chaos en mode dédié (nightly/cron) pour ne pas ralentir la CI classique. 
+Lance les tests de chaos en mode dédié (nightly/cron) pour ne pas ralentir la CI classique.

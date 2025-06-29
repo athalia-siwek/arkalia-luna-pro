@@ -64,4 +64,4 @@ echo "5. Appuyez sur Cmd+Shift+P et tapez 'Developer: Reload Window'"
 
 echo ""
 echo "✅ Configuration VSCode Arkalia-LUNA rechargée !"
-echo "🌕 Kernel IA ultra-protection active ✅" 
+echo "🌕 Kernel IA ultra-protection active ✅"

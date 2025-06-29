@@ -41,4 +41,4 @@ echo -e "${GOLD}║  ${WHITE}Cognitive  : ${GREEN}✅ Réactif${NC}${GOLD}      
 echo -e "${GOLD}╠══════════════════════════════════════════════════════════════╣${NC}"
 echo -e "${GOLD}║  ${CYAN}$quote${NC}${GOLD}  ║${NC}"
 echo -e "${GOLD}╚══════════════════════════════════════════════════════════════╝${NC}"
-echo -e "\n${YELLOW}🚀 Prêt pour le développement IA ?${NC}\n" 
+echo -e "\n${YELLOW}🚀 Prêt pour le développement IA ?${NC}\n"

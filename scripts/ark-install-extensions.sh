@@ -47,48 +47,48 @@ extensions=(
     "ms-python.black-formatter"
     "ms-python.isort"
     "charliermarsh.ruff"
-    
+
     # 🎨 Thèmes & Icons
     "GitHub.github-vscode-theme"
     "PKief.material-icon-theme"
     "zhuangtongfa.Material-theme"
-    
+
     # 🧠 IA & Productivité
     "GitHub.copilot"
     "GitHub.copilot-chat"
     "ms-vscode.vscode-ai"
-    
+
     # 🔍 Git & GitHub
     "eamodio.gitlens"
     "GitHub.vscode-pull-request-github"
     "GitHub.vscode-github-actions"
-    
+
     # 📊 Monitoring & Debug
     "ms-vscode.vscode-json"
     "redhat.vscode-yaml"
     "ms-azuretools.vscode-docker"
-    
+
     # 🎯 Productivité Avancée
     "esbenp.prettier-vscode"
     "ms-vscode.vscode-eslint"
-    
+
     # 🌕 Arkalia Spécial
     "DavidAnson.vscode-markdownlint"
     "streetsidesoftware.code-spell-checker"
     "ms-vscode.vscode-todo-highlight"
-    
+
     # 📝 Documentation
     "yzhang.markdown-all-in-one"
     "shd101wyy.markdown-preview-enhanced"
     "bierner.markdown-mermaid"
-    
+
     # 🔐 Sécurité
     "ms-azuretools.vscode-docker"
-    
+
     # 🎨 UI/UX
     "ms-vscode.vscode-css-peek"
     "ms-vscode.vscode-html-css-support"
-    
+
     # 🧠 Extensions supplémentaires utiles
     "aaron-bond.better-comments"
     "usernamehw.errorlens"
@@ -114,13 +114,13 @@ ark_echo "$ARKALIA_BLUE" "🚀" "Installation des extensions Arkalia-LUNA..."
 for extension in "${extensions[@]}"; do
     # Extraction du nom d'affichage
     display_name=$(echo "$extension" | sed 's/.*\.//')
-    
+
     if echo "$installed_extensions" | grep -q "^${extension}$"; then
         ark_echo "$ARKALIA_GREEN" "✅" "$display_name (déjà installée)"
         ((installed_count++))
     else
         ark_echo "$ARKALIA_BLUE" "📦" "Installation de $display_name..."
-        
+
         if code --install-extension "$extension" >/dev/null 2>&1; then
             ark_echo "$ARKALIA_GREEN" "✅" "$display_name installée"
             ((new_install_count++))
@@ -128,7 +128,7 @@ for extension in "${extensions[@]}"; do
             ark_echo "$ARKALIA_RED" "❌" "Échec installation $display_name"
             ((failed_count++))
         fi
-        
+
         # Pause pour éviter la surcharge
         sleep 0.5
     fi
@@ -204,4 +204,4 @@ if [[ -f "scripts/ark-motivation.sh" ]]; then
     ./scripts/ark-motivation.sh
 fi
 
-exit 0 
+exit 0

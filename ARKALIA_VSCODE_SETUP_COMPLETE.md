@@ -140,4 +140,4 @@ Ton environnement de développement Arkalia-LUNA est maintenant **parfaitement c
 
 ---
 
-*Configuration VSCode Arkalia-LUNA v3.0-phase1 - Terminée avec succès !* 
+*Configuration VSCode Arkalia-LUNA v3.0-phase1 - Terminée avec succès !*

@@ -2,8 +2,8 @@
 
 ## 📊 Résumé Exécutif
 
-**Date** : 29 Juin 2025  
-**Version** : Arkalia-LUNA v11.3.2  
+**Date** : 29 Juin 2025
+**Version** : Arkalia-LUNA v11.3.2
 **Statut** : ✅ **OPTIMISATION RÉUSSIE**
 
 ### 🎯 Objectifs Atteints
@@ -140,5 +140,5 @@ Le système est maintenant **prêt pour le déploiement en production** avec des
 
 ---
 
-*Rapport généré automatiquement le 29 Juin 2025*  
-*Arkalia-LUNA v11.3.2 - Kernel IA Ultra-Pro Clean* 🌕 
+*Rapport généré automatiquement le 29 Juin 2025*
+*Arkalia-LUNA v11.3.2 - Kernel IA Ultra-Pro Clean* 🌕

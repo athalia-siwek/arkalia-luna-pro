@@ -22,4 +22,4 @@ python -c "import asyncio, json, logging, pathlib; print('✅ Dépendances OK')"
 
 # === Démarrage du module ===
 echo "🚀 Lancement de l'Intelligence Générative..."
-exec python -m modules.generative_ai.core --mode production --daemon 
+exec python -m modules.generative_ai.core --mode production --daemon

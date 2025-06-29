@@ -112,7 +112,7 @@ def fix_circuit_breaker_error_handling() -> bool:
         \"\"\"Gère les erreurs inattendues\"\"\"
         logger.warning(f"Erreur inattendue dans Circuit Breaker: {error}")
         self.metrics.unexpected_errors += 1
-        
+
         # Enregistrer l'événement
         if self.event_store:
             try:

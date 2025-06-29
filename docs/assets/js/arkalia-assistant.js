@@ -287,18 +287,18 @@ styles.textContent = `
         from { opacity: 0; }
         to { opacity: 1; }
     }
-    
+
     @keyframes slideInScale {
-        from { 
+        from {
             opacity: 0;
             transform: translateY(20px) scale(0.95);
         }
-        to { 
+        to {
             opacity: 1;
             transform: translateY(0) scale(1);
         }
     }
-    
+
     @keyframes slideInUp {
         from {
             opacity: 0;
