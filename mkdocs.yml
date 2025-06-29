@@ -37,14 +37,6 @@ theme:
 plugins:
   - search:
       lang: fr
-  - minify:
-      minify_html: true
-      minify_css: true
-      minify_js: true
-      htmlmin_opts:
-        remove_comments: true
-        remove_empty_space: true
-      cache_safe: true
 
 extra_css:
   - assets/arkalia-luna-theme.css
@@ -67,9 +59,9 @@ extra:
           name: Cette page pourrait être améliorée
           data: 0
           note: >-
-            Dites-nous comment améliorer cette page en 
+            Dites-nous comment améliorer cette page en
             <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro/issues/new" target="_blank" rel="noopener">créant une issue</a>.
-  
+
   # PWA Configuration
   manifest: assets/docs/manifest.json
 
