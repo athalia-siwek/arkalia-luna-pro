@@ -1,251 +1,134 @@
 /* ================================
-   🤖 ARKALIA ASSISTANT v3.0-phase1
-   Performance & UX Optimisées
+   🤖 ARKALIA ASSISTANT OPTIMISÉ
+   Léger & Efficace
    ================================ */
 
-// 🚀 Configuration et optimisations
 const ArkaliaAssistant = {
-    version: '3.0-phase1',
-    initialized: false,
+    version: '3.1-optimized',
 
-    // 🎯 Initialisation sécurisée
+    // 🚀 Initialisation simple
     init() {
-        if (this.initialized) return;
-
         try {
-            // Performance observer pour tracking
-            this.setupPerformanceTracking();
-
-            // Lazy loading pour les images
-            this.setupLazyLoading();
-
-            // Interactions améliorées
-            this.setupInteractions();
-
-            // Assistant chat intégré
-            this.setupChatAssistant();
-
-            this.initialized = true;
-            console.log('🌙 Arkalia Assistant initialized successfully');
+            this.setupSmoothScroll();
+            this.setupImageFallback();
+            this.setupChatButton();
+            console.log('🌙 Arkalia Assistant ready');
         } catch (error) {
-            console.warn('🚨 Arkalia Assistant initialization failed:', error);
+            console.warn('Assistant init failed:', error);
         }
     },
 
-    // 📊 Performance Tracking
-    setupPerformanceTracking() {
-        if ('performance' in window) {
-            // Mesure du temps de chargement
-            window.addEventListener('load', () => {
-                const loadTime = performance.now();
-                if (loadTime > 3000) {
-                    console.warn('⚠️ Page load time slow:', loadTime + 'ms');
-                }
-            });
-        }
-    },
-
-    // 🖼️ Lazy Loading Optimisé
-    setupLazyLoading() {
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                            img.classList.remove('lazy');
-                            imageObserver.unobserve(img);
-                        }
-                    }
-                });
-            });
-
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }
-    },
-
-    // 🎨 Interactions Améliorées
-    setupInteractions() {
-        // Smooth scroll pour les ancres
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
+    // 📜 Smooth scroll pour les ancres
+    setupSmoothScroll() {
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href^="#"]');
+            if (link) {
                 e.preventDefault();
-                const target = document.querySelector(anchor.getAttribute('href'));
+                const target = document.querySelector(link.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
-            });
-        });
-
-        // Effets hover améliorés
-        this.setupHoverEffects();
-
-        // Gestion des erreurs d'images
-        this.setupImageErrorHandling();
-    },
-
-    // ✨ Effets Hover Optimisés
-    setupHoverEffects() {
-        const buttons = document.querySelectorAll('.md-button, .arkalia-box');
-
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', (e) => {
-                e.target.style.transform = 'translateY(-2px) scale(1.02)';
-                e.target.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.2)';
-            });
-
-            button.addEventListener('mouseleave', (e) => {
-                e.target.style.transform = '';
-                e.target.style.boxShadow = '';
-            });
+            }
         });
     },
 
-    // 🖼️ Gestion Erreurs Images
-    setupImageErrorHandling() {
-        document.querySelectorAll('img').forEach(img => {
-            img.addEventListener('error', (e) => {
-                // Placeholder SVG en cas d'erreur
-                e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjNjM2NmYxIi8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QXJrYWxpYTwvdGV4dD4KPHN2Zz4=';
-                e.target.alt = 'Arkalia-LUNA Logo';
-                console.warn('🖼️ Image failed to load:', e.target.src);
-            });
-        });
+    // 🖼️ Gestion erreurs images (simple)
+    setupImageFallback() {
+        document.addEventListener('error', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.target.style.display = 'none';
+            }
+        }, true);
     },
 
-    // 💬 Chat Assistant Intégré (Mode Démo)
-    setupChatAssistant() {
-        const chatButton = this.createChatButton();
-        document.body.appendChild(chatButton);
-    },
-
-    // 🎯 Créer Bouton Chat Moderne
-    createChatButton() {
+    // 💬 Bouton chat simple et efficace
+    setupChatButton() {
         const button = document.createElement('button');
-        button.className = 'arkalia-chat-button';
-        button.innerHTML = '🌙 Assistant Arkalia';
+        button.innerHTML = '🌙 Assistant';
+        button.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            transition: transform 0.2s ease;
+            z-index: 9999;
+        `;
 
-        // Styles inline pour éviter les conflits CSS
-        Object.assign(button.style, {
-            position: 'fixed',
-            bottom: '20px',
-            right: '20px',
-            backgroundColor: '#6366f1',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50px',
-            padding: '12px 20px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(99, 102, 241, 0.3)',
-            transition: 'all 0.3s ease',
-            zIndex: '9999'
-        });
+        button.onmouseover = () => button.style.transform = 'translateY(-2px)';
+        button.onmouseout = () => button.style.transform = '';
+        button.onclick = () => this.showChatModal();
 
-        button.addEventListener('click', () => this.openChatModal());
-
-        return button;
+        document.body.appendChild(button);
     },
 
-    // 🎭 Modal Chat Moderne
-    openChatModal() {
+    // 🎭 Modal chat simple
+    showChatModal() {
         const modal = document.createElement('div');
-        modal.className = 'arkalia-chat-modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        `;
+
         modal.innerHTML = `
-            <div class="arkalia-chat-content">
-                <div class="arkalia-chat-header">
-                    <h3>🌙 Assistant Arkalia-LUNA</h3>
-                    <button class="arkalia-close-btn">×</button>
+            <div style="
+                background: white;
+                border-radius: 12px;
+                padding: 2rem;
+                max-width: 500px;
+                width: 90%;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            ">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: #1f2937;">🌙 Assistant Arkalia</h3>
+                    <button onclick="this.closest('.modal').remove()" style="
+                        background: none;
+                        border: none;
+                        font-size: 24px;
+                        cursor: pointer;
+                        margin-left: auto;
+                    ">×</button>
                 </div>
-                <div class="arkalia-chat-body">
-                    <div class="arkalia-chat-messages">
-                        <div class="arkalia-message arkalia-bot">
-                            <strong>🤖 Arkalia:</strong> Salut ! Je suis l'assistant IA d'Arkalia-LUNA. Comment puis-je t'aider ?
-                        </div>
-                        <div class="arkalia-message arkalia-bot">
-                            <strong>📚 Suggestions:</strong>
-                            <ul>
-                                <li>• Explique-moi les modules</li>
-                                <li>• Comment démarrer Arkalia ?</li>
-                                <li>• Quelle est l'architecture ?</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="arkalia-chat-input">
-                        <input type="text" placeholder="Tape ta question..." />
-                        <button>Envoyer</button>
-                    </div>
+                <div style="color: #6b7280; line-height: 1.6;">
+                    <p><strong>🤖 Salut !</strong> Je suis l'assistant IA d'Arkalia-LUNA.</p>
+                    <p><strong>📚 Tu peux :</strong></p>
+                    <ul>
+                        <li>• Consulter la <a href="quick-start.md" style="color: #6366f1;">documentation</a></li>
+                        <li>• Voir les <a href="modules.md" style="color: #6366f1;">modules</a></li>
+                        <li>• Lire l'<a href="fonctionnement/structure.md" style="color: #6366f1;">architecture</a></li>
+                        <li>• Accéder à l'<a href="api.md" style="color: #6366f1;">API</a></li>
+                    </ul>
                 </div>
             </div>
         `;
 
-        // Styles pour éviter les conflits
-        this.applyChatStyles(modal);
+        modal.className = 'modal';
+        modal.onclick = (e) => {
+            if (e.target === modal) modal.remove();
+        };
 
         document.body.appendChild(modal);
-
-        // Événements
-        modal.querySelector('.arkalia-close-btn').addEventListener('click', () => {
-            modal.remove();
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.remove();
-        });
-
-        // Focus sur l'input
-        modal.querySelector('input').focus();
-    },
-
-    // 🎨 Styles Chat Modal
-    applyChatStyles(modal) {
-        Object.assign(modal.style, {
-            position: 'fixed',
-            top: '0',
-            left: '0',
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: '10000'
-        });
-
-        const content = modal.querySelector('.arkalia-chat-content');
-        Object.assign(content.style, {
-            backgroundColor: 'white',
-            borderRadius: '16px',
-            width: '90%',
-            maxWidth: '500px',
-            maxHeight: '600px',
-            overflow: 'hidden',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)'
-        });
     }
 };
 
-// 🚀 Initialisation automatique
-document.addEventListener('DOMContentLoaded', () => {
+// 🌙 Auto-initialisation quand la page est prête
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => ArkaliaAssistant.init());
+} else {
     ArkaliaAssistant.init();
-});
-
-// 🌐 Gestion PWA (Progressive Web App)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('🔧 Service Worker registered');
-            })
-            .catch(error => {
-                console.log('🚨 Service Worker registration failed');
-            });
-    });
 }

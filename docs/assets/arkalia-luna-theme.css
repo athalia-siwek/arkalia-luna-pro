@@ -1,76 +1,42 @@
 /* ================================
-   🌙 ARKALIA-LUNA THEME v3.0-phase1 OPTIMISÉ
-   "Luna Élégante" - Performance & UX Parfaites  
+   �� ARKALIA-LUNA THEME OPTIMISÉ
+   Ultra-Léger & Performance 
    ================================ */
 
 :root {
-    /* 🌙 Palette Luna IA - MODE CLAIR */
     --luna-primary: #6366f1;
-    --luna-primary-dark: #4f46e5;
     --luna-accent: #8b5cf6;
-    --luna-accent-glow: #a78bfa;
-
-    /* 🎯 COULEURS FIXES - MODE CLAIR */
-    --luna-bg-main: #ffffff;
-    /* Fond principal blanc */
-    --luna-text-main: #1f2937;
-    /* Texte principal sombre */
-    --luna-text-secondary: #6b7280;
-    /* Texte secondaire gris */
-    --luna-border: #e5e7eb;
-    /* Bordures grises douces */
+    --luna-text: #1f2937;
+    --luna-text-light: #6b7280;
+    --luna-bg: #ffffff;
     --luna-surface: #f9fafb;
-    /* Surface légèrement grise */
-    --luna-shadow: rgba(99, 102, 241, 0.1);
-
-    /* 🎨 Gradients Signature */
-    --luna-gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
-    --luna-gradient-surface: linear-gradient(145deg, #f9fafb, #f3f4f6);
+    --luna-border: #e5e7eb;
+    --luna-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 🌚 Dark Theme Variables - MODE SOMBRE */
 [data-md-color-scheme="slate"] {
-    --luna-bg-main: #0f172a;
-    /* Fond principal sombre */
-    --luna-text-main: #f1f5f9;
-    /* Texte principal clair */
-    --luna-text-secondary: #94a3b8;
-    /* Texte secondaire gris clair */
-    --luna-border: #334155;
-    /* Bordures grises sombres */
+    --luna-text: #f1f5f9;
+    --luna-text-light: #94a3b8;
+    --luna-bg: #0f172a;
     --luna-surface: #1e293b;
-    /* Surface sombre */
-    --luna-shadow: rgba(139, 92, 246, 0.2);
+    --luna-border: #334155;
 }
 
 /* ================================
-   🎯 RESET & BASE STYLING - FORCE
+   BASE STYLING
    ================================ */
 
-/* 🌟 Force le fond et texte principal */
 body {
-    background-color: var(--luna-bg-main) !important;
-    color: var(--luna-text-main) !important;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-    line-height: 1.6;
-    letter-spacing: -0.01em;
+    background-color: var(--luna-bg) !important;
+    color: var(--luna-text) !important;
+    font-family: "Inter", -apple-system, sans-serif !important;
 }
 
-/* Force les couleurs du contenu principal */
-.md-content {
-    background-color: var(--luna-bg-main) !important;
-    color: var(--luna-text-main) !important;
-}
-
-.md-content__inner {
-    background-color: var(--luna-bg-main) !important;
-    color: var(--luna-text-main) !important;
-    padding: 2rem;
-}
-
-/* Force la typographie */
+.md-content,
+.md-content__inner,
 .md-typeset {
-    color: var(--luna-text-main) !important;
+    background-color: var(--luna-bg) !important;
+    color: var(--luna-text) !important;
 }
 
 .md-typeset h1,
@@ -79,433 +45,150 @@ body {
 .md-typeset h4,
 .md-typeset h5,
 .md-typeset h6 {
-    color: var(--luna-text-main) !important;
+    color: var(--luna-text) !important;
     font-weight: 700;
 }
 
-.md-typeset p {
-    color: var(--luna-text-main) !important;
-}
-
 /* ================================
-   🌟 HEADER STYLING
+   HEADER 
    ================================ */
 
 .md-header {
     background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--luna-border);
-    box-shadow: 0 2px 20px var(--luna-shadow);
+    box-shadow: var(--luna-shadow);
 }
 
 [data-md-color-scheme="slate"] .md-header {
     background: rgba(15, 23, 42, 0.95) !important;
-    border-bottom: 1px solid var(--luna-border);
 }
 
 .md-header__title {
     font-weight: 700;
-    background: var(--luna-gradient-primary);
+    background: linear-gradient(135deg, var(--luna-primary), var(--luna-accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 /* ================================
-   🧩 NAVIGATION STYLING - OPTIMISÉ
+   NAVIGATION
    ================================ */
 
-.md-nav {
-    font-size: 0.9rem;
-}
-
 .md-nav__link {
-    border-radius: 12px;
-    padding: 0.6rem 1rem;
-    margin: 0.2rem 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: var(--luna-text-secondary) !important;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    user-select: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 0.1rem 0;
+    transition: all 0.2s ease;
+    color: var(--luna-text-light) !important;
 }
 
 .md-nav__link:hover {
     color: var(--luna-primary) !important;
-    background-color: rgba(99, 102, 241, 0.1) !important;
-    transform: translateX(4px);
-    box-shadow: 0 4px 12px var(--luna-shadow);
-}
-
-.md-nav__link:active {
-    transform: translateX(2px) scale(0.98);
+    background: rgba(99, 102, 241, 0.1) !important;
+    transform: translateX(2px);
 }
 
 .md-nav__link--active {
-    background: var(--luna-gradient-primary) !important;
+    background: var(--luna-primary) !important;
     color: white !important;
     font-weight: 600;
-    box-shadow: 0 4px 15px var(--luna-shadow);
 }
 
 /* ================================
-   📄 CONTENT ENHANCEMENTS
+   CONTENT
    ================================ */
 
-/* 🎨 Tables Styling */
 .md-typeset table {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px var(--luna-shadow);
-    background: var(--luna-bg-main) !important;
+    border-radius: 8px;
+    box-shadow: var(--luna-shadow);
     border: 1px solid var(--luna-border);
 }
 
 .md-typeset table th {
     background: var(--luna-surface) !important;
-    color: var(--luna-text-main) !important;
-    font-weight: 600;
+    color: var(--luna-text) !important;
 }
 
 .md-typeset table td {
-    color: var(--luna-text-main) !important;
+    color: var(--luna-text) !important;
 }
 
-/* 🌙 Code Blocks */
 .md-typeset pre {
     background: var(--luna-surface) !important;
-    border-radius: 16px;
+    border-radius: 8px;
     border: 1px solid var(--luna-border);
-    box-shadow: 0 2px 10px var(--luna-shadow);
-    padding: 1.5rem;
 }
 
 .md-typeset code {
     background: rgba(99, 102, 241, 0.1) !important;
     color: var(--luna-primary) !important;
-    padding: 0.25rem 0.5rem;
-    border-radius: 8px;
-    font-weight: 500;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
 }
 
 /* ================================
-   🎯 INTERACTIVE ELEMENTS - OPTIMISÉ
+   BUTTONS
    ================================ */
 
-/* 🌟 Buttons Luna Style */
 .md-button {
-    background: var(--luna-gradient-primary) !important;
+    background: var(--luna-primary) !important;
     border: none;
-    border-radius: 12px;
-    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
     color: white !important;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px var(--luna-shadow);
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    overflow: hidden;
+    transition: transform 0.2s ease;
 }
 
 .md-button:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 25px var(--luna-shadow);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
-.md-button:active {
-    transform: translateY(0) scale(0.98);
-    box-shadow: 0 2px 10px var(--luna-shadow);
-}
-
-.md-button:focus {
-    outline: 2px solid var(--luna-accent);
-    outline-offset: 2px;
-}
-
-/* 🔗 Links Styling - Optimisé */
 .md-typeset a {
     color: var(--luna-primary) !important;
     text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.md-typeset a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--luna-accent);
-    transition: width 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .md-typeset a:hover {
     color: var(--luna-accent) !important;
-}
-
-.md-typeset a:hover::after {
-    width: 100%;
+    text-decoration: underline;
 }
 
 /* ================================
-   🎨 SPECIAL COMPONENTS - OPTIMISÉ
+   RESPONSIVE
    ================================ */
 
-/* 🌙 Arkalia Box Enhanced */
-.arkalia-box {
-    background: var(--luna-gradient-primary) !important;
-    color: white !important;
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-    box-shadow: 0 8px 30px var(--luna-shadow);
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-    user-select: text;
-}
-
-.arkalia-box h3 {
-    color: white !important;
-    margin-top: 0;
-}
-
-.arkalia-box p,
-.arkalia-box li {
-    color: rgba(255, 255, 255, 0.9) !important;
-}
-
-/* Animation glow effect - Performance optimisée */
-.arkalia-box::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: var(--luna-gradient-primary);
-    border-radius: 18px;
-    opacity: 0.7;
-    filter: blur(10px);
-    animation: lunaGlow 4s ease-in-out infinite alternate;
-    z-index: -1;
-    will-change: opacity, transform;
-}
-
-@keyframes lunaGlow {
-    0% {
-        opacity: 0.7;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1.02);
-    }
-}
-
-/* ================================
-   🔔 ADMONITIONS (Alerts)
-   ================================ */
-
-.md-typeset .admonition {
-    border-radius: 12px;
-    border: 1px solid var(--luna-border);
-    background: var(--luna-surface) !important;
-    transition: all 0.3s ease;
-}
-
-.md-typeset .admonition:hover {
-    box-shadow: 0 4px 15px var(--luna-shadow);
-    transform: translateY(-1px);
-}
-
-.md-typeset .admonition-title {
-    color: var(--luna-text-main) !important;
-    font-weight: 600;
-}
-
-.md-typeset .admonition p {
-    color: var(--luna-text-main) !important;
-}
-
-/* ================================
-   🎨 CHAT ASSISTANT INTEGRATION
-   ================================ */
-
-/* Style pour le bouton chat assistant */
-.arkalia-chat-button {
-    position: fixed !important;
-    bottom: 20px !important;
-    right: 20px !important;
-    z-index: 9999 !important;
-    background: var(--luna-gradient-primary) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 50px !important;
-    padding: 12px 20px !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
-    transition: all 0.3s ease !important;
-    user-select: none !important;
-}
-
-.arkalia-chat-button:hover {
-    transform: translateY(-2px) scale(1.05) !important;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
-}
-
-.arkalia-chat-button:active {
-    transform: translateY(0) scale(0.95) !important;
-}
-
-/* ================================
-   📱 RESPONSIVE DESIGN - OPTIMISÉ
-   ================================ */
-
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .md-content__inner {
         padding: 1rem;
     }
 
-    .arkalia-box {
-        padding: 1rem;
-        margin: 1rem 0;
-    }
-
-    .arkalia-chat-button {
-        bottom: 15px !important;
-        right: 15px !important;
-        padding: 10px 16px !important;
-        font-size: 13px !important;
-    }
-
     .md-nav__link {
-        padding: 0.5rem 0.8rem;
+        padding: 0.4rem 0.8rem;
     }
 
     .md-button {
         padding: 0.6rem 1.2rem;
-        font-size: 14px;
+        font-size: 0.9rem;
     }
 }
 
 /* ================================
-   🎨 SCROLLBAR CUSTOM - OPTIMISÉ
+   ACCESSIBILITY
    ================================ */
 
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--luna-surface);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--luna-primary);
-    border-radius: 4px;
-    transition: background 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--luna-accent);
-}
-
-/* ================================
-   🔒 ACCESSIBILITY & PERFORMANCE
-   ================================ */
-
-/* Focus states optimisés */
 .md-nav__link:focus,
-.md-button:focus,
-.md-typeset a:focus {
+.md-button:focus {
     outline: 2px solid var(--luna-primary);
     outline-offset: 2px;
 }
 
-/* Optimisations de performance */
-* {
-    box-sizing: border-box;
-}
-
-.md-content,
-.md-nav,
-.md-header {
-    will-change: transform;
-}
-
-/* Images lazy loading */
-img[data-src] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-img[data-src].loaded {
-    opacity: 1;
-}
-
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-
-    .arkalia-box::before {
+        transition: none !important;
         animation: none !important;
-    }
-}
-
-/* ================================
-   🚀 PERFORMANCE OPTIMIZATIONS
-   ================================ */
-
-/* GPU acceleration pour les animations */
-.md-button,
-.md-nav__link,
-.arkalia-box,
-.arkalia-chat-button {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000;
-}
-
-/* Optimisation des transitions */
-.md-nav__link,
-.md-button,
-.md-typeset a {
-    transition-property: transform, box-shadow, color, background-color;
-    transition-duration: 0.3s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Conteneurs pour améliorer le layout */
-.md-content__inner {
-    contain: layout style;
-}
-
-/* Print styles */
-@media print {
-    .arkalia-chat-button {
-        display: none !important;
-    }
-
-    .arkalia-box::before {
-        display: none !important;
-    }
-
-    * {
-        box-shadow: none !important;
-        text-shadow: none !important;
     }
 }
