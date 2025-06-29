@@ -1,0 +1,5689 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation complète du système IA Arkalia-LUNA - v2.8.0 Production Ready">
+      
+      
+        <meta name="author" content="Arkalia-LUNA Team">
+      
+      
+        <link rel="canonical" href="https://arkalia-luna-system.github.io/arkalia-luna-pro/planning/roadmap/TECHNICAL_ROADMAP_ADVANCED/">
+      
+      
+        <link rel="prev" href="../ENHANCEMENTS/">
+      
+      
+        <link rel="next" href="../../../reports/technical/ARKALIA_LUNA_V2.8.0_FINAL_REPORT/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Technical Roadmap - Arkalia-LUNA Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/arkalia-luna-theme.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#arkalia-luna-technical-roadmap-advanced" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../../.." title="Arkalia-LUNA Documentation" class="md-header__button md-logo" aria-label="Arkalia-LUNA Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arkalia-LUNA Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Technical Roadmap
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Passer au mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Passer au mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arkalia-luna-system/arkalia-luna-pro
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../getting-started/quick-start/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../fonctionnement/structure/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../core/modules/" class="md-tabs__link">
+          
+  
+  
+  Core
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../modules/" class="md-tabs__link">
+          
+  
+  
+  Modules v2.8.0
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../reference/api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../infrastructure/installation/" class="md-tabs__link">
+          
+  
+  
+  Infrastructure
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../security/security/" class="md-tabs__link">
+          
+  
+  
+  Security
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../devops/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../guides/docker_hardening/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../releases/cross_module_enhanced_v2.7.1/" class="md-tabs__link">
+          
+  
+  
+  Releases
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Planning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../reports/technical/ARKALIA_LUNA_V2.8.0_FINAL_REPORT/" class="md-tabs__link">
+          
+  
+  
+  Reports
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../support/faqs/" class="md-tabs__link">
+          
+  
+  
+  Support
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../legal/license/" class="md-tabs__link">
+          
+  
+  
+  Legal
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Arkalia-LUNA Documentation" class="md-nav__button md-logo" aria-label="Arkalia-LUNA Documentation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    Arkalia-LUNA Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arkalia-luna-system/arkalia-luna-pro
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/cognitive-levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cognitive Levels
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fonctionnement/structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fonctionnement/composants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fonctionnement/kernel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kernel
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fonctionnement/utilisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/decision_flow.mmd" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Decision Flow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Core
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core/modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modules Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Changelog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../core/changelog-detailed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Detailed Changelog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules v2.8.0
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Modules v2.8.0
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/core/helloria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Helloria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/core/assistantia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AssistantIA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/core/reflexia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ReflexIA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/core/zeroia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ZeroIA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/core/sandozia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sandozia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/advanced/cognitive_reactor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cognitive Reactor
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/advanced/generative_ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Generative AI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/advanced/taskia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Taskia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/advanced/nyxalia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nyxalia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/advanced/global_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Global State
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Enhanced Features
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Enhanced Features
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/enhanced/cross_module_enhanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cross Module Enhanced
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/enhanced/sandozia/container_integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sandozia Container
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modules/enhanced/zeroia/orchestrator_enhanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ZeroIA Orchestrator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Infrastructure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../infrastructure/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../infrastructure/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../infrastructure/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../infrastructure/ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CI/CD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../infrastructure/automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Automation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../infrastructure/ollama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ollama
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/architecture.mmd" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/model-poisoning-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Model Poisoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/penetration-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Penetration Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/incident-response/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Incident Response
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/backup-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Backup & Recovery
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/compliance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Compliance
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/log_redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Log Redaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../security/phase4-roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Operations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DevOps Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../devops/linting-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Linting Resolution
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../devops/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DevOps Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chaos/chaos_test_suite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Chaos Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/docker_hardening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Hardening
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/ops-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Operations Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/rebuild-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rebuild Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Releases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Releases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../releases/cross_module_enhanced_v2.7.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cross Module v2.7.1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    All Releases
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Planning
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Planning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roadmap Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OPTIMISATION_v3.0-phase2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v3.0 Phase 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ENHANCEMENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Enhancements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Technical Roadmap
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Technical Roadmap
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Sur cette page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sur cette page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#progress-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Progress Tracker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Progress Tracker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-0-critique-terminee-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ PHASE 0 - CRITIQUE (TERMINÉE 100%)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-11-patterns-avances-terminee-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ PHASE 1.1 - PATTERNS AVANCÉS (TERMINÉE 100%)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-12-gestion-erreurs-avancee-a-faire" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⏳ PHASE 1.2 - GESTION ERREURS AVANCÉE (À FAIRE)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-faiblesses-techniques-a-corriger-en-priorite-absolue" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔥 PHASE 0 – FAIBLESSES TECHNIQUES À CORRIGER EN PRIORITÉ ABSOLUE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔥 PHASE 0 – FAIBLESSES TECHNIQUES À CORRIGER EN PRIORITÉ ABSOLUE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-memory-leaks-accumulation-de-snapshots-en-ram-termine" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.1 Memory Leaks : accumulation de snapshots en RAM ✅ TERMINÉ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-conteneurs-non-securises-securite-paranoiaque-partiellement" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.2 Conteneurs non sécurisés ("Sécurité Paranoïaque") ✅ PARTIELLEMENT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-pas-de-stress-tests-reels" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.3 Pas de stress-tests réels ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-design-patterns-et-stabilite-dexecution" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ PHASE 1 – DESIGN PATTERNS ET STABILITÉ D'EXÉCUTION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚙️ PHASE 1 – DESIGN PATTERNS ET STABILITÉ D&#39;EXÉCUTION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-pas-de-event-sourcing-ni-de-circuit-breaker" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Pas de Event Sourcing ni de Circuit Breaker ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gestion-derreurs-trop-basique" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Gestion d'erreurs trop basique ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-dockerisation-avancee-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 PHASE 2 – DOCKERISATION AVANCÉE &amp; ISOLATION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📦 PHASE 2 – DOCKERISATION AVANCÉE &amp; ISOLATION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-dockerisation-complete-de-sandozia-termine" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Dockerisation complète de Sandozia ✅ TERMINÉ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-zeroia-enhanced-containerization-termine-nouveau" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 ZeroIA Enhanced Containerization ✅ TERMINÉ (NOUVEAU)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-api-tests-dintegration" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔌 PHASE 3 – API &amp; TESTS D'INTÉGRATION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔌 PHASE 3 – API &amp; TESTS D&#39;INTÉGRATION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-creation-dune-api-rest-fastapi-pour-sandozia" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Création d'une API REST FastAPI pour Sandozia ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ajout-de-tests-unifies-dapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Ajout de tests unifiés d'API ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4-alertes-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      📢 PHASE 4 – ALERTES &amp; MONITORING
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📢 PHASE 4 – ALERTES &amp; MONITORING">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-prometheus-alertmanager-slack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Prometheus + AlertManager + Slack ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-projet-de-test-brutal-10k-reqs" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 PHASE 5 – PROJET DE TEST "BRUTAL" (10k req/s)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 PHASE 5 – PROJET DE TEST &#34;BRUTAL&#34; (10k req/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-scenario-test-endurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Scénario test endurance ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6-documentation-sla" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 PHASE 6 – DOCUMENTATION &amp; SLA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 PHASE 6 – DOCUMENTATION &amp; SLA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-schema-darchitecture-manquant" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Schéma d'architecture manquant ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-pas-de-sla-defini" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Pas de SLA défini ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-securite-paranoiaque-enterprise-integration-arkalia_security_roadmapmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (Intégration ARKALIA_SECURITY_ROADMAP.md)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (Intégration ARKALIA_SECURITY_ROADMAP.md)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securite-io-critique-urgent" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚨 Sécurité IO - CRITIQUE URGENT ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-input-llm-critique" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 Validation Input LLM - CRITIQUE ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chiffrement-env-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛡️ Chiffrement .env Production ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sandbox-llm-enterprise" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏰 Sandbox LLM Enterprise ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-snapshot-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 Merkle Snapshot Chains ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflexia-watchdog-cognitif" class="md-nav__link">
+    <span class="md-ellipsis">
+      👁️ ReflexIA Watchdog Cognitif ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-infrastructure-monitoring-industrial" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-metrics-avances-partiel" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Prometheus Metrics Avancés 🟡 PARTIEL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-grafana-sandozia" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Dashboard Grafana Sandozia ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alertmanager-slack" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔔 AlertManager + Slack ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ia-cognitive-extensions-avancees-v3x" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apprentissage-profond-adaptatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Apprentissage Profond Adaptatif ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-comportementale" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Prédiction Comportementale ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimisation-continue" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Optimisation Continue ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ecosystem-marketplace-sdk-phase-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#marketplace-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏪 Marketplace Modules ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdk-developpement" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ SDK Développement ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-publique-standardisee" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 API Publique Standardisée ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-outils-pro-a-ajouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧰 PHASE 7 – OUTILS PRO À AJOUTER
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tableau-de-priorisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 TABLEAU DE PRIORISATION
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plan-dexecution-recommande" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 PLAN D'EXÉCUTION RECOMMANDÉ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 PLAN D&#39;EXÉCUTION RECOMMANDÉ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#semaine-1-urgence-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚡ SEMAINE 1 (URGENCE) - Phase 0
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-2-3-haute-phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 SEMAINE 2-3 (HAUTE) - Phase 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-4-moyenne-phase-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 SEMAINE 4 (MOYENNE) - Phase 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-5-6-api-phase-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 SEMAINE 5-6 (API) - Phase 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-7-monitoring-phase-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 SEMAINE 7 (MONITORING) - Phase 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-8-stress-phase-5-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 SEMAINE 8+ (STRESS) - Phase 5-7
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-securite-paranoiaque-enterprise-arkalia_security_roadmapmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (ARKALIA_SECURITY_ROADMAP.md)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (ARKALIA_SECURITY_ROADMAP.md)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securite-io-critique-urgent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚨 Sécurité IO - CRITIQUE URGENT ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-input-llm-critique_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 Validation Input LLM - CRITIQUE ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chiffrement-env-production_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛡️ Chiffrement .env Production ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sandbox-llm-enterprise_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏰 Sandbox LLM Enterprise ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-snapshot-chains_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 Merkle Snapshot Chains ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflexia-watchdog-cognitif_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      👁️ ReflexIA Watchdog Cognitif ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-infrastructure-monitoring-industrial_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-metrics-avances-partiel_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Prometheus Metrics Avancés 🟡 PARTIEL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-grafana-sandozia_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Dashboard Grafana Sandozia ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alertmanager-slack_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔔 AlertManager + Slack ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ia-cognitive-extensions-avancees-v3x-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x Roadmap)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x Roadmap)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apprentissage-profond-adaptatif_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Apprentissage Profond Adaptatif ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-comportementale_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Prédiction Comportementale ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimisation-continue_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Optimisation Continue ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ecosystem-marketplace-sdk-phase-4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#marketplace-modules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏪 Marketplace Modules ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdk-developpement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ SDK Développement ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-publique-standardisee_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 API Publique Standardisée ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idees-additionnelles-consolidees" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 IDÉES ADDITIONNELLES CONSOLIDÉES
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 IDÉES ADDITIONNELLES CONSOLIDÉES">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memoire-vectorielle-ia" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 Mémoire Vectorielle IA ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nyxalia-web-ui-reactive" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Nyxalia Web UI Réactive ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-localcloud-chiffre" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☁️ Sync Local/Cloud Chiffré ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generateur-cli-ia" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Générateur CLI IA ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nouvelle-priorisation-globale" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 NOUVELLE PRIORISATION GLOBALE
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reports
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Reports
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_1" id="__nav_13_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Technical Reports
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_1">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Reports
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reports/technical/ARKALIA_LUNA_V2.8.0_FINAL_REPORT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Final Report v2.8.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reports/technical/bilan_v3.0-phase1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bilan v3.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_2" id="__nav_13_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Performance Reports
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_2">
+            <span class="md-nav__icon md-icon"></span>
+            Performance Reports
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reports/performance/OPTIMISATION_PERFORMANCE_FINAL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Performance Optimization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_13_3" id="__nav_13_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Documentation Reports
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_3">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation Reports
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reports/documentation/DOCUMENTATION_OPTIMISATION_V2.8.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation Optimization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Support
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Support
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../support/faqs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../journal/CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Journal Checklist
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/cognitive-levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cognitive Levels
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Legal
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../legal/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    License
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../credits/CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../credits/credits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Credits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Sur cette page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sur cette page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#progress-tracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Progress Tracker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Progress Tracker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-0-critique-terminee-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ PHASE 0 - CRITIQUE (TERMINÉE 100%)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-11-patterns-avances-terminee-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ PHASE 1.1 - PATTERNS AVANCÉS (TERMINÉE 100%)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-12-gestion-erreurs-avancee-a-faire" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⏳ PHASE 1.2 - GESTION ERREURS AVANCÉE (À FAIRE)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-faiblesses-techniques-a-corriger-en-priorite-absolue" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔥 PHASE 0 – FAIBLESSES TECHNIQUES À CORRIGER EN PRIORITÉ ABSOLUE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔥 PHASE 0 – FAIBLESSES TECHNIQUES À CORRIGER EN PRIORITÉ ABSOLUE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-memory-leaks-accumulation-de-snapshots-en-ram-termine" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.1 Memory Leaks : accumulation de snapshots en RAM ✅ TERMINÉ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-conteneurs-non-securises-securite-paranoiaque-partiellement" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.2 Conteneurs non sécurisés ("Sécurité Paranoïaque") ✅ PARTIELLEMENT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-pas-de-stress-tests-reels" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.3 Pas de stress-tests réels ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-design-patterns-et-stabilite-dexecution" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ PHASE 1 – DESIGN PATTERNS ET STABILITÉ D'EXÉCUTION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚙️ PHASE 1 – DESIGN PATTERNS ET STABILITÉ D&#39;EXÉCUTION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-pas-de-event-sourcing-ni-de-circuit-breaker" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Pas de Event Sourcing ni de Circuit Breaker ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gestion-derreurs-trop-basique" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Gestion d'erreurs trop basique ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-dockerisation-avancee-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 PHASE 2 – DOCKERISATION AVANCÉE &amp; ISOLATION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📦 PHASE 2 – DOCKERISATION AVANCÉE &amp; ISOLATION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-dockerisation-complete-de-sandozia-termine" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Dockerisation complète de Sandozia ✅ TERMINÉ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-zeroia-enhanced-containerization-termine-nouveau" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 ZeroIA Enhanced Containerization ✅ TERMINÉ (NOUVEAU)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-api-tests-dintegration" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔌 PHASE 3 – API &amp; TESTS D'INTÉGRATION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔌 PHASE 3 – API &amp; TESTS D&#39;INTÉGRATION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-creation-dune-api-rest-fastapi-pour-sandozia" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Création d'une API REST FastAPI pour Sandozia ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ajout-de-tests-unifies-dapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Ajout de tests unifiés d'API ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4-alertes-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      📢 PHASE 4 – ALERTES &amp; MONITORING
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📢 PHASE 4 – ALERTES &amp; MONITORING">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-prometheus-alertmanager-slack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Prometheus + AlertManager + Slack ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-projet-de-test-brutal-10k-reqs" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 PHASE 5 – PROJET DE TEST "BRUTAL" (10k req/s)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 PHASE 5 – PROJET DE TEST &#34;BRUTAL&#34; (10k req/s)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-scenario-test-endurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Scénario test endurance ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6-documentation-sla" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 PHASE 6 – DOCUMENTATION &amp; SLA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 PHASE 6 – DOCUMENTATION &amp; SLA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-schema-darchitecture-manquant" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Schéma d'architecture manquant ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-pas-de-sla-defini" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Pas de SLA défini ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-securite-paranoiaque-enterprise-integration-arkalia_security_roadmapmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (Intégration ARKALIA_SECURITY_ROADMAP.md)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (Intégration ARKALIA_SECURITY_ROADMAP.md)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securite-io-critique-urgent" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚨 Sécurité IO - CRITIQUE URGENT ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-input-llm-critique" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 Validation Input LLM - CRITIQUE ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chiffrement-env-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛡️ Chiffrement .env Production ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sandbox-llm-enterprise" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏰 Sandbox LLM Enterprise ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-snapshot-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 Merkle Snapshot Chains ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflexia-watchdog-cognitif" class="md-nav__link">
+    <span class="md-ellipsis">
+      👁️ ReflexIA Watchdog Cognitif ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-infrastructure-monitoring-industrial" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-metrics-avances-partiel" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Prometheus Metrics Avancés 🟡 PARTIEL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-grafana-sandozia" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Dashboard Grafana Sandozia ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alertmanager-slack" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔔 AlertManager + Slack ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ia-cognitive-extensions-avancees-v3x" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apprentissage-profond-adaptatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Apprentissage Profond Adaptatif ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-comportementale" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Prédiction Comportementale ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimisation-continue" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Optimisation Continue ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ecosystem-marketplace-sdk-phase-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#marketplace-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏪 Marketplace Modules ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdk-developpement" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ SDK Développement ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-publique-standardisee" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 API Publique Standardisée ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-outils-pro-a-ajouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧰 PHASE 7 – OUTILS PRO À AJOUTER
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tableau-de-priorisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 TABLEAU DE PRIORISATION
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plan-dexecution-recommande" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 PLAN D'EXÉCUTION RECOMMANDÉ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 PLAN D&#39;EXÉCUTION RECOMMANDÉ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#semaine-1-urgence-phase-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚡ SEMAINE 1 (URGENCE) - Phase 0
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-2-3-haute-phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 SEMAINE 2-3 (HAUTE) - Phase 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-4-moyenne-phase-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐳 SEMAINE 4 (MOYENNE) - Phase 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-5-6-api-phase-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 SEMAINE 5-6 (API) - Phase 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-7-monitoring-phase-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 SEMAINE 7 (MONITORING) - Phase 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semaine-8-stress-phase-5-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 SEMAINE 8+ (STRESS) - Phase 5-7
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-securite-paranoiaque-enterprise-arkalia_security_roadmapmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (ARKALIA_SECURITY_ROADMAP.md)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (ARKALIA_SECURITY_ROADMAP.md)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securite-io-critique-urgent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚨 Sécurité IO - CRITIQUE URGENT ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-input-llm-critique_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 Validation Input LLM - CRITIQUE ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chiffrement-env-production_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛡️ Chiffrement .env Production ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sandbox-llm-enterprise_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏰 Sandbox LLM Enterprise ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-snapshot-chains_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 Merkle Snapshot Chains ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflexia-watchdog-cognitif_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      👁️ ReflexIA Watchdog Cognitif ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-infrastructure-monitoring-industrial_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-metrics-avances-partiel_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Prometheus Metrics Avancés 🟡 PARTIEL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-grafana-sandozia_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      📈 Dashboard Grafana Sandozia ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alertmanager-slack_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔔 AlertManager + Slack ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ia-cognitive-extensions-avancees-v3x-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x Roadmap)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x Roadmap)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apprentissage-profond-adaptatif_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Apprentissage Profond Adaptatif ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-comportementale_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Prédiction Comportementale ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimisation-continue_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Optimisation Continue ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-ecosystem-marketplace-sdk-phase-4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#marketplace-modules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏪 Marketplace Modules ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sdk-developpement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ SDK Développement ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-publique-standardisee_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 API Publique Standardisée ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idees-additionnelles-consolidees" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 IDÉES ADDITIONNELLES CONSOLIDÉES
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 IDÉES ADDITIONNELLES CONSOLIDÉES">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memoire-vectorielle-ia" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 Mémoire Vectorielle IA ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nyxalia-web-ui-reactive" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Nyxalia Web UI Réactive ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-localcloud-chiffre" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☁️ Sync Local/Cloud Chiffré ❌
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generateur-cli-ia" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Générateur CLI IA ❌
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nouvelle-priorisation-globale" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 NOUVELLE PRIORISATION GLOBALE
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="arkalia-luna-technical-roadmap-advanced">🔥 ARKALIA-LUNA TECHNICAL ROADMAP ADVANCED<a class="headerlink" href="#arkalia-luna-technical-roadmap-advanced" title="Permanent link">&para;</a></h1>
+<p><strong>🎯 Objectif</strong> : Transformer Arkalia-LUNA en système IA enterprise-grade avec sécurité paranoïaque et scalabilité 10k+ req/s</p>
+<p><strong>📅 Créé</strong> : 27 Juin 2025
+<strong>📊 État actuel</strong> : Phase 1.1 ✅ TERMINÉE + Sandozia Intégré ✅</p>
+<hr />
+<h2 id="progress-tracker">📊 Progress Tracker<a class="headerlink" href="#progress-tracker" title="Permanent link">&para;</a></h2>
+<p><strong>Dernière mise à jour</strong> : 28/06/2025 15:47
+<strong>Status global</strong> : 26.1% terminé (18/69 items)</p>
+<h3 id="phase-0-critique-terminee-100">✅ PHASE 0 - CRITIQUE (TERMINÉE 100%)<a class="headerlink" href="#phase-0-critique-terminee-100" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>0.1 IO Sécurisé</strong> : <code>utils/io_safe.py</code> ✅ (existant)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>0.2 Validation LLM</strong> : <code>prompt_validator.py</code> ✅ (existant)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>0.3 Memory Leak Sandozia</strong> : ✅ <strong>RÉSOLU</strong> avec diskcache + éviction auto</li>
+</ul>
+<hr />
+<h3 id="phase-11-patterns-avances-terminee-100">✅ PHASE 1.1 - PATTERNS AVANCÉS (TERMINÉE 100%)<a class="headerlink" href="#phase-11-patterns-avances-terminee-100" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>1.1.1 Circuit Breaker ZeroIA</strong> : ✅ <strong>IMPLÉMENTÉ</strong></li>
+<li>Module : <code>modules/zeroia/circuit_breaker.py</code> (11KB)</li>
+<li>Tests : <code>tests/unit/test_circuit_breaker.py</code> (11KB)</li>
+<li>États : CLOSED/OPEN/HALF_OPEN avec recovery auto</li>
+<li>Métriques : taux succès, latence, échecs consécutifs</li>
+<li>
+<p>Protection : CognitiveOverloadError, DecisionIntegrityError, SystemRebootRequired</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>1.1.2 Event Sourcing Décisions</strong> : ✅ <strong>IMPLÉMENTÉ</strong></p>
+</li>
+<li>Module : <code>modules/zeroia/event_store.py</code> (14KB)</li>
+<li>Tests : <code>tests/unit/test_event_store.py</code> (15KB)</li>
+<li>Persistance : Cache disque 500MB avec éviction LRU</li>
+<li>Analytics : Détection anomalies, patterns, export audit</li>
+<li>
+<p>Types : DECISION_MADE, CIRCUIT_<em>, SYSTEM_</em>, CONTRADICTION_*</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>1.1.3 Reason Loop Enhanced</strong> : ✅ <strong>IMPLÉMENTÉ</strong></p>
+</li>
+<li>Module : <code>modules/zeroia/reason_loop_enhanced.py</code> (18KB)</li>
+<li>Intégration : Circuit Breaker + Event Store</li>
+<li>Fonction : <code>initialize_components()</code> prête pour production</li>
+<li>
+<p>Pattern : Resilience enterprise avec monitoring temps réel</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>1.1.4 Orchestrator Enhanced v2.8.0</strong> : ✅ <strong>IMPLÉMENTÉ</strong> (NOUVEAU)</p>
+</li>
+<li>Module : <code>modules/zeroia/orchestrator_enhanced.py</code> (15KB)</li>
+<li>Script : <code>scripts/demo_orchestrator_enhanced.py</code> avec mode daemon</li>
+<li>Docker : Container ZeroIA intégré en mode daemon</li>
+<li>
+<p>Features : Graceful degradation, métriques session, cleanup auto</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>1.1.5 Sandozia Container Integration</strong> : ✅ <strong>IMPLÉMENTÉ</strong> (NOUVEAU)</p>
+</li>
+<li>Dockerfile : <code>Dockerfile.sandozia</code> (sécurisé non-root)</li>
+<li>Container : docker-compose.yml avec service sandozia</li>
+<li>Mode daemon : <code>scripts/demo_sandozia.py --daemon</code></li>
+<li>Intelligence : Validation croisée + analyse comportementale</li>
+<li>Score : 0.831/1.0 performance globale</li>
+</ul>
+<p><strong>📊 Résultats Phase 1.1</strong> :
+- Tests : 337/337 PASSED (100% réussite core)
+- Performance : Circuit Breaker &lt;300µs latence
+- Memory : Event Store cache optimisé 500MB
+- Docker : 4 containers opérationnels (ZeroIA, Sandozia, Reflexia, Assistantia)
+- Intelligence : Score Sandozia 0.831/1.0
+- Dépendances : <code>tenacity&gt;=8.2.0</code>, <code>diskcache&gt;=5.6.3</code></p>
+<hr />
+<h3 id="phase-12-gestion-erreurs-avancee-a-faire">⏳ PHASE 1.2 - GESTION ERREURS AVANCÉE (À FAIRE)<a class="headerlink" href="#phase-12-gestion-erreurs-avancee-a-faire" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>1.2.1 Error Recovery</strong> : Rollback automatique intelligent</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>1.2.2 Graceful Degradation</strong> : Mode dégradé avec fonctionnalités réduites</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>1.2.3 Error Classification</strong> : Catégorisation erreurs (transient/permanent)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>1.2.4 Retry Strategies</strong> : Backoff exponentiel, jitter, circuit breaker intégré</li>
+</ul>
+<hr />
+<h2 id="phase-0-faiblesses-techniques-a-corriger-en-priorite-absolue">🔥 PHASE 0 – FAIBLESSES TECHNIQUES À CORRIGER EN PRIORITÉ ABSOLUE<a class="headerlink" href="#phase-0-faiblesses-techniques-a-corriger-en-priorite-absolue" title="Permanent link">&para;</a></h2>
+<h3 id="01-memory-leaks-accumulation-de-snapshots-en-ram-termine">0.1 Memory Leaks : accumulation de snapshots en RAM ✅ TERMINÉ<a class="headerlink" href="#01-memory-leaks-accumulation-de-snapshots-en-ram-termine" title="Permanent link">&para;</a></h3>
+<p><strong>✅ Problème résolu</strong> :
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># modules/sandozia/core/sandozia_core.py:92</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">intelligence_snapshots</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="s1">&#39;./cache/sandozia_snapshots&#39;</span><span class="p">,</span> <span class="n">size_limit</span><span class="o">=</span><span class="mi">500_000_000</span><span class="p">)</span>  <span class="c1"># ✅ CACHE DISQUE</span>
+</span></code></pre></div></p>
+<p><strong>✅ Impact résolu</strong> : Plus de crash, persistence sur disque, éviction auto
+<strong>✅ Solution implémentée</strong> : diskcache&gt;=5.6.3</p>
+<p><strong>✅ Actions terminées</strong> :
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">diskcache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># Cache 500MB avec gestion automatique des snapshots</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># 337/337 tests passent, démo Sandozia fonctionnel</span>
+</span></code></pre></div></p>
+<p><strong>🔍 Status</strong> : ✅ <strong>TERMINÉ</strong> (28 Juin 2025)
+<strong>📊 Résultats</strong> : 49KB/500MB utilisés, 337 tests PASS, prêt production</p>
+<hr />
+<h3 id="02-conteneurs-non-securises-securite-paranoiaque-partiellement">0.2 Conteneurs non sécurisés ("Sécurité Paranoïaque") ✅ PARTIELLEMENT<a class="headerlink" href="#02-conteneurs-non-securises-securite-paranoiaque-partiellement" title="Permanent link">&para;</a></h3>
+<p><strong>✅ Déjà fait</strong> : <code>cap_drop: [ALL]</code> dans docker-compose.yml
+<strong>❌ Manque</strong> : seccomp, network policies, user namespaces</p>
+<p><strong>➡️ Actions restantes</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">security_opt</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">seccomp:unconfined</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apparmor:docker-default</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no-new-privileges:true</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nt">networks</span><span class="p">:</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nt">arkalia_internal</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bridge</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">internal</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></code></pre></div></p>
+<p><strong>🔍 Status</strong> : 🟡 EN COURS (50% fait)</p>
+<hr />
+<h3 id="03-pas-de-stress-tests-reels">0.3 Pas de stress-tests réels ❌<a class="headerlink" href="#03-pas-de-stress-tests-reels" title="Permanent link">&para;</a></h3>
+<p><strong>❌ Problème</strong> : Aucun test de montée en charge (10k req/s)
+<strong>🛠️ Outils manquants</strong> : Locust, k6, JMeter</p>
+<p><strong>➡️ Tests à créer</strong> :
+- <code>tests/performance/test_10k_rps.py</code> (Locust)
+- <code>tests/stress/zeroia_48h_endurance.py</code>
+- <code>tests/chaos/network_partition.py</code></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-1-design-patterns-et-stabilite-dexecution">⚙️ PHASE 1 – DESIGN PATTERNS ET STABILITÉ D'EXÉCUTION<a class="headerlink" href="#phase-1-design-patterns-et-stabilite-dexecution" title="Permanent link">&para;</a></h2>
+<h3 id="11-pas-de-event-sourcing-ni-de-circuit-breaker">1.1 Pas de Event Sourcing ni de Circuit Breaker ❌<a class="headerlink" href="#11-pas-de-event-sourcing-ni-de-circuit-breaker" title="Permanent link">&para;</a></h3>
+<p><strong>❌ ZeroIA</strong> : Ne trace pas finement les décisions
+<strong>❌ Système</strong> : Aucun garde-fou en cas de cascade d'échecs</p>
+<p><strong>➡️ À implémenter</strong> :
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Event Sourcing</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">event_log</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="s2">&quot;event_type&quot;</span><span class="p">:</span> <span class="s2">&quot;decision_made&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="s2">&quot;decision&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;zeroia&quot;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">})</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># Circuit Breaker</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tenacity</span><span class="w"> </span><span class="kn">import</span> <span class="n">Retrying</span><span class="p">,</span> <span class="n">stop_after_attempt</span><span class="p">,</span> <span class="n">wait_exponential</span>
+</span></code></pre></div></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="12-gestion-derreurs-trop-basique">1.2 Gestion d'erreurs trop basique ❌<a class="headerlink" href="#12-gestion-derreurs-trop-basique" title="Permanent link">&para;</a></h3>
+<p><strong>❌ Actuel</strong> :
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">try</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">zeroia</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">except</span><span class="p">:</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">pass</span>  <span class="c1"># Trop large</span>
+</span></code></pre></div></p>
+<p><strong>✅ Attendu pro</strong> :
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">except</span> <span class="n">CognitiveOverloadError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">log_metrics</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">trigger_graceful_degradation</span><span class="p">()</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="k">raise</span> <span class="n">SystemRebootRequired</span><span class="p">(</span><span class="s2">&quot;Too much chaos&quot;</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-2-dockerisation-avancee-isolation">📦 PHASE 2 – DOCKERISATION AVANCÉE &amp; ISOLATION<a class="headerlink" href="#phase-2-dockerisation-avancee-isolation" title="Permanent link">&para;</a></h2>
+<h3 id="21-dockerisation-complete-de-sandozia-termine">2.1 Dockerisation complète de Sandozia ✅ <strong>TERMINÉ</strong><a class="headerlink" href="#21-dockerisation-complete-de-sandozia-termine" title="Permanent link">&para;</a></h3>
+<p><strong>🎯 Objectif</strong> : Isoler totalement Sandozia dans son propre container</p>
+<p><strong>✅ Fichiers créés</strong> :
+- <code>Dockerfile.sandozia</code> - Container sécurisé non-root ✅
+- <code>docker-compose.yml</code> - Service sandozia intégré ✅
+- Mode daemon opérationnel ✅</p>
+<p><strong>✅ Spécifications implémentées</strong> :
+- Utilisateur non-root sandozia ✅
+- Healthcheck intégré ✅
+- Sécurité : cap_drop=[ALL], no-new-privileges ✅
+- Dependencies : zeroia + reflexia ✅
+- Environment : SANDOZIA_ENV=production ✅</p>
+<p><strong>📊 Performance mesurée</strong> :
+- Score global Sandozia : 0.831/1.0
+- Modules connectés : 2/2 (100%)
+- Container healthy : ✅</p>
+<p><strong>🔍 Status</strong> : ✅ <strong>TERMINÉ</strong> (28 Juin 2025)</p>
+<h3 id="22-zeroia-enhanced-containerization-termine-nouveau">2.2 ZeroIA Enhanced Containerization ✅ <strong>TERMINÉ</strong> (NOUVEAU)<a class="headerlink" href="#22-zeroia-enhanced-containerization-termine-nouveau" title="Permanent link">&para;</a></h3>
+<p><strong>🎯 Objectif</strong> : Orchestrator Enhanced en mode daemon</p>
+<p><strong>✅ Réalisations</strong> :
+- Container ZeroIA rebuilt avec nouvelles dépendances ✅
+- Mode daemon : <code>scripts/demo_orchestrator_enhanced.py --daemon</code> ✅
+- Circuit Breaker + Event Sourcing intégrés ✅
+- Boucle infinie avec auto-recovery ✅
+- Métriques temps réel ✅</p>
+<p><strong>🔍 Status</strong> : ✅ <strong>TERMINÉ</strong> (28 Juin 2025)</p>
+<hr />
+<h2 id="phase-3-api-tests-dintegration">🔌 PHASE 3 – API &amp; TESTS D'INTÉGRATION<a class="headerlink" href="#phase-3-api-tests-dintegration" title="Permanent link">&para;</a></h2>
+<h3 id="31-creation-dune-api-rest-fastapi-pour-sandozia">3.1 Création d'une API REST FastAPI pour Sandozia ❌<a class="headerlink" href="#31-creation-dune-api-rest-fastapi-pour-sandozia" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">modules.sandozia.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">sandozia_routes</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">sandozia_router</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>📁 Fichiers à créer</strong> :
+- <code>modules/sandozia/api/routes.py</code>
+- <code>modules/sandozia/api/models.py</code></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="32-ajout-de-tests-unifies-dapi">3.2 Ajout de tests unifiés d'API ❌<a class="headerlink" href="#32-ajout-de-tests-unifies-dapi" title="Permanent link">&para;</a></h3>
+<p><strong>✅ Fichier recommandé</strong> : <code>tests/integration/test_sandozia_api.py</code></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-4-alertes-monitoring">📢 PHASE 4 – ALERTES &amp; MONITORING<a class="headerlink" href="#phase-4-alertes-monitoring" title="Permanent link">&para;</a></h2>
+<h3 id="41-prometheus-alertmanager-slack">4.1 Prometheus + AlertManager + Slack ❌<a class="headerlink" href="#41-prometheus-alertmanager-slack" title="Permanent link">&para;</a></h3>
+<p><strong>🎯 Détection d'incohérence Sandozia</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">receivers</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;slack&#39;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">slack_configs</span><span class="p">:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#ops&#39;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">      </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Arkalia</span><span class="nv"> </span><span class="s">Alert&#39;</span>
+</span></code></pre></div></p>
+<p><strong>📁 Fichiers à créer</strong> :
+- <code>infrastructure/monitoring/alertmanager/alerts.yml</code>
+- <code>infrastructure/monitoring/prometheus/sandozia_rules.yml</code></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-5-projet-de-test-brutal-10k-reqs">🚀 PHASE 5 – PROJET DE TEST "BRUTAL" (10k req/s)<a class="headerlink" href="#phase-5-projet-de-test-brutal-10k-reqs" title="Permanent link">&para;</a></h2>
+<h3 id="51-scenario-test-endurance">5.1 Scénario test endurance ❌<a class="headerlink" href="#51-scenario-test-endurance" title="Permanent link">&para;</a></h3>
+<p><strong>🎯 Objectif</strong> : ZeroIA doit tenir 48h sans crash sous 10k req/s, avec 2 nodes en parallèle</p>
+<p><strong>➡️ Compétences visées</strong> :
+- 🔁 Auto-healing
+- ⚖️ Load balancing
+- 🔍 Debug distribué</p>
+<p><strong>📁 Script</strong> : <code>tests/endurance/test_48h_10k_rps.py</code></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-6-documentation-sla">📚 PHASE 6 – DOCUMENTATION &amp; SLA<a class="headerlink" href="#phase-6-documentation-sla" title="Permanent link">&para;</a></h2>
+<h3 id="61-schema-darchitecture-manquant">6.1 Schéma d'architecture manquant ❌<a class="headerlink" href="#61-schema-darchitecture-manquant" title="Permanent link">&para;</a></h3>
+<p><strong>❌ Pas de modèle C4</strong>
+<strong>🧠 À faire</strong> : Diagramme C4, avec draw.io, Mermaid ou Structurizr</p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="62-pas-de-sla-defini">6.2 Pas de SLA défini ❌<a class="headerlink" href="#62-pas-de-sla-defini" title="Permanent link">&para;</a></h3>
+<p><strong>Exemple SLA</strong> : "Répondre &lt; 500ms 99% du temps"</p>
+<p><strong>📁 Fichier</strong> : <code>docs/sla/SERVICE_LEVEL_AGREEMENTS.md</code></p>
+<p><strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-securite-paranoiaque-enterprise-integration-arkalia_security_roadmapmd">🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (Intégration ARKALIA_SECURITY_ROADMAP.md)<a class="headerlink" href="#phase-securite-paranoiaque-enterprise-integration-arkalia_security_roadmapmd" title="Permanent link">&para;</a></h2>
+<h3 id="securite-io-critique-urgent">🚨 <strong>Sécurité IO - CRITIQUE URGENT</strong> ❌<a class="headerlink" href="#securite-io-critique-urgent" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Corruption TOML/JSON en production
+<strong>➡️ Solution</strong> : <code>utils/io_safe.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">atomic_write</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># Écriture atomique</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">locked_read</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>         <span class="c1"># Lecture thread-safe</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">save_toml_safe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>     <span class="c1"># TOML sécurisé</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT - <strong>PRIORITÉ #1</strong></p>
+<hr />
+<h3 id="validation-input-llm-critique">🔒 <strong>Validation Input LLM - CRITIQUE</strong> ❌<a class="headerlink" href="#validation-input-llm-critique" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Prompt injection + code injection
+<strong>➡️ Solution</strong> : <code>modules/assistantia/security/prompt_validator.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">validate_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_prompt</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">detect_injection_patterns</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT - <strong>PRIORITÉ #2</strong></p>
+<hr />
+<h3 id="chiffrement-env-production">🛡️ <strong>Chiffrement .env Production</strong> ❌<a class="headerlink" href="#chiffrement-env-production" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Secrets en clair en production
+<strong>➡️ Solution</strong> : <code>modules/security/crypto/env_encryption.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.fernet</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fernet</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># Chiffrement avec age/sops + décryptage runtime</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="sandbox-llm-enterprise">🏰 <strong>Sandbox LLM Enterprise</strong> ❌<a class="headerlink" href="#sandbox-llm-enterprise" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Exécution IA non-isolée
+<strong>➡️ Solution</strong> : <code>modules/security/sandbox/llm_sandbox.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Container Docker ultra-restreint pour prompts</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># network_disabled, cap_drop=[ALL], user=nobody</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="merkle-snapshot-chains">🔗 <strong>Merkle Snapshot Chains</strong> ❌<a class="headerlink" href="#merkle-snapshot-chains" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Intégrité snapshots non-vérifiable
+<strong>➡️ Solution</strong> : <code>modules/security/crypto/merkle_chains.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_snapshot_hash</span><span class="p">(</span><span class="n">snapshot_data</span><span class="p">,</span> <span class="n">previous_hash</span><span class="p">)</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">validate_chain_integrity</span><span class="p">(</span><span class="n">chain_file</span><span class="p">)</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="reflexia-watchdog-cognitif">👁️ <strong>ReflexIA Watchdog Cognitif</strong> ❌<a class="headerlink" href="#reflexia-watchdog-cognitif" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Pas de surveillance indépendante
+<strong>➡️ Solution</strong> : <code>modules/security/watchdog/reflexia_watchdog.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Monitoring intégrité cognitive + auto-healing</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-infrastructure-monitoring-industrial">🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL<a class="headerlink" href="#phase-infrastructure-monitoring-industrial" title="Permanent link">&para;</a></h2>
+<h3 id="prometheus-metrics-avances-partiel">📊 <strong>Prometheus Metrics Avancés</strong> 🟡 PARTIEL<a class="headerlink" href="#prometheus-metrics-avances-partiel" title="Permanent link">&para;</a></h3>
+<p><strong>Déjà fait</strong> : Métriques basiques dans <code>modules/monitoring/prometheus_metrics.py</code>
+<strong>Manque</strong> :
+- Rules Prometheus : <code>infrastructure/monitoring/prometheus/sandozia_rules.yml</code>
+- Alerting rules : <code>infrastructure/monitoring/alertmanager/alerts.yml</code>
+- Métriques business customisées</p>
+<p><strong>🔍 Status</strong> : 🟡 EN COURS (40% fait)</p>
+<hr />
+<h3 id="dashboard-grafana-sandozia">📈 <strong>Dashboard Grafana Sandozia</strong> ❌<a class="headerlink" href="#dashboard-grafana-sandozia" title="Permanent link">&para;</a></h3>
+<p><strong>Objectif</strong> : Visualisation Intelligence Croisée temps réel
+<strong>➡️ À créer</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="l l-Scalar l-Scalar-Plain">infrastructure/monitoring/grafana/dashboards/sandozia_intelligence.json</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="l l-Scalar l-Scalar-Plain">infrastructure/monitoring/grafana/dashboards/cognitive_health.json</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="l l-Scalar l-Scalar-Plain">infrastructure/monitoring/grafana/datasources/prometheus.yml</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT - <strong>ROADMAP Phase 2 Semaine 2</strong></p>
+<hr />
+<h3 id="alertmanager-slack">🔔 <strong>AlertManager + Slack</strong> ❌<a class="headerlink" href="#alertmanager-slack" title="Permanent link">&para;</a></h3>
+<p><strong>Objectif</strong> : Notifications incohérences Sandozia
+<strong>➡️ Configuration</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">receivers</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;arkalia-ops&#39;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">slack_configs</span><span class="p">:</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#arkalia-alerts&#39;</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">      </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Arkalia</span><span class="nv"> </span><span class="s">Cognitive</span><span class="nv"> </span><span class="s">Alert&#39;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">      </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Incohérence</span><span class="nv"> </span><span class="s">détectée:</span><span class="nv"> </span><span class="s">{{.GroupLabels}}&#39;</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-ia-cognitive-extensions-avancees-v3x">🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x)<a class="headerlink" href="#phase-ia-cognitive-extensions-avancees-v3x" title="Permanent link">&para;</a></h2>
+<h3 id="apprentissage-profond-adaptatif">🤖 <strong>Apprentissage Profond Adaptatif</strong> ❌<a class="headerlink" href="#apprentissage-profond-adaptatif" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Phase 3</strong> : Modèles IA spécialisés par domaine
+<strong>➡️ Stack à ajouter</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">TensorFlow</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">2.13+ pour training models</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nt">PyTorch</span><span class="p">:</span><span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">2.0+ pour research</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nt">Hugging Face</span><span class="p">:</span><span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">Transformers custom fine-tuning</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="nt">MLflow</span><span class="p">:</span><span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">Model versioning &amp; registry</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 3)</p>
+<hr />
+<h3 id="prediction-comportementale">🔮 <strong>Prédiction Comportementale</strong> ❌<a class="headerlink" href="#prediction-comportementale" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Phase 3</strong> : Anticipation patterns futurs
+<strong>➡️ Composants</strong> :
+- <code>modules/sandozia/prediction/behavior_predictor.py</code>
+- Machine learning patterns détection
+- Recommandations préventives auto-adaptation</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 3)</p>
+<hr />
+<h3 id="optimisation-continue">🎯 <strong>Optimisation Continue</strong> ❌<a class="headerlink" href="#optimisation-continue" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Phase 3</strong> : A/B testing automatique
+<strong>➡️ Features</strong> :
+- Auto-optimization métriques
+- Evolution architecture autonome
+- Feedback loops intelligents</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 3)</p>
+<hr />
+<h2 id="phase-ecosystem-marketplace-sdk-phase-4">🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)<a class="headerlink" href="#phase-ecosystem-marketplace-sdk-phase-4" title="Permanent link">&para;</a></h2>
+<h3 id="marketplace-modules">🏪 <strong>Marketplace Modules</strong> ❌<a class="headerlink" href="#marketplace-modules" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Q4 2025</strong> : Store modules tiers
+<strong>➡️ Composants</strong> :
+- Store validation qualité automatique
+- Monétisation développeurs
+- API Gateway modules</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h3 id="sdk-developpement">🛠️ <strong>SDK Développement</strong> ❌<a class="headerlink" href="#sdk-developpement" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Q4 2025</strong> : Framework création modules
+<strong>➡️ Outils</strong> :
+- Templates modules standardisés
+- CLI : <code>arkalia new-module</code>
+- Documentation développeur avancée</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h3 id="api-publique-standardisee">🌐 <strong>API Publique Standardisée</strong> ❌<a class="headerlink" href="#api-publique-standardisee" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Q4 2025</strong> : OpenAPI 3.0 complète
+<strong>➡️ Stack</strong> :
+- SDKs multi-langages (Python, JS, Go, Rust)
+- Intégrations partenaires
+- Rate limiting enterprise</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h2 id="phase-7-outils-pro-a-ajouter">🧰 PHASE 7 – OUTILS PRO À AJOUTER<a class="headerlink" href="#phase-7-outils-pro-a-ajouter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>🔧 Outil</th>
+<th>Rôle attendu</th>
+<th>Status</th>
+<th>Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>diskcache</strong></td>
+<td>Fix memory leaks Sandozia</td>
+<td>❌</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>tenacity</strong></td>
+<td>Circuit Breaker pattern</td>
+<td>❌</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>Locust/k6</strong></td>
+<td>Stress testing 10k req/s</td>
+<td>❌</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>age/sops</strong></td>
+<td>Chiffrement secrets production</td>
+<td>❌</td>
+<td>Sécurité</td>
+</tr>
+<tr>
+<td><strong>Terraform</strong></td>
+<td>Infrastructure as Code</td>
+<td>❌</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Kafka</strong></td>
+<td>Messagerie async inter-modules</td>
+<td>❌</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>TensorFlow</strong></td>
+<td>ML adaptatif</td>
+<td>❌</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Vector DB</strong></td>
+<td>Mémoire vectorielle IA</td>
+<td>❌</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Istio</strong></td>
+<td>Service mesh</td>
+<td>❌</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tableau-de-priorisation">📊 TABLEAU DE PRIORISATION<a class="headerlink" href="#tableau-de-priorisation" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Priorité</th>
+<th>Objectif Technique</th>
+<th>Livrable(s) Attendu(s)</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>🔴 <strong>Urgence</strong></td>
+<td>Corriger perf + sécurité critique</td>
+<td>diskcache, flags Docker</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>1</td>
+<td>🔴 <strong>Haute</strong></td>
+<td>Solidité du système</td>
+<td>Event sourcing, error handling avancé</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>2</td>
+<td>🟠 Moyenne</td>
+<td>Isolation pro</td>
+<td>Dockerfile.sandozia + Compose</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>3</td>
+<td>🟢 Moyenne</td>
+<td>API modulaire &amp; tests</td>
+<td>routes.py, tests CI</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>4</td>
+<td>🟢 Moyenne</td>
+<td>Monitoring &amp; Alerte</td>
+<td>alertmanager.yml, Slack test</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>5</td>
+<td>🟠 Stress</td>
+<td>Test de scalabilité cognitive</td>
+<td>scénario 48h, chaos test</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>6</td>
+<td>🟡 Moyen</td>
+<td>Maturité doc</td>
+<td>C4 + SLA</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>7</td>
+<td>🔵 À venir</td>
+<td>Outils de niveau production</td>
+<td>Terraform, Kafka, WS</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="plan-dexecution-recommande">🎯 PLAN D'EXÉCUTION RECOMMANDÉ<a class="headerlink" href="#plan-dexecution-recommande" title="Permanent link">&para;</a></h2>
+<h3 id="semaine-1-urgence-phase-0">⚡ SEMAINE 1 (URGENCE) - Phase 0<a class="headerlink" href="#semaine-1-urgence-phase-0" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Jour 1</strong> : Fix memory leak Sandozia (diskcache)</li>
+<li><strong>Jour 2</strong> : Sécurisation Docker complète</li>
+<li><strong>Jour 3</strong> : Création tests stress basiques</li>
+</ol>
+<h3 id="semaine-2-3-haute-phase-1">🔧 SEMAINE 2-3 (HAUTE) - Phase 1<a class="headerlink" href="#semaine-2-3-haute-phase-1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Event Sourcing</strong> : Traçage décisions ZeroIA</li>
+<li><strong>Circuit Breaker</strong> : Protection cascade d'échecs</li>
+<li><strong>Error Handling</strong> : Exceptions spécialisées</li>
+</ol>
+<h3 id="semaine-4-moyenne-phase-2">🐳 SEMAINE 4 (MOYENNE) - Phase 2<a class="headerlink" href="#semaine-4-moyenne-phase-2" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Dockerfile.sandozia</strong> : Isolation complète</li>
+<li><strong>Resource limits</strong> : CPU/RAM contraints</li>
+<li><strong>Network policies</strong> : Sécurité réseau</li>
+</ol>
+<h3 id="semaine-5-6-api-phase-3">🌐 SEMAINE 5-6 (API) - Phase 3<a class="headerlink" href="#semaine-5-6-api-phase-3" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>API REST Sandozia</strong> : Routes FastAPI</li>
+<li><strong>Tests intégration</strong> : API endpoints</li>
+<li><strong>Documentation API</strong> : OpenAPI/Swagger</li>
+</ol>
+<h3 id="semaine-7-monitoring-phase-4">📊 SEMAINE 7 (MONITORING) - Phase 4<a class="headerlink" href="#semaine-7-monitoring-phase-4" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>AlertManager</strong> : Configuration Slack</li>
+<li><strong>Prometheus rules</strong> : Métriques Sandozia</li>
+<li><strong>Dashboard Grafana</strong> : Sandozia Intelligence</li>
+</ol>
+<h3 id="semaine-8-stress-phase-5-7">🚀 SEMAINE 8+ (STRESS) - Phase 5-7<a class="headerlink" href="#semaine-8-stress-phase-5-7" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Tests endurance</strong> : 48h/10k rps</li>
+<li><strong>Documentation C4</strong> : Architecture</li>
+<li><strong>SLA définition</strong> : Engagements performance</li>
+</ol>
+<hr />
+<p><strong>📝 Note</strong> : Ce roadmap est post-Phase 2. La Phase 2 Semaine 1 (Sandozia Intelligence Croisée) est ✅ TERMINÉE avec succès.</p>
+<p><strong>🔄 Dernière mise à jour</strong> : 27 Juin 2025 21:00 UTC
+<strong>🚀 Prochaine étape</strong> : Phase 2 Semaine 2 (Dashboard Grafana)</p>
+<hr />
+<h2 id="phase-securite-paranoiaque-enterprise-arkalia_security_roadmapmd">🔐 PHASE SÉCURITÉ – PARANOÏAQUE ENTERPRISE (ARKALIA_SECURITY_ROADMAP.md)<a class="headerlink" href="#phase-securite-paranoiaque-enterprise-arkalia_security_roadmapmd" title="Permanent link">&para;</a></h2>
+<h3 id="securite-io-critique-urgent_1">🚨 <strong>Sécurité IO - CRITIQUE URGENT</strong> ❌<a class="headerlink" href="#securite-io-critique-urgent_1" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Corruption TOML/JSON en production
+<strong>➡️ Solution</strong> : <code>utils/io_safe.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">atomic_write</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>  <span class="c1"># Écriture atomique</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">locked_read</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>         <span class="c1"># Lecture thread-safe</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">save_toml_safe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>     <span class="c1"># TOML sécurisé</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT - <strong>PRIORITÉ #1</strong></p>
+<hr />
+<h3 id="validation-input-llm-critique_1">🔒 <strong>Validation Input LLM - CRITIQUE</strong> ❌<a class="headerlink" href="#validation-input-llm-critique_1" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Prompt injection + code injection
+<strong>➡️ Solution</strong> : <code>modules/assistantia/security/prompt_validator.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">validate_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">sanitize_prompt</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">detect_injection_patterns</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT - <strong>PRIORITÉ #2</strong></p>
+<hr />
+<h3 id="chiffrement-env-production_1">🛡️ <strong>Chiffrement .env Production</strong> ❌<a class="headerlink" href="#chiffrement-env-production_1" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Secrets en clair en production
+<strong>➡️ Solution</strong> : <code>modules/security/crypto/env_encryption.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.fernet</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fernet</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># Chiffrement avec age/sops + décryptage runtime</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="sandbox-llm-enterprise_1">🏰 <strong>Sandbox LLM Enterprise</strong> ❌<a class="headerlink" href="#sandbox-llm-enterprise_1" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Exécution IA non-isolée
+<strong>➡️ Solution</strong> : <code>modules/security/sandbox/llm_sandbox.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Container Docker ultra-restreint pour prompts</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># network_disabled, cap_drop=[ALL], user=nobody</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="merkle-snapshot-chains_1">🔗 <strong>Merkle Snapshot Chains</strong> ❌<a class="headerlink" href="#merkle-snapshot-chains_1" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Intégrité snapshots non-vérifiable
+<strong>➡️ Solution</strong> : <code>modules/security/crypto/merkle_chains.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_snapshot_hash</span><span class="p">(</span><span class="n">snapshot_data</span><span class="p">,</span> <span class="n">previous_hash</span><span class="p">)</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">validate_chain_integrity</span><span class="p">(</span><span class="n">chain_file</span><span class="p">)</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h3 id="reflexia-watchdog-cognitif_1">👁️ <strong>ReflexIA Watchdog Cognitif</strong> ❌<a class="headerlink" href="#reflexia-watchdog-cognitif_1" title="Permanent link">&para;</a></h3>
+<p><strong>Problème</strong> : Pas de surveillance indépendante
+<strong>➡️ Solution</strong> : <code>modules/security/watchdog/reflexia_watchdog.py</code>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Monitoring intégrité cognitive + auto-healing</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-infrastructure-monitoring-industrial_1">🏗️ PHASE INFRASTRUCTURE – MONITORING INDUSTRIAL<a class="headerlink" href="#phase-infrastructure-monitoring-industrial_1" title="Permanent link">&para;</a></h2>
+<h3 id="prometheus-metrics-avances-partiel_1">📊 <strong>Prometheus Metrics Avancés</strong> 🟡 PARTIEL<a class="headerlink" href="#prometheus-metrics-avances-partiel_1" title="Permanent link">&para;</a></h3>
+<p><strong>Déjà fait</strong> : Métriques basiques dans <code>modules/monitoring/prometheus_metrics.py</code>
+<strong>Manque</strong> :
+- Rules Prometheus : <code>infrastructure/monitoring/prometheus/sandozia_rules.yml</code>
+- Alerting rules : <code>infrastructure/monitoring/alertmanager/alerts.yml</code>
+- Métriques business customisées</p>
+<p><strong>🔍 Status</strong> : 🟡 EN COURS (40% fait)</p>
+<hr />
+<h3 id="dashboard-grafana-sandozia_1">📈 <strong>Dashboard Grafana Sandozia</strong> ❌<a class="headerlink" href="#dashboard-grafana-sandozia_1" title="Permanent link">&para;</a></h3>
+<p><strong>Objectif</strong> : Visualisation Intelligence Croisée temps réel
+<strong>➡️ À créer</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="l l-Scalar l-Scalar-Plain">infrastructure/monitoring/grafana/dashboards/sandozia_intelligence.json</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="l l-Scalar l-Scalar-Plain">infrastructure/monitoring/grafana/dashboards/cognitive_health.json</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="l l-Scalar l-Scalar-Plain">infrastructure/monitoring/grafana/datasources/prometheus.yml</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT - <strong>ROADMAP Phase 2 Semaine 2</strong></p>
+<hr />
+<h3 id="alertmanager-slack_1">🔔 <strong>AlertManager + Slack</strong> ❌<a class="headerlink" href="#alertmanager-slack_1" title="Permanent link">&para;</a></h3>
+<p><strong>Objectif</strong> : Notifications incohérences Sandozia
+<strong>➡️ Configuration</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nt">receivers</span><span class="p">:</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;arkalia-ops&#39;</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">  </span><span class="nt">slack_configs</span><span class="p">:</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#arkalia-alerts&#39;</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">      </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Arkalia</span><span class="nv"> </span><span class="s">Cognitive</span><span class="nv"> </span><span class="s">Alert&#39;</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">      </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Incohérence</span><span class="nv"> </span><span class="s">détectée:</span><span class="nv"> </span><span class="s">{{.GroupLabels}}&#39;</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON FAIT</p>
+<hr />
+<h2 id="phase-ia-cognitive-extensions-avancees-v3x-roadmap">🧠 PHASE IA COGNITIVE – EXTENSIONS AVANCÉES (v3.x Roadmap)<a class="headerlink" href="#phase-ia-cognitive-extensions-avancees-v3x-roadmap" title="Permanent link">&para;</a></h2>
+<h3 id="apprentissage-profond-adaptatif_1">🤖 <strong>Apprentissage Profond Adaptatif</strong> ❌<a class="headerlink" href="#apprentissage-profond-adaptatif_1" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Phase 3</strong> : Modèles IA spécialisés par domaine
+<strong>➡️ Stack à ajouter</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">TensorFlow</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">2.13+ pour training models</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nt">PyTorch</span><span class="p">:</span><span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">2.0+ pour research</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="nt">Hugging Face</span><span class="p">:</span><span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">Transformers custom fine-tuning</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="nt">MLflow</span><span class="p">:</span><span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">Model versioning &amp; registry</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 3)</p>
+<hr />
+<h3 id="prediction-comportementale_1">🔮 <strong>Prédiction Comportementale</strong> ❌<a class="headerlink" href="#prediction-comportementale_1" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Phase 3</strong> : Anticipation patterns futurs
+<strong>➡️ Composants</strong> :
+- <code>modules/sandozia/prediction/behavior_predictor.py</code>
+- Machine learning patterns détection
+- Recommandations préventives auto-adaptation</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 3)</p>
+<hr />
+<h3 id="optimisation-continue_1">🎯 <strong>Optimisation Continue</strong> ❌<a class="headerlink" href="#optimisation-continue_1" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Phase 3</strong> : A/B testing automatique
+<strong>➡️ Features</strong> :
+- Auto-optimization métriques
+- Evolution architecture autonome
+- Feedback loops intelligents</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 3)</p>
+<hr />
+<h2 id="phase-ecosystem-marketplace-sdk-phase-4_1">🌟 PHASE ECOSYSTEM – MARKETPLACE &amp; SDK (Phase 4)<a class="headerlink" href="#phase-ecosystem-marketplace-sdk-phase-4_1" title="Permanent link">&para;</a></h2>
+<h3 id="marketplace-modules_1">🏪 <strong>Marketplace Modules</strong> ❌<a class="headerlink" href="#marketplace-modules_1" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Q4 2025</strong> : Store modules tiers
+<strong>➡️ Composants</strong> :
+- Store validation qualité automatique
+- Monétisation développeurs
+- API Gateway modules</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h3 id="sdk-developpement_1">🛠️ <strong>SDK Développement</strong> ❌<a class="headerlink" href="#sdk-developpement_1" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Q4 2025</strong> : Framework création modules
+<strong>➡️ Outils</strong> :
+- Templates modules standardisés
+- CLI : <code>arkalia new-module</code>
+- Documentation développeur avancée</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h3 id="api-publique-standardisee_1">🌐 <strong>API Publique Standardisée</strong> ❌<a class="headerlink" href="#api-publique-standardisee_1" title="Permanent link">&para;</a></h3>
+<p><strong>Vision Q4 2025</strong> : OpenAPI 3.0 complète
+<strong>➡️ Stack</strong> :
+- SDKs multi-langages (Python, JS, Go, Rust)
+- Intégrations partenaires
+- Rate limiting enterprise</p>
+<p><strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h2 id="idees-additionnelles-consolidees">📋 IDÉES ADDITIONNELLES CONSOLIDÉES<a class="headerlink" href="#idees-additionnelles-consolidees" title="Permanent link">&para;</a></h2>
+<h3 id="memoire-vectorielle-ia">🧠 <strong>Mémoire Vectorielle IA</strong> ❌<a class="headerlink" href="#memoire-vectorielle-ia" title="Permanent link">&para;</a></h3>
+<p><strong>Source</strong> : do/planning/roadmap/index.md
+<strong>Objectif</strong> : <code>FAISS</code> ou <code>ChromaDB</code> pour mémoire contextuelle
+<strong>➡️ Stack</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nt">ChromaDB</span><span class="p">:</span><span class="w">       </span><span class="l l-Scalar l-Scalar-Plain">Vector storage moderne</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="nt">FAISS</span><span class="p">:</span><span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">Recherche similarité ultra-rapide</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="nt">Embeddings</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">OpenAI/Sentence-Transformers</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 3+)</p>
+<hr />
+<h3 id="nyxalia-web-ui-reactive">🎨 <strong>Nyxalia Web UI Réactive</strong> ❌<a class="headerlink" href="#nyxalia-web-ui-reactive" title="Permanent link">&para;</a></h3>
+<p><strong>Source</strong> : do/planning/roadmap/index.md
+<strong>Objectif</strong> : Interface cognitive réactive (React/Svelte)
+<strong>➡️ Stack</strong> :
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nt">Frontend</span><span class="p">:</span><span class="w">       </span><span class="l l-Scalar l-Scalar-Plain">React 18+ + TypeScript</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="nt">State</span><span class="p">:</span><span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">Redux Toolkit + RTK Query</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="nt">Design</span><span class="p">:</span><span class="w">         </span><span class="l l-Scalar l-Scalar-Plain">Tailwind CSS + Headless UI</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="nt">Real-time</span><span class="p">:</span><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">Socket.IO pour métriques live</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h3 id="sync-localcloud-chiffre">☁️ <strong>Sync Local/Cloud Chiffré</strong> ❌<a class="headerlink" href="#sync-localcloud-chiffre" title="Permanent link">&para;</a></h3>
+<p><strong>Source</strong> : do/planning/roadmap/index.md
+<strong>Objectif</strong> : <code>rclone</code> + <code>gocryptfs</code> pour backup IA privé
+<strong>➡️ Stack</strong> :
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>rclone:<span class="w">         </span>Sync<span class="w"> </span>multi-cloud<span class="w"> </span><span class="o">(</span>S3,<span class="w"> </span>GCS,<span class="w"> </span>etc.<span class="o">)</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>gocryptfs:<span class="w">      </span>Filesystem<span class="w"> </span>chiffré<span class="w"> </span>transparent
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>restic:<span class="w">         </span>Backup<span class="w"> </span>incrémental<span class="w"> </span>chiffré
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h3 id="generateur-cli-ia">⚙️ <strong>Générateur CLI IA</strong> ❌<a class="headerlink" href="#generateur-cli-ia" title="Permanent link">&para;</a></h3>
+<p><strong>Source</strong> : do/planning/roadmap/index.md
+<strong>Objectif</strong> : <code>arkalia new-module</code> (CLI rapide)
+<strong>➡️ Fonctionnalités</strong> :
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>arkalia<span class="w"> </span>new-module<span class="w"> </span>MyModule<span class="w">    </span><span class="c1"># Génère structure complète</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>arkalia<span class="w"> </span>add-endpoint<span class="w"> </span>/api/test<span class="w"> </span><span class="c1"># Ajoute route FastAPI</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>arkalia<span class="w"> </span>generate-tests<span class="w">         </span><span class="c1"># Auto-génère tests unitaires</span>
+</span></code></pre></div>
+<strong>🔍 Status</strong> : ❌ NON PLANIFIÉ (Phase 4)</p>
+<hr />
+<h2 id="nouvelle-priorisation-globale">🔄 <strong>NOUVELLE PRIORISATION GLOBALE</strong><a class="headerlink" href="#nouvelle-priorisation-globale" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Rang</th>
+<th>Feature</th>
+<th>Impact</th>
+<th>Effort</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>🚨 IO Sécurisé</td>
+<td>🔴 Critique</td>
+<td>4h</td>
+<td>❌</td>
+<td>Security Roadmap</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>🔒 Validation LLM</td>
+<td>🔴 Critique</td>
+<td>6h</td>
+<td>❌</td>
+<td>Security Roadmap</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>💾 Fix Memory Leak</td>
+<td>🔴 Critique</td>
+<td>30min</td>
+<td>❌</td>
+<td>Original</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>🧪 Stress Tests</td>
+<td>🔴 Critique</td>
+<td>8h</td>
+<td>❌</td>
+<td>Original</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>🔗 Event Sourcing</td>
+<td>🟡 Important</td>
+<td>12h</td>
+<td>❌</td>
+<td>Original</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>🏰 Sandbox LLM</td>
+<td>🟡 Important</td>
+<td>16h</td>
+<td>❌</td>
+<td>Security Roadmap</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>📊 Dashboard Grafana</td>
+<td>🟢 Medium</td>
+<td>20h</td>
+<td>❌</td>
+<td>v3.x Roadmap</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>🔔 AlertManager</td>
+<td>🟢 Medium</td>
+<td>8h</td>
+<td>❌</td>
+<td>Multiple</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>🛡️ Chiffrement .env</td>
+<td>🟢 Medium</td>
+<td>6h</td>
+<td>❌</td>
+<td>Security Roadmap</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>🔗 Merkle Chains</td>
+<td>🟢 Low</td>
+<td>12h</td>
+<td>❌</td>
+<td>Security Roadmap</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>📊 RÉSUMÉ CONSOLIDÉ</strong> :
+- <strong>69 items</strong> identifiés au total
+- <strong>12 items critiques</strong> (Phase 0+Sécurité)
+- <strong>23 items importants</strong> (Phase 1-2)
+- <strong>34 items future</strong> (Phase 3-4)</p>
+<p><strong>🎯 PROCHAINE ACTION RECOMMANDÉE</strong> : Commencer immédiatement par les 3 premiers items critiques (IO, LLM, Memory Leak)</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Cette page était-elle utile ?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="Cette page m'a aidé" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m7 0c0 .8-.7 1.5-1.5 1.5S14 10.3 14 9.5 14.7 8 15.5 8s1.5.7 1.5 1.5m-5 7.73c-1.75 0-3.29-.73-4.19-1.81L9.23 14c.45.72 1.52 1.23 2.77 1.23s2.32-.51 2.77-1.23l1.42 1.42c-.9 1.08-2.44 1.81-4.19 1.81"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="Cette page pourrait être améliorée" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10m-6.5-4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m2 4.5c1.75 0 3.29.72 4.19 1.81l-1.42 1.42C14.32 16.5 13.25 16 12 16s-2.32.5-2.77 1.23l-1.42-1.42C8.71 14.72 10.25 14 12 14"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Merci ! Votre feedback nous aide à améliorer la documentation.
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Dites-nous comment améliorer cette page en <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro/issues/new" target="_blank" rel="noopener">créant une issue</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../assets/js/arkalia-assistant.js"></script>
+      
+    
+  </body>
+</html>
