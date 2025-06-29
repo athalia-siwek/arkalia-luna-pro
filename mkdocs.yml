@@ -108,27 +108,78 @@ nav:
   - Architecture:
     - Overview: fonctionnement/structure.md
     - Components: fonctionnement/composants.md
+    - Kernel: fonctionnement/kernel.md
+    - Usage: fonctionnement/utilisation.md
     - Decision Flow: architecture/decision_flow.mmd
   - Modules:
     - Overview: modules.md
-    - AssistantIA: modules/assistantia.md
-    - ZeroIA: modules/zeroia.md
-    - Sandozia: modules/sandozia.md
-    - ReflexIA: modules/reflexia.md
-  - API Reference: api.md
-  - Deployment:
+    - Core Modules:
+      - AssistantIA: modules/assistantia.md
+      - ZeroIA: modules/zeroia.md
+      - Sandozia: modules/sandozia.md
+      - ReflexIA: modules/reflexia.md
+    - Additional Modules:
+      - Taskia: modules/taskia.md
+      - Nyxalia: modules/nyxalia.md
+      - Helloria: modules/helloria.md
+      - Global State: modules/global_state.md
+    - Advanced:
+      - Cross Module Enhanced: modules/cross_module_enhanced.md
+      - Sandozia Container: modules/sandozia/container_integration.md
+      - ZeroIA Orchestrator: modules/zeroia/orchestrator_enhanced.md
+  - ZeroIA Deep Dive:
+    - Overview: zeroia/overview.md
+    - Troubleshooting: zeroia/troubleshooting.md
+    - Comprehensive Audit: audit_zeroia_comprehensive.md
+  - API Reference:
+    - API Guide: api.md
+    - API Documentation: api/index.md
+  - Infrastructure:
     - Installation: infrastructure/installation.md
     - Configuration: infrastructure/configuration.md
-    - Docker: infrastructure/deployment.md
+    - Deployment: infrastructure/deployment.md
+    - CI/CD: infrastructure/ci-cd.md
+    - Automation: infrastructure/automation.md
+    - Ollama: infrastructure/ollama.md
   - Security:
     - Overview: security/security.md
-    - Hardening: docker_hardening.md
-    - Monitoring: security/penetration-testing.md
+    - Architecture: security/architecture.mmd
+    - Model Poisoning: security/model-poisoning-detection.md
+    - Penetration Testing: security/penetration-testing.md
+    - Incident Response: security/incident-response.md
+    - Backup & Recovery: security/backup-recovery.md
+    - Compliance: security/compliance.md
+    - Log Redaction: security/log_redaction.md
+    - Docker Hardening: docker_hardening.md
+    - Phase 4 Roadmap: security/phase4-roadmap.md
   - Operations:
+    - DevOps Overview: devops/index.md
     - Monitoring: logs/zeroia_status.md
-    - Troubleshooting: zeroia/troubleshooting.md
-    - DevOps: devops/index.md
-  - Resources:
-    - Changelog: CHANGELOG.md
-    - Roadmap: roadmap/OPTIMISATION_v3.0-phase2.md
+    - Failure Analysis: logs/failure_analysis.md
+    - Reasoning History: logs/reasoning_history.md
+    - Linting Resolution: devops/linting-resolution.md
+    - DevOps Security: devops/security.md
+    - Chaos Testing: chaos/chaos_test_suite.md
+  - Releases:
+    - Latest Updates: releases/dernieres_updates.md
+    - Changelog: releases/CHANGELOG.md
+    - Cross Module v2.7.1: releases/cross_module_enhanced_v2.7.1.md
+    - All Releases: releases/index.md
+  - Roadmap:
+    - Overview: roadmap/index.md
+    - v3.0 Phase 2: roadmap/OPTIMISATION_v3.0-phase2.md
+    - Structured Plan: roadmap/v3-structured-plan.md
+    - Enhancements: roadmap/ENHANCEMENTS.md
+    - Progress Log: roadmap/PROGRESS_CHANGELOG.md
+    - Technical Roadmap: roadmap/TECHNICAL_ROADMAP_ADVANCED.md
+  - Support:
+    - FAQ: faqs.md
+    - FAQ Index: faqs/index.md
+    - Journal Checklist: journal/CHECKLIST.md
+    - Operations Guide: ops.md
+    - Rebuild Guide: rebuild.md
+    - Cognitive Levels: cognitive-levels.md
+  - Legal:
+    - License: license.md
     - Contributing: credits/CONTRIBUTING.md
+    - Credits: credits/credits.md
