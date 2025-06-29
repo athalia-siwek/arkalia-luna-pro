@@ -141,7 +141,7 @@ ark-degradation-status    # Status Graceful Degradation
 
 - 📋 **Documentation** : [docs/](https://arkalia-luna-system.github.io/arkalia-luna-pro/)
 - 🚀 **Releases** : [docs/releases/dernieres_updates.md](releases/dernieres_updates.md)
-- 📊 **Roadmap** : [docs/roadmap/](roadmap/)
+- 📊 **Roadmap** : [docs/roadmap/index.md](roadmap/index.md)
 - 🧪 **Tests** : `htmlcov/index.html`
 
 **🌟 Arkalia-LUNA Enhanced v2.7.1 - L'évolution continue vers l'excellence !**

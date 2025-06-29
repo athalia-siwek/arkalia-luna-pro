@@ -62,10 +62,12 @@ markdown_extensions:
 
 nav:
   - Accueil: index.md
+  - 🚀 Quick Start: quick-start.md
   - 🚀 Releases:
     - Dernières Updates: releases/dernieres_updates.md
     - Changelog Complet: releases/CHANGELOG.md
     - Index: releases/index.md
+    - Cross Module Enhanced v2.7.1: releases/cross_module_enhanced_v2.7.1.md
   - 🧩 Modules:
     - Vue d'ensemble: modules.md
     - Modules Index: modules/index.md
@@ -77,9 +79,13 @@ nav:
     - 🌊 Nyxalia: modules/nyxalia.md
     - 🌍 Global State: modules/global_state.md
     - 🎮 Helloria: modules/helloria.md
+    - Cross Module Enhanced: modules/cross_module_enhanced.md
+    - Sandozia Container: modules/sandozia/container_integration.md
+    - ZeroIA Orchestrator: modules/zeroia/orchestrator_enhanced.md
   - 🧪 ZeroIA Détaillé:
     - Vue d'ensemble: zeroia/overview.md
     - Troubleshooting: zeroia/troubleshooting.md
+    - Audit Compréhensif: audit_zeroia_comprehensive.md
   - 🌐 API:
     - Guide API: api.md
     - Documentation API: api/index.md
@@ -122,6 +128,7 @@ nav:
     - Vue d'ensemble: roadmap/index.md
     - Plan Structuré v3.x: roadmap/v3-structured-plan.md
     - Améliorations: roadmap/ENHANCEMENTS.md
+    - Optimisation v3.0-phase2: roadmap/OPTIMISATION_v3.0-phase2.md
   - 📚 Journal:
     - Checklist: journal/CHECKLIST.md
   - 🎭 Credits:
