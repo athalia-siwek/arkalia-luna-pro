@@ -1,0 +1,36 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 🌙 Luna Symbol -->
+  <g transform="translate(10, 10)">
+    <circle cx="20" cy="20" r="18" fill="url(#logoGradient)" opacity="0.1"/>
+    <circle cx="20" cy="20" r="12" fill="white"/>
+    <circle cx="22" cy="18" r="10" fill="url(#logoGradient)"/>
+    
+    <!-- ✨ Stars around Luna -->
+    <circle cx="8" cy="8" r="1.5" fill="url(#logoGradient)" opacity="0.8"/>
+    <circle cx="32" cy="8" r="1" fill="url(#logoGradient)" opacity="0.6"/>
+    <circle cx="8" cy="32" r="1" fill="url(#logoGradient)" opacity="0.7"/>
+    <circle cx="32" cy="32" r="1.5" fill="url(#logoGradient)" opacity="0.9"/>
+  </g>
+  
+  <!-- 📝 Text "ARKALIA-LUNA" -->
+  <text x="60" y="25" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="url(#textGradient)">
+    ARKALIA
+  </text>
+  <text x="60" y="42" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="500" fill="#8b5cf6" opacity="0.8">
+    LUNA v3.0-phase1
+  </text>
+  
+  <!-- 🎨 Gradients -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg> 

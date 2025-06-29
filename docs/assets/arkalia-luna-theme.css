@@ -1,6 +1,6 @@
 /* ================================
-   🌙 ARKALIA-LUNA THEME v3.0-phase1 FIXED
-   "Luna Élégante" - Lisibilité Parfaite
+   🌙 ARKALIA-LUNA THEME v3.0-phase1 OPTIMISÉ
+   "Luna Élégante" - Performance & UX Parfaites  
    ================================ */
 
 :root {
@@ -112,7 +112,7 @@ body {
 }
 
 /* ================================
-   🧩 NAVIGATION STYLING
+   🧩 NAVIGATION STYLING - OPTIMISÉ
    ================================ */
 
 .md-nav {
@@ -127,6 +127,8 @@ body {
     color: var(--luna-text-secondary) !important;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    user-select: none;
 }
 
 .md-nav__link:hover {
@@ -134,6 +136,10 @@ body {
     background-color: rgba(99, 102, 241, 0.1) !important;
     transform: translateX(4px);
     box-shadow: 0 4px 12px var(--luna-shadow);
+}
+
+.md-nav__link:active {
+    transform: translateX(2px) scale(0.98);
 }
 
 .md-nav__link--active {
@@ -184,7 +190,7 @@ body {
 }
 
 /* ================================
-   🎯 INTERACTIVE ELEMENTS
+   🎯 INTERACTIVE ELEMENTS - OPTIMISÉ
    ================================ */
 
 /* 🌟 Buttons Luna Style */
@@ -197,28 +203,57 @@ body {
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px var(--luna-shadow);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
 }
 
 .md-button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
     box-shadow: 0 6px 25px var(--luna-shadow);
 }
 
-/* 🔗 Links Styling */
+.md-button:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 10px var(--luna-shadow);
+}
+
+.md-button:focus {
+    outline: 2px solid var(--luna-accent);
+    outline-offset: 2px;
+}
+
+/* 🔗 Links Styling - Optimisé */
 .md-typeset a {
     color: var(--luna-primary) !important;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
+    position: relative;
+}
+
+.md-typeset a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--luna-accent);
+    transition: width 0.3s ease;
 }
 
 .md-typeset a:hover {
     color: var(--luna-accent) !important;
-    text-decoration: underline;
+}
+
+.md-typeset a:hover::after {
+    width: 100%;
 }
 
 /* ================================
-   🎨 SPECIAL COMPONENTS
+   🎨 SPECIAL COMPONENTS - OPTIMISÉ
    ================================ */
 
 /* 🌙 Arkalia Box Enhanced */
@@ -231,6 +266,8 @@ body {
     box-shadow: 0 8px 30px var(--luna-shadow);
     position: relative;
     overflow: hidden;
+    cursor: default;
+    user-select: text;
 }
 
 .arkalia-box h3 {
@@ -243,7 +280,7 @@ body {
     color: rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Animation glow effect */
+/* Animation glow effect - Performance optimisée */
 .arkalia-box::before {
     content: '';
     position: absolute;
@@ -257,6 +294,7 @@ body {
     filter: blur(10px);
     animation: lunaGlow 4s ease-in-out infinite alternate;
     z-index: -1;
+    will-change: opacity, transform;
 }
 
 @keyframes lunaGlow {
@@ -279,6 +317,12 @@ body {
     border-radius: 12px;
     border: 1px solid var(--luna-border);
     background: var(--luna-surface) !important;
+    transition: all 0.3s ease;
+}
+
+.md-typeset .admonition:hover {
+    box-shadow: 0 4px 15px var(--luna-shadow);
+    transform: translateY(-1px);
 }
 
 .md-typeset .admonition-title {
@@ -291,7 +335,39 @@ body {
 }
 
 /* ================================
-   📱 RESPONSIVE DESIGN
+   🎨 CHAT ASSISTANT INTEGRATION
+   ================================ */
+
+/* Style pour le bouton chat assistant */
+.arkalia-chat-button {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    background: var(--luna-gradient-primary) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+    transition: all 0.3s ease !important;
+    user-select: none !important;
+}
+
+.arkalia-chat-button:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
+}
+
+.arkalia-chat-button:active {
+    transform: translateY(0) scale(0.95) !important;
+}
+
+/* ================================
+   📱 RESPONSIVE DESIGN - OPTIMISÉ
    ================================ */
 
 @media screen and (max-width: 768px) {
@@ -303,10 +379,26 @@ body {
         padding: 1rem;
         margin: 1rem 0;
     }
+
+    .arkalia-chat-button {
+        bottom: 15px !important;
+        right: 15px !important;
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+    }
+
+    .md-nav__link {
+        padding: 0.5rem 0.8rem;
+    }
+
+    .md-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 14px;
+    }
 }
 
 /* ================================
-   🎨 SCROLLBAR CUSTOM
+   🎨 SCROLLBAR CUSTOM - OPTIMISÉ
    ================================ */
 
 ::-webkit-scrollbar {
@@ -315,11 +407,13 @@ body {
 
 ::-webkit-scrollbar-track {
     background: var(--luna-surface);
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
     background: var(--luna-primary);
     border-radius: 4px;
+    transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -330,12 +424,33 @@ body {
    🔒 ACCESSIBILITY & PERFORMANCE
    ================================ */
 
-/* Focus states */
+/* Focus states optimisés */
 .md-nav__link:focus,
 .md-button:focus,
 .md-typeset a:focus {
     outline: 2px solid var(--luna-primary);
     outline-offset: 2px;
+}
+
+/* Optimisations de performance */
+* {
+    box-sizing: border-box;
+}
+
+.md-content,
+.md-nav,
+.md-header {
+    will-change: transform;
+}
+
+/* Images lazy loading */
+img[data-src] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img[data-src].loaded {
+    opacity: 1;
 }
 
 /* Reduced motion support */
@@ -344,5 +459,53 @@ body {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+
+    .arkalia-box::before {
+        animation: none !important;
+    }
+}
+
+/* ================================
+   🚀 PERFORMANCE OPTIMIZATIONS
+   ================================ */
+
+/* GPU acceleration pour les animations */
+.md-button,
+.md-nav__link,
+.arkalia-box,
+.arkalia-chat-button {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}
+
+/* Optimisation des transitions */
+.md-nav__link,
+.md-button,
+.md-typeset a {
+    transition-property: transform, box-shadow, color, background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Conteneurs pour améliorer le layout */
+.md-content__inner {
+    contain: layout style;
+}
+
+/* Print styles */
+@media print {
+    .arkalia-chat-button {
+        display: none !important;
+    }
+
+    .arkalia-box::before {
+        display: none !important;
+    }
+
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
     }
 }
