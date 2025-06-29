@@ -86,8 +86,8 @@ class ConfidenceScorer:
             }
 
         # Calcul des scores individuels
-        scores = {}
-        explanations = {}
+        scores: dict[str, Any] = {}
+        explanations: dict[str, Any] = {}
 
         # 1. Score de cohérence avec l'historique
         consistency_score, consistency_explanation = self._score_consistency(decision, context)
@@ -286,7 +286,7 @@ class ConfidenceScorer:
         if not common_keys:
             return 0.0
 
-        similarities = []
+        similarities: list[Any] = []
         for key in common_keys:
             val1, val2 = ctx1[key], ctx2[key]
 
@@ -319,7 +319,7 @@ class ConfidenceScorer:
 
     def _generate_recommendations(self, scores: dict, final_score: float) -> list[str]:
         """Génère des recommandations d'amélioration"""
-        recommendations = []
+        recommendations: list[Any] = []
 
         # Analyse des scores faibles
         for factor, score in scores.items():
@@ -410,7 +410,7 @@ class ConfidenceScorer:
         avg_confidence = confidence_sum / num_metrics
         avg_processing = processing_sum / num_metrics
 
-        decision_counts = {}
+        decision_counts: dict[str, Any] = {}
         for m in recent_metrics:
             decision = m["decision"]
             decision_counts[decision] = decision_counts.get(decision, 0) + 1

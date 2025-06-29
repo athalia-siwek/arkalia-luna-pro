@@ -178,7 +178,7 @@ class SandoziaCore:
         """Collecte un snapshot complet de l'état d'intelligence"""
 
         # État Reflexia
-        reflexia_state = {}
+        reflexia_state: dict[str, Any] = {}
         if self.reflexia_available:
             try:
                 # Utiliser les fonctions disponibles
@@ -195,7 +195,7 @@ class SandoziaCore:
                 reflexia_state = {"active": False}
 
         # État ZeroIA
-        zeroia_state = {}
+        zeroia_state: dict[str, Any] = {}
         if self.zeroia_available:
             try:
                 # Charger l'état ZeroIA existant
@@ -287,7 +287,7 @@ class SandoziaCore:
         """Analyse la cohérence entre les modules IA"""
 
         coherence_score = 1.0
-        issues = []
+        issues: list[Any] = []
 
         # Vérifications de base
         if not reflexia_state.get("active", False):
@@ -307,10 +307,10 @@ class SandoziaCore:
 
     async def _detect_behavioral_patterns(self) -> list[dict]:
         """Détecte des patterns comportementaux suspects"""
-        patterns = []
+        patterns: list[Any] = []
 
         # Analyser l'historique récent - approche simplifiée
-        recent_snapshots_data = []
+        recent_snapshots_data: list[Any] = []
         try:
             # Prendre quelques snapshots récents si disponibles
             snapshot_count = 0
@@ -348,7 +348,7 @@ class SandoziaCore:
         self, coherence_analysis: dict, patterns: list[dict]
     ) -> list[str]:
         """Génère des recommandations basées sur l'analyse"""
-        recommendations = []
+        recommendations: list[Any] = []
 
         coherence_score = coherence_analysis.get("coherence_score", 1.0)
 

@@ -125,25 +125,8 @@ def fix_line_length_errors():
 
 def fix_import_errors():
     """Corrige les erreurs d'import"""
-    # Corriger le fichier test_core.py
-    test_core_path = Path("modules/generative_ai/generated/test_core.py")
-    if test_core_path.exists():
-        try:
-            with open(test_core_path, encoding="utf-8") as f:
-                content = f.read()
-
-            # Corriger l'import
-            content = content.replace("/ import pytest", "import pytest")
-            content = content.replace(
-                "from modules.core import TestCore",
-                "from modules.generative_ai.core import TestCore",
-            )
-
-            with open(test_core_path, "w", encoding="utf-8") as f:
-                f.write(content)
-            print(f"✅ Import corrigé: {test_core_path}")
-        except Exception as e:
-            raise RuntimeError(f"Erreur lors de la correction finale: {e}") from e
+    # Le fichier test_core.py est maintenant correct, on ne le modifie plus
+    print("✅ Fichier test_core.py déjà correct, pas de modification nécessaire")
 
 
 def fix_noqa_directives():

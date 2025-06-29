@@ -241,7 +241,7 @@ class ArkaliaOrchestratorEnhanced:
         """
         logger.info("🔌 Initializing Enhanced modules (15 total)...")
 
-        initialization_results = {}
+        initialization_results: dict[str, Any] = {}
 
         # === MODULES STANDARDS (comme avant) ===
 
@@ -353,7 +353,7 @@ class ArkaliaOrchestratorEnhanced:
             f"🌟 ENHANCED CYCLE #{self.cycle_count} - Mode: {self.current_cycle_mode.value}"
         )
 
-        cycle_results = {}
+        cycle_results: dict[str, Any] = {}
         operations_this_cycle = 0
         successful_this_cycle = 0
 

@@ -426,7 +426,7 @@ class TokenManager:
             Nombre de tokens nettoyés
         """
         cleaned_count = 0
-        expired_tokens = []
+        expired_tokens: list[Any] = []
 
         for token_id, metadata in self.token_metadata.items():
             if metadata.is_expired() or metadata.is_usage_exceeded():
@@ -517,7 +517,7 @@ class TokenManager:
         Returns:
             Liste des métadonnées des tokens actifs
         """
-        active_tokens = []
+        active_tokens: list[Any] = []
 
         for metadata in self.token_metadata.values():
             if metadata.is_valid():

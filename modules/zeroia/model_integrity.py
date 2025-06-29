@@ -299,7 +299,7 @@ class ModelIntegrityMonitor:
 
         if len(self.decision_history) >= 5:
             recent_decisions = [r["decision"] for r in self.decision_history[-20:]]
-            decision_counts = {}
+            decision_counts: dict[str, Any] = {}
             for decision in recent_decisions:
                 decision_counts[decision] = decision_counts.get(decision, 0) + 1
 

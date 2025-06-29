@@ -144,7 +144,7 @@ class Chronalia:
         cycles = self._load_cycles_since(since)
 
         # Heatmap par intervalles de 5 minutes
-        heatmap = {}
+        heatmap: dict[str, Any] = {}
         resolution_minutes = 5
 
         for cycle in cycles:
@@ -216,7 +216,7 @@ class Chronalia:
 
         since = datetime.now() - timedelta(minutes=window_minutes)
         cycles = self._load_cycles_since(since)
-        patterns = []
+        patterns: list[Any] = []
 
         if len(cycles) < 3:
             return patterns
@@ -304,7 +304,7 @@ class Chronalia:
 
     def _load_cycles_since(self, since: datetime) -> list[CognitiveCycle]:
         """📖 Charge cycles depuis une date"""
-        cycles = []
+        cycles: list[Any] = []
 
         if not self.cycles_file.exists():
             return cycles

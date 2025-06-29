@@ -235,7 +235,7 @@ def test_{endpoint_name}_endpoint():
 
     def _detect_code_patterns(self, modules: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Détecte les patterns dans le code"""
-        patterns = []
+        patterns: list[Any] = []
 
         # Pattern: Modules sans tests
         modules_without_tests = [
@@ -278,7 +278,7 @@ def test_{endpoint_name}_endpoint():
         self, modules: list[dict[str, Any]]
     ) -> list[dict[str, Any]]:
         """Trouve les opportunités d'optimisation"""
-        opportunities = []
+        opportunities: list[Any] = []
 
         for module in modules:
             if module.get("complexity", 0) > 15:
@@ -305,7 +305,7 @@ def test_{endpoint_name}_endpoint():
 
     def _find_missing_tests(self, modules: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Trouve les tests manquants"""
-        missing_tests = []
+        missing_tests: list[Any] = []
 
         for module in modules:
             if module.get("name") and not self._has_tests(module["name"]):
@@ -438,7 +438,7 @@ def test_{endpoint_name}_endpoint():
                 content = f.read()
 
             # Optimisations basiques
-            optimizations = []
+            optimizations: list[Any] = []
 
             # Supprimer les imports inutilisés
             if "import os" in content and "os." not in content:

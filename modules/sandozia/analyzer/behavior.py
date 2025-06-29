@@ -131,7 +131,7 @@ class BehaviorAnalyzer:
 
     def detect_statistical_anomalies(self) -> list[BehaviorPattern]:
         """Détecte des anomalies statistiques dans les métriques"""
-        patterns = []
+        patterns: list[Any] = []
         now = datetime.now()
         threshold = self.config["anomaly_threshold"]
 
@@ -189,7 +189,7 @@ class BehaviorAnalyzer:
 
     def detect_performance_regression(self) -> list[BehaviorPattern]:
         """Détecte des régressions de performance"""
-        patterns = []
+        patterns: list[Any] = []
 
         # Analyser les métriques de performance connues
         performance_metrics = [
@@ -261,7 +261,7 @@ class BehaviorAnalyzer:
 
     def detect_decision_patterns(self) -> list[BehaviorPattern]:
         """Détecte des patterns suspects dans les décisions"""
-        patterns = []
+        patterns: list[Any] = []
 
         if len(self.decision_history) < 10:
             return patterns
@@ -306,7 +306,7 @@ class BehaviorAnalyzer:
             # Analyser la fréquence des décisions
             timestamps = [d["timestamp"] for d in recent_decisions]
             if len(timestamps) >= 3:
-                time_intervals = []
+                time_intervals: list[Any] = []
                 for i in range(1, len(timestamps)):
                     interval = (timestamps[i] - timestamps[i - 1]).total_seconds()
                     time_intervals.append(interval)
@@ -340,10 +340,10 @@ class BehaviorAnalyzer:
 
     def detect_correlation_anomalies(self) -> list[BehaviorPattern]:
         """Détecte des anomalies dans les corrélations entre modules"""
-        patterns = []
+        patterns: list[Any] = []
 
         # Analyser les corrélations de confiance entre modules
-        confidence_metrics = {}
+        confidence_metrics: dict[str, Any] = {}
         for metric_key in self.metrics_buffer:
             if "confidence" in metric_key.lower():
                 module_name = metric_key.split(".")[0]
@@ -390,7 +390,7 @@ class BehaviorAnalyzer:
         logger.info("🔍 Starting behavior analysis...")
 
         # Exécuter toutes les analyses
-        all_patterns = []
+        all_patterns: list[Any] = []
 
         all_patterns.extend(self.detect_statistical_anomalies())
         all_patterns.extend(self.detect_performance_regression())
@@ -408,7 +408,7 @@ class BehaviorAnalyzer:
         # Calculer des statistiques globales
         severity_counts = defaultdict(int)
         pattern_type_counts = defaultdict(int)
-        affected_modules = set()
+        affected_modules: set[str] = set()
 
         for pattern in all_patterns:
             severity_counts[pattern.severity] += 1
@@ -445,7 +445,7 @@ class BehaviorAnalyzer:
 
     def get_metrics_summary(self) -> dict[str, Any]:
         """Retourne un résumé des métriques surveillées"""
-        summary = {}
+        summary: dict[str, Any] = {}
 
         for metric_key, samples in self.metrics_buffer.items():
             if samples:

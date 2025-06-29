@@ -35,7 +35,7 @@ def health_check():
 
 
 # Fonction d'initialisation
-def initialize():
+def initialize() -> bool:
     """Initialisation du module"""
     logger.info("🌕 taskia initialisé")
     return True

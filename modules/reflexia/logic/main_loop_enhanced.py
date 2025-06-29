@@ -29,7 +29,7 @@ def analyze_system_health(metrics: dict[str, Any]) -> dict[str, str]:
     Returns:
         Dict avec analyse détaillée par composant
     """
-    analysis = {}
+    analysis: dict[str, Any] = {}
 
     # Analyse système
     system = metrics.get("system", {})
@@ -119,7 +119,7 @@ def analyze_system_health(metrics: dict[str, Any]) -> dict[str, str]:
 
 def generate_recommendations(analysis: dict[str, str], metrics: dict[str, Any]) -> list:
     """Génère des recommandations basées sur l'analyse"""
-    recommendations = []
+    recommendations: list[Any] = []
 
     if analysis.get("cpu") == "critical":
         recommendations.append("🔥 CPU critique: Vérifier les processus lourds")

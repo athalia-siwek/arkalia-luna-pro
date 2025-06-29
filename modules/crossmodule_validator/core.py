@@ -57,8 +57,8 @@ class CrossModuleValidator:
 
     async def validate_states(self) -> ValidationResult:
         """Effectue une validation croisée complète"""
-        conflicts = []
-        recommendations = []
+        conflicts: list[Any] = []
+        recommendations: list[Any] = []
 
         # Vérification basique de cohérence
         if len(self.module_states) < 2:
@@ -70,7 +70,7 @@ class CrossModuleValidator:
             )
 
         # Détection des conflits de version
-        version_groups = {}
+        version_groups: dict[str, Any] = {}
         for name, state in self.module_states.items():
             if state.version not in version_groups:
                 version_groups[state.version] = []

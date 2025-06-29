@@ -137,8 +137,8 @@ class PromptValidator:
             )
 
         # Vérifications de base
-        issues = []
-        blocked_patterns = []
+        issues: list[Any] = []
+        blocked_patterns: list[Any] = []
         security_score = 1.0
 
         # 1. Vérification de longueur
@@ -228,7 +228,7 @@ class PromptValidator:
         Returns:
             list[str]: Liste des patterns détectés
         """
-        detected = []
+        detected: list[Any] = []
         text_lower = text.lower()
 
         for pattern in self.injection_patterns:
@@ -268,7 +268,7 @@ class PromptValidator:
         import math
 
         # Compte la fréquence des caractères
-        char_counts = {}
+        char_counts: dict[str, Any] = {}
         for char in text:
             char_counts[char] = char_counts.get(char, 0) + 1
 

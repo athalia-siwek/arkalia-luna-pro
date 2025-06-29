@@ -61,7 +61,7 @@ def get_arkalia_containers_status() -> dict:
 
         if result.returncode == 0:
             lines = result.stdout.strip().split("\n")
-            containers = {}
+            containers: dict[str, Any] = {}
             for line in lines:
                 if line.strip():
                     parts = line.split(" ", 1)
@@ -79,7 +79,7 @@ def get_arkalia_containers_status() -> dict:
 
 def get_arkalia_modules_health() -> dict:
     """Vérifie la santé des modules Arkalia"""
-    health = {}
+    health: dict[str, Any] = {}
 
     # Check ZeroIA
     zeroia_state = Path("state/zeroia_dashboard.json")

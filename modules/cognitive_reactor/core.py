@@ -128,7 +128,7 @@ class CognitiveReactor:
 
     def detect_cognitive_patterns(self, context: dict[str, Any]) -> list[dict[str, Any]]:
         """Détecte les patterns cognitifs dans le contexte"""
-        patterns = []
+        patterns: list[Any] = []
 
         # === Pattern 1: Surcharge système ===
         if context.get("system_metrics", {}).get("cpu_percent", 0) > 80:
@@ -172,7 +172,7 @@ class CognitiveReactor:
 
     def generate_cognitive_reactions(self, patterns: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Génère des réactions cognitives basées sur les patterns"""
-        reactions = []
+        reactions: list[Any] = []
 
         for pattern in patterns:
             if pattern["type"] == "system_overload":
@@ -277,10 +277,10 @@ class CognitiveReactor:
 
     def predict_future_patterns(self) -> list[dict[str, Any]]:
         """Prédit les patterns futurs basés sur l'apprentissage"""
-        predictions = []
+        predictions: list[Any] = []
 
         # Analyse des patterns récurrents
-        pattern_counts = {}
+        pattern_counts: dict[str, Any] = {}
         for entry in self.reaction_history[-100:]:
             pattern_type = entry["reaction"]["type"]
             pattern_counts[pattern_type] = pattern_counts.get(pattern_type, 0) + 1
@@ -318,7 +318,7 @@ class CognitiveReactor:
                     reactions = self.generate_cognitive_reactions(patterns)
 
                     # === Exécution des réactions ===
-                    outcomes = []
+                    outcomes: list[Any] = []
                     for reaction in reactions:
                         outcome = self.execute_cognitive_reaction(reaction)
                         outcomes.append(outcome)

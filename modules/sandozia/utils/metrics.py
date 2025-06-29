@@ -157,7 +157,7 @@ class SandoziaMetrics:
 
     def export_prometheus_format(self) -> str:
         """Exporte au format Prometheus"""
-        lines = []
+        lines: list[Any] = []
 
         for metric_name, points in self.metrics_store.items():
             if not points:
@@ -179,13 +179,13 @@ class SandoziaMetrics:
 
     def export_grafana_json(self) -> dict[str, Any]:
         """Exporte au format JSON pour Grafana"""
-        series = []
+        series: list[Any] = []
 
         for metric_name, points in self.metrics_store.items():
             if not points:
                 continue
 
-            datapoints = []
+            datapoints: list[Any] = []
             for point in points:
                 # Format Grafana: [value, timestamp_ms]
                 timestamp_ms = int(point.timestamp.timestamp() * 1000)
@@ -201,14 +201,14 @@ class SandoziaMetrics:
 
     def get_cross_module_health(self) -> dict[str, Any]:
         """Calcule la santé cross-modules"""
-        health_metrics = {}
+        health_metrics: dict[str, Any] = {}
 
         # Métriques de base par module
         modules = ["reflexia", "zeroia", "assistantia"]
         base_metrics = ["confidence_score", "response_time", "success_rate"]
 
         for module in modules:
-            module_health = {}
+            module_health: dict[str, Any] = {}
 
             for metric in base_metrics:
                 metric_key = f"{module}_{metric}"
@@ -240,7 +240,7 @@ class SandoziaMetrics:
                 }
 
         # Score de cohérence inter-modules
-        coherence_scores = []
+        coherence_scores: list[Any] = []
         for module in modules:
             if module in health_metrics:
                 coherence_scores.append(health_metrics[module]["overall_health"])

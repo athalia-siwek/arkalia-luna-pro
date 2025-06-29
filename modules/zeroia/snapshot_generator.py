@@ -4,7 +4,7 @@ import subprocess  # nosec
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 import toml
 
@@ -44,7 +44,7 @@ def generate_snapshot(
 
     try:
         state = load_state(input_file)
-        snapshot = {}
+        snapshot: dict[str, Any] = {}
 
         # ✅ Sections pertinentes
         if "inputs" in state:

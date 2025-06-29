@@ -185,7 +185,7 @@ class ArkaliaOrchestrator:
         """
         logger.info("🔌 Initializing 10 Arkalia modules...")
 
-        initialization_results = {}
+        initialization_results: dict[str, Any] = {}
 
         # === ZEROIA - Décisions & raisonnement ===
         if "zeroia" in self.config.enabled_modules:
@@ -338,7 +338,7 @@ class ArkaliaOrchestrator:
 
         logger.info(f"🔄 CYCLE #{self.cycle_count} - Mode: {self.current_cycle_mode.value}")
 
-        cycle_results = {}
+        cycle_results: dict[str, Any] = {}
         operations_this_cycle = 0
         successful_this_cycle = 0
 

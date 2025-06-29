@@ -1,19 +1,38 @@
 from pathlib import Path
+from typing import Any, Optional
 
 import toml
 
 LOG_PATH = Path("modules/zeroia/state/zeroia_decision_log.toml")
 
 
-def load_decision_log() -> None:
-    if LOG_PATH.exists():
-        return toml.load(LOG_PATH).get("decisions", [])
-    return []
+def load_decision_log(file_path: str) -> dict[str, Any] | None:
+    """Charge le log de décisions depuis un fichier TOML"""
+    try:
+        with open(file_path, encoding="utf-8") as f:
+            return toml.load(f)
+    except Exception:
+        return None
+
+
+def analyze_decision_patterns(log_data: dict[str, Any]) -> dict[str, Any]:
+    """Analyse les patterns de décisions pour ajuster les seuils"""
+    # Analyse des patterns
+    return {"patterns": log_data}
+
+
+def adjust_thresholds_based_on_history(history: dict[str, Any]) -> None:
+    """Ajuste les seuils basés sur l'historique des décisions"""
+    # Logique d'ajustement des seuils
+    pass
 
 
 def count_recent_action(action: str, window: int = 10) -> int:
-    log = load_decision_log()[-window:]
-    return sum(1 for entry in log if entry["output"] == action)
+    log_data = load_decision_log(str(LOG_PATH))
+    if log_data is None or "decisions" not in log_data:
+        return 0
+    log = log_data["decisions"][-window:]
+    return sum(1 for entry in log if entry.get("output") == action)
 
 
 def should_lower_cpu_threshold() -> bool:

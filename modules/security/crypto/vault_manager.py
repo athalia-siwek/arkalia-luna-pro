@@ -123,7 +123,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             with open(self.metadata_file) as f:
                 data = json.load(f)
 
-            metadata = {}
+            metadata: dict[str, Any] = {}
             for name, meta_dict in data.items():
                 metadata[name] = SecretMetadata.from_dict(meta_dict)
 
@@ -306,7 +306,7 @@ class ArkaliaVault(BuildIntegrityValidator):
         Returns:
             Liste des métadonnées des secrets
         """
-        secrets = []
+        secrets: list[Any] = []
         now = datetime.now()
 
         for metadata in self.secrets_metadata.values():
@@ -323,7 +323,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             Nombre de secrets supprimés
         """
         now = datetime.now()
-        expired_secrets = []
+        expired_secrets: list[Any] = []
 
         for name, metadata in self.secrets_metadata.items():
             if metadata.expires_at and now > metadata.expires_at:
@@ -413,7 +413,7 @@ class ArkaliaVault(BuildIntegrityValidator):
             raise VaultError(f"Base integrity validation failed: {e}") from e
 
         # 2. Validation spécifique du vault
-        violations = []
+        violations: list[Any] = []
 
         # Vérifier que les fichiers vault existent
         required_files = [self.key_file, self.metadata_file, self.audit_log]

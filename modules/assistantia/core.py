@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from typing import Any, Optional
 
 import requests
 from fastapi import APIRouter, Depends, FastAPI, HTTPException
@@ -50,7 +51,7 @@ async def post_chat(
 
 def get_arkalia_context() -> str:
     """Récupère le contexte des autres modules Arkalia"""
-    context_parts = []
+    context_parts: list[Any] = []
 
     try:
         # État ZeroIA

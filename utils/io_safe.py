@@ -27,7 +27,7 @@ class LockedReadError(Exception):
 
 
 # Thread lock global pour la sécurité
-_file_locks = {}
+_file_locks: dict[str, Any] = {}
 _locks_mutex = threading.Lock()
 
 

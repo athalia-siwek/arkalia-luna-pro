@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 import toml
 
@@ -28,8 +28,8 @@ LAST_DECISION_TIME = None
 MIN_DECISION_INTERVAL = 30  # seconds - Évite les répétitions trop fréquentes
 
 # === Cache TOML optimisé pour performance ===
-_TOML_CACHE = {}
-_CACHE_TIMESTAMPS = {}
+_TOML_CACHE: dict[str, Any] = {}
+_CACHE_TIMESTAMPS: dict[str, Any] = {}
 
 # === Logger contradiction (rotatif) ===
 logger = logging.getLogger("zeroia_contradictions")

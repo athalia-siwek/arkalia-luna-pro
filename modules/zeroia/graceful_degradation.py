@@ -396,7 +396,7 @@ class GracefulDegradationSystem:
     async def _apply_degradation_level(self, level: DegradationLevel):
         """Applique un niveau de dégradation"""
         # Définir quels services désactiver par niveau
-        services_to_disable = set()
+        services_to_disable: set[str] = set()
 
         if level in [DegradationLevel.LIGHT_DEGRADATION]:
             # Désactiver seulement les services optionnels
@@ -610,7 +610,7 @@ class GracefulDegradationSystem:
 
     def get_service_details(self) -> dict[str, Any]:
         """Retourne les détails de tous les services"""
-        services_detail = {}
+        services_detail: dict[str, Any] = {}
 
         for name, service in self.services.items():
             metrics = self.service_metrics[name]

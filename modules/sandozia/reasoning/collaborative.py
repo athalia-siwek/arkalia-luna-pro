@@ -69,7 +69,7 @@ class CollaborativeReasoning:
     def collect_module_reasoning(self, module_decisions: dict[str, dict]) -> dict[str, Any]:
         """Collecte les raisonnements de chaque module"""
 
-        reasoning_data = {}
+        reasoning_data: dict[str, Any] = {}
 
         for module_name, decision_data in module_decisions.items():
             reasoning_data[module_name] = {
@@ -95,7 +95,7 @@ class CollaborativeReasoning:
             )
 
         # Analyser les décisions
-        decisions = {}
+        decisions: dict[str, Any] = {}
         total_confidence = 0.0
 
         for module, data in reasoning_data.items():
@@ -180,7 +180,7 @@ class CollaborativeReasoning:
     def analyze_disagreements(self, reasoning_data: dict[str, Any]) -> dict[str, Any]:
         """Analyse les désaccords entre modules"""
 
-        disagreements = []
+        disagreements: list[Any] = []
         modules = list(reasoning_data.keys())
 
         # Comparer chaque paire de modules

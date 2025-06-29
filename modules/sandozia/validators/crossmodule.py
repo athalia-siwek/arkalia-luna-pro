@@ -96,7 +96,7 @@ class CrossModuleValidator:
 
     def load_module_states(self) -> dict[str, dict]:
         """Charge les états actuels de tous les modules"""
-        states = {}
+        states: dict[str, Any] = {}
 
         for module_name, state_path in self.state_paths.items():
             try:
@@ -117,12 +117,12 @@ class CrossModuleValidator:
 
     def validate_temporal_coherence(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide la cohérence temporelle entre modules"""
-        results = []
+        results: list[Any] = []
         now = datetime.now()
         tolerance = timedelta(minutes=self.config["temporal_tolerance_minutes"])
 
         # Extraire les timestamps des différents modules
-        timestamps = {}
+        timestamps: dict[str, Any] = {}
 
         # Reflexia
         reflexia_state = states.get("reflexia", {})
@@ -193,11 +193,11 @@ class CrossModuleValidator:
 
     def validate_confidence_coherence(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide la cohérence des scores de confiance"""
-        results = []
+        results: list[Any] = []
         now = datetime.now()
 
         # Extraire les scores de confiance
-        confidence_scores = {}
+        confidence_scores: dict[str, Any] = {}
 
         # Reflexia confidence
         reflexia_state = states.get("reflexia", {})
@@ -245,7 +245,7 @@ class CrossModuleValidator:
 
     def validate_logical_consistency(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide la consistance logique entre modules"""
-        results = []
+        results: list[Any] = []
         now = datetime.now()
 
         # Analyser ZeroIA vs Reflexia
@@ -301,7 +301,7 @@ class CrossModuleValidator:
 
     def validate_behavioral_patterns(self, states: dict[str, dict]) -> list[ValidationResult]:
         """Valide les patterns comportementaux"""
-        results = []
+        results: list[Any] = []
         now = datetime.now()
 
         # Analyser les tendances récentes
@@ -342,7 +342,7 @@ class CrossModuleValidator:
         states = self.load_module_states()
 
         # Exécuter toutes les validations
-        all_results = []
+        all_results: list[Any] = []
 
         all_results.extend(self.validate_temporal_coherence(states))
         all_results.extend(self.validate_confidence_coherence(states))

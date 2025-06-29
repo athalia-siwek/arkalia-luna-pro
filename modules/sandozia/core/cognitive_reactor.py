@@ -132,7 +132,7 @@ class CognitiveReactor:
         Returns:
             Liste des réactions déclenchées
         """
-        reactions = []
+        reactions: list[Any] = []
 
         try:
             # 1. Nettoyer les quarantines expirées
@@ -309,7 +309,7 @@ class CognitiveReactor:
 
     def get_quarantine_status(self) -> dict[str, dict]:
         """Retourne l'état de toutes les quarantines"""
-        status = {}
+        status: dict[str, Any] = {}
         for module, quarantine in self.quarantined_modules.items():
             status[module] = {
                 "reason": quarantine.reason.value,
@@ -324,7 +324,7 @@ class CognitiveReactor:
     def _calculate_global_health_score(self, context: dict) -> float:
         """Calcule un score de santé global du système"""
         try:
-            factors = []
+            factors: list[Any] = []
 
             # CPU/RAM/Disk
             status = context.get("status", {})
@@ -419,7 +419,7 @@ class CognitiveReactor:
 
     async def _check_module_health(self, context: dict) -> list[CognitiveReaction]:
         """Vérifie la santé des modules et déclenche des quarantines si nécessaire"""
-        reactions = []
+        reactions: list[Any] = []
 
         for module in ["zeroia", "reflexia", "sandozia"]:
             confidence = context.get(f"{module}_confidence", 0.5)

@@ -253,7 +253,7 @@ class RotationManager:
         Returns:
             Dict {secret_name: (needs_rotation, reason)}
         """
-        results = {}
+        results: dict[str, Any] = {}
 
         for secret_name in self.policies.keys():
             results[secret_name] = self.check_rotation_needed(secret_name)
@@ -268,7 +268,7 @@ class RotationManager:
             Dict {secret_name: rotation_success}
         """
         rotation_check = self.bulk_rotation_check()
-        results = {}
+        results: dict[str, Any] = {}
 
         for secret_name, (needs_rotation, reason) in rotation_check.items():
             if needs_rotation:
@@ -373,13 +373,13 @@ class RotationManager:
         total_rotations = len(self.rotation_history)
 
         # Statistiques par stratégie
-        strategy_stats = {}
+        strategy_stats: dict[str, Any] = {}
         for policy in self.policies.values():
             strategy = policy.strategy.value
             strategy_stats[strategy] = strategy_stats.get(strategy, 0) + 1
 
         # Rotations récentes (7 derniers jours)
-        recent_rotations = []
+        recent_rotations: list[Any] = []
         cutoff_date = datetime.now() - timedelta(days=7)
 
         for record in self.rotation_history:

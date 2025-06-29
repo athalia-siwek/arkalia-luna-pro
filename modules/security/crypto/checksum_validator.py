@@ -49,7 +49,7 @@ class BuildIntegrityValidator:
             Dict mapping {fichier_relatif: sha256_hash}
         """
         scan_dir = Path(target_dir or self.base_dir)
-        checksums = {}
+        checksums: dict[str, Any] = {}
 
         logger.info(f"🔍 Scanning {scan_dir} for critical files...")
 
@@ -124,7 +124,7 @@ class BuildIntegrityValidator:
         current_checksums = self.generate_checksums()
 
         # Validate each file
-        violations = []
+        violations: list[Any] = []
 
         for file_path, expected_hash in reference_checksums.items():
             current_hash = current_checksums.get(file_path)
@@ -167,7 +167,7 @@ class BuildIntegrityValidator:
         reference_checksums = manifest_data.get("checksums", {})
 
         files_to_check = critical_files or self._get_critical_files_list()
-        results = {}
+        results: dict[str, Any] = {}
 
         for file_path in files_to_check:
             if file_path in reference_checksums:

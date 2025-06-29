@@ -50,8 +50,8 @@ LAST_DECISION_TIME = None
 MIN_DECISION_INTERVAL = 30  # seconds
 
 # === Cache TOML Enterprise optimisé pour performance Docker ===
-_TOML_CACHE = {}
-_CACHE_TIMESTAMPS = {}
+_TOML_CACHE: dict[str, Any] = {}
+_CACHE_TIMESTAMPS: dict[str, Any] = {}
 _CACHE_MAX_AGE = 30  # Cache 30s pour Docker container
 
 # === Instances globales Circuit Breaker et Event Store ===

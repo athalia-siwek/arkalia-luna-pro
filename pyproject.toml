@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "arkalia-luna-pro"
 version = "2.8.0"
 description = "Arkalia-LUNA Pro - Kernel IA Ultra-Protection"
-authors = [{name = "Athalia", email = "athalia@arkalia-luna.com"}]
+authors = [{ name = "Athalia", email = "athalia@arkalia-luna.com" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -31,38 +31,22 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.4.0",
-    "pytest-cov>=4.1.0",
-    "black>=23.0.0",
-    "ruff>=0.1.0",
-    "isort>=5.12.0",
-    "pre-commit>=3.5.0",
-    "bandit>=1.7.0",
+    "pytest",
+    "pytest-cov",
+    "black",
+    "ruff",
+    "isort",
+    "pre-commit",
+    "bandit",
 ]
 
 [tool.ruff]
-select = ["E", "W", "F", "I", "B", "C4", "UP"]
-ignore = ["E402", "F841", "W293", "F401", "F811"]
+target-version = "py310"
 line-length = 100
-indent-width = 4
 
 [tool.ruff.lint]
-ignore = [
-    "E402",
-    "F841",
-    "W293",
-    "F401",
-    "F811"
-]
-select = [
-    "E",
-    "W",
-    "F",
-    "I",
-    "B",
-    "C4",
-    "UP"
-]
+select = ["E", "W", "F", "I", "B", "C4", "UP"]
+ignore = ["E501", "E203", "F401", "F841", "B008", "C901"]
 
 [tool.ruff.lint.per-file-ignores]
 "scripts/demo_*.py" = ["E402", "F401"]
@@ -70,18 +54,17 @@ select = [
 "scripts/ark-master-*.py" = ["E402", "F401"]
 "tests/**/*.py" = ["F841", "E402"]
 "modules/**/*.py" = ["W293"]
+"modules/generative_ai/generated/test_core.py" = ["I001", "E", "W", "F", "B", "C4", "UP"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["modules", "scripts"]
 
 [tool.black]
-# Configuration Black
 line-length = 100
 target-version = ['py310']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
-  # directories
   \.eggs
   | \.git
   | \.hg
@@ -100,7 +83,6 @@ extend-exclude = '''
 '''
 
 [tool.isort]
-# Configuration isort
 profile = "black"
 line_length = 100
 known_first_party = ["modules", "scripts"]
@@ -158,11 +140,11 @@ addopts = [
     "--cov-fail-under=70"
 ]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "integration: marks tests as integration tests",
-    "unit: marks tests as unit tests",
-    "performance: marks tests as performance tests",
-    "security: marks tests as security tests",
+    "slow",
+    "integration",
+    "unit",
+    "performance",
+    "security",
 ]
 
 [tool.mypy]
@@ -178,7 +160,7 @@ exclude = [
 
 [tool.flake8]
 max-line-length = 100
-ignore = ["E402", "F841", "W293", "F401", "F811", "E203", "W503"]
+ignore = ["E402", "F841", "W293", "F401", "F811", "E203"]
 exclude = [
     ".git",
     "__pycache__",

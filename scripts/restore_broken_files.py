@@ -9,7 +9,7 @@ import subprocess
 from pathlib import Path
 
 
-def fix_broken_imports(file_path: Path):
+def fix_broken_imports(file_path: Path) -> bool:
     """Corrige les imports cassés par les commentaires noqa mal placés"""
     with open(file_path, encoding="utf-8") as f:
         content = f.read()
@@ -25,7 +25,7 @@ def fix_broken_imports(file_path: Path):
         ),
         # Pattern: import item # noqa: F401
         (r"import ([^#\n]+) # noqa: F401", r"import \1  # noqa: F401"),
-        # Pattern: EventType # noqa: F401.SOMETHING
+        # Pattern: EventType # noqa: F401 SOMETHING
         (r"EventType # noqa: F401\.([A-Z_]+)", r"EventType.\1  # noqa: F401"),
         # Pattern: event_store # noqa: F401
         (r"event_store # noqa: F401", r"event_store  # noqa: F401"),
@@ -52,7 +52,7 @@ def fix_broken_imports(file_path: Path):
     return False
 
 
-def fix_variables_with_underscores(file_path: Path):
+def fix_variables_with_underscores(file_path: Path) -> bool:
     """Corrige les variables avec underscores mal placés"""
     with open(file_path, encoding="utf-8") as f:
         content = f.read()
@@ -71,7 +71,7 @@ def fix_variables_with_underscores(file_path: Path):
         if callable(replacement):
             content = re.sub(pattern, replacement, content)
         else:
-            content = re.sub(pattern, replacement, content)
+            content = re.sub(pattern, str(replacement), content)
 
     if content != original_content:
         with open(file_path, "w", encoding="utf-8") as f:
@@ -82,7 +82,7 @@ def fix_variables_with_underscores(file_path: Path):
     return False
 
 
-def main():
+def main() -> None:
     """Fonction principale de restauration"""
     print("🔧 Début de la restauration des fichiers cassés...")
 
