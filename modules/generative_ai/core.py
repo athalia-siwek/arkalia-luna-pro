@@ -22,7 +22,7 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Optional
 
 # === Configuration du logging ===
 logging.basicConfig(
@@ -84,7 +84,7 @@ class GenerativeAI:
 """
 
 import logging
-from typing import Dict, List, Optional, Any
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +97,7 @@ class {class_name}:
         self.name = "{module_name}"
         logger.info(f"🚀 {class_name} initialisé")
     
-    def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def process(self, data: dict[str, Any]) -> dict[str, Any]:
         """
         Traite les données d'entrée
         """
@@ -106,7 +106,7 @@ class {class_name}:
 ''',
             "api_endpoint": '''from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Dict, Any
+from typing import Any, Optional
 
 router = APIRouter()
 
@@ -115,7 +115,7 @@ class {model_name}(BaseModel):
     {fields}
 
 @router.{method}("/{endpoint_path}")
-async def {function_name}(data: {model_name}) -> Dict[str, Any]:
+async def {function_name}(data: {model_name}) -> dict[str, Any]:
     """
     {endpoint_description}
     """

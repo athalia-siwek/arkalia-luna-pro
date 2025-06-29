@@ -154,9 +154,9 @@ def demo_analysis():
             analysis["modules"], key=lambda x: x.get("complexity", 0), reverse=True
         )
         for i, module in enumerate(sorted_modules[:5], 1):
-            print(
-                f"  {i}. {module.get('name', 'Unknown')} - Complexité: {module.get('complexity', 0)}"
-            )
+            name = module.get("name", "Unknown")
+            complexity = module.get("complexity", 0)
+            print(f"  {i}. {name} - Complexité: {complexity}")
 
     print(f"\n🔍 Patterns détectés: {len(analysis['patterns'])}")
     for pattern in analysis["patterns"]:

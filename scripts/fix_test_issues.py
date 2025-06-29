@@ -12,10 +12,13 @@ Problèmes corrigés :
 4. Tests obsolètes et dépréciés
 """
 
+import os
+import re
 import shutil
 import subprocess
+import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 # Configuration
 PROJECT_ROOT = Path(__file__).parent.parent

@@ -6,7 +6,7 @@ import logging
 import os
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Any, Optional
 
 from cryptography.fernet import Fernet
 
@@ -548,7 +548,7 @@ def migrate_from_env_file(
     secrets_migrated = 0
 
     with open(env_path) as f:
-        for line_num, line in enumerate(f, 1):
+        for _line_num, line in enumerate(f, 1):
             line = line.strip()
 
             # Ignorer les commentaires et lignes vides

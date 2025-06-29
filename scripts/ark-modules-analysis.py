@@ -5,7 +5,7 @@ Analyse tous les composants disponibles vs ceux intégrés dans l'orchestrateur
 """
 
 from pathlib import Path
-from typing import Dict, List
+from typing import Any, Optional
 
 
 class ArkaliaModulesAnalyzer:

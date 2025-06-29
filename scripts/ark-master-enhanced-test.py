@@ -6,7 +6,7 @@ Test complet de l'orchestrateur enhanced v5.0.0
 
 import asyncio
 import sys
-from typing import Dict
+from typing import Any, Optional
 
 
 async def test_enhanced_orchestrator():

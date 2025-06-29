@@ -15,7 +15,7 @@ import os
 import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import Dict
+from typing import Any, Optional
 
 try:
     import psutil

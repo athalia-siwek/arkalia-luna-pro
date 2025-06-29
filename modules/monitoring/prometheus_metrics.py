@@ -5,7 +5,7 @@ import json
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Union
+from typing import Any, Optional
 
 import toml
 from prometheus_client import Counter, Gauge, Histogram, Info, start_http_server

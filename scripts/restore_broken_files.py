@@ -31,7 +31,7 @@ def fix_broken_imports(file_path: Path):
         (r"event_store # noqa: F401", r"event_store  # noqa: F401"),
         # Pattern: circuit_breaker # noqa: F401
         (r"circuit_breaker # noqa: F401", r"circuit_breaker  # noqa: F401"),
-        # Pattern: create_default_context_enhanced # noqa: F401()
+        # Pattern: create_default_context_enhanced # noqa: F401
         (
             r"create_default_context_enhanced # noqa: F401\(\)",
             r"create_default_context_enhanced()  # noqa: F401",

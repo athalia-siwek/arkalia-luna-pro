@@ -11,14 +11,20 @@ Scénarios de chaos:
 - Corruption état ZeroIA/ReflexIA
 """
 
+import asyncio
 import json
+import logging
 import random
 import shutil
+import subprocess
+import sys
 import time
 import traceback
 from datetime import datetime
 from pathlib import Path
-from typing import Dict
+from typing import Any
+
+import toml
 
 
 class ChaosInjector:

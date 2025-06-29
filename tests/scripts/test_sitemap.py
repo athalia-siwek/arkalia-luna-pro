@@ -13,7 +13,7 @@ def test_sitemap_is_valid_xml():
     try:
         secure_parse("site/sitemap.xml")
     except Exception as e:
-        assert False, f"Erreur de parsing XML : {e}"
+        raise AssertionError(f"Erreur de parsing XML : {e}")
 
 
 def test_sitemap_contains_urls():

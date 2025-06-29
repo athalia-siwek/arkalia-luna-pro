@@ -144,7 +144,7 @@ class TestFallbackMetrics:
 
         for metric in required_metrics:
             assert metric in metrics, f"Métrique manquante: {metric}"
-            assert isinstance(metrics[metric], (int, float)), f"Type invalide pour {metric}"
+            assert isinstance(metrics[metric], int | float), f"Type invalide pour {metric}"
 
     def test_fallback_metrics_values(self):
         """🎯 Test cohérence des valeurs de métriques"""

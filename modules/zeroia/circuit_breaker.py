@@ -19,7 +19,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from modules.zeroia.event_store import EventStore, EventType
 

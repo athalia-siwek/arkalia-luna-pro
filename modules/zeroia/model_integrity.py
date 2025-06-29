@@ -11,7 +11,7 @@ des tentatives d'empoisonnement de modèle.
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Any, Optional
 
 # Configuration
 INTEGRITY_LOG = Path("modules/zeroia/logs/model_integrity.log")
@@ -97,7 +97,7 @@ class ModelIntegrityMonitor:
 
         # Validation CPU
         cpu = status.get("cpu")
-        if not isinstance(cpu, (int, float)) or cpu < 0 or cpu > 100:
+        if not isinstance(cpu, int | float) or cpu < 0 or cpu > 100:
             self.logger.warning(f"Suspicious CPU value: {cpu}")
             return False
 
@@ -229,7 +229,7 @@ class ModelIntegrityMonitor:
             self.logger.error(msg)
 
         # Nouvelle détection: CPU élevé mais décision normale
-        for i, (decision, cpu) in enumerate(
+        for _i, (decision, cpu) in enumerate(
             zip(recent_decisions[-5:], recent_cpus[-5:], strict=False)
         ):
             if cpu > 85 and decision == "normal":

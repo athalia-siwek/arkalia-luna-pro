@@ -9,7 +9,7 @@ import tempfile
 import threading
 import time
 from pathlib import Path
-from typing import Any, Dict, Union
+from typing import Any, Optional
 
 import toml
 

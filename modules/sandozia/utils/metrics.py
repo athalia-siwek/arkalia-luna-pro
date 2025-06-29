@@ -17,7 +17,7 @@ import statistics
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -295,7 +295,7 @@ def demo_metrics():
     print("📊 Generating demo metrics...")
 
     # Générer des métriques synthétiques
-    for i in range(100):
+    for _i in range(100):
         # Metrics Reflexia
         metrics.add_metric(
             "reflexia_confidence_score",

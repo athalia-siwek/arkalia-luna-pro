@@ -23,7 +23,7 @@ import logging
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Optional
 
 # Configuration logging
 logging.basicConfig(
@@ -61,9 +61,9 @@ class ArkaliaEnhancedEngine:
     """
 
     def __init__(self):
-        self.cognitive_reactor = CognitiveReactor  # noqa: F401()
-        self.chronalia = Chronalia  # noqa: F401()
-        self.event_store  # noqa: F401 = EventStore()
+        self.cognitive_reactor = CognitiveReactor  # noqa: F401
+        self.chronalia = Chronalia  # noqa: F401
+        self.event_store = EventStore()  # noqa: F401
 
         # État système
         self.decision_pattern_count = 0
@@ -393,7 +393,7 @@ def generate_heatmap_sample():
 
     print("📊 Génération données heatmap pour Grafana...")
 
-    chronalia = Chronalia  # noqa: F401()
+    chronalia = Chronalia  # noqa: F401
     heatmap_data = chronalia.get_heatmap_data(hours_back=24)
 
     output_file = Path("state/chronalia/grafana_heatmap_sample.json")

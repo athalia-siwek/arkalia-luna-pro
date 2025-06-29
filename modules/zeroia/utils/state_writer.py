@@ -19,7 +19,7 @@ import hashlib
 import json
 import os
 from datetime import datetime
-from typing import Any, Dict
+from typing import Any, Optional
 
 import toml
 
@@ -55,7 +55,7 @@ def save_toml_if_changed(data: dict[str, Any], target_path: str) -> None:
     la corruption des données. Ajoute automatiquement un timestamp.
 
     Args:
-        data (Dict[str, Any]): Dictionnaire de données à sauvegarder
+        data (dict[str, Any]): Dictionnaire de données à sauvegarder
         target_path (str): Chemin de destination du fichier TOML
 
     Raises:
@@ -93,7 +93,7 @@ def save_json_if_changed(data: dict[str, Any], target_path: str) -> None:
     consistant (indent=2, sort_keys=True) pour faciliter les diffs Git.
 
     Args:
-        data (Dict[str, Any]): Dictionnaire de données à sauvegarder
+        data (dict[str, Any]): Dictionnaire de données à sauvegarder
         target_path (str): Chemin de destination du fichier JSON
 
     Raises:
@@ -160,7 +160,7 @@ def write_state_json(file_path: str, data: dict[str, Any]) -> None:
 
     Args:
         file_path (str): Chemin de destination du fichier JSON
-        data (Dict[str, Any]): Données à écrire
+        data (dict[str, Any]): Données à écrire
 
     Raises:
         OSError: Si erreur d'écriture fichier
@@ -186,7 +186,7 @@ def load_zeroia_state(path: str) -> dict[str, Any]:
         path (str): Chemin vers le fichier d'état TOML
 
     Returns:
-        Dict[str, Any]: Dictionnaire contenant l'état ZeroIA
+        dict[str, Any]: Dictionnaire contenant l'état ZeroIA
 
     Raises:
         toml.TomlDecodeError: Si fichier TOML invalide

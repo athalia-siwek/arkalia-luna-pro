@@ -1,7 +1,7 @@
 import logging
 import sys
 from pathlib import Path
-from typing import Dict
+from typing import Any, Optional
 
 import toml
 

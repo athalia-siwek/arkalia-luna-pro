@@ -108,7 +108,7 @@ def test_ensure_parent_dir_root_path():
         assert True
     except Exception as e:
         # Autres exceptions non attendues
-        assert False, f"Unexpected exception: {e}"
+        raise AssertionError(f"Unexpected exception: {e}")
 
 
 def test_ensure_parent_dir_relative_path(tmp_path):
@@ -169,4 +169,4 @@ def test_ensure_parent_dir_empty_path():
         assert True
     except Exception as e:
         # Si une exception est levée, elle doit être gérée gracieusement
-        assert isinstance(e, (OSError, ValueError)), f"Unexpected exception type: {type(e)}"
+        assert isinstance(e, OSError | ValueError), f"Unexpected exception type: {type(e)}"

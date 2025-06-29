@@ -14,7 +14,7 @@ import json
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Optional
 
 
 class ConfidenceScorer:
@@ -73,7 +73,7 @@ class ConfidenceScorer:
         Calcule le score de confiance avec explication détaillée
 
         Returns:
-            Tuple[float, Dict]: (score_confiance, explication_détaillée)
+            tuple[float, Dict]: (score_confiance, explication_détaillée)
         """
         start_time = time.time()
 
@@ -290,7 +290,7 @@ class ConfidenceScorer:
         for key in common_keys:
             val1, val2 = ctx1[key], ctx2[key]
 
-            if isinstance(val1, (int, float)) and isinstance(val2, (int, float)):
+            if isinstance(val1, int | float) and isinstance(val2, int | float):
                 # Similarité numérique (distance normalisée)
                 max_val = max(abs(val1), abs(val2), 1)
                 similarity = 1.0 - abs(val1 - val2) / max_val

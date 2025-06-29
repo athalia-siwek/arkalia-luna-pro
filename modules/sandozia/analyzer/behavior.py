@@ -24,7 +24,7 @@ import statistics
 from collections import defaultdict, deque
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -469,7 +469,7 @@ if __name__ == "__main__":
         print("🧠 Generating synthetic behavior data...")
 
         # Générer des données synthétiques
-        for i in range(50):
+        for _i in range(50):
             # Métriques normales
             analyzer.add_metric_sample("reflexia", "confidence_score", random.uniform(0.7, 0.95))
             analyzer.add_metric_sample("zeroia", "confidence_score", random.uniform(0.6, 0.9))
@@ -480,7 +480,7 @@ if __name__ == "__main__":
             time.sleep(0.01)  # Petit délai
 
         # Ajouter quelques anomalies
-        for i in range(5):
+        for _i in range(5):
             analyzer.add_metric_sample("reflexia", "confidence_score", 0.2)  # Anomalie
             analyzer.add_metric_sample("reflexia", "response_time", 5.0)  # Régression
 

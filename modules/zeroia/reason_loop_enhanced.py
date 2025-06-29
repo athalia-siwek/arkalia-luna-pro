@@ -18,7 +18,7 @@ import textwrap
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Any, Optional
 
 import toml
 
@@ -289,7 +289,7 @@ def decide_protected(context: dict) -> tuple[str, float]:
     cpu = status.get("cpu", 0)
 
     # Validation des données d'entrée
-    if not isinstance(cpu, (int, float)) or cpu < 0 or cpu > 100:
+    if not isinstance(cpu, int | float) or cpu < 0 or cpu > 100:
         raise DecisionIntegrityError(f"CPU invalide: {cpu} (doit être 0-100)")
 
     if severity not in ["none", "low", "medium", "high", "critical"]:

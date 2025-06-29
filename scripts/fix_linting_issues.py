@@ -4,10 +4,11 @@
 Corrige les erreurs F841 (variables inutilisées), E722 (bare except), et F401 (imports inutilisés)
 """
 
+import os
 import re
 import subprocess
 from pathlib import Path
-from typing import List
+from typing import Any
 
 
 def fix_unused_variables(file_path: Path) -> list[str]:

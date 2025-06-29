@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -226,7 +226,7 @@ class EventStore:
         """
         try:
             events = []
-            for event_id, event_data in self.events.items():
+            for _event_id, event_data in self.events.items():
                 if event_data["event_type"] == event_type.value:
                     event = Event.from_dict(event_data)
                     if since and event.timestamp < since:

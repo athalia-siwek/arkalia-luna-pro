@@ -7,7 +7,7 @@ import secrets
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta
 from enum import Enum
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Any, Optional
 
 import jwt
 
@@ -331,7 +331,7 @@ class TokenManager:
                 token_id = decoded.get("jti")
             except jwt.InvalidTokenError:
                 # Pas un JWT, chercher dans les API keys
-                for tid, metadata in self.token_metadata.items():
+                for tid, _metadata in self.token_metadata.items():
                     stored_token = self.vault.retrieve_secret(f"token_{tid}")
                     if stored_token == token_value:
                         token_id = tid

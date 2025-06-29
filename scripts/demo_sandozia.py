@@ -166,17 +166,15 @@ class SandoziaDemo:
         print("⚠️  Injection d'anomalies pour test...")
 
         # Anomalies de confiance
-        for i in range(5):
+        for _ in range(5):
             self.analyzer.add_metric_sample("reflexia", "confidence_score", 0.1)  # Très bas
 
         # Régression de performance
-        for i in range(8):
-            self.analyzer.add_metric_sample(
-                "reflexia", "response_time", random.uniform(3.0, 5.0)
-            )  # Très lent
+        for _ in range(8):
+            self.analyzer.add_metric_sample("reflexia", "response_time", random.uniform(3.0, 5.0))
 
         # Pattern répétitif suspect
-        for i in range(7):
+        for _ in range(7):
             self.analyzer.add_decision_event(
                 "zeroia",
                 {
@@ -191,9 +189,8 @@ class SandoziaDemo:
         print("✅ Analyse comportementale terminée:")
         print(f"   🎯 Score de santé: {analysis_result['behavioral_health_score']:.3f}")
         print(f"   📊 Patterns détectés: {analysis_result['patterns_detected']}")
-        print(
-            f"   🔴 Patterns critiques: {analysis_result['patterns_by_severity'].get('critical', 0)}"
-        )
+        critical_count = analysis_result["patterns_by_severity"].get("critical", 0)
+        print(f"   🔴 Patterns critiques: {critical_count}")
         print(f"   🟡 Patterns moyens: {analysis_result['patterns_by_severity'].get('medium', 0)}")
         print(f"   📈 Modules affectés: {len(analysis_result['affected_modules'])}")
 
@@ -348,9 +345,9 @@ behavioral_alert_enabled = true
         print("\n📊 Statut final Sandozia:")
         print(f"   🔄 En fonctionnement: {status['is_running']}")
         print(f"   📊 Snapshots collectés: {status['snapshots_count']}")
-        print(
-            f"   🔌 Modules connectés: {sum(status['modules_available'].values())}/{len(status['modules_available'])}"
-        )
+        connected_modules = sum(status["modules_available"].values())
+        total_modules = len(status["modules_available"])
+        print(f"   🔌 Modules connectés: {connected_modules}/{total_modules}")
 
         return status
 
@@ -483,9 +480,8 @@ async def run_daemon_mode(demo: SandoziaDemo):
                 if cycle_count % 5 == 0:
                     print(f"🎯 Status après {cycle_count} cycles:")
                     print(f"  - Cohérence modules: {validator_result['coherence_score']:.3f}")
-                    print(
-                        f"  - Santé comportementale: {analyzer_result['behavioral_health_score']:.3f}"
-                    )
+                    behavioral_score = analyzer_result["behavioral_health_score"]
+                    print(f"  - Santé comportementale: {behavioral_score:.3f}")
                     print(
                         f"  - Métriques cohérentes: {metrics_result['cross_module_coherence']:.3f}"
                     )

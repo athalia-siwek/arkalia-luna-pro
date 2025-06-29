@@ -11,7 +11,7 @@ CHANGEMENTS v2.6.0:
 
 import logging
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from .circuit_breaker import (
     CognitiveOverloadError,

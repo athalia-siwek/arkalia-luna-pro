@@ -174,7 +174,7 @@ def _convert_to_prometheus_format(metrics_dict):
     lines = []
 
     for metric_name, value in metrics_dict.items():
-        if isinstance(value, (int, float)):
+        if isinstance(value, int | float):
             lines.append(f"# HELP {metric_name} Métrique Arkalia-LUNA")
             lines.append(f"# TYPE {metric_name} gauge")
             lines.append(f"{metric_name} {value}")

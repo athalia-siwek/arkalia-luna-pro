@@ -7,7 +7,7 @@ Module quick_demo généré automatiquement
 """
 
 import logging
-from typing import Any, Dict
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 

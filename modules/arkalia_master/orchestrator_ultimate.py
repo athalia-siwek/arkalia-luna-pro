@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 import toml
 
@@ -607,7 +607,7 @@ class ArkaliaOrchestrator:
 
     async def _perform_health_checks(self):
         """Vérifie la santé de tous les modules"""
-        for module_name, module_wrapper in self.modules.items():
+        for _module_name, module_wrapper in self.modules.items():
             # Logique de health check spécifique à chaque module
             if module_wrapper.error_count > 10:
                 module_wrapper.status = ModuleStatus.CRITICAL

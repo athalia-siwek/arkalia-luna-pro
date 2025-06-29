@@ -87,7 +87,7 @@ def test_main_loop_multiple_calls():
         mock_reason_loop.return_value = ("normal", 0.4)
 
         # Appelle main_loop plusieurs fois
-        for i in range(3):
+        for _i in range(3):
             main_loop()
 
         # Vérifie que reason_loop a été appelé 3 fois

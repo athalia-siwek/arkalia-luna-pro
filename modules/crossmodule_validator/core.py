@@ -7,7 +7,7 @@ Assure la cohérence entre les différents modules du système
 import asyncio
 import logging
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel

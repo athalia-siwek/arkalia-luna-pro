@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Optional
 
 from modules.sandozia.analyzer.behavior import BehaviorAnalyzer
 from modules.zeroia.event_store import EventStore, EventType

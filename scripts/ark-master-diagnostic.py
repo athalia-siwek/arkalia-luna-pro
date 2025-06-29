@@ -6,7 +6,7 @@ Script pour valider tous les mécanismes de protection et résilience
 
 import asyncio
 import logging
-from typing import Dict
+from typing import Any, Optional
 
 # Configuration logging
 logging.basicConfig(

@@ -11,7 +11,7 @@ import logging
 import os
 import time
 from pathlib import Path
-from typing import Dict, Optional, Tuple
+from typing import Any, Optional
 
 from .reason_loop_enhanced import (
     get_circuit_status,
@@ -78,7 +78,7 @@ class ZeroIACore:
             context_path: Chemin vers le contexte (optionnel)
 
         Returns:
-            Tuple[str, float]: (décision, score_confiance)
+            tuple[str, float]: (décision, score_confiance)
         """
         if not self.initialized:
             logger.warning("⚠️ ZeroIA Core non initialisé")
@@ -146,7 +146,7 @@ def quick_decision(context_path: Path | None = None) -> tuple[str, float]:
         context_path: Chemin vers le contexte (optionnel)
 
     Returns:
-        Tuple[str, float]: (décision, score_confiance)
+        tuple[str, float]: (décision, score_confiance)
     """
     core = get_zeroia_core()
 

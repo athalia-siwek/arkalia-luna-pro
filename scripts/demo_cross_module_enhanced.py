@@ -159,9 +159,8 @@ def demo_modules_integration():
 
     working_modules = len([s for s in modules_status.values() if s.startswith("✅")])
     total_modules = len(modules_status)
-    print(
-        f"\n📊 Taux succès: {working_modules}/{total_modules} ({(working_modules/total_modules)*100:.1f}%)"
-    )
+    success_rate = (working_modules / total_modules) * 100
+    print(f"\n📊 Taux succès: {working_modules}/{total_modules} ({success_rate:.1f}%)")
 
 
 def demo_quick():
@@ -175,7 +174,7 @@ def demo_quick():
 
     # Charger quelques configs avec cache
     configs_loaded = 0
-    for i in range(3):
+    for _ in range(3):
         try:
             load_toml_cached("config/settings.toml")
             configs_loaded += 1

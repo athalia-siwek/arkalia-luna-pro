@@ -6,7 +6,7 @@ import re
 import time
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List
+from typing import Any, Optional
 
 
 class SecurityLevel(Enum):
@@ -226,7 +226,7 @@ class PromptValidator:
             text: Texte à analyser
 
         Returns:
-            List[str]: Liste des patterns détectés
+            list[str]: Liste des patterns détectés
         """
         detected = []
         text_lower = text.lower()
@@ -323,6 +323,6 @@ def detect_injection_patterns(text: str) -> list[str]:
         text: Texte à analyser
 
     Returns:
-        List[str]: Patterns détectés
+        list[str]: Patterns détectés
     """
     return default_validator.detect_injection_patterns(text)

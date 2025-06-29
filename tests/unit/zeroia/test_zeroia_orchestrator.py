@@ -18,7 +18,7 @@ def test_orchestrator_runs_limited_loops(monkeypatch):
         orchestrate_zeroia_loop(max_loops=2)
         assert True  # Si on arrive ici, le test a réussi
     except Exception as e:
-        assert False, f"L'orchestrateur a échoué: {e}"
+        raise AssertionError(f"L'orchestrateur a échoué: {e}")
 
 
 class MockOrchestrator:
@@ -62,4 +62,4 @@ def test_orchestrator_exception_handling(monkeypatch):
         orchestrate_zeroia_loop(max_loops=1)
         assert True
     except Exception as e:
-        assert False, f"L'orchestrateur n'a pas géré l'exception: {e}"
+        raise AssertionError(f"L'orchestrateur n'a pas géré l'exception: {e}")

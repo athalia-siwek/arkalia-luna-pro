@@ -23,7 +23,7 @@ Architecture: Microservices-ready avec monitoring intégré
 import logging
 import time
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import toml
 

@@ -51,7 +51,7 @@ class ChaosTester:
                 with open(file_path, "rb") as f:
                     content = f.read()
                 corrupted = bytearray(content)
-                for i in range(min(10, len(corrupted))):
+                for _i in range(min(10, len(corrupted))):
                     pos = random.randint(0, len(corrupted) - 1)
                     corrupted[pos] = random.randint(0, 255)
                 with open(file_path, "wb") as f:

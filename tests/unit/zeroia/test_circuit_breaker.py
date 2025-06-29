@@ -103,7 +103,7 @@ def test_circuit_opens_after_threshold(circuit_breaker, mock_event_store):
         raise CognitiveOverloadError("Test failure")
 
     # Atteindre le seuil d'échecs (3)
-    for i in range(3):
+    for _i in range(3):
         with pytest.raises(CognitiveOverloadError):
             circuit_breaker.call(failing_function)
 
@@ -123,7 +123,7 @@ def test_circuit_blocks_calls_when_open(circuit_breaker, mock_event_store):
         raise CognitiveOverloadError("Test failure")
 
     # Ouvrir le circuit
-    for i in range(3):
+    for _i in range(3):
         with pytest.raises(CognitiveOverloadError):
             circuit_breaker.call(failing_function)
 
@@ -146,7 +146,7 @@ def test_circuit_transitions_to_half_open(circuit_breaker, mock_event_store):
         raise CognitiveOverloadError("Test failure")
 
     # Ouvrir le circuit
-    for i in range(3):
+    for _i in range(3):
         with pytest.raises(CognitiveOverloadError):
             circuit_breaker.call(failing_function)
 
@@ -218,7 +218,7 @@ def test_manual_reset(circuit_breaker, mock_event_store):
         raise CognitiveOverloadError("Test failure")
 
     # Ouvrir le circuit
-    for i in range(3):
+    for _i in range(3):
         with pytest.raises(CognitiveOverloadError):
             circuit_breaker.call(failing_function)
 

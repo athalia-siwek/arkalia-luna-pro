@@ -125,7 +125,7 @@ def test_type_index_functionality(temp_event_store):
     """🧪 Test fonctionnalité index par type"""
     for i in range(5):
         temp_event_store.add_event(EventType.DECISION_MADE, {"decision": f"decision_{i}"})
-    for i in range(3):
+    for _ in range(3):
         temp_event_store.add_event(EventType.CIRCUIT_SUCCESS, {"state": "closed"})
     decision_events = temp_event_store.get_events_by_type(EventType.DECISION_MADE)
     success_events = temp_event_store.get_events_by_type(EventType.CIRCUIT_SUCCESS)

@@ -13,7 +13,7 @@ Boucle principale améliorée avec :
 import logging
 import time
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from .decision import monitor_status
 from .metrics_enhanced import read_metrics, read_metrics_enhanced

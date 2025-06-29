@@ -7,7 +7,7 @@ Détecte et corrige les erreurs dans les modules IA
 import asyncio
 import logging
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -177,7 +177,7 @@ class ErrorRecoverySystem:
         while self.is_running:
             try:
                 # Vérifier erreurs actives
-                for module, errors in self.active_errors.items():
+                for _module, errors in self.active_errors.items():
                     if errors:
                         action = self._plan_recovery_action(errors[-1])
                         if action:
