@@ -56,7 +56,7 @@ ark-reflexia-monitor
 - **📖 Documentation** : [Modules Overview](modules.md)
 - **🧠 Architecture** : [Structure du Système](fonctionnement/structure.md)
 - **🔧 API** : [Guide API](api.md)
-- **💡 Exemples** : [Demos & Scripts](demos.md)
+- **💡 Exemples** : [Style Demo](style-demo.md)
 
 ## 🆘 Aide Rapide
 
@@ -84,7 +84,7 @@ ark-docs-local  # → http://127.0.0.1:9000
 
 1. **Explorer les modules** : [Modules détaillés](modules.md)
 2. **Configurer l'API** : [Configuration](infrastructure/configuration.md)
-3. **Personnaliser** : [Architecture](architecture/)
+3. **Personnaliser** : [Architecture](fonctionnement/structure.md)
 4. **Contribuer** : [Guide de contribution](credits/CONTRIBUTING.md)
 
 ---

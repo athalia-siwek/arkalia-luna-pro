@@ -24,7 +24,7 @@ Bienvenue dans la démonstration du nouveau thème **Arkalia-LUNA v3.0-phase1** 
 
 ### Navigation et Liens
 
-Voici un [lien stylisé](/) avec effet de survol personnalisé.
+Voici un [lien stylisé](index.md) avec effet de survol personnalisé.
 
 ### Code et Syntaxe
 
