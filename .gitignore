@@ -107,3 +107,4 @@ state/sandozia/detected_patterns.jsonl
 
 # Sandozia cache metrics
 state/sandozia/latest_metrics.json
+.mypy_cache/
