@@ -26,21 +26,11 @@ theme:
   favicon: assets/favicon.svg
   features:
     - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.sections
-    - navigation.expand
-    - navigation.indexes
     - navigation.top
-    - navigation.path
-    - navigation.instant
-    - navigation.instant.prefetch
-    - navigation.tracking
     - search.highlight
-    - search.share
     - search.suggest
     - content.code.copy
-    - content.code.annotate
-    - content.tabs.link
   icon:
     repo: fontawesome/brands/github
 
@@ -113,94 +103,32 @@ markdown_extensions:
       title: Sur cette page
 
 nav:
-  - Accueil: index.md
-  - 🚀 Quick Start: quick-start.md
-  - 🎨 Style Demo: style-demo.md
-  - 🚀 Releases:
-    - Dernières Updates: releases/dernieres_updates.md
-    - Changelog Complet: releases/CHANGELOG.md
-    - Index: releases/index.md
-    - Cross Module Enhanced v2.7.1: releases/cross_module_enhanced_v2.7.1.md
-  - 🧩 Modules:
-    - Vue d'ensemble: modules.md
-    - Modules Index: modules/index.md
-    - 🤖 AssistantIA: modules/assistantia.md
-    - 🔄 Reflexia: modules/reflexia.md
-    - 🧠 Sandozia: modules/sandozia.md
-    - ⚡ Taskia: modules/taskia.md
-    - 🧪 ZeroIA: modules/zeroia.md
-    - 🌊 Nyxalia: modules/nyxalia.md
-    - 🌍 Global State: modules/global_state.md
-    - 🎮 Helloria: modules/helloria.md
-    - Cross Module Enhanced: modules/cross_module_enhanced.md
-    - Sandozia Container: modules/sandozia/container_integration.md
-    - ZeroIA Orchestrator: modules/zeroia/orchestrator_enhanced.md
-  - 🧪 ZeroIA Détaillé:
-    - Vue d'ensemble: zeroia/overview.md
-    - Troubleshooting: zeroia/troubleshooting.md
-    - Audit Compréhensif: audit_zeroia_comprehensive.md
-  - 🌐 API:
-    - Guide API: api.md
-    - Documentation API: api/index.md
-  - 🏗️ Architecture:
-    - Fonctionnement:
-      - Structure: fonctionnement/structure.md
-      - Composants: fonctionnement/composants.md
-      - Kernel: fonctionnement/kernel.md
-      - Utilisation: fonctionnement/utilisation.md
-    - Flux de Décision: architecture/decision_flow.mmd
-  - 🛠️ Infrastructure:
+  - Home: index.md
+  - Getting Started: quick-start.md
+  - Architecture:
+    - Overview: fonctionnement/structure.md
+    - Components: fonctionnement/composants.md
+    - Decision Flow: architecture/decision_flow.mmd
+  - Modules:
+    - Overview: modules.md
+    - AssistantIA: modules/assistantia.md
+    - ZeroIA: modules/zeroia.md
+    - Sandozia: modules/sandozia.md
+    - ReflexIA: modules/reflexia.md
+  - API Reference: api.md
+  - Deployment:
     - Installation: infrastructure/installation.md
     - Configuration: infrastructure/configuration.md
-    - Déploiement: infrastructure/deployment.md
-    - CI/CD: infrastructure/ci-cd.md
-    - Automation: infrastructure/automation.md
-    - Ollama: infrastructure/ollama.md
-  - 🧹 DevOps & Qualité:
-    - Vue d'ensemble: devops/index.md
-    - Résolution Linting: devops/linting-resolution.md
-    - Sécurité: devops/security.md
-  - 🔐 Sécurité:
-    - Vue d'ensemble: security/security.md
-    - Architecture: security/architecture.mmd
-    - Détection Model Poisoning: security/model-poisoning-detection.md
-    - Tests de Pénétration: security/penetration-testing.md
-    - Réponse aux Incidents: security/incident-response.md
-    - Sauvegarde et Récupération: security/backup-recovery.md
-    - Conformité: security/compliance.md
-    - Redaction des Logs: security/log_redaction.md
-    - Roadmap Phase 4: security/phase4-roadmap.md
-    - Docker Hardening: docker_hardening.md
-  - 📊 Logs & Monitoring:
-    - Statut ZeroIA: logs/zeroia_status.md
-    - Analyse d'Échecs: logs/failure_analysis.md
-    - Historique Raisonnement: logs/reasoning_history.md
-  - 🧪 Chaos Engineering:
-    - Suite de Tests: chaos/chaos_test_suite.md
-  - 🛣️ Roadmap:
-    - Vue d'ensemble: roadmap/index.md
-    - Plan Structuré v3.x: roadmap/v3-structured-plan.md
-    - Améliorations: roadmap/ENHANCEMENTS.md
-    - Optimisation v3.0-phase2: roadmap/OPTIMISATION_v3.0-phase2.md
-    - Progress Changelog: roadmap/PROGRESS_CHANGELOG.md
-    - Technical Roadmap Advanced: roadmap/TECHNICAL_ROADMAP_ADVANCED.md
-  - 📚 Journal:
-    - Checklist: journal/CHECKLIST.md
-  - 🎭 Credits:
-    - Contributeurs: credits/credits.md
-    - Guide Contribution: credits/CONTRIBUTING.md
-  - 🛠️ Opérations:
-    - Guide Ops: ops.md
-    - Ops Index: ops/index.md
-  - ♻️ Rebuild:
-    - Guide Rebuild: rebuild.md
-    - Rebuild Index: rebuild/index.md
-  - ❓ FAQ:
-    - FAQ Générale: faqs.md
-    - FAQ Index: faqs/index.md
-  - 📄 Licence:
-    - Licence Complète: license.md
-    - Licence Index: license/index.md
-  - 📋 Divers:
-    - Changelog: changelog.md
-    - Niveaux Cognitifs: cognitive-levels.md
+    - Docker: infrastructure/deployment.md
+  - Security:
+    - Overview: security/security.md
+    - Hardening: docker_hardening.md
+    - Monitoring: security/penetration-testing.md
+  - Operations:
+    - Monitoring: logs/zeroia_status.md
+    - Troubleshooting: zeroia/troubleshooting.md
+    - DevOps: devops/index.md
+  - Resources:
+    - Changelog: CHANGELOG.md
+    - Roadmap: roadmap/OPTIMISATION_v3.0-phase2.md
+    - Contributing: credits/CONTRIBUTING.md
