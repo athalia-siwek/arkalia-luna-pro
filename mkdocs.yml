@@ -44,7 +44,6 @@ plugins:
   - search
 
 extra_css:
-  - assets/extra.css
   - assets/arkalia-luna-theme.css
 
 extra_javascript:

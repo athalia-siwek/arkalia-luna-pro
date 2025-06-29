@@ -1,71 +1,108 @@
 /* ================================
-   🌙 ARKALIA-LUNA THEME v3.0-phase1
-   "Luna Élégante" - Sophisticated IA
+   🌙 ARKALIA-LUNA THEME v3.0-phase1 FIXED
+   "Luna Élégante" - Lisibilité Parfaite
    ================================ */
 
 :root {
-    /* 🌙 Palette Luna IA */
+    /* 🌙 Palette Luna IA - MODE CLAIR */
     --luna-primary: #6366f1;
-    /* Luna Violet */
     --luna-primary-dark: #4f46e5;
-    /* Luna Deep */
     --luna-accent: #8b5cf6;
-    /* Starlight */
     --luna-accent-glow: #a78bfa;
-    /* Starlight Glow */
-    --luna-surface: #f8fafc;
-    /* Silver Surface */
-    --luna-surface-dark: #0f172a;
-    /* Deep Space */
-    --luna-text: #334155;
-    /* Slate Text */
-    --luna-text-light: #e2e8f0;
-    /* Light Text */
-    --luna-border: #e2e8f0;
-    /* Subtle Border */
+
+    /* 🎯 COULEURS FIXES - MODE CLAIR */
+    --luna-bg-main: #ffffff;
+    /* Fond principal blanc */
+    --luna-text-main: #1f2937;
+    /* Texte principal sombre */
+    --luna-text-secondary: #6b7280;
+    /* Texte secondaire gris */
+    --luna-border: #e5e7eb;
+    /* Bordures grises douces */
+    --luna-surface: #f9fafb;
+    /* Surface légèrement grise */
     --luna-shadow: rgba(99, 102, 241, 0.1);
-    /* Luna Shadow */
 
     /* 🎨 Gradients Signature */
     --luna-gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
-    --luna-gradient-surface: linear-gradient(145deg, #f8fafc, #f1f5f9);
-    --luna-gradient-dark: linear-gradient(135deg, #0f172a, #1e293b);
+    --luna-gradient-surface: linear-gradient(145deg, #f9fafb, #f3f4f6);
 }
 
-/* 🌙 Dark Theme Variables */
+/* 🌚 Dark Theme Variables - MODE SOMBRE */
 [data-md-color-scheme="slate"] {
-    --luna-surface: #0f172a;
-    --luna-text: #e2e8f0;
+    --luna-bg-main: #0f172a;
+    /* Fond principal sombre */
+    --luna-text-main: #f1f5f9;
+    /* Texte principal clair */
+    --luna-text-secondary: #94a3b8;
+    /* Texte secondaire gris clair */
     --luna-border: #334155;
+    /* Bordures grises sombres */
+    --luna-surface: #1e293b;
+    /* Surface sombre */
     --luna-shadow: rgba(139, 92, 246, 0.2);
 }
 
 /* ================================
-   🎯 CORE STYLING
+   🎯 RESET & BASE STYLING - FORCE
    ================================ */
 
+/* 🌟 Force le fond et texte principal */
 body {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--luna-surface);
-    color: var(--luna-text);
+    background-color: var(--luna-bg-main) !important;
+    color: var(--luna-text-main) !important;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     line-height: 1.6;
     letter-spacing: -0.01em;
 }
 
-/* 🌟 Header avec Glassmorphism */
+/* Force les couleurs du contenu principal */
+.md-content {
+    background-color: var(--luna-bg-main) !important;
+    color: var(--luna-text-main) !important;
+}
+
+.md-content__inner {
+    background-color: var(--luna-bg-main) !important;
+    color: var(--luna-text-main) !important;
+    padding: 2rem;
+}
+
+/* Force la typographie */
+.md-typeset {
+    color: var(--luna-text-main) !important;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+    color: var(--luna-text-main) !important;
+    font-weight: 700;
+}
+
+.md-typeset p {
+    color: var(--luna-text-main) !important;
+}
+
+/* ================================
+   🌟 HEADER STYLING
+   ================================ */
+
 .md-header {
-    background: rgba(248, 250, 252, 0.8);
+    background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--luna-border);
     box-shadow: 0 2px 20px var(--luna-shadow);
 }
 
 [data-md-color-scheme="slate"] .md-header {
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.95) !important;
     border-bottom: 1px solid var(--luna-border);
 }
 
-/* 🎨 Logo & Title Enhancement */
 .md-header__title {
     font-weight: 700;
     background: var(--luna-gradient-primary);
@@ -78,7 +115,6 @@ body {
    🧩 NAVIGATION STYLING
    ================================ */
 
-/* 🌙 Sidebar Navigation */
 .md-nav {
     font-size: 0.9rem;
 }
@@ -88,100 +124,60 @@ body {
     padding: 0.6rem 1rem;
     margin: 0.2rem 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: var(--luna-text);
+    color: var(--luna-text-secondary) !important;
     position: relative;
     overflow: hidden;
 }
 
-.md-nav__link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: var(--luna-gradient-primary);
-    opacity: 0;
-    transition: all 0.4s ease;
-    z-index: -1;
-}
-
-.md-nav__link:hover::before {
-    left: 0;
-    opacity: 0.1;
-}
-
 .md-nav__link:hover {
-    color: var(--luna-primary);
+    color: var(--luna-primary) !important;
+    background-color: rgba(99, 102, 241, 0.1) !important;
     transform: translateX(4px);
     box-shadow: 0 4px 12px var(--luna-shadow);
 }
 
-/* 🎯 Active Link */
 .md-nav__link--active {
-    background: var(--luna-gradient-primary);
-    color: white;
+    background: var(--luna-gradient-primary) !important;
+    color: white !important;
     font-weight: 600;
     box-shadow: 0 4px 15px var(--luna-shadow);
 }
 
 /* ================================
-   📄 CONTENT STYLING
+   📄 CONTENT ENHANCEMENTS
    ================================ */
 
-/* 🌟 Main Content Area */
-.md-content {
-    background: var(--luna-surface);
-}
-
-.md-content__inner {
-    padding: 2rem;
-    animation: lunaFadeIn 0.6s ease-out;
-}
-
-@keyframes lunaFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.98);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* 🎨 Cards & Boxes */
+/* 🎨 Tables Styling */
 .md-typeset table {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 20px var(--luna-shadow);
-    background: white;
+    background: var(--luna-bg-main) !important;
     border: 1px solid var(--luna-border);
 }
 
-[data-md-color-scheme="slate"] .md-typeset table {
-    background: var(--luna-surface-dark);
-    border: 1px solid var(--luna-border);
+.md-typeset table th {
+    background: var(--luna-surface) !important;
+    color: var(--luna-text-main) !important;
+    font-weight: 600;
 }
 
-/* 🌙 Enhanced Code Blocks */
+.md-typeset table td {
+    color: var(--luna-text-main) !important;
+}
+
+/* 🌙 Code Blocks */
 .md-typeset pre {
-    background: var(--luna-gradient-surface);
+    background: var(--luna-surface) !important;
     border-radius: 16px;
     border: 1px solid var(--luna-border);
     box-shadow: 0 2px 10px var(--luna-shadow);
     padding: 1.5rem;
 }
 
-[data-md-color-scheme="slate"] .md-typeset pre {
-    background: var(--luna-gradient-dark);
-    border: 1px solid var(--luna-border);
-}
-
 .md-typeset code {
-    background: rgba(99, 102, 241, 0.1);
-    color: var(--luna-primary);
+    background: rgba(99, 102, 241, 0.1) !important;
+    color: var(--luna-primary) !important;
     padding: 0.25rem 0.5rem;
     border-radius: 8px;
     font-weight: 500;
@@ -193,11 +189,11 @@ body {
 
 /* 🌟 Buttons Luna Style */
 .md-button {
-    background: var(--luna-gradient-primary);
+    background: var(--luna-gradient-primary) !important;
     border: none;
     border-radius: 12px;
     padding: 0.8rem 1.5rem;
-    color: white;
+    color: white !important;
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px var(--luna-shadow);
@@ -205,92 +201,114 @@ body {
 
 .md-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px var(--luna-shadow);
-    filter: brightness(1.1);
+    box-shadow: 0 6px 25px var(--luna-shadow);
 }
 
-/* 🎨 Links Enhancement */
+/* 🔗 Links Styling */
 .md-typeset a {
-    color: var(--luna-primary);
+    color: var(--luna-primary) !important;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
 .md-typeset a:hover {
-    border-bottom: 2px solid var(--luna-accent);
-    color: var(--luna-accent);
+    color: var(--luna-accent) !important;
+    text-decoration: underline;
 }
 
 /* ================================
-   🌙 SPECIAL ARKALIA COMPONENTS
+   🎨 SPECIAL COMPONENTS
    ================================ */
 
-/* 🏆 Arkalia Box Enhanced */
+/* 🌙 Arkalia Box Enhanced */
 .arkalia-box {
-    background: var(--luna-gradient-primary);
-    border-radius: 20px;
-    padding: 2rem;
-    margin: 2rem 0;
-    color: white;
+    background: var(--luna-gradient-primary) !important;
+    color: white !important;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
     box-shadow: 0 8px 30px var(--luna-shadow);
     position: relative;
     overflow: hidden;
 }
 
+.arkalia-box h3 {
+    color: white !important;
+    margin-top: 0;
+}
+
+.arkalia-box p,
+.arkalia-box li {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Animation glow effect */
 .arkalia-box::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-    animation: lunaGlow 4s ease-in-out infinite;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--luna-gradient-primary);
+    border-radius: 18px;
+    opacity: 0.7;
+    filter: blur(10px);
+    animation: lunaGlow 4s ease-in-out infinite alternate;
+    z-index: -1;
 }
 
 @keyframes lunaGlow {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
 
-    0%,
     100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 0.5;
+        opacity: 1;
+        transform: scale(1.02);
     }
-
-    50% {
-        transform: scale(1.1) rotate(180deg);
-        opacity: 0.8;
-    }
-}
-
-/* 📊 Badge Styling */
-.md-typeset img[alt*="shield"] {
-    filter: hue-rotate(240deg) saturate(1.2);
-    transition: all 0.3s ease;
-}
-
-.md-typeset img[alt*="shield"]:hover {
-    transform: scale(1.05);
-    filter: hue-rotate(240deg) saturate(1.4) brightness(1.1);
 }
 
 /* ================================
-   🎯 RESPONSIVE & ACCESSIBILITY
+   🔔 ADMONITIONS (Alerts)
    ================================ */
 
-/* 📱 Mobile Optimizations */
+.md-typeset .admonition {
+    border-radius: 12px;
+    border: 1px solid var(--luna-border);
+    background: var(--luna-surface) !important;
+}
+
+.md-typeset .admonition-title {
+    color: var(--luna-text-main) !important;
+    font-weight: 600;
+}
+
+.md-typeset .admonition p {
+    color: var(--luna-text-main) !important;
+}
+
+/* ================================
+   📱 RESPONSIVE DESIGN
+   ================================ */
+
 @media screen and (max-width: 768px) {
     .md-content__inner {
         padding: 1rem;
     }
 
     .arkalia-box {
-        padding: 1.5rem;
+        padding: 1rem;
         margin: 1rem 0;
     }
 }
 
-/* 🎨 Scrollbar Luna Style */
+/* ================================
+   🎨 SCROLLBAR CUSTOM
+   ================================ */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -300,7 +318,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--luna-gradient-primary);
+    background: var(--luna-primary);
     border-radius: 4px;
 }
 
@@ -309,45 +327,22 @@ body {
 }
 
 /* ================================
-   🌟 FOOTER ENHANCEMENT
+   🔒 ACCESSIBILITY & PERFORMANCE
    ================================ */
 
-.md-footer {
-    background: var(--luna-gradient-dark);
-    border-top: 1px solid var(--luna-border);
-    color: var(--luna-text-light);
-}
-
-/* 🎯 Focus States for Accessibility */
+/* Focus states */
 .md-nav__link:focus,
-.md-button:focus {
-    outline: 2px solid var(--luna-accent);
+.md-button:focus,
+.md-typeset a:focus {
+    outline: 2px solid var(--luna-primary);
     outline-offset: 2px;
 }
 
-/* ================================
-   🚀 PERFORMANCE OPTIMIZATIONS
-   ================================ */
-
-* {
-    box-sizing: border-box;
-}
-
-.md-content,
-.md-nav,
-.md-header {
-    will-change: transform;
-}
-
-/* 🌙 Print Styles */
-@media print {
-    .arkalia-box::before {
-        display: none;
-    }
-
-    .md-nav,
-    .md-header,
-    .md-footer {
-        display: none;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
