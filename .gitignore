@@ -104,3 +104,6 @@ state/sandozia/detected_patterns.jsonl
 # Keep only the latest valid files
 !state/sandozia/last_snapshot.json
 !state/sandozia/latest_metrics.json
+
+# Sandozia cache metrics
+state/sandozia/latest_metrics.json
