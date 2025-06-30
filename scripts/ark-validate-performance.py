@@ -11,14 +11,14 @@ from pathlib import Path
 try:
     import psutil  # noqa: F401
 
-    from modules.zeroia.circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
+    from modules.zeroia.circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
         CircuitBreaker,
     )
     from modules.zeroia.event_store import EventType  # noqa: F401# noqa: F401# noqa: F401,
     from modules.zeroia.event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,  # noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
         EventStore,
     )
-    from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
+    from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
         create_default_context_enhanced,
     )
 except ImportError as e:
@@ -77,12 +77,12 @@ def validate_event_store_performance() -> bool:
 
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
-            event_store  # noqa: F401 = EventStore(cache_dir=f"{temp_dir}/test_events")
+            event_store = EventStore(cache_dir=f"{temp_dir}/test_events")
 
             start = time.perf_counter()
 
-            event_id = event_store  # noqa: F401.add_event(
-                EventType  # noqa: F401.DECISION_MADE,
+            event_id = event_store.add_event(
+                EventType.DECISION_MADE,
                 {"decision": "test", "confidence": 0.9},
                 module="validation_test",
             )
@@ -91,7 +91,7 @@ def validate_event_store_performance() -> bool:
             duration = end - start
 
             # Vérifier récupération
-            event = event_store  # noqa: F401.get_event(event_id)
+            event = event_store.get_event(event_id)
             assert event is not None
             assert event.data["decision"] == "test"
 
@@ -108,12 +108,12 @@ def validate_context_creation() -> bool:
     print("🎯 Validation création contexte...")
 
     try:
-        from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
+        from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
             create_default_context_enhanced,
         )
 
         start = time.perf_counter()
-        context = create_default_context_enhanced  # noqa: F401()
+        context = create_default_context_enhanced()
         end = time.perf_counter()
 
         duration = end - start
@@ -139,14 +139,14 @@ def validate_system_resources() -> bool:
         import psutil  # noqa: F401
 
         # Mémoire disponible
-        memory = psutil  # noqa: F401.virtual_memory()
+        memory = psutil.virtual_memory()
         memory_available_gb = memory.available / (1024**3)
 
         # CPU
-        cpu_percent = psutil  # noqa: F401.cpu_percent(interval=0.1)
+        cpu_percent = psutil.cpu_percent(interval=0.1)
 
         # Disque
-        disk = psutil  # noqa: F401.disk_usage("/")
+        disk = psutil.disk_usage("/")
         disk_free_gb = disk.free / (1024**3)
 
         print(f"✅ RAM disponible: {memory_available_gb:.1f}GB")
