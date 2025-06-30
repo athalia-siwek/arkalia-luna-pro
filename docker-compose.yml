@@ -53,36 +53,6 @@ services:
           memory: 256M
           cpus: '0.5'
 
-  # 🧠 AssistantIA — Navigation contextuelle Optimisée
-  assistantia:
-    <<: *arkalia-defaults
-    container_name: assistantia
-    build:
-      context: .
-      dockerfile: Dockerfile.assistantia
-    ports:
-      - "${PORT_ASSISTANTIA:-8001}:8001"
-    command: >
-      uvicorn modules.assistantia.core:app --host 0.0.0.0 --port 8001
-        --workers 1 --access-log --log-level info
-    environment:
-      - ASSISTANTIA_ENV=development
-      - ASSISTANTIA_LOG_LEVEL=INFO
-    healthcheck:
-      test: [ "CMD", "python", "-c", "import requests; requests.get('http://localhost:8001/health', timeout=3)" ]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 20s
-    deploy:
-      resources:
-        limits:
-          memory: 384M
-          cpus: '0.8'
-        reservations:
-          memory: 192M
-          cpus: '0.4'
-
   # 🔁 ReflexIA — Observateur cognitif réflexif Optimisé
   reflexia:
     <<: *arkalia-defaults
@@ -96,9 +66,6 @@ services:
     environment:
       - REFLEXIA_ENV=development
       - REFLEXIA_MONITORING_ENABLED=true
-    depends_on:
-      assistantia:
-        condition: service_healthy
     healthcheck:
       test: [ "CMD", "python", "-c", "from modules.reflexia.core import launch_reflexia_check; launch_reflexia_check(); print('OK')" ]
       interval: 30s
@@ -191,6 +158,8 @@ services:
       context: .
       dockerfile: Dockerfile.cognitive-reactor
     image: arkalia-luna-cognitive:production
+    ports:
+      - "${PORT_COGNITIVE:-8003}:8003"
     command: --mode production --daemon
     environment:
       - COGNITIVE_REACTOR_ENV=production

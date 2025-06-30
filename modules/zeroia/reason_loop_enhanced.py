@@ -295,7 +295,7 @@ def decide_protected(context: dict) -> tuple[str, float]:
     if not isinstance(cpu, int | float) or cpu < 0 or cpu > 100:
         raise DecisionIntegrityError(f"CPU invalide: {cpu} (doit être 0-100)")
 
-    if severity not in ["none", "low", "medium", "high", "critical"]:
+    if severity not in ["none", "normal", "low", "medium", "high", "critical"]:
         raise DecisionIntegrityError(f"Severity invalide: {severity}")
 
     # Détection de surcharge cognitive
@@ -312,7 +312,11 @@ def decide_protected(context: dict) -> tuple[str, float]:
     if cpu > 60:
         return "monitor", 0.6
 
-    return "normal", 0.4
+    # Traiter "normal" comme "none" pour la logique de décision
+    if severity in ["none", "normal"]:
+        return "normal", 0.4
+
+    return "monitor", 0.5
 
 
 def should_process_decision(new_decision: str) -> bool:
