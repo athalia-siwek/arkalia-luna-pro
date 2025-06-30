@@ -50,7 +50,7 @@ class ModelIntegrityChecker:
 
         # Vérifications d'intégrité
         integrity_score = 1.0
-        issues = []
+        issues: list[Any] = []
 
         # Vérification de la cohérence
         if len(model_output) < 10:

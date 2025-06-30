@@ -16,15 +16,12 @@ Fonctionnalités :
 import json
 import logging
 import sqlite3
-import time
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-from diskcache import Cache
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -85,21 +82,23 @@ class Event:
 class EventStore:
     """Stockage des événements pour Arkalia-LUNA"""
 
-    def __init__(self, store_path: str = "./cache/zeroia_events"):
-        self.store_path = Path(store_path)
-        self.store_path.parent.mkdir(parents=True, exist_ok=True)
+    def __init__(
+        self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000
+    ) -> None:
+        self.cache_dir = Path(cache_dir)
+        self.cache_dir.parent.mkdir(parents=True, exist_ok=True)
 
         self.events: dict[str, dict[str, Any]] = {}
         self.event_counter = 0
         self._load_events()
 
-        logger.info(f"🗄️ EventStore initialisé: {store_path}, compteur: {self.event_counter}")
+        logger.info(f"🗄️ EventStore initialisé: {self.cache_dir}, compteur: {self.event_counter}")
 
     def _load_events(self) -> None:
         """Charge les événements depuis le stockage"""
         try:
-            if self.store_path.exists():
-                with open(self.store_path) as f:
+            if self.cache_dir.exists():
+                with open(self.cache_dir) as f:
                     data = json.load(f)
                     self.events = data.get("events", {})
                     self.event_counter = data.get("counter", 0)
@@ -111,7 +110,7 @@ class EventStore:
     def _save_events(self) -> None:
         """Sauvegarde les événements dans le stockage"""
         try:
-            with open(self.store_path, "w") as f:
+            with open(self.cache_dir, "w") as f:
                 json.dump({"events": self.events, "counter": self.event_counter}, f, indent=2)
         except Exception as e:
             logger.error(f"❌ Erreur lors de la sauvegarde des événements: {e}")
@@ -228,8 +227,8 @@ class EventStore:
             Liste des événements
         """
         try:
-            events = []
-            for event_id, event_data in self.events.items():
+            events: list[Any] = []
+            for _event_id, event_data in self.events.items():
                 if event_data["event_type"] == event_type.value:
                     event = Event.from_dict(event_data)
                     if since and event.timestamp < since:
@@ -253,7 +252,7 @@ class EventStore:
         Returns:
             Liste d'événements triée par timestamp décroissant
         """
-        all_events = []
+        all_events: list[Any] = []
 
         # Utiliser l'approche correcte pour diskcache - parcours sécurisé
         try:
@@ -277,7 +276,7 @@ class EventStore:
 
     def get_events_by_module(self, module: str, limit: int = 100) -> list[Event]:
         """Récupère les événements par module"""
-        events = []
+        events: list[Any] = []
 
         try:
             for key, event_data in self.events.items():
@@ -305,7 +304,7 @@ class EventStore:
             EventType.CALL_BLOCKED,
         ]
 
-        all_health_events = []
+        all_health_events: list[Event] = []
         for event_type in health_types:
             events = self.get_events_by_type(event_type, limit=10)
             all_health_events.extend(events)
@@ -370,7 +369,9 @@ class EventStore:
                     "type": "high_contradictions",
                     "severity": "medium",
                     "count": len(contradictions),
-                    "description": f"{len(contradictions)} contradictions IA en {window_minutes}min",
+                    "description": (
+                        f"{len(contradictions)} contradictions IA en {window_minutes}min"
+                    ),
                 }
             )
 
@@ -381,18 +382,18 @@ class EventStore:
         recent_events = self.get_recent_events(limit=1000)
 
         # Compteurs par type
-        type_counts = {}
+        type_counts: dict[str, int] = {}
         for event in recent_events:
             type_name = event.event_type.value
             type_counts[type_name] = type_counts.get(type_name, 0) + 1
 
         # Compteurs par module
-        module_counts = {}
+        module_counts: dict[str, int] = {}
         for event in recent_events:
             module_counts[event.module] = module_counts.get(event.module, 0) + 1
 
         # Événements récents par heure
-        hourly_counts = {}
+        hourly_counts: dict[str, int] = {}
         for event in recent_events:
             hour_key = event.timestamp.strftime("%Y-%m-%d %H:00")
             hourly_counts[hour_key] = hourly_counts.get(hour_key, 0) + 1
@@ -429,7 +430,7 @@ class EventStore:
 
         try:
             # Récupérer toutes les clés du cache de manière sécurisée
-            keys_to_check = []
+            keys_to_check: list[str] = []
             for key in self.events:
                 if isinstance(key, str) and key.startswith("event_"):
                     keys_to_check.append(key)
@@ -446,7 +447,8 @@ class EventStore:
             logger.warning(f"Erreur nettoyage événements: {e}")
 
         logger.info(
-            f"📋 Nettoyage EventStore: {deleted_count} événements supprimés (> {days_to_keep} jours)"
+            f"📋 Nettoyage EventStore: {deleted_count} événements supprimés "
+            f"(> {days_to_keep} jours)"
         )
         return deleted_count
 

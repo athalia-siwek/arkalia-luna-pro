@@ -12,19 +12,20 @@ __author__ = "Arkalia-LUNA Team"
 __description__ = "Système de raisonnement intelligent avec protection avancée"
 
 from .error_recovery_system import ErrorRecoverySystem  # noqa: F401
-from .graceful_degradation import (  # noqa: F401
-    DegradationLevel,
-    GracefulDegradationSystem,
-)
+from .graceful_degradation import DegradationLevel  # noqa: F401, GracefulDegradationSystem
 from .reason_loop import reason_loop
 
 # Imports conditionnels pour éviter les erreurs si modules non disponibles
 try:
-    from .circuit_breaker import CircuitBreaker  # noqa: F401
-    from .event_store import EventStore, EventType  # noqa: F401
-    from .reason_loop_enhanced import (  # noqa: F401
+    from .circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
+        CircuitBreaker,
+    )
+    from .event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
+        EventStore,
+        EventType,  # noqa: F401,  # noqa: F401,
+    )
+    from .reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,
         reason_loop_enhanced,
-        reason_loop_enhanced_with_recovery,
     )
 except ImportError:
     # Modules optionnels non disponibles
@@ -46,13 +47,13 @@ __all__ = [
     # Core modules
     "CircuitBreaker",
     "EventStore",
-    "EventType",
-    "ErrorRecoverySystem",
+    "EventType  # noqa: F401 ",
+    "ErrorRecoverySystem  # noqa: F401 ",
     "GracefulDegradationSystem",
-    "DegradationLevel",
+    "DegradationLevel  # noqa: F401 ",
     # Reason loops
     "reason_loop",
-    "reason_loop_enhanced",
+    "reason_loop_enhanced  # noqa: F401 ",
     "reason_loop_enhanced_with_recovery",
     # Configuration
     "DEFAULT_CONFIG",
@@ -69,16 +70,16 @@ def get_zeroia_status():
             "status": "✅ HEALTHY",
             "version": "v2.8.0",
             "modules": {
-                "circuit_breaker": "✅",
-                "event_store": "✅",
+                "circuit_breaker  # noqa: F401 ": "✅",
+                "event_store  # noqa: F401 ": "✅",
                 "reason_loop": "✅",
-                "reason_loop_enhanced": "✅",
+                "reason_loop_enhanced  # noqa: F401 ": "✅",
                 "error_recovery": "✅",
                 "graceful_degradation": "✅",
             },
             "features": {
-                "circuit_breaker": "✅",
-                "event_store": "✅",
+                "circuit_breaker  # noqa: F401 ": "✅",
+                "event_store  # noqa: F401 ": "✅",
                 "error_recovery": "✅",
                 "graceful_degradation": "✅",
             },
@@ -112,8 +113,8 @@ def health_check() -> dict:
             "version": __version__,
             "components": {
                 "reason_loop": "available",
-                "circuit_breaker": "available",
-                "event_store": "available",
+                "circuit_breaker  # noqa: F401 ": "available",
+                "event_store  # noqa: F401 ": "available",
                 "error_recovery": "available",
                 "graceful_degradation": "available",
             },

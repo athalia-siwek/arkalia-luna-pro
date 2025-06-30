@@ -17,9 +17,12 @@ import logging
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum
-from typing import Any, Dict, Optional
+from pathlib import Path
+from typing import Any, Optional
+
+import toml
 
 from modules.zeroia.event_store import EventStore, EventType
 
@@ -95,31 +98,51 @@ class CircuitBreaker:
     """
 
     def __init__(
-        self,
-        failure_threshold: int = 5,
-        recovery_timeout: int = 60,
-        half_open_timeout: int = 30,
-        contradiction_threshold: int = 3,
-        expected_exception: tuple = (Exception,),
-        event_store: EventStore | None = None,
-    ):
-        self.state = CircuitState.CLOSED
-        self.failure_count = 0
-        self.last_failure_time = None
+        self, name: str = "default", failure_threshold: int = 5, timeout: int = 60
+    ) -> None:
+        self.name = name
         self.failure_threshold = failure_threshold
-        self.recovery_timeout = recovery_timeout
-        self.half_open_timeout = half_open_timeout
-        self.contradiction_threshold = contradiction_threshold
-        self.contradiction_count = 0
-        self.last_contradiction_time = None
-        self.contradiction_pairs = set()
-        self.expected_exception = expected_exception
-        self.event_store = event_store or EventStore()
+        self.timeout = timeout
+        self.failure_count = 0
+        self.last_failure_time: datetime | None = None
+        self.state = "CLOSED"  # CLOSED, OPEN, HALF_OPEN
+        self.contradiction_pairs: set[str] = set()
+        self.load_state()
+        self.event_store = EventStore()
         self.metrics = CircuitMetrics()
 
-        logger.info(
-            f"🔄 CircuitBreaker initialisé: seuil={failure_threshold}, timeout={recovery_timeout}s"
-        )
+        logger.info(f"🔄 CircuitBreaker initialisé: seuil={failure_threshold}, timeout={timeout}s")
+
+    def load_state(self) -> None:
+        """Charge l'état du circuit breaker depuis le fichier."""
+        try:
+            with open(f"state/circuit_breaker_{self.name}.toml") as f:
+                data = toml.load(f)
+                if isinstance(data, dict):
+                    self.failure_count = data.get("failure_count", 0)
+                    self.state = data.get("state", "CLOSED")
+                    last_failure_str = data.get("last_failure_time")
+                    if last_failure_str:
+                        self.last_failure_time = datetime.fromisoformat(last_failure_str)
+        except FileNotFoundError:
+            pass
+        except Exception:
+            pass
+
+    def save_state(self) -> None:
+        """Sauvegarde l'état du circuit breaker."""
+        try:
+            state_data = {
+                "failure_count": self.failure_count,
+                "state": self.state,
+                "last_failure_time": (
+                    self.last_failure_time.isoformat() if self.last_failure_time else None
+                ),
+            }
+            with open(f"state/circuit_breaker_{self.name}.toml", "w") as f:
+                toml.dump(state_data, f)
+        except Exception:
+            pass  # Ignore les erreurs d'écriture
 
     def handle_contradiction(
         self, service1: str, service2: str, decision1: str, decision2: str
@@ -129,22 +152,15 @@ class CircuitBreaker:
 
         if contradiction_key not in self.contradiction_pairs:
             self.contradiction_pairs.add(contradiction_key)
-            self.contradiction_count += 1
-            self.last_contradiction_time = time.time()
-
-            if self.contradiction_count >= self.contradiction_threshold:
-                self.state = CircuitState.OPEN
-                self.metrics.total_trips += 1
-                logger.warning(f"⚠️ Circuit ouvert après {self.contradiction_count} contradictions")
-                return True
+            self.metrics.total_trips += 1
+            logger.warning(f"⚠️ Circuit ouvert après {len(self.contradiction_pairs)} contradictions")
+            return True
 
         return False
 
     def reset_contradictions(self):
         """Réinitialise le compteur de contradictions"""
-        self.contradiction_count = 0
         self.contradiction_pairs.clear()
-        self.last_contradiction_time = None
 
     def call(self, func: Callable, *args, **kwargs) -> Any:
         """
@@ -164,80 +180,77 @@ class CircuitBreaker:
         self.metrics.total_calls += 1
 
         # Vérifier l'état du circuit
-        if self.state == CircuitState.OPEN:
-            if self._should_attempt_reset():
-                self._transition_to_half_open()
+        if self.state == "OPEN":
+            if self.should_attempt_reset():
+                self.state = "HALF_OPEN"
             else:
                 self._log_blocked_call()
                 raise SystemRebootRequired(
-                    f"Circuit breaker OPEN - trop d'échecs consécutifs ({self.metrics.consecutive_failures})"
+                    f"Circuit breaker {self.name} is OPEN - trop d'échecs consécutifs "
+                    f"({self.metrics.consecutive_failures})"
                 )
 
         try:
             # Tenter l'appel directement (retry simplifié)
             result = func(*args, **kwargs)
-            self._on_success()
+            self.on_success()
             return result
 
-        except self.expected_exception as e:
-            self._on_failure(e)
-            raise
         except Exception as e:
-            # Erreur inattendue
-            self._on_unexpected_error(e)
-            raise CognitiveOverloadError(f"Erreur inattendue dans ZeroIA: {e}") from e
+            self.on_failure(e)
+            raise
 
     def _execute_with_retry(self, func: Callable, *args, **kwargs) -> Any:
         """Exécute la fonction avec retry automatique mais sans masquer les exceptions"""
         # Première tentative sans retry pour les erreurs attendues
         try:
             return func(*args, **kwargs)
-        except self.expected_exception:
-            # Pour les erreurs attendues, on propage directement
-            raise
         except Exception:
             # Pour les autres erreurs, on peut utiliser tenacity
             # Mais ici on va simplifier pour éviter les problèmes de wrapping
             raise
 
-    def _on_success(self) -> None:
+    def on_success(self) -> None:
         """Gère un appel réussi"""
         self.metrics.successful_calls += 1
         self.metrics.consecutive_failures = 0
-
-        if self.state == CircuitState.HALF_OPEN:
-            self._transition_to_closed()
+        self.failure_count = 0
+        self.state = "CLOSED"
+        self.last_failure_time = None
+        self.save_state()
 
         # Event sourcing
         self.event_store.add_event(
             EventType.CIRCUIT_SUCCESS,
             {
-                "state": self.state.value,
+                "state": self.state,
                 "success_rate": self.metrics.success_rate,
                 "consecutive_failures": self.metrics.consecutive_failures,
             },
         )
 
-    def _on_failure(self, exception: Exception) -> None:
+    def on_failure(self, exception: Exception) -> None:
         """Gère un échec d'appel"""
         self.metrics.failed_calls += 1
         self.metrics.consecutive_failures += 1
-        self.metrics.last_failure_time = datetime.now()
-        self.failure_count += 1  # Incrémenter le compteur failure_count pour les tests
+        self.failure_count += 1
+        self.last_failure_time = datetime.now()
+
+        if self.failure_count >= self.failure_threshold:
+            self.state = "OPEN"
+
+        self.save_state()
 
         logger.warning(
-            f"🚨 CircuitBreaker échec: {exception} (consécutif: {self.metrics.consecutive_failures})"
+            f"🚨 CircuitBreaker échec: {exception} "
+            f"(consécutif: {self.metrics.consecutive_failures})"
         )
-
-        # Vérifier si on doit ouvrir le circuit
-        if self.metrics.consecutive_failures >= self.failure_threshold:
-            self._transition_to_open()
 
         # Event sourcing
         self.event_store.add_event(
             EventType.CIRCUIT_FAILURE,
             {
-                "state": self.state.value,
+                "state": self.state,
                 "exception": str(exception),
                 "consecutive_failures": self.metrics.consecutive_failures,
                 "failure_rate": self.metrics.failure_rate,
@@ -253,32 +266,32 @@ class CircuitBreaker:
         self.event_store.add_event(
             EventType.SYSTEM_ERROR,
             {
-                "state": self.state.value,
+                "state": self.state,
                 "error": str(exception),
                 "error_type": type(exception).__name__,
             },
         )
 
-    def _should_attempt_reset(self) -> bool:
+    def should_attempt_reset(self) -> bool:
         """Vérifie si on peut tenter une réinitialisation"""
         if self.last_failure_time is None:
             return True
 
         time_since_failure = datetime.now() - self.last_failure_time
-        return time_since_failure.total_seconds() >= self.recovery_timeout
+        return time_since_failure.total_seconds() >= self.timeout
 
     def _transition_to_closed(self) -> None:
         """Transition vers l'état CLOSED"""
         old_state = self.state
-        self.state = CircuitState.CLOSED
+        self.state = "CLOSED"
         self.metrics.state_changes += 1
-        logger.info(f"🔄 CircuitBreaker: {old_state.value} → {self.state.value}")
+        logger.info(f"🔄 CircuitBreaker: {old_state} → {self.state}")
 
         self.event_store.add_event(
             EventType.STATE_CHANGE,
             {
-                "old_state": old_state.value,
-                "new_state": self.state.value,
+                "old_state": old_state,
+                "new_state": self.state,
                 "reason": "recovery_successful",
             },
         )
@@ -286,16 +299,16 @@ class CircuitBreaker:
     def _transition_to_open(self) -> None:
         """Transition vers l'état OPEN"""
         old_state = self.state
-        self.state = CircuitState.OPEN
+        self.state = "OPEN"
         self.last_failure_time = datetime.now()
         self.metrics.state_changes += 1
-        logger.error(f"🚨 CircuitBreaker: {old_state.value} → {self.state.value} (seuil atteint)")
+        logger.error(f"🚨 CircuitBreaker: {old_state} → {self.state} (seuil atteint)")
 
         self.event_store.add_event(
             EventType.STATE_CHANGE,
             {
-                "old_state": old_state.value,
-                "new_state": self.state.value,
+                "old_state": old_state,
+                "new_state": self.state,
                 "reason": "failure_threshold_exceeded",
                 "consecutive_failures": self.metrics.consecutive_failures,
             },
@@ -304,27 +317,27 @@ class CircuitBreaker:
     def _transition_to_half_open(self) -> None:
         """Transition vers l'état HALF_OPEN"""
         old_state = self.state
-        self.state = CircuitState.HALF_OPEN
+        self.state = "HALF_OPEN"
         self.metrics.state_changes += 1
-        logger.info(f"🔄 CircuitBreaker: {old_state.value} → {self.state.value} (test recovery)")
+        logger.info(f"🔄 CircuitBreaker: {old_state} → {self.state} (test recovery)")
 
         self.event_store.add_event(
             EventType.STATE_CHANGE,
             {
-                "old_state": old_state.value,
-                "new_state": self.state.value,
-                "reason": "recovery_timeout_reached",
+                "old_state": old_state,
+                "new_state": self.state,
+                "reason": "timeout_reached",
             },
         )
 
     def _log_blocked_call(self) -> None:
         """Log d'un appel bloqué"""
-        logger.warning(f"🛑 CircuitBreaker bloque un appel (état: {self.state.value})")
+        logger.warning(f"🛑 CircuitBreaker bloque un appel (état: {self.state})")
 
         self.event_store.add_event(
             EventType.CALL_BLOCKED,
             {
-                "state": self.state.value,
+                "state": self.state,
                 "consecutive_failures": self.metrics.consecutive_failures,
                 "time_since_failure": (
                     (datetime.now() - self.last_failure_time).total_seconds()
@@ -337,24 +350,25 @@ class CircuitBreaker:
     def reset(self) -> None:
         """Réinitialise manuellement le circuit breaker"""
         old_state = self.state
-        self.state = CircuitState.CLOSED
+        self.failure_count = 0
+        self.state = "CLOSED"
         self.metrics.consecutive_failures = 0
         self.last_failure_time = None
         self.metrics.state_changes += 1
+        self.save_state()
 
-        logger.info(
-            f"🔄 CircuitBreaker réinitialisé manuellement: {old_state.value} → {self.state.value}"
-        )
+        logger.info(f"🔄 CircuitBreaker réinitialisé manuellement: {old_state} → {self.state}")
 
         self.event_store.add_event(
             EventType.MANUAL_RESET,
-            {"old_state": old_state.value, "new_state": self.state.value},
+            {"old_state": old_state, "new_state": self.state},
         )
 
     def get_status(self) -> dict[str, Any]:
         """Retourne le statut complet du circuit breaker"""
         return {
-            "state": self.state.value,
+            "name": self.name,
+            "state": self.state,
             "metrics": {
                 "total_calls": self.metrics.total_calls,
                 "successful_calls": self.metrics.successful_calls,
@@ -367,7 +381,7 @@ class CircuitBreaker:
             },
             "config": {
                 "failure_threshold": self.failure_threshold,
-                "recovery_timeout": self.recovery_timeout,
+                "timeout": self.timeout,
             },
             "last_failure_time": (
                 self.last_failure_time.isoformat() if self.last_failure_time else None
@@ -376,7 +390,7 @@ class CircuitBreaker:
 
     def trip(self) -> None:
         """Déclenche le circuit breaker"""
-        self.state = CircuitState.OPEN
+        self.state = "OPEN"
         self.last_failure_time = datetime.now()
         logger.warning("🔌 Circuit breaker déclenché")
 
@@ -392,16 +406,16 @@ class CircuitBreaker:
 
     def allow_request(self) -> bool:
         """Vérifie si une requête peut être autorisée"""
-        if self.state == CircuitState.CLOSED:
+        if self.state == "CLOSED":
             return True
 
-        if self.state == CircuitState.OPEN:
+        if self.state == "OPEN":
             now = datetime.now()
             if (
                 self.last_failure_time
-                and (now - self.last_failure_time).total_seconds() >= self.recovery_timeout
+                and (now - self.last_failure_time).total_seconds() >= self.timeout
             ):
-                self.state = CircuitState.HALF_OPEN
+                self.state = "HALF_OPEN"
                 logger.info("🔌 Circuit breaker en mode semi-ouvert")
                 return True
             return False
@@ -423,8 +437,40 @@ class CircuitBreaker:
 
     def record_success(self) -> None:
         """Enregistre un succès"""
-        if self.state == CircuitState.HALF_OPEN:
+        if self.state == "HALF_OPEN":
             self.reset()
 
         if self.event_store:
             self.event_store.store_event("circuit_breaker_success", {"state": self.state})
+
+    def add_contradiction_pair(self, pair: str) -> None:
+        """Ajoute une paire de contradictions."""
+        self.contradiction_pairs.add(pair)
+
+    def _handle_unexpected_error(self, error: Exception) -> None:
+        """Gère les erreurs inattendues"""
+        logger.warning(f"Erreur inattendue dans Circuit Breaker: {error}")
+        self.metrics.unexpected_errors += 1
+
+        # Enregistrer l'événement
+        if self.event_store:
+            try:
+                self.event_store.add_event(
+                    EventType.SYSTEM_ERROR,
+                    {
+                        "error_type": "unexpected_error",
+                        "error_message": str(error),
+                        "circuit_state": self.state.value,
+                    },
+                )
+            except Exception as e:
+                logger.error(f"Erreur lors de l'enregistrement de l'événement: {e}")
+
+    def detect_contradictions(self, decisions: list[dict[str, Any]]) -> list[str]:
+        """Détecte les contradictions dans les décisions."""
+        contradictions: list[Any] = []
+        for decision in decisions:
+            decision_id = decision.get("id", "")
+            if decision_id in self.contradiction_pairs:
+                contradictions.append(decision_id)
+        return contradictions

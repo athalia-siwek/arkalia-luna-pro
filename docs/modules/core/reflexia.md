@@ -3,7 +3,7 @@
 ![Version](https://img.shields.io/badge/version-v3.0--phase1-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
 
 Reflexia Enhanced est un module de supervision cognitive autonome avec **vraies métriques système**.
 

@@ -23,8 +23,8 @@ def fix_line_length_errors():
         ),
         # modules/generative_ai/core.py:500
         (
-            r'f"🔧 Opportunités d\'optimisation: {len(analysis[\'optimization_opportunities\'])}"',
-            "f\"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'])}\"",
+            r'f"🔧 Opportunités d\'optimisation: {len(analysis["optimization_opportunities"])}"',
+            'f"🔧 Opportunités d\'optimisation: {len(analysis["optimization_opportunities"])}"',
         ),
         # modules/sandozia/analyzer/behavior.py:168
         (

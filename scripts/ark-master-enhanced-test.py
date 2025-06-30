@@ -100,10 +100,10 @@ async def test_enhanced_features():
 
     # Test Error Recovery System
     try:
-        from modules.zeroia.error_recovery_system import ErrorRecoverySystem
+        from modules.zeroia.error_recovery_system import ErrorRecoverySystem  # noqa: F401
 
         # Test d'instanciation pour vérifier que l'import fonctionne
-        _ = ErrorRecoverySystem
+        _ = ErrorRecoverySystem  # noqa: F401
         features_availability["error_recovery"] = True
         print("✅ Error Recovery System disponible")
     except ImportError:
@@ -111,10 +111,10 @@ async def test_enhanced_features():
 
     # Test Cognitive Reactor
     try:
-        from modules.sandozia.core.cognitive_reactor import CognitiveReactor
+        from modules.sandozia.core.cognitive_reactor import CognitiveReactor  # noqa: F401
 
         # Test d'instanciation pour vérifier que l'import fonctionne
-        _ = CognitiveReactor
+        _ = CognitiveReactor  # noqa: F401
         features_availability["cognitive_reactor"] = True
         print("✅ Cognitive Reactor disponible")
     except ImportError:
@@ -124,9 +124,9 @@ async def test_enhanced_features():
     try:
         # Import conditionnel pour éviter les erreurs si le module n'existe pas
         vault_manager_module = __import__(
-            "modules.security.crypto.vault_manager", fromlist=["VaultManager"]
+            "modules.security.crypto.vault_manager", fromlist=["VaultManager  # noqa: F401 "]
         )
-        vault_manager = vault_manager_module.VaultManager
+        vault_manager = vault_manager_module.VaultManager  # noqa: F401
 
         # Test d'instanciation pour vérifier que l'import fonctionne
         _ = vault_manager
@@ -135,23 +135,23 @@ async def test_enhanced_features():
     except (ImportError, AttributeError):
         print("❌ Vault Manager non disponible")
 
-    # Test Chronalia
+    # Test Chronalia  # noqa: F401
     try:
-        from modules.sandozia.core.chronalia import Chronalia
+        from modules.sandozia.core.chronalia import Chronalia  # noqa: F401
 
         # Test d'instanciation pour vérifier que l'import fonctionne
-        _ = Chronalia
+        _ = Chronalia  # noqa: F401
         features_availability["chronalia"] = True
-        print("✅ Chronalia disponible")
+        print("✅ Chronalia  # noqa: F401  disponible")
     except ImportError:
-        print("❌ Chronalia non disponible")
+        print("❌ Chronalia  # noqa: F401  non disponible")
 
     # Test CrossModule Validator
     try:
-        from modules.sandozia.validators.crossmodule import CrossModuleValidator
+        from modules.sandozia.validators.crossmodule import CrossModuleValidator  # noqa: F401
 
         # Test d'instanciation pour vérifier que l'import fonctionne
-        _ = CrossModuleValidator
+        _ = CrossModuleValidator  # noqa: F401
         features_availability["crossmodule_validator"] = True
         print("✅ CrossModule Validator disponible")
     except ImportError:

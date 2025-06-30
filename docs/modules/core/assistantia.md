@@ -3,7 +3,7 @@
 ![Version](https://img.shields.io/badge/version-v3.0--phase1-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
 
 Le module `assistantia/` est l’interface d’assistance IA locale d’Arkalia-LUNA. Il agit comme **guide conversationnel**, interface cognitive et **répondant intelligent** aux requêtes utilisateurs.
 

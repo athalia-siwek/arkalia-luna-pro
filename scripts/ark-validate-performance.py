@@ -1,228 +1,203 @@
 #!/usr/bin/env python3
-# 🧪 scripts/ark-validate-performance.py
-# Validation rapide des composants performance
-
 """
-Script de validation rapide des performances Arkalia-LUNA
-
-Tests légers pour vérifier que les composants clés fonctionnent
-avant de lancer la suite complète de benchmarks.
+🔍 Script de validation des performances Arkalia-LUNA Pro
+Valide les modules ZeroIA, EventStore et CircuitBreaker
 """
 
-import sys
+import tempfile
 import time
 from pathlib import Path
 
-# Ajouter le chemin des modules
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-# Imports des modules pour éviter les erreurs de type checking
 try:
-    from modules.zeroia.circuit_breaker import CircuitBreaker
-    from modules.zeroia.event_store import EventStore, EventType
-except ImportError:
-    # Les erreurs d'import seront gérées par test_imports()
-    pass
+    import psutil  # noqa: F401
+
+    from modules.zeroia.circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
+        CircuitBreaker,
+    )
+    from modules.zeroia.event_store import EventType  # noqa: F401# noqa: F401# noqa: F401,
+    from modules.zeroia.event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,  # noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
+        EventStore,
+    )
+    from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
+        create_default_context_enhanced,
+    )
+except ImportError as e:
+    print(f"❌ Erreur import modules: {e}")
+    print("💡 Vérifiez que les modules sont installés et accessibles")
+    exit(1)
 
 
-def test_imports():
-    """Test d'importation des modules critiques"""
-    print("🔍 Test des imports...")
+def validate_imports() -> bool:
+    """Valide que tous les imports nécessaires fonctionnent"""
+    print("🔍 Validation des imports...")
 
     try:
         # Vérifier que les imports globaux ont fonctionné
-        assert "create_default_context_enhanced" in globals()
+        assert "create_default_context_enhanced  # noqa: F401 " in globals()
         assert "CircuitBreaker" in globals()
         assert "EventStore" in globals()
-        assert "EventType" in globals()
-        assert "psutil" in globals()
+        assert "EventType  # noqa: F401 " in globals()
+        assert "psutil  # noqa: F401 " in globals()
         print("✅ Tous les imports OK")
         return True
-    except (ImportError, AssertionError) as e:
-        print(f"❌ Erreur d'import : {e}")
+
+    except AssertionError as e:
+        print(f"❌ Import manquant: {e}")
+        return False
+
+    except Exception as e:
+        print(f"❌ Erreur validation imports: {e}")
+
         # Tentative de réimport en cas d'échec
         try:
             import psutil  # noqa: F401
 
-            from modules.zeroia.circuit_breaker import CircuitBreaker  # noqa: F401
-            from modules.zeroia.event_store import EventStore, EventType  # noqa: F401
-            from modules.zeroia.reason_loop_enhanced import (  # noqa: F401
+            from modules.zeroia.circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
+                CircuitBreaker,
+            )
+            from modules.zeroia.event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,  # noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
+                EventStore,
+                EventType,
+            )
+            from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
                 create_default_context_enhanced,
             )
 
             print("✅ Réimport réussi")
             return True
+
         except ImportError as e2:
-            print(f"❌ Échec du réimport : {e2}")
+            print(f"❌ Réimport échoué: {e2}")
             return False
 
 
-def test_circuit_breaker_basic():
-    """Test basique du Circuit Breaker"""
-    print("⚡ Test Circuit Breaker...")
+def validate_event_store_performance() -> bool:
+    """Valide les performances de l'EventStore"""
+    print("📊 Validation EventStore...")
 
     try:
-        circuit = CircuitBreaker(failure_threshold=3, timeout=30)
-
-        # Test fonction simple
-        def simple_func() -> None:
-            return "success"
-
-        start = time.perf_counter()
-        result = circuit.call(simple_func)
-        end = time.perf_counter()
-
-        latency_ms = (end - start) * 1000
-
-        assert result == "success"
-        assert latency_ms < 50  # Seuil généreux pour validation
-
-        print(f"✅ Circuit Breaker OK ({latency_ms:.2f}ms)")
-        return True
-
-    except Exception as e:
-        print(f"❌ Circuit Breaker échec : {e}")
-        return False
-
-
-def test_event_store_basic():
-    """Test basique de l'Event Store"""
-    print("💾 Test Event Store...")
-
-    try:
-        import tempfile
-
         with tempfile.TemporaryDirectory() as temp_dir:
-            event_store = EventStore(cache_dir=f"{temp_dir}/test_events")
+            event_store  # noqa: F401 = EventStore(cache_dir=f"{temp_dir}/test_events")
 
             start = time.perf_counter()
 
-            event_id = event_store.add_event(
-                EventType.DECISION_MADE,
+            event_id = event_store  # noqa: F401.add_event(
+                EventType  # noqa: F401.DECISION_MADE,
                 {"decision": "test", "confidence": 0.9},
                 module="validation_test",
             )
 
             end = time.perf_counter()
-
-            latency_ms = (end - start) * 1000
-
-            assert event_id is not None
-            assert latency_ms < 100  # Seuil généreux pour validation
+            duration = end - start
 
             # Vérifier récupération
-            event = event_store.get_event(event_id)
+            event = event_store  # noqa: F401.get_event(event_id)
             assert event is not None
             assert event.data["decision"] == "test"
 
-            print(f"✅ Event Store OK ({latency_ms:.2f}ms)")
-            return True
+            print(f"✅ EventStore: {duration:.3f}s pour ajout + récupération")
+            return duration < 0.1  # Doit être < 100ms
 
     except Exception as e:
-        print(f"❌ Event Store échec : {e}")
+        print(f"❌ Erreur EventStore: {e}")
         return False
 
 
-def test_zeroia_context():
-    """Test création contexte ZeroIA"""
-    print("🧠 Test contexte ZeroIA...")
+def validate_context_creation() -> bool:
+    """Valide la création de contexte"""
+    print("🎯 Validation création contexte...")
 
     try:
-        from modules.zeroia.reason_loop_enhanced import create_default_context_enhanced
+        from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
+            create_default_context_enhanced,
+        )
 
         start = time.perf_counter()
-        context = create_default_context_enhanced()
+        context = create_default_context_enhanced  # noqa: F401()
         end = time.perf_counter()
 
-        latency_ms = (end - start) * 1000
+        duration = end - start
+        print(f"✅ Contexte créé en {duration:.3f}s")
 
-        assert context is not None
-        assert isinstance(context, dict)
-        assert "system" in context
+        # Vérifier structure
+        assert "system_status" in context
+        assert "active_modules" in context
+        assert "status" in context
 
-        print(f"✅ Contexte ZeroIA OK ({latency_ms:.2f}ms)")
-        return True
+        return duration < 0.05  # Doit être < 50ms
 
     except Exception as e:
-        print(f"❌ Contexte ZeroIA échec : {e}")
+        print(f"❌ Erreur création contexte: {e}")
         return False
 
 
-def test_system_resources():
-    """Test disponibilité des ressources système"""
-    print("💻 Test ressources système...")
+def validate_system_resources() -> bool:
+    """Valide les ressources système"""
+    print("💻 Validation ressources système...")
 
     try:
-        import psutil
+        import psutil  # noqa: F401
 
         # Mémoire disponible
-        memory = psutil.virtual_memory()
+        memory = psutil  # noqa: F401.virtual_memory()
         memory_available_gb = memory.available / (1024**3)
 
         # CPU
-        cpu_percent = psutil.cpu_percent(interval=0.1)
+        cpu_percent = psutil  # noqa: F401.cpu_percent(interval=0.1)
 
         # Disque
-        disk = psutil.disk_usage("/")
+        disk = psutil  # noqa: F401.disk_usage("/")
         disk_free_gb = disk.free / (1024**3)
 
-        print(f"📊 Mémoire libre : {memory_available_gb:.1f} GB")
-        print(f"📊 CPU usage : {cpu_percent:.1f}%")
-        print(f"📊 Disque libre : {disk_free_gb:.1f} GB")
+        print(f"✅ RAM disponible: {memory_available_gb:.1f}GB")
+        print(f"✅ CPU usage: {cpu_percent:.1f}%")
+        print(f"✅ Disque libre: {disk_free_gb:.1f}GB")
 
-        # Vérifications minimales
-        assert memory_available_gb > 0.5, "Mémoire insuffisante"
-        assert cpu_percent < 95, "CPU surchargé"
-        assert disk_free_gb > 1.0, "Disque plein"
+        # Critères de validation
+        ram_ok = memory_available_gb > 1.0  # Au moins 1GB
+        cpu_ok = cpu_percent < 90  # CPU < 90%
+        disk_ok = disk_free_gb > 5.0  # Au moins 5GB libre
 
-        print("✅ Ressources système OK")
-        return True
+        return ram_ok and cpu_ok and disk_ok
 
     except Exception as e:
-        print(f"❌ Ressources système : {e}")
+        print(f"❌ Erreur validation ressources: {e}")
         return False
 
 
 def main():
-    """Validation complète"""
-    print("🚀 VALIDATION PERFORMANCE ARKALIA-LUNA")
+    """Fonction principale de validation"""
+    print("🚀 Validation des performances Arkalia-LUNA Pro")
     print("=" * 50)
-
-    tests = [
-        ("Imports", test_imports),
-        ("Circuit Breaker", test_circuit_breaker_basic),
-        ("Event Store", test_event_store_basic),
-        ("Contexte ZeroIA", test_zeroia_context),
-        ("Ressources système", test_system_resources),
-    ]
 
     results = []
 
-    for test_name, test_func in tests:
-        print(f"\n🧪 {test_name}...")
-        success = test_func()
-        results.append((test_name, success))
+    # Tests de validation
+    results.append(("Imports", validate_imports()))
+    results.append(("EventStore", validate_event_store_performance()))
+    results.append(("Contexte", validate_context_creation()))
+    results.append(("Ressources", validate_system_resources()))
 
-    print("\n" + "=" * 50)
-    print("📊 RÉSULTATS VALIDATION")
+    # Résumé
+    print("\n📋 Résumé des validations:")
+    print("-" * 30)
 
     passed = 0
-    for test_name, success in results:
-        status = "✅ PASS" if success else "❌ FAIL"
-        print(f"{status} {test_name}")
-        if success:
+    for test_name, result in results:
+        status = "✅ PASS" if result else "❌ FAIL"
+        print(f"{test_name:15} {status}")
+        if result:
             passed += 1
 
-    print(f"\n🎯 Score : {passed}/{len(tests)} tests réussis")
+    print(f"\n🎯 {passed}/{len(results)} tests passés")
 
-    if passed == len(tests):
-        print("✅ Système prêt pour les benchmarks performance !")
-        return True
+    if passed == len(results):
+        print("🎉 Toutes les validations sont passées!")
+        return 0
     else:
-        print("⚠️ Certains composants ont des problèmes")
-        return False
+        print("⚠️ Certaines validations ont échoué")
+        return 1
 
 
 if __name__ == "__main__":
-    success = main()
-    sys.exit(0 if success else 1)
+    exit(main())

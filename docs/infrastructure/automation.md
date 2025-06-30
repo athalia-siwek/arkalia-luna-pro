@@ -3,7 +3,7 @@
 ![Version](https://img.shields.io/badge/version-v2.4.0-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
 
 Arkalia-LUNA embarque une **boucle d'automatisation intelligente** basée sur la logique des modules IA et des **déclencheurs contextuels**.
 

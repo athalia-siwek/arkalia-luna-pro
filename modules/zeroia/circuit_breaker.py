@@ -447,9 +447,28 @@ class CircuitBreaker:
         """Ajoute une paire de contradictions."""
         self.contradiction_pairs.add(pair)
 
+    def _handle_unexpected_error(self, error: Exception) -> None:
+        """Gère les erreurs inattendues"""
+        logger.warning(f"Erreur inattendue dans Circuit Breaker: {error}")
+        self.metrics.unexpected_errors += 1
+
+        # Enregistrer l'événement
+        if self.event_store:
+            try:
+                self.event_store.add_event(
+                    EventType.SYSTEM_ERROR,
+                    {
+                        "error_type": "unexpected_error",
+                        "error_message": str(error),
+                        "circuit_state": self.state.value,
+                    },
+                )
+            except Exception as e:
+                logger.error(f"Erreur lors de l'enregistrement de l'événement: {e}")
+
     def detect_contradictions(self, decisions: list[dict[str, Any]]) -> list[str]:
         """Détecte les contradictions dans les décisions."""
-        contradictions = []
+        contradictions: list[Any] = []
         for decision in decisions:
             decision_id = decision.get("id", "")
             if decision_id in self.contradiction_pairs:

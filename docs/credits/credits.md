@@ -3,7 +3,7 @@
 ![Version](https://img.shields.io/badge/version-v2.4.0-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
 
 > Système IA conçu, codé et orchestré par **Athalia 🌙** — pour une intelligence locale, souveraine et réflexive.
 

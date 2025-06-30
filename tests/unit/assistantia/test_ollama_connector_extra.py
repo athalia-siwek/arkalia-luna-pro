@@ -10,7 +10,7 @@ def test_query_ollama_function_exists() -> None:
 
 def test_query_ollama_invalid_model(monkeypatch) -> None:
     # Mock get_available_models pour retourner des modèles connus
-    def mock_get_models():
+    def mock_get_models() -> dict:
         return {"models": [{"name": "mistral:latest"}, {"name": "llama2:latest"}]}
 
     monkeypatch.setattr(ollama_connector, "get_available_models", mock_get_models)
@@ -21,7 +21,7 @@ def test_query_ollama_invalid_model(monkeypatch) -> None:
 
 def test_query_ollama_bad_model(monkeypatch) -> None:
     # Mock get_available_models pour retourner des modèles connus
-    def mock_get_models():
+    def mock_get_models() -> dict:
         return {"models": [{"name": "mistral:latest"}, {"name": "llama2:latest"}]}
 
     monkeypatch.setattr(ollama_connector, "get_available_models", mock_get_models)
@@ -68,7 +68,7 @@ def test_query_ollama_http_error(monkeypatch) -> None:
             self.status_code = status_code
             self.text = "Error"
 
-        def json(self) -> None:
+        def json(self) -> dict:
             return {}
 
         def raise_for_status(self) -> None:

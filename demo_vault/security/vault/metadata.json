@@ -1,0 +1,133 @@
+{
+  "database_url": {
+    "name": "database_url",
+    "created_at": "2025-06-30T15:13:14.180006",
+    "expires_at": null,
+    "tags": [
+      "production",
+      "database"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.196542"
+  },
+  "api_key": {
+    "name": "api_key",
+    "created_at": "2025-06-30T15:13:14.192237",
+    "expires_at": "2025-07-30T15:13:14.192233",
+    "tags": [
+      "api",
+      "external"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.198125"
+  },
+  "jwt_secret": {
+    "name": "jwt_secret",
+    "created_at": "2025-06-30T15:13:14.204220",
+    "expires_at": null,
+    "tags": [
+      "jwt",
+      "session",
+      "rotated",
+      "rotated_at_20250630"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.206664"
+  },
+  "jwt_secret_backup_1751289194": {
+    "name": "jwt_secret_backup_1751289194",
+    "created_at": "2025-06-30T15:13:14.201553",
+    "expires_at": "2025-07-30T15:13:14.201551",
+    "tags": [
+      "rotation_backup",
+      "original_jwt_secret"
+    ],
+    "access_count": 0,
+    "last_accessed": null
+  },
+  "jwt_master_secret": {
+    "name": "jwt_master_secret",
+    "created_at": "2025-06-30T15:13:14.208195",
+    "expires_at": null,
+    "tags": [
+      "jwt",
+      "master_secret",
+      "system"
+    ],
+    "access_count": 4,
+    "last_accessed": "2025-06-30T15:13:14.238480"
+  },
+  "token_metadata": {
+    "name": "token_metadata",
+    "created_at": "2025-06-30T15:13:14.235819",
+    "expires_at": null,
+    "tags": [
+      "system",
+      "token_metadata"
+    ],
+    "access_count": 0,
+    "last_accessed": null
+  },
+  "token_session_6BDB0fB8SD6Cwh_2DN4zFA": {
+    "name": "token_session_6BDB0fB8SD6Cwh_2DN4zFA",
+    "created_at": "2025-06-30T15:13:14.214465",
+    "expires_at": "2025-07-01T15:13:14.214463",
+    "tags": [
+      "token",
+      "session",
+      "user_athalia"
+    ],
+    "access_count": 2,
+    "last_accessed": "2025-06-30T15:13:14.240013"
+  },
+  "env_DATABASE_URL": {
+    "name": "env_DATABASE_URL",
+    "created_at": "2025-06-30T15:13:14.248867",
+    "expires_at": null,
+    "tags": [
+      "migrated_from_env"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.256583"
+  },
+  "env_REDIS_URL": {
+    "name": "env_REDIS_URL",
+    "created_at": "2025-06-30T15:13:14.250397",
+    "expires_at": null,
+    "tags": [
+      "migrated_from_env"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.257703"
+  },
+  "env_SECRET_KEY": {
+    "name": "env_SECRET_KEY",
+    "created_at": "2025-06-30T15:13:14.251908",
+    "expires_at": null,
+    "tags": [
+      "migrated_from_env"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.258886"
+  },
+  "env_API_TOKEN": {
+    "name": "env_API_TOKEN",
+    "created_at": "2025-06-30T15:13:14.253625",
+    "expires_at": null,
+    "tags": [
+      "migrated_from_env"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.260286"
+  },
+  "env_DEBUG": {
+    "name": "env_DEBUG",
+    "created_at": "2025-06-30T15:13:14.255077",
+    "expires_at": null,
+    "tags": [
+      "migrated_from_env"
+    ],
+    "access_count": 1,
+    "last_accessed": "2025-06-30T15:13:14.261572"
+  }
+}
