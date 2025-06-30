@@ -26,12 +26,14 @@ def test_launch_reflexia_loop(monkeypatch) -> None:
     """
     called = {}
 
-    def fake_loop() -> None:
+    def fake_loop(*args, **kwargs) -> None:
         called["executed"] = True
         return True
 
-    monkeypatch.setattr("modules.reflexia.logic.main_loop.reflexia_loop", fake_loop)
-    launch_reflexia_loop()
+    monkeypatch.setattr(
+        "modules.reflexia.logic.main_loop_enhanced.reflexia_loop_enhanced", fake_loop
+    )
+    launch_reflexia_loop(max_iterations=1)
     assert called.get("executed") is True
 
 

@@ -14,7 +14,7 @@ def test_hooks_importable() -> None:
 
 
 def test_generate_sitemap() -> None:
-    with patch("scripts.sitemap_generator.generate_sitemap_from_site") as mock_generate:
+    with patch("arkalia.hooks.generate_sitemap_from_site") as mock_generate:
         generate_sitemap()
         mock_generate.assert_called_once()
 

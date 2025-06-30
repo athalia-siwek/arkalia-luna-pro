@@ -1,27 +1,23 @@
 import subprocess
 import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).parent.parent.parent
 
 
 def test_pre_push_zeroia_check_executes_cleanly():
-    """
-    Vérifie que le script pre_push_zeroia_check.py s'exécute sans crash
-    et affiche un message de fin cohérent.
-    """
+    """Teste que le script pre-push ZeroIA s'exécute sans erreur"""
     result = subprocess.run(
-        [sys.executable, "scripts/pre_push_zeroia_check.py"],
+        ["python", "scripts/pre_push_zeroia_check.py"],
         capture_output=True,
         text=True,
-        check=True,
-        shell=False,
+        cwd=PROJECT_ROOT,
     )
 
-    # 🧪 Vérifie que le script a bien terminé (code 0 ou géré)
-    assert result.returncode in [
-        0,
-        1,
-    ], f"Code retour inattendu : {result.returncode}\nSTDERR:\n{result.stderr}"
+    # Vérifie que le script s'exécute sans erreur
+    assert result.returncode == 0, f"Script a échoué avec code {result.returncode}"
 
-    # ✅ Vérifie que la sortie contient un indicateur de succès ou d'erreur contrôlée
-    assert (
-        "ZeroIA Pre-Push Check Complete" in result.stdout or "Erreur" in result.stdout
-    ), f"Sortie inattendue :\n{result.stdout}"
+    # Vérifie que la sortie contient les messages attendus
+    output = result.stdout
+    assert "✅ Fichier TOML valide" in output
+    assert "🛡️ Tous les contrôles ZeroIA sont OK" in output

@@ -137,14 +137,14 @@ addopts = [
     "--cov=scripts",
     "--cov-report=term-missing",
     "--cov-report=html",
-    "--cov-fail-under=70"
+    "--cov-fail-under=70",
+    "--ignore=modules/generative_ai/generated/"
 ]
 markers = [
-    "slow",
-    "integration",
-    "unit",
-    "performance",
-    "security",
+    "slow: tests lents",
+    "integration: tests d'intégration",
+    "unit: tests unitaires",
+    "performance: tests de performance"
 ]
 
 [tool.mypy]

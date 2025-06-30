@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 from httpx import ASGITransport, AsyncClient
 
@@ -8,14 +10,17 @@ pytestmark = pytest.mark.asyncio
 
 @pytest.mark.asyncio
 async def test_chat_endpoint():
-    transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as ac:
-        response = await ac.post("/chat", json={"message": "Bonjour"})
-        assert response.status_code == 200
-        data = response.json()
-        assert "réponse" in data
-        assert isinstance(data["réponse"], str)
-        assert len(data["réponse"]) > 3
+    with patch(
+        "modules.assistantia.core.real_query_ollama", return_value="Réponse simulée pour le test"
+    ):
+        transport = ASGITransport(app=app)
+        async with AsyncClient(transport=transport, base_url="http://test") as ac:
+            response = await ac.post("/chat", json={"message": "Bonjour"})
+            assert response.status_code == 200
+            data = response.json()
+            assert "réponse" in data
+            assert isinstance(data["réponse"], str)
+            assert len(data["réponse"]) > 3
 
 
 @pytest.mark.asyncio

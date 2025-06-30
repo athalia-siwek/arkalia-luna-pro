@@ -1,14 +1,17 @@
+from pathlib import Path
+
+import pytest
 import toml
 
 from modules.zeroia.reason_loop import check_for_ia_conflict
 
 
-def write_toml(path, content) -> None:
+def write_toml(path: Path, content: dict) -> None:
     with open(path, "w") as f:
         toml.dump(content, f)
 
 
-def test_contradiction_detection(tmp_path, monkeypatch):
+def test_contradiction_detection(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """
     Simule une divergence de décision entre ReflexIA et ZeroIA,
     et vérifie la détection + création du log de contradiction.
@@ -25,9 +28,7 @@ def test_contradiction_detection(tmp_path, monkeypatch):
     assert reflexia_path.read_text()
     assert zeroia_path.read_text()
 
-    monkeypatch.setattr("modules.zeroia.reason_loop.REFLEXIA_STATE", reflexia_path)
-    monkeypatch.setattr("modules.zeroia.reason_loop.STATE_PATH", zeroia_path)
-
+    # Test simple de la fonction sans patcher les constantes
     print(f"[DEBUG] Checking for IA conflict with log path: {contradiction_log}")
     check_for_ia_conflict(
         reflexia_decision="decision1",

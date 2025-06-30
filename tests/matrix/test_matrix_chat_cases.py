@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -17,6 +19,9 @@ client = TestClient(app)
 )
 def test_chat_various_messages(msg):
     """Teste l'endpoint /chat avec divers messages."""
-    response = client.post("/chat", json={"message": msg})
-    assert response.status_code == 200, "Statut inattendu"
-    assert "réponse" in response.json(), "Réponse manquante"
+    with patch(
+        "modules.assistantia.core.real_query_ollama", return_value="Réponse simulée pour le test"
+    ):
+        response = client.post("/chat", json={"message": msg})
+        assert response.status_code == 200, "Statut inattendu"
+        assert "réponse" in response.json(), "Réponse manquante"

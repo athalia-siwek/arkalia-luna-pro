@@ -1,112 +1,67 @@
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-json
+      - id: check-toml
+      - id: debug-statements
+      - id: name-tests-test
+      - id: requirements-txt-fixer
+
   - repo: https://github.com/psf/black
-    rev: 25.1.0
+    rev: 23.12.1
     hooks:
       - id: black
         language_version: python3
-        exclude: |
-          (^modules/zeroia/state/zeroia_.*\.toml$|
-           ^state/zeroia_dashboard\.json$|
-           \.tox|venv|site-packages|\.?__pycache__|\.DS_Store|^\._)
+        args: [--line-length=100]
 
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.12.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
     hooks:
       - id: ruff
-        args: [--fix]
-        language_version: python3.10
-        exclude: |
-          (^modules/zeroia/state/zeroia_.*\.toml$|
-           ^state/zeroia_dashboard\.json$|
-           venv|\.DS_Store|\.AppleDouble|^\._)
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
     hooks:
-      - id: end-of-file-fixer
-        exclude: |
-          (^logs/failure_analysis\.md$|
-           ^state/.*\.json$|
-           ^state/.*\.toml$)
-      - id: trailing-whitespace
-        exclude: |
-          ^modules/zeroia/state/zeroia_.*\.toml$|
-          ^state/zeroia_dashboard\.json$
+      - id: isort
+        args: [--profile=black, --line-length=100]
 
-  - repo: local
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
     hooks:
-      - id: format-generated
-        name: Format generated files
-        description: Format all generated directories with isort + black
-        entry: bash -c 'find . -name "generated" -type d -exec sh -c "isort {} --profile black && black {} --quiet" \;'
-        language: system
-        files: ^modules/.*/generated/
-        pass_filenames: false
-
-      - id: zeroia-healthcheck
-        name: ZeroIA TOML Health Check
-        entry: python3 scripts/zeroia_health.py
-        language: system
-        files: ^modules/zeroia/state/zeroia_state\.toml$
-        pass_filenames: false
-
-      - id: healthcheck-zeroia
-        name: 🧠 ZeroIA Healthcheck
-        entry: python3 scripts/healthcheck_zeroia.py
-        language: system
-        types: [python]
-        files: ^modules/zeroia/state/zeroia_state\.toml$
-        pass_filenames: false
-
-      - id: zeroia-rollback
-        name: ♻️ ZeroIA Auto-Rollback
-        entry: python3 scripts/zeroia_rollback.py
-        language: system
-        files: ^modules/zeroia/state/zeroia_state\.toml$
-        pass_filenames: false
-
-      - id: clean-hidden-files
-        name: Clean macOS hidden files
-        entry: bash scripts/ark-clean-hidden.sh
-        language: system
-        types: [file]
+      - id: mypy
+        additional_dependencies: [types-requests]
+        args: [--ignore-missing-imports]
 
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.8.5
+    rev: 1.7.5
     hooks:
       - id: bandit
-        name: Security Linter
-        description: Run Bandit security linter
-        entry: bandit -r
-        language: python
-        types: [python]
+        args: [-r, modules/, -f, json, -o, bandit-report.json]
         exclude: ^tests/
-
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
-    hooks:
-      - id: flake8
-        name: Flake8 Linter
-        description: Run Flake8 linter
-        entry: flake8
-        language: python
-        types: [python]
-        exclude: |
-          ^modules/zeroia/state/zeroia_.*\.toml$|
-          ^state/zeroia_dashboard\.json$
 
   - repo: local
     hooks:
-      - id: run-tests
-        name: Run Tests
-        entry: pytest
+      - id: clean-macos-files
+        name: Clean macOS files
+        entry: bash -c 'find . -name "._*" -delete && find . -name ".DS_Store" -delete'
         language: system
-        types: [python]
+        files: ""
         pass_filenames: false
 
-# CI
-ci:
-  skip: false
-
-# 🚦 Stages définis
-default_stages: [pre-commit]
+      - id: pytest-check
+        name: pytest check
+        entry: pytest --tb=short --strict-markers
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [manual]

@@ -1,8 +1,9 @@
 #########################
 # 🌐 Base Web Server
 #########################
-fastapi
-uvicorn[standard]
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
 
 # 📡 Appels HTTP
 requests
@@ -10,22 +11,25 @@ requests
 #########################
 # 🎨 Formatage & Linting
 #########################
-black
-ruff
+black>=23.0.0
+ruff>=0.1.0
+isort>=5.12.0
 
 #########################
 # ✅ Tests & Couverture
 #########################
-pytest
-pytest-cov
+pytest>=7.4.0
+pytest-cov>=4.1.0
 pytest-asyncio
+pytest-xdist
+pytest-benchmark
 httpx>=0.23.0
 
 #########################
 # 📘 Documentation MkDocs
 #########################
-mkdocs
-mkdocs-material
+mkdocs>=1.5.0
+mkdocs-material>=9.4.0
 mkdocs-minify-plugin
 mkdocs-git-revision-date-localized-plugin
 mkdocs-macros-plugin
@@ -35,15 +39,24 @@ pymdown-extensions
 #########################
 # 🔧 Pre-commit Hooks
 #########################
-pre-commit
+pre-commit>=3.5.0
 toml==0.10.2
 tomli==2.2.1
 
+#########################
+# 🔒 Sécurité
+#########################
+bandit>=1.7.0
 defusedxml
-
-prometheus_client>=0.22.0
 cryptography>=3.4.8
 PyJWT>=2.4.0
+
+#########################
+# 📊 Monitoring & Métriques
+#########################
+prometheus_client>=0.22.0
+asyncio-mqtt>=0.16.0
+psutil>=5.9.0
 
 #########################
 # 💾 Cache & Memory Management
@@ -54,4 +67,8 @@ diskcache>=5.6.3
 # 🔄 Circuit Breaker & Retries
 #########################
 tenacity>=8.2.0
-psutil>=5.9.0
+
+#########################
+# 🐳 Docker
+#########################
+docker>=6.1.0

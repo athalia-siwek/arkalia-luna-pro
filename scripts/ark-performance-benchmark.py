@@ -142,36 +142,40 @@ def generate_summary_report(output_dir="benchmark_results"):
 
     latest_file = max(json_files, key=lambda f: f.stat().st_mtime)
 
-    with open(latest_file) as f:
-        results = json.load(f)
+    try:
+        with open(latest_file) as f:
+            results = json.load(f)
 
-    print("\n📊 RAPPORT DE SYNTHÈSE BENCHMARKS")
-    print("=" * 50)
-    print(f"📅 Date : {results['timestamp']}")
-    print(f"⏱️ Durée : {results['duration_seconds']:.1f}s")
-    print(f"🎯 Statut : {'✅ SUCCÈS' if results['return_code'] == 0 else '❌ ÉCHEC'}")
-    print(f"🐍 Python : {results['environment']['python_version'].split()[0]}")
-    print(f"💻 Plateforme : {results['environment']['platform']}")
+        print("\n📊 RAPPORT DE SYNTHÈSE BENCHMARKS")
+        print("=" * 50)
+        print(f"📅 Date : {results['timestamp']}")
+        print(f"⏱️ Durée : {results['duration_seconds']:.1f}s")
+        print(f"🎯 Statut : {'✅ SUCCÈS' if results['return_code'] == 0 else '❌ ÉCHEC'}")
+        print(f"🐍 Python : {results['environment']['python_version'].split()[0]}")
+        print(f"💻 Plateforme : {results['environment']['platform']}")
 
-    # Extraire métriques du stdout si possible
-    stdout = results.get("stdout", "")
-    if "ZeroIA décision en" in stdout:
-        print("\n🧠 Métriques ZeroIA :")
-        for line in stdout.split("\n"):
-            if "ZeroIA décision en" in line:
-                print(f"  {line}")
+        # Extraire métriques du stdout si possible
+        stdout = results.get("stdout", "")
+        if "ZeroIA décision en" in stdout:
+            print("\n🧠 Métriques ZeroIA :")
+            for line in stdout.split("\n"):
+                if "ZeroIA décision en" in line:
+                    print(f"  {line}")
 
-    if "Circuit Breaker" in stdout:
-        print("\n⚡ Métriques Circuit Breaker :")
-        for line in stdout.split("\n"):
-            if "Circuit Breaker" in line and "Latence" in line:
-                print(f"  {line}")
+        if "Circuit Breaker" in stdout:
+            print("\n⚡ Métriques Circuit Breaker :")
+            for line in stdout.split("\n"):
+                if "Circuit Breaker" in line and "Latence" in line:
+                    print(f"  {line}")
 
-    if "Event Store" in stdout:
-        print("\n💾 Métriques Event Store :")
-        for line in stdout.split("\n"):
-            if "Event Store" in line and "événements" in line:
-                print(f"  {line}")
+        if "Event Store" in stdout:
+            print("\n💾 Métriques Event Store :")
+            for line in stdout.split("\n"):
+                if "Event Store" in line and "événements" in line:
+                    print(f"  {line}")
+
+    except Exception as e:
+        print(f"❌ Erreur lors de la génération du rapport : {e}")
 
 
 def main():
@@ -191,13 +195,17 @@ def main():
 
     args = parser.parse_args()
 
-    if args.report_only:
-        generate_summary_report(args.output_dir)
-    else:
-        success = run_performance_tests(args.output_dir)
-        if success:
+    try:
+        if args.report_only:
             generate_summary_report(args.output_dir)
-        sys.exit(0 if success else 1)
+        else:
+            success = run_performance_tests(args.output_dir)
+            if success:
+                generate_summary_report(args.output_dir)
+            sys.exit(0 if success else 1)
+    except Exception as e:
+        print(f"❌ Erreur fatale : {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

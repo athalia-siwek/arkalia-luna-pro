@@ -56,7 +56,7 @@ def get_metrics() -> dict:
     return read_metrics()
 
 
-def launch_reflexia_loop() -> None:
+def launch_reflexia_loop(max_iterations: int | None = None) -> None:
     """
     🔁 Lance la boucle réflexive automatique Enhanced v2.6.0
     Utilise maintenant les vraies métriques système !
@@ -64,7 +64,7 @@ def launch_reflexia_loop() -> None:
     from modules.reflexia.logic.main_loop_enhanced import reflexia_loop_enhanced
 
     print("🚀 Démarrage Reflexia Enhanced v2.6.0")
-    reflexia_loop_enhanced()
+    reflexia_loop_enhanced(max_iterations=max_iterations)
 
 
 def load_reflexia_data() -> dict:
