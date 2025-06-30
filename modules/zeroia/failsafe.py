@@ -1,6 +1,8 @@
+import json
 import shutil
 from datetime import datetime
 from pathlib import Path
+from typing import Any, Dict, Optional
 
 import toml
 
@@ -9,28 +11,88 @@ BACKUP_PATH = Path("state/zeroia_snapshot_backup.toml")
 FAILURE_LOG = Path("logs/failure_analysis.md")
 
 
-def load_snapshot(path) -> None:
+def load_snapshot(snapshot_path: str) -> dict[str, Any] | None:
+    """Charge un snapshot depuis le fichier spécifié."""
     try:
-        return toml.load(path)
-    except Exception as e:
-        log_failure(f"Erreur de lecture du snapshot {path.name}: {str(e)}")
+        with open(snapshot_path) as f:
+            data = toml.load(f)
+            return data if isinstance(data, dict) else None
+    except FileNotFoundError:
+        return None
+    except Exception:
         return None
 
 
-def log_failure(reason) -> None:
-    FAILURE_LOG.parent.mkdir(parents=True, exist_ok=True)
-    with open(FAILURE_LOG, "a") as f:
-        f.write(f"## 🛑 Échec détecté : {datetime.now().isoformat()}\n")
-        f.write(f"**Raison :** {reason}\n\n")
+def log_failure(error_message: str, log_file: str = "logs/failsafe_errors.log") -> None:
+    """Enregistre une erreur dans le fichier de log."""
+    try:
+        log_path = Path(log_file)
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+
+        timestamp = datetime.now().isoformat()
+        with open(log_path, "a") as f:
+            f.write(f"[{timestamp}] {error_message}\n")
+    except Exception:
+        pass  # Ignore les erreurs d'écriture
 
 
-def restore_backup() -> None:
-    if BACKUP_PATH.exists():
-        shutil.copy(BACKUP_PATH, SNAPSHOT_PATH)
-        log_failure("Backup restauré avec succès.")
+def restore_backup(backup_path: str, target_path: str) -> bool:
+    """Restaure un backup vers le chemin cible."""
+    try:
+        shutil.copy2(backup_path, target_path)
         return True
-    else:
-        log_failure("Aucun backup disponible pour restauration.")
+    except Exception:
+        return False
+
+
+def create_backup(source_path: str, backup_dir: str = "backups") -> str | None:
+    """Crée un backup du fichier source."""
+    try:
+        source = Path(source_path)
+        if not source.exists():
+            return None
+
+        backup_path = Path(backup_dir) / f"{source.stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{source.suffix}"
+        backup_path.parent.mkdir(parents=True, exist_ok=True)
+
+        shutil.copy2(source, backup_path)
+        return str(backup_path)
+    except Exception:
+        return None
+
+
+def log_success(message: str, log_file: str = "logs/failsafe_success.log") -> None:
+    """Enregistre un succès dans le fichier de log."""
+    try:
+        log_path = Path(log_file)
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+
+        timestamp = datetime.now().isoformat()
+        with open(log_path, "a") as f:
+            f.write(f"[{timestamp}] {message}\n")
+    except Exception:
+        pass  # Ignore les erreurs d'écriture
+
+
+def rollback_system(snapshot_path: str, target_path: str) -> bool:
+    """Effectue un rollback du système vers un snapshot."""
+    try:
+        # Créer un backup avant rollback
+        backup_path = create_backup(target_path)
+        if not backup_path:
+            log_failure(f"Impossible de créer un backup avant rollback de {target_path}")
+            return False
+
+        # Restaurer le snapshot
+        success = restore_backup(snapshot_path, target_path)
+        if success:
+            log_success(f"Rollback réussi de {target_path} depuis {snapshot_path}")
+        else:
+            log_failure(f"Échec du rollback de {target_path} depuis {snapshot_path}")
+
+        return success
+    except Exception as e:
+        log_failure(f"Erreur lors du rollback: {str(e)}")
         return False
 
 

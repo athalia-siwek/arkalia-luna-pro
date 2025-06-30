@@ -7,7 +7,7 @@ from modules.zeroia.failsafe import load_snapshot, restore_backup
 def test_load_snapshot_error_handling() -> None:
     with patch("toml.load", side_effect=Exception("Test error")):
         with patch("builtins.open", mock_open()):
-            result = load_snapshot(Path("invalid_snapshot.toml"))
+            result = load_snapshot("invalid_snapshot.toml")
             assert result is None
 
 
@@ -17,17 +17,11 @@ def test_restore_backup_success(tmp_path) -> None:
 
     state_file = tmp_path / "zeroia_state.toml"
 
-    # Patch les chemins utilisés par restore_backup
-    import modules.zeroia.failsafe as failsafe
-
-    failsafe.BACKUP_PATH = backup_file
-    failsafe.SNAPSHOT_PATH = state_file
-
-    assert restore_backup() is True
+    result = restore_backup(str(backup_file), str(state_file))
+    assert result is True
 
 
 def test_restore_backup_failure() -> None:
-    with patch("pathlib.Path.exists", return_value=False):
-        with patch("builtins.open", mock_open()):
-            result = restore_backup()
-            assert result is False
+    with patch("shutil.copy2", side_effect=Exception("Test error")):
+        result = restore_backup("backup.toml", "target.toml")
+        assert result is False

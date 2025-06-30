@@ -11,10 +11,13 @@ Fonctionnalités:
 """
 
 import json
+import math
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional
+
+import toml
 
 
 class ConfidenceScorer:
@@ -22,7 +25,7 @@ class ConfidenceScorer:
 
     def __init__(self, state_file: str = "modules/zeroia/state/confidence_memory.toml") -> None:
         self.state_file = Path(state_file)
-        self.decision_history = []
+        self.decision_history: list[dict[str, Any]] = []
         self.pattern_weights = {
             "consistency": 0.25,  # Cohérence avec historique
             "system_health": 0.20,  # État système
@@ -32,13 +35,24 @@ class ConfidenceScorer:
             "error_rate": 0.10,  # Taux d'erreur
         }
         self.memory = self._load_memory()
+        self.confidence_threshold = 0.7
+        self.load_config()
+
+    def load_config(self) -> dict[str, Any]:
+        """Charge la configuration depuis le fichier TOML."""
+        try:
+            with open("config/confidence.toml") as f:
+                data = toml.load(f)
+                return data if isinstance(data, dict) else {}
+        except FileNotFoundError:
+            return {"threshold": 0.7, "decay_rate": 0.1}
+        except Exception:
+            return {"threshold": 0.7, "decay_rate": 0.1}
 
     def _load_memory(self) -> dict:
         """Charge la mémoire décisionnelle"""
         if self.state_file.exists():
             try:
-                import toml
-
                 with open(self.state_file) as f:
                     return toml.load(f)
             except Exception as e:
@@ -58,8 +72,6 @@ class ConfidenceScorer:
         try:
             self.memory["last_update"] = datetime.now().isoformat()
             self.state_file.parent.mkdir(parents=True, exist_ok=True)
-
-            import toml
 
             with open(self.state_file, "w") as f:
                 toml.dump(self.memory, f)
@@ -424,6 +436,51 @@ class ConfidenceScorer:
             "current_weights": self.memory["learning_weights"],
             "last_update": self.memory["last_update"],
         }
+
+    def update_confidence(self, decision_id: str, new_confidence: float) -> None:
+        """Met à jour le score de confiance pour une décision."""
+        for decision in self.decision_history:
+            if decision.get("id") == decision_id:
+                decision["confidence"] = new_confidence
+                decision["updated_at"] = datetime.now().isoformat()
+                break
+
+    def get_average_confidence(self) -> float:
+        """Retourne la moyenne des scores de confiance."""
+        if not self.decision_history:
+            return 0.0
+        total = sum(d.get("confidence", 0.0) for d in self.decision_history)
+        return total / len(self.decision_history)
+
+    def decay_confidence(self, days: int = 7) -> None:
+        """Applique une décroissance temporelle aux scores de confiance."""
+        cutoff_date = datetime.now() - timedelta(days=days)
+        for decision in self.decision_history:
+            decision_date = datetime.fromisoformat(decision.get("created_at", "1970-01-01"))
+            if decision_date < cutoff_date:
+                current_confidence = decision.get("confidence", 0.0)
+                decayed_confidence = current_confidence * 0.9
+                decision["confidence"] = max(0.1, decayed_confidence)
+
+    def save_confidence_data(self) -> None:
+        """Sauvegarde les données de confiance."""
+        try:
+            with open("state/confidence_data.json", "w") as f:
+                json.dump(self.decision_history, f, indent=2)
+        except Exception:
+            pass  # Ignore les erreurs d'écriture
+
+    def load_confidence_data(self) -> None:
+        """Charge les données de confiance."""
+        try:
+            with open("state/confidence_data.json") as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    self.decision_history = data
+        except FileNotFoundError:
+            self.decision_history = []
+        except Exception:
+            self.decision_history = []
 
 
 def main():

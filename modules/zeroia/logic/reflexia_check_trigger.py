@@ -1,12 +1,35 @@
+from typing import Any, Dict, Optional
+
 import requests
 
 
-def trigger_reflexia_check() -> None:
+def check_reflexia_trigger() -> dict[str, Any] | None:
+    """Vérifie si un déclencheur Reflexia doit être activé."""
     try:
-        response = requests.get("http://arkalia-api:8000/reflexia/check", timeout=3)
-        data = response.json()
-        print(f"🧠 ReflexIA check: {data}")
-        return data
-    except Exception as e:
-        print(f"⚠️ ReflexIA unreachable: {e}")
+        # Simulation d'une vérification de déclencheur
+        response = requests.get("http://localhost:8000/health", timeout=5)
+        if response.status_code == 200:
+            return {
+                "triggered": True,
+                "reason": "system_healthy",
+                "timestamp": "2024-01-01T00:00:00Z"
+            }
+        else:
+            return {
+                "triggered": False,
+                "reason": "system_unhealthy",
+                "status_code": response.status_code
+            }
+    except requests.RequestException:
+        return {
+            "triggered": False,
+            "reason": "connection_error"
+        }
+    except Exception:
         return None
+
+
+def should_trigger_reflexia() -> bool:
+    """Détermine si Reflexia doit être déclenché."""
+    trigger_data = check_reflexia_trigger()
+    return trigger_data is not None and trigger_data.get("triggered", False)

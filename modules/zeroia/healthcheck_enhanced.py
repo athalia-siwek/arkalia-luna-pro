@@ -5,6 +5,34 @@
 import json
 import sys
 from pathlib import Path
+from typing import Any, Dict
+
+import toml
+
+
+def load_healthcheck_config() -> dict[str, Any]:
+    """Charge la configuration de healthcheck depuis le fichier TOML."""
+    try:
+        with open("config/healthcheck.toml") as f:
+            return toml.load(f)
+    except FileNotFoundError:
+        return {"enabled": True, "interval": 30}
+    except Exception:
+        return {"enabled": False, "interval": 60}
+
+
+def check_zeroia_health() -> bool:
+    """Vérifie la santé du système ZeroIA."""
+    try:
+        state_path = Path("state/zeroia_state.toml")
+        if not state_path.exists():
+            return False
+
+        with open(state_path) as f:
+            state = toml.load(f)
+            return state.get("status") == "active"
+    except Exception:
+        return False
 
 
 def check_enhanced_health():
