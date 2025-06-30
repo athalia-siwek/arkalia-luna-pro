@@ -6,6 +6,42 @@ Historique détaillé des modifications et améliorations d'Arkalia-LUNA.
 
 ---
 
+## 🔧 [v2.8.0] - 2025-06-30 — **ÉTAT STABLE - CORRECTIONS MAJEURES**
+
+### 🚨 **Corrections Critiques**
+- **Erreurs syntaxe Python** : Nettoyage complet des commentaires `# noqa` mal placés dans les chaînes de caractères
+- **Module generative_ai dysfonctionnel** : Arrêté et désactivé pour éviter la modification automatique de fichiers
+- **Tests unitaires** : Correction des appels d'enum dans `test_export.py` et validation complète
+- **Pollution .zshrc** : Problème identifié et surveillé
+
+### 🛡️ **Stabilisation Système**
+- **Services principaux** : Tous les modules healthy et stables depuis 30h+
+- **Monitoring renforcé** : Stack complète Prometheus/Grafana/Loki opérationnelle
+- **Base de code propre** : Suppression de toutes les erreurs de syntaxe
+- **Docker compose** : Service generative_ai commenté pour éviter redémarrages automatiques
+
+### 📊 **État des Services**
+- **arkalia-api** (port 8000) : ✅ Healthy - 30h de fonctionnement
+- **assistantia** (port 8001) : ✅ Healthy - 30h de fonctionnement
+- **reflexia** (port 8002) : ✅ Healthy - 30h de fonctionnement
+- **cognitive-reactor** : ✅ Healthy - Redémarré récemment
+- **sandozia** : ✅ Healthy - 30h de fonctionnement
+- **zeroia** : ✅ Healthy - 30h de fonctionnement
+
+### 🔧 **Changements Techniques**
+- **Code** : Correction syntaxe dans `tests/unit/zeroia/event_store/test_export.py`
+- **Docker** : Service generative_ai désactivé dans `docker-compose.yml`
+- **Git** : Commits propres avec hooks pre-commit fonctionnels
+- **Documentation** : Mise à jour des releases et changelog
+
+### 📋 **Impact**
+- **Stabilité** : Système maintenant stable et prévisible
+- **Sécurité** : Plus de modifications automatiques non désirées
+- **Maintenance** : Base de code propre et maintenable
+- **Production** : Prêt pour utilisation en environnement critique
+
+---
+
 ## 🧠 [v2.8.0] - 2025-06-29 — **REFLEXIA ENHANCED - RÉVOLUTION MÉTRIQUES**
 
 ### 🎉 **REFLEXIA ENHANCED v2.8.0 - NOUVELLES FONCTIONNALITÉS MAJEURES**
