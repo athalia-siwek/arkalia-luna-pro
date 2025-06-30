@@ -157,6 +157,7 @@ nav:
     - Rebuild Guide: guides/rebuild-guide.md
   - Releases:
     - Cross Module v2.7.1: releases/cross_module_enhanced_v2.7.1.md
+    - Latest Updates: releases/dernieres_updates.md
     - All Releases: releases/index.md
   - Planning:
     - Roadmap Overview: planning/roadmap/index.md
