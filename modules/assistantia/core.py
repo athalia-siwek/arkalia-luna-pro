@@ -374,30 +374,3 @@ async def root():
         "health": "/health",
         "metrics": "/metrics",
     }
-
-@app.get("/metrics")
-async def root_metrics():
-    """📊 Endpoint métriques Prometheus à la racine pour AssistantIA"""
-    try:
-        prometheus_data = generate_latest()
-        return PlainTextResponse(content=prometheus_data, media_type=CONTENT_TYPE_LATEST)
-    except Exception as e:
-        logger.error(f"Erreur métriques racine: {e}")
-        return JSONResponse(
-            status_code=500,
-            content={"error": f"Erreur métriques : {str(e)}"},
-        )
-
-@app.get("/metrics")
-async def root_metrics():
-    """📊 Endpoint métriques Prometheus à la racine pour AssistantIA"""
-    try:
-        prometheus_data = generate_latest()
-        return PlainTextResponse(content=prometheus_data, media_type=CONTENT_TYPE_LATEST)
-    except Exception as e:
-        logger.error(f"Erreur métriques racine: {e}")
-        return JSONResponse(
-            status_code=500,
-            content={"error": f"Erreur métriques : {str(e)}"},
-        )
-
