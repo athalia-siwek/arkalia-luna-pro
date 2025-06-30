@@ -93,11 +93,38 @@ class ArkaliaMetrics:
         )
 
         # === MÉTRIQUES GLOBALES SYSTÈME ===
-        self.system_uptime = Gauge(
-            "arkalia_system_uptime_seconds",
-            "Temps de fonctionnement du système Arkalia",
+        self.arkalia_requests_total = Counter(
+            "arkalia_requests_total",
+            "Nombre total de requêtes API Arkalia",
+            ["method", "endpoint", "status"],
         )
-
+        self.arkalia_request_duration = Histogram(
+            "arkalia_request_duration_seconds",
+            "Durée des requêtes API Arkalia",
+            ["method", "endpoint"],
+            buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0],
+        )
+        self.arkalia_active_connections = Gauge(
+            "arkalia_active_connections",
+            "Nombre de connexions actives",
+        )
+        self.arkalia_system_uptime = Gauge(
+            "arkalia_system_uptime_seconds",
+            "Temps de fonctionnement du système",
+        )
+        self.arkalia_memory_usage = Gauge(
+            "arkalia_memory_usage_bytes",
+            "Utilisation mémoire du système",
+        )
+        self.arkalia_cpu_usage = Gauge(
+            "arkalia_cpu_usage_percent",
+            "Utilisation CPU du système",
+        )
+        self.arkalia_modules_status = Gauge(
+            "arkalia_modules_status",
+            "Statut des modules (1=actif, 0=inactif)",
+            ["module_name"],
+        )
         self.file_operations = Counter(
             "arkalia_file_operations_total",
             "Opérations de fichiers (io_safe)",
@@ -233,7 +260,7 @@ class ArkaliaMetrics:
     def update_system_uptime(self):
         """Met à jour le temps de fonctionnement"""
         uptime = time.time() - self.start_time
-        self.system_uptime.set(uptime)
+        self.arkalia_system_uptime.set(uptime)
 
 
 class ArkaliaMetricsCollector:

@@ -28,32 +28,6 @@ logger = logging.getLogger(__name__)
 # Instance globale des métriques
 metrics = ArkaliaMetrics()
 
-# Métriques spécifiques Arkalia
-arkalia_requests_total = Counter(
-    "arkalia_requests_total",
-    "Nombre total de requêtes API Arkalia",
-    ["method", "endpoint", "status"],
-)
-
-arkalia_request_duration = Histogram(
-    "arkalia_request_duration_seconds",
-    "Durée des requêtes API Arkalia",
-    ["method", "endpoint"],
-    buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0],
-)
-
-arkalia_active_connections = Gauge("arkalia_active_connections", "Nombre de connexions actives")
-
-arkalia_system_uptime = Gauge("arkalia_system_uptime_seconds", "Temps de fonctionnement du système")
-
-arkalia_memory_usage = Gauge("arkalia_memory_usage_bytes", "Utilisation mémoire du système")
-
-arkalia_cpu_usage = Gauge("arkalia_cpu_usage_percent", "Utilisation CPU du système")
-
-arkalia_modules_status = Gauge(
-    "arkalia_modules_status", "Statut des modules (1=actif, 0=inactif)", ["module_name"]
-)
-
 # Variables globales pour le suivi
 start_time = time.time()
 
@@ -64,10 +38,10 @@ async def lifespan(app: FastAPI):
     logger.info("🚀 Démarrage Arkalia-LUNA API")
 
     # Initialiser les métriques
-    arkalia_system_uptime.set(0)
-    arkalia_modules_status.labels(module_name="assistantia").set(1)
-    arkalia_modules_status.labels(module_name="reflexia").set(1)
-    arkalia_modules_status.labels(module_name="zeroia").set(1)
+    metrics.arkalia_system_uptime.set(0)
+    metrics.arkalia_modules_status.labels(module_name="assistantia").set(1)
+    metrics.arkalia_modules_status.labels(module_name="reflexia").set(1)
+    metrics.arkalia_modules_status.labels(module_name="zeroia").set(1)
 
     yield
 
@@ -103,12 +77,12 @@ async def metrics_middleware(request: Request, call_next):
     duration = time.time() - start_time
 
     # Incrémenter les compteurs
-    arkalia_requests_total.labels(
+    metrics.arkalia_requests_total.labels(
         method=request.method, endpoint=request.url.path, status=response.status_code
     ).inc()
 
     # Enregistrer la durée
-    arkalia_request_duration.labels(method=request.method, endpoint=request.url.path).observe(
+    metrics.arkalia_request_duration.labels(method=request.method, endpoint=request.url.path).observe(
         duration
     )
 
@@ -164,15 +138,15 @@ async def get_metrics():
         import psutil
 
         # Uptime
-        arkalia_system_uptime.set(time.time() - start_time)
+        metrics.arkalia_system_uptime.set(time.time() - start_time)
 
         # Mémoire
         memory = psutil.virtual_memory()
-        arkalia_memory_usage.set(memory.used)
+        metrics.arkalia_memory_usage.set(memory.used)
 
         # CPU
         cpu_percent = psutil.cpu_percent(interval=0.1)
-        arkalia_cpu_usage.set(cpu_percent)
+        metrics.arkalia_cpu_usage.set(cpu_percent)
 
         # Générer le format Prometheus
         prometheus_data = generate_latest()
