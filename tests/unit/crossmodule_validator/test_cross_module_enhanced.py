@@ -284,9 +284,15 @@ class TestRegression:
             assert callable(load_toml_cached)
             assert callable(get_cache_stats)
 
-            # Test chargement basique
-            config = load_toml_cached(self.test_toml)
-            assert isinstance(config, dict)
+            # Test chargement basique avec fichier temporaire
+            with tempfile.NamedTemporaryFile(mode="w", suffix=".toml", delete=False) as f:
+                test_config = {"backward": "compat", "test": True}
+                toml.dump(test_config, f)
+                f.flush()
+
+                config = load_toml_cached(f.name)
+                assert isinstance(config, dict)
+                assert config["backward"] == "compat"
 
             # Test stats
             stats = get_cache_stats()
