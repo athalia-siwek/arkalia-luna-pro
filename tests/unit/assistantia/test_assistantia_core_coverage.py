@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -34,22 +36,23 @@ def test_chat_post(test_client: TestClient):
     app.dependency_overrides[get_query_ollama] = lambda: mock_query_ollama
 
     try:
-        response = test_client.post("/api/v1/chat", json={"message": "Bonjour"})
-        assert response.status_code == 200
-        json_data = response.json()
-        assert "response" in json_data
-        # La réponse peut contenir le contexte système ou juste le message
-        response_text = json_data["response"]
-        # Vérifie que la réponse contient soit "Bonjour", soit le message mocké, soit un message système
-        # En CI, Ollama n'est pas disponible, donc on accepte les erreurs de connexion
-        assert (
-            "Bonjour" in response_text
-            or "Tu as dit : Bonjour" in response_text
-            or "assistant" in response_text.lower()
-            or "aider" in response_text.lower()
-            or "désolé" in response_text.lower()
-            or "erreur ia" in response_text.lower()
-            or "connection" in response_text.lower()
-        )
+        with patch("modules.assistantia.core.check_ollama_health", return_value=True):
+            response = test_client.post("/api/v1/chat", json={"message": "Bonjour"})
+            assert response.status_code == 200
+            json_data = response.json()
+            assert "response" in json_data
+            # La réponse peut contenir le contexte système ou juste le message
+            response_text = json_data["response"]
+            # Vérifie que la réponse contient soit "Bonjour", soit le message mocké, soit un message système
+            # En CI, Ollama n'est pas disponible, donc on accepte les erreurs de connexion
+            assert (
+                "Bonjour" in response_text
+                or "Tu as dit : Bonjour" in response_text
+                or "assistant" in response_text.lower()
+                or "aider" in response_text.lower()
+                or "désolé" in response_text.lower()
+                or "erreur ia" in response_text.lower()
+                or "connection" in response_text.lower()
+            )
     finally:
         app.dependency_overrides.clear()

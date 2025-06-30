@@ -24,7 +24,8 @@ def test_chat_post(test_client):
     def mock_query_ollama(prompt: str, model: str = "mistral", temperature: float = 0.7) -> str:
         return "Tu as dit : Bonjour"
 
-    with patch("modules.assistantia.core.real_query_ollama", side_effect=mock_query_ollama):
+    with patch("modules.assistantia.core.real_query_ollama", side_effect=mock_query_ollama), \
+         patch("modules.assistantia.core.check_ollama_health", return_value=True):
         response = test_client.post("/api/v1/chat", json={"message": "Bonjour"})
         assert response.status_code == 200
 
@@ -61,7 +62,8 @@ def test_chat_post_long_message(test_client):
     def mock_query_ollama(prompt: str, model: str = "mistral", temperature: float = 0.7) -> str:
         return "Message reçu"
 
-    with patch("modules.assistantia.core.real_query_ollama", side_effect=mock_query_ollama):
+    with patch("modules.assistantia.core.real_query_ollama", side_effect=mock_query_ollama), \
+         patch("modules.assistantia.core.check_ollama_health", return_value=True):
         response = test_client.post("/api/v1/chat", json={"message": long_msg})
         assert response.status_code == 200
 

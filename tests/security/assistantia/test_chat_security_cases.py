@@ -11,7 +11,8 @@ client = TestClient(app)
 def test_chat_sql_injection_like():
     """Teste la protection contre les tentatives d'injection SQL-like"""
     payload = {"message": "'; DROP TABLE users; --"}
-    with patch("modules.assistantia.core.real_query_ollama", return_value="Message sécurisé"):
+    with patch("modules.assistantia.core.real_query_ollama", return_value="Message sécurisé"), \
+         patch("modules.assistantia.core.check_ollama_health", return_value=True):
         response = client.post("/api/v1/chat", json=payload)
         assert response.status_code == 200
         assert "response" in response.json()
