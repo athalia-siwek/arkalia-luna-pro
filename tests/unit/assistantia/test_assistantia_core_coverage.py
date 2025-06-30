@@ -28,18 +28,18 @@ def test_process_input_normal():
 def test_chat_post(test_client: TestClient):
     """Teste l'endpoint /chat avec une dépendance mockée."""
 
-    def mock_query_ollama(msg: str, model: str = "mistral") -> str:
+    def mock_query_ollama(msg: str, model: str = "mistral", temperature: float = 0.7) -> str:
         return "Tu as dit : Bonjour"
 
     app.dependency_overrides[get_query_ollama] = lambda: mock_query_ollama
 
     try:
-        response = test_client.post("/chat", json={"message": "Bonjour"})
+        response = test_client.post("/api/v1/chat", json={"message": "Bonjour"})
         assert response.status_code == 200
         json_data = response.json()
-        assert "réponse" in json_data
+        assert "response" in json_data
         # La réponse peut contenir le contexte système ou juste le message
-        response_text = json_data["réponse"]
+        response_text = json_data["response"]
         # Vérifie que la réponse contient soit "Bonjour", soit le message mocké, soit un message système
         # En CI, Ollama n'est pas disponible, donc on accepte les erreurs de connexion
         assert (

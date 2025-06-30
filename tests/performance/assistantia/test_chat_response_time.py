@@ -17,7 +17,7 @@ def test_chat_response_time_under_2s():
     """Teste que la réponse de l'API /chat est rapide."""
     with patch("modules.assistantia.core.real_query_ollama", return_value="Réponse rapide"):
         start_time = time.time()
-        response = client.post("/chat", json={"message": "Test de performance"})
+        response = client.post("/api/v1/chat", json={"message": "Test de performance"})
         end_time = time.time()
 
         response_time = end_time - start_time
@@ -37,13 +37,13 @@ def test_chat_response_time_with_real_ollama():
         pytest.skip("TEST_WITH_OLLAMA non défini - skip test Ollama réel")
 
     # 🔁 Appel de préchauffe (modèle Ollama)
-    _ = client.post("/chat", json={"message": "Préparation"})
+    _ = client.post("/api/v1/chat", json={"message": "Préparation"})
 
     time.sleep(1)  # temps pour charger le modèle
 
     # 🎯 Mesure réelle
     start = time.time()
-    response = client.post("/chat", json={"message": "Hello"})
+    response = client.post("/api/v1/chat", json={"message": "Hello"})
     elapsed = time.time() - start
 
     # ✅ Vérification du code retour
