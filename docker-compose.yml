@@ -225,47 +225,47 @@ services:
           cpus: '0.5'
 
   # 🚀 Generative AI — Intelligence Générative Avancée v2.8.0
-  generative-ai:
-    <<: *arkalia-defaults
-    container_name: generative-ai
-    build:
-      context: .
-      dockerfile: Dockerfile.generative-ai
-    image: arkalia-luna-generative:production
-    ports:
-      - "${PORT_GENERATIVE_AI:-8003}:8001"
-    command: --mode production --daemon --max-generations 100 --interval 120
-    environment:
-      - GENERATIVE_AI_ENV=production
-      - GENERATIVE_AI_ENABLED=true
-      - GENERATIVE_AI_MAX_GENERATIONS=100
-      - GENERATIVE_AI_INTERVAL=120
-      - GENERATIVE_LOG_LEVEL=INFO
-    depends_on:
-      cognitive-reactor:
-        condition: service_healthy
-      sandozia:
-        condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "python", "-c", "from modules.generative_ai.core import GenerativeAI; print('GenerativeAI OK')" ]
-      interval: 90s
-      timeout: 20s
-      retries: 3
-      start_period: 60s
-    restart: unless-stopped
-    volumes:
-      - ./modules/generative_ai/state:/app/modules/generative_ai/state
-      - ./modules/generative_ai/generated:/app/modules/generative_ai/generated
-      - ./logs:/app/logs
-      - ./state:/app/state
-    deploy:
-      resources:
-        limits:
-          memory: 768M
-          cpus: '1.2'
-        reservations:
-          memory: 384M
-          cpus: '0.6'
+  # generative-ai:
+  #   <<: *arkalia-defaults
+  #   container_name: generative-ai
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.generative-ai
+  #   image: arkalia-luna-generative:production
+  #   ports:
+  #     - "${PORT_GENERATIVE_AI:-8003}:8001"
+  #   command: --mode production --daemon --max-generations 100 --interval 120
+  #   environment:
+  #     - GENERATIVE_AI_ENV=production
+  #     - GENERATIVE_AI_ENABLED=true
+  #     - GENERATIVE_AI_MAX_GENERATIONS=100
+  #     - GENERATIVE_AI_INTERVAL=120
+  #     - GENERATIVE_LOG_LEVEL=INFO
+  #   depends_on:
+  #     cognitive-reactor:
+  #       condition: service_healthy
+  #     sandozia:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: [ "CMD", "python", "-c", "from modules.generative_ai.core import GenerativeAI; print('GenerativeAI OK')" ]
+  #     interval: 90s
+  #     timeout: 20s
+  #     retries: 3
+  #     start_period: 60s
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./modules/generative_ai/state:/app/modules/generative_ai/state
+  #     - ./modules/generative_ai/generated:/app/modules/generative_ai/generated
+  #     - ./logs:/app/logs
+  #     - ./state:/app/state
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 768M
+  #         cpus: '1.2'
+  #       reservations:
+  #         memory: 384M
+  #         cpus: '0.6'
 
 networks:
   arkalia_network:
