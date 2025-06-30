@@ -3,10 +3,23 @@ from typing import Any, Optional
 
 import requests
 from fastapi import APIRouter, Depends, FastAPI, HTTPException
+from fastapi.responses import JSONResponse, PlainTextResponse
+from prometheus_client import CONTENT_TYPE_LATEST, Counter, Gauge, generate_latest
 from pydantic import BaseModel
 
-from modules.assistantia.utils.ollama_connector import query_ollama as real_query_ollama
-from modules.assistantia.utils.processing import process_input
+from .utils.ollama_connector import query_ollama as real_query_ollama
+from .utils.processing import process_input
+
+# Métriques Prometheus locales pour AssistantIA
+assistantia_prompts_total = Counter(
+    "assistantia_prompts_total",
+    "Nombre total de prompts traités par AssistantIA",
+    ["status", "security_level"],
+)
+
+assistantia_response_time = Gauge(
+    "assistantia_response_time_seconds", "Temps de réponse AssistantIA"
+)
 
 router = APIRouter()
 
@@ -24,11 +37,8 @@ def get_query_ollama() -> Callable[[str], str]:
 @router.post("/chat")
 async def post_chat(
     data: MessageInput,
-    query_ollama: Callable[[str], str] = None,
+    query_ollama: Callable[[str], str] = Depends(get_query_ollama),
 ) -> dict[str, str]:
-    if query_ollama is None:
-        query_ollama = get_query_ollama()
-
     message = data.message.strip()
     if not message:
         raise HTTPException(status_code=400, detail="Message vide")
@@ -42,10 +52,16 @@ async def post_chat(
 
         processed = process_input(enriched_message)
         response = query_ollama(processed)  # 👈 Appel direct avec un seul argument
+
+        # Enregistrer métriques
+        assistantia_prompts_total.labels(status="success", security_level="medium").inc()
+
         return {"réponse": response}
     except requests.exceptions.Timeout:
+        assistantia_prompts_total.labels(status="timeout", security_level="medium").inc()
         raise HTTPException(status_code=500, detail="Erreur : délai dépassé") from None
     except Exception as e:
+        assistantia_prompts_total.labels(status="error", security_level="medium").inc()
         raise HTTPException(status_code=500, detail=f"Erreur interne : {str(e)}") from e
 
 
@@ -105,5 +121,22 @@ app.include_router(router)
 
 
 @app.get("/health")
-def health() -> None:
+def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/metrics")
+async def get_metrics():
+    """
+    📊 Endpoint métriques Prometheus pour AssistantIA
+    """
+    try:
+        # Générer le format Prometheus
+        prometheus_data = generate_latest()
+
+        return PlainTextResponse(content=prometheus_data, media_type=CONTENT_TYPE_LATEST)
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Erreur métriques : {str(e)}"},
+        )

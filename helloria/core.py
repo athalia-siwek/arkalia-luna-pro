@@ -48,6 +48,44 @@ async def root() -> dict:
     return {"message": "Arkalia-LUNA API active"}
 
 
+# 📊 Endpoint statut détaillé
+@router.get("/status", tags=["Status"])
+async def status() -> dict:
+    """Statut détaillé de l'API avec métriques système"""
+    import time
+
+    import psutil
+
+    # Métriques système
+    cpu_percent = psutil.cpu_percent(interval=0.1)
+    memory = psutil.virtual_memory()
+    disk = psutil.disk_usage("/")
+
+    return {
+        "service": "arkalia-api",
+        "version": "2.8.0",
+        "status": "active",
+        "uptime_seconds": time.time(),
+        "modules": {
+            "assistantia": "active",
+            "reflexia": "active",
+            "zeroia": "active",
+            "helloria": "active",
+        },
+        "metrics": "available",
+        "system": {
+            "cpu_percent": cpu_percent,
+            "memory_percent": memory.percent,
+            "memory_used_gb": round(memory.used / (1024**3), 2),
+            "memory_total_gb": round(memory.total / (1024**3), 2),
+            "disk_usage_percent": disk.percent,
+            "disk_used_gb": round(disk.used / (1024**3), 2),
+            "disk_total_gb": round(disk.total / (1024**3), 2),
+        },
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+
+
 # 📊 Endpoint métriques Prometheus
 @router.get("/metrics", tags=["Monitoring"])
 async def metrics() -> str:

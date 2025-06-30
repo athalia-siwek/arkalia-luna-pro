@@ -23,6 +23,9 @@ from pathlib import Path
 from typing import Any, Optional
 
 import tomli  # type: ignore
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse, PlainTextResponse
+from prometheus_client import CONTENT_TYPE_LATEST, Gauge, generate_latest
 
 # === Configuration du logging ===
 logging.basicConfig(
@@ -34,6 +37,37 @@ logging.basicConfig(
     ],
 )
 logger = logging.getLogger(__name__)
+
+# === Métriques Prometheus pour Cognitive Reactor ===
+cognitive_reactor_uptime = Gauge(
+    "cognitive_reactor_uptime_seconds", "Temps de fonctionnement du Cognitive Reactor (secondes)"
+)
+cognitive_reactor_reactions = Gauge(
+    "cognitive_reactor_reactions_total", "Nombre total de réactions cognitives"
+)
+
+# === FastAPI app ===
+app = FastAPI()
+
+
+@app.get("/metrics")
+async def get_metrics():
+    """
+    📊 Endpoint métriques Prometheus pour Cognitive Reactor
+    """
+    try:
+        # Mettre à jour les métriques
+        reactor = CognitiveReactor()
+        uptime = time.time() - reactor.start_time
+        cognitive_reactor_uptime.set(uptime)
+        cognitive_reactor_reactions.set(reactor.reaction_count)
+        prometheus_data = generate_latest()
+        return PlainTextResponse(content=prometheus_data, media_type=CONTENT_TYPE_LATEST)
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Erreur métriques : {str(e)}"},
+        )
 
 
 class CognitiveReactor:

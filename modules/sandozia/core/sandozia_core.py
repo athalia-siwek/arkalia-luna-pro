@@ -23,8 +23,14 @@ from typing import Any, Optional
 import diskcache  # type: ignore
 import toml
 
+# Ajout FastAPI pour endpoint /metrics
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse, PlainTextResponse
+from prometheus_client import CONTENT_TYPE_LATEST, Gauge, generate_latest
+
 # Imports Arkalia existants (functions disponibles)
-from ...reflexia.core import get_metrics, launch_reflexia_check
+from ...reflexia.core import get_metrics as reflexia_get_metrics
+from ...reflexia.core import launch_reflexia_check
 from ...zeroia.reason_loop import load_context, load_reflexia_state
 
 logger = logging.getLogger(__name__)
@@ -154,7 +160,7 @@ class SandoziaCore:
         # Reflexia - test fonction
         if self.config["modules"]["reflexia_enabled"]:
             try:
-                get_metrics()
+                reflexia_get_metrics()
                 self.reflexia_available = True
                 logger.info("✅ Reflexia functions available")
             except Exception as e:
@@ -460,6 +466,41 @@ class SandoziaCore:
             },
             "last_update": datetime.now().isoformat(),
         }
+
+
+# === Métriques Prometheus pour Sandozia ===
+sandozia_uptime = Gauge("sandozia_uptime_seconds", "Temps de fonctionnement de Sandozia (secondes)")
+sandozia_coherence_score = Gauge(
+    "sandozia_coherence_score", "Score de cohérence inter-modules Sandozia"
+)
+
+# === FastAPI app ===
+app = FastAPI()
+
+
+@app.get("/metrics")
+async def get_metrics():
+    """
+    📊 Endpoint métriques Prometheus pour Sandozia
+    """
+    try:
+        # Mettre à jour les métriques
+        core = SandoziaCore()
+        uptime = (
+            (datetime.now() - core.metrics_history[0].timestamp).total_seconds()
+            if core.metrics_history
+            else 0
+        )
+        sandozia_uptime.set(uptime)
+        if core.metrics_history:
+            sandozia_coherence_score.set(core.metrics_history[-1].coherence_score)
+        prometheus_data = generate_latest()
+        return PlainTextResponse(content=prometheus_data, media_type=CONTENT_TYPE_LATEST)
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Erreur métriques : {str(e)}"},
+        )
 
 
 # Fonction helper pour CLI

@@ -24,6 +24,17 @@ groups:
           description: "L'utilisation mémoire dépasse 6GB depuis 2 minutes"
           value: "{{ $value }}GB"
 
+      - alert: ArkaliaDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 10
+        for: 5m
+        labels:
+          severity: critical
+          service: arkalia
+        annotations:
+          summary: "Espace disque critique"
+          description: "Moins de 10% d'espace disque disponible"
+          value: "{{ $value }}%"
+
       # Alertes modules
       - alert: ModuleInactive
         expr: arkalia_modules_status == 0

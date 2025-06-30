@@ -48,6 +48,8 @@ WORKDIR /app
 
 # Copie sélective du code
 COPY --chown=assistantia:assistantia modules/assistantia ./modules/assistantia
+COPY --chown=assistantia:assistantia modules/monitoring ./modules/monitoring
+COPY --chown=assistantia:assistantia modules/utils_enhanced ./modules/utils_enhanced
 COPY --chown=assistantia:assistantia modules/__init__.py ./modules/
 COPY --chown=assistantia:assistantia config ./config
 COPY --chown=assistantia:assistantia state ./state
