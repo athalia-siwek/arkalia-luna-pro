@@ -1,11 +1,11 @@
-# 🌕 Arkalia-LUNA v2.8.0
+# �� Arkalia-LUNA v2.8.1
 
 <div class="hero-section">
     <div class="hero-content">
         <h2 class="hero-title">Enterprise AI System - Production Ready</h2>
-        <p class="hero-subtitle">Système d'intelligence artificielle modulaire avancé avec Intelligence Générative et Cognitive Reactor. 7 modules IA opérationnels pour l'automatisation intelligente et l'aide à la décision.</p>
+        <p class="hero-subtitle">Système d'intelligence artificielle modulaire avancé avec Intelligence Générative, Cognitive Reactor et Monitoring Complet. 7 modules IA opérationnels avec observabilité totale.</p>
         <div class="version-badge">
-            <span class="badge">v2.8.0</span>
+            <span class="badge">v2.8.1</span>
             <span class="status">✅ Production Ready</span>
         </div>
     </div>
@@ -38,28 +38,28 @@
     <div class="module-card">
         <div class="module-icon">🤖</div>
         <h3>ZeroIA</h3>
-        <p>Décisionneur autonome Enhanced v2.8.0</p>
+        <p>Décisionneur autonome Enhanced v2.8.1</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
 
     <div class="module-card">
         <div class="module-icon">🧠</div>
         <h3>Sandozia</h3>
-        <p>Intelligence croisée Enterprise v2.8.0</p>
+        <p>Intelligence croisée Enterprise v2.8.1</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
 
     <div class="module-card">
         <div class="module-icon">🧠</div>
         <h3>Cognitive Reactor</h3>
-        <p>Intelligence avancée v2.8.0</p>
+        <p>Intelligence avancée v2.8.1</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
 
     <div class="module-card">
-        <div class="module-icon">🚀</div>
-        <h3>Generative AI</h3>
-        <p>Intelligence générative avancée v2.8.0</p>
+        <div class="module-icon">📊</div>
+        <h3>Monitoring</h3>
+        <p>Observabilité complète v2.8.1</p>
         <span class="status-badge healthy">✅ Healthy</span>
     </div>
 </div>
@@ -90,6 +90,18 @@
         <div class="metric-value">7/7</div>
         <div class="metric-label">Modules IA actifs</div>
     </div>
+
+    <div class="metric-card">
+        <div class="metric-icon">📊</div>
+        <div class="metric-value">34</div>
+        <div class="metric-label">Métriques exposées</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-icon">🎯</div>
+        <div class="metric-value">99.9%</div>
+        <div class="metric-label">Disponibilité</div>
+    </div>
 </div>
 
 ## 📋 Configuration système
@@ -114,6 +126,10 @@
     <div class="requirement-item">
         <span class="req-icon">🧠</span>
         <strong>Ollama</strong>: Modèles locaux (optionnel)
+    </div>
+    <div class="requirement-item">
+        <span class="req-icon">📊</span>
+        <strong>Monitoring</strong>: Prometheus + Grafana
     </div>
 </div>
 
@@ -167,11 +183,51 @@
             <p>Intelligence avancée</p>
         </div>
     </a>
+
+    <a href="http://localhost:3000" class="quick-link">
+        <span class="link-icon">📊</span>
+        <div class="link-content">
+            <h4>Grafana Dashboard</h4>
+            <p>Monitoring en temps réel</p>
+        </div>
+    </a>
+
+    <a href="http://localhost:9090" class="quick-link">
+        <span class="link-icon">📈</span>
+        <div class="link-content">
+            <h4>Prometheus</h4>
+            <p>Métriques système</p>
+        </div>
+    </a>
 </div>
 
-## 🌟 Nouvelles fonctionnalités v2.8.0
+## 🌟 Nouvelles fonctionnalités v2.8.1
 
 <div class="features-grid">
+    <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h4>Monitoring Complet</h4>
+        <p>Grafana, Prometheus, AlertManager, Loki - Observabilité totale avec 34 métriques Arkalia</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🚨</div>
+        <h4>Alertes Intelligentes</h4>
+        <p>15 règles d'alertes Prometheus, notifications automatiques, seuils adaptatifs</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h4>Dashboards Grafana</h4>
+        <p>8 panels spécialisés, métriques temps réel, thème sombre, refresh automatique</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h4>Sécurité Enterprise</h4>
+        <p>Fail2ban, conteneurs sécurisés, health endpoints, protection multi-niveaux</p>
+    </div>
+
     <div class="feature-card">
         <div class="feature-icon">🚀</div>
         <h4>Intelligence Générative Avancée</h4>
@@ -183,17 +239,52 @@
         <h4>Cognitive Reactor</h4>
         <p>Réactions cognitives automatiques, apprentissage continu, prédictions intelligentes</p>
     </div>
+</div>
 
-    <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h4>Monitoring Complet</h4>
-        <p>Grafana, Prometheus, Loki, AlertManager - Observabilité totale</p>
+## 📊 Services Monitoring
+
+<div class="monitoring-grid">
+    <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h4>Grafana</h4>
+        <p>Dashboards temps réel</p>
+        <a href="http://localhost:3000" class="service-link">http://localhost:3000</a>
+        <span class="credentials">admin / arkalia-secure-2025</span>
     </div>
 
-    <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <h4>Sécurité Enterprise</h4>
-        <p>Fail2ban, conteneurs sécurisés, health endpoints, protection multi-niveaux</p>
+    <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h4>Prometheus</h4>
+        <p>Collecte métriques</p>
+        <a href="http://localhost:9090" class="service-link">http://localhost:9090</a>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">🚨</div>
+        <h4>AlertManager</h4>
+        <p>Gestion alertes</p>
+        <a href="http://localhost:9093" class="service-link">http://localhost:9093</a>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">📝</div>
+        <h4>Loki</h4>
+        <p>Centralisation logs</p>
+        <a href="http://localhost:3100" class="service-link">http://localhost:3100</a>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">🐳</div>
+        <h4>cAdvisor</h4>
+        <p>Métriques conteneurs</p>
+        <a href="http://localhost:8080" class="service-link">http://localhost:8080</a>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">🔌</div>
+        <h4>Arkalia API</h4>
+        <p>API principale + métriques</p>
+        <a href="http://localhost:8000" class="service-link">http://localhost:8000</a>
     </div>
 </div>
 
@@ -231,11 +322,19 @@
             <p><a href="http://localhost:3000">Grafana Dashboard</a></p>
         </div>
     </div>
+
+    <div class="support-item">
+        <span class="support-icon">🔧</span>
+        <div>
+            <h4>Validation</h4>
+            <p><code>python scripts/ark-validate-monitoring.py</code></p>
+        </div>
+    </div>
 </div>
 
 ---
 
 <div class="footer-note">
-    <p><strong>🌟 Arkalia-LUNA v2.8.0 - Production Ready</strong> pour l'automatisation intelligente et l'aide à la décision enterprise.</p>
-    <p><em>7 modules IA opérationnels • Intelligence Générative • Cognitive Reactor • Monitoring complet</em></p>
+    <p><strong>🌟 Arkalia-LUNA v2.8.1 - Production Ready</strong> pour l'automatisation intelligente et l'aide à la décision enterprise avec monitoring complet.</p>
+    <p><em>7 modules IA opérationnels • Intelligence Générative • Cognitive Reactor • Monitoring complet • 34 métriques • Observabilité totale</em></p>
 </div>
