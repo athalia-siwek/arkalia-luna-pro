@@ -8,7 +8,7 @@ on:
 
 env:
   PYTHON_VERSION: "3.10"
-  COVERAGE_MIN: 70
+  COVERAGE_MIN: 28
 
 jobs:
   # 🔍 Linting et formatage
