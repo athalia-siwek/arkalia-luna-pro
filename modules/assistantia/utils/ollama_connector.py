@@ -1,9 +1,15 @@
 # modules/assistantia/utils/ollama_connector.py
 
 import json
+import os
 from typing import Any, Optional
 
 import requests
+
+# Configuration Ollama - utiliser l'IP de l'hôte pour Docker
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "host.docker.internal")  # Accès à l'hôte depuis Docker
+OLLAMA_PORT = os.getenv("OLLAMA_PORT", "11434")
+OLLAMA_BASE_URL = f"http://{OLLAMA_HOST}:{OLLAMA_PORT}"
 
 
 def query_ollama(prompt: str, model: str = "llama2", temperature: float = 0.7) -> str:
@@ -29,7 +35,7 @@ def query_ollama(prompt: str, model: str = "llama2", temperature: float = 0.7) -
                 # Utiliser le premier modèle trouvé avec le bon préfixe
                 model = matching_models[0]
 
-        url = "http://localhost:11434/api/generate"
+        url = f"{OLLAMA_BASE_URL}/api/generate"
         payload = {"model": model, "prompt": prompt, "temperature": temperature, "stream": False}
 
         response = requests.post(url, json=payload, timeout=30)
@@ -51,7 +57,7 @@ def query_ollama(prompt: str, model: str = "llama2", temperature: float = 0.7) -
 def get_available_models() -> dict[str, Any] | None:
     """Récupère la liste des modèles disponibles."""
     try:
-        url = "http://localhost:11434/api/tags"
+        url = f"{OLLAMA_BASE_URL}/api/tags"
         response = requests.get(url, timeout=10)
         response.raise_for_status()
 
@@ -66,7 +72,7 @@ def get_available_models() -> dict[str, Any] | None:
 def check_ollama_health() -> bool:
     """Vérifie si Ollama est accessible."""
     try:
-        url = "http://localhost:11434/api/tags"
+        url = f"{OLLAMA_BASE_URL}/api/tags"
         response = requests.get(url, timeout=5)
         return response.status_code == 200
     except Exception:

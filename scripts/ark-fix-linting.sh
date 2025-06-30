@@ -66,7 +66,7 @@ black . --exclude "/(generated|venv|\.venv|__pycache__)/" || {
 # 5. Correction automatique avec ruff
 echo ""
 echo "🔧 Correction automatique avec ruff..."
-ruff check . --fix --exclude "generated,venv,.venv,__pycache__" || {
+ruff check . --fix || {
     echo "⚠️ Erreur ruff, continuation..."
 }
 
@@ -95,7 +95,7 @@ echo "🔍 Vérification finale..."
 
 # Vérifier s'il reste des erreurs critiques
 echo "📊 Rapport d'erreurs restantes:"
-ruff check . --exclude "generated,venv,.venv,__pycache__" --output-format=concise || {
+ruff check . --output-format=concise || {
     echo "⚠️ Il reste des erreurs de linting"
 }
 
