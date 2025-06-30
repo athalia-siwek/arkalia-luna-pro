@@ -172,6 +172,7 @@ nav:
       - Performance Optimization: reports/performance/OPTIMISATION_PERFORMANCE_FINAL.md
     - Documentation Reports:
       - Documentation Optimization: reports/documentation/DOCUMENTATION_OPTIMISATION_V2.8.0.md
+      - Documentation Update v2.8.0: reports/documentation/DOCUMENTATION_UPDATE_V2.8.0.md
   - Support:
     - FAQ: support/faqs.md
     - VSCode Setup: vscode-setup.md
