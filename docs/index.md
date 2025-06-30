@@ -120,7 +120,7 @@
 ## 🏁 Démarrage rapide
 
 <div class="quick-links">
-    <a href="getting-started/quick-start.md" class="quick-link primary">
+    <a href="getting-started/quick-start/" class="quick-link primary">
         <span class="link-icon">⚡</span>
         <div class="link-content">
             <h4>Installation rapide</h4>
@@ -128,7 +128,7 @@
         </div>
     </a>
 
-    <a href="fonctionnement/structure.md" class="quick-link">
+    <a href="fonctionnement/structure/" class="quick-link">
         <span class="link-icon">🏗️</span>
         <div class="link-content">
             <h4>Architecture</h4>
@@ -136,7 +136,7 @@
         </div>
     </a>
 
-    <a href="core/modules.md" class="quick-link">
+    <a href="core/modules/" class="quick-link">
         <span class="link-icon">📚</span>
         <div class="link-content">
             <h4>Documentation modules</h4>
@@ -144,7 +144,7 @@
         </div>
     </a>
 
-    <a href="reference/api.md" class="quick-link">
+    <a href="reference/api/" class="quick-link">
         <span class="link-icon">🔌</span>
         <div class="link-content">
             <h4>API Reference</h4>
@@ -152,7 +152,7 @@
         </div>
     </a>
 
-    <a href="modules/advanced/generative_ai.md" class="quick-link">
+    <a href="modules/advanced/generative_ai/" class="quick-link">
         <span class="link-icon">🚀</span>
         <div class="link-content">
             <h4>Intelligence Générative</h4>
@@ -160,7 +160,7 @@
         </div>
     </a>
 
-    <a href="modules/advanced/cognitive_reactor.md" class="quick-link">
+    <a href="modules/advanced/cognitive_reactor/" class="quick-link">
         <span class="link-icon">🧠</span>
         <div class="link-content">
             <h4>Cognitive Reactor</h4>
