@@ -96,49 +96,6 @@ services:
           memory: 256M
           cpus: '0.5'
 
-  # 🤖 AssistantIA — Interface IA conversationnelle v2.8.0
-  assistantia:
-    <<: *arkalia-defaults
-    container_name: assistantia
-    build:
-      context: .
-      dockerfile: Dockerfile.assistantia
-    image: arkalia-luna-assistantia:production
-    ports:
-      - "${PORT_ASSISTANTIA:-8001}:8001"
-    command: >
-      uvicorn modules.assistantia.core:app --host 0.0.0.0 --port 8001
-        --workers 1 --access-log --log-level info
-    environment:
-      - ASSISTANTIA_ENV=production
-      - ASSISTANTIA_LOG_LEVEL=INFO
-      - OLLAMA_HOST=host.docker.internal
-      - OLLAMA_PORT=11434
-    depends_on:
-      arkalia-api:
-        condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8001/api/v1/health" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-    restart: unless-stopped
-    volumes:
-      - ./logs:/app/logs
-      - ./state:/app/state
-      - ./modules/assistantia/logs:/app/modules/assistantia/logs
-    networks:
-      - arkalia_network
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: '1.0'
-        reservations:
-          memory: 256M
-          cpus: '0.5'
-
   # 🔁 ReflexIA — Observateur cognitif réflexif Optimisé
   reflexia:
     <<: *arkalia-defaults
