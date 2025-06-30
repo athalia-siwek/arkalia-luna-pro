@@ -304,7 +304,7 @@ class EventStore:
             EventType.CALL_BLOCKED,
         ]
 
-        all_health_events: list[Any] = []
+        all_health_events: list[Event] = []
         for event_type in health_types:
             events = self.get_events_by_type(event_type, limit=10)
             all_health_events.extend(events)
@@ -382,18 +382,18 @@ class EventStore:
         recent_events = self.get_recent_events(limit=1000)
 
         # Compteurs par type
-        type_counts: dict[str, Any] = {}
+        type_counts: dict[str, int] = {}
         for event in recent_events:
             type_name = event.event_type.value
             type_counts[type_name] = type_counts.get(type_name, 0) + 1
 
         # Compteurs par module
-        module_counts: dict[str, Any] = {}
+        module_counts: dict[str, int] = {}
         for event in recent_events:
             module_counts[event.module] = module_counts.get(event.module, 0) + 1
 
         # Événements récents par heure
-        hourly_counts: dict[str, Any] = {}
+        hourly_counts: dict[str, int] = {}
         for event in recent_events:
             hour_key = event.timestamp.strftime("%Y-%m-%d %H:00")
             hourly_counts[hour_key] = hourly_counts.get(hour_key, 0) + 1
@@ -430,7 +430,7 @@ class EventStore:
 
         try:
             # Récupérer toutes les clés du cache de manière sécurisée
-            keys_to_check: list[Any] = []
+            keys_to_check: list[str] = []
             for key in self.events:
                 if isinstance(key, str) and key.startswith("event_"):
                     keys_to_check.append(key)

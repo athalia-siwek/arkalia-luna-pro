@@ -8,14 +8,112 @@ Module d'intégrité intégré à ZeroIA pour détection temps réel
 des tentatives d'empoisonnement de modèle.
 """
 
+import hashlib
+import json
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional, Set
+
+import toml
 
 # Configuration
 INTEGRITY_LOG = Path("modules/zeroia/logs/model_integrity.log")
 INTEGRITY_STATE = Path("modules/zeroia/state/integrity_state.toml")
+
+
+class ModelIntegrityChecker:
+    def __init__(self) -> None:
+        self.suspicious_context_hashes: set[str] = set()
+        self.integrity_threshold = 0.8
+        self.load_integrity_config()
+
+    def load_integrity_config(self) -> dict[str, Any]:
+        """Charge la configuration d'intégrité."""
+        try:
+            with open("config/integrity.toml") as f:
+                data = toml.load(f)
+                return data if isinstance(data, dict) else {}
+        except FileNotFoundError:
+            return {"threshold": 0.8, "max_suspicious": 100}
+        except Exception:
+            return {"threshold": 0.8, "max_suspicious": 100}
+
+    def calculate_context_hash(self, context: dict[str, Any]) -> str:
+        """Calcule le hash du contexte pour détection d'anomalies."""
+        context_str = json.dumps(context, sort_keys=True)
+        return hashlib.sha256(context_str.encode()).hexdigest()
+
+    def check_model_integrity(self, model_output: str, context: dict[str, Any]) -> dict[str, Any]:
+        """Vérifie l'intégrité du modèle."""
+        context_hash = self.calculate_context_hash(context)
+
+        # Vérifications d'intégrité
+        integrity_score = 1.0
+        issues = []
+
+        # Vérification de la cohérence
+        if len(model_output) < 10:
+            integrity_score -= 0.3
+            issues.append("output_too_short")
+
+        # Vérification des caractères suspects
+        suspicious_chars = ["<script>", "javascript:", "eval(", "exec("]
+        for char in suspicious_chars:
+            if char in model_output.lower():
+                integrity_score -= 0.5
+                issues.append("suspicious_content")
+                break
+
+        # Vérification du hash du contexte
+        if context_hash in self.suspicious_context_hashes:
+            integrity_score -= 0.2
+            issues.append("suspicious_context")
+
+        return {
+            "integrity_score": max(0.0, integrity_score),
+            "issues": issues,
+            "context_hash": context_hash,
+            "timestamp": datetime.now().isoformat()
+        }
+
+    def add_suspicious_context(self, context_hash: str) -> None:
+        """Ajoute un hash de contexte suspect."""
+        self.suspicious_context_hashes.add(context_hash)
+
+    def get_integrity_stats(self) -> dict[str, Any]:
+        """Retourne les statistiques d'intégrité."""
+        return {
+            "suspicious_contexts_count": len(self.suspicious_context_hashes),
+            "integrity_threshold": self.integrity_threshold,
+            "last_check": datetime.now().isoformat()
+        }
+
+    def save_integrity_data(self) -> None:
+        """Sauvegarde les données d'intégrité."""
+        try:
+            data = {
+                "suspicious_contexts": list(self.suspicious_context_hashes),
+                "threshold": self.integrity_threshold,
+                "last_update": datetime.now().isoformat()
+            }
+            with open("state/integrity_data.json", "w") as f:
+                json.dump(data, f, indent=2)
+        except Exception:
+            pass  # Ignore les erreurs d'écriture
+
+    def load_integrity_data(self) -> None:
+        """Charge les données d'intégrité."""
+        try:
+            with open("state/integrity_data.json") as f:
+                data = json.load(f)
+                if isinstance(data, dict):
+                    self.suspicious_context_hashes = set(data.get("suspicious_contexts", []))
+                    self.integrity_threshold = data.get("threshold", 0.8)
+        except FileNotFoundError:
+            pass
+        except Exception:
+            pass
 
 
 class ModelIntegrityMonitor:
@@ -29,6 +127,7 @@ class ModelIntegrityMonitor:
         self.logger = self._setup_logger()
         self.suspicious_context_hashes = set()
         self.stealth_attack_counter = 0
+        self.integrity_checker = ModelIntegrityChecker()
 
     def _setup_logger(self) -> logging.Logger:
         """Configure le logger spécifique à l'intégrité"""
