@@ -278,7 +278,7 @@ ark-docker-status
 - [Documentation Arkalia-LUNA](index.md)
 - [Guide de Développement](guides/ops-guide.md)
 - [Architecture Système](architecture/decision_flow.mmd)
-- [Tests et Qualité](../tests/README.md)
+- [Tests et Qualité](https://github.com/arkalia-luna-system/arkalia-luna-pro/blob/main/tests/README.md)
 
 ---
 
