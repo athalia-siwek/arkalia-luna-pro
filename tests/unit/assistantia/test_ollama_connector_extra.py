@@ -8,12 +8,24 @@ def test_query_ollama_function_exists() -> None:
     assert hasattr(ollama_connector, "query_ollama")
 
 
-def test_query_ollama_invalid_model() -> None:
+def test_query_ollama_invalid_model(monkeypatch) -> None:
+    # Mock get_available_models pour retourner des modèles connus
+    def mock_get_models():
+        return {"models": [{"name": "mistral:latest"}, {"name": "llama2:latest"}]}
+
+    monkeypatch.setattr(ollama_connector, "get_available_models", mock_get_models)
+
     with pytest.raises(ValueError):
         ollama_connector.query_ollama("prompt", model="model-inconnu")
 
 
-def test_query_ollama_bad_model() -> None:
+def test_query_ollama_bad_model(monkeypatch) -> None:
+    # Mock get_available_models pour retourner des modèles connus
+    def mock_get_models():
+        return {"models": [{"name": "mistral:latest"}, {"name": "llama2:latest"}]}
+
+    monkeypatch.setattr(ollama_connector, "get_available_models", mock_get_models)
+
     with pytest.raises(ValueError):
         ollama_connector.query_ollama("prompt", model="inconnu")
 
@@ -21,7 +33,7 @@ def test_query_ollama_bad_model() -> None:
 def test_query_ollama_empty_prompt() -> None:
     response = ollama_connector.query_ollama("", model="mistral")
     assert isinstance(response, str)
-    assert response == "[⚠️ Réponse IA vide]"  # ou un autre message d'erreur approprié
+    assert response == "[⚠️ Réponse IA vide]"
 
 
 def test_query_ollama_valid_prompt() -> None:
