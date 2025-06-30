@@ -88,7 +88,7 @@ curl http://localhost:8000/metrics
 
 ## 📚 Ressources Essentielles
 
-- **📖 Documentation** : [Modules Overview](../core/modules.md)
+- **📖 Documentation** : [Modules Overview](../modules/index.md)
 - **🧠 Architecture** : [Structure du Système](../fonctionnement/structure.md)
 - **🔧 API** : [Guide API](../reference/api.md)
 - **📊 Monitoring** : [Guide Monitoring](../infrastructure/monitoring.md)
@@ -138,7 +138,7 @@ docker-compose -f docker-compose.monitoring.yml up -d
 
 ## 🎯 Prochaines Étapes
 
-1. **Explorer les modules** : [Modules détaillés](../core/modules.md)
+1. **Explorer les modules** : [Modules détaillés](../modules/index.md)
 2. **Configurer l'API** : [Configuration](../infrastructure/configuration.md)
 3. **Personnaliser** : [Architecture](../fonctionnement/structure.md)
 4. **Monitoring** : [Guide Monitoring](../infrastructure/monitoring.md)

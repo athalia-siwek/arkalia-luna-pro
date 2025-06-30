@@ -1,5 +1,5 @@
-site_name: Arkalia-LUNA Documentation
-site_description: Documentation complète du système IA Arkalia-LUNA - v2.8.0 Production Ready
+site_name: Arkalia-LUNA Pro
+site_description: Système d'Intelligence Artificielle Enterprise - v2.8.0 Production Ready
 site_author: Arkalia-LUNA Team
 site_url: https://arkalia-luna-system.github.io/arkalia-luna-pro/
 
@@ -11,14 +11,14 @@ theme:
   language: fr
   palette:
     - scheme: default
-      primary: indigo
-      accent: deep purple
+      primary: slate
+      accent: slate
       toggle:
         icon: material/brightness-7
         name: Passer au mode sombre
     - scheme: slate
-      primary: indigo
-      accent: deep purple
+      primary: slate
+      accent: slate
       toggle:
         icon: material/brightness-4
         name: Passer au mode clair
@@ -28,15 +28,24 @@ theme:
     - navigation.tabs
     - navigation.sections
     - navigation.top
+    - navigation.expand
     - search.highlight
     - search.suggest
     - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
   icon:
     repo: fontawesome/brands/github
+  font:
+    text: Inter
+    code: JetBrains Mono
 
 plugins:
   - search:
       lang: fr
+      separator: '[\s\-,:!=\[\]()/]+'
+      prebuild_index: true
 
 extra_css:
   - assets/arkalia-luna-theme.css
@@ -84,6 +93,7 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
+      combine_header_slug: true
   - pymdownx.tasklist:
       custom_checkbox: true
   - admonition
@@ -94,9 +104,10 @@ markdown_extensions:
   - toc:
       permalink: true
       title: Sur cette page
+      baselevel: 1
 
 nav:
-  - Home: index.md
+  - Home: README.md
   - Getting Started:
     - Quick Start: getting-started/quick-start.md
     - Cognitive Levels: getting-started/cognitive-levels.md
@@ -106,37 +117,26 @@ nav:
     - Kernel: fonctionnement/kernel.md
     - Usage: fonctionnement/utilisation.md
     - Decision Flow: architecture/decision_flow.md
-  - Core:
-    - Modules Overview: core/modules.md
-    - Changelog: core/changelog.md
-    - Detailed Changelog: core/changelog-detailed.md
-  - Modules v2.8.0:
+  - Modules:
     - Overview: modules/index.md
     - Core Modules:
-      - Helloria: modules/core/helloria.md
-      - AssistantIA: modules/core/assistantia.md
-      - ReflexIA: modules/core/reflexia.md
-      - ZeroIA: modules/core/zeroia.md
-      - Sandozia: modules/core/sandozia.md
-    - Advanced Modules:
-      - Cognitive Reactor: modules/advanced/cognitive_reactor.md
-      - Generative AI: modules/advanced/generative_ai.md
-      - Taskia: modules/advanced/taskia.md
-      - Nyxalia: modules/advanced/nyxalia.md
-      - Global State: modules/advanced/global_state.md
-    - Enhanced Features:
-      - Cross Module Enhanced: modules/enhanced/cross_module_enhanced.md
-      - Sandozia Container: modules/enhanced/sandozia/container_integration.md
-      - ZeroIA Orchestrator: modules/enhanced/zeroia/orchestrator_enhanced.md
-  - Reference:
-    - API Documentation: reference/api.md
+      - ZeroIA: modules/zeroia.md
+      - Reflexia: modules/reflexia.md
+      - Sandozia: modules/sandozia.md
+      - Cognitive Reactor: modules/cognitive-reactor.md
+      - AssistantIA: modules/assistantia.md
+      - Helloria: modules/helloria.md
+    - Security Modules:
+      - Security: security/security.md
+    - Monitoring Modules:
+      - Infrastructure Monitoring: infrastructure/monitoring.md
   - Infrastructure:
-    - Installation: infrastructure/installation.md
+    - Overview: infrastructure/index.md
     - Configuration: infrastructure/configuration.md
     - Deployment: infrastructure/deployment.md
+    - Monitoring: infrastructure/monitoring.md
     - CI/CD: infrastructure/ci-cd.md
     - Automation: infrastructure/automation.md
-    - Ollama: infrastructure/ollama.md
   - Security:
     - Overview: security/security.md
     - Architecture: security/architecture.md
@@ -146,7 +146,10 @@ nav:
     - Backup & Recovery: security/backup-recovery.md
     - Compliance: security/compliance.md
     - Log Redaction: security/log_redaction.md
-    - Phase 4 Roadmap: security/phase4-roadmap.md
+  - Reference:
+    - API Documentation: reference/api.md
+    - Endpoints: reference/endpoints.md
+    - Metrics: reference/metrics.md
   - Operations:
     - DevOps Overview: devops/index.md
     - Linting Resolution: devops/linting-resolution.md
@@ -157,28 +160,14 @@ nav:
     - Operations Guide: guides/ops-guide.md
     - Rebuild Guide: guides/rebuild-guide.md
   - Releases:
-    - Cross Module v2.7.1: releases/cross_module_enhanced_v2.7.1.md
-    - Latest Updates: releases/dernieres_updates.md
+    - v2.8.0: releases/v2.8.0.md
     - All Releases: releases/index.md
   - Planning:
     - Roadmap Overview: planning/roadmap/index.md
-    - v3.0 Phase 2: planning/roadmap/OPTIMISATION_v3.0-phase2.md
     - Enhancements: planning/roadmap/ENHANCEMENTS.md
-    - Technical Roadmap: planning/roadmap/TECHNICAL_ROADMAP_ADVANCED.md
-  - Reports:
-    - Technical Reports:
-      - Final Report v2.8.0: reports/technical/ARKALIA_LUNA_V2.8.0_FINAL_REPORT.md
-      - Bilan v3.0: reports/technical/bilan_v3.0-phase1.md
-    - Performance Reports:
-      - Performance Optimization: reports/performance/OPTIMISATION_PERFORMANCE_FINAL.md
-    - Documentation Reports:
-      - Documentation Optimization: reports/documentation/DOCUMENTATION_OPTIMISATION_V2.8.0.md
-      - Documentation Update v2.8.0: reports/documentation/DOCUMENTATION_UPDATE_V2.8.0.md
   - Support:
     - FAQ: support/faqs.md
     - VSCode Setup: vscode-setup.md
-    - Journal Checklist: journal/CHECKLIST.md
-    - Cognitive Levels: getting-started/cognitive-levels.md
   - Legal:
     - License: legal/license.md
     - Contributing: credits/CONTRIBUTING.md

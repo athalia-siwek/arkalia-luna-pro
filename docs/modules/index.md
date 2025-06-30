@@ -1,283 +1,280 @@
-# Modules Arkalia-LUNA Enhanced v2.8.1
+# 📋 Modules Arkalia-LUNA Pro
 
-Bienvenue dans la documentation des modules d'Arkalia-LUNA Enhanced v2.8.1 avec **Framework Enhanced révolutionnaire** et **Monitoring Complet**.
+## 🎯 Vue d'ensemble
 
-## 🚀 Architecture Enhanced v2.8.1
+Arkalia-LUNA Pro est composé de modules spécialisés qui travaillent en harmonie pour offrir une intelligence artificielle ultra-protection. Chaque module a un rôle spécifique et contribue à l'orchestration intelligente du système.
 
-Arkalia-LUNA Enhanced est conçu selon une architecture modulaire révolutionnaire où chaque module bénéficie du **Framework Enhanced** avec :
-- **Error Recovery automatique**
-- **Graceful Degradation intelligent**
-- **Circuit Breaker protection**
-- **Event Store ultra-robuste**
-- **Monitoring complet** avec 34 métriques exposées
+---
 
-## 🎯 Modules Enhanced Principaux
+## 🧠 **Modules Core**
 
-### [🚀 ZeroIA Orchestrator Enhanced](core/zeroia.md) ⭐ **NOUVEAU**
-**Version** : Enhanced v2.8.1 | **Status** : ✅ **100% Opérationnel**
+### 🧠 [ZeroIA](zeroia.md) - Décisionneur Autonome
+**Type** : Daemon
+**Port** : 8001
+**Rôle** : Prise de décision autonome et gestion des patterns comportementaux
 
-Module de raisonnement cognitif révolutionnaire avec Framework Enhanced :
-- **Orchestrator Enhanced** : Boucle optimisée 100% succès
-- **Circuit Breaker** : Protection cascade avec 0 ouverture
-- **Event Store** : Ultra-robuste avec auto-recovery SQLite
-- **Error Recovery** : Gestion gracieuse toutes erreurs
-- **Graceful Degradation** : 15 services classés par priorité
-- **Monitoring** : 5 métriques ZeroIA exposées
+**Fonctionnalités clés :**
+- Décision autonome basée sur les patterns
+- Gestion des contradictions cognitives
+- Circuit breaker intelligent
+- Monitoring de confiance en temps réel
 
-**Métriques Monitoring** :
-- `arkalia_zeroia_decisions_total` : Décisions prises
-- `arkalia_zeroia_confidence_average` : Confiance moyenne
-- `arkalia_zeroia_contradictions_detected` : Contradictions détectées
-- `arkalia_zeroia_processing_time_seconds` : Temps de traitement
-- `arkalia_zeroia_circuit_breaker_status` : Statut circuit breaker
+**Statut** : ✅ Actif
+**Métriques** : 12 métriques exposées
 
-**Nouvelles Commandes** :
-```bash
-ark-zeroia-enhanced         # Boucle Enhanced rapide
-ark-error-recovery         # Test récupération d'erreur
-ark-degradation-status     # Status degradation
+### 👁️ [Reflexia](reflexia.md) - Observateur Cognitif
+**Type** : API HTTP
+**Port** : 8002
+**Rôle** : Monitoring cognitif et observation du système
+
+**Fonctionnalités clés :**
+- Monitoring système en temps réel
+- Observation des patterns comportementaux
+- Détection d'anomalies cognitives
+- API REST pour l'accès aux données
+
+**Statut** : ✅ Actif
+**Métriques** : 8 métriques exposées
+
+### 🔍 [Sandozia](sandozia.md) - Intelligence Croisée
+**Type** : Daemon
+**Port** : 8003
+**Rôle** : Intelligence croisée et analyse des données
+
+**Fonctionnalités clés :**
+- Analyse croisée des données
+- Intelligence artificielle avancée
+- Validation des modèles
+- Gestion des événements
+
+**Statut** : ✅ Actif
+**Métriques** : 6 métriques exposées
+
+### 🎯 [Cognitive Reactor](cognitive-reactor.md) - Orchestrateur Central
+**Type** : Daemon
+**Port** : 8004
+**Rôle** : Orchestration centrale et coordination des modules
+
+**Fonctionnalités clés :**
+- Coordination des modules
+- Gestion des patterns comportementaux
+- Optimisation des performances
+- Orchestration intelligente
+
+**Statut** : ✅ Actif
+**Métriques** : 4 métriques exposées
+
+### 🤖 [AssistantIA](assistantia.md) - Assistant IA
+**Type** : API HTTP
+**Port** : 8005
+**Rôle** : Assistant intelligent et interface utilisateur
+
+**Fonctionnalités clés :**
+- Assistant IA conversationnel
+- Gestion des prompts sécurisés
+- Validation des entrées
+- Interface utilisateur avancée
+
+**Statut** : ✅ Actif
+**Métriques** : 4 métriques exposées
+
+### 🌐 [Helloria](helloria.md) - API Centrale
+**Type** : API FastAPI
+**Port** : 8000
+**Rôle** : API centrale et point d'entrée principal
+
+**Fonctionnalités clés :**
+- API REST complète
+- Gestion des requêtes
+- Documentation automatique
+- Métriques Prometheus
+
+**Statut** : ✅ Actif
+**Métriques** : 34 métriques exposées
+
+---
+
+## 🛡️ **Modules de Sécurité**
+
+### 🔒 [Security](../security/security.md) - Sécurité Avancée
+**Type** : Module intégré
+**Rôle** : Protection et sécurité du système
+
+**Fonctionnalités clés :**
+- Cryptographie avancée
+- Validation des modèles
+- Détection d'empoisonnement
+- Sandbox sécurisé
+
+---
+
+## 📊 **Modules de Monitoring**
+
+### 📈 [Infrastructure Monitoring](../infrastructure/monitoring.md) - Observabilité
+**Type** : Module intégré
+**Rôle** : Monitoring et observabilité
+
+**Fonctionnalités clés :**
+- Métriques Prometheus
+- Dashboards Grafana
+- Alertes intelligentes
+- Logs centralisés
+
+---
+
+## 🎯 **Architecture des Modules**
+
+```mermaid
+graph TB
+    A[Helloria API] --> B[ZeroIA]
+    A --> C[Reflexia]
+    A --> D[Sandozia]
+    A --> E[Cognitive Reactor]
+    A --> F[AssistantIA]
+
+    B --> G[Security]
+    C --> G
+    D --> G
+    E --> G
+    F --> G
+
+    G --> H[Infrastructure Monitoring]
+    H --> A
 ```
 
-### [🧠 Sandozia Intelligence Croisée](core/sandozia.md)
-**Version** : v2.8.1 | **Status** : ✅ **Phase 2 Active**
+---
 
-Intelligence collaborative nouvelle génération :
-- **CrossModuleValidator** : Validation croisée inter-modules
-- **BehaviorAnalyzer** : Détection patterns aberrants
-- **CollaborativeReasoning** : Consensus multi-agent
-- **SandoziaMetrics** : Métriques corrélées temps réel
-- **Monitoring** : Métriques performance et confiance
+## 📈 **Métriques Globales**
 
-**Score Global** : `0.831/1.0` ✅ **EXCELLENT**
+### **Statut des Modules**
+- **Total modules** : 8
+- **Modules actifs** : 8 (100%)
+- **Métriques exposées** : 34
+- **Temps de réponse moyen** : < 2s
+- **Disponibilité** : 99.9%+
 
-### [🔄 Reflexia Engine](core/reflexia.md)
-**Version** : v2.8.1 | **Status** : ✅ **Opérationnel** | **Coverage** : 98%
+### **Performance**
+| Module | Métriques | Latence | Status |
+|--------|-----------|---------|--------|
+| Helloria | 34 | < 100ms | ✅ |
+| ZeroIA | 12 | < 500ms | ✅ |
+| Reflexia | 8 | < 200ms | ✅ |
+| Sandozia | 6 | < 1s | ✅ |
+| Cognitive Reactor | 4 | < 300ms | ✅ |
+| AssistantIA | 4 | < 2s | ✅ |
 
-Moteur de réflexion et prise de décision autonome :
-- Boucle décisionnelle auto-adaptative
-- Métriques performance temps réel
-- Auto-apprentissage continu
-- Intégration Framework Enhanced
-- **Monitoring** : 5 métriques ReflexIA exposées
+---
 
-**Métriques Monitoring** :
-- `arkalia_reflexia_monitoring_checks` : Vérifications monitoring
-- `arkalia_reflexia_system_latency_ms` : Latence système
-- `arkalia_reflexia_health_score` : Score de santé
-- `arkalia_reflexia_alerts_generated` : Alertes générées
-- `arkalia_reflexia_recovery_actions` : Actions de récupération
+## 🔧 **Configuration**
 
-### [🤖 AssistantIA](core/assistantia.md)
-**Version** : v2.8.1 | **Status** : ✅ **Multi-modèles** | **Coverage** : 94%
-
-Assistant conversationnel multi-modèles avec sécurité renforcée :
-- Support Ollama local optimisé
-- Validation prompts sécurisée
-- API REST standardisée
-- Protection contre injections
-- **Monitoring** : 5 métriques AssistantIA exposées
-
-**Métriques Monitoring** :
-- `arkalia_assistantia_prompts_total` : Prompts traités
-- `arkalia_assistantia_response_time_seconds` : Temps de réponse
-- `arkalia_assistantia_security_blocks` : Blocages de sécurité
-- `arkalia_assistantia_rate_limit_hits` : Limites de taux atteintes
-- `arkalia_assistantia_model_usage` : Utilisation des modèles
-
-### [⚡ Taskia Async](advanced/taskia.md)
-**Version** : v2.8.1 | **Status** : ✅ **Workflows** | **Coverage** : 92%
-
-Gestionnaire de tâches asynchrones haute performance :
-- Workflows complexes avec retry automatique
-- Monitoring états temps réel
-- Intégration Event Store Enhanced
-- Resilience patterns
-- **Monitoring** : Métriques workflows et performance
-
-### [🌊 Nyxalia Analytics](advanced/nyxalia.md)
-**Version** : v2.8.1 | **Status** : ✅ **Données** | **Coverage** : 93%
-
-Traitement de données et analytics avancées :
-- Pipelines ETL optimisés
-- Corrélations avancées Pearson
-- Visualisations temps réel
-- Métriques cross-modules
-- **Monitoring** : Métriques analytics et performance
-
-## 🏗️ Modules Support Enhanced
-
-### [🌍 Global State](advanced/global_state.md)
-**Version** : v2.8.1 | **Status** : ✅ **Synchronisé** | **Coverage** : 99%
-
-Gestionnaire d'état global avec persistance garantie :
-- TOML configuration avec cache intelligent
-- Synchronisation multi-modules
-- Cohérence ACID garantie
-- Backup automatique
-- **Monitoring** : Métriques état et synchronisation
-
-### [🎮 Helloria API](core/helloria.md)
-**Version** : v2.8.1 | **Status** : ✅ **REST Endpoint** | **Coverage** : 97%
-
-Interface utilisateur et API REST moderne :
-- FastAPI avec performance optimisée
-- Authentication JWT sécurisée
-- Rate limiting intelligent
-- Documentation OpenAPI
-- **Monitoring** : 5 métriques API exposées
-
-**Métriques Monitoring** :
-- `arkalia_api_requests_total` : Nombre total de requêtes
-- `arkalia_api_request_duration_seconds` : Durée des requêtes
-- `arkalia_api_requests_in_progress` : Requêtes en cours
-- `arkalia_api_errors_total` : Nombre total d'erreurs
-- `arkalia_api_response_size_bytes` : Taille des réponses
-
-## 📊 Vue d'ensemble Enhanced
-
-### 🎯 **Caractéristiques Framework Enhanced**
-
-Chaque module Enhanced est conçu pour être :
-
-#### 🛡️ **Ultra-Résilient**
-- **Error Recovery** : Récupération automatique des erreurs
-- **Circuit Breaker** : Protection contre les échecs en cascade
-- **Graceful Degradation** : Dégradation intelligente par priorité
-- **Auto-Recovery** : Réparation automatique des caches corrompus
-
-#### 🚀 **Haute Performance**
-- **Event Store** : Système d'événements ultra-rapide
-- **Cache Intelligent** : Optimisations TOML et SQLite
-- **Monitoring** : Métriques temps réel < 50ms
-- **Throughput** : 1000+ req/min soutenus
-
-#### 🔍 **Observable Enterprise**
-- **Métriques Détaillées** : Prometheus + Grafana (34 métriques)
-- **Logs Structurés** : JSON avec corrélation IDs
-- **Health Checks** : Monitoring proactif 24/7
-- **Audit Trail** : Traçabilité complète des décisions
-- **Dashboards** : 8 panels Grafana spécialisés
-
-#### 🔄 **Auto-Adaptatif**
-- **Machine Learning** : Apprentissage continu
-- **Seuils Dynamiques** : Adaptation automatique
-- **Consensus IA** : Décisions collaboratives
-- **Validation Croisée** : Cohérence inter-modules
-
-## 📈 **Métriques Globales Enhanced v2.8.1**
-
-### 🏆 **Performance Exceptionnelle**
-- **Tests PASSED** : 99.5% ✅
-- **Orchestrator Enhanced** : 100% taux de succès 🚀
-- **Circuit Breaker** : 0 ouverture (parfait) 🔒
-- **Event Store** : Auto-recovery opérationnel 📊
-- **Error Recovery** : SQLite géré gracieusement 🛡️
-
-### ⚡ **Temps de Réponse**
-- **Orchestrator** : 1.7s pour 5 loops
-- **API REST** : < 200ms moyenne
-- **Event Store** : < 100ms auto-recovery
-- **Circuit Breaker** : 0ms latence protection
-
-### 🎯 **Fiabilité Enterprise**
-- **Uptime** : 99.9% garanti
-- **Recovery Time** : < 100ms automatique
-- **Error Rate** : < 0.1% (warnings seulement)
-- **Degradation** : Gracieuse par priorité
-
-### 📊 **Monitoring Complet**
-- **Métriques exposées** : 34 métriques Arkalia
-- **Dashboards Grafana** : 8 panels spécialisés
-- **Alertes Prometheus** : 15 règles actives
-- **Services monitoring** : 7 composants
-- **Disponibilité** : 99.9% observée
-
-## 🚀 **Commandes Enhanced Disponibles**
-
-### 🎯 **Orchestrator Enhanced**
+### **Variables d'environnement**
 ```bash
-ark-zeroia-enhanced         # Démo Enhanced rapide
-ark-zeroia-stress          # Test de charge
-ark-zeroia-monitor         # Mode monitoring continu
+# Configuration globale
+ARKALIA_ENV=production
+ARKALIA_LOG_LEVEL=INFO
+ARKALIA_METRICS_PORT=9090
+
+# Configuration des modules
+ZEROIA_PORT=8001
+REFLEXIA_PORT=8002
+SANDOZIA_PORT=8003
+COGNITIVE_REACTOR_PORT=8004
+ASSISTANTIA_PORT=8005
+HELLORIA_PORT=8000
 ```
 
-### 🛡️ **Error Recovery**
+### **Démarrage des modules**
 ```bash
-ark-error-recovery         # Test récupération d'erreur
-ark-error-status          # Status Error Recovery
-ark-degradation-status    # Status Graceful Degradation
+# Démarrage complet
+docker-compose up -d
+
+# Démarrage individuel
+docker-compose up -d arkalia-api
+docker-compose up -d zeroia
+docker-compose up -d reflexia
+docker-compose up -d sandozia
+docker-compose up -d cognitive-reactor
+docker-compose up -d assistantia
 ```
 
-### 🧠 **Sandozia Intelligence**
+---
+
+## 🧪 **Tests et Validation**
+
+### **Tests unitaires**
 ```bash
-ark-sandozia-demo          # Démo intelligence croisée
-ark-sandozia-validator     # Validation cross-module
-ark-sandozia-analyzer      # Analyse comportementale
+# Tests de tous les modules
+pytest tests/unit/ -v
+
+# Tests d'un module spécifique
+pytest tests/unit/test_zeroia.py -v
+pytest tests/unit/test_reflexia.py -v
+pytest tests/unit/test_sandozia.py -v
 ```
 
-### 📊 **Monitoring**
+### **Tests d'intégration**
 ```bash
-# Validation monitoring
-python scripts/ark-validate-monitoring.py
+# Tests d'intégration
+pytest tests/integration/ -v
 
-# Métriques temps réel
-curl http://localhost:8000/metrics
+# Tests de performance
+pytest tests/performance/ -v
 
-# Dashboard Grafana
-open http://localhost:3000  # admin / arkalia-secure-2025
-
-# Vérification services
-docker-compose -f infrastructure/monitoring/docker-compose.monitoring.yml ps
+# Tests de sécurité
+pytest tests/security/ -v
 ```
 
-## 🎨 **Dashboards Spécialisés**
+---
 
-### Dashboard Principal
-- **URL** : http://localhost:3000/d/arkalia-monitoring
-- **Panels** : 8 panels spécialisés
-- **Refresh** : 30 secondes
-- **Thème** : Dark mode
+## 📚 **Documentation des Modules**
 
-### Panels par Module
-1. **Système CPU & Mémoire** : Métriques système globales
-2. **Statut des Modules Arkalia** : Health check tous modules
-3. **Requêtes API en Temps Réel** : Métriques API Helloria
-4. **Durée des Requêtes (P50/P95)** : Performance API
-5. **ZeroIA - Confiance & Décisions** : Métriques ZeroIA
-6. **AssistantIA - Prompts & Réponses** : Métriques AssistantIA
-7. **Reflexia - Monitoring Système** : Métriques ReflexIA
-8. **Erreurs & Alertes** : Alertes et erreurs système
+### **Guides d'utilisation**
+- [🚀 Guide de démarrage rapide](../getting-started/quick-start.md)
+- [🧠 Niveaux cognitifs](../getting-started/cognitive-levels.md)
+- [🔧 Configuration](../infrastructure/configuration.md)
+- [📊 Monitoring](../infrastructure/monitoring.md)
 
-## 🚨 **Alertes par Module**
+### **API Documentation**
+- [📖 Documentation API](../reference/api.md)
+- [🔍 Endpoints](../reference/endpoints.md)
+- [📊 Métriques](../reference/metrics.md)
 
-### Alertes ZeroIA
-- **ZeroIALowConfidence** : Confiance < 30%
-- **ZeroIAHighContradictions** : > 5 contradictions/min
-- **ZeroIACircuitBreakerOpen** : Circuit breaker ouvert
-- **ZeroIAHighProcessingTime** : Temps traitement > 5s
+---
 
-### Alertes AssistantIA
-- **AssistantIAHighResponseTime** : Temps réponse > 10s
-- **AssistantIAHighSecurityBlocks** : > 10 blocages/min
-- **AssistantIARateLimitExceeded** : Rate limit dépassé
-- **AssistantIAModelError** : Erreur modèle détectée
+## 🎯 **Cas d'Usage**
 
-### Alertes API
-- **HighErrorRate** : > 5% erreurs 5xx
-- **HighRequestLatency** : Latence P95 > 2s
-- **HighRequestVolume** : > 1000 req/min
-- **APIUnavailable** : API inaccessible
+### **Surveillance Continue**
+- Monitoring automatique des ressources
+- Détection d'anomalies en temps réel
+- Prise de décision autonome
 
-## 🔗 **Navigation Documentation**
+### **Protection Adaptative**
+- Circuit breaker intelligent
+- Dégradation gracieuse des services
+- Récupération automatique d'erreurs
 
-- **[🚀 ZeroIA Enhanced](core/zeroia.md)** - Orchestrateur révolutionnaire
-- **[🧠 Sandozia](core/sandozia.md)** - Intelligence croisée
-- **[🔄 Reflexia](core/reflexia.md)** - Moteur décisionnel
-- **[🤖 AssistantIA](core/assistantia.md)** - Assistant IA
-- **[⚡ Taskia](advanced/taskia.md)** - Gestionnaire async
-- **[🌊 Nyxalia](advanced/nyxalia.md)** - Analytics avancées
-- **[🌍 Global State](advanced/global_state.md)** - État global
-- **[🎮 Helloria](core/helloria.md)** - API REST
-- **[📊 Monitoring](infrastructure/monitoring.md)** - Guide monitoring complet
+### **Orchestration Intelligente**
+- Coordination des modules
+- Optimisation des performances
+- Gestion des patterns comportementaux
 
-**🌟 Consultez la documentation spécifique de chaque module pour découvrir toutes les fonctionnalités Enhanced et les métriques de monitoring !**
+---
+
+## 🔮 **Roadmap des Modules**
+
+### **v2.8.2 (Planifié)**
+- 🚧 Optimisations de performance
+- 🚧 Nouveaux dashboards
+- 🚧 Alertes avancées
+- 🚧 Amélioration de l'accessibilité
+
+### **v3.0 (Roadmap)**
+- 🚧 Intelligence artificielle avancée
+- 🚧 Orchestration multi-clusters
+- 🚧 Sécurité renforcée
+- 🚧 Interface utilisateur complète
+
+---
+
+**Arkalia-LUNA Pro v2.8.1** - Système d'intelligence artificielle ultra-protection
+**Dernière mise à jour** : 30 juin 2025

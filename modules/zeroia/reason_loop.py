@@ -270,6 +270,41 @@ def log_conflict(conflict_msg: str) -> None:
     logger.info("🔄 ZeroIA loop started successfully")
 
 
+def validate_and_fix_context(ctx: dict) -> dict:
+    """
+    🛡️ VALIDATION ET CORRECTION DU CONTEXTE
+    Assure que toutes les clés requises sont présentes avec des valeurs par défaut sécurisées
+    """
+    # Créer une copie pour éviter de modifier l'original
+    validated_ctx = ctx.copy()
+
+    # Assurer que la section status existe
+    if "status" not in validated_ctx:
+        validated_ctx["status"] = {}
+
+    status = validated_ctx["status"]
+
+    # Valeurs par défaut sécurisées pour les métriques système
+    default_metrics = {
+        "cpu": 45.0,  # CPU par défaut : 45% (normal)
+        "ram": 62.0,  # RAM par défaut : 62% (normal)
+        "severity": "normal",  # Sévérité par défaut
+        "disk_usage": 78.0,  # Usage disque par défaut
+        "network_latency": 25.0,  # Latence réseau par défaut
+    }
+
+    # Appliquer les valeurs par défaut pour les clés manquantes
+    for key, default_value in default_metrics.items():
+        if key not in status or status[key] is None:
+            status[key] = default_value
+            print(
+                f"⚠️ [ZeroIA] {key} manquant dans le contexte, valeur par défaut: {default_value}",
+                flush=True,
+            )
+
+    return validated_ctx
+
+
 def reason_loop(
     context_path: Path | None = None,
     reflexia_path: Path | None = None,
@@ -281,18 +316,8 @@ def reason_loop(
     ctx = load_context(context_path or CTX_PATH)
     reflexia_data = load_reflexia_state(reflexia_path or REFLEXIA_STATE)
 
-    # 🛡️ ROBUSTESSE v3.x - Valeurs par défaut si CPU/RAM manquants
-    status = ctx.get("status", {})
-    if "cpu" not in status or "ram" not in status:
-        print("⚠️ [ZeroIA] CPU/RAM missing in context, using defaults", flush=True)
-        # Créer une section status avec valeurs par défaut
-        ctx["status"] = {
-            "cpu": status.get("cpu", 45),  # CPU par défaut : 45%
-            "ram": status.get("ram", 62),  # RAM par défaut : 62%
-            "severity": status.get("severity", "normal"),
-            "disk_usage": status.get("disk_usage", 78),
-            "network_latency": status.get("network_latency", 25),
-        }
+    # 🛡️ ROBUSTESSE v4.0 - Validation et correction automatique du contexte
+    ctx = validate_and_fix_context(ctx)
 
     decision, score = decide(ctx)
 
