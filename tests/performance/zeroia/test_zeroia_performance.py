@@ -134,7 +134,7 @@ def test_circuit_breaker_latency_under_10ms(performance_metrics):
     Objectif : Vérifier que la protection n'ajoute pas de latence
     Seuil : < 10ms par appel
     """
-    circuit_breaker = CircuitBreaker(failure_threshold=5, recovery_timeout=60)
+    circuit_breaker = CircuitBreaker(failure_threshold=5, timeout=60)
 
     def fast_function() -> None:
         return "success"

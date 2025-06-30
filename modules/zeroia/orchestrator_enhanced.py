@@ -13,17 +13,9 @@ import logging
 import time
 from typing import Any, Optional
 
-from .circuit_breaker import (
-    CognitiveOverloadError,
-    DecisionIntegrityError,
-    SystemRebootRequired,
-)
+from .circuit_breaker import CognitiveOverloadError, DecisionIntegrityError, SystemRebootRequired
 from .event_store import EventType
-from .reason_loop_enhanced import (
-    cleanup_components,
-    initialize_components,
-    reason_loop_enhanced,
-)
+from .reason_loop_enhanced import cleanup_components, initialize_components, reason_loop_enhanced
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +36,7 @@ class ZeroIAOrchestrator:
         max_loops: int | None = None,
         interval_seconds: float = 2.5,
         circuit_failure_threshold: int = 10,
-        circuit_recovery_timeout: int = 60,
+        timeout: int = 60,
     ):
         self.max_loops = max_loops
         self.interval_seconds = interval_seconds
@@ -56,7 +48,7 @@ class ZeroIAOrchestrator:
 
         # Configurer les seuils du circuit breaker après initialisation
         self.circuit_breaker.failure_threshold = circuit_failure_threshold
-        self.circuit_breaker.recovery_timeout = circuit_recovery_timeout
+        self.circuit_breaker.timeout = timeout
 
         # Statistiques de session
         self.session_stats = {
@@ -145,7 +137,7 @@ class ZeroIAOrchestrator:
         logger.warning("🔄 Procédure reboot système en cours...")
 
         # Attendre recovery du circuit breaker
-        time.sleep(self.circuit_breaker.recovery_timeout)
+        time.sleep(self.circuit_breaker.timeout)
 
         # Log event
         self.event_store.add_event(
@@ -218,7 +210,7 @@ def orchestrate_zeroia_enhanced(
     max_loops: int | None = None,
     interval_seconds: float = 1.5,
     circuit_failure_threshold: int = 5,
-    circuit_recovery_timeout: int = 30,
+    timeout: int = 30,
 ) -> None:
     """
     Lance l'orchestration ZeroIA Enhanced
@@ -227,13 +219,13 @@ def orchestrate_zeroia_enhanced(
         max_loops: Nombre max de loops (None = infini)
         interval_seconds: Intervalle entre loops
         circuit_failure_threshold: Seuil d'échecs pour ouvrir circuit
-        circuit_recovery_timeout: Timeout recovery circuit (secondes)
+        timeout: Timeout recovery circuit (secondes)
     """
     orchestrator = ZeroIAOrchestrator(
         max_loops=max_loops,
         interval_seconds=interval_seconds,
         circuit_failure_threshold=circuit_failure_threshold,
-        circuit_recovery_timeout=circuit_recovery_timeout,
+        timeout=timeout,
     )
 
     orchestrator.run()

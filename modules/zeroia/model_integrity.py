@@ -13,7 +13,7 @@ import json
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Optional
 
 import toml
 
@@ -74,7 +74,7 @@ class ModelIntegrityChecker:
             "integrity_score": max(0.0, integrity_score),
             "issues": issues,
             "context_hash": context_hash,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
         }
 
     def add_suspicious_context(self, context_hash: str) -> None:
@@ -86,7 +86,7 @@ class ModelIntegrityChecker:
         return {
             "suspicious_contexts_count": len(self.suspicious_context_hashes),
             "integrity_threshold": self.integrity_threshold,
-            "last_check": datetime.now().isoformat()
+            "last_check": datetime.now().isoformat(),
         }
 
     def save_integrity_data(self) -> None:
@@ -95,7 +95,7 @@ class ModelIntegrityChecker:
             data = {
                 "suspicious_contexts": list(self.suspicious_context_hashes),
                 "threshold": self.integrity_threshold,
-                "last_update": datetime.now().isoformat()
+                "last_update": datetime.now().isoformat(),
             }
             with open("state/integrity_data.json", "w") as f:
                 json.dump(data, f, indent=2)

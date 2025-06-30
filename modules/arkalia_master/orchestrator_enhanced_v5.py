@@ -102,7 +102,7 @@ class OrchestratorEnhancedConfig:
 
     # Circuit breaker global
     global_failure_threshold: int = 10
-    global_recovery_timeout: int = 60
+    global_timeout: int = 60
 
     # Modules actifs enhanced
     enabled_modules: list[str] = field(
@@ -203,7 +203,7 @@ class ArkaliaOrchestratorEnhanced:
         # Circuit breaker global
         self.global_circuit_breaker = CircuitBreaker(
             failure_threshold=self.config.global_failure_threshold,
-            recovery_timeout=self.config.global_recovery_timeout,
+            timeout=self.config.global_timeout,
         )
 
         # État orchestrateur enhanced

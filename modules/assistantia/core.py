@@ -60,9 +60,14 @@ def get_arkalia_context() -> str:
 
         zeroia_dashboard = Path("state/zeroia_dashboard.json")
         if zeroia_dashboard.exists():
-            with open(zeroia_dashboard) as f:
-                dashboard = json.load(f)
-            context_parts.append(f"ZeroIA: {dashboard.get('last_decision', 'unknown')}")
+            try:
+                with open(zeroia_dashboard) as f:
+                    dashboard = json.load(f)
+                context_parts.append(f"ZeroIA: {dashboard.get('last_decision', 'unknown')}")
+            except (json.JSONDecodeError, KeyError, OSError):
+                context_parts.append("ZeroIA: unavailable")
+        else:
+            context_parts.append("ZeroIA: inactive")
     except Exception:
         context_parts.append("ZeroIA: unavailable")
 
@@ -72,8 +77,13 @@ def get_arkalia_context() -> str:
 
         reflexia_state = Path("state/reflexia_state.toml")
         if reflexia_state.exists():
-            reflexia_data = toml.load(reflexia_state)
-            context_parts.append(f"Reflexia: {reflexia_data.get('status', 'unknown')}")
+            try:
+                reflexia_data = toml.load(reflexia_state)
+                context_parts.append(f"Reflexia: {reflexia_data.get('status', 'unknown')}")
+            except (toml.TomlDecodeError, KeyError, OSError):
+                context_parts.append("Reflexia: unavailable")
+        else:
+            context_parts.append("Reflexia: inactive")
     except Exception:
         context_parts.append("Reflexia: unavailable")
 

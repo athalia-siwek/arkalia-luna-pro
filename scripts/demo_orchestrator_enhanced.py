@@ -39,7 +39,7 @@ def demo_quick() -> None:
         max_loops=5,
         interval_seconds=0.3,
         circuit_failure_threshold=3,
-        circuit_recovery_timeout=5,
+        timeout=5,
     )
 
     print("📊 Status initial:")
@@ -63,7 +63,7 @@ def demo_stress() -> None:
         max_loops=20,
         interval_seconds=0.1,
         circuit_failure_threshold=2,  # Plus sensible
-        circuit_recovery_timeout=3,
+        timeout=3,
     )
 
     print("📊 Configuration stress:")
@@ -86,7 +86,7 @@ def demo_monitoring() -> None:
         max_loops=10,
         interval_seconds=0.5,
         circuit_failure_threshold=4,
-        circuit_recovery_timeout=10,
+        timeout=10,
     )
 
     print("🔄 Exécution avec monitoring...")
@@ -133,7 +133,7 @@ def demo_daemon() -> None:
         max_loops=100,  # Nombreux loops par cycle
         interval_seconds=2.0,  # Plus lent pour container
         circuit_failure_threshold=5,
-        circuit_recovery_timeout=30,
+        timeout=30,
     )
 
     cycle_count = 0

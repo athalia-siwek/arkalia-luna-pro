@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import requests
 
@@ -12,19 +12,16 @@ def check_reflexia_trigger() -> dict[str, Any] | None:
             return {
                 "triggered": True,
                 "reason": "system_healthy",
-                "timestamp": "2024-01-01T00:00:00Z"
+                "timestamp": "2024-01-01T00:00:00Z",
             }
         else:
             return {
                 "triggered": False,
                 "reason": "system_unhealthy",
-                "status_code": response.status_code
+                "status_code": response.status_code,
             }
     except requests.RequestException:
-        return {
-            "triggered": False,
-            "reason": "connection_error"
-        }
+        return {"triggered": False, "reason": "connection_error"}
     except Exception:
         return None
 

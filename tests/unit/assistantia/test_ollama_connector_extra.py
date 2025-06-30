@@ -59,6 +59,9 @@ def test_query_ollama_http_error(monkeypatch) -> None:
         def json(self) -> None:
             return {}
 
+        def raise_for_status(self) -> None:
+            raise requests.HTTPError(f"HTTP {self.status_code}")
+
     def mock_post(*args, **kwargs) -> None:
         return MockResponse(500)
 

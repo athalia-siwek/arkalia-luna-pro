@@ -20,7 +20,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Optional
 
 import toml
 
@@ -97,7 +97,9 @@ class CircuitBreaker:
     - Event sourcing intégré
     """
 
-    def __init__(self, name: str = "default", failure_threshold: int = 5, timeout: int = 60) -> None:
+    def __init__(
+        self, name: str = "default", failure_threshold: int = 5, timeout: int = 60
+    ) -> None:
         self.name = name
         self.failure_threshold = failure_threshold
         self.timeout = timeout
@@ -109,9 +111,7 @@ class CircuitBreaker:
         self.event_store = EventStore()
         self.metrics = CircuitMetrics()
 
-        logger.info(
-            f"🔄 CircuitBreaker initialisé: seuil={failure_threshold}, timeout={timeout}s"
-        )
+        logger.info(f"🔄 CircuitBreaker initialisé: seuil={failure_threshold}, timeout={timeout}s")
 
     def load_state(self) -> None:
         """Charge l'état du circuit breaker depuis le fichier."""
@@ -135,7 +135,9 @@ class CircuitBreaker:
             state_data = {
                 "failure_count": self.failure_count,
                 "state": self.state,
-                "last_failure_time": self.last_failure_time.isoformat() if self.last_failure_time else None
+                "last_failure_time": (
+                    self.last_failure_time.isoformat() if self.last_failure_time else None
+                ),
             }
             with open(f"state/circuit_breaker_{self.name}.toml", "w") as f:
                 toml.dump(state_data, f)
@@ -324,7 +326,7 @@ class CircuitBreaker:
             {
                 "old_state": old_state,
                 "new_state": self.state,
-                "reason": "recovery_timeout_reached",
+                "reason": "timeout_reached",
             },
         )
 
@@ -355,9 +357,7 @@ class CircuitBreaker:
         self.metrics.state_changes += 1
         self.save_state()
 
-        logger.info(
-            f"🔄 CircuitBreaker réinitialisé manuellement: {old_state} → {self.state}"
-        )
+        logger.info(f"🔄 CircuitBreaker réinitialisé manuellement: {old_state} → {self.state}")
 
         self.event_store.add_event(
             EventType.MANUAL_RESET,
@@ -383,7 +383,9 @@ class CircuitBreaker:
                 "failure_threshold": self.failure_threshold,
                 "timeout": self.timeout,
             },
-            "last_failure_time": self.last_failure_time.isoformat() if self.last_failure_time else None
+            "last_failure_time": (
+                self.last_failure_time.isoformat() if self.last_failure_time else None
+            ),
         }
 
     def trip(self) -> None:

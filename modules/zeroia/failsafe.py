@@ -2,7 +2,7 @@ import json
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import toml
 
@@ -52,7 +52,10 @@ def create_backup(source_path: str, backup_dir: str = "backups") -> str | None:
         if not source.exists():
             return None
 
-        backup_path = Path(backup_dir) / f"{source.stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{source.suffix}"
+        backup_path = (
+            Path(backup_dir)
+            / f"{source.stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}{source.suffix}"
+        )
         backup_path.parent.mkdir(parents=True, exist_ok=True)
 
         shutil.copy2(source, backup_path)
@@ -98,11 +101,11 @@ def rollback_system(snapshot_path: str, target_path: str) -> bool:
 
 def failsafe_mode() -> None:
     print("🛡️ Activation du mode Failsafe ZeroIA…")
-    snapshot = load_snapshot(SNAPSHOT_PATH)
+    snapshot = load_snapshot(str(SNAPSHOT_PATH))
 
     if snapshot is None or "decision" not in snapshot:
         print("⚠️ Snapshot corrompu ou incomplet. Tentative de restauration…")
-        success = restore_backup()
+        success = restore_backup(str(BACKUP_PATH), str(SNAPSHOT_PATH))
         if success:
             print("✅ Restauration réussie.")
         else:

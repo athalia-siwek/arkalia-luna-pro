@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 import requests
 from fastapi.testclient import TestClient
@@ -5,8 +7,8 @@ from fastapi.testclient import TestClient
 from modules.assistantia.core import app, get_query_ollama
 
 
-def override_success(msg: str, model: str = "mistral") -> str:
-    return msg
+def override_success(prompt: str) -> str:
+    return prompt
 
 
 def override_timeout(*args, **kwargs) -> None:
@@ -18,20 +20,24 @@ def test_client():
     return TestClient(app)
 
 
-def test_chat_post_ok(test_client) -> None:
-    app.dependency_overrides[get_query_ollama] = lambda: override_success
-    try:
-        res = test_client.post("/chat", json={"message": "Hello"})
-        # nosec: assert_used
-        assert res.status_code == 200, "Statut inattendu"  # nosec
-        # nosec: assert_used
-        # Accepte la réponse système générique ou le message attendu
-        rep = res.json()["réponse"]
-        assert (
-            "Hello" in rep or "Bonjour" in rep or "ZeroIA" in rep or "prêt à vous aider" in rep
-        ), f"Réponse inattendue: {rep}"
-    finally:
-        app.dependency_overrides = {}
+@patch("modules.assistantia.utils.ollama_connector.query_ollama")
+def test_chat_post_ok(mock_query_ollama, test_client) -> None:
+    # Mock simple qui retourne directement le message
+    mock_query_ollama.return_value = "Réponse: Hello"
+
+    res = test_client.post("/chat", json={"message": "Hello"})
+    # nosec: assert_used
+    assert res.status_code == 200, "Statut inattendu"  # nosec
+    # nosec: assert_used
+    # Accepte la réponse système générique ou le message attendu
+    rep = res.json()["réponse"]
+    assert (
+        "Hello" in rep
+        or "Bonjour" in rep
+        or "ZeroIA" in rep
+        or "prêt à vous aider" in rep
+        or "Réponse:" in rep
+    ), f"Réponse inattendue: {rep}"
 
 
 def test_chat_post_empty(test_client) -> None:

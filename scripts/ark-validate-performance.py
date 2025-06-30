@@ -62,7 +62,7 @@ def test_circuit_breaker_basic():
     print("⚡ Test Circuit Breaker...")
 
     try:
-        circuit = CircuitBreaker(failure_threshold=3, recovery_timeout=30)
+        circuit = CircuitBreaker(failure_threshold=3, timeout=30)
 
         # Test fonction simple
         def simple_func() -> None:
