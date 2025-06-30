@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
 import toml
 
@@ -39,12 +39,33 @@ def should_lower_cpu_threshold() -> bool:
     return count_recent_action("monitor", window=10) >= 8
 
 
-def adjust_threshold(current: float, feedback: str) -> float:
-    if feedback == "success":
-        return min(1.0, current + 0.05)
-    elif feedback == "fail":
-        return max(0.0, current - 0.05)
-    elif feedback == "neutral":
-        return current
+def load_adaptive_thresholds_config() -> dict[str, Any] | None:
+    """Charge la configuration des seuils adaptatifs depuis le fichier TOML."""
+    try:
+        with open("config/adaptive_thresholds.toml") as f:
+            return toml.load(f)
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return None
+
+
+def adjust_threshold(current_threshold: float, feedback: str) -> float:
+    """
+    Ajuste le seuil en fonction du feedback reçu.
+
+    Args:
+        current_threshold: Le seuil actuel
+        feedback: Le feedback ('increase', 'decrease', 'stable')
+
+    Returns:
+        Le nouveau seuil ajusté
+    """
+    if feedback == "increase":
+        return current_threshold * 1.1
+    elif feedback == "decrease":
+        return current_threshold * 0.9
+    elif feedback == "stable":
+        return current_threshold
     else:
-        raise ValueError(f"Unknown feedback: {feedback}")
+        return current_threshold

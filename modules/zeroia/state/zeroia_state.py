@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
 import toml
 
@@ -22,3 +22,14 @@ def save_state(path: Path, data: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         toml.dump(data, f)
+
+
+def load_zeroia_state() -> dict[str, Any]:
+    """Charge l'état ZeroIA depuis le fichier TOML."""
+    try:
+        with open("state/zeroia_state.toml") as f:
+            return toml.load(f)
+    except FileNotFoundError:
+        return {"status": "inactive", "last_decision": None}
+    except Exception:
+        return {"status": "error", "last_decision": None}

@@ -67,6 +67,8 @@ jobs:
           find . -name "._*" -delete
           find . -name ".DS_Store" -delete
           find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+          rm -f test-results.xml coverage.xml .coverage
+          rm -rf htmlcov/
 
       - name: 🧪 Run tests with coverage
         run: |
@@ -79,7 +81,8 @@ jobs:
             --junitxml=test-results.xml \
             -v \
             --tb=short \
-            --ignore=modules/generative_ai/generated/
+            --ignore=modules/generative_ai/generated/ \
+            --strict-markers
 
       - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
