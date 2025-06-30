@@ -220,7 +220,7 @@
         <span class="support-icon">🤝</span>
         <div>
             <h4>Contribuer</h4>
-            <p><a href="credits/CONTRIBUTING.md">Guidelines</a></p>
+            <p><a href="credits/CONTRIBUTING/">Guidelines</a></p>
         </div>
     </div>
 
