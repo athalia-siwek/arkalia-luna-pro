@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import toml
 
@@ -65,7 +65,5 @@ def adjust_threshold(current_threshold: float, feedback: str) -> float:
         return current_threshold * 1.1
     elif feedback == "decrease":
         return current_threshold * 0.9
-    elif feedback == "stable":
-        return current_threshold
     else:
         return current_threshold
