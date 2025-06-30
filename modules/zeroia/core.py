@@ -22,7 +22,6 @@ from fastapi.responses import JSONResponse, PlainTextResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Gauge, generate_latest
 
 from .circuit_breaker import CircuitBreaker
-from .reason_loop import ZeroIAReasonLoop
 from .reason_loop_enhanced import (
     initialize_components_with_recovery,
     reason_loop_enhanced_with_recovery,
@@ -53,7 +52,6 @@ class ZeroIACore:
     """🧠 Core ZeroIA - Système de décision intelligent"""
 
     def __init__(self):
-        self.reason_loop = ZeroIAReasonLoop()
         self.circuit_breaker = CircuitBreaker()
         self.state_path = Path("state/zeroia_state.toml")
         self.dashboard_path = Path("state/zeroia_dashboard.json")
