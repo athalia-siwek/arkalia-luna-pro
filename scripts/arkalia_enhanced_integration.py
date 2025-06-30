@@ -68,7 +68,7 @@ class ArkaliaEnhancedEngine:
     def __init__(self) -> None:
         self.cognitive_reactor = CognitiveReactor  # noqa: F401
         self.chronalia = Chronalia  # noqa: F401
-        self.event_store  # noqa: F401 = EventStore()
+        self.event_store = EventStore()  # noqa: F401
 
         # État système
         self.decision_pattern_count = 0

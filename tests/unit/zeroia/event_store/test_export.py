@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# 🧪 tests/unit/zeroia/event_store  # noqa: F401/test_export.py
+# 🧪 tests/unit/zeroia/event_store/test_export.py
 # Tests pour l'export et la persistance de l'Event Store ZeroIA
 
 import json
@@ -10,11 +10,7 @@ from unittest.mock import patch
 
 import pytest
 
-from modules.zeroia.event_store import EventType  # noqa: F401# noqa: F401,
-from modules.zeroia.event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
-    Event,
-    EventStore,
-)
+from modules.zeroia.event_store import Event, EventStore, EventType  # noqa: F401
 
 
 @pytest.fixture

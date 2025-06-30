@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# 🔄 modules/zeroia/reason_loop_enhanced  # noqa: F401.py
+# 🔄 modules/zeroia/reason_loop_enhanced.py
 # Version améliorée avec Circuit Breaker et Event Sourcing
 
 """
@@ -19,23 +19,19 @@ import textwrap
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import toml
 
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
-from modules.zeroia.circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401
+from modules.zeroia.circuit_breaker import (  # noqa: F401
     CircuitBreaker,
     CognitiveOverloadError,
     DecisionIntegrityError,
     SystemRebootRequired,
 )
 from modules.zeroia.error_recovery_system import ErrorRecoverySystem  # noqa: F401
-from modules.zeroia.event_store import EventType  # noqa: F401# noqa: F401,
-from modules.zeroia.event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
-    Event,
-    EventStore,
-)
+from modules.zeroia.event_store import Event, EventStore, EventType  # noqa: F401
 from modules.zeroia.graceful_degradation import GracefulDegradationSystem
 from modules.zeroia.utils.backup import save_backup
 from modules.zeroia.utils.state_writer import save_json_if_changed, save_toml_if_changed

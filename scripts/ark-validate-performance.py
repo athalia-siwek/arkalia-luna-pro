@@ -11,16 +11,9 @@ from pathlib import Path
 try:
     import psutil  # noqa: F401
 
-    from modules.zeroia.circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
-        CircuitBreaker,
-    )
-    from modules.zeroia.event_store import EventType  # noqa: F401# noqa: F401# noqa: F401,
-    from modules.zeroia.event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,  # noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
-        EventStore,
-    )
-    from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
-        create_default_context_enhanced,
-    )
+    from modules.zeroia.circuit_breaker import CircuitBreaker  # noqa: F401
+    from modules.zeroia.event_store import EventStore, EventType  # noqa: F401
+    from modules.zeroia.reason_loop_enhanced import create_default_context_enhanced  # noqa: F401
 except ImportError as e:
     print(f"❌ Erreur import modules: {e}")
     print("💡 Vérifiez que les modules sont installés et accessibles")
@@ -33,11 +26,11 @@ def validate_imports() -> bool:
 
     try:
         # Vérifier que les imports globaux ont fonctionné
-        assert "create_default_context_enhanced  # noqa: F401 " in globals()
+        assert "create_default_context_enhanced" in globals()
         assert "CircuitBreaker" in globals()
         assert "EventStore" in globals()
-        assert "EventType  # noqa: F401 " in globals()
-        assert "psutil  # noqa: F401 " in globals()
+        assert "EventType" in globals()
+        assert "psutil" in globals()
         print("✅ Tous les imports OK")
         return True
 
@@ -52,14 +45,9 @@ def validate_imports() -> bool:
         try:
             import psutil  # noqa: F401
 
-            from modules.zeroia.circuit_breaker import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
-                CircuitBreaker,
-            )
-            from modules.zeroia.event_store import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,  # noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401,; noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401
-                EventStore,
-                EventType,
-            )
-            from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
+            from modules.zeroia.circuit_breaker import CircuitBreaker  # noqa: F401
+            from modules.zeroia.event_store import EventStore, EventType  # noqa: F401
+            from modules.zeroia.reason_loop_enhanced import (  # noqa: F401
                 create_default_context_enhanced,
             )
 
@@ -108,7 +96,7 @@ def validate_context_creation() -> bool:
     print("🎯 Validation création contexte...")
 
     try:
-        from modules.zeroia.reason_loop_enhanced import (  # noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401# noqa: F401; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,; noqa: F401,
+        from modules.zeroia.reason_loop_enhanced import (  # noqa: F401
             create_default_context_enhanced,
         )
 
