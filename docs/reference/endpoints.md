@@ -2,7 +2,7 @@
 
 ## 🎯 Vue d'ensemble
 
-Cette page documente tous les endpoints API disponibles dans Arkalia-LUNA Pro v2.8.1.
+Cette page documente tous les endpoints API disponibles dans Arkalia-LUNA Pro v2.8.0.
 
 ---
 
@@ -55,7 +55,7 @@ GET /status
 {
   "overall_status": "good",
   "components": {
-    "arkalia_api": "healthy",
+    "arkalia_api (port 8000)": "healthy",
     "zeroia": "healthy",
     "reflexia": "healthy",
     "sandozia": "healthy",
@@ -435,5 +435,5 @@ curl -X POST http://localhost:8005/chat \
 
 ---
 
-**Arkalia-LUNA Pro v2.8.1** - Documentation des endpoints API
+**Arkalia-LUNA Pro v2.8.0** - Documentation des endpoints API
 **Dernière mise à jour** : 30 juin 2025

@@ -1,6 +1,6 @@
 # 🛤️ Roadmap — Arkalia-LUNA
 
-![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![Version](https://img.shields.io/badge/version-v2.8.0-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
@@ -9,7 +9,7 @@
 
 ---
 
-## ✅ Version Actuelle : `v2.4.0`
+## ✅ Version Actuelle : `v2.8.0`
 
 🟢 Système IA **stable, modulaire, dockerisé, testé, documenté, stylisé**
 
@@ -48,7 +48,7 @@
 | 🔒 Sandozia v2                  | Sécurité IA (authentification, signature, watchdog) |
 | ☁️ Sync local/cloud chiffré     | `rclone` + `gocryptfs` pour backup IA privé |
 | 🧠 Mémoire vectorielle IA       | `FAISS` ou `ChromaDB` pour mémoire contextuelle |
-| 📊 Monitoring temps réel        | Prometheus + Grafana IA → pilotage ReflexIA |
+| 📊 Monitoring temps réel        | Prometheus + Grafana IA → pilotage Reflexia |
 
 ---
 
@@ -67,7 +67,7 @@ Créer un **système IA auto-réflexif intelligent**, capable de s'auto-réguler
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v1.x`
+🤖 Powered by Arkalia Reflexia `v1.x`
 
 # 🗺️ Arkalia-LUNA v3.x Roadmap
 
@@ -222,7 +222,7 @@ graph TB
 
     subgraph "AI Modules Enhanced"
         ZIA[ZeroIA Enhanced ✅]
-        REF[ReflexIA]
+        REF[Reflexia]
         ASS[AssistantIA]
         SAN[Sandozia]
     end

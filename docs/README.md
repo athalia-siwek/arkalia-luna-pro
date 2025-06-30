@@ -41,7 +41,10 @@
 
 <div style="display: flex; justify-content: flex-end; align-items: center; margin: 1rem 0 2rem 0;">
   <a href="http://localhost:5173/" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, rgba(126, 203, 255, 0.2) 0%, rgba(30, 58, 138, 0.3) 100%); color: #7ecbff; font-family: 'Orbitron', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border-radius: 9999px; border: 1px solid rgba(126, 203, 255, 0.3); transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-    Voir le Dashboard
+    🚀 Dashboard React (Port 5173)
+  </a>
+  <a href="http://localhost:8081/" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, rgba(126, 203, 255, 0.2) 0%, rgba(30, 58, 138, 0.3) 100%); color: #7ecbff; font-family: 'Orbitron', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border-radius: 9999px; border: 1px solid rgba(126, 203, 255, 0.3); transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-left: 1rem;">
+    📚 Documentation (Port 8081)
   </a>
 </div>
 
@@ -87,7 +90,7 @@
     <div class="luna-col">
       <h3>API Reference</h3>
       <ul>
-        <li><a href="#arkalia-api">Arkalla API</a></li>
+        <li><a href="#arkalia-api">Arkalia API (port 8000)</a></li>
         <li><a href="#endpoints">Endpoints</a></li>
       </ul>
       <h3>Testing</h3>
@@ -129,7 +132,7 @@
 
     <div class="module-card">
         <div class="module-icon">🔁</div>
-        <h3>ReflexIA</h3>
+        <h3>Reflexia</h3>
         <p>Observateur cognitif réflexif avec analyse comportementale</p>
         <span class="status-badge healthy">✅ Opérationnel</span>
     </div>
@@ -168,7 +171,7 @@
 <div class="metrics-grid">
     <div class="metric-card">
         <div class="metric-icon">🧪</div>
-        <div class="metric-value">455</div>
+        <div class="metric-value">97</div>
         <div class="metric-label">Tests automatisés</div>
     </div>
 
@@ -180,13 +183,13 @@
 
     <div class="metric-card">
         <div class="metric-icon">🔧</div>
-        <div class="metric-value">82</div>
+        <div class="metric-value">94</div>
         <div class="metric-label">Modules Python</div>
     </div>
 
     <div class="metric-card">
         <div class="metric-icon">🚀</div>
-        <div class="metric-value">7/7</div>
+        <div class="metric-value">6/6</div>
         <div class="metric-label">Modules IA actifs</div>
     </div>
 
@@ -329,5 +332,5 @@
 </div>
 
 <div class="footer-note">
-    <p><strong>Arkalia-LUNA Pro v2.8.0</strong> - Système d'Intelligence Artificielle Enterprise. Architecture modulaire avec 7 modules IA opérationnels, monitoring complet et observabilité totale. Optimisé pour la production avec 455 tests automatisés et 99.9% de disponibilité.</p>
+    <p><strong>Arkalia-LUNA Pro v2.8.0</strong> - Système d'Intelligence Artificielle Enterprise. Architecture modulaire avec 7 modules IA opérationnels, monitoring complet et observabilité totale. Optimisé pour la production avec 97 tests automatisés et 99.9% de disponibilité.</p>
 </div>

@@ -43,9 +43,9 @@ Historique des versions et releases d'Arkalia-LUNA.
 - ✅ **Backup Strategy** : Système de sauvegarde et recovery automatisé
 - ✅ **Penetration Testing** : Framework de tests sécurité spécialisé IA
 
-### v2.4.0 — Stabilisation Kernel
+### v2.8.0 — Stabilisation Kernel
 - ✅ ZeroIA orchestrateur stabilisé
-- ✅ ReflexIA monitoring temps réel
+- ✅ Reflexia monitoring temps réel
 - ✅ Tests automatisés 93% couverture
 - ✅ Docker hardening complet
 

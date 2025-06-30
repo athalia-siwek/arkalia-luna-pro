@@ -77,7 +77,7 @@ flowchart TD
 ## Facteurs de Confiance
 
 - **Cohérence système** : CPU/RAM/Disk corrélés
-- **Historique ReflexIA** : Décisions passées similaires
+- **Historique Reflexia** : Décisions passées similaires
 - **Temps de réponse** : < 500ms = confiance élevée
 - **Contexte** : Similarité avec patterns connus
 - **Taux d'erreur** : Historique de succès/échecs
@@ -87,8 +87,8 @@ graph TD
         ZeroIA["🤖 ZeroIA<br/>Decision Engine<br/>/cycle, /status"] --> |"Patterns"| Sandozia["🔍 Sandozia<br/>Pattern Analysis<br/>/metric, /pattern"]
         Sandozia --> |"Signals"| CognitiveReactor["🧠 CognitiveReactor<br/>Logic Fusion<br/>/signal, /decision"]
         CognitiveReactor --> |"Validation"| CrossValidator["🔍 CrossModuleValidator<br/>Inter-module Check<br/>/validate, /register"]
-        CrossValidator --> |"Evaluation"| ReflexIA["🔄 ReflexIA<br/>Self-reflection<br/>/evaluate, /snapshot"]
-        ReflexIA --> |"Recovery"| ErrorRecovery["💫 Error Recovery<br/>Auto-healing<br/>/error, /recover"]
+        CrossValidator --> |"Evaluation"| Reflexia["🔄 Reflexia<br/>Self-reflection<br/>/evaluate, /snapshot"]
+        Reflexia --> |"Recovery"| ErrorRecovery["💫 Error Recovery<br/>Auto-healing<br/>/error, /recover"]
         ErrorRecovery --> |"History"| Chronalia["📊 Chronalia<br/>Timeline<br/>/timeline, /history"]
     end
 
@@ -116,7 +116,7 @@ graph TD
     Sandozia --> VaultManager
     CognitiveReactor --> AssistantIA
     CrossValidator --> Helloria
-    ReflexIA --> Prometheus
+    Reflexia --> Prometheus
     ErrorRecovery --> AlertManager
     Chronalia --> Loki
 

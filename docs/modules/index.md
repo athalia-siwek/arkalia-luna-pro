@@ -189,7 +189,7 @@ HELLORIA_PORT=8000
 docker-compose up -d
 
 # Démarrage individuel
-docker-compose up -d arkalia-api
+docker-compose up -d arkalia-api (port 8000)
 docker-compose up -d zeroia
 docker-compose up -d reflexia
 docker-compose up -d sandozia
@@ -276,5 +276,5 @@ pytest tests/security/ -v
 
 ---
 
-**Arkalia-LUNA Pro v2.8.1** - Système d'intelligence artificielle ultra-protection
+**Arkalia-LUNA Pro v2.8.0** - Système d'intelligence artificielle ultra-protection
 **Dernière mise à jour** : 30 juin 2025

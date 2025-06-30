@@ -177,7 +177,7 @@ echo "📋 AUDIT SOC 2 ARKALIA-LUNA"
 echo "✅ CC1.1: Code de conduite et politiques éthiques documentés"
 
 # CC2.1 - Structure de surveillance
-echo "✅ CC2.1: Monitoring continu via ReflexIA + Prometheus"
+echo "✅ CC2.1: Monitoring continu via Reflexia + Prometheus"
 
 # CC3.1 - Structures, autorité, responsabilité
 echo "✅ CC3.1: Rôles définis dans documentation"
@@ -211,7 +211,7 @@ echo "✅ CC9.1: SDLC sécurisé avec CI/CD"
 |---------------|-----------------|------------------------|
 | **IDENTIFY** | Asset Management | Inventaire modules + documentation |
 | **PROTECT** | Access Control | Docker security + GPG |
-| **DETECT** | Monitoring | ReflexIA + Prometheus + logs |
+| **DETECT** | Monitoring | Reflexia + Prometheus + logs |
 | **RESPOND** | Response Planning | incident-response.md |
 | **RECOVER** | Recovery Planning | backup-recovery.md |
 

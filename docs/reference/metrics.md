@@ -2,7 +2,7 @@
 
 ## 🎯 Vue d'ensemble
 
-Cette page documente toutes les métriques Prometheus exposées par Arkalia-LUNA Pro v2.8.1.
+Cette page documente toutes les métriques Prometheus exposées par Arkalia-LUNA Pro v2.8.0.
 
 ---
 
@@ -284,7 +284,7 @@ assistantia_security_blocks_total 2
 ### **Targets Configuration**
 ```yaml
 scrape_configs:
-  - job_name: 'arkalia-api'
+  - job_name: 'arkalia-api (port 8000)'
     static_configs:
       - targets: ['localhost:8000']
     metrics_path: '/metrics'
@@ -366,5 +366,5 @@ rate(arkalia_security_events_total[5m])
 
 ---
 
-**Arkalia-LUNA Pro v2.8.1** - Documentation des métriques Prometheus
+**Arkalia-LUNA Pro v2.8.0** - Documentation des métriques Prometheus
 **Dernière mise à jour** : 30 juin 2025

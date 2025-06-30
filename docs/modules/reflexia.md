@@ -1,6 +1,6 @@
-# ReflexIA — Observateur cognitif réflexif
+# Reflexia — Observateur cognitif réflexif
 
-ReflexIA est le module de monitoring cognitif du kernel Arkalia-LUNA. Il fonctionne en mode API HTTP (port 8002) et prend en charge :
+Reflexia est le module de monitoring cognitif du kernel Arkalia-LUNA. Il fonctionne en mode API HTTP (port 8002) et prend en charge :
 
 - Le monitoring avancé des ressources (CPU, RAM, latence)
 - La synchronisation et la validation des décisions ZeroIA

@@ -82,8 +82,8 @@ arkalia-luna-pro/
 │   ├── utils/                    # Connecteurs Ollama
 │   └── config/                   # Configuration modèles
 │
-├── ⚡ modules/taskia/            # Gestionnaire tâches async
-├── 🌊 modules/nyxalia/           # Analytics et données
+├── ⚡ modules/taskia (en développement)/            # Gestionnaire tâches async
+├── 🌊 modules/nyxalia (en développement)/           # Analytics et données
 ├── 🎮 modules/helloria/          # API REST FastAPI
 ├── 🌍 modules/global_state/      # État global synchronisé
 ├── 🔐 modules/security/          # Vault cryptographique
@@ -201,7 +201,7 @@ sequenceDiagram
 ```yaml
 # Docker Compose Stack
 services:
-  arkalia-api:        # API REST principale
+  arkalia-api (port 8000):        # API REST principale
   sandozia-core:      # Intelligence croisée
   reflexia-engine:    # Moteur décision
   zeroia-monitor:     # Surveillance anomalies

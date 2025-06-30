@@ -82,7 +82,7 @@ graph TD
     end
 
     subgraph "🧠 Modules IA Core"
-        ReflexIA[ReflexIA<br/>Monitoring]
+        Reflexia[Reflexia<br/>Monitoring]
         ZeroIA[ZeroIA<br/>Decision Engine]
         AssistantIA[AssistantIA<br/>LLM Interface]
     end
@@ -106,12 +106,12 @@ graph TD
         AuditTrail[Audit Trail]
     end
 
-    MainLoop --> ReflexIA
+    MainLoop --> Reflexia
     MainLoop --> ZeroIA
     MainLoop --> AssistantIA
 
-    ReflexIA --> ReflexiaState
-    ReflexIA --> PrometheusMetrics
+    Reflexia --> ReflexiaState
+    Reflexia --> PrometheusMetrics
     ReflexiaState --> ZeroIA
 
     ZeroIA --> ZeroiaState
@@ -133,7 +133,7 @@ graph TD
     ErrorHandler --> AuditTrail
 
     style MainLoop fill:#ff6b6b
-    style ReflexIA fill:#4ecdc4
+    style Reflexia fill:#4ecdc4
     style ZeroIA fill:#45b7d1
     style AssistantIA fill:#96ceb4
     style PrometheusMetrics fill:#feca57
@@ -191,7 +191,7 @@ graph TB
     end
 
     subgraph "📦 Core Containers"
-        APIContainer[arkalia-api<br/>:8000]
+        APIContainer[arkalia-api (port 8000)<br/>:8000]
         ReflexiaContainer[reflexia<br/>internal]
         ZeroiaContainer[zeroia<br/>internal]
     end
@@ -463,7 +463,7 @@ sequenceDiagram
     participant S as Sandozia
     participant C as CognitiveReactor
     participant V as CrossValidator
-    participant R as ReflexIA
+    participant R as Reflexia
     participant E as ErrorRecovery
     participant T as Chronalia
     participant M as Monitoring

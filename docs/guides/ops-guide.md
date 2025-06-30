@@ -1,4 +1,4 @@
-# 🛠️ Operations & Maintenance - Arkalia-LUNA v2.8.1
+# 🛠️ Operations & Maintenance - Arkalia-LUNA v2.8.0
 
 Documentation complète des opérations et maintenance d'Arkalia-LUNA avec monitoring intégré.
 
@@ -201,4 +201,4 @@ ark-test-security
 
 [📖 Guide Complet →](ops-guide.md)
 
-💡 **Le monitoring Arkalia-LUNA v2.8.1 offre une observabilité totale avec 34 métriques, 8 dashboards et 15 alertes pour garantir la fiabilité et les performances du système IA.**
+💡 **Le monitoring Arkalia-LUNA v2.8.0 offre une observabilité totale avec 34 métriques, 8 dashboards et 15 alertes pour garantir la fiabilité et les performances du système IA.**

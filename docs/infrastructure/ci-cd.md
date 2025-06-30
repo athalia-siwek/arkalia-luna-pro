@@ -1,6 +1,6 @@
 # 🧑‍💻 Intégration Continue & Qualité — Arkalia-LUNA
 
-![Version](https://img.shields.io/badge/version-v2.5.4-blue)
+![Version](https://img.shields.io/badge/version-v2.8.0-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
@@ -147,7 +147,7 @@ ark-zeroia-full       # Cycle complet (debug + fix + tests)
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v2.x` — Industrial AI Operations
+🤖 Powered by Arkalia Reflexia `v2.x` — Industrial AI Operations
 
 ```markdown
 # 🧪 Intégration Continue & Qualité — Arkalia-LUNA

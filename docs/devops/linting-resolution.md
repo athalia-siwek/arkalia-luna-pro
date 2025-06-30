@@ -243,4 +243,4 @@ L'harmonisation des outils de qualité garantit une **maintenance aisée** et un
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v2.x` — Industrial AI Operations
+🤖 Powered by Arkalia Reflexia `v2.x` — Industrial AI Operations

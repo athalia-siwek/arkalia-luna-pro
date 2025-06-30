@@ -52,7 +52,7 @@ uvicorn modules.assistantia.core:app --port 8001
 Le module est connecté à :
 - `helloria/` (API externe)
 - `reflexia/` (logs et surveillance IA)
-- `nyxalia/` (interprétation mobile)
+- `nyxalia (en développement)/` (interprétation mobile)
 
 💡 **Prêt pour une extension** vers Ollama, Langchain, ou des modèles hybrides.
 
@@ -145,7 +145,7 @@ Pour des considérations de sécurité, veuillez consulter [la section Sécurit�
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v1.x`
+🤖 Powered by Arkalia Reflexia `v1.x`
 
 # Documentation du Module Assistantia
 

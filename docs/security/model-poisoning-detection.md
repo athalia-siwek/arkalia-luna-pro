@@ -33,8 +33,8 @@ except Exception as e:
 
 ### 1. CPU Injection Attack
 **Description** : Injection de valeurs CPU malveillantes pour forcer `emergency_shutdown`
-**Détection** : Analyse cohérence CPU vs severity vs ReflexIA
-**Exemple** : CPU=95% + severity="critical" + ReflexIA="normal" (incohérent)
+**Détection** : Analyse cohérence CPU vs severity vs Reflexia
+**Exemple** : CPU=95% + severity="critical" + Reflexia="normal" (incohérent)
 
 ### 2. Oscillation Attack
 **Description** : Alternance rapide de contextes pour créer instabilité décisionnelle

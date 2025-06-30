@@ -60,10 +60,10 @@ docker run --rm --read-only --tmpfs /tmp \
 
 ### Protection ZeroIA API
 ```ini
-[arkalia-api]
+[arkalia-api (port 8000)]
 enabled = true
 port = 8000
-filter = arkalia-api
+filter = arkalia-api (port 8000)
 logpath = /var/log/arkalia/api.log
 maxretry = 5
 bantime = 3600

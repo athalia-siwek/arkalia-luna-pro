@@ -1,4 +1,4 @@
-# ⚙️ Configuration — Arkalia-LUNA v2.8.1
+# ⚙️ Configuration — Arkalia-LUNA v2.8.0
 
 > Guide complet pour configurer correctement le système IA **Arkalia-LUNA**, en garantissant stabilité, performance et sécurité avec monitoring complet.
 
@@ -102,7 +102,7 @@ alerting:
         - targets: ["alertmanager:9093"]
 
 scrape_configs:
-  - job_name: 'arkalia-api'
+  - job_name: 'arkalia-api (port 8000)'
     static_configs:
       - targets: ['host.docker.internal:8000']
     metrics_path: '/metrics'
@@ -193,7 +193,7 @@ ark-zeroia-enhanced
 # Test Sandozia
 ark-sandozia-demo
 
-# Test ReflexIA
+# Test Reflexia
 ark-reflexia-monitor
 
 # Test API

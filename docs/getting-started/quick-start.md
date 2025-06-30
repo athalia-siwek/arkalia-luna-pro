@@ -1,4 +1,4 @@
-# 🚀 Quick Start - Arkalia-LUNA v2.8.1
+# 🚀 Quick Start - Arkalia-LUNA v2.8.0
 
 Guide de démarrage rapide pour utiliser Arkalia-LUNA en 5 minutes !
 
@@ -54,11 +54,11 @@ ark-zeroia-enhanced
 # Sandozia Intelligence
 ark-sandozia-demo
 
-# ReflexIA Monitoring
+# Reflexia Monitoring
 ark-reflexia-monitor
 
 # Generative AI
-ark-generative-ai-demo
+ark-generative-ai-demo (désactivé)
 ```
 
 ## 📊 Services Monitoring

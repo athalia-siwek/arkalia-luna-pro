@@ -1,4 +1,4 @@
-# 🧹 DevOps & Qualité — Arkalia-LUNA v2.8.1
+# 🧹 DevOps & Qualité — Arkalia-LUNA v2.8.0
 
 Bienvenue dans la section DevOps et Qualité d'Arkalia-LUNA. Cette section regroupe toutes les pratiques, processus et outils qui garantissent la **qualité industrielle** du système IA avec monitoring complet.
 
@@ -184,7 +184,7 @@ docker scan image    # Scan conteneurs
 - ✅ **Niveau 4 - Géré** : Métriques et monitoring ✅
 - ✅ **Niveau 5 - Optimisé** : Amélioration continue + observabilité totale ✅
 
-### Nouvelles Capacités v2.8.1
+### Nouvelles Capacités v2.8.0
 - **Observabilité totale** : 34 métriques + 8 dashboards
 - **Alertes intelligentes** : 15 règles Prometheus
 - **Auto-recovery** : Récupération automatique
@@ -216,4 +216,4 @@ docker scan image    # Scan conteneurs
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v2.8.1` — Industrial AI Operations with Complete Monitoring
+🤖 Powered by Arkalia Reflexia `v2.8.0` — Industrial AI Operations with Complete Monitoring

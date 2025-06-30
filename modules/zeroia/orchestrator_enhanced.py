@@ -104,7 +104,7 @@ class ZeroIAOrchestrator:
                     "decision": decision,
                     "confidence_score": score,
                     "loop_number": self.loop_count,
-                    "circuit_state": self.circuit_breaker.state.value,
+                    "circuit_state": self.circuit_breaker.state,
                 },
                 module="orchestrator",
             )
@@ -144,7 +144,7 @@ class ZeroIAOrchestrator:
             EventType.SYSTEM_ERROR,
             {
                 "action": "system_reboot_handled",
-                "circuit_state": self.circuit_breaker.state.value,
+                "circuit_state": self.circuit_breaker.state,
                 "loop_number": self.loop_count,
             },
             module="orchestrator",

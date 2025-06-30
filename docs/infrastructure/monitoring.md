@@ -1,4 +1,4 @@
-# 📊 Monitoring Complet - Arkalia-LUNA v2.8.1
+# 📊 Monitoring Complet - Arkalia-LUNA v2.8.0
 
 > Guide complet pour l'infrastructure de monitoring d'Arkalia-LUNA avec observabilité totale, métriques avancées et alertes intelligentes.
 
@@ -6,7 +6,7 @@
 
 ## 🎯 Vue d'ensemble
 
-Arkalia-LUNA v2.8.1 intègre une infrastructure de monitoring complète et professionnelle :
+Arkalia-LUNA v2.8.0 intègre une infrastructure de monitoring complète et professionnelle :
 
 - **📊 Grafana** : Dashboards temps réel avec 8 panels spécialisés
 - **📈 Prometheus** : Collecte et stockage de 34 métriques Arkalia
@@ -62,11 +62,11 @@ curl http://localhost:8000/metrics
 - `arkalia_system_load_average` : Charge système moyenne
 
 ### Métriques API
-- `arkalia_api_requests_total` : Nombre total de requêtes
-- `arkalia_api_request_duration_seconds` : Durée des requêtes
-- `arkalia_api_requests_in_progress` : Requêtes en cours
-- `arkalia_api_errors_total` : Nombre total d'erreurs
-- `arkalia_api_response_size_bytes` : Taille des réponses
+- `arkalia_api (port 8000)_requests_total` : Nombre total de requêtes
+- `arkalia_api (port 8000)_request_duration_seconds` : Durée des requêtes
+- `arkalia_api (port 8000)_requests_in_progress` : Requêtes en cours
+- `arkalia_api (port 8000)_errors_total` : Nombre total d'erreurs
+- `arkalia_api (port 8000)_response_size_bytes` : Taille des réponses
 
 ### Métriques Modules
 - `arkalia_module_status` : Statut des modules (0=inactif, 1=actif)
@@ -89,7 +89,7 @@ curl http://localhost:8000/metrics
 - `arkalia_assistantia_rate_limit_hits` : Limites de taux atteintes
 - `arkalia_assistantia_model_usage` : Utilisation des modèles
 
-### Métriques ReflexIA
+### Métriques Reflexia
 - `arkalia_reflexia_monitoring_checks` : Vérifications monitoring
 - `arkalia_reflexia_system_latency_ms` : Latence système
 - `arkalia_reflexia_health_score` : Score de santé
@@ -151,7 +151,7 @@ curl http://localhost:8000/metrics
 - Blocages de sécurité
 - Utilisation des modèles
 
-#### 7. ReflexIA - Monitoring Système
+#### 7. Reflexia - Monitoring Système
 - Vérifications monitoring
 - Latence système
 - Score de santé
@@ -254,7 +254,7 @@ alerting:
         - targets: ["alertmanager:9093"]
 
 scrape_configs:
-  - job_name: 'arkalia-api'
+  - job_name: 'arkalia-api (port 8000)'
     static_configs:
       - targets: ['host.docker.internal:8000']
     metrics_path: '/metrics'
@@ -395,7 +395,7 @@ curl http://localhost:8000/status
 curl http://localhost:8000/metrics | grep arkalia
 
 # Redémarrer l'API
-docker restart arkalia-api
+docker restart arkalia-api (port 8000)
 ```
 
 ---
@@ -419,7 +419,7 @@ docker restart arkalia-api
 
 ## 🎯 Roadmap Future
 
-### v2.9.0 - Monitoring Avancé
+### v2.8.1 - Monitoring Avancé
 - [ ] Métriques business (KPI)
 - [ ] Alertes par email/Slack
 - [ ] Dashboards personnalisables
@@ -474,4 +474,4 @@ docker system prune -f
 
 ---
 
-💡 **Le monitoring Arkalia-LUNA v2.8.1 offre une observabilité totale avec 34 métriques, 8 dashboards et 15 alertes pour garantir la fiabilité et les performances du système IA.**
+💡 **Le monitoring Arkalia-LUNA v2.8.0 offre une observabilité totale avec 34 métriques, 8 dashboards et 15 alertes pour garantir la fiabilité et les performances du système IA.**

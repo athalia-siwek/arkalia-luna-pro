@@ -1,6 +1,6 @@
 # ✨ Crédits — Arkalia-LUNA
 
-![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![Version](https://img.shields.io/badge/version-v2.8.0-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
@@ -88,4 +88,4 @@ Arkalia-LUNA est conçu pour fonctionner **entièrement en local**, garantissant
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v1.x`
+🤖 Powered by Arkalia Reflexia `v1.x`

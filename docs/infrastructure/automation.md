@@ -1,6 +1,6 @@
 # 🔄 Automatisation Cognitivo-Contextuelle
 
-![Version](https://img.shields.io/badge/version-v2.4.0-blue)
+![Version](https://img.shields.io/badge/version-v2.8.0-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 ![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
@@ -13,7 +13,7 @@ Arkalia-LUNA embarque une **boucle d'automatisation intelligente** basée sur la
 
 | Moteur        | Rôle principal                            | Module |
 |---------------|-------------------------------------------|--------|
-| ReflexIA      | Analyse des états internes + alertes      | `reflexia/` |
+| Reflexia      | Analyse des états internes + alertes      | `reflexia/` |
 | ZeroIA        | Prise de décision raisonnée               | `zeroia/`   |
 | AssistantIA   | Action ou réponse générée                 | `assistantia/` |
 | ArkaliaLoop   | Orchestration continue                    | `core/arkalia_loop.py` |
@@ -24,15 +24,15 @@ Arkalia-LUNA embarque une **boucle d'automatisation intelligente** basée sur la
 
 ```mermaid
 sequenceDiagram
-  participant ReflexIA
+  participant Reflexia
   participant ZeroIA
   participant AssistantIA
   participant Nyxalia
 
-  ReflexIA->>ZeroIA: 📊 Anomalie détectée
+  Reflexia->>ZeroIA: 📊 Anomalie détectée
   ZeroIA->>AssistantIA: 💬 Proposition d'action
   AssistantIA->>Nyxalia: 💬 Notification / exécution
-  Nyxalia-->>ReflexIA: 🔄 Retour de signal
+  Nyxalia-->>Reflexia: 🔄 Retour de signal
 
 
   🎯 Types de Déclencheurs
@@ -78,4 +78,4 @@ Arkalia-LUNA n'est pas juste un système IA, c'est un organisme cognitif capable
 ---
 
 © 2025 **Athalia** – Tous droits réservés.
-🤖 Powered by Arkalia ReflexIA `v1.x`
+🤖 Powered by Arkalia Reflexia `v1.x`

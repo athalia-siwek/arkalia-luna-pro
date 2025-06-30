@@ -48,16 +48,16 @@ def test_prompt_injection_protection():
 # Test capabilities, montages, privileges
 
 # Vérification capabilities
-docker exec arkalia-api capsh --print | grep "cap_sys_admin" && echo "❌ VULNÉRABILITÉ"
+docker exec arkalia-api (port 8000) capsh --print | grep "cap_sys_admin" && echo "❌ VULNÉRABILITÉ"
 
 # Test montages dangereux
-docker inspect arkalia-api | jq -r '.[0].Mounts[] | select(.Source | startswith("/proc"))'
+docker inspect arkalia-api (port 8000) | jq -r '.[0].Mounts[] | select(.Source | startswith("/proc"))'
 
 # Vérification utilisateur non-root
-[ "$(docker exec arkalia-api id -u)" = "0" ] && echo "❌ Container en root"
+[ "$(docker exec arkalia-api (port 8000) id -u)" = "0" ] && echo "❌ Container en root"
 
 # Test accès socket Docker
-docker exec arkalia-api test -S /var/run/docker.sock && echo "❌ Socket accessible"
+docker exec arkalia-api (port 8000) test -S /var/run/docker.sock && echo "❌ Socket accessible"
 ```
 
 ### 🟧 **SCÉNARIO 3 : State Corruption & Race Conditions**
@@ -131,7 +131,7 @@ class ArkaliaScanner:
                 self.results.append({"type": "prompt_injection", "severity": "high"})
 
     def scan_docker_security(self):
-        caps = subprocess.check_output(["docker", "exec", "arkalia-api", "capsh", "--print"])
+        caps = subprocess.check_output(["docker", "exec", "arkalia-api (port 8000)", "capsh", "--print"])
         dangerous_caps = ["cap_sys_admin", "cap_net_admin"]
         for cap in dangerous_caps:
             if cap in caps.decode():
@@ -157,7 +157,7 @@ for payload in "'" "1' OR '1'='1" "<script>alert('XSS')</script>"; do
 done
 
 # Phase 3: Container escape attempts
-docker exec arkalia-api /bin/bash -c "
+docker exec arkalia-api (port 8000) /bin/bash -c "
     mount | grep docker
     grep Cap /proc/self/status
     ls -la /proc/1/

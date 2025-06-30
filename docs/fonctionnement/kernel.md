@@ -24,7 +24,7 @@
 
 | Composant         | Description                                             |
 |------------------|---------------------------------------------------------|
-| 🧩 Modules IA     | `reflexia`, `nyxalia`, `helloria`, `assistantia`, etc. |
+| 🧩 Modules IA     | `reflexia`, `nyxalia (en développement)`, `helloria`, `assistantia`, etc. |
 | 🧪 Tests          | `pytest`, `pytest-cov` (couverture 85% mini recommandée)|
 | 🐳 Docker         | Lancement local via `docker-compose`                   |
 | 🚦 CI/CD          | GitHub Actions (`lint`, `tests`, `deploy`)             |

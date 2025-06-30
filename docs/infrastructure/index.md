@@ -255,7 +255,7 @@ curl http://localhost:8000/health
 
 ## 🎯 **Roadmap Infrastructure**
 
-### **v2.8.2 (Planifié)**
+### **v2.8.0 (Planifié)**
 - 🚧 Orchestration Kubernetes
 - 🚧 Auto-scaling intelligent
 - 🚧 Disaster recovery avancé
@@ -282,5 +282,5 @@ curl http://localhost:8000/health
 
 ---
 
-**Arkalia-LUNA Pro v2.8.1** - Infrastructure robuste et scalable
+**Arkalia-LUNA Pro v2.8.0** - Infrastructure robuste et scalable
 **Dernière mise à jour** : 30 juin 2025
