@@ -9,14 +9,15 @@ import json
 import logging
 import time
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any
 
 import aiohttp
 import psutil
 
 # Configuration logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
+
 
 class MonitoringValidator:
     """Validateur complet du monitoring Arkalia"""
@@ -28,7 +29,7 @@ class MonitoringValidator:
             "components": {},
             "metrics": {},
             "alerts": {},
-            "recommendations": []
+            "recommendations": [],
         }
 
         # URLs des services
@@ -39,13 +40,15 @@ class MonitoringValidator:
             "alertmanager": "http://localhost:9093",
             "loki": "http://localhost:3100",
             "node_exporter": "http://localhost:9100",
-            "cadvisor": "http://localhost:8080"
+            "cadvisor": "http://localhost:8080",
         }
 
         # Credentials Grafana
         self.grafana_auth = aiohttp.BasicAuth("admin", "arkalia-secure-2025")
 
-    async def check_service_health(self, session: aiohttp.ClientSession, name: str, url: str) -> dict[str, Any]:
+    async def check_service_health(
+        self, session: aiohttp.ClientSession, name: str, url: str
+    ) -> dict[str, Any]:
         """Vérifie la santé d'un service"""
         try:
             start_time = time.time()
@@ -56,60 +59,60 @@ class MonitoringValidator:
                     "status": "healthy" if response.status == 200 else "unhealthy",
                     "response_time": round(duration, 3),
                     "status_code": response.status,
-                    "error": None
+                    "error": None,
                 }
         except Exception as e:
-            return {
-                "status": "error",
-                "response_time": None,
-                "status_code": None,
-                "error": str(e)
-            }
+            return {"status": "error", "response_time": None, "status_code": None, "error": str(e)}
 
     async def check_arkalia_metrics(self, session: aiohttp.ClientSession) -> dict[str, Any]:
         """Vérifie les métriques Arkalia"""
         try:
-            async with session.get(f"{self.services['arkalia_api']}/metrics", timeout=10) as response:
+            async with session.get(
+                f"{self.services['arkalia_api']}/metrics", timeout=10
+            ) as response:
                 if response.status == 200:
                     metrics_text = await response.text()
-                    arkalia_metrics = [line for line in metrics_text.split('\n') if line.startswith('arkalia_')]
+                    arkalia_metrics = [
+                        line for line in metrics_text.split("\n") if line.startswith("arkalia_")
+                    ]
 
                     return {
                         "status": "healthy",
                         "total_metrics": len(arkalia_metrics),
                         "sample_metrics": arkalia_metrics[:5],
-                        "error": None
+                        "error": None,
                     }
                 else:
                     return {
                         "status": "error",
                         "total_metrics": 0,
                         "sample_metrics": [],
-                        "error": f"HTTP {response.status}"
+                        "error": f"HTTP {response.status}",
                     }
         except Exception as e:
-            return {
-                "status": "error",
-                "total_metrics": 0,
-                "sample_metrics": [],
-                "error": str(e)
-            }
+            return {"status": "error", "total_metrics": 0, "sample_metrics": [], "error": str(e)}
 
     async def check_prometheus_targets(self, session: aiohttp.ClientSession) -> dict[str, Any]:
         """Vérifie les targets Prometheus"""
         try:
-            async with session.get(f"{self.services['prometheus']}/api/v1/targets", timeout=10) as response:
+            async with session.get(
+                f"{self.services['prometheus']}/api/v1/targets", timeout=10
+            ) as response:
                 if response.status == 200:
                     data = await response.json()
-                    targets = data.get('data', {}).get('activeTargets', [])
-                    arkalia_targets = [t for t in targets if 'arkalia' in t.get('labels', {}).get('job', '')]
+                    targets = data.get("data", {}).get("activeTargets", [])
+                    arkalia_targets = [
+                        t for t in targets if "arkalia" in t.get("labels", {}).get("job", "")
+                    ]
 
                     return {
                         "status": "healthy",
                         "total_targets": len(targets),
                         "arkalia_targets": len(arkalia_targets),
-                        "targets_status": {t['labels']['job']: t['health'] for t in arkalia_targets},
-                        "error": None
+                        "targets_status": {
+                            t["labels"]["job"]: t["health"] for t in arkalia_targets
+                        },
+                        "error": None,
                     }
                 else:
                     return {
@@ -117,7 +120,7 @@ class MonitoringValidator:
                         "total_targets": 0,
                         "arkalia_targets": 0,
                         "targets_status": {},
-                        "error": f"HTTP {response.status}"
+                        "error": f"HTTP {response.status}",
                     }
         except Exception as e:
             return {
@@ -125,23 +128,27 @@ class MonitoringValidator:
                 "total_targets": 0,
                 "arkalia_targets": 0,
                 "targets_status": {},
-                "error": str(e)
+                "error": str(e),
             }
 
     async def check_grafana_dashboards(self, session: aiohttp.ClientSession) -> dict[str, Any]:
         """Vérifie les dashboards Grafana"""
         try:
-            async with session.get(f"{self.services['grafana']}/api/search", auth=self.grafana_auth, timeout=10) as response:
+            async with session.get(
+                f"{self.services['grafana']}/api/search", auth=self.grafana_auth, timeout=10
+            ) as response:
                 if response.status == 200:
                     dashboards = await response.json()
-                    arkalia_dashboards = [d for d in dashboards if 'arkalia' in d.get('title', '').lower()]
+                    arkalia_dashboards = [
+                        d for d in dashboards if "arkalia" in d.get("title", "").lower()
+                    ]
 
                     return {
                         "status": "healthy",
                         "total_dashboards": len(dashboards),
                         "arkalia_dashboards": len(arkalia_dashboards),
-                        "dashboard_titles": [d['title'] for d in arkalia_dashboards],
-                        "error": None
+                        "dashboard_titles": [d["title"] for d in arkalia_dashboards],
+                        "error": None,
                     }
                 else:
                     return {
@@ -149,7 +156,7 @@ class MonitoringValidator:
                         "total_dashboards": 0,
                         "arkalia_dashboards": 0,
                         "dashboard_titles": [],
-                        "error": f"HTTP {response.status}"
+                        "error": f"HTTP {response.status}",
                     }
         except Exception as e:
             return {
@@ -157,7 +164,7 @@ class MonitoringValidator:
                 "total_dashboards": 0,
                 "arkalia_dashboards": 0,
                 "dashboard_titles": [],
-                "error": str(e)
+                "error": str(e),
             }
 
     def check_system_resources(self) -> dict[str, Any]:
@@ -165,7 +172,7 @@ class MonitoringValidator:
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
-            disk = psutil.disk_usage('/')
+            disk = psutil.disk_usage("/")
 
             return {
                 "status": "healthy",
@@ -176,13 +183,10 @@ class MonitoringValidator:
                 "disk_percent": disk.percent,
                 "disk_used_gb": round(disk.used / (1024**3), 2),
                 "disk_total_gb": round(disk.total / (1024**3), 2),
-                "error": None
+                "error": None,
             }
         except Exception as e:
-            return {
-                "status": "error",
-                "error": str(e)
-            }
+            return {"status": "error", "error": str(e)}
 
     def generate_recommendations(self) -> list[str]:
         """Génère des recommandations basées sur les résultats"""
@@ -191,7 +195,9 @@ class MonitoringValidator:
         # Vérifier les services
         for service_name, service_data in self.results["components"].items():
             if service_data.get("status") != "healthy":
-                recommendations.append(f"🔧 Corriger le service {service_name}: {service_data.get('error', 'Unknown error')}")
+                recommendations.append(
+                    f"🔧 Corriger le service {service_name}: {service_data.get('error', 'Unknown error')}"
+                )
 
         # Vérifier les métriques
         metrics_data = self.results.get("metrics", {})
@@ -230,7 +236,9 @@ class MonitoringValidator:
             # Vérifier la santé des services
             logger.info("📡 Vérification de la santé des services...")
             for service_name, service_url in self.services.items():
-                self.results["components"][service_name] = await self.check_service_health(session, service_name, service_url)
+                self.results["components"][service_name] = await self.check_service_health(
+                    session, service_name, service_url
+                )
 
             # Vérifier les métriques Arkalia
             logger.info("📊 Vérification des métriques Arkalia...")
@@ -238,11 +246,15 @@ class MonitoringValidator:
 
             # Vérifier les targets Prometheus
             logger.info("🎯 Vérification des targets Prometheus...")
-            self.results["components"]["prometheus_targets"] = await self.check_prometheus_targets(session)
+            self.results["components"]["prometheus_targets"] = await self.check_prometheus_targets(
+                session
+            )
 
             # Vérifier les dashboards Grafana
             logger.info("📈 Vérification des dashboards Grafana...")
-            self.results["components"]["grafana_dashboards"] = await self.check_grafana_dashboards(session)
+            self.results["components"]["grafana_dashboards"] = await self.check_grafana_dashboards(
+                session
+            )
 
             # Vérifier les ressources système
             logger.info("💻 Vérification des ressources système...")
@@ -252,8 +264,11 @@ class MonitoringValidator:
         self.results["recommendations"] = self.generate_recommendations()
 
         # Déterminer le statut global
-        healthy_services = sum(1 for service in self.results["components"].values()
-                             if service.get("status") == "healthy")
+        healthy_services = sum(
+            1
+            for service in self.results["components"].values()
+            if service.get("status") == "healthy"
+        )
         total_services = len(self.results["components"])
 
         if healthy_services == total_services:
@@ -270,9 +285,9 @@ class MonitoringValidator:
 
     def print_report(self):
         """Affiche le rapport de validation"""
-        print("\n" + "="*80)
+        print("\n" + "=" * 80)
         print("🔍 RAPPORT DE VALIDATION DU MONITORING ARKALIA-LUNA PRO")
-        print("="*80)
+        print("=" * 80)
         print(f"📅 Timestamp: {self.results['timestamp']}")
         print(f"🎯 Statut global: {self.results['overall_status'].upper()}")
 
@@ -293,21 +308,26 @@ class MonitoringValidator:
         system_data = self.results.get("components", {}).get("system_resources", {})
         if system_data.get("status") == "healthy":
             print(f"  🖥️  CPU: {system_data.get('cpu_percent', 0)}%")
-            print(f"  💾 RAM: {system_data.get('memory_percent', 0)}% ({system_data.get('memory_used_gb', 0)}GB/{system_data.get('memory_total_gb', 0)}GB)")
-            print(f"  💿 Disque: {system_data.get('disk_percent', 0)}% ({system_data.get('disk_used_gb', 0)}GB/{system_data.get('disk_total_gb', 0)}GB)")
+            print(
+                f"  💾 RAM: {system_data.get('memory_percent', 0)}% ({system_data.get('memory_used_gb', 0)}GB/{system_data.get('memory_total_gb', 0)}GB)"
+            )
+            print(
+                f"  💿 Disque: {system_data.get('disk_percent', 0)}% ({system_data.get('disk_used_gb', 0)}GB/{system_data.get('disk_total_gb', 0)}GB)"
+            )
 
         print("\n💡 RECOMMANDATIONS:")
         for rec in self.results["recommendations"]:
             print(f"  {rec}")
 
-        print("\n" + "="*80)
+        print("\n" + "=" * 80)
         print("🌐 URLs d'accès:")
         print("  📊 Grafana: http://localhost:3000 (admin/arkalia-secure-2025)")
         print("  🎯 Prometheus: http://localhost:9090")
         print("  🚨 AlertManager: http://localhost:9093")
         print("  📝 Loki: http://localhost:3100")
         print("  🔧 cAdvisor: http://localhost:8080")
-        print("="*80)
+        print("=" * 80)
+
 
 async def main():
     """Fonction principale"""
@@ -317,14 +337,16 @@ async def main():
 
     # Sauvegarder le rapport
     import os
+
     os.makedirs("logs", exist_ok=True)
     report_file = f"logs/monitoring_validation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    with open(report_file, 'w') as f:
+    with open(report_file, "w") as f:
         json.dump(results, f, indent=2, default=str)
 
     print(f"\n📄 Rapport sauvegardé: {report_file}")
 
     return results
+
 
 if __name__ == "__main__":
     asyncio.run(main())

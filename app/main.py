@@ -82,9 +82,9 @@ async def metrics_middleware(request: Request, call_next):
     ).inc()
 
     # Enregistrer la durée
-    metrics.arkalia_request_duration.labels(method=request.method, endpoint=request.url.path).observe(
-        duration
-    )
+    metrics.arkalia_request_duration.labels(
+        method=request.method, endpoint=request.url.path
+    ).observe(duration)
 
     return response
 
