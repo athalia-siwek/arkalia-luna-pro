@@ -1,0 +1,91 @@
+{
+    "name": "Arkalia-LUNA Documentation",
+    "short_name": "Arkalia-LUNA",
+    "description": "Documentation complète du système IA Arkalia-LUNA v2.8.0",
+    "version": "2.8.0",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#6366f1",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "fr",
+    "dir": "ltr",
+    "categories": ["productivity", "education", "developer"],
+    "icons": [
+        {
+            "src": "/assets/favicon.svg",
+            "sizes": "32x32",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/assets/logo.svg",
+            "sizes": "200x60",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Installation rapide",
+            "short_name": "Quick Start",
+            "description": "Guide d'installation rapide",
+            "url": "/getting-started/quick-start/",
+            "icons": [
+                {
+                    "src": "/assets/favicon.svg",
+                    "sizes": "32x32"
+                }
+            ]
+        },
+        {
+            "name": "Modules",
+            "short_name": "Modules",
+            "description": "Documentation des modules",
+            "url": "/modules/",
+            "icons": [
+                {
+                    "src": "/assets/favicon.svg",
+                    "sizes": "32x32"
+                }
+            ]
+        },
+        {
+            "name": "API Reference",
+            "short_name": "API",
+            "description": "Documentation API",
+            "url": "/reference/api/",
+            "icons": [
+                {
+                    "src": "/assets/favicon.svg",
+                    "sizes": "32x32"
+                }
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/assets/docs/screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Page d'accueil Arkalia-LUNA"
+        },
+        {
+            "src": "/assets/docs/screenshot-mobile.png",
+            "sizes": "390x844",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Page d'accueil Arkalia-LUNA (Mobile)"
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "edge_side_panel": {
+        "preferred_width": 400
+    },
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    }
+}
