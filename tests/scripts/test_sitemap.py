@@ -15,7 +15,8 @@ def test_sitemap_exists():
     if not sitemap_path.exists():
         sitemap_path.parent.mkdir(exist_ok=True)
         with open(sitemap_path, "w") as f:
-            f.write('''<?xml version="1.0" encoding="UTF-8"?>
+            f.write(
+                """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://arkalia-luna.com/</loc>
@@ -23,7 +24,8 @@ def test_sitemap_exists():
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-</urlset>''')
+</urlset>"""
+            )
 
     assert sitemap_path.exists(), "Le fichier sitemap.xml est introuvable"
 

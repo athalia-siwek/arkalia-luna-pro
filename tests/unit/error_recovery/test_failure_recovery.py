@@ -35,6 +35,8 @@ def test_failsafe_recovers_from_corrupt_snapshot():
     if not failure_analysis_path.exists():
         failure_analysis_path.parent.mkdir(exist_ok=True)
         with open(failure_analysis_path, "w") as f:
-            f.write("# Analyse des échecs\n\n## Résumé\nCe fichier contient l'analyse des échecs système.\n")
+            f.write(
+                "# Analyse des échecs\n\n## Résumé\nCe fichier contient l'analyse des échecs système.\n"
+            )
 
     assert failure_analysis_path.exists(), "Le fichier failure_analysis.md doit exister"
