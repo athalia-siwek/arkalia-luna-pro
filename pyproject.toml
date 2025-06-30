@@ -144,7 +144,9 @@ markers = [
     "slow: tests lents",
     "integration: tests d'intégration",
     "unit: tests unitaires",
-    "performance: tests de performance"
+    "performance: tests de performance",
+    "security: tests de sécurité",
+    "chaos: tests de chaos"
 ]
 
 [tool.mypy]

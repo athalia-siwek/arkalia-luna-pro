@@ -26,7 +26,7 @@ import toml
 # Ajouter le path des modules pour les tests
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "modules"))
 
-from utils_enhanced import get_cache_stats, load_toml_cached
+from modules.utils_enhanced.cache_enhanced import get_cache_stats, load_toml_cached
 
 
 class TestCacheEnhanced:
@@ -153,7 +153,7 @@ class TestCrossModuleIntegration:
     def test_utils_enhanced_import(self):
         """Test import framework Enhanced"""
         try:
-            from utils_enhanced import get_cache_stats, load_toml_cached
+            from modules.utils_enhanced.cache_enhanced import get_cache_stats, load_toml_cached
 
             assert callable(load_toml_cached)
             assert callable(get_cache_stats)
