@@ -43,6 +43,7 @@ extra_css:
 
 extra_javascript:
   - assets/js/arkalia-assistant.js
+  - assets/js/arkalia-enhancements.js
 
 # 🚀 Optimisations Performance
 extra:
