@@ -81,18 +81,14 @@ class TestAdaptiveThresholdsEnhanced:
 
     def test_should_lower_cpu_threshold_true(self):
         """Test de should_lower_cpu_threshold retournant True"""
-        mock_data = {
-            "decisions": [{"output": "monitor"}] * 8  # 8 décisions monitor
-        }
+        mock_data = {"decisions": [{"output": "monitor"}] * 8}  # 8 décisions monitor
         with patch("modules.zeroia.adaptive_thresholds.load_decision_log", return_value=mock_data):
             result = should_lower_cpu_threshold()
             assert result is True
 
     def test_should_lower_cpu_threshold_false(self):
         """Test de should_lower_cpu_threshold retournant False"""
-        mock_data = {
-            "decisions": [{"output": "reduce_load"}] * 5  # 5 décisions reduce_load
-        }
+        mock_data = {"decisions": [{"output": "reduce_load"}] * 5}  # 5 décisions reduce_load
         with patch("modules.zeroia.adaptive_thresholds.load_decision_log", return_value=mock_data):
             result = should_lower_cpu_threshold()
             assert result is False
@@ -173,4 +169,4 @@ class TestAdaptiveThresholdsEnhanced:
         }
         with patch("modules.zeroia.adaptive_thresholds.load_decision_log", return_value=mock_data):
             count = count_recent_action("monitor", window=2)
-            assert count == 1 
+            assert count == 1
