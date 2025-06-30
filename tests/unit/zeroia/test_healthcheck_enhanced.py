@@ -103,10 +103,10 @@ class TestHealthcheckEnhanced:
     def test_check_enhanced_health_with_dashboard_active(self):
         """Test de la vérification de santé améliorée avec dashboard actif"""
         mock_dashboard = {"status": "active", "last_decision": "monitor"}
-        
+
         # Mock events_dir existe avec fichiers récents
         mock_files = [Path("event1.cache"), Path("event2.cache")]
-        
+
         with patch("pathlib.Path.exists", side_effect=lambda: True):
             with patch("pathlib.Path.glob", return_value=mock_files):
                 with patch("builtins.open", mock_open(read_data=json.dumps(mock_dashboard))):
@@ -118,10 +118,10 @@ class TestHealthcheckEnhanced:
     def test_check_enhanced_health_with_dashboard_inactive(self):
         """Test de la vérification de santé améliorée avec dashboard inactif"""
         mock_dashboard = {"status": "inactive", "last_decision": "halt"}
-        
+
         # Mock events_dir existe avec fichiers récents
         mock_files = [Path("event1.cache"), Path("event2.cache")]
-        
+
         with patch("pathlib.Path.exists", side_effect=lambda: True):
             with patch("pathlib.Path.glob", return_value=mock_files):
                 with patch("builtins.open", mock_open(read_data=json.dumps(mock_dashboard))):
@@ -135,7 +135,7 @@ class TestHealthcheckEnhanced:
         """Test de la vérification de santé améliorée sans dashboard"""
         # Mock events_dir existe avec fichiers récents, mais pas de dashboard
         mock_files = [Path("event1.cache"), Path("event2.cache")]
-        
+
         def mock_exists(path):
             path_str = str(path)
             if "dashboard" in path_str:
@@ -143,7 +143,7 @@ class TestHealthcheckEnhanced:
             if "events" in path_str:
                 return True
             return True
-        
+
         with patch("pathlib.Path.exists", side_effect=mock_exists):
             with patch("pathlib.Path.glob", return_value=mock_files):
                 with patch("builtins.print") as mock_print:
@@ -155,10 +155,10 @@ class TestHealthcheckEnhanced:
         """Test de la vérification de santé améliorée avec JSON invalide"""
         # Mock events_dir existe avec fichiers récents
         mock_files = [Path("event1.cache"), Path("event2.cache")]
-        
+
         def mock_exists(path):
             return True
-        
+
         with patch("pathlib.Path.exists", side_effect=mock_exists):
             with patch("pathlib.Path.glob", return_value=mock_files):
                 with patch("builtins.open", side_effect=Exception("Invalid JSON")):
@@ -179,7 +179,7 @@ class TestHealthcheckEnhanced:
         """Test de la vérification de santé améliorée avec fichiers récents"""
         # Mock events_dir existe avec fichiers récents
         mock_files = [Path("event1.cache"), Path("event2.cache")]
-        
+
         with patch("pathlib.Path.exists", side_effect=lambda: True):
             with patch("pathlib.Path.glob", return_value=mock_files):
                 with patch("builtins.print") as mock_print:
@@ -191,10 +191,10 @@ class TestHealthcheckEnhanced:
     def test_check_enhanced_health_dashboard_missing_status(self):
         """Test de la vérification de santé améliorée avec dashboard sans statut"""
         mock_dashboard = {"last_decision": "monitor"}  # Pas de status
-        
+
         # Mock events_dir existe avec fichiers récents
         mock_files = [Path("event1.cache"), Path("event2.cache")]
-        
+
         with patch("pathlib.Path.exists", side_effect=lambda: True):
             with patch("pathlib.Path.glob", return_value=mock_files):
                 with patch("builtins.open", mock_open(read_data=json.dumps(mock_dashboard))):
@@ -209,4 +209,4 @@ class TestHealthcheckEnhanced:
             with patch("builtins.print") as mock_print:
                 result = check_enhanced_health()
                 assert result is False
-                mock_print.assert_called_with("❌ Erreur healthcheck: Permission denied") 
+                mock_print.assert_called_with("❌ Erreur healthcheck: Permission denied")

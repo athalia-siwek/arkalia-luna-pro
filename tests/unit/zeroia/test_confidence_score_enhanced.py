@@ -52,7 +52,7 @@ class TestConfidenceScoreEnhanced:
         # Supprimer le fichier s'il existe
         if self.state_file.exists():
             self.state_file.unlink()
-        
+
         memory = self.scorer._load_memory()
         assert "decision_patterns" in memory
         assert "successful_contexts" in memory
@@ -71,7 +71,7 @@ class TestConfidenceScoreEnhanced:
             "learning_weights": self.scorer.pattern_weights.copy(),
             "last_update": datetime.now().isoformat(),
         }
-        
+
         with patch("builtins.open", mock_open(read_data=toml.dumps(mock_memory))):
             with patch("pathlib.Path.exists", return_value=True):
                 memory = self.scorer._load_memory()
@@ -87,9 +87,9 @@ class TestConfidenceScoreEnhanced:
         """Test du calcul de confiance de base"""
         decision = "monitor"
         context = {"cpu": 50.0, "ram": 60.0}
-        
+
         score, explanation = self.scorer.calculate_confidence(decision, context)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
         assert isinstance(explanation, dict)
@@ -102,9 +102,9 @@ class TestConfidenceScoreEnhanced:
         decision = "reduce_load"
         context = {"cpu": 80.0, "ram": 70.0}
         system_metrics = {"cpu": 85.0, "ram": 75.0, "response_time_ms": 150}
-        
+
         score, explanation = self.scorer.calculate_confidence(decision, context, system_metrics)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
         assert explanation["decision"] == decision
@@ -113,9 +113,9 @@ class TestConfidenceScoreEnhanced:
         """Test du score de cohérence sans historique"""
         decision = "monitor"
         context = {"cpu": 50.0}
-        
+
         score, explanation = self.scorer._score_consistency(decision, context)
-        
+
         assert score == 0.5
         assert "Pas d'historique" in explanation
 
@@ -124,26 +124,26 @@ class TestConfidenceScoreEnhanced:
         # Ajouter des patterns dans la mémoire
         context1 = {"cpu": 50.0, "ram": 60.0}
         context2 = {"cpu": 55.0, "ram": 65.0}
-        
+
         self.scorer.memory["decision_patterns"] = {
             json.dumps(context1): "monitor",
-            json.dumps(context2): "monitor"
+            json.dumps(context2): "monitor",
         }
-        
+
         decision = "monitor"
         context = {"cpu": 52.0, "ram": 62.0}  # Similaire aux contextes existants
-        
+
         score, explanation = self.scorer._score_consistency(decision, context)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
 
     def test_score_system_health(self):
         """Test du score de santé système"""
         metrics = {"cpu": 50.0, "ram": 60.0}
-        
+
         score, explanation = self.scorer._score_system_health(metrics)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
         assert isinstance(explanation, str)
@@ -151,9 +151,9 @@ class TestConfidenceScoreEnhanced:
     def test_score_response_time(self):
         """Test du score de temps de réponse"""
         metrics = {"response_time_ms": 100}
-        
+
         score, explanation = self.scorer._score_response_time(metrics)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
         assert isinstance(explanation, str)
@@ -161,9 +161,9 @@ class TestConfidenceScoreEnhanced:
     def test_score_resource_efficiency(self):
         """Test du score d'efficacité des ressources"""
         metrics = {"cpu": 50.0, "ram": 60.0}
-        
+
         score, explanation = self.scorer._score_resource_efficiency(metrics)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
         assert isinstance(explanation, str)
@@ -172,9 +172,9 @@ class TestConfidenceScoreEnhanced:
         """Test du score de pertinence contextuelle"""
         decision = "monitor"
         context = {"cpu": 50.0, "ram": 60.0}
-        
+
         score, explanation = self.scorer._score_context_relevance(decision, context)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
         assert isinstance(explanation, str)
@@ -182,9 +182,9 @@ class TestConfidenceScoreEnhanced:
     def test_score_error_rate(self):
         """Test du score basé sur le taux d'erreur"""
         decision = "monitor"
-        
+
         score, explanation = self.scorer._score_error_rate(decision)
-        
+
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
         assert isinstance(explanation, str)
@@ -193,9 +193,9 @@ class TestConfidenceScoreEnhanced:
         """Test du calcul de similarité entre contextes"""
         ctx1 = {"cpu": 50.0, "ram": 60.0}
         ctx2 = {"cpu": 55.0, "ram": 65.0}
-        
+
         similarity = self.scorer._calculate_context_similarity(ctx1, ctx2)
-        
+
         assert isinstance(similarity, float)
         assert 0.0 <= similarity <= 1.0
 
@@ -215,12 +215,12 @@ class TestConfidenceScoreEnhanced:
             "response_time": 0.7,
             "resource_efficiency": 0.5,
             "context_relevance": 0.9,
-            "error_rate": 0.8
+            "error_rate": 0.8,
         }
         final_score = 0.7
-        
+
         recommendations = self.scorer._generate_recommendations(scores, final_score)
-        
+
         assert isinstance(recommendations, list)
         assert all(isinstance(rec, str) for rec in recommendations)
 
@@ -230,9 +230,9 @@ class TestConfidenceScoreEnhanced:
         self.scorer.memory["decision_patterns"] = {"test": "monitor"}
         self.scorer.memory["successful_contexts"] = [{"test": "success"}]
         self.scorer.memory["performance_metrics"] = {"avg_confidence": 0.8}
-        
+
         summary = self.scorer.get_memory_summary()
-        
+
         assert isinstance(summary, dict)
         # Vérifier que le résumé contient les bonnes clés selon l'implémentation
         assert "status" in summary or "total_decisions" in summary
@@ -241,14 +241,14 @@ class TestConfidenceScoreEnhanced:
         """Test de la mise à jour de la confiance"""
         decision_id = "test_decision_123"
         new_confidence = 0.8
-        
+
         # Ne doit pas lever d'exception
         self.scorer.update_confidence(decision_id, new_confidence)
 
     def test_get_average_confidence(self):
         """Test de l'obtention de la confiance moyenne"""
         avg_confidence = self.scorer.get_average_confidence()
-        
+
         assert isinstance(avg_confidence, float)
         assert 0.0 <= avg_confidence <= 1.0
 
@@ -273,7 +273,7 @@ class TestConfidenceScoreEnhanced:
         score, explanation = self.scorer.calculate_confidence("monitor", {})
         assert isinstance(score, float)
         assert 0.0 <= score <= 1.0
-        
+
         # Test avec métriques système vides
         score, explanation = self.scorer.calculate_confidence("monitor", {}, {})
         assert isinstance(score, float)
@@ -284,9 +284,9 @@ class TestConfidenceScoreEnhanced:
         # Test avec contextes vides
         similarity = self.scorer._calculate_context_similarity({}, {})
         assert isinstance(similarity, float)
-        
+
         # Test avec contextes différents
         ctx1 = {"cpu": 50.0}
         ctx2 = {"ram": 60.0}
         similarity = self.scorer._calculate_context_similarity(ctx1, ctx2)
-        assert isinstance(similarity, float) 
+        assert isinstance(similarity, float)
