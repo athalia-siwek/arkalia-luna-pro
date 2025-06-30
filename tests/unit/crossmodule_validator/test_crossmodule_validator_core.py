@@ -8,11 +8,7 @@ from datetime import datetime
 
 import pytest
 
-from modules.crossmodule_validator.core import (
-    CrossModuleValidator,
-    ModuleState,
-    ValidationResult,
-)
+from modules.crossmodule_validator.core import CrossModuleValidator, ModuleState, ValidationResult
 
 
 class TestCrossModuleValidator:

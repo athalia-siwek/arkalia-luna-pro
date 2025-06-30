@@ -17,6 +17,12 @@ from .utils.ollama_connector import check_ollama_health
 from .utils.ollama_connector import query_ollama as real_query_ollama
 from .utils.processing import process_input
 
+
+def _check_ollama_health() -> bool:
+    """Wrapper pour check_ollama_health qui peut être mockée dans les tests"""
+    return check_ollama_health()
+
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -193,7 +199,7 @@ async def post_chat(
             raise HTTPException(status_code=400, detail="Message vide")
 
         # Vérifier la santé d'Ollama
-        if not check_ollama_health():
+        if not _check_ollama_health():
             raise HTTPException(status_code=503, detail="Service IA temporairement indisponible")
 
         # Récupérer le contexte Arkalia si demandé

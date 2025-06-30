@@ -77,7 +77,6 @@ def load_toml_cached(
 
     # Vérifier cache hit et validité
     if not force_reload and path_str in _TOML_CACHE_ENHANCED and path_str in _CACHE_TIMESTAMPS:
-
         cache_age = current_time - _CACHE_TIMESTAMPS[path_str]
 
         if cache_age < max_age:

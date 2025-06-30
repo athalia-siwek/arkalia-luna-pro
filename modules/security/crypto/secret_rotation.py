@@ -298,7 +298,6 @@ class RotationManager:
                 backup_meta.name.startswith(f"{secret_name}_backup_")
                 and "rotation_backup" in backup_meta.tags
             ):
-
                 # Extraire le timestamp du nom
                 try:
                     timestamp_str = backup_meta.name.split("_backup_")[1]
@@ -360,7 +359,6 @@ class RotationManager:
 
         for backup_meta in self.vault.list_secrets(include_expired=True):
             if "rotation_backup" in backup_meta.tags and backup_meta.created_at < cutoff_date:
-
                 if self.vault.delete_secret(backup_meta.name):
                     deleted_count += 1
 

@@ -92,7 +92,6 @@ class ArkaliaModulesAnalyzer:
         for component in components:
             for pattern, description in special_patterns.items():
                 if pattern in component.lower():
-
                     # Vérifier si ce composant est intégré
                     is_integrated = self.is_component_integrated(module_name, component)
 

@@ -70,7 +70,11 @@ def run_performance_tests(output_dir="benchmark_results"):
 
     try:
         result = subprocess.run(
-            cmd, env=env, capture_output=True, text=True, timeout=300  # 5 minutes max
+            cmd,
+            env=env,
+            capture_output=True,
+            text=True,
+            timeout=300,  # 5 minutes max
         )
 
         end_time = time.time()

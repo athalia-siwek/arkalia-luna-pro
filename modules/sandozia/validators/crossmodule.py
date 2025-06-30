@@ -257,7 +257,6 @@ class CrossModuleValidator:
             zeroia_state.get("contradictions_detected", 0) > 0
             and reflexia_state.get("decision_metrics", {}).get("confidence", 0.0) > 0.9
         ):
-
             result = ValidationResult(
                 level=ValidationLevel.WARNING,
                 module_source="zeroia",
@@ -281,7 +280,6 @@ class CrossModuleValidator:
         # Reflexia en erreur mais ZeroIA n'a rien détecté
         reflexia_errors = reflexia_state.get("recent_errors", [])
         if len(reflexia_errors) > 0 and zeroia_state.get("contradictions_detected", 0) == 0:
-
             result = ValidationResult(
                 level=ValidationLevel.INFO,
                 module_source="reflexia",
@@ -383,7 +381,9 @@ class CrossModuleValidator:
             "overall_status": (
                 "healthy"
                 if coherence_score > 0.8
-                else "degraded" if coherence_score > 0.6 else "critical"
+                else "degraded"
+                if coherence_score > 0.6
+                else "critical"
             ),
         }
 

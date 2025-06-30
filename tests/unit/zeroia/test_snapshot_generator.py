@@ -1,11 +1,7 @@
 from pathlib import Path
 from unittest.mock import patch
 
-from modules.zeroia.snapshot_generator import (
-    generate_snapshot,
-    is_valid_toml,
-    load_state,
-)
+from modules.zeroia.snapshot_generator import generate_snapshot, is_valid_toml, load_state
 
 
 def test_load_state_file_not_found():

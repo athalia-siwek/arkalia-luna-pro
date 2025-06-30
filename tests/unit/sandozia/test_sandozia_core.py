@@ -48,7 +48,6 @@ class TestSandoziaCore:
             patch("modules.sandozia.core.sandozia_core.reflexia_get_metrics") as mock_get_metrics,
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_load_context,
         ):
-
             mock_get_metrics.return_value = {"cpu": 50, "ram": 60}
             mock_load_context.return_value = {"status": {"severity": "normal"}}
 
@@ -67,7 +66,6 @@ class TestSandoziaCore:
             patch("modules.sandozia.core.sandozia_core.load_reflexia_state") as mock_zeroia_state,
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_context,
         ):
-
             mock_reflexia.return_value = {"status": "ok", "metrics": {"cpu": 45}}
             mock_zeroia_state.return_value = {"decision": {"confidence_score": 0.85}}
             mock_context.return_value = {"status": {"severity": "normal"}}
@@ -164,7 +162,6 @@ class TestSandoziaCore:
             patch("modules.sandozia.core.sandozia_core.get_metrics") as mock_get_metrics,
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_load_context,
         ):
-
             mock_get_metrics.return_value = {"cpu": 50}
             mock_load_context.return_value = {"status": {"severity": "normal"}}
 
@@ -251,7 +248,6 @@ class TestSandoziaCoreIntegration:
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_context,
             patch("modules.sandozia.core.sandozia_core.reflexia_get_metrics") as mock_get_metrics,
         ):
-
             # Setup mocks
             mock_reflexia.return_value = {"status": "ok", "metrics": {"cpu": 45}}
             mock_zeroia_state.return_value = {"decision": {"confidence_score": 0.85}}

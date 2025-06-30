@@ -125,7 +125,6 @@ def demo_modules_integration():
     # Test Sandozia Enhanced
     print("\n🧠 Test Sandozia Enhanced...")
     try:
-
         modules_status["Sandozia"] = "✅ Cache Enhanced intégré"
         print("  ✅ Sandozia prêt pour Enhanced")
     except Exception as e:
@@ -135,7 +134,6 @@ def demo_modules_integration():
     # Test Reflexia Enhanced
     print("\n🔍 Test Reflexia Enhanced...")
     try:
-
         modules_status["Reflexia"] = "✅ Cache Enhanced intégré"
         print("  ✅ Reflexia prêt pour Enhanced")
     except Exception as e:
@@ -145,7 +143,6 @@ def demo_modules_integration():
     # Test Monitoring Enhanced
     print("\n📊 Test Monitoring Enhanced...")
     try:
-
         modules_status["Monitoring"] = "✅ Cache Enhanced intégré"
         print("  ✅ Monitoring prêt pour Enhanced")
     except Exception as e:

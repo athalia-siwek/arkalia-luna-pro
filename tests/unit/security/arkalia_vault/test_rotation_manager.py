@@ -8,12 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.security.crypto import (
-    ArkaliaVault,
-    RotationManager,
-    RotationPolicy,
-    RotationStrategy,
-)
+from modules.security.crypto import ArkaliaVault, RotationManager, RotationPolicy, RotationStrategy
 
 
 class TestRotationManager:

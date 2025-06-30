@@ -81,7 +81,6 @@ def atomic_write(
                 prefix=f".{file_path.name}.tmp.",
                 suffix=".arkalia",
             ) as tmp_file:
-
                 # Écrit les données selon le type
                 if isinstance(data, dict):
                     if file_path.suffix.lower() == ".json":

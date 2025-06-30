@@ -7,11 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from modules.security.crypto import (
-    ArkaliaVault,
-    create_arkalia_vault,
-    migrate_from_env_file,
-)
+from modules.security.crypto import ArkaliaVault, create_arkalia_vault, migrate_from_env_file
 
 
 class TestMigrationFunctions:

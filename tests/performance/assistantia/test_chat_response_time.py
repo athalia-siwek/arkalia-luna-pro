@@ -15,8 +15,10 @@ client = TestClient(app)
 @pytest.mark.skipif(os.getenv("CI") == "true", reason="Ignoré en CI")
 def test_chat_response_time_under_2s():
     """Teste que la réponse de l'API /chat est rapide."""
-    with patch("modules.assistantia.core.real_query_ollama", return_value="Réponse rapide"), \
-         patch("modules.assistantia.core.check_ollama_health", return_value=True):
+    with (
+        patch("modules.assistantia.core.real_query_ollama", return_value="Réponse rapide"),
+        patch("modules.assistantia.core._check_ollama_health", return_value=True),
+    ):
         start_time = time.time()
         response = client.post("/api/v1/chat", json={"message": "Test de performance"})
         end_time = time.time()
@@ -38,14 +40,14 @@ def test_chat_response_time_with_real_ollama():
         pytest.skip("TEST_WITH_OLLAMA non défini - skip test Ollama réel")
 
     # 🔁 Appel de préchauffe (modèle Ollama)
-    with patch("modules.assistantia.core.check_ollama_health", return_value=True):
+    with patch("modules.assistantia.core._check_ollama_health", return_value=True):
         _ = client.post("/api/v1/chat", json={"message": "Préparation"})
 
     time.sleep(1)  # temps pour charger le modèle
 
     # 🎯 Mesure réelle
     start = time.time()
-    with patch("modules.assistantia.core.check_ollama_health", return_value=True):
+    with patch("modules.assistantia.core._check_ollama_health", return_value=True):
         response = client.post("/api/v1/chat", json={"message": "Hello"})
     elapsed = time.time() - start
 

@@ -36,7 +36,7 @@ def test_chat_post(test_client: TestClient):
     app.dependency_overrides[get_query_ollama] = lambda: mock_query_ollama
 
     try:
-        with patch("modules.assistantia.core.check_ollama_health", return_value=True):
+        with patch("modules.assistantia.core._check_ollama_health", return_value=True):
             response = test_client.post("/api/v1/chat", json={"message": "Bonjour"})
             assert response.status_code == 200
             json_data = response.json()

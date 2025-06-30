@@ -394,7 +394,6 @@ class ArkaliaOrchestrator:
             and self.modules["sandozia"].status != ModuleStatus.OFFLINE
             and self.current_cycle_mode in [CycleMode.NORMAL, CycleMode.DEEP_ANALYSIS]
         ):
-
             try:
                 sandozia_module = self.modules["sandozia"]
                 sandozia_status = sandozia_module.instance.get_current_status()
@@ -421,7 +420,6 @@ class ArkaliaOrchestrator:
             and self.modules["taskia"].status != ModuleStatus.OFFLINE
             and self.current_cycle_mode != CycleMode.URGENT
         ):
-
             try:
                 taskia_module = self.modules["taskia"]
 
@@ -457,7 +455,6 @@ class ArkaliaOrchestrator:
             and self.modules["nyxalia"].status != ModuleStatus.OFFLINE
             and self.current_cycle_mode == CycleMode.DEEP_ANALYSIS
         ):
-
             try:
                 nyxalia_module = self.modules["nyxalia"]
 

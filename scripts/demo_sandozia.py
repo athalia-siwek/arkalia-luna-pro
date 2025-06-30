@@ -216,7 +216,6 @@ class SandoziaDemo:
 
         # Générer des séries temporelles
         for i in range(60):  # 60 points
-
             # Métriques corrélées (simulation)
             base_confidence = 0.8 + 0.15 * (i / 60)  # Tendance croissante
             noise = random.uniform(-0.05, 0.05)
