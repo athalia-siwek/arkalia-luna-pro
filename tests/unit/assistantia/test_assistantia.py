@@ -21,16 +21,16 @@ def test_root_get(test_client):
 def test_chat_post(test_client):
     """Teste l'endpoint POST /chat avec un message simple"""
 
-    def mock_query_ollama(prompt: str) -> str:
+    def mock_query_ollama(prompt: str, model: str = "mistral") -> str:
         return "Tu as dit : Bonjour"
 
-    with patch("modules.assistantia.core.get_query_ollama", return_value=mock_query_ollama):
+    with patch("modules.assistantia.core.real_query_ollama", side_effect=mock_query_ollama):
         response = test_client.post("/chat", json={"message": "Bonjour"})
         assert response.status_code == 200
 
         response_data = response.json()
         assert "réponse" in response_data
-        # La réponse devrait contenir le message mocké
+        # La réponse contient le message mocké + contexte Arkalia
         response_text = response_data["réponse"]
         assert "Tu as dit : Bonjour" in response_text
 
@@ -52,13 +52,14 @@ def test_chat_post_long_message(test_client):
     """Teste l'endpoint POST /chat avec un message long"""
     long_msg = "A" * 1000
 
-    def mock_query_ollama(prompt: str) -> str:
+    def mock_query_ollama(prompt: str, model: str = "mistral") -> str:
         return "Message reçu"
 
-    with patch("modules.assistantia.core.get_query_ollama", return_value=mock_query_ollama):
+    with patch("modules.assistantia.core.real_query_ollama", side_effect=mock_query_ollama):
         response = test_client.post("/chat", json={"message": long_msg})
         assert response.status_code == 200
 
         response_data = response.json()
         assert "réponse" in response_data
+        # La réponse contient le message mocké + contexte Arkalia
         assert "Message reçu" in response_data["réponse"]

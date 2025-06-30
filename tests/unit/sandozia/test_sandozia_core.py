@@ -7,11 +7,7 @@ from unittest.mock import patch
 
 import pytest
 
-from modules.sandozia.core.sandozia_core import (
-    IntelligenceSnapshot,
-    SandoziaCore,
-    SandoziaMetrics,
-)
+from modules.sandozia.core.sandozia_core import IntelligenceSnapshot, SandoziaCore, SandoziaMetrics
 
 
 class TestSandoziaCore:
@@ -49,7 +45,7 @@ class TestSandoziaCore:
     async def test_initialize_modules(self, sandozia_core):
         """Test initialisation modules"""
         with (
-            patch("modules.sandozia.core.sandozia_core.get_metrics") as mock_get_metrics,
+            patch("modules.sandozia.core.sandozia_core.reflexia_get_metrics") as mock_get_metrics,
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_load_context,
         ):
 
@@ -253,7 +249,7 @@ class TestSandoziaCoreIntegration:
             patch("modules.sandozia.core.sandozia_core.launch_reflexia_check") as mock_reflexia,
             patch("modules.sandozia.core.sandozia_core.load_reflexia_state") as mock_zeroia_state,
             patch("modules.sandozia.core.sandozia_core.load_context") as mock_context,
-            patch("modules.sandozia.core.sandozia_core.get_metrics") as mock_get_metrics,
+            patch("modules.sandozia.core.sandozia_core.reflexia_get_metrics") as mock_get_metrics,
         ):
 
             # Setup mocks
@@ -275,9 +271,15 @@ class TestSandoziaCoreIntegration:
             assert snapshot.coherence_analysis["coherence_score"] > 0.0
             assert sandozia.snapshots_counter >= 1  # Cache persiste entre tests
 
+            # Vérifier que les mocks ont été appelés
+            mock_reflexia.assert_called()
+            mock_zeroia_state.assert_called()
+            mock_context.assert_called()
+            mock_get_metrics.assert_called()
+
             # Test statut
             status = sandozia.get_current_status()
-            assert status["snapshots_count"] == 1
+            assert status["snapshots_count"] >= 1
 
 
 if __name__ == "__main__":
