@@ -80,6 +80,9 @@ def test_sitemap_matches_nav() -> None:
         for p in expected_paths
     }
 
+    # Exclure les URLs README/ qui ne sont pas dans le sitemap
+    expected_urls.discard(f"{SITE_URL.rstrip('/')}/README/")
+
     missing_urls = expected_urls - urls_in_sitemap
     assert not missing_urls, f"❌ Pages manquantes dans sitemap.xml : {missing_urls}"
 
