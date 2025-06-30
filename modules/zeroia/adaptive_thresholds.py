@@ -43,7 +43,8 @@ def load_adaptive_thresholds_config() -> dict[str, Any] | None:
     """Charge la configuration des seuils adaptatifs depuis le fichier TOML."""
     try:
         with open("config/adaptive_thresholds.toml") as f:
-            return toml.load(f)
+            data = toml.load(f)
+            return data if isinstance(data, dict) else None
     except FileNotFoundError:
         return None
     except Exception:
@@ -67,3 +68,12 @@ def adjust_threshold(current_threshold: float, feedback: str) -> float:
         return current_threshold * 0.9
     else:
         return current_threshold
+
+
+def save_adaptive_thresholds_config(config: dict[str, Any]) -> None:
+    """Sauvegarde la configuration des seuils adaptatifs."""
+    try:
+        with open("config/adaptive_thresholds.toml", "w") as f:
+            toml.dump(config, f)
+    except Exception:
+        pass  # Ignore les erreurs d'écriture

@@ -30,4 +30,13 @@ def load_helloria_state(state: dict[str, Any]) -> dict[str, Any]:
         return {"status": "error"}
 
 
+def save_helloria_state(state: dict[str, Any]) -> None:
+    """Sauvegarde l'état Helloria dans le fichier TOML."""
+    try:
+        with open("state/helloria_state.toml", "w") as f:
+            toml.dump(state, f)
+    except Exception:
+        pass  # Ignore les erreurs d'écriture
+
+
 IS_HELLORIA = True

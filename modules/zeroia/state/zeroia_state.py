@@ -28,8 +28,18 @@ def load_zeroia_state() -> dict[str, Any]:
     """Charge l'état ZeroIA depuis le fichier TOML."""
     try:
         with open("state/zeroia_state.toml") as f:
-            return toml.load(f)
+            data = toml.load(f)
+            return data if isinstance(data, dict) else {"status": "inactive", "last_decision": None}
     except FileNotFoundError:
         return {"status": "inactive", "last_decision": None}
     except Exception:
         return {"status": "error", "last_decision": None}
+
+
+def save_zeroia_state(state: dict[str, Any]) -> None:
+    """Sauvegarde l'état ZeroIA dans le fichier TOML."""
+    try:
+        with open("state/zeroia_state.toml", "w") as f:
+            toml.dump(state, f)
+    except Exception:
+        pass  # Ignore les erreurs d'écriture
