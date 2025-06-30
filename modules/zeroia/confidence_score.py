@@ -62,7 +62,7 @@ class ConfidenceScorer:
             "decision_patterns": {},
             "successful_contexts": [],
             "error_contexts": [],
-            "performance_metrics": {},
+            "performance_metrics": [],
             "learning_weights": self.pattern_weights.copy(),
             "last_update": datetime.now().isoformat(),
         }

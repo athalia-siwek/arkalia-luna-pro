@@ -1,5 +1,3 @@
-"""🧪 Tests étendus pour le module confidence_score de ZeroIA"""
-
 import json
 import tempfile
 from datetime import datetime, timedelta
@@ -229,7 +227,9 @@ class TestConfidenceScoreEnhanced:
         # Ajouter des données de test dans la mémoire
         self.scorer.memory["decision_patterns"] = {"test": "monitor"}
         self.scorer.memory["successful_contexts"] = [{"test": "success"}]
-        self.scorer.memory["performance_metrics"] = {"avg_confidence": 0.8}
+        self.scorer.memory["performance_metrics"] = [
+            {"confidence_score": 0.8, "processing_time_ms": 100, "decision": "monitor"}
+        ]
 
         summary = self.scorer.get_memory_summary()
 

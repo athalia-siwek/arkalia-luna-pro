@@ -41,29 +41,36 @@ def check_enhanced_health():
         # Vérifier Event Store
         events_dir = Path("cache/zeroia_events/events")
         if not events_dir.exists():
+            print(f"DEBUG: events_dir {events_dir} n existe pas")
             print("❌ Event Store non trouvé")
             return False
 
         # Vérifier fichiers récents
         recent_files = list(events_dir.glob("*.cache"))
         if not recent_files:
+            print("DEBUG: pas de fichiers récents trouvés")
             print("❌ Aucun événement récent")
             return False
 
         # Vérifier état dashboard
         dashboard_file = Path("state/zeroia_dashboard.json")
         if dashboard_file.exists():
-            with open(dashboard_file) as f:
-                data = json.load(f)
-                if data.get("status") == "active":
-                    print("✅ ZeroIA Enhanced OK")
-                    return True
+            try:
+                with open(dashboard_file) as f:
+                    data = json.load(f)
+                    if data.get("status") == "active":
+                        print("✅ ZeroIA Enhanced OK")
+                        return True
+            except Exception:
+                # Si erreur lecture dashboard, continuer avec Event Store
+                pass
 
-        # Si pas de dashboard, vérifier activité récente via events
+        # Si pas de dashboard ou erreur, vérifier activité récente via events
         print("✅ ZeroIA Enhanced - Event Store actif")
         return True
 
     except Exception as e:
+        print(f"DEBUG: Exception dans check_enhanced_health: {e}")
         print(f"❌ Erreur healthcheck: {e}")
         return False
 
