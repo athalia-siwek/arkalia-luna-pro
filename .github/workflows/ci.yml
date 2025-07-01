@@ -73,6 +73,13 @@ jobs:
           rm -f test-results.xml coverage.xml .coverage
           rm -rf htmlcov/
 
+      - name: 🔍 Verify test file content
+        run: |
+          echo "🔍 Vérification du contenu du fichier de test..."
+          grep -n "execution_count >= 0" tests/unit/arkalia_master/test_orchestrator_enhanced_v5.py || echo "❌ Assertion execution_count >= 0 non trouvée"
+          grep -n "error_count >= 0" tests/unit/arkalia_master/test_orchestrator_enhanced_v5.py || echo "❌ Assertion error_count >= 0 non trouvée"
+          echo "✅ Vérification terminée"
+
       - name: 🧪 Run tests with coverage
         run: |
           pytest tests/ \
