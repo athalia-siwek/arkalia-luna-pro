@@ -141,7 +141,9 @@ class TestReasonLoopEnhancedFunctions:
         """Test de récupération du statut de dégradation"""
         status = get_degradation_status()
         assert isinstance(status, dict)
-        assert "degradation_level" in status or "current_level" in status or "auto_recovery" in status
+        assert (
+            "degradation_level" in status or "current_level" in status or "auto_recovery" in status
+        )
 
 
 # Tests d'intégration
@@ -246,7 +248,7 @@ class TestReasonLoopEnhancedRobustness:
     def test_handling_component_initialization_failure(self):
         """Test de gestion d'échec d'initialisation des composants"""
         # Test de robustesse lors d'échecs d'initialisation
-        try:
+                try:
             reason_loop = ReasonLoopEnhanced()
             assert reason_loop is not None
         except Exception:
