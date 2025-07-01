@@ -80,9 +80,9 @@ jobs:
           grep -n "error_count >= 0" tests/unit/arkalia_master/test_orchestrator_enhanced_v5.py || echo "❌ Assertion error_count >= 0 non trouvée"
           echo "✅ Vérification terminée"
 
-      - name: 🧪 Run tests with coverage
+      - name: 🧪 Run unit tests with coverage
         run: |
-          pytest tests/ \
+          pytest tests/unit/ \
             --cov=modules \
             --cov=scripts \
             --cov-report=xml \
@@ -93,6 +93,12 @@ jobs:
             --tb=short \
             --ignore=modules/generative_ai/generated/ \
             --strict-markers
+
+      - name: 🧪 Run integration tests (no coverage check)
+        run: |
+          pytest -c pytest-integration.ini \
+            --junitxml=integration-test-results.xml \
+            --ignore=modules/generative_ai/generated/
 
       - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
