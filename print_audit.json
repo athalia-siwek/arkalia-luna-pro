@@ -1,0 +1,2460 @@
+{
+  "audit": {
+    "metadata": {
+      "timestamp": "2025-07-01T13:26:56.703558",
+      "total_files": 37,
+      "total_prints": 168,
+      "by_criticality": {
+        "HIGH": 80,
+        "MEDIUM": 56,
+        "LOW": 26,
+        "EXCLUDE": 6
+      }
+    },
+    "files": {
+      "modules/helloria/__init__.py": [
+        {
+          "line": 45,
+          "code": "print(f\"🌕 helloria v{__version__}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/helloria/__init__.py"
+        },
+        {
+          "line": 46,
+          "code": "print(f\"🏥 Santé: {health_check()}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/helloria/__init__.py"
+        }
+      ],
+      "modules/reflexia/core.py": [
+        {
+          "line": 66,
+          "code": "print(\"🚀 Démarrage Reflexia Enhanced v2.6.0\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/reflexia/core.py"
+        }
+      ],
+      "modules/reflexia/logic/main_loop.py": [
+        {
+          "line": 22,
+          "code": "print(\"🔄 ReflexIA Loop started\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(.*started",
+          "file_path": "modules/reflexia/logic/main_loop.py"
+        },
+        {
+          "line": 28,
+          "code": "print(f\"✅ Status: {status} | Metrics: {metrics}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop.py"
+        },
+        {
+          "line": 34,
+          "code": "print(\"🛑 ReflexIA Loop finished (max iterations reached)\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(.*finished",
+          "file_path": "modules/reflexia/logic/main_loop.py"
+        }
+      ],
+      "modules/reflexia/logic/metrics_enhanced.py": [
+        {
+          "line": 213,
+          "code": "print(\"🧠 Reflexia Enhanced Metrics Test\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/reflexia/logic/metrics_enhanced.py"
+        },
+        {
+          "line": 215,
+          "code": "print(json.dumps(metrics, indent=2))",
+          "criticality": "EXCLUDE",
+          "reason": "JSON dumps - à conserver pour communication inter-process",
+          "file_path": "modules/reflexia/logic/metrics_enhanced.py"
+        }
+      ],
+      "modules/reflexia/logic/main_loop_enhanced.py": [
+        {
+          "line": 198,
+          "code": "print(\"🧠 Reflexia Enhanced Loop v2.6.0 started\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(.*started",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 222,
+          "code": "print(f\"🔄 [{datetime.now().strftime('%H:%M:%S')}] Reflexia Cycle #{iteration + 1}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 223,
+          "code": "print(",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 231,
+          "code": "print(f\"   🐳 Containers: {len(containers)} actifs\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 233,
+          "code": "print(f\"      • {name}: {state}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 235,
+          "code": "print(\"   🎯 Recommandations:\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 237,
+          "code": "print(f\"      • {rec}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 239,
+          "code": "print(f\"   ⏱️ Cycle time: {cycle_time:.2f}s\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 240,
+          "code": "print()",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 247,
+          "code": "print(f\"❌ Erreur cycle Reflexia: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 258,
+          "code": "print(f\"🛑 Reflexia Enhanced terminé - {iteration} cycles en {total_time:.1f}s\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        },
+        {
+          "line": 270,
+          "code": "print(\"🧪 Test Reflexia Enhanced Loop (3 cycles)\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+        }
+      ],
+      "modules/reflexia/utils/config_loader.py": [
+        {
+          "line": 15,
+          "code": "print(f\"❌ Failed to load TOML config: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/reflexia/utils/config_loader.py"
+        }
+      ],
+      "modules/zeroia/failsafe.py": [
+        {
+          "line": 103,
+          "code": "print(\"🛡️ Activation du mode Failsafe ZeroIA…\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/failsafe.py"
+        },
+        {
+          "line": 107,
+          "code": "print(\"⚠️ Snapshot corrompu ou incomplet. Tentative de restauration…\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/failsafe.py"
+        },
+        {
+          "line": 110,
+          "code": "print(\"✅ Restauration réussie.\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/failsafe.py"
+        },
+        {
+          "line": 112,
+          "code": "print(\"❌ Aucune restauration possible. \" \"ZeroIA doit être relancé manuellement.\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/failsafe.py"
+        },
+        {
+          "line": 114,
+          "code": "print(\"✅ Snapshot valide. Aucun failsafe nécessaire.\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/failsafe.py"
+        }
+      ],
+      "modules/zeroia/core.py": [
+        {
+          "line": 274,
+          "code": "print(\"🧠 ZeroIA Core - Test de démarrage\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/core.py"
+        },
+        {
+          "line": 279,
+          "code": "print(\"✅ Initialisation réussie\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/core.py"
+        },
+        {
+          "line": 282,
+          "code": "print(f\"🎯 Décision: {decision} (confiance: {confidence:.2f})\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/core.py"
+        },
+        {
+          "line": 285,
+          "code": "print(f\"📊 État: {status['status']}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/core.py"
+        },
+        {
+          "line": 287,
+          "code": "print(\"❌ Échec initialisation\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/core.py"
+        }
+      ],
+      "modules/zeroia/orchestrator.py": [
+        {
+          "line": 33,
+          "code": "print(f\"[DEBUG] Decision: {decision} / Score: {score}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/orchestrator.py"
+        },
+        {
+          "line": 36,
+          "code": "print(f\"[DEBUG] Max loop reached ({max_loops}). Exiting.\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/orchestrator.py"
+        },
+        {
+          "line": 41,
+          "code": "print(f\"[ERROR] An error occurred in the reason loop: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/orchestrator.py"
+        }
+      ],
+      "modules/zeroia/snapshot_generator.py": [
+        {
+          "line": 21,
+          "code": "print(f\"[ERROR] Fichier introuvable : {file_path}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/snapshot_generator.py"
+        },
+        {
+          "line": 24,
+          "code": "print(f\"[ERROR] Chargement TOML échoué : {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/snapshot_generator.py"
+        },
+        {
+          "line": 33,
+          "code": "print(f\"[ERROR] Données TOML invalides : {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/snapshot_generator.py"
+        },
+        {
+          "line": 67,
+          "code": "print(f\"✅ Snapshot généré dans {output_file}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/snapshot_generator.py"
+        },
+        {
+          "line": 77,
+          "code": "print(f\"[FAILSAFE] Échec snapshot : {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/snapshot_generator.py"
+        },
+        {
+          "line": 79,
+          "code": "print(\"⚠️ Lancement du mode failsafe.\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/snapshot_generator.py"
+        }
+      ],
+      "modules/zeroia/healthcheck_zeroia.py": [
+        {
+          "line": 21,
+          "code": "print(\"❌ Fichier zeroia_state.toml manquant.\", flush=True)",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_zeroia.py"
+        },
+        {
+          "line": 31,
+          "code": "print(f\"🩺 Debug: active={active}, last_decision={last_decision}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/healthcheck_zeroia.py"
+        },
+        {
+          "line": 36,
+          "code": "print(\"✅ ZeroIA forcée comme active (FORCE_ZEROIA_OK=1)\", flush=True)",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_zeroia.py"
+        },
+        {
+          "line": 42,
+          "code": "print(\"✅ ZeroIA est active.\", flush=True)",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_zeroia.py"
+        },
+        {
+          "line": 46,
+          "code": "print(\"❌ ZeroIA inactive ou état incomplet.\", flush=True)",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_zeroia.py"
+        },
+        {
+          "line": 51,
+          "code": "print(f\"💥 Erreur lors du chargement: {e}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/healthcheck_zeroia.py"
+        }
+      ],
+      "modules/zeroia/reason_loop.py": [
+        {
+          "line": 300,
+          "code": "print(",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 328,
+          "code": "print(f\"🚨 [ZeroIA] INTEGRITY VIOLATION: {integrity_reason}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 332,
+          "code": "print(f\"⚠️ [ZeroIA] Integrity check failed: {e}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 336,
+          "code": "print(",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 358,
+          "code": "print(f\"✅ ZeroIA decided: {decision} (confidence={score})\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 359,
+          "code": "print(f\"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score})\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 369,
+          "code": "print(\"[ZeroIA] loop started\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(.*started",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 373,
+          "code": "print(f\"[ZeroIA] 🚨 ERREUR dans reason_loop(): {e}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 379,
+          "code": "print(\"[ZeroIA] 🔄 Boucle cognitive initialisée...\", flush=True)",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop.py"
+        },
+        {
+          "line": 384,
+          "code": "print(\"[ZeroIA] 🧠 Arrêt manuel détecté.\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop.py"
+        }
+      ],
+      "modules/zeroia/confidence_score.py": [
+        {
+          "line": 59,
+          "code": "print(f\"⚠️ [CONFIDENCE] Erreur chargement mémoire: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 79,
+          "code": "print(f\"❌ [CONFIDENCE] Erreur sauvegarde mémoire: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 390,
+          "code": "print(f\"❌ [CONFIDENCE] Erreur mise à jour mémoire: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 500,
+          "code": "print(\"🧠 [CONFIDENCE SCORER] Test du système...\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 507,
+          "code": "print(f\"\\n📊 Score de confiance: {confidence:.3f}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 508,
+          "code": "print(f\"🎯 Niveau: {explanation['confidence_level']}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 509,
+          "code": "print(f\"⏱️ Temps de traitement: {explanation['processing_time_ms']}ms\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 511,
+          "code": "print(\"\\n🔍 Détail des facteurs:\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 513,
+          "code": "print(f\"  • {factor}: {score:.3f}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 515,
+          "code": "print(\"\\n💡 Recommandations:\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 517,
+          "code": "print(f\"  {rec}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 519,
+          "code": "print(\"\\n📈 Résumé mémoire:\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/confidence_score.py"
+        },
+        {
+          "line": 522,
+          "code": "print(f\"  • {key}: {value}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/confidence_score.py"
+        }
+      ],
+      "modules/zeroia/reason_loop_enhanced.py": [
+        {
+          "line": 242,
+          "code": "print(f\"✅ [ZeroIA Enhanced] Contexte par défaut créé: {path}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 642,
+          "code": "print(",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 647,
+          "code": "print(",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 653,
+          "code": "print(",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 720,
+          "code": "print(f\"[ZeroIA Enhanced] 🔄 REDÉMARRAGE REQUIS: {e}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 738,
+          "code": "print(f\"[ZeroIA Enhanced] ⚠️ SURCHARGE: {e}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 744,
+          "code": "print(f\"[ZeroIA Enhanced] 🚨 ERREUR: {e}\", flush=True)",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 774,
+          "code": "print(\"🔄 Circuit breaker réinitialisé manuellement\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 957,
+          "code": "print(\"\\n🛑 Arrêt manuel détecté\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 968,
+          "code": "print(f\"⚠️ Erreur lors du cleanup: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 970,
+          "code": "print(\"✅ Cleanup terminé\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        },
+        {
+          "line": 972,
+          "code": "print(f\"❌ Erreur fatale: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/reason_loop_enhanced.py"
+        }
+      ],
+      "modules/zeroia/healthcheck_enhanced.py": [
+        {
+          "line": 44,
+          "code": "print(f\"DEBUG: events_dir {events_dir} n existe pas\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        },
+        {
+          "line": 45,
+          "code": "print(\"❌ Event Store non trouvé\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        },
+        {
+          "line": 51,
+          "code": "print(\"DEBUG: pas de fichiers récents trouvés\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        },
+        {
+          "line": 52,
+          "code": "print(\"❌ Aucun événement récent\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        },
+        {
+          "line": 62,
+          "code": "print(\"✅ ZeroIA Enhanced OK\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        },
+        {
+          "line": 69,
+          "code": "print(\"✅ ZeroIA Enhanced - Event Store actif\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        },
+        {
+          "line": 73,
+          "code": "print(f\"DEBUG: Exception dans check_enhanced_health: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        },
+        {
+          "line": 74,
+          "code": "print(f\"❌ Erreur healthcheck: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/healthcheck_enhanced.py"
+        }
+      ],
+      "modules/zeroia/utils/state_writer.py": [
+        {
+          "line": 42,
+          "code": ">>> print(f\"Hash du fichier: {hash_val}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/utils/state_writer.py"
+        },
+        {
+          "line": 143,
+          "code": ">>> print(f\"ZeroIA status: {'OK' if is_healthy else 'DOWN'}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/zeroia/utils/state_writer.py"
+        }
+      ],
+      "modules/zeroia/utils/backup.py": [
+        {
+          "line": 11,
+          "code": "print(\"🧪 Backup auto effectué.\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/zeroia/utils/backup.py"
+        },
+        {
+          "line": 13,
+          "code": "print(\"⚠️ Aucun fichier d'état à sauvegarder.\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/zeroia/utils/backup.py"
+        }
+      ],
+      "modules/arkalia_master/orchestrator_ultimate.py": [
+        {
+          "line": 790,
+          "code": "print(\"🌕 ARKALIA MASTER ORCHESTRATOR v4.0.0\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 791,
+          "code": "print(\"=\" * 60)",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 792,
+          "code": "print(\"🧠 10 Modules IA Coordonnés\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 793,
+          "code": "print(\"🔄 Cycles Adaptatifs Intelligents\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 794,
+          "code": "print(\"🛡️ Circuit Breaker Global\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 795,
+          "code": "print(\"🌐 Global State Master\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 796,
+          "code": "print(\"=\" * 60)",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 807,
+          "code": "print(\"\\n📊 ORCHESTRATOR STATUS:\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 808,
+          "code": "print(\"=\" * 40)",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 810,
+          "code": "print(f\"{key}: {value}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 813,
+          "code": "print(\"\\n⏹️ Stopped by user\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        },
+        {
+          "line": 815,
+          "code": "print(f\"\\n💥 Error: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+        }
+      ],
+      "modules/arkalia_master/orchestrator_enhanced_v5.py": [
+        {
+          "line": 740,
+          "code": "print(\"🌟 ARKALIA MASTER ORCHESTRATOR ENHANCED v5.0.0\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 741,
+          "code": "print(\"=\" * 70)",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 742,
+          "code": "print(\"🧠 15 Modules IA Coordonnés (Enhanced)\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 743,
+          "code": "print(\"🛡️ Error Recovery System intégré\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 744,
+          "code": "print(\"🧠 Cognitive Reactor pour réactions automatiques\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 745,
+          "code": "print(\"🔐 Vault Manager pour sécurité renforcée\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 746,
+          "code": "print(\"⏰ Chronalia pour gestion temporelle\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 747,
+          "code": "print(\"✅ CrossModule Validator pour validation croisée\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 748,
+          "code": "print(\"=\" * 70)",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 754,
+          "code": "print(\"\\n⏹️ Stopped by user\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        },
+        {
+          "line": 756,
+          "code": "print(f\"\\n💥 Error: {e}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+        }
+      ],
+      "modules/taskia/__init__.py": [
+        {
+          "line": 45,
+          "code": "print(f\"🌕 taskia v{__version__}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/taskia/__init__.py"
+        },
+        {
+          "line": 46,
+          "code": "print(f\"🏥 Santé: {health_check()}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/taskia/__init__.py"
+        }
+      ],
+      "modules/monitoring/prometheus_metrics.py": [
+        {
+          "line": 385,
+          "code": "print(f\"🔥 Serveur métriques Prometheus démarré sur {self.host}:{self.port}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        },
+        {
+          "line": 386,
+          "code": "print(f\"📊 Métriques disponibles: http://{self.host}:{self.port}/metrics\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        },
+        {
+          "line": 472,
+          "code": "print(\"📊 Système de métriques Arkalia-LUNA initialisé\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        },
+        {
+          "line": 478,
+          "code": "print(\"🔥 Test serveur métriques Prometheus Arkalia-LUNA\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        },
+        {
+          "line": 489,
+          "code": "print(\"✅ Métriques de test enregistrées\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        },
+        {
+          "line": 490,
+          "code": "print(\"🌐 Accès: http://localhost:8001/metrics\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        },
+        {
+          "line": 496,
+          "code": "print(f\"📊 Collecte effectuée: {datetime.now()}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        },
+        {
+          "line": 499,
+          "code": "print(\"🛑 Arrêt du serveur de métriques\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/monitoring/prometheus_metrics.py"
+        }
+      ],
+      "modules/monitoring/__init__.py": [
+        {
+          "line": 45,
+          "code": "print(f\"🌕 monitoring v{__version__}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/monitoring/__init__.py"
+        },
+        {
+          "line": 46,
+          "code": "print(f\"🏥 Santé: {health_check()}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/monitoring/__init__.py"
+        }
+      ],
+      "modules/monitoring/core.py": [
+        {
+          "line": 75,
+          "code": "print(f\"✅ Résultat: {result}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/monitoring/core.py"
+        },
+        {
+          "line": 78,
+          "code": "print(f\"🏥 Santé: {health}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/monitoring/core.py"
+        }
+      ],
+      "modules/security/core.py": [
+        {
+          "line": 75,
+          "code": "print(f\"✅ Résultat: {result}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/security/core.py"
+        },
+        {
+          "line": 78,
+          "code": "print(f\"🏥 Santé: {health}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/security/core.py"
+        }
+      ],
+      "modules/security/crypto/checksum_validator.py": [
+        {
+          "line": 315,
+          "code": "print(f\"✅ Manifest generated: {manifest_path}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/security/crypto/checksum_validator.py"
+        },
+        {
+          "line": 327,
+          "code": "print(f\"❌ Quick check failed: {failed}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/security/crypto/checksum_validator.py"
+        },
+        {
+          "line": 330,
+          "code": "print(\"✅ Quick check passed\")",
+          "criticality": "LOW",
+          "reason": "Pattern sûr détecté",
+          "file_path": "modules/security/crypto/checksum_validator.py"
+        },
+        {
+          "line": 333,
+          "code": "print(\"Usage: python checksum_validator.py [generate|validate|quick]\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/security/crypto/checksum_validator.py"
+        },
+        {
+          "line": 339,
+          "code": "print(f\"Generated checksums for {len(checksums)} files\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/security/crypto/checksum_validator.py"
+        }
+      ],
+      "modules/sandozia/core.py": [
+        {
+          "line": 75,
+          "code": "print(f\"✅ Résultat: {result}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/sandozia/core.py"
+        },
+        {
+          "line": 78,
+          "code": "print(f\"🏥 Santé: {health}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/sandozia/core.py"
+        }
+      ],
+      "modules/sandozia/core/sandozia_core.py": [
+        {
+          "line": 522,
+          "code": "print(json.dumps(status, indent=2))",
+          "criticality": "EXCLUDE",
+          "reason": "JSON dumps - à conserver pour communication inter-process",
+          "file_path": "modules/sandozia/core/sandozia_core.py"
+        },
+        {
+          "line": 526,
+          "code": "print(\"🧠 Starting Sandozia Intelligence Croisée...\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/core/sandozia_core.py"
+        },
+        {
+          "line": 533,
+          "code": "print(\"\\n🛑 Stopping Sandozia...\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/core/sandozia_core.py"
+        }
+      ],
+      "modules/sandozia/core/cognitive_reactor.py": [
+        {
+          "line": 589,
+          "code": "print(\"Usage: python -m modules.sandozia.core.cognitive_reactor --daemon\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/core/cognitive_reactor.py"
+        }
+      ],
+      "modules/sandozia/validators/crossmodule.py": [
+        {
+          "line": 467,
+          "code": "print(json.dumps(result, indent=2))",
+          "criticality": "EXCLUDE",
+          "reason": "JSON dumps - à conserver pour communication inter-process",
+          "file_path": "modules/sandozia/validators/crossmodule.py"
+        },
+        {
+          "line": 471,
+          "code": "print(json.dumps(report, indent=2))",
+          "criticality": "EXCLUDE",
+          "reason": "JSON dumps - à conserver pour communication inter-process",
+          "file_path": "modules/sandozia/validators/crossmodule.py"
+        }
+      ],
+      "modules/sandozia/analyzer/behavior.py": [
+        {
+          "line": 481,
+          "code": "print(\"🧠 Generating synthetic behavior data...\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/analyzer/behavior.py"
+        },
+        {
+          "line": 499,
+          "code": "print(\"📊 Synthetic data generated\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/analyzer/behavior.py"
+        },
+        {
+          "line": 503,
+          "code": "print(json.dumps(result, indent=2))",
+          "criticality": "EXCLUDE",
+          "reason": "JSON dumps - à conserver pour communication inter-process",
+          "file_path": "modules/sandozia/analyzer/behavior.py"
+        }
+      ],
+      "modules/sandozia/reasoning/collaborative.py": [
+        {
+          "line": 277,
+          "code": "print(\"🧠 Demo CollaborativeReasoning...\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/reasoning/collaborative.py"
+        },
+        {
+          "line": 302,
+          "code": "print(json.dumps(result, indent=2))",
+          "criticality": "EXCLUDE",
+          "reason": "JSON dumps - à conserver pour communication inter-process",
+          "file_path": "modules/sandozia/reasoning/collaborative.py"
+        }
+      ],
+      "modules/sandozia/utils/metrics.py": [
+        {
+          "line": 295,
+          "code": "print(\"📊 Generating demo metrics...\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/utils/metrics.py"
+        },
+        {
+          "line": 323,
+          "code": "print(\"\\n🔍 Analysis results:\")",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/utils/metrics.py"
+        },
+        {
+          "line": 330,
+          "code": "print(f\"Corrélation confiance Reflexia-ZeroIA: {correlation:.3f}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/sandozia/utils/metrics.py"
+        },
+        {
+          "line": 334,
+          "code": "print(f\"Cohérence inter-modules: {health['cross_module_coherence']:.3f}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/sandozia/utils/metrics.py"
+        },
+        {
+          "line": 338,
+          "code": "print(f\"\\n📤 Prometheus export ({len(prometheus_data.split())} metrics):\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/sandozia/utils/metrics.py"
+        },
+        {
+          "line": 339,
+          "code": "print(prometheus_data[:200] + \"...\" if len(prometheus_data) > 200 else prometheus_data)",
+          "criticality": "MEDIUM",
+          "reason": "Analyse manuelle requise",
+          "file_path": "modules/sandozia/utils/metrics.py"
+        }
+      ],
+      "modules/sandozia/tests/integration/modules/test_assistantia_integration.py": [
+        {
+          "line": 18,
+          "code": "print(\"\\n--- ROUTES DISPONIBLES ---\")",
+          "criticality": "LOW",
+          "reason": "Fichier de test ou généré",
+          "file_path": "modules/sandozia/tests/integration/modules/test_assistantia_integration.py"
+        },
+        {
+          "line": 20,
+          "code": "print(f\"{route.path} | methods: {route.methods}\")",
+          "criticality": "LOW",
+          "reason": "Fichier de test ou généré",
+          "file_path": "modules/sandozia/tests/integration/modules/test_assistantia_integration.py"
+        },
+        {
+          "line": 21,
+          "code": "print(\"--- FIN ROUTES ---\\n\")",
+          "criticality": "LOW",
+          "reason": "Fichier de test ou généré",
+          "file_path": "modules/sandozia/tests/integration/modules/test_assistantia_integration.py"
+        }
+      ],
+      "modules/sandozia/tests/matrix/test_matrix_chat_cases.py": [
+        {
+          "line": 18,
+          "code": "print(\"\\n--- ROUTES DISPONIBLES ---\")",
+          "criticality": "LOW",
+          "reason": "Fichier de test ou généré",
+          "file_path": "modules/sandozia/tests/matrix/test_matrix_chat_cases.py"
+        },
+        {
+          "line": 20,
+          "code": "print(f\"{route.path} | methods: {route.methods}\")",
+          "criticality": "LOW",
+          "reason": "Fichier de test ou généré",
+          "file_path": "modules/sandozia/tests/matrix/test_matrix_chat_cases.py"
+        },
+        {
+          "line": 21,
+          "code": "print(\"--- FIN ROUTES ---\\n\")",
+          "criticality": "LOW",
+          "reason": "Fichier de test ou généré",
+          "file_path": "modules/sandozia/tests/matrix/test_matrix_chat_cases.py"
+        }
+      ],
+      "modules/utils_enhanced/core.py": [
+        {
+          "line": 75,
+          "code": "print(f\"✅ Résultat: {result}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/utils_enhanced/core.py"
+        },
+        {
+          "line": 78,
+          "code": "print(f\"🏥 Santé: {health}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/utils_enhanced/core.py"
+        }
+      ],
+      "modules/crossmodule_validator/__init__.py": [
+        {
+          "line": 45,
+          "code": "print(f\"🌕 crossmodule_validator v{__version__}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/crossmodule_validator/__init__.py"
+        },
+        {
+          "line": 46,
+          "code": "print(f\"🏥 Santé: {health_check()}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/crossmodule_validator/__init__.py"
+        }
+      ],
+      "modules/error_recovery/__init__.py": [
+        {
+          "line": 45,
+          "code": "print(f\"🌕 error_recovery v{__version__}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/error_recovery/__init__.py"
+        },
+        {
+          "line": 46,
+          "code": "print(f\"🏥 Santé: {health_check()}\")",
+          "criticality": "HIGH",
+          "reason": "Pattern critique détecté: print\\(f\"",
+          "file_path": "modules/error_recovery/__init__.py"
+        }
+      ]
+    }
+  },
+  "migration_plan": {
+    "phase_1_safe": [
+      {
+        "line": 270,
+        "code": "print(\"🧪 Test Reflexia Enhanced Loop (3 cycles)\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 110,
+        "code": "print(\"✅ Restauration réussie.\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/failsafe.py"
+      },
+      {
+        "line": 112,
+        "code": "print(\"❌ Aucune restauration possible. \" \"ZeroIA doit être relancé manuellement.\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/failsafe.py"
+      },
+      {
+        "line": 114,
+        "code": "print(\"✅ Snapshot valide. Aucun failsafe nécessaire.\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/failsafe.py"
+      },
+      {
+        "line": 279,
+        "code": "print(\"✅ Initialisation réussie\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/core.py"
+      },
+      {
+        "line": 287,
+        "code": "print(\"❌ Échec initialisation\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/core.py"
+      },
+      {
+        "line": 21,
+        "code": "print(\"❌ Fichier zeroia_state.toml manquant.\", flush=True)",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_zeroia.py"
+      },
+      {
+        "line": 36,
+        "code": "print(\"✅ ZeroIA forcée comme active (FORCE_ZEROIA_OK=1)\", flush=True)",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_zeroia.py"
+      },
+      {
+        "line": 42,
+        "code": "print(\"✅ ZeroIA est active.\", flush=True)",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_zeroia.py"
+      },
+      {
+        "line": 46,
+        "code": "print(\"❌ ZeroIA inactive ou état incomplet.\", flush=True)",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_zeroia.py"
+      },
+      {
+        "line": 970,
+        "code": "print(\"✅ Cleanup terminé\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 45,
+        "code": "print(\"❌ Event Store non trouvé\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 51,
+        "code": "print(\"DEBUG: pas de fichiers récents trouvés\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 52,
+        "code": "print(\"❌ Aucun événement récent\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 62,
+        "code": "print(\"✅ ZeroIA Enhanced OK\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 69,
+        "code": "print(\"✅ ZeroIA Enhanced - Event Store actif\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 11,
+        "code": "print(\"🧪 Backup auto effectué.\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/zeroia/utils/backup.py"
+      },
+      {
+        "line": 747,
+        "code": "print(\"✅ CrossModule Validator pour validation croisée\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 489,
+        "code": "print(\"✅ Métriques de test enregistrées\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 330,
+        "code": "print(\"✅ Quick check passed\")",
+        "criticality": "LOW",
+        "reason": "Pattern sûr détecté",
+        "file_path": "modules/security/crypto/checksum_validator.py"
+      },
+      {
+        "line": 18,
+        "code": "print(\"\\n--- ROUTES DISPONIBLES ---\")",
+        "criticality": "LOW",
+        "reason": "Fichier de test ou généré",
+        "file_path": "modules/sandozia/tests/integration/modules/test_assistantia_integration.py"
+      },
+      {
+        "line": 20,
+        "code": "print(f\"{route.path} | methods: {route.methods}\")",
+        "criticality": "LOW",
+        "reason": "Fichier de test ou généré",
+        "file_path": "modules/sandozia/tests/integration/modules/test_assistantia_integration.py"
+      },
+      {
+        "line": 21,
+        "code": "print(\"--- FIN ROUTES ---\\n\")",
+        "criticality": "LOW",
+        "reason": "Fichier de test ou généré",
+        "file_path": "modules/sandozia/tests/integration/modules/test_assistantia_integration.py"
+      },
+      {
+        "line": 18,
+        "code": "print(\"\\n--- ROUTES DISPONIBLES ---\")",
+        "criticality": "LOW",
+        "reason": "Fichier de test ou généré",
+        "file_path": "modules/sandozia/tests/matrix/test_matrix_chat_cases.py"
+      },
+      {
+        "line": 20,
+        "code": "print(f\"{route.path} | methods: {route.methods}\")",
+        "criticality": "LOW",
+        "reason": "Fichier de test ou généré",
+        "file_path": "modules/sandozia/tests/matrix/test_matrix_chat_cases.py"
+      },
+      {
+        "line": 21,
+        "code": "print(\"--- FIN ROUTES ---\\n\")",
+        "criticality": "LOW",
+        "reason": "Fichier de test ou généré",
+        "file_path": "modules/sandozia/tests/matrix/test_matrix_chat_cases.py"
+      }
+    ],
+    "phase_2_medium": [
+      {
+        "line": 66,
+        "code": "print(\"🚀 Démarrage Reflexia Enhanced v2.6.0\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/reflexia/core.py"
+      },
+      {
+        "line": 213,
+        "code": "print(\"🧠 Reflexia Enhanced Metrics Test\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/reflexia/logic/metrics_enhanced.py"
+      },
+      {
+        "line": 223,
+        "code": "print(",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 235,
+        "code": "print(\"   🎯 Recommandations:\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 240,
+        "code": "print()",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 103,
+        "code": "print(\"🛡️ Activation du mode Failsafe ZeroIA…\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/failsafe.py"
+      },
+      {
+        "line": 107,
+        "code": "print(\"⚠️ Snapshot corrompu ou incomplet. Tentative de restauration…\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/failsafe.py"
+      },
+      {
+        "line": 274,
+        "code": "print(\"🧠 ZeroIA Core - Test de démarrage\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/core.py"
+      },
+      {
+        "line": 79,
+        "code": "print(\"⚠️ Lancement du mode failsafe.\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/snapshot_generator.py"
+      },
+      {
+        "line": 300,
+        "code": "print(",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 336,
+        "code": "print(",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 379,
+        "code": "print(\"[ZeroIA] 🔄 Boucle cognitive initialisée...\", flush=True)",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 384,
+        "code": "print(\"[ZeroIA] 🧠 Arrêt manuel détecté.\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 500,
+        "code": "print(\"🧠 [CONFIDENCE SCORER] Test du système...\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 511,
+        "code": "print(\"\\n🔍 Détail des facteurs:\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 515,
+        "code": "print(\"\\n💡 Recommandations:\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 519,
+        "code": "print(\"\\n📈 Résumé mémoire:\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 642,
+        "code": "print(",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 647,
+        "code": "print(",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 653,
+        "code": "print(",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 774,
+        "code": "print(\"🔄 Circuit breaker réinitialisé manuellement\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 957,
+        "code": "print(\"\\n🛑 Arrêt manuel détecté\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 13,
+        "code": "print(\"⚠️ Aucun fichier d'état à sauvegarder.\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/zeroia/utils/backup.py"
+      },
+      {
+        "line": 790,
+        "code": "print(\"🌕 ARKALIA MASTER ORCHESTRATOR v4.0.0\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 791,
+        "code": "print(\"=\" * 60)",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 792,
+        "code": "print(\"🧠 10 Modules IA Coordonnés\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 793,
+        "code": "print(\"🔄 Cycles Adaptatifs Intelligents\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 794,
+        "code": "print(\"🛡️ Circuit Breaker Global\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 795,
+        "code": "print(\"🌐 Global State Master\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 796,
+        "code": "print(\"=\" * 60)",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 807,
+        "code": "print(\"\\n📊 ORCHESTRATOR STATUS:\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 808,
+        "code": "print(\"=\" * 40)",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 813,
+        "code": "print(\"\\n⏹️ Stopped by user\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 740,
+        "code": "print(\"🌟 ARKALIA MASTER ORCHESTRATOR ENHANCED v5.0.0\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 741,
+        "code": "print(\"=\" * 70)",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 742,
+        "code": "print(\"🧠 15 Modules IA Coordonnés (Enhanced)\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 743,
+        "code": "print(\"🛡️ Error Recovery System intégré\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 744,
+        "code": "print(\"🧠 Cognitive Reactor pour réactions automatiques\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 745,
+        "code": "print(\"🔐 Vault Manager pour sécurité renforcée\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 746,
+        "code": "print(\"⏰ Chronalia pour gestion temporelle\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 748,
+        "code": "print(\"=\" * 70)",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 754,
+        "code": "print(\"\\n⏹️ Stopped by user\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 472,
+        "code": "print(\"📊 Système de métriques Arkalia-LUNA initialisé\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 478,
+        "code": "print(\"🔥 Test serveur métriques Prometheus Arkalia-LUNA\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 490,
+        "code": "print(\"🌐 Accès: http://localhost:8001/metrics\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 499,
+        "code": "print(\"🛑 Arrêt du serveur de métriques\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 333,
+        "code": "print(\"Usage: python checksum_validator.py [generate|validate|quick]\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/security/crypto/checksum_validator.py"
+      },
+      {
+        "line": 526,
+        "code": "print(\"🧠 Starting Sandozia Intelligence Croisée...\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/core/sandozia_core.py"
+      },
+      {
+        "line": 533,
+        "code": "print(\"\\n🛑 Stopping Sandozia...\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/core/sandozia_core.py"
+      },
+      {
+        "line": 589,
+        "code": "print(\"Usage: python -m modules.sandozia.core.cognitive_reactor --daemon\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/core/cognitive_reactor.py"
+      },
+      {
+        "line": 481,
+        "code": "print(\"🧠 Generating synthetic behavior data...\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/analyzer/behavior.py"
+      },
+      {
+        "line": 499,
+        "code": "print(\"📊 Synthetic data generated\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/analyzer/behavior.py"
+      },
+      {
+        "line": 277,
+        "code": "print(\"🧠 Demo CollaborativeReasoning...\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/reasoning/collaborative.py"
+      },
+      {
+        "line": 295,
+        "code": "print(\"📊 Generating demo metrics...\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/utils/metrics.py"
+      },
+      {
+        "line": 323,
+        "code": "print(\"\\n🔍 Analysis results:\")",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/utils/metrics.py"
+      },
+      {
+        "line": 339,
+        "code": "print(prometheus_data[:200] + \"...\" if len(prometheus_data) > 200 else prometheus_data)",
+        "criticality": "MEDIUM",
+        "reason": "Analyse manuelle requise",
+        "file_path": "modules/sandozia/utils/metrics.py"
+      }
+    ],
+    "phase_3_high": [
+      {
+        "line": 45,
+        "code": "print(f\"🌕 helloria v{__version__}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/helloria/__init__.py"
+      },
+      {
+        "line": 46,
+        "code": "print(f\"🏥 Santé: {health_check()}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/helloria/__init__.py"
+      },
+      {
+        "line": 22,
+        "code": "print(\"🔄 ReflexIA Loop started\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(.*started",
+        "file_path": "modules/reflexia/logic/main_loop.py"
+      },
+      {
+        "line": 28,
+        "code": "print(f\"✅ Status: {status} | Metrics: {metrics}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop.py"
+      },
+      {
+        "line": 34,
+        "code": "print(\"🛑 ReflexIA Loop finished (max iterations reached)\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(.*finished",
+        "file_path": "modules/reflexia/logic/main_loop.py"
+      },
+      {
+        "line": 198,
+        "code": "print(\"🧠 Reflexia Enhanced Loop v2.6.0 started\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(.*started",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 222,
+        "code": "print(f\"🔄 [{datetime.now().strftime('%H:%M:%S')}] Reflexia Cycle #{iteration + 1}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 231,
+        "code": "print(f\"   🐳 Containers: {len(containers)} actifs\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 233,
+        "code": "print(f\"      • {name}: {state}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 237,
+        "code": "print(f\"      • {rec}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 239,
+        "code": "print(f\"   ⏱️ Cycle time: {cycle_time:.2f}s\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 247,
+        "code": "print(f\"❌ Erreur cycle Reflexia: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 258,
+        "code": "print(f\"🛑 Reflexia Enhanced terminé - {iteration} cycles en {total_time:.1f}s\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/logic/main_loop_enhanced.py"
+      },
+      {
+        "line": 15,
+        "code": "print(f\"❌ Failed to load TOML config: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/reflexia/utils/config_loader.py"
+      },
+      {
+        "line": 282,
+        "code": "print(f\"🎯 Décision: {decision} (confiance: {confidence:.2f})\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/core.py"
+      },
+      {
+        "line": 285,
+        "code": "print(f\"📊 État: {status['status']}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/core.py"
+      },
+      {
+        "line": 33,
+        "code": "print(f\"[DEBUG] Decision: {decision} / Score: {score}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/orchestrator.py"
+      },
+      {
+        "line": 36,
+        "code": "print(f\"[DEBUG] Max loop reached ({max_loops}). Exiting.\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/orchestrator.py"
+      },
+      {
+        "line": 41,
+        "code": "print(f\"[ERROR] An error occurred in the reason loop: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/orchestrator.py"
+      },
+      {
+        "line": 21,
+        "code": "print(f\"[ERROR] Fichier introuvable : {file_path}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/snapshot_generator.py"
+      },
+      {
+        "line": 24,
+        "code": "print(f\"[ERROR] Chargement TOML échoué : {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/snapshot_generator.py"
+      },
+      {
+        "line": 33,
+        "code": "print(f\"[ERROR] Données TOML invalides : {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/snapshot_generator.py"
+      },
+      {
+        "line": 67,
+        "code": "print(f\"✅ Snapshot généré dans {output_file}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/snapshot_generator.py"
+      },
+      {
+        "line": 77,
+        "code": "print(f\"[FAILSAFE] Échec snapshot : {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/snapshot_generator.py"
+      },
+      {
+        "line": 31,
+        "code": "print(f\"🩺 Debug: active={active}, last_decision={last_decision}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/healthcheck_zeroia.py"
+      },
+      {
+        "line": 51,
+        "code": "print(f\"💥 Erreur lors du chargement: {e}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/healthcheck_zeroia.py"
+      },
+      {
+        "line": 328,
+        "code": "print(f\"🚨 [ZeroIA] INTEGRITY VIOLATION: {integrity_reason}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 332,
+        "code": "print(f\"⚠️ [ZeroIA] Integrity check failed: {e}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 358,
+        "code": "print(f\"✅ ZeroIA decided: {decision} (confidence={score})\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 359,
+        "code": "print(f\"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score})\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 369,
+        "code": "print(\"[ZeroIA] loop started\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(.*started",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 373,
+        "code": "print(f\"[ZeroIA] 🚨 ERREUR dans reason_loop(): {e}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop.py"
+      },
+      {
+        "line": 59,
+        "code": "print(f\"⚠️ [CONFIDENCE] Erreur chargement mémoire: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 79,
+        "code": "print(f\"❌ [CONFIDENCE] Erreur sauvegarde mémoire: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 390,
+        "code": "print(f\"❌ [CONFIDENCE] Erreur mise à jour mémoire: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 507,
+        "code": "print(f\"\\n📊 Score de confiance: {confidence:.3f}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 508,
+        "code": "print(f\"🎯 Niveau: {explanation['confidence_level']}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 509,
+        "code": "print(f\"⏱️ Temps de traitement: {explanation['processing_time_ms']}ms\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 513,
+        "code": "print(f\"  • {factor}: {score:.3f}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 517,
+        "code": "print(f\"  {rec}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 522,
+        "code": "print(f\"  • {key}: {value}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/confidence_score.py"
+      },
+      {
+        "line": 242,
+        "code": "print(f\"✅ [ZeroIA Enhanced] Contexte par défaut créé: {path}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 720,
+        "code": "print(f\"[ZeroIA Enhanced] 🔄 REDÉMARRAGE REQUIS: {e}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 738,
+        "code": "print(f\"[ZeroIA Enhanced] ⚠️ SURCHARGE: {e}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 744,
+        "code": "print(f\"[ZeroIA Enhanced] 🚨 ERREUR: {e}\", flush=True)",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 968,
+        "code": "print(f\"⚠️ Erreur lors du cleanup: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 972,
+        "code": "print(f\"❌ Erreur fatale: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/reason_loop_enhanced.py"
+      },
+      {
+        "line": 44,
+        "code": "print(f\"DEBUG: events_dir {events_dir} n existe pas\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 73,
+        "code": "print(f\"DEBUG: Exception dans check_enhanced_health: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 74,
+        "code": "print(f\"❌ Erreur healthcheck: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/healthcheck_enhanced.py"
+      },
+      {
+        "line": 42,
+        "code": ">>> print(f\"Hash du fichier: {hash_val}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/utils/state_writer.py"
+      },
+      {
+        "line": 143,
+        "code": ">>> print(f\"ZeroIA status: {'OK' if is_healthy else 'DOWN'}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/zeroia/utils/state_writer.py"
+      },
+      {
+        "line": 810,
+        "code": "print(f\"{key}: {value}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 815,
+        "code": "print(f\"\\n💥 Error: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/arkalia_master/orchestrator_ultimate.py"
+      },
+      {
+        "line": 756,
+        "code": "print(f\"\\n💥 Error: {e}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/arkalia_master/orchestrator_enhanced_v5.py"
+      },
+      {
+        "line": 45,
+        "code": "print(f\"🌕 taskia v{__version__}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/taskia/__init__.py"
+      },
+      {
+        "line": 46,
+        "code": "print(f\"🏥 Santé: {health_check()}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/taskia/__init__.py"
+      },
+      {
+        "line": 385,
+        "code": "print(f\"🔥 Serveur métriques Prometheus démarré sur {self.host}:{self.port}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 386,
+        "code": "print(f\"📊 Métriques disponibles: http://{self.host}:{self.port}/metrics\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 496,
+        "code": "print(f\"📊 Collecte effectuée: {datetime.now()}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/monitoring/prometheus_metrics.py"
+      },
+      {
+        "line": 45,
+        "code": "print(f\"🌕 monitoring v{__version__}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/monitoring/__init__.py"
+      },
+      {
+        "line": 46,
+        "code": "print(f\"🏥 Santé: {health_check()}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/monitoring/__init__.py"
+      },
+      {
+        "line": 75,
+        "code": "print(f\"✅ Résultat: {result}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/monitoring/core.py"
+      },
+      {
+        "line": 78,
+        "code": "print(f\"🏥 Santé: {health}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/monitoring/core.py"
+      },
+      {
+        "line": 75,
+        "code": "print(f\"✅ Résultat: {result}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/security/core.py"
+      },
+      {
+        "line": 78,
+        "code": "print(f\"🏥 Santé: {health}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/security/core.py"
+      },
+      {
+        "line": 315,
+        "code": "print(f\"✅ Manifest generated: {manifest_path}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/security/crypto/checksum_validator.py"
+      },
+      {
+        "line": 327,
+        "code": "print(f\"❌ Quick check failed: {failed}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/security/crypto/checksum_validator.py"
+      },
+      {
+        "line": 339,
+        "code": "print(f\"Generated checksums for {len(checksums)} files\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/security/crypto/checksum_validator.py"
+      },
+      {
+        "line": 75,
+        "code": "print(f\"✅ Résultat: {result}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/sandozia/core.py"
+      },
+      {
+        "line": 78,
+        "code": "print(f\"🏥 Santé: {health}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/sandozia/core.py"
+      },
+      {
+        "line": 330,
+        "code": "print(f\"Corrélation confiance Reflexia-ZeroIA: {correlation:.3f}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/sandozia/utils/metrics.py"
+      },
+      {
+        "line": 334,
+        "code": "print(f\"Cohérence inter-modules: {health['cross_module_coherence']:.3f}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/sandozia/utils/metrics.py"
+      },
+      {
+        "line": 338,
+        "code": "print(f\"\\n📤 Prometheus export ({len(prometheus_data.split())} metrics):\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/sandozia/utils/metrics.py"
+      },
+      {
+        "line": 75,
+        "code": "print(f\"✅ Résultat: {result}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/utils_enhanced/core.py"
+      },
+      {
+        "line": 78,
+        "code": "print(f\"🏥 Santé: {health}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/utils_enhanced/core.py"
+      },
+      {
+        "line": 45,
+        "code": "print(f\"🌕 crossmodule_validator v{__version__}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/crossmodule_validator/__init__.py"
+      },
+      {
+        "line": 46,
+        "code": "print(f\"🏥 Santé: {health_check()}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/crossmodule_validator/__init__.py"
+      },
+      {
+        "line": 45,
+        "code": "print(f\"🌕 error_recovery v{__version__}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/error_recovery/__init__.py"
+      },
+      {
+        "line": 46,
+        "code": "print(f\"🏥 Santé: {health_check()}\")",
+        "criticality": "HIGH",
+        "reason": "Pattern critique détecté: print\\(f\"",
+        "file_path": "modules/error_recovery/__init__.py"
+      }
+    ],
+    "exclude": [
+      {
+        "line": 215,
+        "code": "print(json.dumps(metrics, indent=2))",
+        "criticality": "EXCLUDE",
+        "reason": "JSON dumps - à conserver pour communication inter-process",
+        "file_path": "modules/reflexia/logic/metrics_enhanced.py"
+      },
+      {
+        "line": 522,
+        "code": "print(json.dumps(status, indent=2))",
+        "criticality": "EXCLUDE",
+        "reason": "JSON dumps - à conserver pour communication inter-process",
+        "file_path": "modules/sandozia/core/sandozia_core.py"
+      },
+      {
+        "line": 467,
+        "code": "print(json.dumps(result, indent=2))",
+        "criticality": "EXCLUDE",
+        "reason": "JSON dumps - à conserver pour communication inter-process",
+        "file_path": "modules/sandozia/validators/crossmodule.py"
+      },
+      {
+        "line": 471,
+        "code": "print(json.dumps(report, indent=2))",
+        "criticality": "EXCLUDE",
+        "reason": "JSON dumps - à conserver pour communication inter-process",
+        "file_path": "modules/sandozia/validators/crossmodule.py"
+      },
+      {
+        "line": 503,
+        "code": "print(json.dumps(result, indent=2))",
+        "criticality": "EXCLUDE",
+        "reason": "JSON dumps - à conserver pour communication inter-process",
+        "file_path": "modules/sandozia/analyzer/behavior.py"
+      },
+      {
+        "line": 302,
+        "code": "print(json.dumps(result, indent=2))",
+        "criticality": "EXCLUDE",
+        "reason": "JSON dumps - à conserver pour communication inter-process",
+        "file_path": "modules/sandozia/reasoning/collaborative.py"
+      }
+    ],
+    "recommendations": [
+      "Phase 1: Commencer par les fichiers de test et debug simples",
+      "Phase 2: Analyser manuellement chaque cas MEDIUM",
+      "Phase 3: Ne pas toucher aux cas HIGH sans validation complète",
+      "Exclude: Ne jamais modifier les json.dumps",
+      "Toujours tester après chaque modification"
+    ]
+  }
+}

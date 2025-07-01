@@ -3,6 +3,7 @@
 ## 1. 🌟 Objectifs du Projet
 
 ### Court Terme (1–3 mois)
+
 | Objectif | État | Commentaire |
 |----------|------|-------------|
 | Stabilisation des conteneurs Docker | ✅ | Tous les conteneurs critiques sont actifs et healthy (docker ps OK, healthchecks présents) |
@@ -12,6 +13,7 @@
 | CI/CD locale complète (pytest, black, ruff, GitHub Actions, act) | ✅ | En place et fonctionnelle, tous les tests passent, pre-commit actifs, CI/CD déclenchée sur les bonnes branches |
 
 ### Moyen Terme (3–6 mois)
+
 | Objectif | État | Commentaire |
 |----------|------|-------------|
 | Migration architecture hexagonale | 🟡 | Structure core/domain/infra présente, certains modules encore monolithiques |
@@ -20,6 +22,7 @@
 | Staging avec rollback sécurisé | 🟡 | Docker et backups présents, pas de pipeline de staging/rollback automatisé détecté |
 
 ### Long Terme (6–12 mois)
+
 | Objectif | État | Commentaire |
 |----------|------|-------------|
 | Déploiement Cloud, auto-scaling, CDN | ⏳ | Non encore fait, Docker prêt mais pas de scripts Terraform/Cloud |
@@ -30,11 +33,13 @@
 ---
 
 ## 2. 🌐 Contexte du Projet
+
 - **Conforme** : Architecture modulaire, API REST, SPA React, monitoring avancé, cible IA/DevOps.
 
 ---
 
 ## 3. 🧱 Architecture Actuelle
+
 | Élément | État | Commentaire |
 |---------|------|-------------|
 | Conteneurs | ✅ | 15 actifs, tous healthy |
@@ -48,6 +53,7 @@
 ---
 
 ## 4. 📏 Règles de Codage & Bonnes Pratiques
+
 | Règle | État | Commentaire |
 |-------|------|-------------|
 | Clean Architecture | 🟢 | Structure core/domain/infra présente, modules bien séparés |
@@ -60,6 +66,7 @@
 ---
 
 ## 5. ⚙️ Exigences Techniques
+
 | Exigence | État | Commentaire |
 |----------|------|-------------|
 | Sécurité | 🟢 | Auth API en partie présente, pas de root en conteneur, secrets chiffrés, Bandit OK |
@@ -69,6 +76,7 @@
 ---
 
 ## 6. 🛠️ Roadmap Technique
+
 | Mois | Objectifs Clés | État |
 |------|----------------|------|
 | 1–2  | Auth API, refactor SOLID, cache Redis | 🟡 Auth partielle, refactor avancée, cache Redis à implémenter |
@@ -79,12 +87,14 @@
 ---
 
 ## 7. 📌 Annexes
+
 - **Structure dossiers** : 🟢 Respectée (api/, core/, modules/, docs/, frontend/, infrastructure/, tests/, scripts/)
 - **KPIs** : 🟢 Latence API < 300ms (à confirmer), uptime > 99.9%, CPU/RAM OK, couverture à améliorer
 
 ---
 
 ## 8. 🧩 Synthèse par module/service
+
 | Module/Service         | État actuel                | Remarques                                 |
 |------------------------|---------------------------|-------------------------------------------|
 | ZeroIA                 | ✅ Stable, healthy        | Logs OK, interactions multi-agent         |
@@ -104,6 +114,7 @@
 ---
 
 ## 9. 🚦 Conclusion & Prochaines Étapes
+
 - **Avancées majeures** : stabilité, modularité, CI/CD, structure, conformité.
 - **Points à renforcer** : Authentification API complète, couverture de tests (objectif 90%), intégration OpenTelemetry, staging/rollback, documentation Swagger, audit sécurité externe.
 - **Aucun point bloquant détecté.**
