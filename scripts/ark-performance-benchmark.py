@@ -12,6 +12,7 @@ Fonctionnalités :
 - Détecte régressions performance
 """
 
+from core.ark_logger import ark_logger
 import argparse
 import json
 import os
@@ -28,8 +29,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 def run_performance_tests(output_dir="benchmark_results"):
     """Lance les tests de performance et collecte les résultats"""
 
-    print("🚀 Lancement des benchmarks performance Arkalia-LUNA")
-    print("=" * 60)
+    ark_logger.info("🚀 Lancement des benchmarks performance Arkalia-LUNA", extra={"module": "scripts"})
+    ark_logger.info("=" * 60, extra={"module": "scripts"})
 
     # Créer dossier de résultats
     results_dir = Path(output_dir)
@@ -61,9 +62,9 @@ def run_performance_tests(output_dir="benchmark_results"):
         "--capture=no",  # Afficher les prints
     ]
 
-    print(f"📊 Commande : {' '.join(cmd)}")
-    print(f"📁 Résultats dans : {results_dir}")
-    print()
+    ark_logger.info(f"📊 Commande : {' '.join(cmd, extra={"module": "scripts"})}")
+    ark_logger.info(f"📁 Résultats dans : {results_dir}", extra={"module": "scripts"})
+    ark_logger.info("")
 
     # Exécuter les tests
     start_time = time.time()
@@ -99,34 +100,34 @@ def run_performance_tests(output_dir="benchmark_results"):
             json.dump(results, f, indent=2)
 
         # Afficher résultats
-        print(f"✅ Benchmarks terminés en {duration:.1f}s")
-        print(f"📊 Code retour : {result.returncode}")
-        print(f"💾 Résultats sauvés : {results_file}")
+        ark_logger.info(f"✅ Benchmarks terminés en {duration:.1f}s", extra={"module": "scripts"})
+        ark_logger.info(f"📊 Code retour : {result.returncode}", extra={"module": "scripts"})
+        ark_logger.info(f"💾 Résultats sauvés : {results_file}", extra={"module": "scripts"})
 
         if result.returncode == 0:
-            print("🎯 Tous les benchmarks ont réussi !")
+            ark_logger.info("🎯 Tous les benchmarks ont réussi !", extra={"module": "scripts"})
         else:
-            print("⚠️ Certains benchmarks ont échoué")
+            ark_logger.info("⚠️ Certains benchmarks ont échoué", extra={"module": "scripts"})
 
         # Afficher stdout si présent
         if result.stdout:
-            print("\n📋 Sortie des tests :")
-            print("-" * 40)
-            print(result.stdout)
+            ark_logger.info("\n📋 Sortie des tests :", extra={"module": "scripts"})
+            ark_logger.info("-" * 40, extra={"module": "scripts"})
+            ark_logger.info(result.stdout, extra={"module": "scripts"})
 
         if result.stderr:
-            print("\n❌ Erreurs :")
-            print("-" * 40)
-            print(result.stderr)
+            ark_logger.info("\n❌ Erreurs :", extra={"module": "scripts"})
+            ark_logger.info("-" * 40, extra={"module": "scripts"})
+            ark_logger.info(result.stderr, extra={"module": "scripts"})
 
         return result.returncode == 0
 
     except subprocess.TimeoutExpired:
-        print("❌ Timeout : Les benchmarks ont pris trop de temps (>5min)")
+        ark_logger.info("❌ Timeout : Les benchmarks ont pris trop de temps (>5min)", extra={"module": "scripts"})
         return False
 
     except Exception as e:
-        print(f"❌ Erreur lors de l'exécution : {e}")
+        ark_logger.info(f"❌ Erreur lors de l'exécution : {e}", extra={"module": "scripts"})
         return False
 
 
@@ -135,13 +136,13 @@ def generate_summary_report(output_dir="benchmark_results"):
 
     results_dir = Path(output_dir)
     if not results_dir.exists():
-        print(f"❌ Dossier {output_dir} introuvable")
+        ark_logger.info(f"❌ Dossier {output_dir} introuvable", extra={"module": "scripts"})
         return
 
     # Trouver le fichier de résultats le plus récent
     json_files = list(results_dir.glob("benchmark_results_*.json"))
     if not json_files:
-        print("❌ Aucun fichier de résultats trouvé")
+        ark_logger.info("❌ Aucun fichier de résultats trouvé", extra={"module": "scripts"})
         return
 
     latest_file = max(json_files, key=lambda f: f.stat().st_mtime)
@@ -150,36 +151,36 @@ def generate_summary_report(output_dir="benchmark_results"):
         with open(latest_file) as f:
             results = json.load(f)
 
-        print("\n📊 RAPPORT DE SYNTHÈSE BENCHMARKS")
-        print("=" * 50)
-        print(f"📅 Date : {results['timestamp']}")
-        print(f"⏱️ Durée : {results['duration_seconds']:.1f}s")
-        print(f"🎯 Statut : {'✅ SUCCÈS' if results['return_code'] == 0 else '❌ ÉCHEC'}")
-        print(f"🐍 Python : {results['environment']['python_version'].split()[0]}")
-        print(f"💻 Plateforme : {results['environment']['platform']}")
+        ark_logger.info("\n📊 RAPPORT DE SYNTHÈSE BENCHMARKS", extra={"module": "scripts"})
+        ark_logger.info("=" * 50, extra={"module": "scripts"})
+        ark_logger.info(f"📅 Date : {results['timestamp']}", extra={"module": "scripts"})
+        ark_logger.info(f"⏱️ Durée : {results['duration_seconds']:.1f}s", extra={"module": "scripts"})
+        ark_logger.info(f"🎯 Statut : {'✅ SUCCÈS' if results['return_code'] == 0 else '❌ ÉCHEC'}", extra={"module": "scripts"})
+        ark_logger.info(f"🐍 Python : {results['environment']['python_version'].split(, extra={"module": "scripts"})[0]}")
+        ark_logger.info(f"💻 Plateforme : {results['environment']['platform']}", extra={"module": "scripts"})
 
         # Extraire métriques du stdout si possible
         stdout = results.get("stdout", "")
         if "ZeroIA décision en" in stdout:
-            print("\n🧠 Métriques ZeroIA :")
+            ark_logger.info("\n🧠 Métriques ZeroIA :", extra={"module": "scripts"})
             for line in stdout.split("\n"):
                 if "ZeroIA décision en" in line:
-                    print(f"  {line}")
+                    ark_logger.info(f"  {line}", extra={"module": "scripts"})
 
         if "Circuit Breaker" in stdout:
-            print("\n⚡ Métriques Circuit Breaker :")
+            ark_logger.info("\n⚡ Métriques Circuit Breaker :", extra={"module": "scripts"})
             for line in stdout.split("\n"):
                 if "Circuit Breaker" in line and "Latence" in line:
-                    print(f"  {line}")
+                    ark_logger.info(f"  {line}", extra={"module": "scripts"})
 
         if "Event Store" in stdout:
-            print("\n💾 Métriques Event Store :")
+            ark_logger.info("\n💾 Métriques Event Store :", extra={"module": "scripts"})
             for line in stdout.split("\n"):
                 if "Event Store" in line and "événements" in line:
-                    print(f"  {line}")
+                    ark_logger.info(f"  {line}", extra={"module": "scripts"})
 
     except Exception as e:
-        print(f"❌ Erreur lors de la génération du rapport : {e}")
+        ark_logger.info(f"❌ Erreur lors de la génération du rapport : {e}", extra={"module": "scripts"})
 
 
 def main():
@@ -208,7 +209,7 @@ def main():
                 generate_summary_report(args.output_dir)
             sys.exit(0 if success else 1)
     except Exception as e:
-        print(f"❌ Erreur fatale : {e}")
+        ark_logger.info(f"❌ Erreur fatale : {e}", extra={"module": "scripts"})
         sys.exit(1)
 
 

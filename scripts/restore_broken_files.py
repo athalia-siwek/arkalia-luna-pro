@@ -4,6 +4,7 @@
 Corrige les erreurs de syntaxe créées par les commentaires noqa mal placés
 """
 
+from core.ark_logger import ark_logger
 import re
 import subprocess
 from pathlib import Path
@@ -46,7 +47,7 @@ def fix_broken_imports(file_path: Path) -> bool:
     if content != original_content:
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"✅ Fixed {file_path}")
+        ark_logger.info(f"✅ Fixed {file_path}", extra={"module": "scripts"})
         return True
 
     return False
@@ -76,7 +77,7 @@ def fix_variables_with_underscores(file_path: Path) -> bool:
     if content != original_content:
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"✅ Fixed variables in {file_path}")
+        ark_logger.info(f"✅ Fixed variables in {file_path}", extra={"module": "scripts"})
         return True
 
     return False
@@ -84,7 +85,7 @@ def fix_variables_with_underscores(file_path: Path) -> bool:
 
 def main() -> None:
     """Fonction principale de restauration"""
-    print("🔧 Début de la restauration des fichiers cassés...")
+    ark_logger.info("🔧 Début de la restauration des fichiers cassés...", extra={"module": "scripts"})
 
     files_to_fix = [
         "modules/zeroia/__init__.py",
@@ -108,11 +109,11 @@ def main() -> None:
     try:
         subprocess.run(["isort", "."], check=True)
         subprocess.run(["black", "."], check=True)
-        print("✅ Formatage final appliqué")
+        ark_logger.info("✅ Formatage final appliqué", extra={"module": "scripts"})
     except subprocess.CalledProcessError as e:
-        print(f"❌ Erreur formatage: {e}")
+        ark_logger.info(f"❌ Erreur formatage: {e}", extra={"module": "scripts"})
 
-    print(f"\n✅ Fichiers restaurés: {fixed_count}")
+    ark_logger.info(f"\n✅ Fichiers restaurés: {fixed_count}", extra={"module": "scripts"})
 
 
 if __name__ == "__main__":

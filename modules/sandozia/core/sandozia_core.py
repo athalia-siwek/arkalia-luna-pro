@@ -12,6 +12,7 @@ Coordonne l'intelligence collaborative entre les modules IA :
 - Monitoring temps réel
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -519,18 +520,18 @@ async def main():
 
     if args.status:
         status = sandozia.get_current_status()
-        print(json.dumps(status, indent=2))
+        ark_logger.info(json.dumps(status, indent=2, extra={"module": "core"}))
         return
 
     if args.start:
-        print("🧠 Starting Sandozia Intelligence Croisée...")
+        ark_logger.info("🧠 Starting Sandozia Intelligence Croisée...", extra={"module": "core"})
         await sandozia.start_monitoring()
 
         try:
             while True:
                 await asyncio.sleep(1)
         except KeyboardInterrupt:
-            print("\n🛑 Stopping Sandozia...")
+            ark_logger.info("\n🛑 Stopping Sandozia...", extra={"module": "core"})
             await sandozia.stop_monitoring()
 
 

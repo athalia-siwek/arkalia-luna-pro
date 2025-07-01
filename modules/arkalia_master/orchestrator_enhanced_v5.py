@@ -10,6 +10,7 @@ Version Enhanced avec les composants manquants intégrés :
 - CrossModule Validator pour validation croisée
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import logging
 import time
@@ -697,23 +698,23 @@ if __name__ == "__main__":
         datefmt="%H:%M:%S",
     )
 
-    print("🌟 ARKALIA MASTER ORCHESTRATOR ENHANCED v5.0.0")
-    print("=" * 70)
-    print("🧠 15 Modules IA Coordonnés (Enhanced)")
-    print("🛡️ Error Recovery System intégré")
-    print("🧠 Cognitive Reactor pour réactions automatiques")
-    print("🔐 Vault Manager pour sécurité renforcée")
-    print("⏰ Chronalia pour gestion temporelle")
-    print("✅ CrossModule Validator pour validation croisée")
-    print("=" * 70)
+    ark_logger.info("🌟 ARKALIA MASTER ORCHESTRATOR ENHANCED v5.0.0", extra={"module": "arkalia_master"})
+    ark_logger.info("=" * 70, extra={"module": "arkalia_master"})
+    ark_logger.info("🧠 15 Modules IA Coordonnés (Enhanced)", extra={"module": "arkalia_master"})
+    ark_logger.error("🛡️ Error Recovery System intégré", extra={"module": "arkalia_master"})
+    ark_logger.info("🧠 Cognitive Reactor pour réactions automatiques", extra={"module": "arkalia_master"})
+    ark_logger.info("🔐 Vault Manager pour sécurité renforcée", extra={"module": "arkalia_master"})
+    ark_logger.info("⏰ Chronalia pour gestion temporelle", extra={"module": "arkalia_master"})
+    ark_logger.info("✅ CrossModule Validator pour validation croisée", extra={"module": "arkalia_master"})
+    ark_logger.info("=" * 70, extra={"module": "arkalia_master"})
 
     try:
         cycles = args.cycles or None
         asyncio.run(orchestrate_enhanced_ecosystem(max_cycles=cycles))
     except KeyboardInterrupt:
-        print("\n⏹️ Stopped by user")
+        ark_logger.info("\n⏹️ Stopped by user", extra={"module": "arkalia_master"})
     except Exception as e:
-        print(f"\n💥 Error: {e}")
+        ark_logger.error(f"\n💥 Error: {e}", extra={"module": "arkalia_master"})
         import traceback
 
         traceback.print_exc()

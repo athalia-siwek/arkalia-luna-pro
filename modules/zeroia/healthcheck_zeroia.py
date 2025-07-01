@@ -1,3 +1,4 @@
+from core.ark_logger import ark_logger
 import os
 import sys
 from pathlib import Path
@@ -18,7 +19,7 @@ def check_zeroia_health(verbose: bool = True) -> bool:
 
         if not state_path.exists():
             if verbose:
-                print("❌ Fichier zeroia_state.toml manquant.", flush=True)
+                ark_logger.info("❌ Fichier zeroia_state.toml manquant.", flush=True, extra={"module": "zeroia"})
             return False
 
         data = toml.load(state_path)
@@ -28,27 +29,27 @@ def check_zeroia_health(verbose: bool = True) -> bool:
         last_decision = data.get("decision", {}).get("last_decision", None)
 
         if verbose:
-            print(f"🩺 Debug: active={active}, last_decision={last_decision}", flush=True)
+            ark_logger.debug(f"🩺 Debug: active={active}, last_decision={last_decision}", flush=True, extra={"module": "zeroia"})
 
         # Vérification forcée (ex. pour les tests)
         if os.getenv("FORCE_ZEROIA_OK") == "1":
             if verbose:
-                print("✅ ZeroIA forcée comme active (FORCE_ZEROIA_OK=1)", flush=True)
+                ark_logger.info("✅ ZeroIA forcée comme active (FORCE_ZEROIA_OK=1, extra={"module": "zeroia"})", flush=True)
             return True
 
         # Vérification logique réelle
         if active is True and last_decision:
             if verbose:
-                print("✅ ZeroIA est active.", flush=True)
+                ark_logger.info("✅ ZeroIA est active.", flush=True, extra={"module": "zeroia"})
             return True
         else:
             if verbose:
-                print("❌ ZeroIA inactive ou état incomplet.", flush=True)
+                ark_logger.info("❌ ZeroIA inactive ou état incomplet.", flush=True, extra={"module": "zeroia"})
             return False
 
     except Exception as e:
         if verbose:
-            print(f"💥 Erreur lors du chargement: {e}", flush=True)
+            ark_logger.info(f"💥 Erreur lors du chargement: {e}", flush=True, extra={"module": "zeroia"})
         return False
 
 

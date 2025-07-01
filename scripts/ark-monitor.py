@@ -1,6 +1,7 @@
 # 📊 Arkalia IA Monitor
 # Affiche un état synthétique de la cognition ZeroIA
 
+from core.ark_logger import ark_logger
 import json
 import subprocess  # nosec
 import sys
@@ -24,49 +25,49 @@ def check_docker_status() -> None:
             shell=False,
         )  # nosec
         if result.stdout:
-            print("\n🐳 Docker — Conteneurs en cours d'exécution")
-            print(result.stdout)
+            ark_logger.info("\n🐳 Docker — Conteneurs en cours d'exécution", extra={"module": "scripts"})
+            ark_logger.info(result.stdout, extra={"module": "scripts"})
         else:
-            print("\n🐳 Docker — Aucun conteneur en cours d'exécution")
+            ark_logger.info("\n🐳 Docker — Aucun conteneur en cours d'exécution", extra={"module": "scripts"})
     except subprocess.CalledProcessError as e:
-        print(f"💥 Erreur Docker : {e}")
+        ark_logger.info(f"💥 Erreur Docker : {e}", extra={"module": "scripts"})
 
 
 def ping_reflexia() -> None:
     try:
         response = requests.get("http://reflexia-endpoint/ping", timeout=5)
         if response.status_code == 200:
-            print("\n🔗 Reflexia — Actif")
+            ark_logger.info("\n🔗 Reflexia — Actif", extra={"module": "scripts"})
         else:
-            print("\n🔗 Reflexia — Inactif")
+            ark_logger.info("\n🔗 Reflexia — Inactif", extra={"module": "scripts"})
     except requests.RequestException as e:
-        print(f"💥 Erreur Reflexia : {e}")
+        ark_logger.info(f"💥 Erreur Reflexia : {e}", extra={"module": "scripts"})
 
 
 def display_recent_errors() -> None:
-    print("\n📝 Dernières erreurs connues")
+    ark_logger.info("\n📝 Dernières erreurs connues", extra={"module": "scripts"})
     if LOG_FILE.exists():
         with LOG_FILE.open("r", encoding="utf-8") as f:
             lines = f.readlines()
-            print("".join(lines[-5:]))  # Affiche les 5 dernières lignes du fichier de log
+            ark_logger.info("".join(lines[-5:], extra={"module": "scripts"}))  # Affiche les 5 dernières lignes du fichier de log
     else:
-        print("Aucune erreur connue.")
+        ark_logger.info("Aucune erreur connue.", extra={"module": "scripts"})
 
 
 if __name__ == "__main__":
-    print("\n📄 ZeroIA — TOML State")
+    ark_logger.info("\n📄 ZeroIA — TOML State", extra={"module": "scripts"})
     try:
         data = toml.load(STATE_PATH)
-        print(toml.dumps(data))
+        ark_logger.info(toml.dumps(data, extra={"module": "scripts"}))
     except Exception as e:
-        print(f"💥 Erreur lecture TOML : {e}")
+        ark_logger.info(f"💥 Erreur lecture TOML : {e}", extra={"module": "scripts"})
 
-    print("\n📊 ZeroIA — Dashboard JSON")
+    ark_logger.info("\n📊 ZeroIA — Dashboard JSON", extra={"module": "scripts"})
     try:
         data = json.loads(DASHBOARD_PATH.read_text())
-        print(json.dumps(data, indent=2))
+        ark_logger.info(json.dumps(data, indent=2, extra={"module": "scripts"}))
     except Exception as e:
-        print(f"💥 Erreur lecture JSON : {e}")
+        ark_logger.info(f"💥 Erreur lecture JSON : {e}", extra={"module": "scripts"})
 
     check_docker_status()
     ping_reflexia()

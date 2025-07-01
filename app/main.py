@@ -1,3 +1,4 @@
+from core.ark_logger import ark_logger
 import logging
 import time
 from contextlib import asynccontextmanager
@@ -169,4 +170,4 @@ app.include_router(zeroia_router, prefix="/zeroia")
 def print_status() -> None:
     from rich import print
 
-    print("[green bold]Arkalia-LUNA is active and running.[/green bold]")
+    ark_logger.info("[green bold]Arkalia-LUNA is active and running.[/green bold]", extra={"module": "app"})

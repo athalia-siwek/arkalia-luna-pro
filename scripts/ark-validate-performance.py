@@ -4,6 +4,7 @@
 Valide les modules ZeroIA, EventStore et CircuitBreaker
 """
 
+from core.ark_logger import ark_logger
 import tempfile
 import time
 from pathlib import Path
@@ -15,14 +16,14 @@ try:
     from modules.zeroia.event_store import EventStore, EventType  # noqa: F401
     from modules.zeroia.reason_loop_enhanced import create_default_context_enhanced  # noqa: F401
 except ImportError as e:
-    print(f"❌ Erreur import modules: {e}")
-    print("💡 Vérifiez que les modules sont installés et accessibles")
+    ark_logger.info(f"❌ Erreur import modules: {e}", extra={"module": "scripts"})
+    ark_logger.info("💡 Vérifiez que les modules sont installés et accessibles", extra={"module": "scripts"})
     exit(1)
 
 
 def validate_imports() -> bool:
     """Valide que tous les imports nécessaires fonctionnent"""
-    print("🔍 Validation des imports...")
+    ark_logger.info("🔍 Validation des imports...", extra={"module": "scripts"})
 
     try:
         # Vérifier que les imports globaux ont fonctionné
@@ -31,15 +32,15 @@ def validate_imports() -> bool:
         assert "EventStore" in globals()
         assert "EventType" in globals()
         assert "psutil" in globals()
-        print("✅ Tous les imports OK")
+        ark_logger.info("✅ Tous les imports OK", extra={"module": "scripts"})
         return True
 
     except AssertionError as e:
-        print(f"❌ Import manquant: {e}")
+        ark_logger.info(f"❌ Import manquant: {e}", extra={"module": "scripts"})
         return False
 
     except Exception as e:
-        print(f"❌ Erreur validation imports: {e}")
+        ark_logger.info(f"❌ Erreur validation imports: {e}", extra={"module": "scripts"})
 
         # Tentative de réimport en cas d'échec
         try:
@@ -51,17 +52,17 @@ def validate_imports() -> bool:
                 create_default_context_enhanced,
             )
 
-            print("✅ Réimport réussi")
+            ark_logger.info("✅ Réimport réussi", extra={"module": "scripts"})
             return True
 
         except ImportError as e2:
-            print(f"❌ Réimport échoué: {e2}")
+            ark_logger.info(f"❌ Réimport échoué: {e2}", extra={"module": "scripts"})
             return False
 
 
 def validate_event_store_performance() -> bool:
     """Valide les performances de l'EventStore"""
-    print("📊 Validation EventStore...")
+    ark_logger.info("📊 Validation EventStore...", extra={"module": "scripts"})
 
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -83,17 +84,17 @@ def validate_event_store_performance() -> bool:
             assert event is not None
             assert event.data["decision"] == "test"
 
-            print(f"✅ EventStore: {duration:.3f}s pour ajout + récupération")
+            ark_logger.info(f"✅ EventStore: {duration:.3f}s pour ajout + récupération", extra={"module": "scripts"})
             return duration < 0.1  # Doit être < 100ms
 
     except Exception as e:
-        print(f"❌ Erreur EventStore: {e}")
+        ark_logger.info(f"❌ Erreur EventStore: {e}", extra={"module": "scripts"})
         return False
 
 
 def validate_context_creation() -> bool:
     """Valide la création de contexte"""
-    print("🎯 Validation création contexte...")
+    ark_logger.info("🎯 Validation création contexte...", extra={"module": "scripts"})
 
     try:
         from modules.zeroia.reason_loop_enhanced import (  # noqa: F401
@@ -105,7 +106,7 @@ def validate_context_creation() -> bool:
         end = time.perf_counter()
 
         duration = end - start
-        print(f"✅ Contexte créé en {duration:.3f}s")
+        ark_logger.info(f"✅ Contexte créé en {duration:.3f}s", extra={"module": "scripts"})
 
         # Vérifier structure
         assert "system_status" in context
@@ -115,13 +116,13 @@ def validate_context_creation() -> bool:
         return duration < 0.05  # Doit être < 50ms
 
     except Exception as e:
-        print(f"❌ Erreur création contexte: {e}")
+        ark_logger.info(f"❌ Erreur création contexte: {e}", extra={"module": "scripts"})
         return False
 
 
 def validate_system_resources() -> bool:
     """Valide les ressources système"""
-    print("💻 Validation ressources système...")
+    ark_logger.info("💻 Validation ressources système...", extra={"module": "scripts"})
 
     try:
         import psutil  # noqa: F401
@@ -137,9 +138,9 @@ def validate_system_resources() -> bool:
         disk = psutil.disk_usage("/")
         disk_free_gb = disk.free / (1024**3)
 
-        print(f"✅ RAM disponible: {memory_available_gb:.1f}GB")
-        print(f"✅ CPU usage: {cpu_percent:.1f}%")
-        print(f"✅ Disque libre: {disk_free_gb:.1f}GB")
+        ark_logger.info(f"✅ RAM disponible: {memory_available_gb:.1f}GB", extra={"module": "scripts"})
+        ark_logger.info(f"✅ CPU usage: {cpu_percent:.1f}%", extra={"module": "scripts"})
+        ark_logger.info(f"✅ Disque libre: {disk_free_gb:.1f}GB", extra={"module": "scripts"})
 
         # Critères de validation
         ram_ok = memory_available_gb > 1.0  # Au moins 1GB
@@ -149,14 +150,14 @@ def validate_system_resources() -> bool:
         return ram_ok and cpu_ok and disk_ok
 
     except Exception as e:
-        print(f"❌ Erreur validation ressources: {e}")
+        ark_logger.info(f"❌ Erreur validation ressources: {e}", extra={"module": "scripts"})
         return False
 
 
 def main():
     """Fonction principale de validation"""
-    print("🚀 Validation des performances Arkalia-LUNA Pro")
-    print("=" * 50)
+    ark_logger.info("🚀 Validation des performances Arkalia-LUNA Pro", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     results = []
 
@@ -167,23 +168,23 @@ def main():
     results.append(("Ressources", validate_system_resources()))
 
     # Résumé
-    print("\n📋 Résumé des validations:")
-    print("-" * 30)
+    ark_logger.info("\n📋 Résumé des validations:", extra={"module": "scripts"})
+    ark_logger.info("-" * 30, extra={"module": "scripts"})
 
     passed = 0
     for test_name, result in results:
         status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{test_name:15} {status}")
+        ark_logger.info(f"{test_name:15} {status}", extra={"module": "scripts"})
         if result:
             passed += 1
 
-    print(f"\n🎯 {passed}/{len(results)} tests passés")
+    ark_logger.info(f"\n🎯 {passed}/{len(results, extra={"module": "scripts"})} tests passés")
 
     if passed == len(results):
-        print("🎉 Toutes les validations sont passées!")
+        ark_logger.info("🎉 Toutes les validations sont passées!", extra={"module": "scripts"})
         return 0
     else:
-        print("⚠️ Certaines validations ont échoué")
+        ark_logger.info("⚠️ Certaines validations ont échoué", extra={"module": "scripts"})
         return 1
 
 

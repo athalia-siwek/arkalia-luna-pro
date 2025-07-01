@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # 🔄 ZeroIA Rollback — Arkalia LUNA v2.6.x
 
+from core.ark_logger import ark_logger
 import argparse
 import shutil
 from datetime import datetime
@@ -29,9 +30,9 @@ def log(msg: str, silent: bool = False):
         with LOG_FILE.open("a", encoding="utf-8") as f:
             f.write(f"[rollback] {msg}\n")
     except Exception as e:
-        print(f"[rollback] Erreur : {e}")
+        ark_logger.info(f"[rollback] Erreur : {e}", extra={"module": "scripts"})
     if not silent:
-        print(msg)
+        ark_logger.info(msg, extra={"module": "scripts"})
 
 
 def backup_current_state(silent: bool = False) -> None:

@@ -1,6 +1,7 @@
 # 📊 modules/monitoring/prometheus_metrics.py
 # Système de métriques Prometheus pour Arkalia-LUNA
 
+from core.ark_logger import ark_logger
 import json
 import time
 from datetime import datetime
@@ -382,8 +383,8 @@ class PrometheusServer:
         if not self.server_started:
             start_http_server(self.port, addr=self.host)
             self.server_started = True
-            print(f"🔥 Serveur métriques Prometheus démarré sur {self.host}:{self.port}")
-            print(f"📊 Métriques disponibles: http://{self.host}:{self.port}/metrics")
+            ark_logger.info(f"🔥 Serveur métriques Prometheus démarré sur {self.host}:{self.port}", extra={"module": "monitoring"})
+            ark_logger.info(f"📊 Métriques disponibles: http://{self.host}:{self.port}/metrics", extra={"module": "monitoring"})
 
     def collect_and_expose(self):
         """Collecte les métriques et les expose"""
@@ -469,13 +470,13 @@ def initialize_metrics() -> PrometheusServer:
     """Initialise le système de métriques Arkalia"""
     server = get_prometheus_server()
     server.start_server()
-    print("📊 Système de métriques Arkalia-LUNA initialisé")
+    ark_logger.info("📊 Système de métriques Arkalia-LUNA initialisé", extra={"module": "monitoring"})
     return server
 
 
 if __name__ == "__main__":
     # Test standalone
-    print("🔥 Test serveur métriques Prometheus Arkalia-LUNA")
+    ark_logger.info("🔥 Test serveur métriques Prometheus Arkalia-LUNA", extra={"module": "monitoring"})
 
     server = PrometheusServer(port=8001)
     server.start_server()
@@ -486,14 +487,14 @@ if __name__ == "__main__":
     metrics.update_reflexia_metrics(65.0, 45.0, 150.0)
     metrics.record_assistantia_prompt("processed", "medium")
 
-    print("✅ Métriques de test enregistrées")
-    print("🌐 Accès: http://localhost:8001/metrics")
+    ark_logger.info("✅ Métriques de test enregistrées", extra={"module": "monitoring"})
+    ark_logger.info("🌐 Accès: http://localhost:8001/metrics", extra={"module": "monitoring"})
 
     try:
         # Collecte continue (pour test)
         while True:
             server.collect_and_expose()
-            print(f"📊 Collecte effectuée: {datetime.now()}")
+            ark_logger.info(f"📊 Collecte effectuée: {datetime.now(, extra={"module": "monitoring"})}")
             time.sleep(30)  # Collecte toutes les 30 secondes
     except KeyboardInterrupt:
-        print("🛑 Arrêt du serveur de métriques")
+        ark_logger.info("🛑 Arrêt du serveur de métriques", extra={"module": "monitoring"})

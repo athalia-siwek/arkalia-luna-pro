@@ -6,6 +6,7 @@ Orchestrateur Maître coordonnant l'écosystème complet Arkalia-LUNA
 Gère intelligemment les 10 modules IA avec cycles adaptatifs
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import logging
 import time
@@ -787,13 +788,13 @@ async def main():
             logger.error(f"❌ Error loading config: {e}")
             return
 
-    print("🌕 ARKALIA MASTER ORCHESTRATOR v4.0.0")
-    print("=" * 60)
-    print("🧠 10 Modules IA Coordonnés")
-    print("🔄 Cycles Adaptatifs Intelligents")
-    print("🛡️ Circuit Breaker Global")
-    print("🌐 Global State Master")
-    print("=" * 60)
+    ark_logger.info("🌕 ARKALIA MASTER ORCHESTRATOR v4.0.0", extra={"module": "arkalia_master"})
+    ark_logger.info("=" * 60, extra={"module": "arkalia_master"})
+    ark_logger.info("🧠 10 Modules IA Coordonnés", extra={"module": "arkalia_master"})
+    ark_logger.info("🔄 Cycles Adaptatifs Intelligents", extra={"module": "arkalia_master"})
+    ark_logger.info("🛡️ Circuit Breaker Global", extra={"module": "arkalia_master"})
+    ark_logger.info("🌐 Global State Master", extra={"module": "arkalia_master"})
+    ark_logger.info("=" * 60, extra={"module": "arkalia_master"})
 
     try:
         if args.mode == "daemon":
@@ -804,15 +805,15 @@ async def main():
         elif args.mode == "status":
             orchestrator = ArkaliaOrchestrator(config)
             status = orchestrator.get_status()
-            print("\n📊 ORCHESTRATOR STATUS:")
-            print("=" * 40)
+            ark_logger.info("\n📊 ORCHESTRATOR STATUS:", extra={"module": "arkalia_master"})
+            ark_logger.info("=" * 40, extra={"module": "arkalia_master"})
             for key, value in status.items():
-                print(f"{key}: {value}")
+                ark_logger.info(f"{key}: {value}", extra={"module": "arkalia_master"})
 
     except KeyboardInterrupt:
-        print("\n⏹️ Stopped by user")
+        ark_logger.info("\n⏹️ Stopped by user", extra={"module": "arkalia_master"})
     except Exception as e:
-        print(f"\n💥 Error: {e}")
+        ark_logger.error(f"\n💥 Error: {e}", extra={"module": "arkalia_master"})
         import traceback
 
         traceback.print_exc()

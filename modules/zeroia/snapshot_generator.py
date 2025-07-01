@@ -1,5 +1,6 @@
 # 📄 modules/zeroia/snapshot_generator.py
 
+from core.ark_logger import ark_logger
 import subprocess  # nosec
 import sys
 from datetime import datetime
@@ -18,10 +19,10 @@ def load_state(file_path: Path) -> dict:
     try:
         return toml.load(file_path)
     except FileNotFoundError:
-        print(f"[ERROR] Fichier introuvable : {file_path}")
+        ark_logger.error(f"[ERROR] Fichier introuvable : {file_path}", extra={"module": "zeroia"})
         return {}
     except Exception as e:
-        print(f"[ERROR] Chargement TOML échoué : {e}")
+        ark_logger.error(f"[ERROR] Chargement TOML échoué : {e}", extra={"module": "zeroia"})
         return {}
 
 
@@ -30,7 +31,7 @@ def is_valid_toml(data: dict) -> bool:
         toml.dumps(data)
         return True
     except Exception as e:
-        print(f"[ERROR] Données TOML invalides : {e}")
+        ark_logger.error(f"[ERROR] Données TOML invalides : {e}", extra={"module": "zeroia"})
         return False
 
 
@@ -64,7 +65,7 @@ def generate_snapshot(
         with output_file.open("w") as f:
             toml.dump(snapshot, f)
 
-        print(f"✅ Snapshot généré dans {output_file}")
+        ark_logger.info(f"✅ Snapshot généré dans {output_file}", extra={"module": "zeroia"})
 
         with open("logs/snapshot_evolution.log", "a") as log_file:
             timestamp = datetime.utcnow().isoformat()
@@ -74,9 +75,9 @@ def generate_snapshot(
         return True
 
     except Exception as e:
-        print(f"[FAILSAFE] Échec snapshot : {e}")
+        ark_logger.error(f"[FAILSAFE] Échec snapshot : {e}", extra={"module": "zeroia"})
         if fallback and FAILSAFE_SCRIPT.exists():
-            print("⚠️ Lancement du mode failsafe.")
+            ark_logger.error("⚠️ Lancement du mode failsafe.", extra={"module": "zeroia"})
             subprocess.run([sys.executable, str(FAILSAFE_SCRIPT)], check=True)  # nosec
         return False
 

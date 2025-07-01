@@ -17,6 +17,7 @@ Détecte :
 - Dérives comportementales
 """
 
+from core.ark_logger import ark_logger
 import json
 import logging
 from dataclasses import dataclass
@@ -464,8 +465,8 @@ if __name__ == "__main__":
 
     if args.validate:
         result = validator.run_full_validation()
-        print(json.dumps(result, indent=2))
+        ark_logger.info(json.dumps(result, indent=2, extra={"module": "validators"}))
 
     if args.report:
         report = validator.get_validation_report()
-        print(json.dumps(report, indent=2))
+        ark_logger.info(json.dumps(report, indent=2, extra={"module": "validators"}))

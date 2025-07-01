@@ -1,5 +1,6 @@
 # scripts/generate_zeroia_status.py
 
+from core.ark_logger import ark_logger
 import datetime
 import os
 import subprocess  # nosec
@@ -50,7 +51,7 @@ def write_markdown(status: str, decisions: list[str]) -> None:
         else:
             f.write("Aucune décision récente détectée.\n")
 
-    print(f"✅ Statut écrit dans {OUTPUT_FILE}")
+    ark_logger.info(f"✅ Statut écrit dans {OUTPUT_FILE}", extra={"module": "scripts"})
 
 
 def get_file_info(filepath) -> None:
@@ -72,7 +73,7 @@ def main() -> None:
     decisions = parse_decisions(logs)
 
     if not logs:
-        print("❌ Impossible de récupérer les logs de ZeroIA.")
+        ark_logger.info("❌ Impossible de récupérer les logs de ZeroIA.", extra={"module": "scripts"})
         sys.exit(1)
 
     write_markdown(status, decisions)

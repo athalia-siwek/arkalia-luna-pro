@@ -7,6 +7,7 @@ ZeroIA Core - Point d'entrée principal du système de raisonnement
 Module core simplifié qui délègue aux composants enhanced spécialisés.
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -271,17 +272,17 @@ def health_check() -> dict:
 
 if __name__ == "__main__":
     # Test rapide du core
-    print("🧠 ZeroIA Core - Test de démarrage")
+    ark_logger.info("🧠 ZeroIA Core - Test de démarrage", extra={"module": "zeroia"})
 
     core = get_zeroia_core()
 
     if core.initialize():
-        print("✅ Initialisation réussie")
+        ark_logger.info("✅ Initialisation réussie", extra={"module": "zeroia"})
 
         decision, confidence = core.run_decision_cycle()
-        print(f"🎯 Décision: {decision} (confiance: {confidence:.2f})")
+        ark_logger.info(f"🎯 Décision: {decision} (confiance: {confidence:.2f}, extra={"module": "zeroia"})")
 
         status = core.get_status()
-        print(f"📊 État: {status['status']}")
+        ark_logger.info(f"📊 État: {status['status']}", extra={"module": "zeroia"})
     else:
-        print("❌ Échec initialisation")
+        ark_logger.info("❌ Échec initialisation", extra={"module": "zeroia"})

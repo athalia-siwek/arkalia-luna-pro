@@ -4,6 +4,7 @@
 Test complet de l'orchestrateur enhanced v5.0.0
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import sys
 from typing import Any, Optional
@@ -12,8 +13,8 @@ from typing import Any, Optional
 async def test_enhanced_orchestrator():
     """Test complet de l'orchestrateur enhanced"""
 
-    print("🌟 TEST ARKALIA ORCHESTRATOR ENHANCED v5.0.0")
-    print("=" * 60)
+    ark_logger.info("🌟 TEST ARKALIA ORCHESTRATOR ENHANCED v5.0.0", extra={"module": "scripts"})
+    ark_logger.info("=" * 60, extra={"module": "scripts"})
 
     try:
         # Import de l'orchestrateur enhanced
@@ -22,7 +23,7 @@ async def test_enhanced_orchestrator():
             OrchestratorEnhancedConfig,
         )
 
-        print("✅ Import orchestrateur enhanced réussi")
+        ark_logger.info("✅ Import orchestrateur enhanced réussi", extra={"module": "scripts"})
 
         # Test 1: Configuration enhanced
         config = OrchestratorEnhancedConfig()
@@ -31,53 +32,53 @@ async def test_enhanced_orchestrator():
         config.temporal_analysis_enabled = True
         config.cross_validation_enabled = True
 
-        print("✅ Configuration enhanced créée")
+        ark_logger.info("✅ Configuration enhanced créée", extra={"module": "scripts"})
 
         # Test 2: Initialisation orchestrateur
         orchestrator = ArkaliaOrchestratorEnhanced(config)
-        print("✅ Orchestrateur enhanced initialisé")
+        ark_logger.info("✅ Orchestrateur enhanced initialisé", extra={"module": "scripts"})
 
         # Test 3: Initialisation modules enhanced
-        print("\n🔌 Test initialisation modules enhanced...")
+        ark_logger.info("\n🔌 Test initialisation modules enhanced...", extra={"module": "scripts"})
         init_success = await orchestrator.initialize_modules_enhanced()
 
         if init_success:
-            print("✅ Modules enhanced initialisés avec succès")
+            ark_logger.info("✅ Modules enhanced initialisés avec succès", extra={"module": "scripts"})
         else:
-            print("⚠️ Certains modules enhanced ont échoué (normal si composants manquants)")
+            ark_logger.info("⚠️ Certains modules enhanced ont échoué (normal si composants manquants)", extra={"module": "scripts"})
 
         # Test 4: Statut enhanced
-        print("\n📊 Test statut enhanced...")
+        ark_logger.info("\n📊 Test statut enhanced...", extra={"module": "scripts"})
         status = orchestrator.get_enhanced_status()
 
-        print(f"🌟 Version: {status['orchestrator']['version']}")
-        print(f"🔧 Modules: {len(status['modules'])}")
-        print(f"🧠 Enhanced features actives: {sum(status['enhanced_features'].values())}")
+        ark_logger.info(f"🌟 Version: {status['orchestrator']['version']}", extra={"module": "scripts"})
+        ark_logger.info(f"🔧 Modules: {len(status['modules'], extra={"module": "scripts"})}")
+        ark_logger.info(f"🧠 Enhanced features actives: {sum(status['enhanced_features'].values(, extra={"module": "scripts"}))}")
 
         # Test 5: Cycle enhanced (test rapide)
-        print("\n🔄 Test cycle enhanced...")
+        ark_logger.info("\n🔄 Test cycle enhanced...", extra={"module": "scripts"})
         if len(orchestrator.modules) > 0:
             _cycle_result = await orchestrator.execute_enhanced_cycle()
 
-            print(f"✅ Cycle enhanced terminé en {_cycle_result['duration_seconds']}s")
-            print(
+            ark_logger.info(f"✅ Cycle enhanced terminé en {_cycle_result['duration_seconds']}s", extra={"module": "scripts"})
+            ark_logger.info(
                 f"📊 Opérations: {_cycle_result['operations_successful']}/"
                 f"{_cycle_result['operations_executed']}"
-            )
-            print(
+            , extra={"module": "scripts"})
+            ark_logger.info(
                 f"🧠 Événements cognitifs: {_cycle_result['enhanced_features']['cognitive_events']}"
-            )
-            print(f"🛡️ Récupérations: {_cycle_result['enhanced_features']['recovery_events']}")
+            , extra={"module": "scripts"})
+            ark_logger.info(f"🛡️ Récupérations: {_cycle_result['enhanced_features']['recovery_events']}", extra={"module": "scripts"})
         else:
-            print("⚠️ Aucun module disponible pour test cycle")
+            ark_logger.info("⚠️ Aucun module disponible pour test cycle", extra={"module": "scripts"})
 
-        print("\n🎉 TEST ENHANCED TERMINÉ AVEC SUCCÈS!")
+        ark_logger.info("\n🎉 TEST ENHANCED TERMINÉ AVEC SUCCÈS!", extra={"module": "scripts"})
 
         return True
 
     except ImportError as e:
-        print(f"❌ Erreur import: {e}")
-        print("💡 Certains modules enhanced peuvent être manquants (normal)")
+        ark_logger.info(f"❌ Erreur import: {e}", extra={"module": "scripts"})
+        ark_logger.info("💡 Certains modules enhanced peuvent être manquants (normal)", extra={"module": "scripts"})
         return False
 
     except Exception as e:
@@ -87,8 +88,8 @@ async def test_enhanced_orchestrator():
 async def test_enhanced_features():
     """Test spécifique des fonctionnalités enhanced"""
 
-    print("\n🌟 TEST FONCTIONNALITÉS ENHANCED")
-    print("=" * 50)
+    ark_logger.info("\n🌟 TEST FONCTIONNALITÉS ENHANCED", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     features_availability: dict[str, bool] = {
         "error_recovery": False,
@@ -105,9 +106,9 @@ async def test_enhanced_features():
         # Test d'instanciation pour vérifier que l'import fonctionne
         _ = ErrorRecoverySystem  # noqa: F401
         features_availability["error_recovery"] = True
-        print("✅ Error Recovery System disponible")
+        ark_logger.error("✅ Error Recovery System disponible", extra={"module": "scripts"})
     except ImportError:
-        print("❌ Error Recovery System non disponible")
+        ark_logger.error("❌ Error Recovery System non disponible", extra={"module": "scripts"})
 
     # Test Cognitive Reactor
     try:
@@ -116,9 +117,9 @@ async def test_enhanced_features():
         # Test d'instanciation pour vérifier que l'import fonctionne
         _ = CognitiveReactor  # noqa: F401
         features_availability["cognitive_reactor"] = True
-        print("✅ Cognitive Reactor disponible")
+        ark_logger.info("✅ Cognitive Reactor disponible", extra={"module": "scripts"})
     except ImportError:
-        print("❌ Cognitive Reactor non disponible")
+        ark_logger.info("❌ Cognitive Reactor non disponible", extra={"module": "scripts"})
 
     # Test Vault Manager
     try:
@@ -131,9 +132,9 @@ async def test_enhanced_features():
         # Test d'instanciation pour vérifier que l'import fonctionne
         _ = vault_manager
         features_availability["vault_manager"] = True
-        print("✅ Vault Manager disponible")
+        ark_logger.info("✅ Vault Manager disponible", extra={"module": "scripts"})
     except (ImportError, AttributeError):
-        print("❌ Vault Manager non disponible")
+        ark_logger.info("❌ Vault Manager non disponible", extra={"module": "scripts"})
 
     # Test Chronalia  # noqa: F401
     try:
@@ -142,9 +143,9 @@ async def test_enhanced_features():
         # Test d'instanciation pour vérifier que l'import fonctionne
         _ = Chronalia  # noqa: F401
         features_availability["chronalia"] = True
-        print("✅ Chronalia  # noqa: F401  disponible")
+        ark_logger.info("✅ Chronalia  # noqa: F401  disponible", extra={"module": "scripts"})
     except ImportError:
-        print("❌ Chronalia  # noqa: F401  non disponible")
+        ark_logger.info("❌ Chronalia  # noqa: F401  non disponible", extra={"module": "scripts"})
 
     # Test CrossModule Validator
     try:
@@ -153,29 +154,29 @@ async def test_enhanced_features():
         # Test d'instanciation pour vérifier que l'import fonctionne
         _ = CrossModuleValidator  # noqa: F401
         features_availability["crossmodule_validator"] = True
-        print("✅ CrossModule Validator disponible")
+        ark_logger.info("✅ CrossModule Validator disponible", extra={"module": "scripts"})
     except ImportError:
-        print("❌ CrossModule Validator non disponible")
+        ark_logger.info("❌ CrossModule Validator non disponible", extra={"module": "scripts"})
 
     # Résumé
     available_count = sum(features_availability.values())
     total_count = len(features_availability)
 
-    print(f"\n📊 RÉSUMÉ ENHANCED FEATURES: {available_count}/{total_count} disponibles")
+    ark_logger.info(f"\n📊 RÉSUMÉ ENHANCED FEATURES: {available_count}/{total_count} disponibles", extra={"module": "scripts"})
 
     if available_count >= 2:
-        print("🎉 Suffisamment de fonctionnalités enhanced pour tester")
+        ark_logger.info("🎉 Suffisamment de fonctionnalités enhanced pour tester", extra={"module": "scripts"})
         return True
     else:
-        print("⚠️ Peu de fonctionnalités enhanced disponibles")
+        ark_logger.info("⚠️ Peu de fonctionnalités enhanced disponibles", extra={"module": "scripts"})
         return False
 
 
 async def main():
     """Point d'entrée principal du test"""
 
-    print("🚀 DÉMARRAGE TESTS ARKALIA ORCHESTRATOR ENHANCED")
-    print("=" * 70)
+    ark_logger.info("🚀 DÉMARRAGE TESTS ARKALIA ORCHESTRATOR ENHANCED", extra={"module": "scripts"})
+    ark_logger.info("=" * 70, extra={"module": "scripts"})
 
     # Test 1: Fonctionnalités enhanced
     features_ok = await test_enhanced_features()
@@ -184,21 +185,21 @@ async def main():
     orchestrator_ok = await test_enhanced_orchestrator()
 
     # Résultat final
-    print("\n" + "=" * 70)
-    print("📊 RÉSUMÉ FINAL TESTS")
-    print("=" * 70)
+    ark_logger.info("\n" + "=" * 70, extra={"module": "scripts"})
+    ark_logger.info("📊 RÉSUMÉ FINAL TESTS", extra={"module": "scripts"})
+    ark_logger.info("=" * 70, extra={"module": "scripts"})
 
     if features_ok and orchestrator_ok:
-        print("🎉 TOUS LES TESTS ENHANCED RÉUSSIS!")
-        print("✅ L'orchestrateur enhanced est prêt pour intégration")
+        ark_logger.info("🎉 TOUS LES TESTS ENHANCED RÉUSSIS!", extra={"module": "scripts"})
+        ark_logger.info("✅ L'orchestrateur enhanced est prêt pour intégration", extra={"module": "scripts"})
         return 0
     elif orchestrator_ok:
-        print("⚠️ TESTS PARTIELLEMENT RÉUSSIS")
-        print("✅ Orchestrateur fonctionne mais certaines features manquent")
+        ark_logger.info("⚠️ TESTS PARTIELLEMENT RÉUSSIS", extra={"module": "scripts"})
+        ark_logger.info("✅ Orchestrateur fonctionne mais certaines features manquent", extra={"module": "scripts"})
         return 1
     else:
-        print("❌ TESTS ÉCHOUÉS")
-        print("💡 Vérifier les imports et dépendances")
+        ark_logger.info("❌ TESTS ÉCHOUÉS", extra={"module": "scripts"})
+        ark_logger.info("💡 Vérifier les imports et dépendances", extra={"module": "scripts"})
         return 2
 
 

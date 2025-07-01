@@ -3,6 +3,7 @@ Test Docker Enhanced pour ZeroIA Container
 Tests robustes de la boucle Enhanced avec tous les modules Arkalia
 """
 
+from core.ark_logger import ark_logger
 import json
 import shutil
 import subprocess
@@ -80,13 +81,13 @@ def test_zeroia_enhanced_docker_functionality():
     Test robuste de la boucle Enhanced ZeroIA dans Docker.
     Vérifie que tous tes modules fonctionnent correctement.
     """
-    print("\n🧪 Test ZeroIA Enhanced Container...")
+    ark_logger.info("\n🧪 Test ZeroIA Enhanced Container...", extra={"module": "modules"})
 
     # 1. Vérifier que le conteneur tourne
     assert is_container_running("zeroia"), "Conteneur ZeroIA non actif"
 
     # 2. Attendre que ZeroIA se stabilise
-    print("⏳ Stabilisation ZeroIA Enhanced...")
+    ark_logger.info("⏳ Stabilisation ZeroIA Enhanced...", extra={"module": "modules"})
     time.sleep(5)
 
     # 3. Capturer les logs récents
@@ -98,7 +99,7 @@ def test_zeroia_enhanced_docker_functionality():
     )
 
     logs_output = result.stdout + result.stderr
-    print(f"📋 Logs capturés (50 dernières lignes):\n{logs_output[-500:]}")
+    ark_logger.info(f"📋 Logs capturés (50 dernières lignes, extra={"module": "modules"}):\n{logs_output[-500:]}")
 
     # 4. Vérifications robustes des fonctionnalités Enhanced
     success_indicators = ["loop started", "enhanced", "decision", "zeroia"]
@@ -117,14 +118,14 @@ def test_zeroia_enhanced_docker_functionality():
     dashboard = check_zeroia_dashboard()
     if dashboard:
         assert "reasoning_loop_active" in dashboard, "Dashboard ZeroIA invalide"
-        print(f"✅ Dashboard OK: {dashboard.get('last_decision', 'N/A')}")
+        ark_logger.info(f"✅ Dashboard OK: {dashboard.get('last_decision', 'N/A', extra={"module": "modules"})}")
 
     # 6. Test de santé container
     health = get_container_health("zeroia")
     if health not in ["unknown", ""]:
         assert health in ["healthy", "starting"], f"Container health: {health}"
 
-    print("✅ Test ZeroIA Enhanced Container: SUCCÈS")
+    ark_logger.info("✅ Test ZeroIA Enhanced Container: SUCCÈS", extra={"module": "modules"})
 
 
 @pytest.mark.skipif(not docker_available, reason="Docker non installé")
@@ -136,7 +137,7 @@ def test_arkalia_modules_integration():
     if not is_container_running("zeroia"):
         pytest.skip("Conteneur ZeroIA non actif - skip test intégration")
 
-    print("\n🔗 Test intégration modules Arkalia...")
+    ark_logger.info("\n🔗 Test intégration modules Arkalia...", extra={"module": "modules"})
 
     # Vérifier les autres conteneurs si disponibles
     arkalia_containers = ["reflexia", "sandozia", "assistantia", "helloria"]
@@ -146,7 +147,7 @@ def test_arkalia_modules_integration():
         if is_container_running(container):
             active_modules.append(container)
 
-    print(f"📦 Modules actifs détectés: {active_modules}")
+    ark_logger.info(f"📦 Modules actifs détectés: {active_modules}", extra={"module": "modules"})
 
     # Vérifier les logs pour l'intégration
     if active_modules:
@@ -164,36 +165,36 @@ def test_arkalia_modules_integration():
         found_signs = [sign for sign in integration_signs if sign.lower() in logs.lower()]
 
         if found_signs:
-            print(f"✅ Signes d'intégration trouvés: {found_signs}")
+            ark_logger.info(f"✅ Signes d'intégration trouvés: {found_signs}", extra={"module": "modules"})
         else:
-            print("⚠️ Aucun signe d'intégration détecté (peut être normal)")
+            ark_logger.info("⚠️ Aucun signe d'intégration détecté (peut être normal)", extra={"module": "modules"})
 
-    print("✅ Test intégration modules: TERMINÉ")
+    ark_logger.info("✅ Test intégration modules: TERMINÉ", extra={"module": "modules"})
 
 
 if __name__ == "__main__":
     # Tests en mode standalone
-    print("🧪 Tests Docker ZeroIA Enhanced - Mode Standalone")
+    ark_logger.info("🧪 Tests Docker ZeroIA Enhanced - Mode Standalone", extra={"module": "modules"})
 
     if not docker_available:
-        print("❌ Docker non disponible")
+        ark_logger.info("❌ Docker non disponible", extra={"module": "modules"})
         exit(1)
 
     try:
         test_docker_service_availability()
-        print("✅ Docker service OK")
+        ark_logger.info("✅ Docker service OK", extra={"module": "modules"})
 
         test_zeroia_container_exists()
-        print("✅ Container ZeroIA existe")
+        ark_logger.info("✅ Container ZeroIA existe", extra={"module": "modules"})
 
         if is_container_running("zeroia"):
             test_zeroia_enhanced_docker_functionality()
             test_arkalia_modules_integration()
         else:
-            print("⚠️ Container ZeroIA non actif - tests skippés")
+            ark_logger.info("⚠️ Container ZeroIA non actif - tests skippés", extra={"module": "modules"})
 
     except Exception as e:
-        print(f"❌ Erreur test: {e}")
+        ark_logger.info(f"❌ Erreur test: {e}", extra={"module": "modules"})
         exit(1)
 
-    print("🎉 Tous les tests Docker Enhanced: SUCCÈS")
+    ark_logger.info("🎉 Tous les tests Docker Enhanced: SUCCÈS", extra={"module": "modules"})

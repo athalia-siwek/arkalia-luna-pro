@@ -1,6 +1,7 @@
 # 🌀 tests/chaos/chaos_test.py
 # Tests de chaos pour résilience Arkalia-LUNA
 
+from core.ark_logger import ark_logger
 import json
 import random
 import subprocess
@@ -73,7 +74,7 @@ class ChaosTester:
             return True
 
         except Exception as e:
-            print(f"⚠️ Erreur corruption {file_path}: {e}")
+            ark_logger.info(f"⚠️ Erreur corruption {file_path}: {e}", extra={"module": "chaos"})
             return False
 
     def restore_files(self) -> None:
@@ -84,7 +85,7 @@ class ChaosTester:
                     original_path.write_bytes(backup_path.read_bytes())
                     backup_path.unlink()
             except Exception as e:
-                print(f"⚠️ Erreur restauration {original_path}: {e}")
+                ark_logger.info(f"⚠️ Erreur restauration {original_path}: {e}", extra={"module": "chaos"})
         self.corrupted_files.clear()
 
     def simulate_high_load(self, duration: int = 10):
@@ -121,7 +122,7 @@ for t in threads:
             return process
 
         except Exception as e:
-            print(f"⚠️ Erreur simulation charge: {e}")
+            ark_logger.info(f"⚠️ Erreur simulation charge: {e}", extra={"module": "chaos"})
             return None
 
     def simulate_memory_pressure(self, mb_size: int = 100):
@@ -139,7 +140,7 @@ for t in threads:
             return memory_blocks
 
         except MemoryError:
-            print("⚠️ Mémoire insuffisante pour le test")
+            ark_logger.info("⚠️ Mémoire insuffisante pour le test", extra={"module": "chaos"})
             return []
 
     def cleanup(self) -> None:
@@ -535,7 +536,7 @@ def create_chaos_environment() -> None:
 
 def run_chaos_suite() -> None:
     """Lance la suite complète de tests chaos"""
-    print("🌀 Démarrage suite tests chaos Arkalia-LUNA")
+    ark_logger.info("🌀 Démarrage suite tests chaos Arkalia-LUNA", extra={"module": "chaos"})
 
     # Lance tous les tests
     test_modules = [
@@ -548,12 +549,12 @@ def run_chaos_suite() -> None:
     ]
 
     for module in test_modules:
-        print(f"🧪 Test module: {module.__name__}")
+        ark_logger.info(f"🧪 Test module: {module.__name__}", extra={"module": "chaos"})
 
-    print("✅ Suite chaos terminée")
+    ark_logger.info("✅ Suite chaos terminée", extra={"module": "chaos"})
 
 
 if __name__ == "__main__":
     # Test standalone
-    print("🌀 Tests de chaos Arkalia-LUNA")
+    ark_logger.info("🌀 Tests de chaos Arkalia-LUNA", extra={"module": "chaos"})
     run_chaos_suite()

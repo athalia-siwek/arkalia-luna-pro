@@ -10,6 +10,7 @@ Fonctionnalités:
 - Détection de patterns et apprentissage
 """
 
+from core.ark_logger import ark_logger
 import json
 import math
 import time
@@ -56,7 +57,7 @@ class ConfidenceScorer:
                 with open(self.state_file) as f:
                     return toml.load(f)
             except Exception as e:
-                print(f"⚠️ [CONFIDENCE] Erreur chargement mémoire: {e}")
+                ark_logger.info(f"⚠️ [CONFIDENCE] Erreur chargement mémoire: {e}", extra={"module": "zeroia"})
 
         return {
             "decision_patterns": {},
@@ -76,7 +77,7 @@ class ConfidenceScorer:
             with open(self.state_file, "w") as f:
                 toml.dump(self.memory, f)
         except Exception as e:
-            print(f"❌ [CONFIDENCE] Erreur sauvegarde mémoire: {e}")
+            ark_logger.info(f"❌ [CONFIDENCE] Erreur sauvegarde mémoire: {e}", extra={"module": "zeroia"})
 
     def calculate_confidence(
         self, decision: str, context: dict, system_metrics: dict | None = None
@@ -387,7 +388,7 @@ class ConfidenceScorer:
             self._save_memory()
 
         except Exception as e:
-            print(f"❌ [CONFIDENCE] Erreur mise à jour mémoire: {e}")
+            ark_logger.info(f"❌ [CONFIDENCE] Erreur mise à jour mémoire: {e}", extra={"module": "zeroia"})
 
     def _adaptive_weight_learning(self, final_score: float, factor_scores: dict):
         """Apprentissage adaptatif des poids basé sur la performance"""
@@ -497,29 +498,29 @@ def main():
 
     test_decision = "normal"
 
-    print("🧠 [CONFIDENCE SCORER] Test du système...")
+    ark_logger.info("🧠 [CONFIDENCE SCORER] Test du système...", extra={"module": "zeroia"})
 
     system_metrics = {"cpu": 45.0, "ram": 60.0, "response_time_ms": 120}
     confidence, explanation = scorer.calculate_confidence(
         test_decision, test_context, system_metrics
     )
 
-    print(f"\n📊 Score de confiance: {confidence:.3f}")
-    print(f"🎯 Niveau: {explanation['confidence_level']}")
-    print(f"⏱️ Temps de traitement: {explanation['processing_time_ms']}ms")
+    ark_logger.info(f"\n📊 Score de confiance: {confidence:.3f}", extra={"module": "zeroia"})
+    ark_logger.info(f"🎯 Niveau: {explanation['confidence_level']}", extra={"module": "zeroia"})
+    ark_logger.info(f"⏱️ Temps de traitement: {explanation['processing_time_ms']}ms", extra={"module": "zeroia"})
 
-    print("\n🔍 Détail des facteurs:")
+    ark_logger.info("\n🔍 Détail des facteurs:", extra={"module": "zeroia"})
     for factor, score in explanation["factor_scores"].items():
-        print(f"  • {factor}: {score:.3f}")
+        ark_logger.info(f"  • {factor}: {score:.3f}", extra={"module": "zeroia"})
 
-    print("\n💡 Recommandations:")
+    ark_logger.info("\n💡 Recommandations:", extra={"module": "zeroia"})
     for rec in explanation["recommendations"]:
-        print(f"  {rec}")
+        ark_logger.info(f"  {rec}", extra={"module": "zeroia"})
 
-    print("\n📈 Résumé mémoire:")
+    ark_logger.info("\n📈 Résumé mémoire:", extra={"module": "zeroia"})
     summary = scorer.get_memory_summary()
     for key, value in summary.items():
-        print(f"  • {key}: {value}")
+        ark_logger.info(f"  • {key}: {value}", extra={"module": "zeroia"})
 
 
 if __name__ == "__main__":

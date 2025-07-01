@@ -6,6 +6,7 @@ Demo Reflexia Enhanced v2.6.0
 Test de la nouvelle version avec vraies métriques système
 """
 
+from core.ark_logger import ark_logger
 import pathlib
 import subprocess
 import sys
@@ -17,8 +18,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 try:
     from modules.reflexia.logic.main_loop_enhanced import reflexia_loop_enhanced
 except ImportError as e:
-    print(f"❌ Erreur import Reflexia Enhanced: {e}")
-    print("💡 Vérifier que le module reflexia est installé")
+    ark_logger.info(f"❌ Erreur import Reflexia Enhanced: {e}", extra={"module": "scripts"})
+    ark_logger.info("💡 Vérifier que le module reflexia est installé", extra={"module": "scripts"})
     sys.exit(1)
 
 
@@ -30,32 +31,32 @@ def format_generated():
             subprocess.run(["isort", str(d), "--profile", "black"], check=True)
             # Formatage du code avec black
             subprocess.run(["black", str(d), "--quiet"], check=True)
-            print(f"✅ Formaté: {d}")
+            ark_logger.info(f"✅ Formaté: {d}", extra={"module": "scripts"})
         except subprocess.CalledProcessError as e:
-            print(f"⚠️ Erreur formatage {d}: {e}")
+            ark_logger.info(f"⚠️ Erreur formatage {d}: {e}", extra={"module": "scripts"})
             # Fallback: essayer au moins isort
             try:
                 subprocess.run(["isort", str(d), "--fix"], check=False)
-                print(f"⚠️ Fallback isort appliqué: {d}")
+                ark_logger.info(f"⚠️ Fallback isort appliqué: {d}", extra={"module": "scripts"})
             except Exception:
-                print(f"❌ Fallback échoué: {d}")
+                ark_logger.info(f"❌ Fallback échoué: {d}", extra={"module": "scripts"})
 
 
 def main() -> None:
-    print("🧠 === DEMO REFLEXIA ENHANCED v2.6.0 ===")
-    print("   Vraies métriques système + containers Docker")
-    print("   Test avec 3 cycles, pause 3s entre chaque\n")
+    ark_logger.info("🧠 === DEMO REFLEXIA ENHANCED v2.6.0 ===", extra={"module": "scripts"})
+    ark_logger.info("   Vraies métriques système + containers Docker", extra={"module": "scripts"})
+    ark_logger.info("   Test avec 3 cycles, pause 3s entre chaque\n", extra={"module": "scripts"})
 
     try:
         reflexia_loop_enhanced(max_iterations=3, sleep_seconds=3, verbose=True)
-        print("\n✅ Demo Reflexia Enhanced terminé avec succès !")
+        ark_logger.info("\n✅ Demo Reflexia Enhanced terminé avec succès !", extra={"module": "scripts"})
         format_generated()
 
     except KeyboardInterrupt:
-        print("\n🛑 Demo interrompu par l'utilisateur")
+        ark_logger.info("\n🛑 Demo interrompu par l'utilisateur", extra={"module": "scripts"})
     except ImportError as e:
-        print(f"\n❌ Erreur import: {e}")
-        print("💡 Vérifier les dépendances Reflexia")
+        ark_logger.info(f"\n❌ Erreur import: {e}", extra={"module": "scripts"})
+        ark_logger.info("💡 Vérifier les dépendances Reflexia", extra={"module": "scripts"})
     except Exception as e:
         raise RuntimeError(f"Erreur demo reflexia enhanced: {e}") from e
 

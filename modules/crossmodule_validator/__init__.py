@@ -12,6 +12,7 @@ __author__ = "Athalia"
 
 # Import des composants principaux
 try:
+from core.ark_logger import ark_logger
     from .core import CrossModuleValidator, validate_states
 except ImportError:
     pass
@@ -42,5 +43,5 @@ def initialize() -> bool:
 
 
 if __name__ == "__main__":
-    print(f"🌕 crossmodule_validator v{__version__}")
-    print(f"🏥 Santé: {health_check()}")
+    ark_logger.info(f"🌕 crossmodule_validator v{__version__}", extra={"module": "crossmodule_validator"})
+    ark_logger.info(f"🏥 Santé: {health_check(, extra={"module": "crossmodule_validator"})}")

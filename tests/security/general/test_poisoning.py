@@ -7,6 +7,7 @@ Détecte les tentatives d'empoisonnement du modèle décisionnel de ZeroIA
 via injection de données malveillantes dans les inputs contextuels.
 """
 
+from core.ark_logger import ark_logger
 import tempfile
 import unittest
 from datetime import datetime, timedelta
@@ -327,6 +328,6 @@ if __name__ == "__main__":
 
     # Génération rapport d'intégrité
     report = create_model_integrity_report()
-    print("\n🛡️ Model Integrity Report:")
-    print(f"Status: {report['model_integrity']}")
-    print(f"Recommendation: {report['recommendation']}")
+    ark_logger.info("\n🛡️ Model Integrity Report:", extra={"module": "general"})
+    ark_logger.info(f"Status: {report['model_integrity']}", extra={"module": "general"})
+    ark_logger.info(f"Recommendation: {report['recommendation']}", extra={"module": "general"})

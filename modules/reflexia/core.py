@@ -7,6 +7,7 @@ Module principal pour lancer la logique réflexive :
 - Version Enhanced v2.6.0 avec vraies métriques
 """
 
+from core.ark_logger import ark_logger
 from modules.reflexia.logic.decision import monitor_status
 from modules.reflexia.logic.metrics_enhanced import read_metrics, read_metrics_enhanced
 from modules.reflexia.logic.snapshot import save_snapshot
@@ -63,7 +64,7 @@ def launch_reflexia_loop(max_iterations: int | None = None) -> None:
     """
     from modules.reflexia.logic.main_loop_enhanced import reflexia_loop_enhanced
 
-    print("🚀 Démarrage Reflexia Enhanced v2.6.0")
+    ark_logger.info("🚀 Démarrage Reflexia Enhanced v2.6.0", extra={"module": "reflexia"})
     reflexia_loop_enhanced(max_iterations=max_iterations)
 
 

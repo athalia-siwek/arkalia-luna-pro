@@ -1,5 +1,6 @@
 # scripts/sitemap_generator.py
 
+from core.ark_logger import ark_logger
 import datetime
 import os
 import urllib.parse
@@ -58,7 +59,7 @@ def generate_sitemap(site_url=None, output_dir="site", mkdocs_yml_path="mkdocs.y
             f.write("  </url>\n")
         f.write("</urlset>\n")
 
-    print(f"✅ Sitemap généré : {sitemap_path}")
+    ark_logger.info(f"✅ Sitemap généré : {sitemap_path}", extra={"module": "scripts"})
     ping_google_sitemap()
 
 
@@ -76,9 +77,9 @@ def ping_google_sitemap():
     try:
         response = requests.get(ping_url, timeout=5)
         if response.status_code != 200:
-            print(f"⚠️ Ping échoué ({response.status_code})")
+            ark_logger.info(f"⚠️ Ping échoué ({response.status_code}, extra={"module": "scripts"})")
     except Exception:
-        print("⚠️ Ping désactivé en local.")
+        ark_logger.info("⚠️ Ping désactivé en local.", extra={"module": "scripts"})
 
 
 # 🚀 Exécution directe

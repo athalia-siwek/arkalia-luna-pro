@@ -15,6 +15,7 @@ Version: 2.7.1-enhanced
 Auteur: Arkalia-LUNA Project
 """
 
+from core.ark_logger import ark_logger
 import hashlib
 import json
 import os
@@ -39,7 +40,7 @@ def file_hash(path: str) -> str:
 
     Example:
         >>> hash_val = file_hash("state/zeroia_state.toml")
-        >>> print(f"Hash du fichier: {hash_val}")
+        >>> ark_logger.info(f"Hash du fichier: {hash_val}", extra={"module": "utils"})
     """
     if not os.path.exists(path):
         return ""
@@ -140,7 +141,7 @@ def check_health(path: str) -> bool:
 
     Example:
         >>> is_healthy = check_health("modules/zeroia/state/zeroia_state.toml")
-        >>> print(f"ZeroIA status: {'OK' if is_healthy else 'DOWN'}")
+        >>> ark_logger.info(f"ZeroIA status: {'OK' if is_healthy else 'DOWN'}", extra={"module": "utils"})
     """
     try:
         data = toml.load(path)

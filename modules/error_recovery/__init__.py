@@ -12,6 +12,7 @@ __author__ = "Athalia"
 
 # Import des composants principaux
 try:
+from core.ark_logger import ark_logger
     from .core import ErrorRecoverySystem, get_error_recovery_status
 except ImportError:
     pass
@@ -42,5 +43,5 @@ def initialize() -> bool:
 
 
 if __name__ == "__main__":
-    print(f"🌕 error_recovery v{__version__}")
-    print(f"🏥 Santé: {health_check()}")
+    ark_logger.error(f"🌕 error_recovery v{__version__}", extra={"module": "error_recovery"})
+    ark_logger.info(f"🏥 Santé: {health_check(, extra={"module": "error_recovery"})}")

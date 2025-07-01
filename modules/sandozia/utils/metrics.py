@@ -12,6 +12,7 @@ Collecte et traite les métriques d'intelligence croisée :
 - Export Grafana
 """
 
+from core.ark_logger import ark_logger
 import logging
 import statistics
 from collections import defaultdict
@@ -292,7 +293,7 @@ def demo_metrics():
 
     metrics = create_sandozia_metrics()
 
-    print("📊 Generating demo metrics...")
+    ark_logger.info("📊 Generating demo metrics...", extra={"module": "utils"})
 
     # Générer des métriques synthétiques
     for _i in range(100):
@@ -320,23 +321,23 @@ def demo_metrics():
         time.sleep(0.01)
 
     # Analyser les résultats
-    print("\n🔍 Analysis results:")
+    ark_logger.info("\n🔍 Analysis results:", extra={"module": "utils"})
 
     # Corrélation entre confiances
     correlation = metrics.calculate_correlation(
         "reflexia_confidence_score", "zeroia_confidence_score"
     )
     if correlation:
-        print(f"Corrélation confiance Reflexia-ZeroIA: {correlation:.3f}")
+        ark_logger.info(f"Corrélation confiance Reflexia-ZeroIA: {correlation:.3f}", extra={"module": "utils"})
 
     # Santé cross-modules
     health = metrics.get_cross_module_health()
-    print(f"Cohérence inter-modules: {health['cross_module_coherence']:.3f}")
+    ark_logger.info(f"Cohérence inter-modules: {health['cross_module_coherence']:.3f}", extra={"module": "utils"})
 
     # Export Prometheus
     prometheus_data = metrics.export_prometheus_format()
-    print(f"\n📤 Prometheus export ({len(prometheus_data.split())} metrics):")
-    print(prometheus_data[:200] + "..." if len(prometheus_data) > 200 else prometheus_data)
+    ark_logger.info(f"\n📤 Prometheus export ({len(prometheus_data.split(, extra={"module": "utils"}))} metrics):")
+    ark_logger.info(prometheus_data[:200] + "..." if len(prometheus_data, extra={"module": "utils"}) > 200 else prometheus_data)
 
 
 if __name__ == "__main__":

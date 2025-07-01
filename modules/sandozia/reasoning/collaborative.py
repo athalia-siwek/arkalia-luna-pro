@@ -12,6 +12,7 @@ Coordonne le raisonnement entre modules IA :
 - Apprentissage collaboratif
 """
 
+from core.ark_logger import ark_logger
 import json
 import logging
 from dataclasses import dataclass
@@ -274,7 +275,7 @@ if __name__ == "__main__":
     collaborative = CollaborativeReasoning()
 
     if args.demo:
-        print("🧠 Demo CollaborativeReasoning...")
+        ark_logger.info("🧠 Demo CollaborativeReasoning...", extra={"module": "reasoning"})
 
         # Données de test
         test_decisions = {
@@ -299,4 +300,4 @@ if __name__ == "__main__":
         }
 
         result = collaborative.run_collaborative_reasoning(test_decisions)
-        print(json.dumps(result, indent=2))
+        ark_logger.info(json.dumps(result, indent=2, extra={"module": "reasoning"}))

@@ -4,6 +4,7 @@
 Script de diagnostic et monitoring des deux sites web
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -242,43 +243,43 @@ class ArkaliaHealthChecker:
 
     def print_report(self):
         """Affiche le rapport de diagnostic"""
-        print("\n" + "=" * 60)
-        print("🔍 RAPPORT DE DIAGNOSTIC ARKALIA-LUNA PRO")
-        print("=" * 60)
-        print(f"📅 Timestamp: {self.results['timestamp']}")
-        print(f"🏥 Statut global: {self.results['overall_status'].upper()}")
+        ark_logger.info("\n" + "=" * 60, extra={"module": "scripts"})
+        ark_logger.info("🔍 RAPPORT DE DIAGNOSTIC ARKALIA-LUNA PRO", extra={"module": "scripts"})
+        ark_logger.info("=" * 60, extra={"module": "scripts"})
+        ark_logger.info(f"📅 Timestamp: {self.results['timestamp']}", extra={"module": "scripts"})
+        ark_logger.info(f"🏥 Statut global: {self.results['overall_status'].upper(, extra={"module": "scripts"})}")
 
-        print("\n🌐 SITES WEB:")
+        ark_logger.info("\n🌐 SITES WEB:", extra={"module": "scripts"})
         for site_name, site_data in self.results["sites"].items():
             status_emoji = "🟢" if site_data["status"] == "online" else "🔴"
-            print(f"  {status_emoji} {site_name.upper()}: {site_data['status']}")
+            ark_logger.info(f"  {status_emoji} {site_name.upper(, extra={"module": "scripts"})}: {site_data['status']}")
             if site_data.get("response_time"):
-                print(f"     ⏱️ Temps de réponse: {site_data['response_time']}s")
+                ark_logger.info(f"     ⏱️ Temps de réponse: {site_data['response_time']}s", extra={"module": "scripts"})
 
-        print("\n⚙️ PROCESSUS:")
+        ark_logger.info("\n⚙️ PROCESSUS:", extra={"module": "scripts"})
         for proc_name, proc_data in self.results["processes"].items():
             status_emoji = "🟢" if proc_data["status"] == "free" else "🟡"
-            print(f"  {status_emoji} {proc_name}: {proc_data['status']}")
+            ark_logger.info(f"  {status_emoji} {proc_name}: {proc_data['status']}", extra={"module": "scripts"})
 
-        print("\n📋 LOGS:")
+        ark_logger.info("\n📋 LOGS:", extra={"module": "scripts"})
         logs = self.results["logs"]
-        print(f"  🔴 Erreurs: {logs['error_count']}")
-        print(f"  ⚠️ Avertissements: {logs['warning_count']}")
+        ark_logger.error(f"  🔴 Erreurs: {logs['error_count']}", extra={"module": "scripts"})
+        ark_logger.warning(f"  ⚠️ Avertissements: {logs['warning_count']}", extra={"module": "scripts"})
 
-        print("\n🔍 INTÉGRITÉ DES FICHIERS:")
+        ark_logger.info("\n🔍 INTÉGRITÉ DES FICHIERS:", extra={"module": "scripts"})
         integrity = self.results["file_integrity"]
-        print(f"  ✅ Fichiers valides: {integrity['valid_files']}/{integrity['total_files']}")
+        ark_logger.info(f"  ✅ Fichiers valides: {integrity['valid_files']}/{integrity['total_files']}", extra={"module": "scripts"})
         if integrity["missing_files"]:
-            print(f"  ❌ Fichiers manquants: {len(integrity['missing_files'])}")
+            ark_logger.info(f"  ❌ Fichiers manquants: {len(integrity['missing_files'], extra={"module": "scripts"})}")
         if integrity["corrupted_files"]:
-            print(f"  🔧 Fichiers corrompus: {len(integrity['corrupted_files'])}")
+            ark_logger.info(f"  🔧 Fichiers corrompus: {len(integrity['corrupted_files'], extra={"module": "scripts"})}")
 
         if self.results["recommendations"]:
-            print("\n💡 RECOMMANDATIONS:")
+            ark_logger.info("\n💡 RECOMMANDATIONS:", extra={"module": "scripts"})
             for rec in self.results["recommendations"]:
-                print(f"  {rec}")
+                ark_logger.info(f"  {rec}", extra={"module": "scripts"})
 
-        print("\n" + "=" * 60)
+        ark_logger.info("\n" + "=" * 60, extra={"module": "scripts"})
 
 
 def main():
@@ -294,7 +295,7 @@ def main():
     with open(report_path, "w") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    print(f"\n📄 Rapport sauvegardé: {report_path}")
+    ark_logger.info(f"\n📄 Rapport sauvegardé: {report_path}", extra={"module": "scripts"})
 
     # Code de sortie basé sur le statut
     if results["overall_status"] == "critical":

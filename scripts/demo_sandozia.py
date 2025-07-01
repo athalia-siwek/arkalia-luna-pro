@@ -15,6 +15,7 @@ Utilisation :
 python scripts/demo_sandozia.py --full-demo
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -101,9 +102,9 @@ class SandoziaDemo:
 
     def demo_validator(self):
         """Démonstration CrossModuleValidator"""
-        print("\n" + "=" * 60)
-        print("🔍 DÉMONSTRATION CROSSMODULEVALIDATOR")
-        print("=" * 60)
+        ark_logger.info("\n" + "=" * 60, extra={"module": "scripts"})
+        ark_logger.info("🔍 DÉMONSTRATION CROSSMODULEVALIDATOR", extra={"module": "scripts"})
+        ark_logger.info("=" * 60, extra={"module": "scripts"})
 
         self.validator = CrossModuleValidator()
 
@@ -113,30 +114,30 @@ class SandoziaDemo:
         # Exécuter validation complète
         validation_result = self.validator.run_full_validation()
 
-        print("✅ Validation terminée:")
-        print(f"   🎯 Score de cohérence: {validation_result['coherence_score']:.3f}")
-        print(f"   📊 Validations: {validation_result['total_validations']}")
-        print(f"   ⚠️  Issues critiques: {validation_result['issues_by_level']['critical']}")
-        print(f"   ⚠️  Issues warnings: {validation_result['issues_by_level']['warning']}")
-        print(f"   📈 Statut global: {validation_result['overall_status']}")
+        ark_logger.info("✅ Validation terminée:", extra={"module": "scripts"})
+        ark_logger.info(f"   🎯 Score de cohérence: {validation_result['coherence_score']:.3f}", extra={"module": "scripts"})
+        ark_logger.info(f"   📊 Validations: {validation_result['total_validations']}", extra={"module": "scripts"})
+        ark_logger.info(f"   ⚠️  Issues critiques: {validation_result['issues_by_level']['critical']}", extra={"module": "scripts"})
+        ark_logger.warning(f"   ⚠️  Issues warnings: {validation_result['issues_by_level']['warning']}", extra={"module": "scripts"})
+        ark_logger.info(f"   📈 Statut global: {validation_result['overall_status']}", extra={"module": "scripts"})
 
         # Afficher quelques détails
         if validation_result["validation_results"]:
-            print("\n📋 Détail des validations:")
+            ark_logger.info("\n📋 Détail des validations:", extra={"module": "scripts"})
             for result in validation_result["validation_results"][:3]:  # 3 premiers
-                print(f"   • {result['level'].upper()}: {result['message']}")
+                ark_logger.info(f"   • {result['level'].upper(, extra={"module": "scripts"})}: {result['message']}")
 
         return validation_result
 
     def demo_behavior_analyzer(self):
         """Démonstration BehaviorAnalyzer"""
-        print("\n" + "=" * 60)
-        print("🧠 DÉMONSTRATION BEHAVIORANALYZER")
-        print("=" * 60)
+        ark_logger.info("\n" + "=" * 60, extra={"module": "scripts"})
+        ark_logger.info("🧠 DÉMONSTRATION BEHAVIORANALYZER", extra={"module": "scripts"})
+        ark_logger.info("=" * 60, extra={"module": "scripts"})
 
         self.analyzer = BehaviorAnalyzer()
 
-        print("📊 Génération de données comportementales...")
+        ark_logger.info("📊 Génération de données comportementales...", extra={"module": "scripts"})
 
         # Générer des métriques normales
         for i in range(50):
@@ -163,7 +164,7 @@ class SandoziaDemo:
                 )
 
         # Ajouter quelques anomalies pour tester la détection
-        print("⚠️  Injection d'anomalies pour test...")
+        ark_logger.info("⚠️  Injection d'anomalies pour test...", extra={"module": "scripts"})
 
         # Anomalies de confiance
         for _ in range(5):
@@ -186,33 +187,33 @@ class SandoziaDemo:
         # Exécuter l'analyse
         analysis_result = self.analyzer.analyze_behavior()
 
-        print("✅ Analyse comportementale terminée:")
-        print(f"   🎯 Score de santé: {analysis_result['behavioral_health_score']:.3f}")
-        print(f"   📊 Patterns détectés: {analysis_result['patterns_detected']}")
+        ark_logger.info("✅ Analyse comportementale terminée:", extra={"module": "scripts"})
+        ark_logger.info(f"   🎯 Score de santé: {analysis_result['behavioral_health_score']:.3f}", extra={"module": "scripts"})
+        ark_logger.info(f"   📊 Patterns détectés: {analysis_result['patterns_detected']}", extra={"module": "scripts"})
         critical_count = analysis_result["patterns_by_severity"].get("critical", 0)
-        print(f"   🔴 Patterns critiques: {critical_count}")
-        print(f"   🟡 Patterns moyens: {analysis_result['patterns_by_severity'].get('medium', 0)}")
-        print(f"   📈 Modules affectés: {len(analysis_result['affected_modules'])}")
+        ark_logger.info(f"   🔴 Patterns critiques: {critical_count}", extra={"module": "scripts"})
+        ark_logger.info(f"   🟡 Patterns moyens: {analysis_result['patterns_by_severity'].get('medium', 0, extra={"module": "scripts"})}")
+        ark_logger.info(f"   📈 Modules affectés: {len(analysis_result['affected_modules'], extra={"module": "scripts"})}")
 
         # Afficher détails des patterns
         if analysis_result["patterns_detail"]:
-            print("\n🔍 Patterns détectés:")
+            ark_logger.info("\n🔍 Patterns détectés:", extra={"module": "scripts"})
             for pattern in analysis_result["patterns_detail"][:3]:  # 3 premiers
-                print(f"   • {pattern['severity'].upper()}: {pattern['description']}")
-                print(f"     Modules: {', '.join(pattern['affected_modules'])}")
-                print(f"     Confiance: {pattern['confidence']:.2f}")
+                ark_logger.info(f"   • {pattern['severity'].upper(, extra={"module": "scripts"})}: {pattern['description']}")
+                ark_logger.info(f"     Modules: {', '.join(pattern['affected_modules'], extra={"module": "scripts"})}")
+                ark_logger.info(f"     Confiance: {pattern['confidence']:.2f}", extra={"module": "scripts"})
 
         return analysis_result
 
     def demo_metrics(self):
         """Démonstration SandoziaMetrics"""
-        print("\n" + "=" * 60)
-        print("📊 DÉMONSTRATION SANDOZIAMETRICS")
-        print("=" * 60)
+        ark_logger.info("\n" + "=" * 60, extra={"module": "scripts"})
+        ark_logger.info("📊 DÉMONSTRATION SANDOZIAMETRICS", extra={"module": "scripts"})
+        ark_logger.info("=" * 60, extra={"module": "scripts"})
 
         self.metrics = SandoziaMetrics(retention_hours=1)  # Court pour demo
 
-        print("📈 Génération de métriques temporelles...")
+        ark_logger.info("📈 Génération de métriques temporelles...", extra={"module": "scripts"})
 
         # Générer des séries temporelles
         for i in range(60):  # 60 points
@@ -248,17 +249,17 @@ class SandoziaDemo:
             "reflexia_confidence_score", "zeroia_confidence_score", 60
         )
 
-        print("✅ Métriques générées:")
-        print(
+        ark_logger.info("✅ Métriques générées:", extra={"module": "scripts"})
+        ark_logger.info(
             f"   🔗 Corrélation Reflexia-ZeroIA: {correlation:.3f}"
             if correlation
             else "   🔗 Corrélation: N/A"
-        )
+        , extra={"module": "scripts"})
 
         # Santé cross-modules
         health = self.metrics.get_cross_module_health()
-        print(f"   🎯 Cohérence inter-modules: {health['cross_module_coherence']:.3f}")
-        print(f"   📊 Métriques totales: {health['total_metrics']}")
+        ark_logger.info(f"   🎯 Cohérence inter-modules: {health['cross_module_coherence']:.3f}", extra={"module": "scripts"})
+        ark_logger.info(f"   📊 Métriques totales: {health['total_metrics']}", extra={"module": "scripts"})
 
         # Résumés par métrique
         for metric_name in [
@@ -268,18 +269,18 @@ class SandoziaDemo:
         ]:
             summary = self.metrics.get_metric_summary(metric_name)
             if summary:
-                print(f"   📈 {metric_name}:")
-                print(f"      Moyenne: {summary['mean']:.3f}")
-                print(f"      Min-Max: {summary['min']:.3f} - {summary['max']:.3f}")
-                print(f"      Échantillons: {summary['count']}")
+                ark_logger.info(f"   📈 {metric_name}:", extra={"module": "scripts"})
+                ark_logger.info(f"      Moyenne: {summary['mean']:.3f}", extra={"module": "scripts"})
+                ark_logger.info(f"      Min-Max: {summary['min']:.3f} - {summary['max']:.3f}", extra={"module": "scripts"})
+                ark_logger.info(f"      Échantillons: {summary['count']}", extra={"module": "scripts"})
 
         return health
 
     async def demo_sandozia_core(self):
         """Démonstration SandoziaCore (orchestrateur)"""
-        print("\n" + "=" * 60)
-        print("🚀 DÉMONSTRATION SANDOZIACORE")
-        print("=" * 60)
+        ark_logger.info("\n" + "=" * 60, extra={"module": "scripts"})
+        ark_logger.info("🚀 DÉMONSTRATION SANDOZIACORE", extra={"module": "scripts"})
+        ark_logger.info("=" * 60, extra={"module": "scripts"})
 
         # Créer configuration custom pour demo
         config_path = Path("modules/sandozia/config/demo_config.toml")
@@ -310,53 +311,53 @@ behavioral_alert_enabled = true
         # Créer des états simulés
         self.create_demo_states()
 
-        print("🔌 Initialisation des connexions modules...")
+        ark_logger.info("🔌 Initialisation des connexions modules...", extra={"module": "scripts"})
         await self.sandozia_core.initialize_modules()
 
-        print("📊 Collecte d'un snapshot d'intelligence...")
+        ark_logger.info("📊 Collecte d'un snapshot d'intelligence...", extra={"module": "scripts"})
         snapshot = await self.sandozia_core.collect_intelligence_snapshot()
 
-        print("✅ Snapshot collecté:")
-        print(f"   🧠 État Reflexia: {'✅' if snapshot.reflexia_state.get('active') else '❌'}")
-        print(f"   🔍 État ZeroIA: {'✅' if snapshot.zeroia_state.get('active', True) else '❌'}")
-        print(f"   🎯 Score cohérence: {snapshot.coherence_analysis['coherence_score']:.3f}")
-        print(f"   ⚠️  Issues détectées: {len(snapshot.coherence_analysis['issues'])}")
-        print(f"   🔮 Patterns comportementaux: {len(snapshot.behavioral_patterns)}")
-        print(f"   💡 Recommandations: {len(snapshot.recommendations)}")
+        ark_logger.info("✅ Snapshot collecté:", extra={"module": "scripts"})
+        ark_logger.info(f"   🧠 État Reflexia: {'✅' if snapshot.reflexia_state.get('active', extra={"module": "scripts"}) else '❌'}")
+        ark_logger.info(f"   🔍 État ZeroIA: {'✅' if snapshot.zeroia_state.get('active', True, extra={"module": "scripts"}) else '❌'}")
+        ark_logger.info(f"   🎯 Score cohérence: {snapshot.coherence_analysis['coherence_score']:.3f}", extra={"module": "scripts"})
+        ark_logger.info(f"   ⚠️  Issues détectées: {len(snapshot.coherence_analysis['issues'], extra={"module": "scripts"})}")
+        ark_logger.info(f"   🔮 Patterns comportementaux: {len(snapshot.behavioral_patterns, extra={"module": "scripts"})}")
+        ark_logger.info(f"   💡 Recommandations: {len(snapshot.recommendations, extra={"module": "scripts"})}")
 
         if snapshot.recommendations:
-            print("\n💡 Recommandations:")
+            ark_logger.info("\n💡 Recommandations:", extra={"module": "scripts"})
             for rec in snapshot.recommendations[:3]:
-                print(f"   • {rec}")
+                ark_logger.info(f"   • {rec}", extra={"module": "scripts"})
 
         # Test de monitoring court (10 secondes)
-        print("\n🔄 Test monitoring (10 secondes)...")
+        ark_logger.info("\n🔄 Test monitoring (10 secondes)...", extra={"module": "scripts"})
         await self.sandozia_core.start_monitoring()
 
         # Attendre un peu pour voir le monitoring
         await asyncio.sleep(10)
 
         await self.sandozia_core.stop_monitoring()
-        print("🛑 Monitoring arrêté")
+        ark_logger.info("🛑 Monitoring arrêté", extra={"module": "scripts"})
 
         # Statut final
         status = self.sandozia_core.get_current_status()
-        print("\n📊 Statut final Sandozia:")
-        print(f"   🔄 En fonctionnement: {status['is_running']}")
-        print(f"   📊 Snapshots collectés: {status['snapshots_count']}")
+        ark_logger.info("\n📊 Statut final Sandozia:", extra={"module": "scripts"})
+        ark_logger.info(f"   🔄 En fonctionnement: {status['is_running']}", extra={"module": "scripts"})
+        ark_logger.info(f"   📊 Snapshots collectés: {status['snapshots_count']}", extra={"module": "scripts"})
         connected_modules = sum(status["modules_available"].values())
         total_modules = len(status["modules_available"])
-        print(f"   🔌 Modules connectés: {connected_modules}/{total_modules}")
+        ark_logger.info(f"   🔌 Modules connectés: {connected_modules}/{total_modules}", extra={"module": "scripts"})
 
         return status
 
     async def run_full_demo(self):
         """Exécute la démonstration complète"""
-        print("🌟" + "=" * 70 + "🌟")
-        print("🧠 DÉMONSTRATION COMPLÈTE SANDOZIA INTELLIGENCE CROISÉE")
-        print("🌟" + "=" * 70 + "🌟")
-        print(f"📅 Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S')}")
-        print("🎯 Phase 2 v3.x - Semaine 1 (SandoziaCore + boucle simple)")
+        ark_logger.info("🌟" + "=" * 70 + "🌟", extra={"module": "scripts"})
+        ark_logger.info("🧠 DÉMONSTRATION COMPLÈTE SANDOZIA INTELLIGENCE CROISÉE", extra={"module": "scripts"})
+        ark_logger.info("🌟" + "=" * 70 + "🌟", extra={"module": "scripts"})
+        ark_logger.info(f"📅 Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', extra={"module": "scripts"})}")
+        ark_logger.info("🎯 Phase 2 v3.x - Semaine 1 (SandoziaCore + boucle simple)", extra={"module": "scripts"})
 
         try:
             # 1. Validator
@@ -372,17 +373,17 @@ behavioral_alert_enabled = true
             core_result = await self.demo_sandozia_core()
 
             # Résumé final
-            print("\n" + "🎉" + "=" * 70 + "🎉")
-            print("✅ DÉMONSTRATION SANDOZIA TERMINÉE AVEC SUCCÈS")
-            print("🎉" + "=" * 70 + "🎉")
+            ark_logger.info("\n" + "🎉" + "=" * 70 + "🎉", extra={"module": "scripts"})
+            ark_logger.info("✅ DÉMONSTRATION SANDOZIA TERMINÉE AVEC SUCCÈS", extra={"module": "scripts"})
+            ark_logger.info("🎉" + "=" * 70 + "🎉", extra={"module": "scripts"})
 
-            print("\n📊 RÉSUMÉ DES PERFORMANCES:")
-            print(f"   🔍 Cohérence modules: {validator_result['coherence_score']:.3f}")
-            print(f"   🧠 Santé comportementale: {analyzer_result['behavioral_health_score']:.3f}")
-            print(f"   📈 Cohérence métriques: {metrics_result['cross_module_coherence']:.3f}")
-            print(
+            ark_logger.info("\n📊 RÉSUMÉ DES PERFORMANCES:", extra={"module": "scripts"})
+            ark_logger.info(f"   🔍 Cohérence modules: {validator_result['coherence_score']:.3f}", extra={"module": "scripts"})
+            ark_logger.info(f"   🧠 Santé comportementale: {analyzer_result['behavioral_health_score']:.3f}", extra={"module": "scripts"})
+            ark_logger.info(f"   📈 Cohérence métriques: {metrics_result['cross_module_coherence']:.3f}", extra={"module": "scripts"})
+            ark_logger.info(
                 f"   🚀 Core opérationnel: {'✅' if core_result['is_running'] is False else '✅'}"
-            )  # False car arrêté proprement
+            , extra={"module": "scripts"})  # False car arrêté proprement
 
             # Score global Sandozia
             scores = [
@@ -392,19 +393,19 @@ behavioral_alert_enabled = true
             ]
             global_score = sum(scores) / len(scores)
 
-            print(f"\n🎯 SCORE GLOBAL SANDOZIA: {global_score:.3f}/1.0")
+            ark_logger.info(f"\n🎯 SCORE GLOBAL SANDOZIA: {global_score:.3f}/1.0", extra={"module": "scripts"})
 
             if global_score > 0.8:
-                print("🌟 EXCELLENT - Sandozia Intelligence Croisée pleinement opérationnelle!")
+                ark_logger.info("🌟 EXCELLENT - Sandozia Intelligence Croisée pleinement opérationnelle!", extra={"module": "scripts"})
             elif global_score > 0.6:
-                print(
+                ark_logger.info(
                     "👍 BIEN - Sandozia fonctionne correctement avec "
                     "quelques optimisations possibles"
-                )
+                , extra={"module": "scripts"})
             else:
-                print("⚠️  ATTENTION - Sandozia nécessite des ajustements")
+                ark_logger.info("⚠️  ATTENTION - Sandozia nécessite des ajustements", extra={"module": "scripts"})
 
-            print("\n🚀 PHASE 2 PRÊTE POUR SEMAINE 2: CrossModuleValidator + Dashboard Grafana")
+            ark_logger.info("\n🚀 PHASE 2 PRÊTE POUR SEMAINE 2: CrossModuleValidator + Dashboard Grafana", extra={"module": "scripts"})
 
             return {
                 "global_score": global_score,
@@ -417,7 +418,7 @@ behavioral_alert_enabled = true
 
         except Exception as e:
             logger.error(f"❌ Demo failed: {e}")
-            print(f"❌ ÉCHEC DE LA DÉMONSTRATION: {e}")
+            ark_logger.info(f"❌ ÉCHEC DE LA DÉMONSTRATION: {e}", extra={"module": "scripts"})
             return {"demo_successful": False, "error": str(e)}
 
     def cleanup(self):
@@ -433,14 +434,14 @@ behavioral_alert_enabled = true
         if demo_config.exists():
             demo_config.unlink()
 
-        print("🧹 Cleanup demo terminé")
+        ark_logger.info("🧹 Cleanup demo terminé", extra={"module": "scripts"})
 
 
 async def run_daemon_mode(demo: SandoziaDemo):
     """Mode daemon pour container Docker - boucle infinie"""
-    print("🧠 SANDOZIA INTELLIGENCE CROISÉE - Mode Daemon")
-    print("🐳 Démarrage pour container Docker...")
-    print("=" * 60)
+    ark_logger.info("🧠 SANDOZIA INTELLIGENCE CROISÉE - Mode Daemon", extra={"module": "scripts"})
+    ark_logger.info("🐳 Démarrage pour container Docker...", extra={"module": "scripts"})
+    ark_logger.info("=" * 60, extra={"module": "scripts"})
 
     import time
 
@@ -449,8 +450,8 @@ async def run_daemon_mode(demo: SandoziaDemo):
     try:
         while True:  # Boucle infinie pour daemon
             cycle_count += 1
-            print(f"\n🔄 === CYCLE SANDOZIA DAEMON {cycle_count} ===")
-            print(f"⏰ {time.strftime('%H:%M:%S')}")
+            ark_logger.info(f"\n🔄 === CYCLE SANDOZIA DAEMON {cycle_count} ===", extra={"module": "scripts"})
+            ark_logger.info(f"⏰ {time.strftime('%H:%M:%S', extra={"module": "scripts"})}")
 
             # Exécuter cycle d'analyse complet
             try:
@@ -474,33 +475,33 @@ async def run_daemon_mode(demo: SandoziaDemo):
                 ]
                 global_score = sum(scores) / len(scores)
 
-                print(f"📊 Score global Sandozia: {global_score:.3f}")
+                ark_logger.info(f"📊 Score global Sandozia: {global_score:.3f}", extra={"module": "scripts"})
 
                 # Status périodique détaillé
                 if cycle_count % 5 == 0:
-                    print(f"🎯 Status après {cycle_count} cycles:")
-                    print(f"  - Cohérence modules: {validator_result['coherence_score']:.3f}")
+                    ark_logger.info(f"🎯 Status après {cycle_count} cycles:", extra={"module": "scripts"})
+                    ark_logger.info(f"  - Cohérence modules: {validator_result['coherence_score']:.3f}", extra={"module": "scripts"})
                     behavioral_score = analyzer_result["behavioral_health_score"]
-                    print(f"  - Santé comportementale: {behavioral_score:.3f}")
-                    print(
+                    ark_logger.info(f"  - Santé comportementale: {behavioral_score:.3f}", extra={"module": "scripts"})
+                    ark_logger.info(
                         f"  - Métriques cohérentes: {metrics_result['cross_module_coherence']:.3f}"
-                    )
-                    print(f"  - Performance globale: {global_score:.3f}")
+                    , extra={"module": "scripts"})
+                    ark_logger.info(f"  - Performance globale: {global_score:.3f}", extra={"module": "scripts"})
 
             except Exception as e:
-                print(f"⚠️ Erreur cycle {cycle_count}: {e}")
+                ark_logger.info(f"⚠️ Erreur cycle {cycle_count}: {e}", extra={"module": "scripts"})
                 # En mode daemon, on continue malgré les erreurs
 
             # Pause entre cycles (important pour container)
-            print("💤 Pause 15s avant prochain cycle...")
+            ark_logger.info("💤 Pause 15s avant prochain cycle...", extra={"module": "scripts"})
             await asyncio.sleep(15)
 
     except KeyboardInterrupt:
-        print("\n⏹️ Daemon Sandozia arrêté proprement")
+        ark_logger.info("\n⏹️ Daemon Sandozia arrêté proprement", extra={"module": "scripts"})
     except Exception as e:
-        print(f"\n💥 Erreur daemon: {e}")
+        ark_logger.info(f"\n💥 Erreur daemon: {e}", extra={"module": "scripts"})
         # En mode daemon, on redémarre automatiquement
-        print("🔄 Redémarrage automatique dans 10s...")
+        ark_logger.info("🔄 Redémarrage automatique dans 10s...", extra={"module": "scripts"})
         await asyncio.sleep(10)
         await run_daemon_mode(demo)  # Relance recursive
 
@@ -513,15 +514,15 @@ def format_generated():
             subprocess.run(["isort", str(d), "--profile", "black"], check=True)
             # Formatage du code avec black
             subprocess.run(["black", str(d), "--quiet"], check=True)
-            print(f"✅ Formaté: {d}")
+            ark_logger.info(f"✅ Formaté: {d}", extra={"module": "scripts"})
         except subprocess.CalledProcessError as e:
-            print(f"⚠️ Erreur formatage {d}: {e}")
+            ark_logger.info(f"⚠️ Erreur formatage {d}: {e}", extra={"module": "scripts"})
             # Fallback: essayer au moins isort
             try:
                 subprocess.run(["isort", str(d), "--fix"], check=False)
-                print(f"⚠️ Fallback isort appliqué: {d}")
+                ark_logger.info(f"⚠️ Fallback isort appliqué: {d}", extra={"module": "scripts"})
             except Exception:
-                print(f"❌ Fallback échoué: {d}")
+                ark_logger.info(f"❌ Fallback échoué: {d}", extra={"module": "scripts"})
 
 
 async def main():
@@ -564,7 +565,7 @@ async def main():
             results_file = Path("demo_sandozia_results.json")
             with open(results_file, "w") as f:
                 json.dump(result, f, indent=2, default=str)
-            print(f"\n📁 Résultats sauvegardés: {results_file}")
+            ark_logger.info(f"\n📁 Résultats sauvegardés: {results_file}", extra={"module": "scripts"})
 
         elif args.validator_only:
             demo.demo_validator()

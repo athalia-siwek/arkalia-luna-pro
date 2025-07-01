@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 # Ajout dynamique du chemin du projet pour garantir l'import correct
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
+from core.ark_logger import ark_logger
 from modules.assistantia.core import app
 
 client = TestClient(app)
@@ -15,10 +16,10 @@ client = TestClient(app)
 
 def test_debug_routes():
     """Test de debug pour afficher les routes disponibles."""
-    print("\n--- ROUTES DISPONIBLES ---")
+    ark_logger.info("\n--- ROUTES DISPONIBLES ---", extra={"module": "matrix"})
     for route in app.routes:
-        print(f"{route.path} | methods: {route.methods}")
-    print("--- FIN ROUTES ---\n")
+        ark_logger.info(f"{route.path} | methods: {route.methods}", extra={"module": "matrix"})
+    ark_logger.info("--- FIN ROUTES ---\n", extra={"module": "matrix"})
     # On ne fait pas d'assert pour ne pas bloquer
 
 

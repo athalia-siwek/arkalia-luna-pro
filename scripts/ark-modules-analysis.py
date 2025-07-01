@@ -4,6 +4,7 @@
 Analyse tous les composants disponibles vs ceux intégrés dans l'orchestrateur
 """
 
+from core.ark_logger import ark_logger
 from pathlib import Path
 from typing import Any, Optional
 
@@ -35,8 +36,8 @@ class ArkaliaModulesAnalyzer:
 
     def scan_all_modules(self):
         """Scan complet de tous les modules disponibles"""
-        print("🔍 ANALYSE COMPLÈTE DES MODULES ARKALIA")
-        print("=" * 60)
+        ark_logger.info("🔍 ANALYSE COMPLÈTE DES MODULES ARKALIA", extra={"module": "scripts"})
+        ark_logger.info("=" * 60, extra={"module": "scripts"})
 
         # Scan modules/ directory
         if self.modules_dir.exists():
@@ -174,14 +175,14 @@ class ArkaliaModulesAnalyzer:
 
     def analyze_integration_gaps(self):
         """Analyse les lacunes d'intégration"""
-        print(f"\n📊 MODULES DÉCOUVERTS : {len(self.discovered_modules)}")
-        print(f"🔗 MODULES INTÉGRÉS    : {len(self.integrated_modules)}")
-        print(f"⚠️ COMPOSANTS MANQUÉS  : {len(self.missing_integrations)}")
+        ark_logger.info(f"\n📊 MODULES DÉCOUVERTS : {len(self.discovered_modules, extra={"module": "scripts"})}")
+        ark_logger.info(f"🔗 MODULES INTÉGRÉS    : {len(self.integrated_modules, extra={"module": "scripts"})}")
+        ark_logger.info(f"⚠️ COMPOSANTS MANQUÉS  : {len(self.missing_integrations, extra={"module": "scripts"})}")
 
     def print_detailed_report(self):
         """Affiche le rapport détaillé"""
-        print("\n🔍 RAPPORT DÉTAILLÉ - MODULES NON INTÉGRÉS")
-        print("=" * 80)
+        ark_logger.info("\n🔍 RAPPORT DÉTAILLÉ - MODULES NON INTÉGRÉS", extra={"module": "scripts"})
+        ark_logger.info("=" * 80, extra={"module": "scripts"})
 
         # Trier par priorité
         high_priority = [m for m in self.missing_integrations if m["priority"] == "HIGH"]
@@ -195,54 +196,54 @@ class ArkaliaModulesAnalyzer:
             ("💡 BASSE PRIORITÉ", low_priority),
         ]:
             if items:
-                print(f"\n{priority}:")
-                print("-" * 50)
+                ark_logger.info(f"\n{priority}:", extra={"module": "scripts"})
+                ark_logger.info("-" * 50, extra={"module": "scripts"})
 
                 for item in items:
-                    print(f"📦 {item['module']}.{item['component']}")
-                    print(f"   Type: {item['type']}")
-                    print(f"   💡 {item['integration_suggestion']}")
-                    print()
+                    ark_logger.info(f"📦 {item['module']}.{item['component']}", extra={"module": "scripts"})
+                    ark_logger.info(f"   Type: {item['type']}", extra={"module": "scripts"})
+                    ark_logger.info(f"   💡 {item['integration_suggestion']}", extra={"module": "scripts"})
+                    ark_logger.info("")
 
     def generate_integration_code(self):
         """Génère le code d'intégration suggéré"""
-        print("\n🚀 CODE D'INTÉGRATION SUGGÉRÉ")
-        print("=" * 60)
+        ark_logger.info("\n🚀 CODE D'INTÉGRATION SUGGÉRÉ", extra={"module": "scripts"})
+        ark_logger.info("=" * 60, extra={"module": "scripts"})
 
         high_priority = [m for m in self.missing_integrations if m["priority"] == "HIGH"]
 
         if high_priority:
-            print("# === IMPORTS À AJOUTER ===")
+            ark_logger.info("# === IMPORTS À AJOUTER ===", extra={"module": "scripts"})
             for item in high_priority:
                 module_path = f"..{item['module']}.{item['component']}"
                 component_class = item["component"].split(".")[-1]
-                print(f"from {module_path} import {component_class}")
+                ark_logger.info(f"from {module_path} import {component_class}", extra={"module": "scripts"})
 
-            print("\n# === INITIALISATION DANS initialize_modules() ===")
+            ark_logger.info("\n# === INITIALISATION DANS initialize_modules() ===", extra={"module": "scripts"})
             for item in high_priority:
                 component_name = item["component"].split(".")[-1]
-                print(f'# {item["module"].upper()} - {item["type"]}')
-                print(f'if "{item["module"]}" in self.config.enabled_modules:')
-                print("    try:")
-                print(f'        {item["module"]}_component = {component_name}()')
-                print(
+                ark_logger.info(f'# {item["module"].upper(, extra={"module": "scripts"})} - {item["type"]}')
+                ark_logger.info(f'if "{item["module"]}" in self.config.enabled_modules:', extra={"module": "scripts"})
+                ark_logger.info("    try:", extra={"module": "scripts"})
+                ark_logger.info(f'        {item["module"]}_component = {component_name}(, extra={"module": "scripts"})')
+                ark_logger.info(
                     f'        initialization_results["{item["module"]}_'
-                    f'{component_name.lower()}"] = '
+                    f'{component_name.lower(, extra={"module": "scripts"})}"] = '
                     f'ModuleWrapper("{item["module"]}_{component_name.lower()}", '
                     f'{item["module"]}_component)'
                 )
-                print(
+                ark_logger.info(
                     f'        initialization_results["{item["module"]}_'
-                    f'{component_name.lower()}"] = '
+                    f'{component_name.lower(, extra={"module": "scripts"})}"] = '
                     f'"✅ SUCCESS"'
                 )
-                print("    except Exception as e:")
-                print(
+                ark_logger.error("    except Exception as e:", extra={"module": "scripts"})
+                ark_logger.info(
                     f'        initialization_results["{item["module"]}_'
-                    f'{component_name.lower()}"] = '
+                    f'{component_name.lower(, extra={"module": "scripts"})}"] = '
                     f'f"❌ ERROR: {{e}}"'
                 )
-                print()
+                ark_logger.info("")
 
 
 def main():

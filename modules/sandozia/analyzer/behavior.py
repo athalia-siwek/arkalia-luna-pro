@@ -18,6 +18,7 @@ Signale :
 - Incohérences répétitives
 """
 
+from core.ark_logger import ark_logger
 import json
 import logging
 import statistics
@@ -478,7 +479,7 @@ if __name__ == "__main__":
     analyzer = BehaviorAnalyzer()
 
     if args.demo:
-        print("🧠 Generating synthetic behavior data...")
+        ark_logger.info("🧠 Generating synthetic behavior data...", extra={"module": "analyzer"})
 
         # Générer des données synthétiques
         for _i in range(50):
@@ -496,8 +497,8 @@ if __name__ == "__main__":
             analyzer.add_metric_sample("reflexia", "confidence_score", 0.2)  # Anomalie
             analyzer.add_metric_sample("reflexia", "response_time", 5.0)  # Régression
 
-        print("📊 Synthetic data generated")
+        ark_logger.info("📊 Synthetic data generated", extra={"module": "analyzer"})
 
     if args.analyze or args.demo:
         result = analyzer.analyze_behavior()
-        print(json.dumps(result, indent=2))
+        ark_logger.info(json.dumps(result, indent=2, extra={"module": "analyzer"}))

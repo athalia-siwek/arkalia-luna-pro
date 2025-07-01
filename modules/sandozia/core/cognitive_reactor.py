@@ -12,6 +12,7 @@ Fonctionnalités automatiques :
 - Intégration parfaite avec BehaviorAnalyzer existant
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import logging
 from dataclasses import dataclass, field
@@ -496,7 +497,7 @@ async def run_daemon():
     args = parser.parse_args()
 
     if not args.daemon:
-        print("Usage: python -m modules.sandozia.core.cognitive_reactor --daemon")
+        ark_logger.info("Usage: python -m modules.sandozia.core.cognitive_reactor --daemon", extra={"module": "core"})
         sys.exit(1)
 
     reactor = create_cognitive_reactor()

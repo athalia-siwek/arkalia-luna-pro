@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # 🚫 Pre-push ZeroIA Validator — Arkalia LUNA v2.6.x
 
+from core.ark_logger import ark_logger
 import re
 
 try:
@@ -19,10 +20,10 @@ def check_toml_validity() -> None:
     try:
         with STATE_FILE.open("rb") as f:
             tomllib.load(f)
-        print("✅ Fichier TOML valide.")
+        ark_logger.info("✅ Fichier TOML valide.", extra={"module": "scripts"})
         return True
     except Exception as e:
-        print(f"❌ Erreur de parsing TOML: {e}")
+        ark_logger.info(f"❌ Erreur de parsing TOML: {e}", extra={"module": "scripts"})
         return False
 
 
@@ -31,7 +32,7 @@ def check_pat_exposure() -> None:
     for file in ENV_FILES:
         content = file.read_text(errors="ignore")
         if pat_regex.search(content):
-            print(f"⚠️ Token PAT détecté dans : {file}")
+            ark_logger.info(f"⚠️ Token PAT détecté dans : {file}", extra={"module": "scripts"})
             return False
     return True
 
@@ -46,8 +47,8 @@ if __name__ == "__main__":
         errors.append("PAT exposé")
 
     if errors:
-        print("🚫 Pre-push bloqué.")
+        ark_logger.info("🚫 Pre-push bloqué.", extra={"module": "scripts"})
         exit(1)
 
-    print("🛡️ Tous les contrôles ZeroIA sont OK.")
+    ark_logger.info("🛡️ Tous les contrôles ZeroIA sont OK.", extra={"module": "scripts"})
     exit(0)

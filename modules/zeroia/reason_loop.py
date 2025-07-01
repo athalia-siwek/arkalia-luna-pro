@@ -1,3 +1,4 @@
+from core.ark_logger import ark_logger
 import logging
 import textwrap
 import time
@@ -297,10 +298,10 @@ def validate_and_fix_context(ctx: dict) -> dict:
     for key, default_value in default_metrics.items():
         if key not in status or status[key] is None:
             status[key] = default_value
-            print(
+            ark_logger.info(
                 f"⚠️ [ZeroIA] {key} manquant dans le contexte, valeur par défaut: {default_value}",
                 flush=True,
-            )
+            , extra={"module": "zeroia"})
 
     return validated_ctx
 
@@ -325,16 +326,16 @@ def reason_loop(
     try:
         integrity_valid, integrity_reason = validate_decision_integrity(ctx, decision, score)
         if not integrity_valid:
-            print(f"🚨 [ZeroIA] INTEGRITY VIOLATION: {integrity_reason}", flush=True)
+            ark_logger.info(f"🚨 [ZeroIA] INTEGRITY VIOLATION: {integrity_reason}", flush=True, extra={"module": "zeroia"})
             # En cas de compromission, forcer décision sécurisée
             decision, score = "monitor", 0.3
     except Exception as e:
-        print(f"⚠️ [ZeroIA] Integrity check failed: {e}", flush=True)
+        ark_logger.error(f"⚠️ [ZeroIA] Integrity check failed: {e}", flush=True, extra={"module": "zeroia"})
 
     # Vérifie si on doit traiter cette décision (anti-spam)
     if not should_process_decision(decision):
-        print(
-            f"[ZeroIA] Décision {decision} ignorée (répétition trop fréquente)",
+        ark_logger.info(
+            f"[ZeroIA] Décision {decision} ignorée (répétition trop fréquente, extra={"module": "zeroia"})",
             flush=True,
         )
         return decision, score
@@ -355,8 +356,8 @@ def reason_loop(
     # Logs modifiés pour éviter le spam
     status = ctx.get("status", {})
     cpu = status.get("cpu", "N/A")
-    print(f"✅ ZeroIA decided: {decision} (confidence={score})", flush=True)
-    print(f"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score})", flush=True)
+    ark_logger.info(f"✅ ZeroIA decided: {decision} (confidence={score}, extra={"module": "zeroia"})", flush=True)
+    ark_logger.info(f"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score}, extra={"module": "zeroia"})", flush=True)
 
     return decision, score
 
@@ -366,19 +367,19 @@ def compute_confidence_score(success_rate: float, error_rate: float) -> float:
 
 
 def main_loop() -> None:
-    print("[ZeroIA] loop started", flush=True)
+    ark_logger.info("[ZeroIA] loop started", flush=True, extra={"module": "zeroia"})
     try:
         reason_loop()
     except Exception as e:
-        print(f"[ZeroIA] 🚨 ERREUR dans reason_loop(): {e}", flush=True)
+        ark_logger.info(f"[ZeroIA] 🚨 ERREUR dans reason_loop(, extra={"module": "zeroia"}): {e}", flush=True)
         logger.exception(e)
 
 
 if __name__ == "__main__":
     try:
-        print("[ZeroIA] 🔄 Boucle cognitive initialisée...", flush=True)
+        ark_logger.info("[ZeroIA] 🔄 Boucle cognitive initialisée...", flush=True, extra={"module": "zeroia"})
         while True:
             main_loop()
             time.sleep(15)  # Augmentation de l'intervalle à 15 secondes
     except KeyboardInterrupt:
-        print("[ZeroIA] 🧠 Arrêt manuel détecté.")
+        ark_logger.info("[ZeroIA] 🧠 Arrêt manuel détecté.", extra={"module": "zeroia"})

@@ -4,6 +4,7 @@ Script de validation CI pour Arkalia-LUNA
 Vérifie les points critiques sans échouer sur les erreurs mineures
 """
 
+from core.ark_logger import ark_logger
 import os
 import subprocess
 import sys
@@ -12,28 +13,28 @@ from pathlib import Path
 
 def run_command(cmd: list[str], description: str) -> bool:
     """Exécute une commande et retourne le succès"""
-    print(f"🔍 {description}...")
+    ark_logger.info(f"🔍 {description}...", extra={"module": "scripts"})
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
         if result.returncode == 0:
-            print(f"✅ {description} - SUCCÈS")
+            ark_logger.info(f"✅ {description} - SUCCÈS", extra={"module": "scripts"})
             return True
         else:
-            print(f"❌ {description} - ÉCHEC")
+            ark_logger.info(f"❌ {description} - ÉCHEC", extra={"module": "scripts"})
             if result.stderr:
-                print(f"Erreur: {result.stderr}")
+                ark_logger.info(f"Erreur: {result.stderr}", extra={"module": "scripts"})
             return False
     except subprocess.TimeoutExpired:
-        print(f"⏰ {description} - TIMEOUT")
+        ark_logger.info(f"⏰ {description} - TIMEOUT", extra={"module": "scripts"})
         return False
     except Exception as e:
-        print(f"💥 {description} - ERREUR: {e}")
+        ark_logger.info(f"💥 {description} - ERREUR: {e}", extra={"module": "scripts"})
         return False
 
 
 def check_imports() -> bool:
     """Vérifie que les imports principaux fonctionnent"""
-    print("🔍 Vérification des imports principaux...")
+    ark_logger.info("🔍 Vérification des imports principaux...", extra={"module": "scripts"})
 
     test_imports = [
         "import modules.zeroia.core",
@@ -46,9 +47,9 @@ def check_imports() -> bool:
     for import_stmt in test_imports:
         try:
             exec(import_stmt)
-            print(f"✅ {import_stmt}")
+            ark_logger.info(f"✅ {import_stmt}", extra={"module": "scripts"})
         except Exception as e:
-            print(f"❌ {import_stmt} - {e}")
+            ark_logger.info(f"❌ {import_stmt} - {e}", extra={"module": "scripts"})
             return False
 
     return True
@@ -56,7 +57,7 @@ def check_imports() -> bool:
 
 def check_config_files() -> bool:
     """Vérifie que les fichiers de configuration existent"""
-    print("🔍 Vérification des fichiers de configuration...")
+    ark_logger.info("🔍 Vérification des fichiers de configuration...", extra={"module": "scripts"})
 
     required_files = [
         "pyproject.toml",
@@ -69,9 +70,9 @@ def check_config_files() -> bool:
 
     for file_path in required_files:
         if Path(file_path).exists():
-            print(f"✅ {file_path}")
+            ark_logger.info(f"✅ {file_path}", extra={"module": "scripts"})
         else:
-            print(f"❌ {file_path} - MANQUANT")
+            ark_logger.info(f"❌ {file_path} - MANQUANT", extra={"module": "scripts"})
             return False
 
     return True
@@ -79,7 +80,7 @@ def check_config_files() -> bool:
 
 def check_test_structure() -> bool:
     """Vérifie la structure des tests"""
-    print("🔍 Vérification de la structure des tests...")
+    ark_logger.info("🔍 Vérification de la structure des tests...", extra={"module": "scripts"})
 
     test_dirs = [
         "tests/unit",
@@ -93,11 +94,11 @@ def check_test_structure() -> bool:
         if Path(test_dir).exists():
             test_files = list(Path(test_dir).rglob("test_*.py"))
             if test_files:
-                print(f"✅ {test_dir} ({len(test_files)} fichiers)")
+                ark_logger.info(f"✅ {test_dir} ({len(test_files, extra={"module": "scripts"})} fichiers)")
             else:
-                print(f"⚠️ {test_dir} - Aucun test trouvé")
+                ark_logger.info(f"⚠️ {test_dir} - Aucun test trouvé", extra={"module": "scripts"})
         else:
-            print(f"❌ {test_dir} - MANQUANT")
+            ark_logger.info(f"❌ {test_dir} - MANQUANT", extra={"module": "scripts"})
             return False
 
     return True
@@ -105,8 +106,8 @@ def check_test_structure() -> bool:
 
 def main() -> int:
     """Point d'entrée principal"""
-    print("🚀 Validation CI Arkalia-LUNA")
-    print("=" * 50)
+    ark_logger.info("🚀 Validation CI Arkalia-LUNA", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     checks = [
         ("Configuration", check_config_files),
@@ -122,30 +123,30 @@ def main() -> int:
 
     results = []
     for name, check_func in checks:
-        print(f"\n📋 {name}")
-        print("-" * 30)
+        ark_logger.info(f"\n📋 {name}", extra={"module": "scripts"})
+        ark_logger.info("-" * 30, extra={"module": "scripts"})
         success = check_func()
         results.append((name, success))
 
     # Rapport final
-    print("\n" + "=" * 50)
-    print("📊 RAPPORT FINAL")
-    print("=" * 50)
+    ark_logger.info("\n" + "=" * 50, extra={"module": "scripts"})
+    ark_logger.info("📊 RAPPORT FINAL", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     passed = sum(1 for _, success in results if success)
     total = len(results)
 
     for name, success in results:
         status = "✅ PASS" if success else "❌ FAIL"
-        print(f"{status} {name}")
+        ark_logger.info(f"{status} {name}", extra={"module": "scripts"})
 
-    print(f"\n🎯 Résultat: {passed}/{total} vérifications réussies")
+    ark_logger.info(f"\n🎯 Résultat: {passed}/{total} vérifications réussies", extra={"module": "scripts"})
 
     if passed == total:
-        print("🎉 Toutes les vérifications CI sont passées !")
+        ark_logger.info("🎉 Toutes les vérifications CI sont passées !", extra={"module": "scripts"})
         return 0
     else:
-        print("⚠️ Certaines vérifications ont échoué")
+        ark_logger.info("⚠️ Certaines vérifications ont échoué", extra={"module": "scripts"})
         return 1
 
 

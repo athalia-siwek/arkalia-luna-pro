@@ -4,6 +4,7 @@
 Corrige les erreurs d'imports manquants et les types dépréciés
 """
 
+from core.ark_logger import ark_logger
 import re
 import subprocess
 from pathlib import Path
@@ -107,18 +108,18 @@ def process_file(file_path: Path) -> bool:
         if content != original_content:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
-            print(f"✅ Fixed {file_path}")
+            ark_logger.info(f"✅ Fixed {file_path}", extra={"module": "scripts"})
             return True
 
         return False
     except Exception as e:
-        print(f"❌ Error processing {file_path}: {e}")
+        ark_logger.error(f"❌ Error processing {file_path}: {e}", extra={"module": "scripts"})
         return False
 
 
 def main() -> None:
     """Fonction principale"""
-    print("🔧 Début de la correction des imports et types...")
+    ark_logger.info("🔧 Début de la correction des imports et types...", extra={"module": "scripts"})
 
     # Fichiers à traiter
     files_to_fix = [
@@ -178,11 +179,11 @@ def main() -> None:
     try:
         subprocess.run(["isort", "."], check=True)
         subprocess.run(["black", "."], check=True)
-        print("✅ Formatage final appliqué")
+        ark_logger.info("✅ Formatage final appliqué", extra={"module": "scripts"})
     except subprocess.CalledProcessError as e:
-        print(f"❌ Erreur formatage: {e}")
+        ark_logger.info(f"❌ Erreur formatage: {e}", extra={"module": "scripts"})
 
-    print(f"\n✅ Fichiers corrigés: {fixed_count}")
+    ark_logger.info(f"\n✅ Fichiers corrigés: {fixed_count}", extra={"module": "scripts"})
 
 
 if __name__ == "__main__":

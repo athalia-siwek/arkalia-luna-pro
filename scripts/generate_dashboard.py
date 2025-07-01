@@ -4,6 +4,7 @@
 Crée un dashboard unifié avec toutes les métriques du système
 """
 
+from core.ark_logger import ark_logger
 import json
 from pathlib import Path
 from typing import Any
@@ -392,7 +393,7 @@ def create_arkalia_overview_dashboard() -> dict[str, Any]:
 
 def main() -> None:
     """Fonction principale"""
-    print("🌕 Génération du Dashboard Grafana Arkalia-LUNA Pro...")
+    ark_logger.info("🌕 Génération du Dashboard Grafana Arkalia-LUNA Pro...", extra={"module": "scripts"})
 
     # Créer le dashboard
     dashboard = create_arkalia_overview_dashboard()
@@ -405,15 +406,15 @@ def main() -> None:
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(dashboard, f, indent=2, ensure_ascii=False)
 
-    print(f"✅ Dashboard créé: {output_path}")
-    print("📊 Panels inclus:")
-    print("  • 🕐 Uptime Système")
-    print("  • 💻 Utilisation CPU/RAM")
-    print("  • ⚡ Latence & Temps de Réponse")
-    print("  • 🧠 Décisions ZeroIA/min")
-    print("  • 🎯 Score de Confiance ZeroIA")
-    print("  • 💬 Prompts AssistantIA & Sécurité")
-    print("  • 🚨 Erreurs par Module")
+    ark_logger.info(f"✅ Dashboard créé: {output_path}", extra={"module": "scripts"})
+    ark_logger.info("📊 Panels inclus:", extra={"module": "scripts"})
+    ark_logger.info("  • 🕐 Uptime Système", extra={"module": "scripts"})
+    ark_logger.info("  • 💻 Utilisation CPU/RAM", extra={"module": "scripts"})
+    ark_logger.info("  • ⚡ Latence & Temps de Réponse", extra={"module": "scripts"})
+    ark_logger.info("  • 🧠 Décisions ZeroIA/min", extra={"module": "scripts"})
+    ark_logger.info("  • 🎯 Score de Confiance ZeroIA", extra={"module": "scripts"})
+    ark_logger.info("  • 💬 Prompts AssistantIA & Sécurité", extra={"module": "scripts"})
+    ark_logger.info("  • 🚨 Erreurs par Module", extra={"module": "scripts"})
 
 
 if __name__ == "__main__":

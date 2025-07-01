@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 # Ajout dynamique du chemin du projet pour garantir l'import correct
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
 
+from core.ark_logger import ark_logger
 from modules.assistantia.core import app
 
 pytestmark = pytest.mark.asyncio
@@ -15,10 +16,10 @@ pytestmark = pytest.mark.asyncio
 
 def test_print_routes():
     """Affiche les routes disponibles pour debug."""
-    print("\n--- ROUTES DISPONIBLES ---")
+    ark_logger.info("\n--- ROUTES DISPONIBLES ---", extra={"module": "modules"})
     for route in app.routes:
-        print(f"{route.path} | methods: {route.methods}")
-    print("--- FIN ROUTES ---\n")
+        ark_logger.info(f"{route.path} | methods: {route.methods}", extra={"module": "modules"})
+    ark_logger.info("--- FIN ROUTES ---\n", extra={"module": "modules"})
 
 
 def test_chat_endpoint_success():

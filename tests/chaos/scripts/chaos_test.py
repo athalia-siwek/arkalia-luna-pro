@@ -14,6 +14,7 @@ Scénarios de chaos:
 import asyncio
 import json
 import logging
+import os
 import random
 import shutil
 import subprocess
@@ -25,6 +26,11 @@ from pathlib import Path
 from typing import Any
 
 import toml
+
+# Ajout dynamique du chemin du projet pour garantir l'import correct
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
+
+from core.ark_logger import ark_logger
 
 
 class ChaosInjector:
@@ -49,7 +55,7 @@ class ChaosInjector:
 
         if not self.is_dry_run and file_path.exists():
             shutil.copy2(file_path, backup_path)
-            print(f"📦 [CHAOS] Backup: {file_path} → {backup_path}")
+            ark_logger.info(f"📦 [CHAOS] Backup: {file_path} → {backup_path}", extra={"module": "scripts"})
 
         return backup_path
 
@@ -57,11 +63,11 @@ class ChaosInjector:
         """Restaure un fichier depuis sa sauvegarde"""
         if backup_path.exists() and not self.is_dry_run:
             shutil.copy2(backup_path, original_path)
-            print(f"🔄 [CHAOS] Restored: {backup_path} → {original_path}")
+            ark_logger.info(f"🔄 [CHAOS] Restored: {backup_path} → {original_path}", extra={"module": "scripts"})
 
     def chaos_corrupt_config(self) -> dict:
         """💥 Corrompt les fichiers de configuration"""
-        print("💥 [CHAOS] Corruption fichiers configuration...")
+        ark_logger.info("💥 [CHAOS] Corruption fichiers configuration...", extra={"module": "scripts"})
 
         config_files = [
             "config/settings.toml",
@@ -95,17 +101,17 @@ class ChaosInjector:
                     with open(file_path, "w") as f:
                         f.write(corrupted_content)
 
-                    print(f"💀 [CHAOS] Corrompu: {file_path}")
+                    ark_logger.info(f"💀 [CHAOS] Corrompu: {file_path}", extra={"module": "scripts"})
 
                 except Exception as e:
-                    print(f"❌ [CHAOS] Erreur corruption {file_path}: {e}")
+                    ark_logger.info(f"❌ [CHAOS] Erreur corruption {file_path}: {e}", extra={"module": "scripts"})
                     results["success"] = False
 
         return results
 
     def chaos_delete_critical_files(self) -> dict:
         """🗑️ Supprime des fichiers critiques temporairement"""
-        print("🗑️ [CHAOS] Suppression fichiers critiques...")
+        ark_logger.info("🗑️ [CHAOS] Suppression fichiers critiques...", extra={"module": "scripts"})
 
         critical_files = [
             "modules/zeroia/core.py",
@@ -127,16 +133,16 @@ class ChaosInjector:
             if not self.is_dry_run:
                 try:
                     file_path.unlink()
-                    print(f"💥 [CHAOS] Supprimé: {file_path}")
+                    ark_logger.info(f"💥 [CHAOS] Supprimé: {file_path}", extra={"module": "scripts"})
                 except Exception as e:
-                    print(f"❌ [CHAOS] Erreur suppression {file_path}: {e}")
+                    ark_logger.info(f"❌ [CHAOS] Erreur suppression {file_path}: {e}", extra={"module": "scripts"})
                     results["success"] = False
 
         return results
 
     def chaos_memory_stress(self, duration_seconds: int = 30) -> dict:
         """🧠 Surcharge mémoire pour tester la résilience"""
-        print(f"🧠 [CHAOS] Surcharge mémoire pendant {duration_seconds}s...")
+        ark_logger.info(f"🧠 [CHAOS] Surcharge mémoire pendant {duration_seconds}s...", extra={"module": "scripts"})
 
         results = {
             "name": "memory_stress",
@@ -145,7 +151,7 @@ class ChaosInjector:
         }
 
         if self.is_dry_run:
-            print("🔍 [CHAOS] Mode dry-run: simulation surcharge mémoire")
+            ark_logger.info("🔍 [CHAOS] Mode dry-run: simulation surcharge mémoire", extra={"module": "scripts"})
             return results
 
         try:
@@ -158,25 +164,25 @@ class ChaosInjector:
                 try:
                     chunk = bytearray(chunk_size)
                     memory_chunks.append(chunk)
-                    print(f"📈 [CHAOS] Alloué: {(i+1) * 50}MB")
+                    ark_logger.info(f"📈 [CHAOS] Alloué: {(i+1, extra={"module": "scripts"}) * 50}MB")
                     time.sleep(duration_seconds / max_chunks)
                 except MemoryError:
-                    print("💥 [CHAOS] Limite mémoire atteinte")
+                    ark_logger.info("💥 [CHAOS] Limite mémoire atteinte", extra={"module": "scripts"})
                     break
 
             # Libération progressive
             del memory_chunks
-            print("🔄 [CHAOS] Mémoire libérée")
+            ark_logger.info("🔄 [CHAOS] Mémoire libérée", extra={"module": "scripts"})
 
         except Exception as e:
-            print(f"❌ [CHAOS] Erreur stress mémoire: {e}")
+            ark_logger.info(f"❌ [CHAOS] Erreur stress mémoire: {e}", extra={"module": "scripts"})
             results["success"] = False
 
         return results
 
     def chaos_network_simulation(self) -> dict:
         """🌐 Simule des erreurs réseau"""
-        print("🌐 [CHAOS] Simulation erreurs réseau...")
+        ark_logger.info("🌐 [CHAOS] Simulation erreurs réseau...", extra={"module": "scripts"})
 
         results = {"name": "network_simulation", "tests": [], "success": True}
 
@@ -206,12 +212,12 @@ class ChaosInjector:
                     test_result["accessible"] = random.choice([True, False])  # nosec B311
                     test_result["chaos_injected"] = True
 
-                print(f"🔗 [CHAOS] {service}: {'✅' if test_result['accessible'] else '❌'}")
+                ark_logger.info(f"🔗 [CHAOS] {service}: {'✅' if test_result['accessible'] else '❌'}", extra={"module": "scripts"})
 
             except Exception as e:
                 test_result["accessible"] = False
                 test_result["error"] = str(e)
-                print(f"💥 [CHAOS] Erreur test {service}: {e}")
+                ark_logger.info(f"💥 [CHAOS] Erreur test {service}: {e}", extra={"module": "scripts"})
 
             results["tests"].append(test_result)
 
@@ -219,7 +225,7 @@ class ChaosInjector:
 
     def chaos_zeroia_state_corruption(self) -> dict:
         """🤖 Corrompt l'état de ZeroIA"""
-        print("🤖 [CHAOS] Corruption état ZeroIA...")
+        ark_logger.info("🤖 [CHAOS] Corruption état ZeroIA...", extra={"module": "scripts"})
 
         results = {"name": "zeroia_corruption", "files_corrupted": [], "success": True}
 
@@ -257,17 +263,17 @@ class ChaosInjector:
                     with open(file_path, "w") as f:
                         f.write(corrupted_content)
 
-                    print(f"💀 [CHAOS] État ZeroIA corrompu: {file_path}")
+                    ark_logger.info(f"💀 [CHAOS] État ZeroIA corrompu: {file_path}", extra={"module": "scripts"})
 
                 except Exception as e:
-                    print(f"❌ [CHAOS] Erreur corruption ZeroIA {file_path}: {e}")
+                    ark_logger.info(f"❌ [CHAOS] Erreur corruption ZeroIA {file_path}: {e}", extra={"module": "scripts"})
                     results["success"] = False
 
         return results
 
     def run_resilience_test(self, test_duration: int = 60) -> dict:
         """🧪 Exécute un test de résilience complet"""
-        print(f"🧪 [CHAOS] Démarrage test résilience ({test_duration}s)...")
+        ark_logger.info(f"🧪 [CHAOS] Démarrage test résilience ({test_duration}s, extra={"module": "scripts"})...")
 
         start_time = time.time()
         test_report = {
@@ -289,7 +295,7 @@ class ChaosInjector:
 
         try:
             for scenario_name, chaos_func in chaos_scenarios:
-                print(f"\n🎯 [CHAOS] Scénario: {scenario_name}")
+                ark_logger.info(f"\n🎯 [CHAOS] Scénario: {scenario_name}", extra={"module": "scripts"})
 
                 scenario_start = time.time()
                 scenario_result = chaos_func()
@@ -310,7 +316,7 @@ class ChaosInjector:
                 test_report["recovery_tests"].append(recovery_result)
 
         except KeyboardInterrupt:
-            print("\n🛑 [CHAOS] Test interrompu par utilisateur")
+            ark_logger.info("\n🛑 [CHAOS] Test interrompu par utilisateur", extra={"module": "scripts"})
             test_report["interrupted"] = True
 
         except Exception as e:
@@ -355,7 +361,7 @@ class ChaosInjector:
                     }
 
                 status = "✅" if test_result["importable"] else "❌"
-                print(f"🔍 [RECOVERY] Module {module_name}: {status}")
+                ark_logger.info(f"🔍 [RECOVERY] Module {module_name}: {status}", extra={"module": "scripts"})
 
             except Exception as e:
                 test_result = {
@@ -364,7 +370,7 @@ class ChaosInjector:
                     "error": str(e),
                 }
                 recovery_result["success"] = False
-                print(f"💥 [RECOVERY] Échec import {module_name}: {e}")
+                ark_logger.info(f"💥 [RECOVERY] Échec import {module_name}: {e}", extra={"module": "scripts"})
 
             recovery_result["tests"].append(test_result)
 
@@ -372,7 +378,7 @@ class ChaosInjector:
 
     def _restore_all_backups(self):
         """🔄 Restaure tous les fichiers depuis les backups"""
-        print("🔄 [CHAOS] Restauration des backups...")
+        ark_logger.info("🔄 [CHAOS] Restauration des backups...", extra={"module": "scripts"})
 
         for backup_file in self.backup_dir.glob("*.backup"):
             try:
@@ -388,7 +394,7 @@ class ChaosInjector:
                             break
 
             except Exception as e:
-                print(f"❌ [CHAOS] Erreur restauration {backup_file}: {e}")
+                ark_logger.info(f"❌ [CHAOS] Erreur restauration {backup_file}: {e}", extra={"module": "scripts"})
 
     def _generate_chaos_report(self, test_report: dict):
         """📊 Génère le rapport de test de chaos"""
@@ -401,12 +407,12 @@ class ChaosInjector:
         with open(report_file, "w") as f:
             json.dump(test_report, f, indent=2)
 
-        print("\n📊 [CHAOS] RAPPORT DE TEST:")
-        print(f"   ⏱️ Durée: {test_report.get('actual_duration', 0):.2f}s")
-        print(f"   🎯 Scénarios: {len(test_report['chaos_scenarios'])}")
-        print(f"   🔄 Tests récupération: {len(test_report['recovery_tests'])}")
-        print(f"   ✅ Succès global: {'OUI' if test_report['overall_success'] else 'NON'}")
-        print(f"   📄 Rapport: {report_file}")
+        ark_logger.info("\n📊 [CHAOS] RAPPORT DE TEST:", extra={"module": "scripts"})
+        ark_logger.info(f"   ⏱️ Durée: {test_report.get('actual_duration', 0, extra={"module": "scripts"}):.2f}s")
+        ark_logger.info(f"   🎯 Scénarios: {len(test_report['chaos_scenarios'], extra={"module": "scripts"})}")
+        ark_logger.info(f"   🔄 Tests récupération: {len(test_report['recovery_tests'], extra={"module": "scripts"})}")
+        ark_logger.info(f"   ✅ Succès global: {'OUI' if test_report['overall_success'] else 'NON'}", extra={"module": "scripts"})
+        ark_logger.info(f"   📄 Rapport: {report_file}", extra={"module": "scripts"})
 
         # Statistiques détaillées
         successful_scenarios = sum(
@@ -416,16 +422,16 @@ class ChaosInjector:
             1 for r in test_report["recovery_tests"] if r.get("success", False)
         )
 
-        print("\n📈 [CHAOS] STATISTIQUES:")
+        ark_logger.info("\n📈 [CHAOS] STATISTIQUES:", extra={"module": "scripts"})
         scenarios_count = len(test_report["chaos_scenarios"])
         recoveries_count = len(test_report["recovery_tests"])
-        print(f"   💥 Scénarios réussis: {successful_scenarios}/{scenarios_count}")
-        print(f"   🔄 Récupérations réussies: {successful_recoveries}/{recoveries_count}")
+        ark_logger.info(f"   💥 Scénarios réussis: {successful_scenarios}/{scenarios_count}", extra={"module": "scripts"})
+        ark_logger.info(f"   🔄 Récupérations réussies: {successful_recoveries}/{recoveries_count}", extra={"module": "scripts"})
 
         total_tests = scenarios_count + recoveries_count
         total_successes = successful_scenarios + successful_recoveries
         resilience_score = total_successes / total_tests * 100
-        print(f"   🛡️ Score de résilience: {resilience_score:.1f}%")
+        ark_logger.info(f"   🛡️ Score de résilience: {resilience_score:.1f}%", extra={"module": "scripts"})
 
 
 def main():
@@ -460,7 +466,7 @@ def main():
             if args.scenario in scenario_map:
                 result = scenario_map[args.scenario]()
                 status = "Succès" if result["success"] else "Échec"
-                print(f"\n✅ [CHAOS] Scénario {args.scenario} terminé: {status}")
+                ark_logger.info(f"\n✅ [CHAOS] Scénario {args.scenario} terminé: {status}", extra={"module": "scripts"})
 
         else:
             # Test complet de résilience
@@ -469,10 +475,10 @@ def main():
             exit(exit_code)
 
     except KeyboardInterrupt:
-        print("\n🛑 [CHAOS] Arrêt demandé par l'utilisateur")
+        ark_logger.info("\n🛑 [CHAOS] Arrêt demandé par l'utilisateur", extra={"module": "scripts"})
         exit(130)
     except Exception as e:
-        print(f"💥 [CHAOS] Erreur fatale: {e}")
+        ark_logger.info(f"💥 [CHAOS] Erreur fatale: {e}", extra={"module": "scripts"})
         traceback.print_exc()
         exit(1)
 

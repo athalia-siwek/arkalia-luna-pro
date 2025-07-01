@@ -1,3 +1,4 @@
+from core.ark_logger import ark_logger
 import time
 from typing import Optional
 
@@ -19,17 +20,17 @@ def reflexia_loop(max_iterations: int | None = None, sleep_seconds: float = 5.0)
     :param sleep_seconds: Délai entre chaque itération (en secondes)
     """
     iteration = 0
-    print("🔄 ReflexIA Loop started")
+    ark_logger.info("🔄 ReflexIA Loop started", extra={"module": "logic"})
 
     while True:
         metrics = read_metrics()
         status = monitor_status(metrics)
         save_snapshot(metrics, status)
-        print(f"✅ Status: {status} | Metrics: {metrics}")
+        ark_logger.info(f"✅ Status: {status} | Metrics: {metrics}", extra={"module": "logic"})
 
         time.sleep(sleep_seconds)
         iteration += 1
 
         if max_iterations is not None and iteration >= max_iterations:
-            print("🛑 ReflexIA Loop finished (max iterations reached)")
+            ark_logger.info("🛑 ReflexIA Loop finished (max iterations reached)", extra={"module": "logic"})
             break

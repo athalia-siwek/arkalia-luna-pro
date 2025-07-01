@@ -7,6 +7,7 @@
 📅 Created: 2025-06-29
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import logging
 from dataclasses import dataclass
@@ -72,10 +73,10 @@ async def main():
 
     # Test du module
     result = await core.process({"test": "data"})
-    print(f"✅ Résultat: {result}")
+    ark_logger.info(f"✅ Résultat: {result}", extra={"module": "utils_enhanced"})
 
     health = core.health_check()
-    print(f"🏥 Santé: {health}")
+    ark_logger.info(f"🏥 Santé: {health}", extra={"module": "utils_enhanced"})
 
 
 if __name__ == "__main__":

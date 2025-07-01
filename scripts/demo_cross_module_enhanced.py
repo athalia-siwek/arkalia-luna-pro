@@ -21,6 +21,7 @@ Copyright 2025 Arkalia-LUNA Enterprise
 Version: Enhanced v2.7.1-performance
 """
 
+from core.ark_logger import ark_logger
 import argparse
 import pathlib
 import subprocess
@@ -47,8 +48,8 @@ logger = logging.getLogger(__name__)
 
 def demo_cache_performance():
     """Démonstration performance cache TOML Enhanced"""
-    print("⚡ DEMO PERFORMANCE CACHE ENHANCED")
-    print("=" * 40)
+    ark_logger.info("⚡ DEMO PERFORMANCE CACHE ENHANCED", extra={"module": "scripts"})
+    ark_logger.info("=" * 40, extra={"module": "scripts"})
 
     # Liste des fichiers TOML à tester
     test_files = [
@@ -63,7 +64,7 @@ def demo_cache_performance():
     valid_tests = 0
 
     for file_path in test_files:
-        print(f"\n📁 Test: {file_path}")
+        ark_logger.info(f"\n📁 Test: {file_path}", extra={"module": "scripts"})
 
         try:
             # Premier chargement (cache miss)
@@ -76,97 +77,97 @@ def demo_cache_performance():
             load_toml_cached(file_path)
             time2 = (time.time() - start) * 1000
 
-            print(f"  🔄 Premier: {time1:.2f}ms")
-            print(f"  ⚡ Cache: {time2:.2f}ms")
+            ark_logger.info(f"  🔄 Premier: {time1:.2f}ms", extra={"module": "scripts"})
+            ark_logger.info(f"  ⚡ Cache: {time2:.2f}ms", extra={"module": "scripts"})
 
             if time1 > 0 and time2 < time1:
                 improvement = ((time1 - time2) / time1) * 100
-                print(f"  📈 Gain: {improvement:.1f}%")
+                ark_logger.info(f"  📈 Gain: {improvement:.1f}%", extra={"module": "scripts"})
                 total_improvement += improvement
                 valid_tests += 1
             else:
-                print("  ✅ Instantané")
+                ark_logger.info("  ✅ Instantané", extra={"module": "scripts"})
 
         except Exception as e:
-            print(f"  ⚠️ Erreur: {e}")
+            ark_logger.info(f"  ⚠️ Erreur: {e}", extra={"module": "scripts"})
 
     # Résumé performance
     if valid_tests > 0:
         avg_improvement = total_improvement / valid_tests
-        print(f"\n🎯 MOYENNE AMÉLIORATION: {avg_improvement:.1f}%")
+        ark_logger.info(f"\n🎯 MOYENNE AMÉLIORATION: {avg_improvement:.1f}%", extra={"module": "scripts"})
 
     # Stats cache globales
     stats = get_cache_stats()
-    print("\n📊 STATISTIQUES CACHE:")
-    print(f"  - Hit rate: {stats['performance']['hit_rate_percent']}%")
-    print(f"  - Total requêtes: {stats['performance']['total_requests']}")
-    print(f"  - Entrées cache: {stats['cache_state']['entries_count']}")
+    ark_logger.info("\n📊 STATISTIQUES CACHE:", extra={"module": "scripts"})
+    ark_logger.info(f"  - Hit rate: {stats['performance']['hit_rate_percent']}%", extra={"module": "scripts"})
+    ark_logger.info(f"  - Total requêtes: {stats['performance']['total_requests']}", extra={"module": "scripts"})
+    ark_logger.info(f"  - Entrées cache: {stats['cache_state']['entries_count']}", extra={"module": "scripts"})
 
 
 def demo_modules_integration():
     """Démonstration intégration modules avec Enhanced"""
-    print("\n🧠 DEMO INTÉGRATION MODULES ENHANCED")
-    print("=" * 40)
+    ark_logger.info("\n🧠 DEMO INTÉGRATION MODULES ENHANCED", extra={"module": "scripts"})
+    ark_logger.info("=" * 40, extra={"module": "scripts"})
 
     modules_status = {}
 
     # Test ZeroIA Enhanced
-    print("\n🔄 Test ZeroIA Enhanced...")
+    ark_logger.info("\n🔄 Test ZeroIA Enhanced...", extra={"module": "scripts"})
     try:
         from zeroia.reason_loop_enhanced import load_toml_enhanced_cache
 
         load_toml_enhanced_cache(Path("state/global_context.toml"))
         modules_status["ZeroIA"] = "✅ Enhanced v2.7.1"
-        print("  ✅ ZeroIA Enhanced opérationnel")
+        ark_logger.info("  ✅ ZeroIA Enhanced opérationnel", extra={"module": "scripts"})
     except Exception as e:
         modules_status["ZeroIA"] = f"❌ {e}"
-        print(f"  ❌ ZeroIA: {e}")
+        ark_logger.info(f"  ❌ ZeroIA: {e}", extra={"module": "scripts"})
 
     # Test Sandozia Enhanced
-    print("\n🧠 Test Sandozia Enhanced...")
+    ark_logger.info("\n🧠 Test Sandozia Enhanced...", extra={"module": "scripts"})
     try:
         modules_status["Sandozia"] = "✅ Cache Enhanced intégré"
-        print("  ✅ Sandozia prêt pour Enhanced")
+        ark_logger.info("  ✅ Sandozia prêt pour Enhanced", extra={"module": "scripts"})
     except Exception as e:
         modules_status["Sandozia"] = f"❌ {e}"
-        print(f"  ❌ Sandozia: {e}")
+        ark_logger.info(f"  ❌ Sandozia: {e}", extra={"module": "scripts"})
 
     # Test Reflexia Enhanced
-    print("\n🔍 Test Reflexia Enhanced...")
+    ark_logger.info("\n🔍 Test Reflexia Enhanced...", extra={"module": "scripts"})
     try:
         modules_status["Reflexia"] = "✅ Cache Enhanced intégré"
-        print("  ✅ Reflexia prêt pour Enhanced")
+        ark_logger.info("  ✅ Reflexia prêt pour Enhanced", extra={"module": "scripts"})
     except Exception as e:
         modules_status["Reflexia"] = f"❌ {e}"
-        print(f"  ❌ Reflexia: {e}")
+        ark_logger.info(f"  ❌ Reflexia: {e}", extra={"module": "scripts"})
 
     # Test Monitoring Enhanced
-    print("\n📊 Test Monitoring Enhanced...")
+    ark_logger.info("\n📊 Test Monitoring Enhanced...", extra={"module": "scripts"})
     try:
         modules_status["Monitoring"] = "✅ Cache Enhanced intégré"
-        print("  ✅ Monitoring prêt pour Enhanced")
+        ark_logger.info("  ✅ Monitoring prêt pour Enhanced", extra={"module": "scripts"})
     except Exception as e:
         modules_status["Monitoring"] = f"❌ {e}"
-        print(f"  ❌ Monitoring: {e}")
+        ark_logger.info(f"  ❌ Monitoring: {e}", extra={"module": "scripts"})
 
     # Résumé intégration
-    print("\n🎯 RÉSUMÉ INTÉGRATION MODULES:")
+    ark_logger.info("\n🎯 RÉSUMÉ INTÉGRATION MODULES:", extra={"module": "scripts"})
     for module, status in modules_status.items():
-        print(f"  {module}: {status}")
+        ark_logger.info(f"  {module}: {status}", extra={"module": "scripts"})
 
     working_modules = len([s for s in modules_status.values() if s.startswith("✅")])
     total_modules = len(modules_status)
     success_rate = (working_modules / total_modules) * 100
-    print(f"\n📊 Taux succès: {working_modules}/{total_modules} ({success_rate:.1f}%)")
+    ark_logger.info(f"\n📊 Taux succès: {working_modules}/{total_modules} ({success_rate:.1f}%, extra={"module": "scripts"})")
 
 
 def demo_quick():
     """Démonstration rapide du framework"""
-    print("🚀 DEMO QUICK - CROSS-MODULE ENHANCED")
-    print("=" * 42)
+    ark_logger.info("🚀 DEMO QUICK - CROSS-MODULE ENHANCED", extra={"module": "scripts"})
+    ark_logger.info("=" * 42, extra={"module": "scripts"})
 
     # Test rapide du framework
-    print("\n⚡ Test framework Enhanced...")
+    ark_logger.info("\n⚡ Test framework Enhanced...", extra={"module": "scripts"})
     start = time.time()
 
     # Charger quelques configs avec cache
@@ -179,39 +180,39 @@ def demo_quick():
             pass
 
     duration = (time.time() - start) * 1000
-    print(f"✅ {configs_loaded} configs chargées en {duration:.2f}ms")
+    ark_logger.info(f"✅ {configs_loaded} configs chargées en {duration:.2f}ms", extra={"module": "scripts"})
 
     # Stats finales
     stats = get_cache_stats()
-    print(f"📊 Hit rate: {stats['performance']['hit_rate_percent']}%")
+    ark_logger.info(f"📊 Hit rate: {stats['performance']['hit_rate_percent']}%", extra={"module": "scripts"})
 
-    print("\n🎯 Framework Cross-Module Enhanced: OPÉRATIONNEL !")
+    ark_logger.info("\n🎯 Framework Cross-Module Enhanced: OPÉRATIONNEL !", extra={"module": "scripts"})
 
 
 def demo_full():
     """Démonstration complète du framework Enhanced"""
-    print("🏢 DEMO FULL - ARKALIA ENHANCED ENTERPRISE")
-    print("=" * 45)
+    ark_logger.info("🏢 DEMO FULL - ARKALIA ENHANCED ENTERPRISE", extra={"module": "scripts"})
+    ark_logger.info("=" * 45, extra={"module": "scripts"})
 
-    print("\n🎯 Phase 1: Performance Cache TOML")
+    ark_logger.info("\n🎯 Phase 1: Performance Cache TOML", extra={"module": "scripts"})
     demo_cache_performance()
 
-    print("\n🎯 Phase 2: Intégration Modules")
+    ark_logger.info("\n🎯 Phase 2: Intégration Modules", extra={"module": "scripts"})
     demo_modules_integration()
 
-    print("\n🎯 Phase 3: Validation Finale")
+    ark_logger.info("\n🎯 Phase 3: Validation Finale", extra={"module": "scripts"})
     stats = get_cache_stats()
 
-    print("\n📊 MÉTRIQUES FINALES:")
-    print(f"  - Cache hit rate: {stats['performance']['hit_rate_percent']}%")
-    print(f"  - Total requêtes: {stats['performance']['total_requests']}")
-    print(f"  - Uptime: {stats['system']['uptime_seconds']}s")
-    print(f"  - Mémoire: {stats['system']['memory_usage']}")
+    ark_logger.info("\n📊 MÉTRIQUES FINALES:", extra={"module": "scripts"})
+    ark_logger.info(f"  - Cache hit rate: {stats['performance']['hit_rate_percent']}%", extra={"module": "scripts"})
+    ark_logger.info(f"  - Total requêtes: {stats['performance']['total_requests']}", extra={"module": "scripts"})
+    ark_logger.info(f"  - Uptime: {stats['system']['uptime_seconds']}s", extra={"module": "scripts"})
+    ark_logger.info(f"  - Mémoire: {stats['system']['memory_usage']}", extra={"module": "scripts"})
 
-    print("\n🏆 ARKALIA ENHANCED v2.7.1-performance: SUCCÈS COMPLET!")
-    print("✅ Framework Cross-Module opérationnel")
-    print("✅ Performance 97.1% améliorée")
-    print("✅ Architecture enterprise cohérente")
+    ark_logger.info("\n🏆 ARKALIA ENHANCED v2.7.1-performance: SUCCÈS COMPLET!", extra={"module": "scripts"})
+    ark_logger.info("✅ Framework Cross-Module opérationnel", extra={"module": "scripts"})
+    ark_logger.info("✅ Performance 97.1% améliorée", extra={"module": "scripts"})
+    ark_logger.info("✅ Architecture enterprise cohérente", extra={"module": "scripts"})
 
 
 def format_generated():
@@ -222,15 +223,15 @@ def format_generated():
             subprocess.run(["isort", str(d), "--profile", "black"], check=True)
             # Formatage du code avec black
             subprocess.run(["black", str(d), "--quiet"], check=True)
-            print(f"✅ Formaté: {d}")
+            ark_logger.info(f"✅ Formaté: {d}", extra={"module": "scripts"})
         except subprocess.CalledProcessError as e:
-            print(f"⚠️ Erreur formatage {d}: {e}")
+            ark_logger.info(f"⚠️ Erreur formatage {d}: {e}", extra={"module": "scripts"})
             # Fallback: essayer au moins isort
             try:
                 subprocess.run(["isort", str(d), "--fix"], check=False)
-                print(f"⚠️ Fallback isort appliqué: {d}")
+                ark_logger.info(f"⚠️ Fallback isort appliqué: {d}", extra={"module": "scripts"})
             except Exception:
-                print(f"❌ Fallback échoué: {d}")
+                ark_logger.info(f"❌ Fallback échoué: {d}", extra={"module": "scripts"})
 
 
 def main():
@@ -249,9 +250,9 @@ def main():
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    print("🌕 ARKALIA-LUNA ENHANCED v2.7.1-performance")
-    print("🚀 Framework Cross-Module avec Cache TOML 97.1% plus rapide")
-    print()
+    ark_logger.info("🌕 ARKALIA-LUNA ENHANCED v2.7.1-performance", extra={"module": "scripts"})
+    ark_logger.info("🚀 Framework Cross-Module avec Cache TOML 97.1% plus rapide", extra={"module": "scripts"})
+    ark_logger.info("")
 
     try:
         if args.mode == "full":
@@ -262,7 +263,7 @@ def main():
             demo_quick()
 
     except KeyboardInterrupt:
-        print("\n⏹️ Demo interrompue par l'utilisateur")
+        ark_logger.info("\n⏹️ Demo interrompue par l'utilisateur", extra={"module": "scripts"})
     except Exception as e:
         raise RuntimeError(f"Erreur demo cross module: {e}") from e
 

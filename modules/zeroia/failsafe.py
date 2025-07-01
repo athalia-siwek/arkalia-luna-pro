@@ -1,3 +1,4 @@
+from core.ark_logger import ark_logger
 import json
 import shutil
 from datetime import datetime
@@ -100,18 +101,18 @@ def rollback_system(snapshot_path: str, target_path: str) -> bool:
 
 
 def failsafe_mode() -> None:
-    print("🛡️ Activation du mode Failsafe ZeroIA…")
+    ark_logger.error("🛡️ Activation du mode Failsafe ZeroIA…", extra={"module": "zeroia"})
     snapshot = load_snapshot(str(SNAPSHOT_PATH))
 
     if snapshot is None or "decision" not in snapshot:
-        print("⚠️ Snapshot corrompu ou incomplet. Tentative de restauration…")
+        ark_logger.info("⚠️ Snapshot corrompu ou incomplet. Tentative de restauration…", extra={"module": "zeroia"})
         success = restore_backup(str(BACKUP_PATH), str(SNAPSHOT_PATH))
         if success:
-            print("✅ Restauration réussie.")
+            ark_logger.info("✅ Restauration réussie.", extra={"module": "zeroia"})
         else:
-            print("❌ Aucune restauration possible. " "ZeroIA doit être relancé manuellement.")
+            ark_logger.info("❌ Aucune restauration possible. " "ZeroIA doit être relancé manuellement.", extra={"module": "zeroia"})
     else:
-        print("✅ Snapshot valide. Aucun failsafe nécessaire.")
+        ark_logger.error("✅ Snapshot valide. Aucun failsafe nécessaire.", extra={"module": "zeroia"})
 
 
 if __name__ == "__main__":

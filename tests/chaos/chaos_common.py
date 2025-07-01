@@ -1,6 +1,7 @@
 # 🌀 tests/chaos/common.py
 # Classes et utilitaires communs pour les tests de chaos
 
+from core.ark_logger import ark_logger
 import random
 import subprocess
 import tempfile
@@ -65,7 +66,7 @@ class ChaosTester:
             return True
 
         except Exception as e:
-            print(f"⚠️ Erreur corruption {file_path}: {e}")
+            ark_logger.info(f"⚠️ Erreur corruption {file_path}: {e}", extra={"module": "chaos"})
             return False
 
     def restore_files(self):
@@ -76,7 +77,7 @@ class ChaosTester:
                     original_path.write_bytes(backup_path.read_bytes())
                     backup_path.unlink()
             except Exception as e:
-                print(f"⚠️ Erreur restauration {original_path}: {e}")
+                ark_logger.info(f"⚠️ Erreur restauration {original_path}: {e}", extra={"module": "chaos"})
         self.corrupted_files.clear()
 
     def simulate_high_load(self, duration: int = 10):
@@ -113,7 +114,7 @@ for t in threads:
             return process
 
         except Exception as e:
-            print(f"⚠️ Erreur simulation charge: {e}")
+            ark_logger.info(f"⚠️ Erreur simulation charge: {e}", extra={"module": "chaos"})
             return None
 
     def simulate_memory_pressure(self, mb_size: int = 100):
@@ -131,7 +132,7 @@ for t in threads:
             return memory_blocks
 
         except MemoryError:
-            print("⚠️ Mémoire insuffisante pour le test")
+            ark_logger.info("⚠️ Mémoire insuffisante pour le test", extra={"module": "chaos"})
             return []
 
     def cleanup(self):

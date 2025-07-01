@@ -13,6 +13,7 @@ Améliorations v3.x :
 - Recovery automatique et graceful degradation
 """
 
+from core.ark_logger import ark_logger
 import logging
 import sys
 import textwrap
@@ -239,7 +240,7 @@ def load_toml_enhanced_cache(path: Path, max_age: int | None = None) -> dict:
                     toml.dump(default_context, f)
                 _TOML_CACHE[path_str] = default_context
                 _CACHE_TIMESTAMPS[path_str] = current_time
-                print(f"✅ [ZeroIA Enhanced] Contexte par défaut créé: {path}", flush=True)
+                ark_logger.info(f"✅ [ZeroIA Enhanced] Contexte par défaut créé: {path}", flush=True, extra={"module": "zeroia"})
                 return default_context
             raise ValueError(f"TOML file {path} is empty or missing")
 
@@ -639,19 +640,19 @@ def reason_loop_enhanced_with_recovery(
 
         # Logs améliorés avec Error Recovery
         error_recovery_status = "✅" if decision_error is None else "🔄"
-        print(
+        ark_logger.error(
             f"{error_recovery_status} ZeroIA decided: {decision} "
-            f"(confidence={score}, health={system_health:.2f})",
+            f"(confidence={score}, health={system_health:.2f}, extra={"module": "zeroia"})",
             flush=True,
         )
-        print(
-            f"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score})",
+        ark_logger.info(
+            f"[ZeroIA] CPU usage: {cpu}% → decision={decision} (score={score}, extra={"module": "zeroia"})",
             flush=True,
         )
 
         if decision_error:
-            print(
-                f"[ZeroIA] Error Recovery triggered for: {type(decision_error).__name__}",
+            ark_logger.error(
+                f"[ZeroIA] Error Recovery triggered for: {type(decision_error, extra={"module": "zeroia"}).__name__}",
                 flush=True,
             )
 
@@ -717,7 +718,7 @@ def main_loop_enhanced() -> None:
         time.sleep(2)
 
     except SystemRebootRequired as e:
-        print(f"[ZeroIA Enhanced] 🔄 REDÉMARRAGE REQUIS: {e}", flush=True)
+        ark_logger.info(f"[ZeroIA Enhanced] 🔄 REDÉMARRAGE REQUIS: {e}", flush=True, extra={"module": "zeroia"})
 
         # Event sourcing critique
         if event_store is not None:
@@ -735,13 +736,13 @@ def main_loop_enhanced() -> None:
         time.sleep(60)
 
     except (CognitiveOverloadError, DecisionIntegrityError) as e:
-        print(f"[ZeroIA Enhanced] ⚠️ SURCHARGE: {e}", flush=True)
+        ark_logger.info(f"[ZeroIA Enhanced] ⚠️ SURCHARGE: {e}", flush=True, extra={"module": "zeroia"})
 
         # Graceful degradation
         time.sleep(30)
 
     except Exception as e:
-        print(f"[ZeroIA Enhanced] 🚨 ERREUR: {e}", flush=True)
+        ark_logger.info(f"[ZeroIA Enhanced] 🚨 ERREUR: {e}", flush=True, extra={"module": "zeroia"})
         logger.exception(e)
 
         # Event sourcing d'erreur
@@ -771,7 +772,7 @@ def reset_circuit_breaker() -> None:
     """Réinitialise manuellement le circuit breaker"""
     cb, es, _, _ = initialize_components_with_recovery()
     cb.reset()
-    print("🔄 Circuit breaker réinitialisé manuellement")
+    ark_logger.info("🔄 Circuit breaker réinitialisé manuellement", extra={"module": "zeroia"})
 
 
 def cleanup_components(circuit_breaker: CircuitBreaker, event_store: EventStore) -> None:
@@ -954,7 +955,7 @@ if __name__ == "__main__":
     try:
         main_loop_enhanced()
     except KeyboardInterrupt:
-        print("\n🛑 Arrêt manuel détecté")
+        ark_logger.info("\n🛑 Arrêt manuel détecté", extra={"module": "zeroia"})
 
         # Cleanup final
         try:
@@ -965,9 +966,9 @@ if __name__ == "__main__":
                     {"action": "manual_shutdown", "reason": "keyboard_interrupt"},
                 )
         except Exception as e:
-            print(f"⚠️ Erreur lors du cleanup: {e}")
+            ark_logger.info(f"⚠️ Erreur lors du cleanup: {e}", extra={"module": "zeroia"})
 
-        print("✅ Cleanup terminé")
+        ark_logger.info("✅ Cleanup terminé", extra={"module": "zeroia"})
     except Exception as e:
-        print(f"❌ Erreur fatale: {e}")
+        ark_logger.info(f"❌ Erreur fatale: {e}", extra={"module": "zeroia"})
         sys.exit(1)

@@ -2,6 +2,7 @@
 # 🩺 modules/zeroia/healthcheck_enhanced.py
 """Healthcheck pour ZeroIA Orchestrator Enhanced"""
 
+from core.ark_logger import ark_logger
 import json
 import sys
 from pathlib import Path
@@ -41,15 +42,15 @@ def check_enhanced_health():
         # Vérifier Event Store
         events_dir = Path("cache/zeroia_events/events")
         if not events_dir.exists():
-            print(f"DEBUG: events_dir {events_dir} n existe pas")
-            print("❌ Event Store non trouvé")
+            ark_logger.debug(f"DEBUG: events_dir {events_dir} n existe pas", extra={"module": "zeroia"})
+            ark_logger.info("❌ Event Store non trouvé", extra={"module": "zeroia"})
             return False
 
         # Vérifier fichiers récents
         recent_files = list(events_dir.glob("*.cache"))
         if not recent_files:
-            print("DEBUG: pas de fichiers récents trouvés")
-            print("❌ Aucun événement récent")
+            ark_logger.debug("DEBUG: pas de fichiers récents trouvés", extra={"module": "zeroia"})
+            ark_logger.info("❌ Aucun événement récent", extra={"module": "zeroia"})
             return False
 
         # Vérifier état dashboard
@@ -59,19 +60,19 @@ def check_enhanced_health():
                 with open(dashboard_file) as f:
                     data = json.load(f)
                     if data.get("status") == "active":
-                        print("✅ ZeroIA Enhanced OK")
+                        ark_logger.info("✅ ZeroIA Enhanced OK", extra={"module": "zeroia"})
                         return True
             except Exception:
                 # Si erreur lecture dashboard, continuer avec Event Store
                 pass
 
         # Si pas de dashboard ou erreur, vérifier activité récente via events
-        print("✅ ZeroIA Enhanced - Event Store actif")
+        ark_logger.info("✅ ZeroIA Enhanced - Event Store actif", extra={"module": "zeroia"})
         return True
 
     except Exception as e:
-        print(f"DEBUG: Exception dans check_enhanced_health: {e}")
-        print(f"❌ Erreur healthcheck: {e}")
+        ark_logger.error(f"DEBUG: Exception dans check_enhanced_health: {e}", extra={"module": "zeroia"})
+        ark_logger.info(f"❌ Erreur healthcheck: {e}", extra={"module": "zeroia"})
         return False
 
 

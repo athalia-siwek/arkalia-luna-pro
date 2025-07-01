@@ -4,6 +4,7 @@
 Installe les packages nécessaires pour les graphiques et dashboards
 """
 
+from core.ark_logger import ark_logger
 import subprocess
 import sys
 from pathlib import Path
@@ -12,18 +13,18 @@ from pathlib import Path
 def install_package(package: str) -> bool:
     """Installe un package avec pip"""
     try:
-        print(f"📦 Installation de {package}...")
+        ark_logger.info(f"📦 Installation de {package}...", extra={"module": "scripts"})
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-        print(f"✅ {package} installé avec succès")
+        ark_logger.info(f"✅ {package} installé avec succès", extra={"module": "scripts"})
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Erreur installation {package}: {e}")
+        ark_logger.info(f"❌ Erreur installation {package}: {e}", extra={"module": "scripts"})
         return False
 
 
 def main():
     """Installe toutes les dépendances de visualisation"""
-    print("🌕 Installation des dépendances de visualisation Arkalia-LUNA...")
+    ark_logger.info("🌕 Installation des dépendances de visualisation Arkalia-LUNA...", extra={"module": "scripts"})
 
     # Packages de visualisation
     packages = [
@@ -44,15 +45,15 @@ def main():
         if install_package(package):
             success_count += 1
 
-    print(f"\n📊 Résumé: {success_count}/{total_count} packages installés")
+    ark_logger.info(f"\n📊 Résumé: {success_count}/{total_count} packages installés", extra={"module": "scripts"})
 
     if success_count == total_count:
-        print("🎉 Toutes les dépendances installées avec succès !")
-        print("\n🚀 Vous pouvez maintenant utiliser:")
-        print("   python3 scripts/arkalia_visualizations.py")
+        ark_logger.info("🎉 Toutes les dépendances installées avec succès !", extra={"module": "scripts"})
+        ark_logger.info("\n🚀 Vous pouvez maintenant utiliser:", extra={"module": "scripts"})
+        ark_logger.info("   python3 scripts/arkalia_visualizations.py", extra={"module": "scripts"})
         return True
     else:
-        print("⚠️ Certains packages n'ont pas pu être installés")
+        ark_logger.info("⚠️ Certains packages n'ont pas pu être installés", extra={"module": "scripts"})
         return False
 
 

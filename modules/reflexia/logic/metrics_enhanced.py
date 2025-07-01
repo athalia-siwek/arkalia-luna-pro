@@ -10,6 +10,7 @@ Collecte de vraies métriques système :
 - Analyse des logs d'erreurs
 """
 
+from core.ark_logger import ark_logger
 import json
 import os
 import subprocess
@@ -210,6 +211,6 @@ def read_metrics() -> dict:
 
 if __name__ == "__main__":
     # Test du module
-    print("🧠 Reflexia Enhanced Metrics Test")
+    ark_logger.info("🧠 Reflexia Enhanced Metrics Test", extra={"module": "logic"})
     metrics = read_metrics_enhanced()
-    print(json.dumps(metrics, indent=2))
+    ark_logger.info(json.dumps(metrics, indent=2, extra={"module": "logic"}))

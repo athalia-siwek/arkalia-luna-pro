@@ -1,3 +1,4 @@
+from core.ark_logger import ark_logger
 from pathlib import Path
 
 import pytest
@@ -29,7 +30,7 @@ def test_contradiction_detection(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     assert zeroia_path.read_text()
 
     # Test simple de la fonction sans patcher les constantes
-    print(f"[DEBUG] Checking for IA conflict with log path: {contradiction_log}")
+    ark_logger.debug(f"[DEBUG] Checking for IA conflict with log path: {contradiction_log}", extra={"module": "zeroia"})
     check_for_ia_conflict(
         reflexia_decision="decision1",
         zeroia_decision="decision2",

@@ -10,6 +10,7 @@ Boucle principale améliorée avec :
 - Logs structurés
 """
 
+from core.ark_logger import ark_logger
 import logging
 import time
 from datetime import datetime
@@ -195,7 +196,7 @@ def reflexia_loop_enhanced(
 
     if verbose:
         logger.info("🧠 Reflexia Enhanced Loop v2.6.0 started")
-        print("🧠 Reflexia Enhanced Loop v2.6.0 started")
+        ark_logger.info("🧠 Reflexia Enhanced Loop v2.6.0 started", extra={"module": "logic"})
 
     while True:
         cycle_start = datetime.now()
@@ -219,32 +220,32 @@ def reflexia_loop_enhanced(
             cycle_time = (datetime.now() - cycle_start).total_seconds()
 
             if verbose:
-                print(f"🔄 [{datetime.now().strftime('%H:%M:%S')}] Reflexia Cycle #{iteration + 1}")
-                print(
+                ark_logger.info(f"🔄 [{datetime.now(, extra={"module": "logic"}).strftime('%H:%M:%S')}] Reflexia Cycle #{iteration + 1}")
+                ark_logger.info(
                     f"   💻 CPU: {metrics_enhanced['system']['cpu_percent']}% | "
                     f"RAM: {metrics_enhanced['system']['memory_percent']}% | "
                     f"Status: {status}"
-                )
+                , extra={"module": "logic"})
 
                 containers = metrics_enhanced.get("containers", {})
                 if isinstance(containers, dict) and "error" not in containers:
-                    print(f"   🐳 Containers: {len(containers)} actifs")
+                    ark_logger.info(f"   🐳 Containers: {len(containers, extra={"module": "logic"})} actifs")
                     for name, state in containers.items():
-                        print(f"      • {name}: {state}")
+                        ark_logger.info(f"      • {name}: {state}", extra={"module": "logic"})
 
-                print("   🎯 Recommandations:")
+                ark_logger.info("   🎯 Recommandations:", extra={"module": "logic"})
                 for rec in recommendations[:2]:  # Max 2 recommendations
-                    print(f"      • {rec}")
+                    ark_logger.info(f"      • {rec}", extra={"module": "logic"})
 
-                print(f"   ⏱️ Cycle time: {cycle_time:.2f}s")
-                print()
+                ark_logger.info(f"   ⏱️ Cycle time: {cycle_time:.2f}s", extra={"module": "logic"})
+                ark_logger.info("")
 
             logger.info(f"Reflexia cycle #{iteration + 1} completed - Status: {status}")
 
         except Exception as e:
             logger.error(f"Reflexia enhanced cycle error: {e}")
             if verbose:
-                print(f"❌ Erreur cycle Reflexia: {e}")
+                ark_logger.info(f"❌ Erreur cycle Reflexia: {e}", extra={"module": "logic"})
 
         time.sleep(sleep_seconds)
         iteration += 1
@@ -255,7 +256,7 @@ def reflexia_loop_enhanced(
                 logger.info(
                     f"Reflexia Enhanced completed - {iteration} cycles in {total_time:.1f}s"
                 )
-                print(f"🛑 Reflexia Enhanced terminé - {iteration} cycles en {total_time:.1f}s")
+                ark_logger.info(f"🛑 Reflexia Enhanced terminé - {iteration} cycles en {total_time:.1f}s", extra={"module": "logic"})
             break
 
 
@@ -267,5 +268,5 @@ def reflexia_loop(max_iterations: int | None = None, sleep_seconds: float = 5.0)
 
 if __name__ == "__main__":
     # Test de la boucle enhanced
-    print("🧪 Test Reflexia Enhanced Loop (3 cycles)")
+    ark_logger.info("🧪 Test Reflexia Enhanced Loop (3 cycles)", extra={"module": "logic"})
     reflexia_loop_enhanced(max_iterations=3, sleep_seconds=2, verbose=True)

@@ -12,6 +12,8 @@ __author__ = "Athalia"
 
 # Import des composants principaux
 try:
+    from core.ark_logger import ark_logger
+
     from .core import format_summary, taskia_main
 except ImportError:
     pass
@@ -42,5 +44,5 @@ def initialize() -> bool:
 
 
 if __name__ == "__main__":
-    print(f"🌕 taskia v{__version__}")
-    print(f"🏥 Santé: {health_check()}")
+    ark_logger.info(f"🌕 taskia v{__version__}", extra={"module": "taskia"})
+    ark_logger.info(f"🏥 Santé: {health_check()}", extra={"module": "taskia"})

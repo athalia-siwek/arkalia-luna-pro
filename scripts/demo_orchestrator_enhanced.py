@@ -10,6 +10,7 @@ FEATURES:
 - Monitoring et métriques temps réel
 """
 
+from core.ark_logger import ark_logger
 import argparse
 import logging
 import pathlib
@@ -32,8 +33,8 @@ logging.basicConfig(
 
 def demo_quick() -> None:
     """Démonstration rapide (5 loops)"""
-    print("🚀 DEMO ORCHESTRATOR ENHANCED - Mode Rapide")
-    print("=" * 50)
+    ark_logger.info("🚀 DEMO ORCHESTRATOR ENHANCED - Mode Rapide", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     orchestrator = ZeroIAOrchestrator(
         max_loops=5,
@@ -42,22 +43,22 @@ def demo_quick() -> None:
         timeout=5,
     )
 
-    print("📊 Status initial:")
+    ark_logger.info("📊 Status initial:", extra={"module": "scripts"})
     status = orchestrator.get_status()
-    print(f"  - Loops prévus: {status['orchestrator']['max_loops']}")
-    print(f"  - Intervalle: {status['orchestrator']['interval_seconds']}s")
-    print(f"  - Circuit seuil: {orchestrator.circuit_breaker.failure_threshold}")
+    ark_logger.info(f"  - Loops prévus: {status['orchestrator']['max_loops']}", extra={"module": "scripts"})
+    ark_logger.info(f"  - Intervalle: {status['orchestrator']['interval_seconds']}s", extra={"module": "scripts"})
+    ark_logger.error(f"  - Circuit seuil: {orchestrator.circuit_breaker.failure_threshold}", extra={"module": "scripts"})
 
-    print("\n🔄 Exécution en cours...")
+    ark_logger.info("\n🔄 Exécution en cours...", extra={"module": "scripts"})
     orchestrator.run()
 
-    print("\n✅ Demo rapide terminée!")
+    ark_logger.info("\n✅ Demo rapide terminée!", extra={"module": "scripts"})
 
 
 def demo_stress() -> None:
     """Démonstration stress test (20 loops)"""
-    print("🔥 DEMO ORCHESTRATOR ENHANCED - Mode Stress")
-    print("=" * 50)
+    ark_logger.info("🔥 DEMO ORCHESTRATOR ENHANCED - Mode Stress", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     orchestrator = ZeroIAOrchestrator(
         max_loops=20,
@@ -66,21 +67,21 @@ def demo_stress() -> None:
         timeout=3,
     )
 
-    print("📊 Configuration stress:")
-    print("  - 20 loops rapides (0.1s intervalle)")
-    print("  - Circuit sensible (seuil=2)")
-    print("  - Recovery rapide (3s)")
+    ark_logger.info("📊 Configuration stress:", extra={"module": "scripts"})
+    ark_logger.info("  - 20 loops rapides (0.1s intervalle)", extra={"module": "scripts"})
+    ark_logger.info("  - Circuit sensible (seuil=2)", extra={"module": "scripts"})
+    ark_logger.info("  - Recovery rapide (3s)", extra={"module": "scripts"})
 
-    print("\n🔄 Stress test en cours...")
+    ark_logger.info("\n🔄 Stress test en cours...", extra={"module": "scripts"})
     orchestrator.run()
 
-    print("\n🎯 Stress test terminé!")
+    ark_logger.info("\n🎯 Stress test terminé!", extra={"module": "scripts"})
 
 
 def demo_monitoring() -> None:
     """Démonstration avec monitoring détaillé"""
-    print("📊 DEMO ORCHESTRATOR ENHANCED - Mode Monitoring")
-    print("=" * 50)
+    ark_logger.info("📊 DEMO ORCHESTRATOR ENHANCED - Mode Monitoring", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     ZeroIAOrchestrator(
         max_loops=10,
@@ -89,7 +90,7 @@ def demo_monitoring() -> None:
         timeout=10,
     )
 
-    print("🔄 Exécution avec monitoring...")
+    ark_logger.info("🔄 Exécution avec monitoring...", extra={"module": "scripts"})
 
     # Hook pour afficher status périodiquement
     import time
@@ -99,7 +100,7 @@ def demo_monitoring() -> None:
     try:
         # Lancer en background et monitorer
         for i in range(3):  # 3 cycles de monitoring
-            print(f"\n📊 === CYCLE MONITORING {i+1}/3 ===")
+            ark_logger.info(f"\n📊 === CYCLE MONITORING {i+1}/3 ===", extra={"module": "scripts"})
 
             # Exécuter quelques loops
             temp_orchestrator = ZeroIAOrchestrator(max_loops=3, interval_seconds=0.2)
@@ -107,24 +108,24 @@ def demo_monitoring() -> None:
 
             # Afficher métriques
             status = temp_orchestrator.get_status()
-            print(f"✅ Loops: {status['orchestrator']['loop_count']}")
-            print(f"📈 Succès: {status['session_stats']['successful_decisions']}")
-            print(f"❌ Échecs: {status['session_stats']['failed_decisions']}")
-            print(f"🔄 Circuit: {status['circuit_breaker']['state']}")
+            ark_logger.info(f"✅ Loops: {status['orchestrator']['loop_count']}", extra={"module": "scripts"})
+            ark_logger.info(f"📈 Succès: {status['session_stats']['successful_decisions']}", extra={"module": "scripts"})
+            ark_logger.error(f"❌ Échecs: {status['session_stats']['failed_decisions']}", extra={"module": "scripts"})
+            ark_logger.info(f"🔄 Circuit: {status['circuit_breaker']['state']}", extra={"module": "scripts"})
 
             time.sleep(0.5)
 
     except KeyboardInterrupt:
-        print("\n⏹️ Monitoring arrêté")
+        ark_logger.info("\n⏹️ Monitoring arrêté", extra={"module": "scripts"})
 
-    print("\n📊 Demo monitoring terminée!")
+    ark_logger.info("\n📊 Demo monitoring terminée!", extra={"module": "scripts"})
 
 
 def demo_daemon() -> None:
     """Mode daemon pour container Docker - boucle infinie"""
-    print("🔄 ORCHESTRATOR ENHANCED - Mode Daemon")
-    print("🐳 Démarrage pour container Docker...")
-    print("=" * 50)
+    ark_logger.info("🔄 ORCHESTRATOR ENHANCED - Mode Daemon", extra={"module": "scripts"})
+    ark_logger.info("🐳 Démarrage pour container Docker...", extra={"module": "scripts"})
+    ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     import time
 
@@ -141,8 +142,8 @@ def demo_daemon() -> None:
     try:
         while True:  # Boucle infinie pour daemon
             cycle_count += 1
-            print(f"\n🔄 === CYCLE DAEMON {cycle_count} ===")
-            print(f"⏰ {time.strftime('%H:%M:%S')}")
+            ark_logger.info(f"\n🔄 === CYCLE DAEMON {cycle_count} ===", extra={"module": "scripts"})
+            ark_logger.info(f"⏰ {time.strftime('%H:%M:%S', extra={"module": "scripts"})}")
 
             # Exécuter cycle d'orchestration
             orchestrator.run()
@@ -150,20 +151,20 @@ def demo_daemon() -> None:
             # Afficher status périodique
             if cycle_count % 5 == 0:
                 status = orchestrator.get_status()
-                print(f"📊 Status après {cycle_count} cycles:")
-                print(f"  - Total decisions: {status['session_stats']['total_decisions']}")
-                print(f"  - Taux succès: {status['session_stats']['success_rate']:.1f}%")
-                print(f"  - Circuit état: {status['circuit_breaker']['state']}")
+                ark_logger.info(f"📊 Status après {cycle_count} cycles:", extra={"module": "scripts"})
+                ark_logger.info(f"  - Total decisions: {status['session_stats']['total_decisions']}", extra={"module": "scripts"})
+                ark_logger.info(f"  - Taux succès: {status['session_stats']['success_rate']:.1f}%", extra={"module": "scripts"})
+                ark_logger.info(f"  - Circuit état: {status['circuit_breaker']['state']}", extra={"module": "scripts"})
 
             # Pause entre cycles (important pour container)
             time.sleep(10)
 
     except KeyboardInterrupt:
-        print("\n⏹️ Daemon arrêté proprement")
+        ark_logger.info("\n⏹️ Daemon arrêté proprement", extra={"module": "scripts"})
     except Exception as e:
         raise RuntimeError(f"Erreur daemon: {e}") from e
         # En mode daemon, on redémarre automatiquement
-        print("🔄 Redémarrage automatique dans 5s...")
+        ark_logger.info("🔄 Redémarrage automatique dans 5s...", extra={"module": "scripts"})
         time.sleep(5)
         demo_daemon()  # Relance recursive
 
@@ -176,15 +177,15 @@ def format_generated():
             subprocess.run(["isort", str(d), "--profile", "black"], check=True)
             # Formatage du code avec black
             subprocess.run(["black", str(d), "--quiet"], check=True)
-            print(f"✅ Formaté: {d}")
+            ark_logger.info(f"✅ Formaté: {d}", extra={"module": "scripts"})
         except subprocess.CalledProcessError as e:
-            print(f"⚠️ Erreur formatage {d}: {e}")
+            ark_logger.info(f"⚠️ Erreur formatage {d}: {e}", extra={"module": "scripts"})
             # Fallback: essayer au moins isort
             try:
                 subprocess.run(["isort", str(d), "--fix"], check=False)
-                print(f"⚠️ Fallback isort appliqué: {d}")
+                ark_logger.info(f"⚠️ Fallback isort appliqué: {d}", extra={"module": "scripts"})
             except Exception:
-                print(f"❌ Fallback échoué: {d}")
+                ark_logger.info(f"❌ Fallback échoué: {d}", extra={"module": "scripts"})
 
 
 def main():
@@ -203,9 +204,9 @@ def main():
     if args.logs:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    print("🌕 ARKALIA-LUNA v2.6.0 - ORCHESTRATOR ENHANCED")
-    print("🔄 Circuit Breaker + Event Sourcing + Resilience Patterns")
-    print()
+    ark_logger.info("🌕 ARKALIA-LUNA v2.6.0 - ORCHESTRATOR ENHANCED", extra={"module": "scripts"})
+    ark_logger.info("🔄 Circuit Breaker + Event Sourcing + Resilience Patterns", extra={"module": "scripts"})
+    ark_logger.info("")
 
     try:
         if args.mode == "quick":
@@ -218,7 +219,7 @@ def main():
             demo_daemon()
 
     except KeyboardInterrupt:
-        print("\n⏹️ Demo interrompue par l'utilisateur")
+        ark_logger.info("\n⏹️ Demo interrompue par l'utilisateur", extra={"module": "scripts"})
     except Exception as e:
         raise RuntimeError(f"Erreur demo orchestrator enhanced: {e}") from e
 

@@ -4,6 +4,7 @@ Script pour corriger automatiquement les annotations de type manquantes dans les
 Ajoute -> None sur toutes les fonctions de test qui n'ont pas d'annotation de retour.
 """
 
+from core.ark_logger import ark_logger
 import os
 import re
 import sys
@@ -50,7 +51,7 @@ def fix_file_annotations(file_path: str) -> int:
     if fixed_count > 0:
         with open(file_path, "w", encoding="utf-8") as f:
             f.write("\n".join(new_lines))
-        print(f"✅ {file_path}: {fixed_count} annotations ajoutées")
+        ark_logger.info(f"✅ {file_path}: {fixed_count} annotations ajoutées", extra={"module": "scripts"})
 
     return fixed_count
 
@@ -74,12 +75,12 @@ def main():
                         fixed = fix_file_annotations(file_path)
                         total_fixed += fixed
                     except Exception as e:
-                        print(f"❌ Erreur sur {file_path}: {e}")
+                        ark_logger.info(f"❌ Erreur sur {file_path}: {e}", extra={"module": "scripts"})
 
-    print(f"\n🎯 Total: {total_fixed} annotations ajoutées")
+    ark_logger.info(f"\n🎯 Total: {total_fixed} annotations ajoutées", extra={"module": "scripts"})
 
     if total_fixed > 0:
-        print("\n🔄 Relance Mypy pour vérifier les corrections...")
+        ark_logger.info("\n🔄 Relance Mypy pour vérifier les corrections...", extra={"module": "scripts"})
         os.system("mypy . --install-types --non-interactive | head -20")
 
 

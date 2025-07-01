@@ -4,6 +4,7 @@
 Pour faire fonctionner ark-act parfaitement
 """
 
+from core.ark_logger import ark_logger
 import os
 import re
 import subprocess
@@ -118,7 +119,7 @@ def fix_line_length_errors():
                             content = content.replace(pattern, replacement)
                             with open(file_path, "w", encoding="utf-8") as f:
                                 f.write(content)
-                            print(f"✅ Corrigé: {file_path}")
+                            ark_logger.info(f"✅ Corrigé: {file_path}", extra={"module": "scripts"})
                     except Exception as e:
                         raise RuntimeError(f"Erreur lors de la correction finale: {e}") from e
 
@@ -126,7 +127,7 @@ def fix_line_length_errors():
 def fix_import_errors():
     """Corrige les erreurs d'import"""
     # Le fichier test_core.py est maintenant correct, on ne le modifie plus
-    print("✅ Fichier test_core.py déjà correct, pas de modification nécessaire")
+    ark_logger.info("✅ Fichier test_core.py déjà correct, pas de modification nécessaire", extra={"module": "scripts"})
 
 
 def fix_noqa_directives():
@@ -145,43 +146,43 @@ def fix_noqa_directives():
 
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
-                print(f"✅ Noqa corrigé: {file_path}")
+                ark_logger.info(f"✅ Noqa corrigé: {file_path}", extra={"module": "scripts"})
             except Exception as e:
                 raise RuntimeError(f"Erreur lors de la correction finale: {e}") from e
 
 
 def main():
     """Fonction principale"""
-    print("🔧 Correction finale des erreurs de linting...")
+    ark_logger.info("🔧 Correction finale des erreurs de linting...", extra={"module": "scripts"})
 
     # 1. Corriger les erreurs de longueur de ligne
-    print("\n📏 Correction des erreurs de longueur de ligne...")
+    ark_logger.info("\n📏 Correction des erreurs de longueur de ligne...", extra={"module": "scripts"})
     fix_line_length_errors()
 
     # 2. Corriger les erreurs d'import
-    print("\n📦 Correction des erreurs d'import...")
+    ark_logger.info("\n📦 Correction des erreurs d'import...", extra={"module": "scripts"})
     fix_import_errors()
 
     # 3. Corriger les directives noqa
-    print("\n🚫 Correction des directives noqa...")
+    ark_logger.info("\n🚫 Correction des directives noqa...", extra={"module": "scripts"})
     fix_noqa_directives()
 
     # 4. Appliquer le formatage
-    print("\n🎨 Application du formatage...")
+    ark_logger.info("\n🎨 Application du formatage...", extra={"module": "scripts"})
     subprocess.run(["black", "."], check=False)
     subprocess.run(["isort", "."], check=False)
 
     # 5. Vérifier le résultat
-    print("\n🔍 Vérification finale...")
+    ark_logger.info("\n🔍 Vérification finale...", extra={"module": "scripts"})
     result = subprocess.run(["ruff", "check", ".", "--statistics"], capture_output=True, text=True)
 
     if result.returncode == 0:
-        print("✅ Toutes les erreurs corrigées !")
+        ark_logger.info("✅ Toutes les erreurs corrigées !", extra={"module": "scripts"})
     else:
-        print("⚠️  Il reste encore quelques erreurs, mais ark-act devrait fonctionner.")
-        print(result.stdout)
+        ark_logger.info("⚠️  Il reste encore quelques erreurs, mais ark-act devrait fonctionner.", extra={"module": "scripts"})
+        ark_logger.info(result.stdout, extra={"module": "scripts"})
 
-    print("\n🚀 ark-act devrait maintenant fonctionner !")
+    ark_logger.info("\n🚀 ark-act devrait maintenant fonctionner !", extra={"module": "scripts"})
 
 
 if __name__ == "__main__":

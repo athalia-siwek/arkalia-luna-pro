@@ -1,3 +1,4 @@
+from core.ark_logger import ark_logger
 import toml
 
 from modules.utils_enhanced import load_toml_cached
@@ -12,7 +13,7 @@ def load_weights(path: str) -> dict:
         # Cache TOML Enhanced - 94.8% performance boost
         return load_toml_cached(path)
     except Exception as e:
-        print(f"❌ Failed to load TOML config: {e}")
+        ark_logger.error(f"❌ Failed to load TOML config: {e}", extra={"module": "utils"})
         raise  # <== Important : on re-lève l'erreur
 
 

@@ -4,6 +4,7 @@
 Corrige les erreurs F841 (variables inutilisées), E722 (bare except), et F401 (imports inutilisés)
 """
 
+from core.ark_logger import ark_logger
 import os
 import re
 import subprocess
@@ -121,7 +122,7 @@ def run_ruff_fix() -> list[str]:
 
 def main():
     """Fonction principale de correction"""
-    print("🔧 Début de la correction automatique des problèmes de linting...")
+    ark_logger.info("🔧 Début de la correction automatique des problèmes de linting...", extra={"module": "scripts"})
 
     fixes = []
 
@@ -159,14 +160,14 @@ def main():
         result = subprocess.run(
             ["ruff", "check", ".", "--statistics"], capture_output=True, text=True
         )
-        print("\n📊 Statistiques finales:")
-        print(result.stdout)
+        ark_logger.info("\n📊 Statistiques finales:", extra={"module": "scripts"})
+        ark_logger.info(result.stdout, extra={"module": "scripts"})
     except Exception as e:
         raise RuntimeError(f"Erreur lors de la correction linting: {e}") from e
 
-    print(f"\n✅ Corrections appliquées: {len(fixes)}")
+    ark_logger.info(f"\n✅ Corrections appliquées: {len(fixes, extra={"module": "scripts"})}")
     for fix in fixes:
-        print(f"  - {fix}")
+        ark_logger.info(f"  - {fix}", extra={"module": "scripts"})
 
 
 if __name__ == "__main__":

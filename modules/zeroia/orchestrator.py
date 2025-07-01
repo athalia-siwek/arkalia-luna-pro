@@ -3,6 +3,7 @@ ZeroIA Orchestrator Enhanced - Version Modernisée (Test-Safe)
 Utilise la boucle Enhanced avec Error Recovery et optimisations performance
 """
 
+from core.ark_logger import ark_logger
 import time
 
 from modules.zeroia.reason_loop_enhanced import reason_loop_enhanced_with_recovery
@@ -30,15 +31,15 @@ def orchestrate_zeroia_loop(max_loops: int | None = 3) -> None:
         try:
             # Les tests attendent ce format exact
             decision, score = reason_loop_enhanced_with_recovery()
-            print(f"[DEBUG] Decision: {decision} / Score: {score}")
+            ark_logger.debug(f"[DEBUG] Decision: {decision} / Score: {score}", extra={"module": "zeroia"})
 
             if max_loops and count >= max_loops:
-                print(f"[DEBUG] Max loop reached ({max_loops}). Exiting.")
+                ark_logger.debug(f"[DEBUG] Max loop reached ({max_loops}, extra={"module": "zeroia"}). Exiting.")
                 break
             count += 1
 
         except Exception as e:
-            print(f"[ERROR] An error occurred in the reason loop: {e}")
+            ark_logger.error(f"[ERROR] An error occurred in the reason loop: {e}", extra={"module": "zeroia"})
             break  # Sortir en cas d'erreur pour éviter boucle infinie
         time.sleep(0.1)  # Réduire le sleep pour les tests
 

@@ -12,6 +12,7 @@ Problèmes corrigés :
 4. Tests obsolètes et dépréciés
 """
 
+from core.ark_logger import ark_logger
 import os
 import re
 import shutil
@@ -29,7 +30,7 @@ MODULES_DIR = PROJECT_ROOT / "modules"
 def log(message: str, level: str = "INFO") -> None:
     """Log avec niveau de priorité"""
     prefix = {"INFO": "ℹ️", "WARN": "⚠️", "ERROR": "❌", "SUCCESS": "✅"}.get(level, "ℹ️")
-    print(f"{prefix} {message}")
+    ark_logger.info(f"{prefix} {message}", extra={"module": "scripts"})
 
 
 def backup_file(file_path: Path) -> Path:

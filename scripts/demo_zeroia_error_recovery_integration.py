@@ -5,6 +5,7 @@ Démontre l'intégration complète du système Error Recovery
 dans la boucle de raisonnement ZeroIA Enhanced.
 """
 
+from core.ark_logger import ark_logger
 import asyncio
 import logging
 import pathlib
@@ -90,8 +91,8 @@ def test_scenario(scenario_name: str, cpu: float, ram: float, expected_behavior:
     Returns:
         Résultats du test
     """
-    print(f"\n🧪 === TEST SCENARIO: {scenario_name} ===")
-    print(f"💻 CPU: {cpu}%, RAM: {ram}% - Attendu: {expected_behavior}")
+    ark_logger.info(f"\n🧪 === TEST SCENARIO: {scenario_name} ===", extra={"module": "scripts"})
+    ark_logger.info(f"💻 CPU: {cpu}%, RAM: {ram}% - Attendu: {expected_behavior}", extra={"module": "scripts"})
 
     # Créer contexte temporaire
     temp_context_path = Path(f"temp/demo_context_{int(time.time())}.toml")
@@ -104,8 +105,8 @@ def test_scenario(scenario_name: str, cpu: float, ram: float, expected_behavior:
         decision, score = reason_loop_enhanced_with_recovery(context_path=temp_context_path)
         duration = time.time() - start_time
 
-        print(f"✅ Décision: {decision} (confiance: {score:.2f})")
-        print(f"⏱️ Durée: {duration:.3f}s")
+        ark_logger.info(f"✅ Décision: {decision} (confiance: {score:.2f}, extra={"module": "scripts"})")
+        ark_logger.info(f"⏱️ Durée: {duration:.3f}s", extra={"module": "scripts"})
 
         # Nettoyer fichier temporaire
         if temp_context_path.exists():
@@ -122,7 +123,7 @@ def test_scenario(scenario_name: str, cpu: float, ram: float, expected_behavior:
         }
 
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        ark_logger.info(f"❌ Erreur: {e}", extra={"module": "scripts"})
 
         # Nettoyer en cas d'erreur
         if temp_context_path.exists():
@@ -145,36 +146,36 @@ def format_generated():
             subprocess.run(["isort", str(d), "--profile", "black"], check=True)
             # Formatage du code avec black
             subprocess.run(["black", str(d), "--quiet"], check=True)
-            print(f"✅ Formaté: {d}")
+            ark_logger.info(f"✅ Formaté: {d}", extra={"module": "scripts"})
         except subprocess.CalledProcessError as e:
-            print(f"⚠️ Erreur formatage {d}: {e}")
+            ark_logger.info(f"⚠️ Erreur formatage {d}: {e}", extra={"module": "scripts"})
             # Fallback: essayer au moins isort
             try:
                 subprocess.run(["isort", str(d), "--fix"], check=False)
-                print(f"⚠️ Fallback isort appliqué: {d}")
+                ark_logger.info(f"⚠️ Fallback isort appliqué: {d}", extra={"module": "scripts"})
             except Exception:
-                print(f"❌ Fallback échoué: {d}")
+                ark_logger.info(f"❌ Fallback échoué: {d}", extra={"module": "scripts"})
 
 
 async def main():
     """Fonction principale du demo"""
-    print("🔄 DEMO: ZeroIA Enhanced + Error Recovery Integration v2.7.0")
-    print("=" * 70)
+    ark_logger.error("🔄 DEMO: ZeroIA Enhanced + Error Recovery Integration v2.7.0", extra={"module": "scripts"})
+    ark_logger.info("=" * 70, extra={"module": "scripts"})
 
     # Initialiser les composants
     try:
         cb, es, error_recovery, graceful_degradation = initialize_components_with_recovery()
-        print("✅ Composants initialisés avec succès")
+        ark_logger.info("✅ Composants initialisés avec succès", extra={"module": "scripts"})
 
         if error_recovery:
-            print("🔄 Error Recovery System: DISPONIBLE")
+            ark_logger.error("🔄 Error Recovery System: DISPONIBLE", extra={"module": "scripts"})
         else:
-            print("⚠️ Error Recovery System: NON DISPONIBLE")
+            ark_logger.error("⚠️ Error Recovery System: NON DISPONIBLE", extra={"module": "scripts"})
 
         if graceful_degradation:
-            print("📉 Graceful Degradation: DISPONIBLE")
+            ark_logger.info("📉 Graceful Degradation: DISPONIBLE", extra={"module": "scripts"})
         else:
-            print("⚠️ Graceful Degradation: NON DISPONIBLE")
+            ark_logger.info("⚠️ Graceful Degradation: NON DISPONIBLE", extra={"module": "scripts"})
 
     except Exception as e:
         raise RuntimeError(f"Erreur initialisation: {e}") from e
@@ -199,57 +200,57 @@ async def main():
             time.sleep(1)  # Petite pause entre tests
 
         except KeyboardInterrupt:
-            print("\n🛑 Arrêt manuel détecté")
+            ark_logger.info("\n🛑 Arrêt manuel détecté", extra={"module": "scripts"})
             break
 
     # Statistiques finales
-    print("\n📊 === RÉSULTATS FINAUX ===")
+    ark_logger.info("\n📊 === RÉSULTATS FINAUX ===", extra={"module": "scripts"})
 
     successful_tests = [r for r in results if r.get("success", False)]
     failed_tests = [r for r in results if not r.get("success", False)]
 
-    print(f"✅ Tests réussis: {len(successful_tests)}")
-    print(f"❌ Tests échoués: {len(failed_tests)}")
-    print(f"📈 Taux de succès: {len(successful_tests)/len(results)*100:.1f}%")
+    ark_logger.info(f"✅ Tests réussis: {len(successful_tests, extra={"module": "scripts"})}")
+    ark_logger.error(f"❌ Tests échoués: {len(failed_tests, extra={"module": "scripts"})}")
+    ark_logger.info(f"📈 Taux de succès: {len(successful_tests, extra={"module": "scripts"})/len(results)*100:.1f}%")
 
     if successful_tests:
         avg_duration = sum(r["duration"] for r in successful_tests) / len(successful_tests)
-        print(f"⏱️ Durée moyenne: {avg_duration:.3f}s")
+        ark_logger.info(f"⏱️ Durée moyenne: {avg_duration:.3f}s", extra={"module": "scripts"})
 
     # Status des composants
-    print("\n🔧 === STATUS DES COMPOSANTS ===")
+    ark_logger.info("\n🔧 === STATUS DES COMPOSANTS ===", extra={"module": "scripts"})
 
     try:
         circuit_status = get_circuit_status()
-        print(f"🔄 Circuit Breaker: {circuit_status.get('state', 'unknown')}")
+        ark_logger.info(f"🔄 Circuit Breaker: {circuit_status.get('state', 'unknown', extra={"module": "scripts"})}")
 
         metrics = circuit_status.get("metrics", {})
         if metrics:
-            print(f"📊 Success Rate: {metrics.get('success_rate', 0):.1f}%")
+            ark_logger.info(f"📊 Success Rate: {metrics.get('success_rate', 0, extra={"module": "scripts"}):.1f}%")
     except Exception as e:
-        print(f"⚠️ Status Circuit Breaker: erreur ({e})")
+        ark_logger.info(f"⚠️ Status Circuit Breaker: erreur ({e}, extra={"module": "scripts"})")
 
     try:
         error_recovery_status = get_error_recovery_status()
-        print(f"🔄 Error Recovery: {error_recovery_status.get('status', 'unknown')}")
+        ark_logger.error(f"🔄 Error Recovery: {error_recovery_status.get('status', 'unknown', extra={"module": "scripts"})}")
     except Exception as e:
-        print(f"⚠️ Status Error Recovery: erreur ({e})")
+        ark_logger.error(f"⚠️ Status Error Recovery: erreur ({e}, extra={"module": "scripts"})")
 
     try:
         degradation_status = get_degradation_status()
-        print(f"📉 Graceful Degradation: {degradation_status.get('status', 'unknown')}")
+        ark_logger.info(f"📉 Graceful Degradation: {degradation_status.get('status', 'unknown', extra={"module": "scripts"})}")
     except Exception as e:
-        print(f"⚠️ Status Graceful Degradation: erreur ({e})")
+        ark_logger.info(f"⚠️ Status Graceful Degradation: erreur ({e}, extra={"module": "scripts"})")
 
     try:
         event_analytics = get_event_analytics()
         total_events = event_analytics.get("total_events", 0)
-        print(f"📋 Event Store: {total_events} événements")
+        ark_logger.info(f"📋 Event Store: {total_events} événements", extra={"module": "scripts"})
     except Exception as e:
-        print(f"⚠️ Status Event Store: erreur ({e})")
+        ark_logger.info(f"⚠️ Status Event Store: erreur ({e}, extra={"module": "scripts"})")
 
-    print("\n🎉 Demo terminé avec succès !")
-    print("💡 L'Error Recovery System est maintenant intégré dans ZeroIA Enhanced")
+    ark_logger.info("\n🎉 Demo terminé avec succès !", extra={"module": "scripts"})
+    ark_logger.error("💡 L'Error Recovery System est maintenant intégré dans ZeroIA Enhanced", extra={"module": "scripts"})
 
     format_generated()
 
@@ -258,8 +259,8 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\n🛑 Demo interrompu manuellement")
+        ark_logger.info("\n🛑 Demo interrompu manuellement", extra={"module": "scripts"})
     except Exception as e:
         logger.error(f"❌ Erreur dans demo: {e}")
-        print(f"❌ Erreur inattendue: {e}")
+        ark_logger.info(f"❌ Erreur inattendue: {e}", extra={"module": "scripts"})
         raise RuntimeError(f"Erreur demo zeroia error recovery integration: {e}") from e

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from core.ark_logger import ark_logger
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -10,27 +11,27 @@ def ensure_init_py() -> None:
     init_path = MODULES / "__init__.py"
     if not init_path.exists():
         init_path.touch()
-        print(f"✅ Créé : {init_path}")
+        ark_logger.info(f"✅ Créé : {init_path}", extra={"module": "scripts"})
     else:
-        print(f"✔️ Déjà présent : {init_path}")
+        ark_logger.info(f"✔️ Déjà présent : {init_path}", extra={"module": "scripts"})
 
 
 def ensure_env_py_path() -> None:
     if ENV_FILE.exists():
         content = ENV_FILE.read_text()
         if "PYTHONPATH" in content:
-            print("✔️ PYTHONPATH déjà présent dans .env")
+            ark_logger.info("✔️ PYTHONPATH déjà présent dans .env", extra={"module": "scripts"})
             return
     with open(ENV_FILE, "a") as f:
         f.write("\nPYTHONPATH=./modules\n")
-    print(f"✅ PYTHONPATH ajouté à {ENV_FILE}")
+    ark_logger.info(f"✅ PYTHONPATH ajouté à {ENV_FILE}", extra={"module": "scripts"})
 
 
 def main() -> None:
-    print("🔧 Patch Pyright / Cursor en cours…")
+    ark_logger.info("🔧 Patch Pyright / Cursor en cours…", extra={"module": "scripts"})
     ensure_init_py()
     ensure_env_py_path()
-    print("✅ Terminé. Recharge Cursor (⇧⌘P > Reload Window)")
+    ark_logger.info("✅ Terminé. Recharge Cursor (⇧⌘P > Reload Window)", extra={"module": "scripts"})
 
 
 if __name__ == "__main__":
