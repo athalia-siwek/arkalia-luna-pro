@@ -13,6 +13,7 @@ import pytest
 from modules.zeroia.graceful_degradation import (
     DegradationLevel,
     DegradationMetrics,
+    GracefulDegradation,
     GracefulDegradationSystem,
     ServiceDefinition,
     ServiceMetrics,
@@ -165,6 +166,16 @@ class TestGracefulDegradationIntegration:
 @pytest.mark.performance
 class TestGracefulDegradationPerformance:
     """Tests de performance pour la dégradation gracieuse"""
+
+    def setup_method(self):
+        """Configuration avant chaque test"""
+        self.temp_dir = tempfile.mkdtemp()
+        self.degradation = GracefulDegradationSystem()
+
+    def teardown_method(self):
+        """Nettoyage après chaque test"""
+        import shutil
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_health_assessment_performance(self):
         """Test de performance de l'évaluation de santé"""

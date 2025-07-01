@@ -286,6 +286,16 @@ class TestCognitiveReactorIntegration:
 class TestCognitiveReactorPerformance:
     """Tests de performance pour le réacteur cognitif"""
 
+    def setup_method(self):
+        """Configuration avant chaque test"""
+        self.temp_dir = tempfile.mkdtemp()
+        self.reactor = CognitiveReactor(mode="test")
+
+    def teardown_method(self):
+        """Nettoyage après chaque test"""
+        import shutil
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
     def test_pattern_detection_performance(self):
         """Test de performance de détection de patterns"""
         reactor = CognitiveReactor(mode="performance_test")
