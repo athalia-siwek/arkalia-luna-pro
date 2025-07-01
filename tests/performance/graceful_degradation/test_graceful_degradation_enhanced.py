@@ -13,7 +13,6 @@ import pytest
 from modules.zeroia.graceful_degradation import (
     DegradationLevel,
     DegradationMetrics,
-    GracefulDegradation,
     GracefulDegradationSystem,
     ServiceDefinition,
     ServiceMetrics,
