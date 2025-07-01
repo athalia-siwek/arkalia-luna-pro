@@ -294,6 +294,7 @@ class TestCognitiveReactorPerformance:
     def teardown_method(self):
         """Nettoyage après chaque test"""
         import shutil
+
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_pattern_detection_performance(self):

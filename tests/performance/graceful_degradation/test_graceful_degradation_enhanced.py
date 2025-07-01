@@ -174,6 +174,7 @@ class TestGracefulDegradationPerformance:
     def teardown_method(self):
         """Nettoyage après chaque test"""
         import shutil
+
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_health_assessment_performance(self):
