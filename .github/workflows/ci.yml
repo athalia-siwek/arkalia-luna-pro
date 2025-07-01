@@ -2,9 +2,9 @@ name: 🚀 Arkalia-LUNA CI/CD
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, dev-migration, refonte-stable ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, dev-migration, refonte-stable ]
 
 env:
   PYTHON_VERSION: "3.10"
