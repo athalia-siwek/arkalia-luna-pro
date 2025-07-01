@@ -248,7 +248,7 @@ class TestReasonLoopEnhancedRobustness:
     def test_handling_component_initialization_failure(self):
         """Test de gestion d'échec d'initialisation des composants"""
         # Test de robustesse lors d'échecs d'initialisation
-                try:
+        try:
             reason_loop = ReasonLoopEnhanced()
             assert reason_loop is not None
         except Exception:
