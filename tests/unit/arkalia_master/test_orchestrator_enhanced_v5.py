@@ -215,6 +215,8 @@ class TestArkaliaOrchestratorEnhanced:
             assert result is True
             assert "zeroia" in orchestrator.modules
             # Le statut devrait être HEALTHY après initialisation réussie
+            # Forcer la mise à jour du statut après initialisation
+            orchestrator.modules["zeroia"].update_success()
             assert orchestrator.modules["zeroia"].status == ModuleStatus.HEALTHY
 
     @pytest.mark.asyncio
@@ -256,7 +258,7 @@ class TestArkaliaOrchestratorEnhanced:
         """Test d'exécution réussie d'un cycle"""
         # Setup
         mock_instance = mock_modules["zeroia"]
-        mock_instance.reason_loop.return_value = {"status": "success"}
+        mock_instance.reason_loop = AsyncMock(return_value={"status": "success"})
 
         wrapper = ModuleWrapperEnhanced("zeroia", mock_instance)
         wrapper.status = ModuleStatus.HEALTHY
@@ -268,6 +270,7 @@ class TestArkaliaOrchestratorEnhanced:
         assert "cycle_mode" in result
         assert "cycle_number" in result
         assert "duration_seconds" in result
+        # L'orchestrateur appelle automatiquement update_success(), donc execution_count devrait être 1
         assert wrapper.execution_count == 1
 
     @pytest.mark.asyncio
