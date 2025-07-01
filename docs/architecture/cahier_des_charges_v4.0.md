@@ -1,114 +1,96 @@
 # 📘 Cahier des Charges – Arkalia-LUNA Pro (v4.0+)
 
-## 1. 🎯 Objectifs du Projet
+## 1. 🌟 Objectifs du Projet
+
+### 🔹 Vision Progressive et Réaliste
+
+Le développement d'Arkalia suit une approche **progressive, modulaire et sécurisée**, compatible avec les contraintes d'un développeur solo. Le but n'est pas d'implémenter tout d'un coup, mais d'avancer **itérativement**, en garantissant la stabilité à chaque étape.
 
 ### 🔹 Court Terme (1–3 mois)
 
-- Stabiliser 100 % des conteneurs (Docker, healthchecks actifs).
-- Refactoriser les modules critiques (reason_loop, snapshot, security.py) selon SOLID.
-- Implémenter une authentification API (JWT + rate limiting).
-- Réduire le temps de réponse de MkDocs à < 1s (via cache Redis).
-- Déployer la CI/CD complète avec pytest, black, ruff, act, GitHub Actions.
+* Stabiliser 100 % des conteneurs Docker (healthchecks inclus)
+* Refactorer les modules critiques (`reason_loop`, `snapshot`, `security.py`) selon SOLID
+* Implémenter une authentification API (JWT + rate limiting)
+* Réduire le temps de réponse de MkDocs à < 1s (via cache Redis)
+* Déployer CI/CD locale complète (pytest, black, ruff, GitHub Actions avec `act`)
 
 ### 🔹 Moyen Terme (3–6 mois)
 
-- Migrer l'architecture vers microservices hexagonaux avec interfaces claires (api/, use_cases/, infra/).
-- Intégrer OpenTelemetry pour le tracing distribué.
-- Finaliser le raisonnement multi-agent ZeroIA ↔ ReflexIA ↔ Sandozia.
-- Créer un environnement staging complet avec rollback sécurisé.
+* Migration progressive vers architecture hexagonale (api/, domain/, use\_cases/, infra/)
+* Intégrer OpenTelemetry (tracing distribué)
+* Finaliser les interactions ZeroIA ↔ ReflexIA ↔ Sandozia
+* Créer un environnement staging avec rollback sécurisé
 
 ### 🔹 Long Terme (6–12 mois)
 
-- Déploiement Cloud (AWS/GCP) avec Terraform, auto-scaling, reverse proxy, CDN.
-- Intégration de LLM avancés (Claude, GPT-4) dans AssistantIA.
-- Auto-apprentissage par feedback utilisateur (ZeroIA v2).
-- Audit externe sécurité (ISO 27001, RGPD), sandbox cognitive.
+* Déploiement Cloud (AWS/GCP via Terraform), auto-scaling, CDN
+* Intégration de LLM avancés (Claude, GPT-4) dans AssistantIA
+* Auto-apprentissage par feedback utilisateur (ZeroIA v2)
+* Audit sécurité externe (ISO 27001, RGPD), sandbox cognitive
 
 ---
 
 ## 2. 🌐 Contexte du Projet
 
-Arkalia-LUNA est un système IA modulaire, auto-réparateur, auto-observant, fonctionnant via une architecture Dockerisée, piloté par une API REST centrale (FastAPI), et doté d'une interface web moderne (React).
+Arkalia-LUNA est un système cognitif IA auto-réparateur, conteneurisé, piloté par API REST (FastAPI) et disposant d'une interface SPA (React).
 
-**Public :**
+**Cibles** :
 
-- Développeurs IA / Ops cognitifs
-- Systèmes critiques et haute résilience
-- R&D, laboratoires, entreprises tech innovantes
+* Développeurs IA, DevOps cognitifs
+* Systèmes critiques, laboratoire R\&D, observabilité avancée
 
 ---
 
 ## 3. 🧱 Architecture Actuelle
 
-- Microservices Dockerisés : 15 conteneurs actifs (ZeroIA, ReflexIA, AssistantIA…)
-- LLM Local : mistral:latest via Ollama
-- Monitoring : Grafana, Prometheus, Loki, cadvisor, node-exporter
-- Frontend : React (Vite + Tailwind), SPA
-- Backend : FastAPI + docs Swagger
-- Documentation : MkDocs (Material Theme)
-- CI/CD : GitHub Actions (act), pytest, coverage, pre-commit
-
-```
-C4Context
-    title "Arkalia-LUNA – Architecture Globale"
-    Enterprise_Boundary(b0, "Infra") {
-        System(arkalia_api, "arkalia-api", "FastAPI REST")
-        System(user, "Utilisateur", "Dashboard React / API")
-        System_Ext(llm, "Ollama", "mistral:latest")
-    }
-    Rel(user, arkalia_api, "Utilise")
-    Rel(arkalia_api, llm, "Interroge")
-```
+* Conteneurs actifs : 15 (ZeroIA, ReflexIA, Sandozia, AssistantIA, etc.)
+* API REST : FastAPI (`arkalia-api`)
+* LLM local : mistral\:latest (Ollama)
+* Monitoring : Prometheus, Grafana, Loki, cadvisor
+* Frontend : React (Vite + Tailwind)
+* Documentation : MkDocs (Material Theme)
+* CI/CD : GitHub Actions, pytest, coverage, pre-commit, `act`
 
 ---
 
 ## 4. 📏 Règles de Codage & Bonnes Pratiques
 
-### 🔹 Architecture & Structure
+### 🔹 Principes Architecturaux
 
-- Clean Architecture stricte : core/, domain/, interfaces/, use_cases/, infra/
-- 1 fonction = 1 responsabilité (Single Responsibility)
-- Séparation stricte logique métier ↔ adaptateurs
+* Clean Architecture stricte : `core/`, `domain/`, `infra/`, `interfaces/`
+* SOLID appliqué sur tous les modules IA
+* Domain Driven Design (DDD) en phase d'introduction
 
-### 🔹 Principes SOLID appliqués
+### 🔹 SOLID
 
-| Principe | Exigence | Exemple |
-|----------|----------|---------|
-| S | Une classe = une seule responsabilité | Reasoner, ErrorDetector |
-| O | Ouvert à extension | Hook on_reasoning_complete() |
-| L | Modules IA substituables | class IModule → ZeroIA, Reflexia |
-| I | Interfaces fines | ILogger, IScorer séparés |
-| D | Abstractions > implémentations | def **init**(self, scorer: IScorer) |
+| Principe | Exigence                        | Exemple                               |
+| -------- | ------------------------------- | ------------------------------------- |
+| S        | Une classe = une responsabilité | `Reasoner`, `ErrorDetector`           |
+| O        | Ouvert à extension              | `on_reasoning_complete()`             |
+| L        | Substituabilité                 | `IModule` → `ZeroIA`, `Reflexia`      |
+| I        | Interfaces fines                | `ILogger`, `IScorer`                  |
+| D        | Inversion d’injection           | `def __init__(self, scorer: IScorer)` |
 
-### 🔹 Conventions Python & Outils
+### 🔹 Conventions
 
-- PEP8 strict (black, ruff avec règles sévères)
-- Variables claires : reason_score, module_state
-- print() interdit → logger structuré ark_logger
-- Tests avec pytest, pytest-mock, --cov + seuil : 85 %
+* PEP8, ruff, black
+* `print()` interdit → logger structuré `ark_logger`
+* Variables explicites : `score_final`, `module_state`
+* Tests avec `pytest`, `pytest-mock`, `--cov`, seuil > 85 %
 
-### 🔹 Architecture des Tests
+### 🔹 Architecture des tests
 
-- **Structure stricte** : tous les tests dans `tests/` uniquement
-  - `tests/unit/` : tests unitaires par module
-  - `tests/integration/` : tests d'intégration par service
-  - `tests/chaos/` : tests de résilience et chaos engineering
-  - `tests/performance/` : tests de performance
-  - `tests/security/` : tests de sécurité
-  - `tests/matrix/` : tests combinatoires et edge cases
+```
+tests/
+├── unit/
+├── integration/
+├── chaos/
+├── performance/
+├── security/
+├── matrix/
+```
 
-- **Interdiction** : aucun test dans `modules/`, `scripts/`, `routes/`
-- **Imports relatifs** : utilisation de `sys.path.insert()` pour les imports absolus
-- **Convention de nommage** : `test_*.py` pour tous les fichiers de test
-- **Markers pytest** : `@pytest.mark.unit`, `@pytest.mark.integration`, etc.
-
-### 🔹 Gestion des Imports
-
-- **Ordre des imports** : stdlib → third-party → local (PEP8)
-- **Imports absolus** : préférés pour les modules du projet
-- **Imports relatifs** : uniquement pour les sous-modules du même package
-- **Path dynamique** : `sys.path.insert()` pour les tests avec imports complexes
-- **Éviter** : imports circulaires et imports conditionnels
+> Aucun test en dehors de ce dossier. Convention : `test_*.py`, markers `@pytest.mark.unit`, etc.
 
 ---
 
@@ -116,66 +98,65 @@ C4Context
 
 ### 🔐 Sécurité
 
-- Authentification JWT + token header (X-API-Token)
-- Rate limiting dynamique (slowapi) : max 10 req/s/IP
-- Aucune élévation root dans Docker (USER arkalia)
-- Secrets encryptés (AES-256, rotation hebdo)
+* Auth API (JWT + header `X-API-Token`)
+* Rate limiting : 10 req/s/IP max (slowapi)
+* Pas d'utilisateur root en conteneur (USER = `arkalia`)
+* Secrets encryptés (AES-256), rotation hebdomadaire
 
-### 📊 Monitoring & Observabilité
+### 📊 Observabilité & Monitoring
 
-- Prometheus + /metrics par module
-- Grafana : dashboards par module, heatmap cognitive
-- Alertmanager + alertes Slack/mail : CPU > 80 %, ZeroIA KO
-- Tracing distribué avec OpenTelemetry
+* /metrics Prometheus par module
+* Dashboards Grafana dynamiques
+* Alertes Slack/mail (CPU > 80 %, ZeroIA KO, etc.)
+* Tracing avec OpenTelemetry
 
-### 🧪 Qualité logicielle
+### 🥺 Qualité
 
-- Couverture minimale 90 %
-- CI bloquante si < 85 % (via GitHub Actions + act)
-- Tests containers (Docker) avec pytest-docker
-- Documentation Swagger + MkDocs (versionnée)
-- Convention Git (vX.Y.Z, changelogs, PRs nettes)
-
----
-
-## 6. 🛠️ Roadmap Technique (12 mois)
-
-| Période | Objectifs principaux | Modules/Actions |
-|---------|---------------------|-----------------|
-| Mois 1–2 | Auth API, refactor SOLID, cache Redis | api, core, docs |
-| Mois 2–4 | CI/CD complète, exposition Swagger, staging | ci, infra, docker |
-| Mois 4–6 | Tracing, multi-agent loop | reactor, zeroia, reflexia |
-| Mois 6–12 | Cloud (Terraform), audit sécurité, IA avancée | assistantia, cloud |
+* Couverture cible : 90 %
+* CI bloquante < 85 %
+* Pre-commit actifs
+* Docs : Swagger pour API, MkDocs pour architecture
 
 ---
 
-## 7. 📎 Annexes
+## 6. 🛠️ Roadmap Technique
 
-### 📌 Structure de Dossiers
+| Mois | Objectifs Clés                                   |
+| ---- | ------------------------------------------------ |
+| 1–2  | Auth API, refactor SOLID, cache Redis            |
+| 3–4  | CI/CD, staging, Swagger stable                   |
+| 5–6  | Tracing OpenTelemetry, Reasoning multi-agent     |
+| 6–12 | Cloud (Terraform), sandbox cognitive, auto-learn |
+
+---
+
+## 7. 📌 Annexes
+
+### 📂 Structure Dossier
 
 ```
 arkalia-luna/
-├── api/                  # FastAPI
-├── core/                 # Logique métier
-├── modules/              # IA : zeroia/, reflexia/, sandozia/
-├── docs/                 # MkDocs
-├── frontend/             # React
-├── infrastructure/       # Docker, Terraform, Prometheus…
-├── tests/                # Tests unitaires/integration
-└── scripts/              # CI/CD, analyse statique
+├── api/
+├── core/
+├── modules/
+├── docs/
+├── frontend/
+├── infrastructure/
+├── tests/
+├── scripts/
 ```
 
-### 📌 KPIs Clés à Suivre
+### 📊 KPIs Suivis
 
-| KPI | Objectif |
-|-----|----------|
-| Latence API (P95) | < 300 ms |
-| Couverture tests | > 90 % |
-| Uptime mensuel | ≥ 99.9 % |
-| CPU moyen / conteneur | < 80 % |
-| RAM / module | < 100 MB |
+| KPI              | Cible    |
+| ---------------- | -------- |
+| Latence API      | < 300 ms |
+| Uptime           | > 99.9 % |
+| CPU/Module       | < 80 %   |
+| RAM/module       | < 100 MB |
+| Couverture tests | > 90 %   |
 
-### 📌 Exemple Auth FastAPI
+### 🔑 Exemple Auth FastAPI
 
 ```python
 from fastapi import Header, HTTPException
@@ -187,13 +168,13 @@ def check_token(x_token: str = Header(...)):
 
 ---
 
-## ✅ Résumé Final
+## ✅ Rappel final : Progressivité Obligatoire
 
-Arkalia-LUNA Pro est désormais un système IA modulaire, sécurisé, versionné, et monitoré, prêt à passer à l'échelle. Ce cahier des charges assure la conformité pro, la stabilité cognitive et la maintenabilité.
+Ce cahier des charges **n'est pas un objectif à tout faire d'un coup**. Il sert à guider un développement **progressif**, propre, sans dette technique, en mode expert IA solo. Chaque étape doit être validée avant la suivante.
 
-**Document à réviser tous les trimestres. Version actuelle : v4.0-Juin-2025**
+**Document à relire chaque trimestre** — Version : v4.0-Juillet-2025
 
-**Signatures :**
+Signé :
 
-- 🧠 **Athalia** – Architecte IA Système
-- 🔐 **Responsable Sécurité** : …
+* 🧠 **Athalia** – Architecte IA Système
+* 🔐 Responsable sécurité : …

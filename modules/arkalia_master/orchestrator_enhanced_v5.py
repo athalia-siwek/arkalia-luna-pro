@@ -250,7 +250,9 @@ class ArkaliaOrchestratorEnhanced:
             try:
                 zeroia_core = ZeroIACore()
                 if await asyncio.to_thread(zeroia_core.initialize):
-                    self.modules["zeroia"] = ModuleWrapperEnhanced("zeroia", zeroia_core)
+                    wrapper = ModuleWrapperEnhanced("zeroia", zeroia_core)
+                    wrapper.update_success()  # Mettre à jour le statut vers HEALTHY
+                    self.modules["zeroia"] = wrapper
                     initialization_results["zeroia"] = "✅ SUCCESS"
                 else:
                     initialization_results["zeroia"] = "❌ FAILED"
@@ -503,6 +505,44 @@ class ArkaliaOrchestratorEnhanced:
                 logger.error(f"❌ Vault Manager error: {e}")
                 self.modules["vault_manager"].update_error(str(e))
                 cycle_results["vault_manager"] = {"status": "error", "error": str(e)}
+
+            operations_this_cycle += 1
+
+        # === PHASE 5: MODULES STANDARDS EXECUTION ===
+        for module_name, wrapper in self.modules.items():
+            # Ignorer les modules enhanced déjà traités
+            if module_name in [
+                "cognitive_reactor",
+                "error_recovery",
+                "vault_manager",
+                "chronalia",
+                "crossmodule_validator",
+            ]:
+                continue
+
+            # Exécuter les modules standards
+            try:
+                if hasattr(wrapper.instance, "reason_loop"):
+                    result = await asyncio.to_thread(wrapper.instance.reason_loop)
+                    cycle_results[module_name] = {"status": "success", "result": result}
+                    wrapper.update_success()
+                    successful_this_cycle += 1
+                elif hasattr(wrapper.instance, "process"):
+                    result = await asyncio.to_thread(wrapper.instance.process)
+                    cycle_results[module_name] = {"status": "success", "result": result}
+                    wrapper.update_success()
+                    successful_this_cycle += 1
+                else:
+                    # Module sans méthode d'exécution standard
+                    cycle_results[module_name] = {
+                        "status": "skipped",
+                        "reason": "No execution method found",
+                    }
+
+            except Exception as e:
+                logger.error(f"❌ {module_name} error: {e}")
+                wrapper.update_error(str(e))
+                cycle_results[module_name] = {"status": "error", "error": str(e)}
 
             operations_this_cycle += 1
 
