@@ -11,7 +11,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 
 def load_audit_results() -> dict[str, Any]:
@@ -23,16 +23,18 @@ def load_audit_results() -> dict[str, Any]:
         print("❌ print_audit.json non trouvé. Lancez d'abord ark_check_print.py")
         sys.exit(1)
 
-def get_safe_prints(audit_data: dict[str, Any]) -> list[dict[str, Any]]:
-    """Récupère tous les print() de criticité LOW."""
+
+def migrate_safe_prints(audit_data: dict[str, Any]) -> list[dict[str, Any]]:
+    """Extrait les print() sûrs pour migration Phase 1."""
     safe_prints = []
 
-    for file_path, prints in audit_data["audit"]["files"].items():
+    for _file_path, prints in audit_data["audit"]["files"].items():
         for print_info in prints:
             if print_info["criticality"] == "LOW":
                 safe_prints.append(print_info)
 
     return safe_prints
+
 
 def backup_file(file_path: str) -> str:
     """Crée une sauvegarde du fichier."""
@@ -42,12 +44,14 @@ def backup_file(file_path: str) -> str:
             dst.write(src.read())
     return backup_path
 
+
 def check_ark_logger_import(lines: list[str]) -> bool:
     """Vérifie si ark_logger est déjà importé."""
     for line in lines:
         if "import ark_logger" in line or "from arkalia import ark_logger" in line:
             return True
     return False
+
 
 def add_ark_logger_import(lines: list[str]) -> list[str]:
     """Ajoute l'import ark_logger au début du fichier."""
@@ -59,12 +63,12 @@ def add_ark_logger_import(lines: list[str]) -> list[str]:
 
         # Ajouter après les imports existants
         if not import_added and (
-            line.startswith("import ") or
-            line.startswith("from ") or
-            line.strip() == "" or
-            line.startswith("#") or
-            line.startswith('"""') or
-            line.startswith("'''")
+            line.startswith("import ")
+            or line.startswith("from ")
+            or line.strip() == ""
+            or line.startswith("#")
+            or line.startswith('"""')
+            or line.startswith("'''")
         ):
             if i + 1 < len(lines) and not lines[i + 1].startswith(("import ", "from ")):
                 new_lines.append("from arkalia import ark_logger\n")
@@ -75,6 +79,7 @@ def add_ark_logger_import(lines: list[str]) -> list[str]:
         new_lines.insert(0, "from arkalia import ark_logger\n")
 
     return new_lines
+
 
 def migrate_print_to_logger(line: str, file_path: str) -> str:
     """Convertit un print() en ark_logger."""
@@ -104,7 +109,7 @@ def migrate_print_to_logger(line: str, file_path: str) -> str:
             return re.sub(pattern, replacement, line)
 
     # Cas par défaut
-    if line.strip() == 'print()':
+    if line.strip() == "print()":
         return line  # Ne pas toucher aux print() vides
 
     # Remplacement générique pour les messages simples
@@ -112,6 +117,7 @@ def migrate_print_to_logger(line: str, file_path: str) -> str:
         return line.replace('print("', 'ark_logger.info("')
 
     return line
+
 
 def migrate_file_safe(file_path: str, safe_prints: list[dict[str, Any]]) -> bool:
     """Migre un fichier de manière sécurisée."""
@@ -151,7 +157,9 @@ def migrate_file_safe(file_path: str, safe_prints: list[dict[str, Any]]) -> bool
                 if new_line != old_line:
                     lines[line_num] = new_line
                     modified = True
-                    print(f"   ✅ Ligne {print_info['line']}: {old_line.strip()} → {new_line.strip()}")
+                    print(
+                        f"   ✅ Ligne {print_info['line']}: {old_line.strip()} → {new_line.strip()}"
+                    )
 
         # Écrire le fichier modifié
         if modified:
@@ -171,6 +179,7 @@ def migrate_file_safe(file_path: str, safe_prints: list[dict[str, Any]]) -> bool
                 dst.write(src.read())
         return False
 
+
 def run_tests() -> bool:
     """Lance les tests pour valider la migration."""
     print("\n🧪 Validation par tests...")
@@ -181,7 +190,7 @@ def run_tests() -> bool:
             ["python", "-m", "pytest", "tests/unit/", "-v", "--tb=short"],
             capture_output=True,
             text=True,
-            timeout=60
+            timeout=60,
         )
 
         if result.returncode == 0:
@@ -200,13 +209,14 @@ def run_tests() -> bool:
         print(f"❌ Erreur tests: {e}")
         return False
 
+
 def main():
     """Fonction principale."""
     print("🔄 Début migration Phase 1 SAFE (v2) - print() → ark_logger")
 
     # Charger l'audit
     audit_data = load_audit_results()
-    safe_prints = get_safe_prints(audit_data)
+    safe_prints = migrate_safe_prints(audit_data)
 
     if not safe_prints:
         print("✅ Aucun print() sûr à migrer")
@@ -238,6 +248,7 @@ def main():
     else:
         print("❌ Migration Phase 1 SAFE échouée - restauration nécessaire")
         print("💡 Utilisez les fichiers .backup_print_migration_v2 pour restaurer")
+
 
 if __name__ == "__main__":
     main()

@@ -12,7 +12,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 
 def load_audit_results() -> dict[str, Any]:
@@ -25,11 +25,11 @@ def load_audit_results() -> dict[str, Any]:
         sys.exit(1)
 
 
-def get_safe_prints(audit_data: dict[str, Any]) -> list[dict[str, Any]]:
-    """Récupère tous les print() de criticité LOW."""
+def migrate_safe_prints(audit_data: dict[str, Any]) -> list[dict[str, Any]]:
+    """Extrait les print() sûrs pour migration Phase 1."""
     safe_prints = []
 
-    for file_path, prints in audit_data["audit"]["files"].items():
+    for _file_path, prints in audit_data["audit"]["files"].items():
         for print_info in prints:
             if print_info["criticality"] == "LOW":
                 safe_prints.append(print_info)
@@ -174,7 +174,7 @@ def main():
 
     # Charger l'audit
     audit_data = load_audit_results()
-    safe_prints = get_safe_prints(audit_data)
+    safe_prints = migrate_safe_prints(audit_data)
 
     if not safe_prints:
         print("✅ Aucun print() sûr à migrer")

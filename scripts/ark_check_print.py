@@ -12,7 +12,7 @@ import os
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 
 def analyze_print_statement(line: str, line_num: int, file_path: str) -> dict[str, Any]:
@@ -125,7 +125,7 @@ def generate_migration_plan(audit_results: dict[str, Any]) -> dict[str, Any]:
         "recommendations": [],
     }
 
-    for file_path, prints in audit_results["files"].items():
+    for _file_path, prints in audit_results["files"].items():
         for print_info in prints:
             if print_info["criticality"] == "LOW":
                 plan["phase_1_safe"].append(print_info)
