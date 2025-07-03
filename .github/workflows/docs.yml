@@ -158,9 +158,6 @@ jobs:
     needs: build-docs
     if: github.event_name == 'push'
     timeout-minutes: 10
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: 📥 Checkout du dépôt
         uses: actions/checkout@v4
