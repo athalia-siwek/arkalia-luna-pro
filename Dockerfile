@@ -36,6 +36,11 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Installation des outils système
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Création utilisateur non-root
 RUN groupadd -r arkalia && \
     useradd -r -g arkalia -d /app -s /bin/bash arkalia && \
@@ -53,6 +58,7 @@ COPY --chown=arkalia:arkalia helloria ./helloria
 COPY --chown=arkalia:arkalia modules ./modules
 COPY --chown=arkalia:arkalia state ./state
 COPY --chown=arkalia:arkalia config ./config
+COPY --chown=arkalia:arkalia run_arkalia_api.py ./
 
 # Switch vers utilisateur non-root
 USER arkalia
@@ -60,6 +66,5 @@ USER arkalia
 # Port exposé
 EXPOSE 8000
 
-# Point d'entrée optimisé (sans healthcheck pour éviter les erreurs de build)
-CMD ["uvicorn", "helloria.core:app", "--host", "0.0.0.0", "--port", "8000", \
-    "--workers", "1", "--access-log", "--log-level", "info"]
+# Point d'entrée optimisé avec script de démarrage robuste
+CMD ["python", "run_arkalia_api.py"]

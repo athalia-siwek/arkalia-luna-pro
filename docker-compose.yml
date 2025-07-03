@@ -32,14 +32,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "${PORT_API:-8000}:8000"
-    command: >
-      uvicorn helloria.core:app --host 0.0.0.0 --port 8000
-        --workers 1 --access-log --log-level info
+    command: python run_arkalia_api.py
     environment:
       - ARKALIA_ENV=development
       - ARKALIA_LOG_LEVEL=INFO
     healthcheck:
-      test: [ "CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health', timeout=3)" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
       interval: 30s
       timeout: 5s
       retries: 3
