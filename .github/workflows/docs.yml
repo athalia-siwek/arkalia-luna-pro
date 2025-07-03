@@ -47,10 +47,9 @@ jobs:
         run: |
           echo "🔍 Validation de la configuration MkDocs..."
           python -m pip install --upgrade pip setuptools wheel
-          pip install mkdocs mkdocs-material
+          sudo pip install mkdocs mkdocs-material
           if [ -f "mkdocs.yml" ]; then
             echo "✅ mkdocs.yml trouvé"
-            export PATH="$HOME/.local/bin:$PATH"
             mkdocs build --strict || (echo "❌ mkdocs.yml invalide" && exit 1)
           else
             echo "❌ mkdocs.yml manquant"
