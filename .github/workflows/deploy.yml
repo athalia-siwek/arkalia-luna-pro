@@ -39,29 +39,26 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
+          pip install mkdocs mkdocs-material
+
+      - name: 🔍 Validate MkDocs configuration
+        run: |
+          echo "🔍 Validation de la configuration MkDocs..."
+          if [ -f "mkdocs.yml" ]; then
+            echo "✅ mkdocs.yml trouvé"
+            # Validation syntaxe MkDocs
+            mkdocs build --strict --verbose || (echo "❌ mkdocs.yml invalide" && exit 1)
+            echo "✅ Configuration MkDocs valide"
+          else
+            echo "❌ mkdocs.yml manquant"
+            exit 1
+          fi
 
       - name: 🔍 Validate Dockerfiles
         run: |
           echo "🔍 Validation des Dockerfiles..."
-
-          # Vérification de l'existence des Dockerfiles
-          required_dockerfiles=("Dockerfile.zeroia" "Dockerfile-reflexia" "Dockerfile.sandozia" "Dockerfile.assistantia")
-
-          for dockerfile in "${required_dockerfiles[@]}"; do
-            if [ -f "$dockerfile" ]; then
-              echo "✅ $dockerfile trouvé"
-              # Validation syntaxe basique
-              if grep -q "FROM\|COPY\|RUN" "$dockerfile"; then
-                echo "✅ $dockerfile syntaxe valide"
-              else
-                echo "❌ $dockerfile syntaxe invalide"
-                exit 1
-              fi
-            else
-              echo "❌ $dockerfile manquant"
-              exit 1
-            fi
-          done
+          chmod +x scripts/validate-dockerfiles.sh
+          ./scripts/validate-dockerfiles.sh
 
       - name: 🔍 Validate docker-compose
         run: |
@@ -96,6 +93,15 @@ jobs:
     strategy:
       matrix:
         image: [zeroia, reflexia, sandozia, assistantia]
+        include:
+          - image: zeroia
+            dockerfile: Dockerfile.zeroia
+          - image: reflexia
+            dockerfile: Dockerfile-reflexia
+          - image: sandozia
+            dockerfile: Dockerfile.sandozia
+          - image: assistantia
+            dockerfile: Dockerfile.assistantia
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -125,7 +131,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile.${{ matrix.image }}
+          file: ./${{ matrix.dockerfile }}
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
