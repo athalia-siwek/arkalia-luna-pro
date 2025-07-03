@@ -5,7 +5,7 @@
 all: test
 
 test:
-	pytest
+	bash ./ark-test-full.sh
 
 format:
 	black .

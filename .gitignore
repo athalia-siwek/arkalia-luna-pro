@@ -350,3 +350,5 @@ docs/_build/
 
 # Pre-commit
 .pre-commit-config.yaml.bak
+
+tests/tmp/

@@ -10,6 +10,7 @@ from modules.monitoring.prometheus_metrics import get_metrics_summary
 
 # 📦 Import des routes externes (modules IA)
 from modules.reflexia.core_api import router as reflexia_router
+from modules.zeroia.core import router as zeroia_router
 
 # 🚦 Router principal
 router = APIRouter()
@@ -237,6 +238,7 @@ app = FastAPI(
 # 🧩 Inclusion des routers
 app.include_router(router)
 app.include_router(reflexia_router)  # ✅ Active le endpoint /reflexia/check
+app.include_router(zeroia_router)  # ✅ Active les endpoints /zeroia/decision et /zeroia/status
 
 
 @app.get("/health")

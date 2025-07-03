@@ -8,10 +8,10 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 try:
-    from tests.common.test_helpers import ensure_test_toml
+    from tests.fixtures.test_helpers import ensure_test_toml
 except ImportError:
     # fallback pour appel direct
-    from common.test_helpers import ensure_test_toml
+    pass
 
 
 @pytest.fixture(autouse=True, scope="session")

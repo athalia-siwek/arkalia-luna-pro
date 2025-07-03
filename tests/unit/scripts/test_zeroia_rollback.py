@@ -7,7 +7,7 @@ import pytest
 
 from scripts import zeroia_rollback
 
-PROJECT_ROOT = Path(__file__).parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 
 # 📁 Setup de répertoires temporaires pour simuler l'état ZeroIA

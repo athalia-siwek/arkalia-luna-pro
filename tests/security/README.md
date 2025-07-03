@@ -1,4 +1,18 @@
-# 🔒 Tests de Sécurité — Arkalia-LUNA
+# 📁 tests/security — Tests de sécurité
+
+Ce dossier contient les **tests de sécurité** :
+- Vérification des permissions, injections, gestion des secrets
+- Tests d'attaque, fuzzing, validation des protections
+
+## Conventions
+- Fichiers : `test_*.py`
+- Markers : `@pytest.mark.security`
+- Ne jamais exposer de secrets réels dans les tests
+
+## Bonnes pratiques
+- Utiliser des données fictives ou mockées
+- Documenter chaque cas de test
+- Nettoyer les traces sensibles après chaque test
 
 ## Objectif
 Valider la robustesse du système face aux attaques, injections, corruptions et accès non autorisés.
@@ -18,12 +32,6 @@ pytest tests/security/general/
 ## Marqueurs
 - `@pytest.mark.security` : tests de sécurité
 - `@pytest.mark.slow` : tests longs
-
-## Bonnes pratiques
-- Couvrir tous les points d'entrée critiques
-- Ajouter un test pour chaque faille ou bug découvert
-- Utiliser des mocks pour simuler les attaques
-- Documenter chaque scénario d'attaque
 
 ## Exemple de test
 ```python

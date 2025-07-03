@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from modules.zeroia.reason_loop import reason_loop
-from tests.common.test_helpers import ensure_test_toml, ensure_zeroia_state_file
+from tests.fixtures.test_helpers import ensure_test_toml, ensure_zeroia_state_file
 
 ensure_test_toml()
 
