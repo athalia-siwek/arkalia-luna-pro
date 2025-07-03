@@ -1,0 +1,8 @@
+timestamp = "2025-07-03 23:43:39"
+
+[decision]
+last_decision = "normal"
+confidence_score = 0.4
+justification = "cpu=N/A, severity=none"
+timestamp = "2025-07-03T23:43:39.324002"
+
