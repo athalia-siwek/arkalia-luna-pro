@@ -246,10 +246,54 @@ def health() -> dict:
     return {"status": "ok"}
 
 
+@app.get("/zeroia/health", tags=["ZeroIA"])
+def zeroia_health() -> dict:
+    try:
+        from modules.zeroia.core import health_check
+
+        return health_check()
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+@app.get("/reflexia/health", tags=["ReflexIA"])
+def reflexia_health() -> dict:
+    try:
+        # Vérification simple de l'état ReflexIA
+        from pathlib import Path
+
+        reflexia_state = Path("state/reflexia_state.toml")
+        if reflexia_state.exists():
+            return {"status": "active", "module": "reflexia"}
+        else:
+            return {"status": "inactive", "module": "reflexia"}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+@app.get("/sandozia/health", tags=["Sandozia"])
+def sandozia_health() -> dict:
+    try:
+        # Vérification simple de l'état Sandozia
+        from pathlib import Path
+
+        sandozia_state = Path("state/sandozia")
+        if sandozia_state.exists():
+            return {"status": "active", "module": "sandozia"}
+        else:
+            return {"status": "inactive", "module": "sandozia"}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
 @app.get("/zeroia/status", tags=["ZeroIA"])
 def zeroia_status() -> dict:
-    with open("state/zeroia_dashboard.json") as f:
-        return json.load(f)
+    try:
+        with open("state/zeroia_dashboard.json") as f:
+            return json.load(f)
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+    return {"status": "unknown"}
 
 
 def _get_metrics() -> dict:

@@ -109,17 +109,17 @@ class ZeroIACore:
         except Exception as e:
             logger.error(f"Erreur sauvegarde état ZeroIA: {e}")
 
-    async def make_decision(self, context: str) -> dict[str, Any]:
+    def make_decision(self, context: str) -> dict[str, Any]:
         print("🧪 make_decision déclaré")
         try:
-            if not self.circuit_breaker.can_execute():
+            if not self.circuit_breaker.allow_request():
                 logger.warning("Circuit breaker ouvert - décision différée")
                 return {"decision": "deferred", "confidence": 0.0, "reason": "circuit_breaker_open"}
             start_time = time.time()
-            decision_result = await self.reason_loop.process_context(context)
+            # Appel direct de la fonction reason_loop avec un contexte par défaut
+            decision, confidence = self.reason_loop()
             duration = time.time() - start_time
-            decision = decision_result.get("decision", "unknown")
-            confidence = decision_result.get("confidence", 0.0)
+            decision_result = {"decision": decision, "confidence": confidence}
             zeroia_decisions_total.labels(decision_type=decision, confidence_level=confidence).inc()
             zeroia_confidence_score.set(confidence)
             self.state.update(
@@ -177,7 +177,7 @@ class DecisionRequest(BaseModel):
 async def make_decision(request: DecisionRequest):
     if zeroia_core is None:
         return {"error": "core not available"}
-    result = await zeroia_core.make_decision(request.context)
+    result = zeroia_core.make_decision(request.context)
     return result
 
 

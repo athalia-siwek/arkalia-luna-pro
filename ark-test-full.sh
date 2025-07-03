@@ -8,6 +8,35 @@ mkdir -p "$REPORTS_DIR"
 # Nettoyage des anciens rapports
 rm -rf htmlcov/ "$REPORTS_DIR"/*
 
+# 🧹 Nettoyage automatique des fichiers macOS cachés
+echo "🧹 Nettoyage des fichiers macOS cachés..."
+if [ -f "scripts/ark-clean-hidden.sh" ]; then
+    ./scripts/ark-clean-hidden.sh
+else
+    echo "⚠️ Script ark-clean-hidden.sh non trouvé, nettoyage manuel..."
+    find . -name "._*" -delete 2>/dev/null || true
+    find . -name "._*" -type d -delete 2>/dev/null || true
+fi
+
+# 🔄 Restauration automatique des fichiers de config pytest manquants
+echo "🔄 Vérification des fichiers de config pytest..."
+if [ ! -f "pytest-integration.ini" ]; then
+    echo "📥 Restauration de pytest-integration.ini..."
+    ./restore_config.sh pytest-integration.ini
+fi
+if [ ! -f "pytest-chaos.ini" ]; then
+    echo "📥 Restauration de pytest-chaos.ini..."
+    ./restore_config.sh pytest-chaos.ini
+fi
+if [ ! -f "pytest-performance.ini" ]; then
+    echo "📥 Restauration de pytest-performance.ini..."
+    ./restore_config.sh pytest-performance.ini
+fi
+if [ ! -f "pytest-security.ini" ]; then
+    echo "📥 Restauration de pytest-security.ini..."
+    ./restore_config.sh pytest-security.ini
+fi
+
 # Exécution des tests unitaires avec couverture
 pytest --cov=modules --cov-report=html --cov-report=term-missing tests/unit
 

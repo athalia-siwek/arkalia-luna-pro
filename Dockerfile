@@ -59,6 +59,7 @@ COPY --chown=arkalia:arkalia helloria ./helloria
 COPY --chown=arkalia:arkalia modules ./modules
 COPY --chown=arkalia:arkalia state ./state
 COPY --chown=arkalia:arkalia config ./config
+COPY --chown=arkalia:arkalia version.toml ./
 COPY --chown=arkalia:arkalia run_arkalia_api.py ./
 
 # Switch vers utilisateur non-root
