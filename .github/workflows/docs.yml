@@ -191,12 +191,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🚀 Déploiement de la documentation..."
-
-          # Configuration Git pour le déploiement
           git config --global user.email "ci@arkalia.ai"
           git config --global user.name "arkalia-bot"
-
-          # Déploiement avec gestion d'erreur
           if mkdocs gh-deploy --force --remote-branch gh-pages --remote-name origin; then
             echo "✅ Déploiement réussi"
             echo "page_url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
@@ -204,6 +200,13 @@ jobs:
             echo "❌ Échec du déploiement"
             exit 1
           fi
+
+      - name: 📋 Logs du container arkalia-api en cas d'échec
+        if: failure()
+        run: |
+          echo "===== LOGS DU CONTAINER arkalia-api ====="
+          docker ps -a
+          docker logs arkalia-api || echo "Pas de logs disponibles pour arkalia-api"
 
       - name: 🏥 Health check documentation
         run: |
