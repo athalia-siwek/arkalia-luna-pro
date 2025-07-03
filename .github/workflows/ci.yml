@@ -87,12 +87,20 @@ jobs:
             --cov=scripts \
             --cov-report=xml \
             --cov-report=html \
+            --cov-report=term-missing \
             --cov-fail-under=${{ env.COVERAGE_MIN }} \
             --junitxml=test-results.xml \
             -v \
             --tb=short \
             --ignore=modules/generative_ai/generated/ \
             --strict-markers
+
+      - name: 📊 Display coverage summary
+        run: |
+          echo "=== COUVERTURE DE TESTS ==="
+          coverage report --show-missing
+          echo "=== FICHIERS COUVERTURE ==="
+          ls -la coverage.xml htmlcov/
 
       - name: 🧪 Run integration tests (no coverage check)
         run: |
@@ -107,6 +115,8 @@ jobs:
           file: ./coverage.xml
           flags: unittests
           name: codecov-umbrella
+          fail_ci_if_error: false
+          verbose: true
 
       - name: 📋 Upload test results
         uses: actions/upload-artifact@v4
