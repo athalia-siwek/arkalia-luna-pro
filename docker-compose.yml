@@ -37,7 +37,7 @@ services:
       - ARKALIA_ENV=development
       - ARKALIA_LOG_LEVEL=INFO
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
       interval: 15s
       timeout: 10s
       retries: 5

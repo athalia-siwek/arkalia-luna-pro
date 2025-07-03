@@ -39,6 +39,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Installation des outils système
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Création utilisateur non-root
