@@ -65,7 +65,6 @@ liens_non_listes.txt
 # 🐳 Docker (non versionnés dans Git)
 # ======================================================
 docker-compose.override.yml
-Dockerfile*
 
 # ======================================================
 # 🧠 Fichiers de state IA (dynamiques à exclure du contrôle Git)

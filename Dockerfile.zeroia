@@ -1,0 +1,67 @@
+# 🧠 Dockerfile.zeroia - ZeroIA Enhanced Optimisé
+# Stage 1: Builder
+FROM python:3.10-slim AS builder
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PIP_NO_CACHE_DIR=1
+
+# Installation des outils de build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Création d'un environnement virtuel
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Installation des dépendances
+COPY requirements.txt ./
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Stage 2: Runtime
+FROM python:3.10-slim AS runtime
+
+# Métadonnées
+LABEL maintainer="Athalia <athalia@arkalia.ai>"
+LABEL description="ZeroIA - Décisionneur Autonome Enhanced"
+LABEL version="2.6.0"
+
+# Variables d'environnement
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PATH="/opt/venv/bin:$PATH"
+ENV PYTHONPATH=/app
+ENV ZEROIA_ENV=production
+
+# Création utilisateur non-root
+RUN groupadd -r zeroia && \
+    useradd -r -g zeroia -d /app -s /bin/bash zeroia && \
+    mkdir -p /app/logs /app/state && \
+    chown -R zeroia:zeroia /app
+
+# Copie du venv
+COPY --from=builder /opt/venv /opt/venv
+
+WORKDIR /app
+
+# Copie sélective du code
+COPY --chown=zeroia:zeroia modules/zeroia ./modules/zeroia
+COPY --chown=zeroia:zeroia modules/monitoring ./modules/monitoring
+COPY --chown=zeroia:zeroia modules/utils_enhanced ./modules/utils_enhanced
+COPY --chown=zeroia:zeroia modules/__init__.py ./modules/
+COPY --chown=zeroia:zeroia scripts/demo_orchestrator_enhanced.py ./scripts/
+COPY --chown=zeroia:zeroia config ./config
+COPY --chown=zeroia:zeroia state ./state
+
+# Switch vers utilisateur non-root
+USER zeroia
+
+# Healthcheck amélioré
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+    CMD python -c "from modules.zeroia.state.zeroia_state import ZeroiaState; \
+    state = ZeroiaState(); print('ZeroIA Enhanced OK')" || exit 1
+
+# Point d'entrée optimisé
+CMD ["python", "scripts/demo_orchestrator_enhanced.py", "--mode", "daemon"]

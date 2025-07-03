@@ -1,0 +1,43 @@
+# 🌕 ARKALIA MASTER ORCHESTRATOR - Dockerfile v4.0.0
+# Container optimisé pour coordonner l'écosystème Arkalia-LUNA
+
+FROM python:3.10-slim
+
+# Métadonnées
+LABEL maintainer="Athalia <athalia@arkalia-luna.pro>"
+LABEL version="5.0.0"
+LABEL description="Arkalia Master Orchestrator Enhanced - Conteneur Unique avec 15 modules IA"
+
+# Variables d'environnement
+ENV PYTHONPATH="/app/modules:/app"
+ENV PYTHONUNBUFFERED=1
+ENV OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+# Répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers de dépendances
+COPY requirements.txt .
+COPY pyproject.toml .
+
+# Installer les dépendances
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier tout le code
+COPY . .
+
+# Créer les répertoires nécessaires
+RUN mkdir -p logs cache state config
+
+# Permissions
+RUN chmod +x scripts/ark-master-orchestrator.py
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python scripts/ark-master-orchestrator.py --mode status || exit 1
+
+# Exposition du port (si nécessaire pour monitoring)
+EXPOSE 8000
+
+# Commande par défaut - Lance le Master Orchestrator Enhanced v5.0.0
+CMD ["python", "modules/arkalia_master/orchestrator_enhanced_v5.py", "--cycles", "1000"] 
