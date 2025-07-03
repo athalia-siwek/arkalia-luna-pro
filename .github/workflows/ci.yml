@@ -366,3 +366,15 @@ jobs:
         run: |
           echo "❌ CI/CD a échoué sur ${{ github.ref }}"
           echo "🔗 Voir les détails: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: 🕵️ Validate MkDocs configuration
+        run: |
+          echo "🔍 Validation de la configuration MkDocs..."
+          if [ -f "mkdocs.yml" ]; then
+            echo "✅ mkdocs.yml trouvé"
+            mkdocs build --strict || (echo "❌ mkdocs.yml invalide" && exit 1)
+            echo "✅ Configuration MkDocs valide"
+          else
+            echo "❌ mkdocs.yml manquant"
+            exit 1
+          fi

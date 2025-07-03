@@ -46,8 +46,7 @@ jobs:
           echo "🔍 Validation de la configuration MkDocs..."
           if [ -f "mkdocs.yml" ]; then
             echo "✅ mkdocs.yml trouvé"
-            # Validation syntaxe MkDocs
-            mkdocs build --strict --verbose || (echo "❌ mkdocs.yml invalide" && exit 1)
+            mkdocs build --strict || (echo "❌ mkdocs.yml invalide" && exit 1)
             echo "✅ Configuration MkDocs valide"
           else
             echo "❌ mkdocs.yml manquant"
