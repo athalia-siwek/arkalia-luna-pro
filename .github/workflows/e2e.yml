@@ -32,8 +32,8 @@ jobs:
 
       - name: 🐳 Build and start services
         run: |
-          docker-compose build
-          docker-compose up -d
+          docker compose build
+          docker compose up -d
           echo "⏳ Attente du démarrage des services..."
           sleep 45
 
@@ -75,7 +75,7 @@ jobs:
           echo "### 🌿 Branche: ${{ github.ref }}" >> e2e-report.md
           echo "" >> e2e-report.md
           echo "### 🐳 Services Status:" >> e2e-report.md
-          docker-compose ps >> e2e-report.md
+          docker compose ps >> e2e-report.md
           echo "" >> e2e-report.md
           echo "### 🏥 Health Checks:" >> e2e-report.md
           curl -s http://localhost:8000/health || echo "❌ API principale" >> e2e-report.md
@@ -92,7 +92,7 @@ jobs:
       - name: 🐳 Stop services
         if: always()
         run: |
-          docker-compose down
+          docker compose down
           docker system prune -f
 
   # 🧪 Tests de charge simples
@@ -116,7 +116,7 @@ jobs:
 
       - name: 🐳 Start services for load testing
         run: |
-          docker-compose up -d
+          docker compose up -d
           sleep 30
 
       - name: 🚀 Run load tests
@@ -140,4 +140,4 @@ jobs:
       - name: 🐳 Stop services
         if: always()
         run: |
-          docker-compose down
+          docker compose down

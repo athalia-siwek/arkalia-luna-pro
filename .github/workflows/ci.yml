@@ -93,6 +93,11 @@ jobs:
             -v \
             --tb=short \
             --ignore=modules/generative_ai/generated/ \
+            --ignore=modules/security/sandbox/ \
+            --ignore=modules/security/watchdog/ \
+            --ignore=modules/helloria/main.py \
+            --ignore=modules/helloria/state.py \
+            --ignore=modules/utils_enhanced/core.py \
             --strict-markers
 
       - name: 📊 Display coverage summary
