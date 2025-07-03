@@ -82,7 +82,7 @@ jobs:
           name: linting-artifacts
           path: |
             bandit-report.json
-            .ruff_cache/
+          if-no-files-found: warn
 
   # 🧪 Tests unitaires et d'intégration
   test:
@@ -188,6 +188,7 @@ jobs:
             .coverage
             coverage.xml
           retention-days: 30
+          if-no-files-found: warn
 
   # 🔒 Tests de sécurité
   security:
@@ -235,6 +236,7 @@ jobs:
             bandit-report.json
             safety-report.json
           retention-days: 90
+          if-no-files-found: warn
 
   # 🚀 Tests de performance (nightly)
   performance:
@@ -278,6 +280,7 @@ jobs:
             .benchmarks/
             performance-report.json
           retention-days: 30
+          if-no-files-found: warn
 
   # 🌀 Tests de chaos (nightly)
   chaos:
@@ -315,6 +318,7 @@ jobs:
             chaos_reports/
             chaos_metric_*.toml
           retention-days: 30
+          if-no-files-found: warn
 
   # 📊 Rapport final
   report:
@@ -360,6 +364,7 @@ jobs:
           name: ci-report
           path: report.md
           retention-days: 90
+          if-no-files-found: warn
 
       - name: 🚨 Notify on failure
         if: failure()
