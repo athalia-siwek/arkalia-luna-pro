@@ -337,7 +337,6 @@ modules/*/generated/
 .coverage
 coverage.xml
 test-results.xml
-bandit-report.json
 
 # Documentation build
 site/
