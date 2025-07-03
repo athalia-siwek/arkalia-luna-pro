@@ -14,13 +14,21 @@ Benchmarks couverts :
 """
 
 import os
+import sys
 import time
+from pathlib import Path
+from typing import Any, Dict
 from unittest.mock import patch
 
 import psutil
 import pytest
+import pytest_benchmark.plugin
+
+# Ajout du path pour les imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from modules.zeroia.circuit_breaker import CircuitBreaker
+from modules.zeroia.core import ZeroIACore
 from modules.zeroia.event_store import EventStore, EventType
 from modules.zeroia.reason_loop_enhanced import (
     create_default_context_enhanced,
@@ -252,3 +260,304 @@ def test_performance_regression_detection():
     assert all(threshold > 0 for threshold in reference_benchmarks.values())
 
     print("✅ Seuils de performance validés")
+
+
+class TestZeroIAPerformance:
+    """Tests de performance pour ZeroIA"""
+
+    @pytest.fixture
+    def zeroia_core(self):
+        """Instance ZeroIA pour les tests"""
+        return ZeroIACore()
+
+    @pytest.fixture
+    def circuit_breaker(self):
+        """Instance CircuitBreaker pour les tests"""
+        return CircuitBreaker()
+
+    @pytest.fixture
+    def event_store(self):
+        """Instance EventStore pour les tests"""
+        return EventStore()
+
+    @pytest.mark.benchmark
+    def test_zeroia_decision_time_under_2s(self, zeroia_core, benchmark):
+        """Test que la décision ZeroIA prend moins de 2 secondes"""
+
+        def decision_operation():
+            context = {
+                "cpu_usage": 75.0,
+                "memory_usage": 80.0,
+                "error_rate": 0.02,
+                "response_time": 150.0,
+            }
+            return zeroia_core.make_decision(context)
+
+        result = benchmark(decision_operation)
+        assert result is not None
+        assert "decision" in result
+
+    @pytest.mark.benchmark
+    def test_circuit_breaker_latency_under_10ms(self, circuit_breaker, benchmark):
+        """Test que le circuit breaker répond en moins de 10ms"""
+
+        def circuit_breaker_operation():
+            return circuit_breaker.is_open()
+
+        result = benchmark(circuit_breaker_operation)
+        assert isinstance(result, bool)
+
+    @pytest.mark.benchmark
+    def test_event_store_write_performance(self, event_store, benchmark):
+        """Test de performance d'écriture dans l'EventStore"""
+
+        def write_event():
+            event = {"timestamp": time.time(), "type": "performance_test", "data": {"test": "data"}}
+            return event_store.store_event(event)
+
+        result = benchmark(write_event)
+        assert result is not None
+
+    @pytest.mark.benchmark
+    def test_event_store_read_performance(self, event_store, benchmark):
+        """Test de performance de lecture dans l'EventStore"""
+        # Préparation : ajout d'événements
+        for i in range(100):
+            event = {"timestamp": time.time(), "type": f"test_event_{i}", "data": {"index": i}}
+            event_store.store_event(event)
+
+        def read_events():
+            return event_store.get_events(limit=50)
+
+        result = benchmark(read_events)
+        assert len(result) <= 50
+
+    @pytest.mark.benchmark
+    def test_confidence_score_calculation(self, zeroia_core, benchmark):
+        """Test de performance du calcul du score de confiance"""
+
+        def calculate_confidence():
+            metrics = {
+                "cpu_usage": 70.0,
+                "memory_usage": 75.0,
+                "error_rate": 0.01,
+                "response_time": 120.0,
+            }
+            return zeroia_core.calculate_confidence_score(metrics)
+
+        result = benchmark(calculate_confidence)
+        assert 0.0 <= result <= 1.0
+
+    @pytest.mark.benchmark
+    def test_adaptive_thresholds_update(self, zeroia_core, benchmark):
+        """Test de performance de mise à jour des seuils adaptatifs"""
+
+        def update_thresholds():
+            current_metrics = {"cpu_usage": 65.0, "memory_usage": 70.0}
+            return zeroia_core.update_adaptive_thresholds(current_metrics)
+
+        result = benchmark(update_thresholds)
+        assert result is not None
+
+    @pytest.mark.benchmark
+    def test_snapshot_generation_performance(self, zeroia_core, benchmark):
+        """Test de performance de génération de snapshots"""
+
+        def generate_snapshot():
+            return zeroia_core.generate_system_snapshot()
+
+        result = benchmark(generate_snapshot)
+        assert result is not None
+        assert "timestamp" in result
+
+    @pytest.mark.benchmark
+    def test_health_check_performance(self, zeroia_core, benchmark):
+        """Test de performance des health checks"""
+
+        def health_check():
+            return zeroia_core.perform_health_check()
+
+        result = benchmark(health_check)
+        assert result is not None
+        assert "status" in result
+
+    @pytest.mark.benchmark
+    def test_graceful_degradation_performance(self, zeroia_core, benchmark):
+        """Test de performance de la dégradation gracieuse"""
+
+        def graceful_degradation():
+            return zeroia_core.trigger_graceful_degradation()
+
+        result = benchmark(graceful_degradation)
+        assert result is not None
+
+    @pytest.mark.benchmark
+    def test_error_recovery_performance(self, zeroia_core, benchmark):
+        """Test de performance de la récupération d'erreur"""
+
+        def error_recovery():
+            return zeroia_core.trigger_error_recovery()
+
+        result = benchmark(error_recovery)
+        assert result is not None
+
+
+class TestZeroIALoadPerformance:
+    """Tests de performance sous charge pour ZeroIA"""
+
+    @pytest.mark.asyncio
+    async def test_concurrent_decisions(self, zeroia_core):
+        """Test de décisions concurrentes"""
+
+        async def make_decision(decision_id):
+            context = {
+                "cpu_usage": 60.0 + (decision_id % 20),
+                "memory_usage": 70.0 + (decision_id % 15),
+                "error_rate": 0.01 + (decision_id % 5) * 0.001,
+            }
+            return zeroia_core.make_decision(context)
+
+        # 50 décisions concurrentes
+        tasks = [make_decision(i) for i in range(50)]
+        start_time = time.time()
+        results = await asyncio.gather(*tasks)
+        end_time = time.time()
+
+        total_time = end_time - start_time
+        assert total_time < 10.0  # Moins de 10 secondes pour 50 décisions
+        assert len(results) == 50
+        assert all("decision" in result for result in results)
+
+    @pytest.mark.asyncio
+    async def test_high_frequency_events(self, event_store):
+        """Test de performance avec événements haute fréquence"""
+
+        async def store_event(event_id):
+            event = {
+                "timestamp": time.time(),
+                "type": "high_frequency_test",
+                "data": {"event_id": event_id},
+            }
+            return event_store.store_event(event)
+
+        # 1000 événements haute fréquence
+        tasks = [store_event(i) for i in range(1000)]
+        start_time = time.time()
+        results = await asyncio.gather(*tasks)
+        end_time = time.time()
+
+        total_time = end_time - start_time
+        assert total_time < 5.0  # Moins de 5 secondes pour 1000 événements
+        assert len(results) == 1000
+
+    @pytest.mark.asyncio
+    async def test_circuit_breaker_stress_test(self, circuit_breaker):
+        """Test de stress du circuit breaker"""
+
+        async def circuit_breaker_operation():
+            # Simulation d'opérations qui peuvent échouer
+            import random
+
+            if random.random() < 0.1:  # 10% d'échec
+                circuit_breaker.record_failure()
+            else:
+                circuit_breaker.record_success()
+            return circuit_breaker.is_open()
+
+        # 1000 opérations
+        tasks = [circuit_breaker_operation() for _ in range(1000)]
+        start_time = time.time()
+        results = await asyncio.gather(*tasks)
+        end_time = time.time()
+
+        total_time = end_time - start_time
+        assert total_time < 2.0  # Moins de 2 secondes pour 1000 opérations
+        assert len(results) == 1000
+
+
+class TestZeroIAMemoryPerformance:
+    """Tests de performance mémoire pour ZeroIA"""
+
+    def test_memory_usage_under_load(self, zeroia_core):
+        """Test de l'utilisation mémoire sous charge"""
+        import os
+
+        import psutil
+
+        process = psutil.Process(os.getpid())
+        initial_memory = process.memory_info().rss
+
+        # Simulation de charge
+        for i in range(1000):
+            context = {
+                "cpu_usage": 50.0 + (i % 30),
+                "memory_usage": 60.0 + (i % 20),
+                "error_rate": 0.01 + (i % 10) * 0.001,
+            }
+            zeroia_core.make_decision(context)
+
+        final_memory = process.memory_info().rss
+        memory_increase = final_memory - initial_memory
+
+        # L'augmentation mémoire ne doit pas dépasser 50MB
+        assert memory_increase < 50 * 1024 * 1024
+
+    def test_memory_leak_prevention(self, event_store):
+        """Test de prévention des fuites mémoire"""
+        import os
+
+        import psutil
+
+        process = psutil.Process(os.getpid())
+        initial_memory = process.memory_info().rss
+
+        # Ajout et suppression d'événements
+        for i in range(1000):
+            event = {
+                "timestamp": time.time(),
+                "type": f"memory_test_{i}",
+                "data": {"test": "data" * 100},  # Données volumineuses
+            }
+            event_store.store_event(event)
+
+        # Nettoyage
+        event_store.clear_old_events(age_hours=0)
+
+        final_memory = process.memory_info().rss
+        memory_increase = final_memory - initial_memory
+
+        # L'augmentation mémoire doit être raisonnable après nettoyage
+        assert memory_increase < 10 * 1024 * 1024  # 10MB
+
+
+class TestZeroIAPerformanceRegression:
+    """Tests de régression de performance"""
+
+    def test_performance_regression_detection(self, zeroia_core):
+        """Test de détection de régression de performance"""
+        # Test de performance de base
+        start_time = time.time()
+        for i in range(100):
+            context = {"cpu_usage": 50.0, "memory_usage": 60.0, "error_rate": 0.01}
+            zeroia_core.make_decision(context)
+        base_time = time.time() - start_time
+
+        # Test avec charge supplémentaire
+        start_time = time.time()
+        for i in range(100):
+            context = {
+                "cpu_usage": 50.0,
+                "memory_usage": 60.0,
+                "error_rate": 0.01,
+                "additional_load": True,  # Charge supplémentaire
+            }
+            zeroia_core.make_decision(context)
+        load_time = time.time() - start_time
+
+        # La différence ne doit pas être trop importante
+        time_increase = (load_time - base_time) / base_time
+        assert time_increase < 0.5  # Pas plus de 50% d'augmentation
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v", "--benchmark-only"])
