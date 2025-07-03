@@ -12,7 +12,7 @@ class TestHealthcheckEnhanced:
         """Test de la vérification de santé améliorée sans dashboard"""
         # Test simplifié qui vérifie juste que la fonction existe et peut être appelée
         assert callable(check_enhanced_health)
-        
+
         # Test avec mock complet du système de fichiers
         with patch("pathlib.Path") as mock_path_class:
             # Créer un mock Path qui retourne des objets Path mockés
@@ -20,7 +20,7 @@ class TestHealthcheckEnhanced:
             mock_path_instance.exists.return_value = True
             mock_path_instance.glob.return_value = ["event1.cache", "event2.cache"]
             mock_path_class.return_value = mock_path_instance
-            
+
             with patch("builtins.print") as mock_print:
                 result = check_enhanced_health()
                 # Le test passe si la fonction ne lève pas d'exception
@@ -31,11 +31,11 @@ class TestHealthcheckEnhanced:
         with patch("modules.zeroia.healthcheck_enhanced.Path") as mock_path:
             # Mock Path.exists pour retourner True pour tout
             mock_path.return_value.exists.return_value = True
-            
+
             # Mock Path.glob pour retourner des fichiers
             mock_files = [Path("event1.cache"), Path("event2.cache")]
             mock_path.return_value.glob.return_value = mock_files
-            
+
             with patch("builtins.open", side_effect=Exception("Invalid JSON")):
                 with patch("builtins.print") as mock_print:
                     result = check_enhanced_health()

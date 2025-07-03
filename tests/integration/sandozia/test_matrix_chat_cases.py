@@ -34,10 +34,12 @@ def test_debug_routes():
 )
 def test_chat_various_messages(msg):
     """Teste l'endpoint /api/v1/chat avec divers messages."""
-    with patch(
-        "modules.assistantia.core.real_query_ollama", return_value="Réponse simulée pour le test"
-    ), patch(
-        "modules.assistantia.core._check_ollama_health", return_value=True
+    with (
+        patch(
+            "modules.assistantia.core.real_query_ollama",
+            return_value="Réponse simulée pour le test",
+        ),
+        patch("modules.assistantia.core._check_ollama_health", return_value=True),
     ):
         response = client.post("/api/v1/chat", json={"message": msg})
         assert (
