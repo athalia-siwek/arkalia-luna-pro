@@ -51,7 +51,6 @@ COPY --chown=zeroia:zeroia modules/zeroia ./modules/zeroia
 COPY --chown=zeroia:zeroia modules/monitoring ./modules/monitoring
 COPY --chown=zeroia:zeroia modules/utils_enhanced ./modules/utils_enhanced
 COPY --chown=zeroia:zeroia modules/__init__.py ./modules/
-COPY --chown=zeroia:zeroia scripts/demo_orchestrator_enhanced.py ./scripts/
 COPY --chown=zeroia:zeroia config ./config
 COPY --chown=zeroia:zeroia state ./state
 
@@ -64,4 +63,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     state = ZeroiaState(); print('ZeroIA Enhanced OK')" || exit 1
 
 # Point d'entrée optimisé
-CMD ["python", "scripts/demo_orchestrator_enhanced.py", "--mode", "daemon"]
+CMD ["python", "-m", "modules.zeroia.core"]
