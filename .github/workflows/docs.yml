@@ -50,6 +50,7 @@ jobs:
           pip install mkdocs mkdocs-material
           if [ -f "mkdocs.yml" ]; then
             echo "✅ mkdocs.yml trouvé"
+            export PATH="$HOME/.local/bin:$PATH"
             mkdocs build --strict || (echo "❌ mkdocs.yml invalide" && exit 1)
           else
             echo "❌ mkdocs.yml manquant"
