@@ -1,4 +1,4 @@
-# 🟢 ÉTAT SYSTÈME COMPLET - Arkalia-LUNA Pro v2.8.0
+# 📝 RAPPORT SYNTHÈSE FINAL - Arkalia-LUNA Pro v2.8.0
 
 ## 📊 ÉTAT GLOBAL - 27 Janvier 2025 - 18:50
 

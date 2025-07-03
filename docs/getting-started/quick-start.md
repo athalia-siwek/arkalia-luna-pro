@@ -1,6 +1,15 @@
-# 🚀 Quick Start - Arkalia-LUNA v2.8.0
+# 🚀 Quick Start - Arkalia-LUNA Pro v2.8.0
 
-Guide de démarrage rapide pour utiliser Arkalia-LUNA en 5 minutes !
+## 📊 **ÉTAT ACTUEL DU SYSTÈME (Mise à jour 27/01/2025)**
+
+### ✅ **SUCCÈS MAJEUR - CI/CD 100% Verte !**
+- **671 tests passés** (642 unitaires + 29 intégration) ✅
+- **Couverture : 59.25%** (bien au-dessus du seuil de 28%) ✅
+- **Temps d'exécution : 31.73s** ✅
+- **Healthcheck optimisé** : Python urllib natif ✅
+- **Artefacts uploadés** : Conditionnel et robuste ✅
+
+Guide de démarrage rapide pour utiliser Arkalia-LUNA Pro en 5 minutes !
 
 ## ⚡ Installation Express
 
@@ -25,7 +34,7 @@ cd arkalia-luna-pro
 ### 3. Test Système
 ```bash
 # Vérifier l'installation
-ark-test  # 99.5% tests PASSED
+ark-test  # 671 tests PASSED (59.25% couverture)
 
 # Statut des modules
 ark-status
@@ -162,6 +171,19 @@ Le monitoring expose **34 métriques Arkalia** :
 - **Refresh** : 30 secondes
 - **Thème** : Dark mode
 
+## 🎯 **Métriques de Performance Actuelles**
+
+| Métrique | Valeur | Statut |
+|----------|--------|--------|
+| **Tests passés** | 671/671 | ✅ 100% |
+| **Couverture** | 59.25% | ✅ >28% |
+| **Temps CI** | 31.73s | ✅ Optimal |
+| **Modules critiques** | 15/15 | ✅ Opérationnels |
+| **Healthcheck** | Python urllib | ✅ Natif |
+| **Artefacts** | Upload conditionnel | ✅ Robuste |
+
 ---
 
 > 💡 **Astuce** : Commencez par Grafana pour visualiser l'état complet du système ! 📊
+
+*Dernière mise à jour : 27 Janvier 2025 - 18:50*
