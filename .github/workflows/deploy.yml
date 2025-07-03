@@ -95,7 +95,7 @@ jobs:
           - image: zeroia
             dockerfile: Dockerfile.zeroia
           - image: reflexia
-            dockerfile: Dockerfile-reflexia
+            dockerfile: Dockerfile.reflexia
           - image: sandozia
             dockerfile: Dockerfile.sandozia
           - image: assistantia

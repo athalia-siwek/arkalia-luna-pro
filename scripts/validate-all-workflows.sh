@@ -62,7 +62,7 @@ validate_dockerfiles() {
     # Liste des Dockerfiles requis
     dockerfiles=(
         "Dockerfile.zeroia:ZeroIA - Décisionneur Autonome"
-        "Dockerfile-reflexia:ReflexIA - Observateur Cognitif"
+        "Dockerfile.reflexia:ReflexIA - Observateur Cognitif"
         "Dockerfile.sandozia:Sandozia - Intelligence Croisée"
         "Dockerfile.assistantia:AssistantIA - Assistant IA"
         "Dockerfile.cognitive-reactor:Cognitive Reactor - Intelligence Avancée"

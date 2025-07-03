@@ -54,12 +54,15 @@ validate_dockerfile() {
 # Liste des Dockerfiles requis avec descriptions
 declare -A dockerfiles=(
     ["Dockerfile.zeroia"]="ZeroIA - Décisionneur Autonome"
-    ["Dockerfile-reflexia"]="ReflexIA - Observateur Cognitif"
+    ["Dockerfile.reflexia"]="ReflexIA - Observateur Cognitif"
     ["Dockerfile.sandozia"]="Sandozia - Intelligence Croisée"
     ["Dockerfile.assistantia"]="AssistantIA - Assistant IA"
     ["Dockerfile.cognitive-reactor"]="Cognitive Reactor - Intelligence Avancée"
     ["Dockerfile.generative-ai"]="Generative AI - Génération IA"
     ["Dockerfile.master"]="Arkalia Master - Orchestrateur Principal"
+    ["modules/cognitive_reactor/Dockerfile"]="Cognitive Reactor (module)"
+    ["modules/crossmodule_validator/Dockerfile"]="Crossmodule Validator (module)"
+    ["modules/error_recovery/Dockerfile"]="Error Recovery (module)"
 )
 
 # Validation de tous les Dockerfiles

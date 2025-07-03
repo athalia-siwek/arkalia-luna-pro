@@ -102,7 +102,7 @@ services:
     container_name: reflexia
     build:
       context: .
-      dockerfile: Dockerfile-reflexia
+      dockerfile: Dockerfile.reflexia
     ports:
       - "${PORT_REFLEXIA:-8002}:8002"
     command: python run_reflexia_api.py

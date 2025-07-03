@@ -52,7 +52,7 @@ echo "🔍 Validation des Dockerfiles critiques..."
 
 DOCKERFILES=(
     "Dockerfile"
-    "Dockerfile-reflexia"
+    "Dockerfile.reflexia"
     "Dockerfile.zeroia"
     "Dockerfile.assistantia"
     "Dockerfile.sandozia"

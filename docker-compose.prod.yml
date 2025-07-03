@@ -163,7 +163,7 @@ services:
   reflexia_primary:
     build:
       context: .
-      dockerfile: Dockerfile-reflexia
+      dockerfile: Dockerfile.reflexia
     container_name: reflexia_primary
     environment:
       - REFLEXIA_INSTANCE=primary
