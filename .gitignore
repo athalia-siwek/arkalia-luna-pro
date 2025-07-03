@@ -349,3 +349,31 @@ docs/_build/
 .pre-commit-config.yaml.bak
 
 tests/tmp/
+
+# ======================================================
+# 🧠 JSON MASSIFS - Arkalia-LUNA Cognitive System
+# ======================================================
+# Ignorer tous les JSON sauf les configs importantes
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!*.schema.json
+!config/*.json
+!docs/assets/docs/*.json
+
+# Rapports et états générés automatiquement
+logs/**/*.json
+modules/**/state/*.json
+snapshots/
+coverage*.json
+bandit-report.json
+print_audit.json
+demo_sandozia_results.json
+
+# Caches Python spécifiques
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc

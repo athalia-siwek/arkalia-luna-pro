@@ -49,3 +49,15 @@ tests/
 ## 📚 Ressources
 - [Guide de contribution](../docs/credits/CONTRIBUTING.md)
 - [Cahier des charges](../docs/architecture/cahier_des_charges_v4.0.md)
+
+# 🧪 tests/
+
+Ce dossier contient tous les **tests unitaires, d'intégration, de performance et de sécurité** du projet.
+
+- `unit/` : tests unitaires
+- `integration/` : tests d'intégration
+- `performance/` : tests de performance
+- `security/` : tests de sécurité
+- `fixtures/` : fixtures et helpers
+
+**Lancez les tests avec `pytest` ou les scripts fournis.**

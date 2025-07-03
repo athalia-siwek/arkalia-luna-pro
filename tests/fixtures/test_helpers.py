@@ -1,5 +1,6 @@
 # 📄 tests/unit/test_helpers.py
 
+import shutil
 from pathlib import Path
 
 
@@ -37,3 +38,15 @@ goal = "observe"
 context = "reflexia"
 """.strip()
         )
+
+
+def restore_snapshot_if_missing(snapshot_name):
+    """
+    Restaure un snapshot JSON manquant depuis l'archive vers state/sandozia/.
+    """
+    src = Path("archive/json_reports/state/sandozia") / snapshot_name
+    dst = Path("state/sandozia") / snapshot_name
+    if not dst.exists() and src.exists():
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(src, dst)
+        print(f"[pytest] Snapshot restauré : {snapshot_name}")
