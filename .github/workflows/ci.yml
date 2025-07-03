@@ -334,23 +334,25 @@ jobs:
 
       - name: 📊 Generate final report
         run: |
-          echo "## 🚀 Arkalia-LUNA CI/CD Report" > report.md
-          echo "### 📅 Date: $(date)" >> report.md
-          echo "### 🔗 Commit: ${{ github.sha }}" >> report.md
-          echo "### 🌿 Branche: ${{ github.ref }}" >> report.md
-          echo "### 🏃‍♂️ Event: ${{ github.event_name }}" >> report.md
-          echo "" >> report.md
-          echo "### ✅ Tests Status" >> report.md
-          echo "- Unit & Integration: ${{ needs.test.result }}" >> report.md
-          echo "- Security: ${{ needs.security.result }}" >> report.md
-          echo "- Performance: ${{ needs.performance.result }}" >> report.md
-          echo "- Chaos: ${{ needs.chaos.result }}" >> report.md
-          echo "" >> report.md
-          echo "### 📈 Coverage: ${{ env.COVERAGE_MIN }}% minimum" >> report.md
-          echo "### ⏱️ Timeouts: Test=${{ env.TEST_TIMEOUT }}s, Build=${{ env.BUILD_TIMEOUT }}s" >> report.md
-          echo "" >> report.md
-          echo "### 📋 Artifacts Generated" >> report.md
-          ls -la artifacts/ || echo "Aucun artifact trouvé" >> report.md
+          {
+            echo "## 🚀 Arkalia-LUNA CI/CD Report"
+            echo "### 📅 Date: $(date)"
+            echo "### 🔗 Commit: ${{ github.sha }}"
+            echo "### 🌿 Branche: ${{ github.ref }}"
+            echo "### 🏃‍♂️ Event: ${{ github.event_name }}"
+            echo ""
+            echo "### ✅ Tests Status"
+            echo "- Unit & Integration: ${{ needs.test.result }}"
+            echo "- Security: ${{ needs.security.result }}"
+            echo "- Performance: ${{ needs.performance.result }}"
+            echo "- Chaos: ${{ needs.chaos.result }}"
+            echo ""
+            echo "### 📈 Coverage: ${{ env.COVERAGE_MIN }}% minimum"
+            echo "### ⏱️ Timeouts: Test=${{ env.TEST_TIMEOUT }}s, Build=${{ env.BUILD_TIMEOUT }}s"
+            echo ""
+            echo "### 📋 Artifacts Generated"
+            ls -la artifacts/ || echo "Aucun artifact trouvé"
+          } > report.md
 
       - name: 📋 Upload final report
         uses: actions/upload-artifact@v4

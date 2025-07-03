@@ -76,7 +76,13 @@ extra:
 
 # 📊 SEO & Performance
 use_directory_urls: true
-strict: false
+strict: true
+
+# 🚫 Exclusion des fichiers temporaires macOS
+exclude_docs: |
+  .!*
+  .DS_Store
+  Thumbs.db
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -116,6 +122,7 @@ nav:
     - Kernel: fonctionnement/kernel.md
     - Usage: fonctionnement/utilisation.md
     - Decision Flow: architecture/decision_flow.md
+    - Cahier des Charges: architecture/cahier_des_charges_v4.0.md
   - Modules:
     - Overview: modules/index.md
     - Core Modules:
@@ -161,7 +168,6 @@ nav:
   - Releases:
     - v2.8.0: releases/v2.8.0.md
     - All Releases: releases/index.md
-    - Latest Updates: releases/dernieres_updates.md
     - Latest Updates: releases/dernieres_updates.md
   - Planning:
     - Future Improvements: plan-ameliorations-futures.md
