@@ -361,8 +361,8 @@ rate(arkalia_security_events_total[5m])
 
 - [🔗 Endpoints API](endpoints.md)
 - [📖 API Documentation](api.md)
-- [🔧 Configuration](../infrastructure/configuration.md)
-- [📊 Monitoring](../infrastructure/monitoring.md)
+- [🔧 Configuration](../devops/index.md)
+- [📊 Monitoring](../devops/index.md)
 
 ---
 

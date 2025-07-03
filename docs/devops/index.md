@@ -42,7 +42,7 @@ Pratiques de sécurité intégrées dans la chaîne DevOps :
 - Gestion des secrets et certificats
 - Durcissement des conteneurs Docker
 
-### 📊 [Monitoring DevOps](../infrastructure/monitoring.md)
+### 📊 [Monitoring DevOps](../devops/index.md)
 Infrastructure de monitoring complète :
 
 - 34 métriques Arkalia exposées

@@ -124,7 +124,7 @@ nav:
     - Decision Flow: architecture/decision_flow.md
     - Cahier des Charges: architecture/cahier_des_charges_v4.0.md
   - Modules:
-    - Overview: modules/index.md
+    - Overview: modules/zeroia.md
     - Core Modules:
       - ZeroIA: modules/zeroia.md
       - Reflexia: modules/reflexia.md
@@ -135,14 +135,14 @@ nav:
     - Security Modules:
       - Security: security/security.md
     - Monitoring Modules:
-      - Infrastructure Monitoring: infrastructure/monitoring.md
+      - Infrastructure Monitoring: devops/index.md
   - Infrastructure:
-    - Overview: infrastructure/index.md
-    - Configuration: infrastructure/configuration.md
-    - Deployment: infrastructure/deployment.md
-    - Monitoring: infrastructure/monitoring.md
-    - CI/CD: infrastructure/ci-cd.md
-    - Automation: infrastructure/automation.md
+    - Overview: devops/index.md
+    - Configuration: devops/index.md
+    - Deployment: devops/index.md
+    - Monitoring: devops/index.md
+    - CI/CD: devops/index.md
+    - Automation: devops/index.md
   - Security:
     - Overview: security/security.md
     - Architecture: security/architecture.md
