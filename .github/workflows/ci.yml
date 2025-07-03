@@ -1,3 +1,4 @@
+---
 name: 🚀 Arkalia-LUNA CI/CD
 
 on:
@@ -12,58 +13,103 @@ env:
   SECURITY_COVERAGE_MIN: 10
   PERFORMANCE_COVERAGE_MIN: 10
   CHAOS_COVERAGE_MIN: 10
+  # Timeouts pour éviter les jobs bloqués
+  TEST_TIMEOUT: 1800  # 30 minutes
+  BUILD_TIMEOUT: 900  # 15 minutes
+
+# Permissions globales pour éviter les erreurs de sécurité
+permissions:
+  contents: read
+  security-events: write
+  actions: read
 
 jobs:
   # 🔍 Linting et formatage
   lint:
     name: 🔍 Lint & Format
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Pour avoir l'historique complet
 
       - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'  # Cache des dépendances
 
       - name: 📦 Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
+          pip install black isort ruff mypy bandit
 
       - name: 🧹 Clean generated files
         run: |
           find . -name "._*" -delete
           find . -name ".DS_Store" -delete
           find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+          find . -name "*.pyc" -delete
 
       - name: 🎨 Check code formatting
         run: |
-          black --check --diff .
-          isort --check-only --diff .
+          echo "🔍 Vérification formatage avec black..."
+          black --check --diff . || (echo "❌ Formatage incorrect. Exécutez: black ." && exit 1)
+
+          echo "🔍 Vérification imports avec isort..."
+          isort --check-only --diff . || (echo "❌ Imports incorrects. Exécutez: isort ." && exit 1)
 
       - name: 🔍 Run linting
         run: |
-          ruff check . || exit 1
-          mypy modules/ --ignore-missing-imports || true
+          echo "🔍 Linting avec ruff..."
+          ruff check . --output-format=github || exit 1
+
+          echo "🔍 Type checking avec mypy..."
+          mypy modules/ --ignore-missing-imports --no-strict-optional || echo "⚠️ Type checking terminé avec avertissements"
+
+      - name: 🔒 Security scan with bandit
+        run: |
+          echo "🔒 Scan de sécurité avec bandit..."
+          bandit -r modules/ -f json -o bandit-report.json || echo "⚠️ Scan de sécurité terminé avec avertissements"
+
+      - name: 📋 Upload linting artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linting-artifacts
+          path: |
+            bandit-report.json
+            .ruff_cache/
 
   # 🧪 Tests unitaires et d'intégration
   test:
     name: 🧪 Tests Unitaires & Intégration
     runs-on: ubuntu-latest
     needs: lint
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+        os: [ubuntu-latest]
+      fail-fast: false
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
       - name: 📦 Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-xdist pytest-timeout
 
       - name: 🧹 Clean test artifacts
         run: |
@@ -71,17 +117,19 @@ jobs:
           find . -name ".DS_Store" -delete
           find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
           rm -f test-results.xml coverage.xml .coverage
-          rm -rf htmlcov/
+          rm -rf htmlcov/ .pytest_cache/
 
-      - name: 🔍 Verify test file content
+      - name: 🔍 Verify test environment
         run: |
-          echo "🔍 Vérification du contenu du fichier de test..."
-          grep -n "execution_count >= 0" tests/unit/arkalia_master/test_orchestrator_enhanced_v5.py || echo "❌ Assertion execution_count >= 0 non trouvée"
-          grep -n "error_count >= 0" tests/unit/arkalia_master/test_orchestrator_enhanced_v5.py || echo "❌ Assertion error_count >= 0 non trouvée"
-          echo "✅ Vérification terminée"
+          echo "🔍 Vérification de l'environnement de test..."
+          python --version
+          pytest --version
+          echo "📁 Tests disponibles:"
+          find tests/ -name "test_*.py" | wc -l
 
       - name: 🧪 Run unit tests with coverage
         run: |
+          echo "🧪 Exécution des tests unitaires avec couverture..."
           pytest tests/unit/ \
             --cov=modules \
             --cov=scripts \
@@ -90,7 +138,7 @@ jobs:
             --cov-report=term-missing \
             --cov-fail-under=${{ env.COVERAGE_MIN }} \
             --junitxml=test-results.xml \
-            -v \
+            --timeout=300 \
             --tb=short \
             --ignore=modules/generative_ai/generated/ \
             --ignore=modules/security/sandbox/ \
@@ -98,20 +146,24 @@ jobs:
             --ignore=modules/helloria/main.py \
             --ignore=modules/helloria/state.py \
             --ignore=modules/utils_enhanced/core.py \
-            --strict-markers
+            --strict-markers \
+            -v
 
       - name: 📊 Display coverage summary
         run: |
-          echo "=== COUVERTURE DE TESTS ==="
+          echo "=== 📊 COUVERTURE DE TESTS ==="
           coverage report --show-missing
-          echo "=== FICHIERS COUVERTURE ==="
-          ls -la coverage.xml htmlcov/
+          echo "=== 📁 FICHIERS COUVERTURE ==="
+          ls -la coverage.xml htmlcov/ || echo "⚠️ Fichiers de couverture non trouvés"
 
       - name: 🧪 Run integration tests (no coverage check)
         run: |
+          echo "🧪 Exécution des tests d'intégration..."
           pytest -c pytest-integration.ini \
             --junitxml=integration-test-results.xml \
-            --ignore=modules/generative_ai/generated/
+            --ignore=modules/generative_ai/generated/ \
+            --timeout=300 \
+            -v
 
       - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -122,49 +174,67 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: false
           verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: 📋 Upload test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results
+          name: test-results-${{ matrix.os }}-${{ matrix.python-version }}
           path: |
             test-results.xml
+            integration-test-results.xml
             htmlcov/
             .coverage
             coverage.xml
+          retention-days: 30
 
   # 🔒 Tests de sécurité
   security:
     name: 🔒 Tests de Sécurité
     runs-on: ubuntu-latest
     needs: test
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
       - name: 📦 Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install bandit safety
 
       - name: 🔒 Run security tests
         run: |
-          pytest -c pytest-security.ini || echo "Security tests completed with coverage warning"
+          echo "🔒 Exécution des tests de sécurité..."
+          pytest -c pytest-security.ini --timeout=300 || echo "⚠️ Tests de sécurité terminés avec avertissements"
 
       - name: 🔍 Run bandit security scan
         run: |
-          bandit -r modules/ -f json -o bandit-report.json || true
+          echo "🔍 Scan de sécurité avec bandit..."
+          bandit -r modules/ -f json -o bandit-report.json || echo "⚠️ Scan bandit terminé avec avertissements"
+
+      - name: 🔍 Run safety check
+        run: |
+          echo "🔍 Vérification des vulnérabilités des dépendances..."
+          safety check --json --output safety-report.json || echo "⚠️ Safety check terminé avec avertissements"
 
       - name: 📋 Upload security report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-report
-          path: bandit-report.json
+          path: |
+            bandit-report.json
+            safety-report.json
+          retention-days: 90
 
   # 🚀 Tests de performance (nightly)
   performance:
@@ -172,25 +242,42 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
       - name: 📦 Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest-benchmark
 
       - name: 🚀 Run performance tests
         run: |
-          pytest -c pytest-performance.ini || echo "Performance tests completed with coverage warning"
+          echo "🚀 Exécution des tests de performance..."
+          pytest -c pytest-performance.ini --timeout=600 || echo "⚠️ Tests de performance terminés avec avertissements"
 
       - name: 📊 Generate performance report
         run: |
-          python scripts/ark-performance-benchmark.py --report-only || echo "Performance report generation failed"
+          echo "📊 Génération du rapport de performance..."
+          python scripts/ark-performance-benchmark.py --report-only || echo "⚠️ Génération du rapport échouée"
+
+      - name: 📋 Upload performance artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-results
+          path: |
+            .benchmarks/
+            performance-report.json
+          retention-days: 30
 
   # 🌀 Tests de chaos (nightly)
   chaos:
@@ -198,21 +285,36 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
       - name: 📦 Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: 🌀 Run chaos tests
         run: |
-          pytest -c pytest-chaos.ini || echo "Chaos tests completed with coverage warning"
+          echo "🌀 Exécution des tests de chaos..."
+          pytest -c pytest-chaos.ini --timeout=900 || echo "⚠️ Tests de chaos terminés avec avertissements"
+
+      - name: 📋 Upload chaos artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chaos-results
+          path: |
+            chaos_reports/
+            chaos_metric_*.toml
+          retention-days: 30
 
   # 📊 Rapport final
   report:
@@ -220,13 +322,24 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test, security, performance, chaos]
     if: always()
+    timeout-minutes: 10
     steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
       - name: 📋 Download all artifacts
         uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
 
       - name: 📊 Generate final report
         run: |
-          echo "## 🚀 Arkalia-LUNA CI/CD Report" >> report.md
+          echo "## 🚀 Arkalia-LUNA CI/CD Report" > report.md
+          echo "### 📅 Date: $(date)" >> report.md
+          echo "### 🔗 Commit: ${{ github.sha }}" >> report.md
+          echo "### 🌿 Branche: ${{ github.ref }}" >> report.md
+          echo "### 🏃‍♂️ Event: ${{ github.event_name }}" >> report.md
+          echo "" >> report.md
           echo "### ✅ Tests Status" >> report.md
           echo "- Unit & Integration: ${{ needs.test.result }}" >> report.md
           echo "- Security: ${{ needs.security.result }}" >> report.md
@@ -234,9 +347,20 @@ jobs:
           echo "- Chaos: ${{ needs.chaos.result }}" >> report.md
           echo "" >> report.md
           echo "### 📈 Coverage: ${{ env.COVERAGE_MIN }}% minimum" >> report.md
+          echo "### ⏱️ Timeouts: Test=${{ env.TEST_TIMEOUT }}s, Build=${{ env.BUILD_TIMEOUT }}s" >> report.md
+          echo "" >> report.md
+          echo "### 📋 Artifacts Generated" >> report.md
+          ls -la artifacts/ || echo "Aucun artifact trouvé" >> report.md
 
       - name: 📋 Upload final report
         uses: actions/upload-artifact@v4
         with:
           name: ci-report
           path: report.md
+          retention-days: 90
+
+      - name: 🚨 Notify on failure
+        if: failure()
+        run: |
+          echo "❌ CI/CD a échoué sur ${{ github.ref }}"
+          echo "🔗 Voir les détails: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

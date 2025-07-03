@@ -54,9 +54,7 @@ class TestBasicE2E:
         """Test de l'endpoint de décision ZeroIA"""
         try:
             response = requests.post(
-                f"{base_url}/zeroia/decision",
-                json={"context": {"cpu_usage": 50.0}},
-                timeout=10
+                f"{base_url}/zeroia/decision", json={"context": {"cpu_usage": 50.0}}, timeout=10
             )
             assert response.status_code == 200
             data = response.json()
@@ -73,14 +71,14 @@ class TestBasicE2E:
                 ["docker", "ps", "--format", "{{.Names}}"],
                 capture_output=True,
                 text=True,
-                timeout=10
+                timeout=10,
             )
 
             if result.returncode == 0:
-                services = result.stdout.strip().split('\n')
+                services = result.stdout.strip().split("\n")
                 # Vérifier qu'au moins un service est en cours d'exécution
                 assert len(services) > 0
-                assert any('arkalia' in service.lower() for service in services)
+                assert any("arkalia" in service.lower() for service in services)
             else:
                 pytest.skip("Docker non disponible - test ignoré")
         except (subprocess.TimeoutExpired, FileNotFoundError):
@@ -91,7 +89,7 @@ class TestBasicE2E:
         state_files = [
             "state/zeroia_state.toml",
             "state/reflexia_state.toml",
-            "state/arkalia_master_state.toml"
+            "state/arkalia_master_state.toml",
         ]
 
         for state_file in state_files:
@@ -108,11 +106,7 @@ class TestBasicE2E:
 
     def test_config_files_exist(self):
         """Test que les fichiers de configuration existent"""
-        config_files = [
-            "config/arkalia_master_config.toml",
-            "config/settings.toml",
-            "pytest.ini"
-        ]
+        config_files = ["config/arkalia_master_config.toml", "config/settings.toml", "pytest.ini"]
 
         for config_file in config_files:
             if Path(config_file).exists():
@@ -135,7 +129,7 @@ class TestE2EIntegration:
             decision_response = requests.post(
                 f"{base_url}/zeroia/decision",
                 json={"context": {"cpu_usage": 75.0, "memory_usage": 60.0}},
-                timeout=10
+                timeout=10,
             )
             assert decision_response.status_code == 200
 
@@ -152,9 +146,7 @@ class TestE2EIntegration:
         try:
             # Test avec des données invalides
             response = requests.post(
-                f"{base_url}/zeroia/decision",
-                json={"invalid": "data"},
-                timeout=5
+                f"{base_url}/zeroia/decision", json={"invalid": "data"}, timeout=5
             )
             # Le système devrait gérer les données invalides sans planter
             assert response.status_code in [200, 400, 422]
