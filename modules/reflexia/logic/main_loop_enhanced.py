@@ -149,9 +149,7 @@ def generate_recommendations(analysis: dict[str, str], metrics: dict[str, Any]) 
                     f"🔧 Module {module_name}: Fichiers manquants - Vérifier installation"
                 )
             elif status == "error":
-                recommendations.append(
-                    f"❌ Module {module_name}: Erreur de chargement - Redémarrer"
-                )
+                recommendations.append(f"❌ Module {module_name}: Erreur de chargement - Redémarrer")
             elif status == "warning":
                 recommendations.append(f"⚠️ Module {module_name}: État instable - Surveiller")
 

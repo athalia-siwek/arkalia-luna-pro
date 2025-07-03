@@ -58,7 +58,6 @@ class TestGenerativeAI:
             patch("pathlib.Path.exists", return_value=True),
             patch("pathlib.Path.rglob") as mock_rglob,
         ):
-
             # Mock des fichiers de modules
             mock_files = [MagicMock(name="test_module.py"), MagicMock(name="another_module.py")]
             mock_rglob.return_value = mock_files
@@ -303,7 +302,6 @@ class TestGenerativeAIIntegration:
             patch("pathlib.Path.exists", return_value=True),
             patch("pathlib.Path.rglob") as mock_rglob,
         ):
-
             mock_files = [MagicMock(name="zeroia.py"), MagicMock(name="reflexia.py")]
             mock_rglob.return_value = mock_files
 
@@ -334,7 +332,6 @@ class TestGenerativeAIRobustness:
             patch("pathlib.Path.exists", return_value=True),
             patch("pathlib.Path.rglob") as mock_rglob,
         ):
-
             # Création de nombreux fichiers mock
             mock_files = [MagicMock(name=f"module_{i}.py") for i in range(1000)]
             mock_rglob.return_value = mock_files

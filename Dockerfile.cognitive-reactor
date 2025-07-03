@@ -65,4 +65,4 @@ EXPOSE 8003
 ENTRYPOINT ["python", "modules/cognitive_reactor/core.py"]
 
 # === Commande par défaut ===
-CMD ["--mode", "production", "--daemon"] 
+CMD ["--mode", "production", "--daemon"]

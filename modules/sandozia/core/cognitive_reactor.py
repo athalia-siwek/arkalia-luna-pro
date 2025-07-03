@@ -626,6 +626,4 @@ async def run_daemon():
 
 
 if __name__ == "__main__":
-    import asyncio
-
     asyncio.run(run_daemon())

@@ -11,22 +11,22 @@ import time
 from pathlib import Path
 
 # Configuration logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
+
 
 def check_dependencies():
     """Vérification des dépendances critiques"""
     try:
         import fastapi
         import uvicorn
+
         logger.info("✅ FastAPI et Uvicorn disponibles")
         return True
     except ImportError as e:
         logger.error(f"❌ Dépendance manquante: {e}")
         return False
+
 
 def check_modules():
     """Vérification des modules critiques"""
@@ -34,7 +34,7 @@ def check_modules():
         "helloria/core.py",
         "modules/reflexia/core.py",
         "modules/zeroia/core.py",
-        "modules/assistantia/core.py"
+        "modules/assistantia/core.py",
     ]
 
     missing_modules = []
@@ -49,20 +49,16 @@ def check_modules():
     logger.info("✅ Tous les modules critiques présents")
     return True
 
+
 def create_directories():
     """Création des répertoires nécessaires"""
-    directories = [
-        "logs",
-        "state",
-        "cache",
-        "modules/zeroia/state",
-        "modules/assistantia/logs"
-    ]
+    directories = ["logs", "state", "cache", "modules/zeroia/state", "modules/assistantia/logs"]
 
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
 
     logger.info("✅ Répertoires créés")
+
 
 def start_api():
     """Démarrage de l'API avec gestion d'erreurs"""
@@ -92,12 +88,13 @@ def start_api():
             workers=1,
             access_log=True,
             log_level="info",
-            reload=False
+            reload=False,
         )
 
     except Exception as e:
         logger.error(f"❌ Erreur de démarrage: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     start_api()

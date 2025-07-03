@@ -134,8 +134,6 @@ class TestSitemapGenerator(unittest.TestCase):
                         "scripts.sitemap_generator.parse_nav_from_mkdocs",
                         return_value=["path1/", "path2/"],
                     ):
-                        from scripts.sitemap_generator import generate_sitemap
-
                         generate_sitemap()
 
                         # Vérifie que le fichier a été écrit avec le bon contenu

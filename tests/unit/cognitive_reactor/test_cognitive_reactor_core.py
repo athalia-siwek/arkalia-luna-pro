@@ -376,7 +376,6 @@ class TestCognitiveReactorIntegration:
             patch("modules.zeroia.core.ZeroIACore") as mock_zeroia,
             patch("modules.reflexia.core.launch_reflexia_check") as mock_reflexia,
         ):
-
             mock_zeroia_instance = AsyncMock()
             mock_reflexia.return_value = {"status": "healthy", "metrics": {}}
 

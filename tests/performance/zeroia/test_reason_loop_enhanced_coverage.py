@@ -96,9 +96,12 @@ class TestReasonLoopEnhancedFunctions:
 
     def test_initialize_components(self):
         """Test d'initialisation des composants"""
-        circuit_breaker, event_store, error_recovery, graceful_degradation = (
-            initialize_components_with_recovery()
-        )
+        (
+            circuit_breaker,
+            event_store,
+            error_recovery,
+            graceful_degradation,
+        ) = initialize_components_with_recovery()
 
         assert circuit_breaker is not None
         assert event_store is not None

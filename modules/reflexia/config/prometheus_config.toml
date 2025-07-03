@@ -4,4 +4,5 @@ ram_usage = true
 disk_io = true
 
 [alerts]
-cpu > 85 = "ALERT_HIGH_CPU"
+cpu_threshold = 85
+cpu_alert = "ALERT_HIGH_CPU"

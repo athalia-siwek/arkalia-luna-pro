@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+🧠 modules/zeroia/core.py
+ZeroIA Core - Point d'entrée principal du système de raisonnement
+
+Module core simplifié qui délègue aux composants enhanced spécialisés.
+"""
 
 import asyncio
 import json
@@ -23,13 +29,6 @@ from .reason_loop_enhanced import (
 )
 
 print("🚨 DEBUT core.py")
-
-"""
-🧠 modules/zeroia/core.py
-ZeroIA Core - Point d'entrée principal du système de raisonnement
-
-Module core simplifié qui délègue aux composants enhanced spécialisés.
-"""
 
 # Métriques Prometheus locales pour ZeroIA
 zeroia_decisions_total = Counter(

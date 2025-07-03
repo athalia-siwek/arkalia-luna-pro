@@ -46,4 +46,4 @@ COPY scripts/start_generative_ai.sh /start.sh
 RUN chmod +x /start.sh
 
 # === Point d'entrée ===
-ENTRYPOINT ["/start.sh"] 
+ENTRYPOINT ["/start.sh"]

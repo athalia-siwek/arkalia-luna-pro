@@ -13,4 +13,4 @@ COPY modules/crossmodule_validator /app/modules/crossmodule_validator
 EXPOSE 8016
 
 # Commande de démarrage
-CMD ["python", "-m", "modules.crossmodule_validator.core"] 
+CMD ["python", "-m", "modules.crossmodule_validator.core"]

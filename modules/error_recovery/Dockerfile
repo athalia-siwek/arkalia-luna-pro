@@ -13,4 +13,4 @@ COPY modules/error_recovery /app/modules/error_recovery
 EXPOSE 8017
 
 # Commande de démarrage
-CMD ["python", "-m", "modules.error_recovery.core"] 
+CMD ["python", "-m", "modules.error_recovery.core"]

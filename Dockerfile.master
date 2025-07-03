@@ -40,4 +40,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 EXPOSE 8000
 
 # Commande par défaut - Lance le Master Orchestrator Enhanced v5.0.0
-CMD ["python", "modules/arkalia_master/orchestrator_enhanced_v5.py", "--cycles", "1000"] 
+CMD ["python", "modules/arkalia_master/orchestrator_enhanced_v5.py", "--cycles", "1000"]
