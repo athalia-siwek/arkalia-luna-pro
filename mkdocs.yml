@@ -45,7 +45,6 @@ plugins:
   - search:
       lang: fr
       separator: '[\s\-,:!=\[\]()/]+'
-      prebuild_index: true
 
 extra_css:
   - assets/arkalia-luna-theme.css
@@ -90,7 +89,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: !!str fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
       combine_header_slug: true
