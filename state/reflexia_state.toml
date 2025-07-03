@@ -1,7 +1,7 @@
-last_execution = "2025-07-03T13:25:05.949882"
+last_execution = "2025-07-03T13:30:31.874709"
 recent_errors = []
 status = "active"
 
 [decision_metrics]
-confidence = 0.8437107412070592
-accuracy = 0.8882205845373414
+confidence = 0.9477211000023925
+accuracy = 0.9123874953914657

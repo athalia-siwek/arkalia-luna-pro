@@ -1,13 +1,13 @@
 """
-🧪 Test d'intégration minimal pour AssistantIA
+🧪 Test d'intégration minimal pour AssistantIA (fonction process_input)
 """
+
 import pytest
 
-from modules.assistantia.core import AssistantIA
+from modules.assistantia.utils.processing import process_input
 
 
 @pytest.mark.integration
 def test_assistantia_integration_basic():
-    assistant = AssistantIA()
-    response = assistant.process_input({"input": "integration_test"})
-    assert response is not None
+    result = process_input("integration_test")
+    assert result.startswith("Tu as dit :")

@@ -1,6 +1,7 @@
 """
 🧪 Test d'intégration minimal pour CognitiveReactor
 """
+
 import pytest
 
 from modules.cognitive_reactor.core import CognitiveReactor

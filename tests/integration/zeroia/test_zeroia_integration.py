@@ -1,6 +1,7 @@
 """
 🧪 Test d'intégration minimal pour ZeroIA
 """
+
 import pytest
 
 from modules.zeroia.core import ZeroIACore
