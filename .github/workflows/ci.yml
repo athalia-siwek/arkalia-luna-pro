@@ -378,3 +378,116 @@ jobs:
             echo "❌ mkdocs.yml manquant"
             exit 1
           fi
+
+  # 🐳 Build Docker Images
+  build-docker:
+    name: 🐳 Build Docker Images
+    runs-on: ubuntu-latest
+    needs: test
+    timeout-minutes: 20
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      - name: 🐳 Build ZeroIA
+        run: docker build -f Dockerfile.zeroia -t arkalia-zeroia .
+      - name: 🐳 Build ReflexIA
+        run: docker build -f Dockerfile.reflexia -t arkalia-reflexia .
+      - name: 🐳 Build Sandozia
+        run: docker build -f Dockerfile.sandozia -t arkalia-sandozia .
+      - name: 🐳 Build AssistantIA
+        run: docker build -f Dockerfile.assistantia -t arkalia-assistantia .
+      - name: 🐳 Build Cognitive Reactor
+        run: docker build -f Dockerfile.cognitive-reactor -t arkalia-cognitive-reactor .
+      - name: 🐳 Build Generative AI
+        run: docker build -f Dockerfile.generative-ai -t arkalia-generative-ai .
+      - name: 🐳 Build Master
+        run: docker build -f Dockerfile.master -t arkalia-master .
+
+  # 🧪 Tests E2E
+  e2e:
+    name: 🧪 Tests E2E
+    runs-on: ubuntu-latest
+    needs: build-docker
+    timeout-minutes: 20
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+          pip install pytest
+      - name: 🐳 Start services (docker-compose)
+        run: |
+          docker compose up -d
+          sleep 10
+      - name: 🧪 Run E2E tests
+        run: |
+          pytest tests/e2e/ --tb=short -v
+      - name: 🐳 Stop services
+        if: always()
+        run: docker compose down
+
+  # 🚀 Deploy to Staging
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: e2e
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+    timeout-minutes: 15
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      - name: 🐳 Deploy to staging
+        run: |
+          docker compose -f docker-compose.prod.yml up -d
+      - name: 🧹 Clean up
+        if: always()
+        run: docker compose -f docker-compose.prod.yml down
+
+  # 🏥 Health Check
+  health-check:
+    name: 🏥 Health Check
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+    timeout-minutes: 5
+    steps:
+      - name: 🔍 Check API health
+        run: |
+          curl -f http://localhost:8000/health || exit 1
+      - name: 🔍 Check metrics
+        run: |
+          curl -f http://localhost:8000/metrics || exit 1
+      - name: 🔍 Check doc
+        run: |
+          curl -f http://localhost:9000 || exit 1
+
+  # 🚀 Deploy to Production (main uniquement, protégé)
+  deploy-prod:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [e2e, build-docker]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 20
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      - name: 🐳 Deploy to production
+        run: |
+          docker compose -f docker-compose.prod.yml up -d
+      - name: 🏥 Health Check (prod)
+        run: |
+          curl -f http://localhost:8000/health || exit 1
+          curl -f http://localhost:8000/metrics || exit 1
+      - name: 🧹 Clean up
+        if: always()
+        run: docker compose -f docker-compose.prod.yml down
