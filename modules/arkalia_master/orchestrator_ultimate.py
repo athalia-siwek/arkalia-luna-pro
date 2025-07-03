@@ -313,7 +313,9 @@ class ArkaliaOrchestrator:
         success_rate = (success_count / total_modules) * 100 if total_modules > 0 else 0
 
         logger.info("=" * 70)
-        logger.info(f"📊 MODULES INITIALIZED: {success_count}/{total_modules} ({success_rate:.1f}%)")
+        logger.info(
+            f"📊 MODULES INITIALIZED: {success_count}/{total_modules} ({success_rate:.1f}%)"
+        )
         logger.info("=" * 70)
 
         # Mise à jour état global

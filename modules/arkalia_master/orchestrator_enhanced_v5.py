@@ -351,7 +351,9 @@ class ArkaliaOrchestratorEnhanced:
         cycle_start = time.time()
         self.cycle_count += 1
 
-        logger.info(f"🌟 ENHANCED CYCLE #{self.cycle_count} - Mode: {self.current_cycle_mode.value}")
+        logger.info(
+            f"🌟 ENHANCED CYCLE #{self.cycle_count} - Mode: {self.current_cycle_mode.value}"
+        )
 
         cycle_results: dict[str, Any] = {}
         operations_this_cycle = 0
@@ -417,9 +419,7 @@ class ArkaliaOrchestratorEnhanced:
                             self.modules[module_name].status = ModuleStatus.HEALTHY
                             self.modules[module_name].error_count = 0
 
-                    logger.info(
-                        f"🛡️ Modules recovered: {len(recovery_result.get('recovered', []))}"
-                    )
+                    logger.info(f"🛡️ Modules recovered: {len(recovery_result.get('recovered', []))}")
 
             except Exception as e:
                 logger.error(f"❌ Error Recovery error: {e}")

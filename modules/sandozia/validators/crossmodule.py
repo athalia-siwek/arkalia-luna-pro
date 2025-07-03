@@ -381,9 +381,7 @@ class CrossModuleValidator:
             "overall_status": (
                 "healthy"
                 if coherence_score > 0.8
-                else "degraded"
-                if coherence_score > 0.6
-                else "critical"
+                else "degraded" if coherence_score > 0.6 else "critical"
             ),
         }
 
@@ -406,7 +404,9 @@ class CrossModuleValidator:
 
             # Adapter la validation selon les modules actifs
             if active_modules:
-                logger.info(f"🔍 Validating cross-module coherence for: {', '.join(active_modules)}")
+                logger.info(
+                    f"🔍 Validating cross-module coherence for: {', '.join(active_modules)}"
+                )
 
             # Simplifier la réponse pour l'orchestrateur
             return {

@@ -153,9 +153,7 @@ class CircuitBreaker:
         if contradiction_key not in self.contradiction_pairs:
             self.contradiction_pairs.add(contradiction_key)
             self.metrics.total_trips += 1
-            logger.warning(
-                f"⚠️ Circuit ouvert après {len(self.contradiction_pairs)} contradictions"
-            )
+            logger.warning(f"⚠️ Circuit ouvert après {len(self.contradiction_pairs)} contradictions")
             return True
 
         return False
