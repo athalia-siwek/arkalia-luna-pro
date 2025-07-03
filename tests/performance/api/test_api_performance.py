@@ -9,7 +9,7 @@ import asyncio
 import sys
 import time
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 import aiohttp
 import httpx
@@ -269,7 +269,7 @@ class TestAPIMemoryPerformance:
             for _ in range(100):
                 try:
                     requests.get("http://localhost:8000/health", timeout=5)
-                except:
+                except Exception:
                     pass
 
         # Mesure mémoire initiale

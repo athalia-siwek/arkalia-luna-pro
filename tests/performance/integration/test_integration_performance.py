@@ -2,14 +2,14 @@
 """
 🧪 Tests de Performance - Intégration Arkalia-LUNA Pro
 
-Tests de performance d'intégration entre les modules.
+Tests de performance pour l'intégration entre modules.
 """
 
 import asyncio
 import sys
 import time
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 import pytest
 
