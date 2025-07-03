@@ -50,7 +50,6 @@ htmlcov/
 # 📘 MkDocs : site statique généré + fichiers auxiliaires
 # ======================================================
 site/
-docs/releases/dernieres_updates.md
 docs_in_nav.txt
 docs_all.txt
 liens_non_listes.txt
