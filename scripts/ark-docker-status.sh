@@ -42,7 +42,7 @@ echo -e "${GREEN}✅ Docker est disponible${NC}"
 
 # Afficher l'état des conteneurs
 echo -e "${BLUE}📊 État des conteneurs:${NC}"
-docker-compose -f "$COMPOSE_FILE" ps
+docker compose -f "$COMPOSE_FILE" ps
 
 echo -e ""
 echo -e "${BLUE}🔍 Détails des services:${NC}"
@@ -51,7 +51,7 @@ echo -e "${BLUE}🔍 Détails des services:${NC}"
 services=("arkalia-api" "assistantia" "reflexia" "zeroia" "sandozia" "cognitive-reactor")
 
 for service in "${services[@]}"; do
-    if docker-compose -f "$COMPOSE_FILE" ps "$service" | grep -q "Up"; then
+    if docker compose -f "$COMPOSE_FILE" ps "$service" | grep -q "Up"; then
         echo -e "${GREEN}✅ $service: En cours d'exécution${NC}"
     else
         echo -e "${RED}❌ $service: Arrêté${NC}"
@@ -97,5 +97,5 @@ echo -e "${CYAN}==============================================${NC}"
 echo -e "${YELLOW}📋 Commandes utiles:${NC}"
 echo -e "   🚀 Démarrage: ./scripts/ark-docker-start.sh"
 echo -e "   🛑 Arrêt: ./scripts/ark-docker-stop.sh"
-echo -e "   📝 Logs: docker-compose logs -f"
-echo -e "   🔄 Redémarrage: docker-compose restart"
+echo -e "   📝 Logs: docker compose logs -f"
+echo -e "   🔄 Redémarrage: docker compose restart"

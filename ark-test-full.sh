@@ -16,7 +16,7 @@ pytest -c pytest-integration.ini tests/integration
 
 # --- Démarrage de l'API pour les tests E2E ---
 echo "\n🚀 Démarrage de l'API (FastAPI) via Docker Compose..."
-docker-compose up -d arkalia-api
+docker compose up -d arkalia-api
 
 # Attente de disponibilité de l'API
 API_URL="http://localhost:8000/reason"
@@ -34,7 +34,7 @@ pytest tests/e2e
 
 # Arrêt de l'API (optionnel)
 echo "⏹️ Arrêt de l'API (FastAPI)"
-docker-compose stop arkalia-api
+docker compose stop arkalia-api
 
 # Exécution des tests de chaos
 pytest tests/chaos

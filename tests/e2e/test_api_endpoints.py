@@ -20,6 +20,7 @@ import pytest
 def api_client():
     return httpx.AsyncClient(base_url="http://localhost:8000", timeout=30.0)
 
+
 class TestAPIEndpointsE2E:
     """Tests E2E pour les endpoints API"""
 
@@ -253,7 +254,12 @@ class TestAPISecurityE2E:
     async def test_invalid_payload_handling(self, api_client):
         """Test de gestion des payloads invalides"""
         try:
-            invalid_payloads = [None, "invalid_json", {"invalid": "data"}, {"context": "not_a_dict"}]
+            invalid_payloads = [
+                None,
+                "invalid_json",
+                {"invalid": "data"},
+                {"context": "not_a_dict"},
+            ]
 
             for payload in invalid_payloads:
                 response = await api_client.post("/zeroia/decision", json=payload)

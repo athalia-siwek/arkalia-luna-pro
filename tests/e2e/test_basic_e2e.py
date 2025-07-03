@@ -16,6 +16,7 @@ import requests
 def base_url():
     return "http://localhost:8000"
 
+
 class TestBasicE2E:
     """Tests E2E de base"""
 

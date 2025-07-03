@@ -60,12 +60,11 @@ jobs:
           chmod +x scripts/validate-dockerfiles.sh
           ./scripts/validate-dockerfiles.sh
 
-      - name: 🔍 Validate docker-compose
+      - name: 🕵️ Validate docker-compose
         run: |
           echo "🔍 Validation docker-compose.yml..."
           if [ -f "docker-compose.yml" ]; then
             echo "✅ docker-compose.yml trouvé"
-            # Validation syntaxe
             docker compose config --quiet || (echo "❌ docker-compose.yml invalide" && exit 1)
           else
             echo "❌ docker-compose.yml manquant"

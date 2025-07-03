@@ -81,13 +81,13 @@ arkalia-luna-pro/
 ### Commandes Docker
 ```bash
 # Démarrer tous les services
-docker-compose up -d
+docker compose up -d
 
 # Voir les logs
-docker-compose logs -f
+docker compose logs -f
 
 # Arrêter tous les services
-docker-compose down
+docker compose down
 ```
 
 ## 📊 Monitoring

@@ -52,7 +52,7 @@ if ! command -v docker &> /dev/null; then
     error "Docker not found - required for monitoring stack"
 fi
 
-if ! command -v docker-compose &> /dev/null; then
+if ! command -v docker compose &> /dev/null; then
     error "Docker Compose not found - required for monitoring stack"
 fi
 
@@ -148,11 +148,11 @@ EOF
 # Arrêt éventuel de l'ancien stack
 log "🛑 Stopping any existing monitoring stack..."
 cd "$MONITORING_DIR"
-docker-compose -f docker-compose.monitoring.yml down --remove-orphans 2>/dev/null || true
+docker compose -f docker-compose.monitoring.yml down --remove-orphans 2>/dev/null || true
 
 # Démarrage du nouveau stack
 log "🚀 Starting monitoring stack..."
-docker-compose -f docker-compose.monitoring.yml up -d
+docker compose -f docker-compose.monitoring.yml up -d
 
 # Attente démarrage services
 log "⏳ Waiting for services to start..."
@@ -191,7 +191,7 @@ fi
 
 # Affichage des logs en temps réel
 log "📊 Monitoring stack status:"
-docker-compose -f docker-compose.monitoring.yml ps
+docker compose -f docker-compose.monitoring.yml ps
 
 # Informations d'accès
 echo -e "\n${GREEN}🎯 MONITORING ENDPOINTS${NC}"
@@ -213,10 +213,10 @@ echo "5. 📋 Browse logs in Loki datasource"
 
 echo -e "\n${YELLOW}🔧 MANAGEMENT COMMANDS${NC}"
 echo "=================================="
-echo "📊 View logs:       docker-compose -f $COMPOSE_FILE logs -f"
-echo "🛑 Stop stack:      docker-compose -f $COMPOSE_FILE down"
-echo "🔄 Restart stack:   docker-compose -f $COMPOSE_FILE restart"
-echo "📈 Scale Grafana:   docker-compose -f $COMPOSE_FILE up -d --scale grafana=2"
+echo "📊 View logs:       docker compose -f $COMPOSE_FILE logs -f"
+echo "🛑 Stop stack:      docker compose -f $COMPOSE_FILE down"
+echo "🔄 Restart stack:   docker compose -f $COMPOSE_FILE restart"
+echo "📈 Scale Grafana:   docker compose -f $COMPOSE_FILE up -d --scale grafana=2"
 
 # Test final d'intégration
 log "🧪 Running integration tests..."

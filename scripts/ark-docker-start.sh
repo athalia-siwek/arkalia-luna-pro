@@ -78,7 +78,7 @@ echo -e "   🧠 Cognitive: $PORT_COGNITIVE"
 
 # Arrêter les services existants s'ils tournent
 echo -e "${BLUE}🛑 Arrêt des services existants...${NC}"
-docker-compose -f "$COMPOSE_FILE" down --remove-orphans 2>/dev/null || true
+docker compose -f "$COMPOSE_FILE" down --remove-orphans 2>/dev/null || true
 
 # Nettoyer les conteneurs orphelins
 echo -e "${BLUE}🧹 Nettoyage des conteneurs orphelins...${NC}"
@@ -86,11 +86,11 @@ docker container prune -f 2>/dev/null || true
 
 # Construire les images
 echo -e "${BLUE}🔨 Construction des images Docker...${NC}"
-docker-compose -f "$COMPOSE_FILE" build --no-cache
+docker compose -f "$COMPOSE_FILE" build --no-cache
 
 # Démarrer les services
 echo -e "${BLUE}🚀 Démarrage des services Arkalia...${NC}"
-docker-compose -f "$COMPOSE_FILE" up -d
+docker compose -f "$COMPOSE_FILE" up -d
 
 # Attendre que les services démarrent
 echo -e "${YELLOW}⏳ Attente du démarrage des services...${NC}"
@@ -98,7 +98,7 @@ sleep 30
 
 # Vérifier l'état des services
 echo -e "${BLUE}🔍 Vérification de l'état des services...${NC}"
-docker-compose -f "$COMPOSE_FILE" ps
+docker compose -f "$COMPOSE_FILE" ps
 
 # Tests de santé
 echo -e "${BLUE}🏥 Tests de santé des services...${NC}"
@@ -133,9 +133,9 @@ echo -e "   🔁 Reflexia: http://localhost:$PORT_REFLEXIA"
 echo -e "   🧠 Cognitive: http://localhost:$PORT_COGNITIVE"
 echo -e ""
 echo -e "${YELLOW}📋 Commandes utiles:${NC}"
-echo -e "   📊 État des services: docker-compose ps"
-echo -e "   📝 Logs: docker-compose logs -f"
-echo -e "   🛑 Arrêt: docker-compose down"
-echo -e "   🔄 Redémarrage: docker-compose restart"
+echo -e "   📊 État des services: docker compose ps"
+echo -e "   📝 Logs: docker compose logs -f"
+echo -e "   🛑 Arrêt: docker compose down"
+echo -e "   🔄 Redémarrage: docker compose restart"
 echo -e ""
 echo -e "${GREEN}🌟 Arkalia-LUNA Pro est prêt !${NC}"

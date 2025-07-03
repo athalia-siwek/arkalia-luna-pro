@@ -7,7 +7,7 @@
 ark-start-optimized() {
     echo "🚀 Démarrage des conteneurs Arkalia optimisés..."
     ark-clean
-    docker-compose -f docker-compose.simple.yml up -d
+    docker compose -f docker-compose.simple.yml up -d
     sleep 5
     docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep optimized
 }
@@ -15,16 +15,16 @@ ark-start-optimized() {
 # 🛑 Arrêter tous les conteneurs optimisés
 ark-stop-optimized() {
     echo "🛑 Arrêt des conteneurs Arkalia optimisés..."
-    docker-compose -f docker-compose.simple.yml down
+    docker compose -f docker-compose.simple.yml down
 }
 
 # 🔄 Redémarrer avec rebuild complet
 ark-rebuild-optimized() {
     echo "🔄 Reconstruction complète des conteneurs optimisés..."
     ark-clean
-    docker-compose -f docker-compose.simple.yml down
+    docker compose -f docker-compose.simple.yml down
     docker system prune -f
-    docker-compose -f docker-compose.simple.yml up -d --build --force-recreate
+    docker compose -f docker-compose.simple.yml up -d --build --force-recreate
 }
 
 # 📊 Statut détaillé des conteneurs optimisés
@@ -60,7 +60,7 @@ ark-logs-optimized() {
 # 🧠 Démarrer seulement les IA cognitives
 ark-start-cognitive() {
     echo "🧠 Démarrage des modules IA cognitifs..."
-    docker-compose -f docker-compose.simple.yml up -d zeroia sandozia cognitive-reactor
+    docker compose -f docker-compose.simple.yml up -d zeroia sandozia cognitive-reactor
     docker ps --format "table {{.Names}}\t{{.Status}}" | grep -E "(zeroia|sandozia|cognitive)"
 }
 

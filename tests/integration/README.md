@@ -1,15 +1,9 @@
-# 📁 tests/integration — Tests d'intégration
+# Tests d'intégration — Arkalia-LUNA Pro
 
-Ce dossier regroupe les **tests d'intégration** :
-- Vérifient l'interaction entre plusieurs modules, API, ou services
-- Peuvent nécessiter des dépendances externes (DB, API, Docker)
+Ce dossier regroupe tous les tests d'intégration des modules critiques du projet Arkalia-LUNA Pro.
 
-## Conventions
-- Fichiers : `test_*.py`
-- Markers : `@pytest.mark.integration`
-- Utiliser des données de test isolées
+- Chaque sous-dossier correspond à un module.
+- Les tests vérifient l'intégration réelle entre modules, la robustesse et la non-régression.
+- Convention : `test_<module>_integration.py`.
 
-## Bonnes pratiques
-- Nettoyer l'environnement après chaque test
-- Documenter les dépendances nécessaires
-- Utiliser les fixtures partagées
+Respecte la philosophie ultra-pro Arkalia : tests propres, sans print, markers explicites, et couverture réelle.

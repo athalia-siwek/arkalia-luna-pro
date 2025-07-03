@@ -355,7 +355,7 @@ generate_report() {
 
     echo "Prochaines étapes:"
     echo "1. Lancer: python scripts/ark-master-orchestrator.py --mode daemon"
-    echo "2. Ou via Docker: docker-compose -f docker-compose.master.yml up -d"
+    echo "2. Ou via Docker: docker compose -f docker-compose.master.yml up -d"
     echo "3. Monitoring: http://localhost:9091/metrics"
 }
 

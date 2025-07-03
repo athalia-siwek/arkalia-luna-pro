@@ -25,9 +25,9 @@ major:
 
 zeroia:
 	@echo "🔁 [Make] ZeroIA full check"
-	@docker ps -a | grep zeroia
-	@docker inspect zeroia --format="Status: {{.State.Status}} | Restarting: {{.State.Restarting}}"
-	@docker logs zeroia --tail 30
+	@docker compose ps -a | grep zeroia
+	@docker compose inspect zeroia --format="Status: {{.State.Status}} | Restarting: {{.State.Restarting}}"
+	@docker compose logs zeroia --tail 30
 	@ruff modules/zeroia/ --fix
 	@black modules/zeroia/
 	@pytest tests/unit/test_state_writer.py

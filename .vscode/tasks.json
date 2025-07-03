@@ -101,7 +101,7 @@
         {
             "label": "🐳 Docker Compose Up",
             "type": "shell",
-            "command": "docker-compose",
+            "command": "docker compose",
             "args": ["up", "-d"],
             "group": "build",
             "presentation": {
@@ -115,7 +115,7 @@
         {
             "label": "🐳 Docker Compose Down",
             "type": "shell",
-            "command": "docker-compose",
+            "command": "docker compose",
             "args": ["down"],
             "group": "build",
             "presentation": {

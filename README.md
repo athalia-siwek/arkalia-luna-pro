@@ -92,7 +92,7 @@ git clone https://github.com/athalia-siwek/arkalia-luna-pro.git
 cd arkalia-luna-pro
 
 # Démarrer tous les services v2.8.0
-docker-compose up -d
+docker compose up -d
 
 # Vérifier l'état de tous les modules
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
@@ -240,10 +240,10 @@ python scripts/demo_graceful_degradation.py
 ### Déploiement
 ```bash
 # Déploiement local complet
-docker-compose up -d
+docker compose up -d
 
 # Déploiement production
-docker-compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml up -d
 
 # Mise à jour documentation
 mkdocs gh-deploy

@@ -34,8 +34,8 @@ jobs:
       - name: 🐳 Start services for E2E testing
         run: |
           echo "🚀 Démarrage des services pour tests E2E..."
-          docker-compose build --no-cache
-          docker-compose up -d --remove-orphans
+          docker compose build --no-cache
+          docker compose up -d --remove-orphans
           sleep 60
 
       - name: 🏥 Health check before E2E tests
@@ -70,5 +70,5 @@ jobs:
         if: always()
         run: |
           echo "🛑 Arrêt des services..."
-          docker-compose down --remove-orphans
+          docker compose down --remove-orphans
           docker system prune -f

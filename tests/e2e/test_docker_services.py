@@ -21,11 +21,13 @@ import pytest
 def docker_client():
     return docker.from_env()
 
+
 @pytest.fixture(scope="session")
 def services_running():
     # Ici, on suppose que les services sont déjà up via docker-compose
     # On pourrait ajouter un check ici si besoin
     return True
+
 
 class TestDockerServicesE2E:
     """Tests E2E pour les services Docker"""
@@ -173,7 +175,11 @@ class TestDockerSecurityE2E:
         """Test de scan de sécurité basique"""
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.get("http://localhost:8000/admin")
-            assert response.status_code in [401, 403, 404], "Endpoint admin accessible sans authentification"
+            assert response.status_code in [
+                401,
+                403,
+                404,
+            ], "Endpoint admin accessible sans authentification"
 
 
 if __name__ == "__main__":
