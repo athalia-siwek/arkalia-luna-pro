@@ -240,4 +240,13 @@ modules/taskia/
 
 ---
 
+## 📝 Note de migration (juillet 2025)
+
+- Tous les imports relatifs (`from interfaces`, `from formatters`, etc.) ont été remplacés par des imports absolus (`from modules.taskia...`).
+- Cette migration garantit la compatibilité avec les outils de CI/CD, le packaging, et l'importabilité depuis n'importe quel contexte Python.
+- Un test de validation SOLID (`test_taskia_solid.py`) a été ajouté pour vérifier l'intégrité de l'architecture et des dépendances.
+- Résultat : **tous les tests passent, architecture SOLID validée.**
+
+---
+
 *Analyse générée le $(date)* 

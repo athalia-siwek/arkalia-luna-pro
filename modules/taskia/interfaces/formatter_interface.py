@@ -14,30 +14,30 @@ from typing import Dict, Any
 class IFormatter(ABC):
     """
     Interface pour les formateurs de données.
-    
+
     Principe ISP : Interface spécifique pour le formatage
     Principe LSP : Permet la substitution de formateurs
     """
-    
+
     @abstractmethod
     def format(self, data: Dict[str, Any]) -> str:
         """
         Formate les données selon le type de formateur.
-        
+
         Args:
             data: Données à formater
-            
+
         Returns:
             Données formatées sous forme de chaîne
         """
         pass
-    
+
     @abstractmethod
     def get_format_type(self) -> str:
         """
         Retourne le type de formatage supporté.
-        
+
         Returns:
             Type de formatage (ex: 'summary', 'json', 'markdown')
         """
-        pass 
+        pass

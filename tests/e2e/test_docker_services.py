@@ -77,7 +77,7 @@ class TestDockerServicesE2E:
             # Test API principale
             response = await client.get("http://localhost:8000/health")
             assert response.status_code == 200
-            
+
             # Test communication avec assistantia
             try:
                 response = await client.get("http://localhost:8001/api/v1/health")
@@ -95,7 +95,10 @@ class TestDockerServicesE2E:
                 c.restart()
                 time.sleep(5)  # Plus de temps pour le redémarrage
                 c.reload()  # Recharger les infos du conteneur
-                assert c.status in ["running", "created"], f"Container {c.name} n'a pas redémarré correctement"
+                assert c.status in [
+                    "running",
+                    "created",
+                ], f"Container {c.name} n'a pas redémarré correctement"
 
 
 class TestDockerNetworkingE2E:
@@ -108,7 +111,7 @@ class TestDockerNetworkingE2E:
             # Test communication interne via l'API principale
             response = await client.get("http://localhost:8000/health")
             assert response.status_code == 200
-            
+
             # Test communication avec les métriques
             try:
                 response = await client.get("http://localhost:8000/metrics")
@@ -123,7 +126,7 @@ class TestDockerNetworkingE2E:
             # Test port principal
             response = await client.get("http://localhost:8000/health")
             assert response.status_code == 200
-            
+
             # Test port assistantia
             try:
                 response = await client.get("http://localhost:8001/api/v1/health")
@@ -207,10 +210,14 @@ class TestDockerSecurityE2E:
             # Test endpoint admin (doit être protégé)
             try:
                 response = await client.get("http://localhost:8000/admin")
-                assert response.status_code in [401, 403, 404], "Endpoint admin accessible sans authentification"
+                assert response.status_code in [
+                    401,
+                    403,
+                    404,
+                ], "Endpoint admin accessible sans authentification"
             except Exception:
                 pytest.skip("Endpoint admin non accessible - test ignoré")
-            
+
             # Test endpoint de santé (doit être accessible)
             response = await client.get("http://localhost:8000/health")
             assert response.status_code == 200, "Endpoint health doit être accessible"

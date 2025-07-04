@@ -11,11 +11,7 @@ from .task_processor import TaskProcessor
 from .health_checker import HealthChecker
 from .logger_service import LoggerService
 
-__all__ = [
-    "TaskProcessor",
-    "HealthChecker",
-    "LoggerService"
-]
+__all__ = ["TaskProcessor", "HealthChecker", "LoggerService"]
 
 __version__ = "2.0.0"
-__author__ = "Athalia" 
+__author__ = "Athalia"

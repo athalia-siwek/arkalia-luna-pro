@@ -10,10 +10,7 @@
 from .formatter_factory import FormatterFactory
 from .service_factory import ServiceFactory
 
-__all__ = [
-    "FormatterFactory",
-    "ServiceFactory"
-]
+__all__ = ["FormatterFactory", "ServiceFactory"]
 
 __version__ = "2.0.0"
-__author__ = "Athalia" 
+__author__ = "Athalia"
