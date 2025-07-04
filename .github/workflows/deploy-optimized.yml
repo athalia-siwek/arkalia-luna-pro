@@ -306,7 +306,7 @@ jobs:
           echo "- Gestion d'erreurs renforcée" >> deployment-report.md
 
       - name: 📋 Upload deployment report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: deployment-report-optimized
           path: deployment-report.md

@@ -416,7 +416,7 @@ jobs:
           echo "- assistantia: ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/assistantia:${{ github.sha }}" >> deployment-report.md
 
       - name: 📋 Upload deployment report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: deployment-report
           path: deployment-report.md
