@@ -29,10 +29,10 @@ jobs:
       fail-fast: false
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
@@ -126,7 +126,7 @@ jobs:
           docker system prune -f || echo "⚠️ Nettoyage Docker échoué"
 
       - name: 📋 Upload E2E test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: e2e-test-results-${{ matrix.os }}-${{ matrix.python-version }}
@@ -151,10 +151,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
@@ -178,7 +178,7 @@ jobs:
             || echo "⚠️ Tests E2E fallback terminés"
 
       - name: 📋 Upload fallback results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: e2e-fallback-results

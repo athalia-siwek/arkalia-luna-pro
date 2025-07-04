@@ -27,10 +27,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
@@ -102,7 +102,7 @@ jobs:
             dockerfile: Dockerfile.assistantia
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐳 Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -156,10 +156,10 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
@@ -220,7 +220,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐳 Setup Docker
         uses: docker/setup-buildx-action@v3
@@ -281,7 +281,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐳 Setup Docker
         uses: docker/setup-buildx-action@v3
@@ -360,7 +360,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🔄 Execute rollback
         run: |
@@ -394,7 +394,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 📊 Generate deployment report
         run: |
@@ -416,7 +416,7 @@ jobs:
           echo "- assistantia: ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/assistantia:${{ github.sha }}" >> deployment-report.md
 
       - name: 📋 Upload deployment report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: deployment-report
           path: deployment-report.md
