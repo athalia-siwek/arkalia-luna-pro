@@ -1,0 +1,253 @@
+name: 🔒 Security Scan
+
+on:
+  push:
+    branches: [main, dev-migration]
+  pull_request:
+    branches: [main, dev-migration]
+  schedule:
+    # Scan quotidien à 2h du matin
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
+env:
+  PYTHON_VERSION: "3.10"
+  SECURITY_SCAN_TIMEOUT: 600
+
+jobs:
+  security-scan:
+    name: 🔍 Security Vulnerability Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Pour l'historique complet des commits
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 📦 Install security tools
+        run: |
+          pip install --upgrade pip
+          pip install bandit safety pip-audit
+          npm install -g audit
+
+      - name: 🔍 Python Security Scan (Bandit)
+        run: |
+          echo "🔍 Scanning Python code with Bandit..."
+          bandit -r . -f json -o bandit-report.json || true
+          bandit -r . -f txt -o bandit-report.txt || true
+
+          # Vérifier si des vulnérabilités critiques ont été trouvées
+          if [ -f bandit-report.json ]; then
+            CRITICAL_ISSUES=$(python -c "
+            import json
+            with open('bandit-report.json') as f:
+                data = json.load(f)
+            critical = sum(1 for result in data['results'] if result['issue_severity'] == 'HIGH')
+            print(critical)
+            ")
+            if [ "$CRITICAL_ISSUES" -gt 0 ]; then
+              echo "❌ $CRITICAL_ISSUES vulnérabilités critiques détectées"
+              exit 1
+            fi
+          fi
+
+      - name: 🔍 Dependency Security Scan (Safety)
+        run: |
+          echo "🔍 Scanning Python dependencies with Safety..."
+          safety check --json --output safety-report.json || true
+          safety check --output safety-report.txt || true
+
+      - name: 🔍 Dependency Security Scan (pip-audit)
+        run: |
+          echo "🔍 Scanning Python dependencies with pip-audit..."
+          pip-audit --format json --output pip-audit-report.json || true
+          pip-audit --output pip-audit-report.txt || true
+
+      - name: 🔍 Node.js Security Scan
+        if: hashFiles('package.json') != ''
+        run: |
+          echo "🔍 Scanning Node.js dependencies..."
+          npm audit --audit-level=high --json > npm-audit-report.json || true
+          npm audit --audit-level=high > npm-audit-report.txt || true
+
+      - name: 🔍 Docker Security Scan
+        run: |
+          echo "🔍 Scanning Docker images for vulnerabilities..."
+          # Scan des Dockerfiles pour les bonnes pratiques
+          echo "📋 Checking Dockerfile best practices..."
+
+          # Vérifier les images de base
+          grep -r "FROM" . --include="Dockerfile*" | grep -v "python:3.10-slim" | grep -v "node:" || echo "✅ Base images look good"
+
+          # Vérifier les utilisateurs non-root
+          grep -r "USER" . --include="Dockerfile*" || echo "⚠️ Some Dockerfiles might not use non-root users"
+
+      - name: 📊 Upload Security Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            *-report.json
+            *-report.txt
+          retention-days: 30
+
+      - name: 🚨 Security Summary
+        run: |
+          echo "🔒 SECURITY SCAN SUMMARY"
+          echo "========================"
+
+          # Résumé Bandit
+          if [ -f bandit-report.json ]; then
+            echo "📊 Bandit Results:"
+            python -c "
+            import json
+            try:
+                with open('bandit-report.json') as f:
+                    data = json.load(f)
+                issues = len(data.get('results', []))
+                high = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'HIGH')
+                medium = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'MEDIUM')
+                low = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'LOW')
+                print(f'  - Total issues: {issues}')
+                print(f'  - High: {high}, Medium: {medium}, Low: {low}')
+            except:
+                print('  - No issues found or error reading report')
+            "
+          fi
+
+          # Résumé Safety
+          if [ -f safety-report.json ]; then
+            echo "📊 Safety Results:"
+            python -c "
+            import json
+            try:
+                with open('safety-report.json') as f:
+                    data = json.load(f)
+                issues = len(data)
+                print(f'  - Vulnerable packages: {issues}')
+            except:
+                print('  - No vulnerabilities found or error reading report')
+            "
+          fi
+
+          # Résumé pip-audit
+          if [ -f pip-audit-report.json ]; then
+            echo "📊 pip-audit Results:"
+            python -c "
+            import json
+            try:
+                with open('pip-audit-report.json') as f:
+                    data = json.load(f)
+                issues = len(data.get('vulnerabilities', []))
+                print(f'  - Vulnerabilities: {issues}')
+            except:
+                print('  - No vulnerabilities found or error reading report')
+            "
+          fi
+
+      - name: 🎯 Security Score
+        run: |
+          echo "🎯 SECURITY SCORE CALCULATION"
+          echo "============================"
+
+          SCORE=100
+
+          # Décrémenter pour chaque problème
+          if [ -f bandit-report.json ]; then
+            CRITICAL=$(python -c "
+            import json
+            try:
+                with open('bandit-report.json') as f:
+                    data = json.load(f)
+                critical = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'HIGH')
+                print(critical)
+            except:
+                print(0)
+            ")
+            SCORE=$((SCORE - CRITICAL * 10))
+          fi
+
+          if [ -f safety-report.json ]; then
+            VULNS=$(python -c "
+            import json
+            try:
+                with open('safety-report.json') as f:
+                    data = json.load(f)
+                print(len(data))
+            except:
+                print(0)
+            ")
+            SCORE=$((SCORE - VULNS * 5))
+          fi
+
+          # Score minimum de 0
+          if [ $SCORE -lt 0 ]; then
+            SCORE=0
+          fi
+
+          echo "🔒 Security Score: $SCORE/100"
+
+          # Définir le statut selon le score
+          if [ $SCORE -lt 70 ]; then
+            echo "❌ Security score too low ($SCORE/100)"
+            exit 1
+          elif [ $SCORE -lt 90 ]; then
+            echo "⚠️ Security score acceptable but needs improvement ($SCORE/100)"
+          else
+            echo "✅ Excellent security score ($SCORE/100)"
+          fi
+
+  dependency-update-check:
+    name: 📦 Dependency Update Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v5
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 📦 Check Python dependencies
+        run: |
+          pip install pip-check-updates
+          pcu --version
+
+          echo "📋 Checking for outdated Python packages..."
+          pcu --dry-run requirements.txt > dependency-updates.txt || true
+
+          echo "📊 Dependency Update Summary:"
+          cat dependency-updates.txt || echo "No updates available"
+
+      - name: 📦 Check Node.js dependencies
+        if: hashFiles('package.json') != ''
+        run: |
+          echo "📋 Checking for outdated Node.js packages..."
+          npm outdated --json > npm-outdated.json || true
+
+          echo "📊 Node.js Dependency Update Summary:"
+          cat npm-outdated.json || echo "No updates available"
+
+      - name: 📊 Upload Dependency Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-reports
+          path: |
+            dependency-updates.txt
+            npm-outdated.json
+          retention-days: 7

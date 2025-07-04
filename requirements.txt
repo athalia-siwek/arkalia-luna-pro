@@ -5,6 +5,8 @@ asyncio-mqtt>=0.16.0
 # 🔒 Sécurité
 #########################
 bandit>=1.7.0
+safety>=2.3.0
+pip-audit>=2.6.0
 
 #########################
 # 🎨 Formatage & Linting
