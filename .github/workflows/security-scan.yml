@@ -50,13 +50,7 @@ jobs:
 
           # Vérifier si des vulnérabilités critiques ont été trouvées
           if [ -f bandit-report.json ]; then
-            CRITICAL_ISSUES=$(python -c "
-            import json
-            with open('bandit-report.json') as f:
-                data = json.load(f)
-            critical = sum(1 for result in data['results'] if result['issue_severity'] == 'HIGH')
-            print(critical)
-            ")
+            CRITICAL_ISSUES=$(python -c "import json; f=open('bandit-report.json'); data=json.load(f); f.close(); print(sum(1 for result in data['results'] if result['issue_severity']=='HIGH'))")
             if [ "$CRITICAL_ISSUES" -gt 0 ]; then
               echo "❌ $CRITICAL_ISSUES vulnérabilités critiques détectées"
               exit 1
@@ -107,54 +101,17 @@ jobs:
         run: |
           echo "🔒 SECURITY SCAN SUMMARY"
           echo "========================"
-
-          # Résumé Bandit
           if [ -f bandit-report.json ]; then
             echo "📊 Bandit Results:"
-            python -c "
-            import json
-            try:
-                with open('bandit-report.json') as f:
-                    data = json.load(f)
-                issues = len(data.get('results', []))
-                high = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'HIGH')
-                medium = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'MEDIUM')
-                low = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'LOW')
-                print(f'  - Total issues: {issues}')
-                print(f'  - High: {high}, Medium: {medium}, Low: {low}')
-            except:
-                print('  - No issues found or error reading report')
-            "
+            python -c "import json; f=open('bandit-report.json'); data=json.load(f); f.close(); issues=len(data.get('results', [])); high=sum(1 for r in data.get('results', []) if r.get('issue_severity')=='HIGH'); medium=sum(1 for r in data.get('results', []) if r.get('issue_severity')=='MEDIUM'); low=sum(1 for r in data.get('results', []) if r.get('issue_severity')=='LOW'); print('  - Total issues:', issues); print('  - High:', high, 'Medium:', medium, 'Low:', low)"
           fi
-
-          # Résumé Safety
           if [ -f safety-report.json ]; then
             echo "📊 Safety Results:"
-            python -c "
-            import json
-            try:
-                with open('safety-report.json') as f:
-                    data = json.load(f)
-                issues = len(data)
-                print(f'  - Vulnerable packages: {issues}')
-            except:
-                print('  - No vulnerabilities found or error reading report')
-            "
+            python -c "import json; f=open('safety-report.json'); data=json.load(f); f.close(); issues=len(data); print('  - Vulnerable packages:', issues) if issues else print('  - No vulnerabilities found or error reading report')"
           fi
-
-          # Résumé pip-audit
           if [ -f pip-audit-report.json ]; then
             echo "📊 pip-audit Results:"
-            python -c "
-            import json
-            try:
-                with open('pip-audit-report.json') as f:
-                    data = json.load(f)
-                issues = len(data.get('vulnerabilities', []))
-                print(f'  - Vulnerabilities: {issues}')
-            except:
-                print('  - No vulnerabilities found or error reading report')
-            "
+            python -c "import json; f=open('pip-audit-report.json'); data=json.load(f); f.close(); issues=len(data.get('vulnerabilities', [])); print('  - Vulnerabilities:', issues) if issues else print('  - No vulnerabilities found or error reading report')"
           fi
 
       - name: 🎯 Security Score
@@ -166,29 +123,16 @@ jobs:
 
           # Décrémenter pour chaque problème
           if [ -f bandit-report.json ]; then
-            CRITICAL=$(python -c "
-            import json
-            try:
-                with open('bandit-report.json') as f:
-                    data = json.load(f)
-                critical = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'HIGH')
-                print(critical)
-            except:
-                print(0)
-            ")
+            CRITICAL=$(python -c "import json; \
+try: f=open('bandit-report.json'); data=json.load(f); f.close(); print(sum(1 for r in data.get('results', []) if r.get('issue_severity')=='HIGH')) \
+except Exception: print(0)")
             SCORE=$((SCORE - CRITICAL * 10))
           fi
 
           if [ -f safety-report.json ]; then
-            VULNS=$(python -c "
-            import json
-            try:
-                with open('safety-report.json') as f:
-                    data = json.load(f)
-                print(len(data))
-            except:
-                print(0)
-            ")
+            VULNS=$(python -c "import json; \
+try: f=open('safety-report.json'); data=json.load(f); f.close(); print(len(data)) \
+except Exception: print(0)")
             SCORE=$((SCORE - VULNS * 5))
           fi
 
