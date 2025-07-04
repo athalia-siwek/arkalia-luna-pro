@@ -29,7 +29,7 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Pour l'historique complet des commits
+          fetch-depth: 0
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v4
@@ -47,8 +47,6 @@ jobs:
           echo "🔍 Scanning Python code with Bandit..."
           bandit -r . -f json -o bandit-report.json || true
           bandit -r . -f txt -o bandit-report.txt || true
-
-          # Vérifier si des vulnérabilités critiques ont été trouvées
           if [ -f bandit-report.json ]; then
             CRITICAL_ISSUES=$(python -c "import json; f=open('bandit-report.json'); data=json.load(f); f.close(); print(sum(1 for result in data['results'] if result['issue_severity']=='HIGH'))")
             if [ "$CRITICAL_ISSUES" -gt 0 ]; then
@@ -79,13 +77,8 @@ jobs:
       - name: 🔍 Docker Security Scan
         run: |
           echo "🔍 Scanning Docker images for vulnerabilities..."
-          # Scan des Dockerfiles pour les bonnes pratiques
           echo "📋 Checking Dockerfile best practices..."
-
-          # Vérifier les images de base
           grep -r "FROM" . --include="Dockerfile*" | grep -v "python:3.10-slim" | grep -v "node:" || echo "✅ Base images look good"
-
-          # Vérifier les utilisateurs non-root
           grep -r "USER" . --include="Dockerfile*" || echo "⚠️ Some Dockerfiles might not use non-root users"
 
       - name: 📊 Upload Security Reports
@@ -118,32 +111,19 @@ jobs:
         run: |
           echo "🎯 SECURITY SCORE CALCULATION"
           echo "============================"
-
           SCORE=100
-
-          # Décrémenter pour chaque problème
           if [ -f bandit-report.json ]; then
-            CRITICAL=$(python -c "import json; \
-try: f=open('bandit-report.json'); data=json.load(f); f.close(); print(sum(1 for r in data.get('results', []) if r.get('issue_severity')=='HIGH')) \
-except Exception: print(0)")
+            CRITICAL=$(python -c "import json; f=open('bandit-report.json'); data=json.load(f); f.close(); print(sum(1 for r in data.get('results', []) if r.get('issue_severity')=='HIGH'))")
             SCORE=$((SCORE - CRITICAL * 10))
           fi
-
           if [ -f safety-report.json ]; then
-            VULNS=$(python -c "import json; \
-try: f=open('safety-report.json'); data=json.load(f); f.close(); print(len(data)) \
-except Exception: print(0)")
+            VULNS=$(python -c "import json; f=open('safety-report.json'); data=json.load(f); f.close(); print(len(data))")
             SCORE=$((SCORE - VULNS * 5))
           fi
-
-          # Score minimum de 0
           if [ $SCORE -lt 0 ]; then
             SCORE=0
           fi
-
           echo "🔒 Security Score: $SCORE/100"
-
-          # Définir le statut selon le score
           if [ $SCORE -lt 70 ]; then
             echo "❌ Security score too low ($SCORE/100)"
             exit 1
@@ -171,10 +151,8 @@ except Exception: print(0)")
         run: |
           pip install pip-check-updates
           pcu --version
-
           echo "📋 Checking for outdated Python packages..."
           pcu --dry-run requirements.txt > dependency-updates.txt || true
-
           echo "📊 Dependency Update Summary:"
           cat dependency-updates.txt || echo "No updates available"
 
@@ -183,7 +161,6 @@ except Exception: print(0)")
         run: |
           echo "📋 Checking for outdated Node.js packages..."
           npm outdated --json > npm-outdated.json || true
-
           echo "📊 Node.js Dependency Update Summary:"
           cat npm-outdated.json || echo "No updates available"
 
