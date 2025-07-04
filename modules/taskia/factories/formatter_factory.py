@@ -7,12 +7,12 @@
 📅 Created: 2025-01-27
 """
 
-from typing import Dict, Type
-from modules.taskia.interfaces.formatter_interface import IFormatter
-from modules.taskia.formatters.summary_formatter import SummaryFormatter
+
+from modules.taskia.formatters.html_formatter import HtmlFormatter
 from modules.taskia.formatters.json_formatter import JsonFormatter
 from modules.taskia.formatters.markdown_formatter import MarkdownFormatter
-from modules.taskia.formatters.html_formatter import HtmlFormatter
+from modules.taskia.formatters.summary_formatter import SummaryFormatter
+from modules.taskia.interfaces.formatter_interface import IFormatter
 
 
 class FormatterFactory:
@@ -25,7 +25,7 @@ class FormatterFactory:
 
     def __init__(self):
         """Initialise la factory avec les formateurs disponibles."""
-        self._formatters: Dict[str, Type[IFormatter]] = {
+        self._formatters: dict[str, type[IFormatter]] = {
             "summary": SummaryFormatter,
             "json": JsonFormatter,
             "markdown": MarkdownFormatter,
@@ -64,7 +64,7 @@ class FormatterFactory:
         """
         return list(self._formatters.keys())
 
-    def register_formatter(self, format_type: str, formatter_class: Type[IFormatter]) -> None:
+    def register_formatter(self, format_type: str, formatter_class: type[IFormatter]) -> None:
         """
         Enregistre un nouveau formateur.
 

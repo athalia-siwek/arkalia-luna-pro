@@ -7,7 +7,8 @@
 📅 Created: 2025-01-27
 """
 
-from typing import Dict, Any
+from typing import Any
+
 from modules.taskia.interfaces.formatter_interface import IFormatter
 
 
@@ -28,7 +29,7 @@ class MarkdownFormatter(IFormatter):
         """
         self._title = title
 
-    def format(self, data: Dict[str, Any]) -> str:
+    def format(self, data: dict[str, Any]) -> str:
         """
         Formate les données en Markdown.
 
@@ -57,7 +58,7 @@ class MarkdownFormatter(IFormatter):
 
         return "\n".join(markdown_lines)
 
-    def _format_dict(self, data: Dict[str, Any]) -> str:
+    def _format_dict(self, data: dict[str, Any]) -> str:
         """Formate un dictionnaire en Markdown."""
         lines = []
         for k, v in data.items():

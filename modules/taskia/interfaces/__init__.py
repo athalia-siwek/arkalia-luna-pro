@@ -8,8 +8,8 @@
 """
 
 from .formatter_interface import IFormatter
-from .task_processor_interface import ITaskProcessor
 from .health_check_interface import IHealthChecker
+from .task_processor_interface import ITaskProcessor
 
 __all__ = ["IFormatter", "ITaskProcessor", "IHealthChecker"]
 

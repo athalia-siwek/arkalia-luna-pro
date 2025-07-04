@@ -8,9 +8,10 @@
 """
 
 import logging
-from typing import Dict, Any
-from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
+from typing import Any
+
 from modules.taskia.interfaces.formatter_interface import IFormatter
+from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
 
 
 class TaskProcessor(ITaskProcessor):
@@ -32,7 +33,7 @@ class TaskProcessor(ITaskProcessor):
         self._formatter = formatter
         self._logger = logger or logging.getLogger(__name__)
 
-    def process(self, context: Dict[str, Any]) -> str:
+    def process(self, context: dict[str, Any]) -> str:
         """
         Traite le contexte et génère un résultat formaté.
 
@@ -49,7 +50,7 @@ class TaskProcessor(ITaskProcessor):
 
         return self._formatter.format(context)
 
-    def validate_context(self, context: Dict[str, Any]) -> bool:
+    def validate_context(self, context: dict[str, Any]) -> bool:
         """
         Valide le contexte d'entrée.
 

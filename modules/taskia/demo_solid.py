@@ -7,19 +7,19 @@
 📅 Created: 2025-01-27
 """
 
-from typing import Dict, Any
-import sys
 import os
+import sys
+from typing import Any
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from modules.taskia.core_refactored import TaskIACore
-from modules.taskia.factories.service_factory import ServiceFactory
 from modules.taskia.factories.formatter_factory import FormatterFactory
-from modules.taskia.formatters.summary_formatter import SummaryFormatter
+from modules.taskia.factories.service_factory import ServiceFactory
+from modules.taskia.formatters.html_formatter import HtmlFormatter
 from modules.taskia.formatters.json_formatter import JsonFormatter
 from modules.taskia.formatters.markdown_formatter import MarkdownFormatter
-from modules.taskia.formatters.html_formatter import HtmlFormatter
+from modules.taskia.formatters.summary_formatter import SummaryFormatter
 
 
 def demo_solid_principles():
@@ -107,8 +107,10 @@ def demo_solid_principles():
     print("-" * 40)
 
     # Ajout d'un nouveau formateur sans modifier le code existant
-    class CsvFormatter:
-        def format(self, data: Dict[str, Any]) -> str:
+    from modules.taskia.interfaces.formatter_interface import IFormatter
+
+    class CsvFormatter(IFormatter):
+        def format(self, data: dict[str, Any]) -> str:
             lines = [f"{k},{v}" for k, v in data.items()]
             return "\n".join(lines)
 

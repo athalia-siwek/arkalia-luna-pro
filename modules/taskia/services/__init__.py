@@ -7,9 +7,9 @@
 📅 Created: 2025-01-27
 """
 
-from .task_processor import TaskProcessor
 from .health_checker import HealthChecker
 from .logger_service import LoggerService
+from .task_processor import TaskProcessor
 
 __all__ = ["TaskProcessor", "HealthChecker", "LoggerService"]
 

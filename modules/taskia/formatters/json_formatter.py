@@ -8,7 +8,8 @@
 """
 
 import json
-from typing import Dict, Any
+from typing import Any
+
 from modules.taskia.interfaces.formatter_interface import IFormatter
 
 
@@ -31,7 +32,7 @@ class JsonFormatter(IFormatter):
         self._indent = indent
         self._ensure_ascii = ensure_ascii
 
-    def format(self, data: Dict[str, Any]) -> str:
+    def format(self, data: dict[str, Any]) -> str:
         """
         Formate les données en JSON.
 

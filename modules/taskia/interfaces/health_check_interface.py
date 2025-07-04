@@ -8,7 +8,7 @@
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any
+from typing import Any
 
 
 class IHealthChecker(ABC):
@@ -20,7 +20,7 @@ class IHealthChecker(ABC):
     """
 
     @abstractmethod
-    def check_health(self) -> Dict[str, Any]:
+    def check_health(self) -> dict[str, Any]:
         """
         Effectue une vérification de santé.
 

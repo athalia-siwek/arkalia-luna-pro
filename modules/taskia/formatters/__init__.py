@@ -7,10 +7,10 @@
 📅 Created: 2025-01-27
 """
 
-from .summary_formatter import SummaryFormatter
+from .html_formatter import HtmlFormatter
 from .json_formatter import JsonFormatter
 from .markdown_formatter import MarkdownFormatter
-from .html_formatter import HtmlFormatter
+from .summary_formatter import SummaryFormatter
 
 __all__ = ["SummaryFormatter", "JsonFormatter", "MarkdownFormatter", "HtmlFormatter"]
 

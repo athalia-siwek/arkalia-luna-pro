@@ -9,7 +9,8 @@
 
 import logging
 from datetime import datetime
-from typing import Dict, Any
+from typing import Any
+
 from modules.taskia.interfaces.health_check_interface import IHealthChecker
 
 
@@ -33,7 +34,7 @@ class HealthChecker(IHealthChecker):
         self._logger = logger or logging.getLogger(__name__)
         self._status = "operational"
 
-    def check_health(self) -> Dict[str, Any]:
+    def check_health(self) -> dict[str, Any]:
         """
         Effectue une vérification de santé.
 

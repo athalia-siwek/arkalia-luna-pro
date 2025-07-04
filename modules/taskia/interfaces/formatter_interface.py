@@ -8,7 +8,7 @@
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any
+from typing import Any
 
 
 class IFormatter(ABC):
@@ -20,7 +20,7 @@ class IFormatter(ABC):
     """
 
     @abstractmethod
-    def format(self, data: Dict[str, Any]) -> str:
+    def format(self, data: dict[str, Any]) -> str:
         """
         Formate les données selon le type de formateur.
 

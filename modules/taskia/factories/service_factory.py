@@ -9,13 +9,14 @@
 
 import logging
 from typing import Optional
+
+from modules.taskia.factories.formatter_factory import FormatterFactory
 from modules.taskia.interfaces.formatter_interface import IFormatter
-from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
 from modules.taskia.interfaces.health_check_interface import IHealthChecker
-from modules.taskia.services.task_processor import TaskProcessor
+from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
 from modules.taskia.services.health_checker import HealthChecker
 from modules.taskia.services.logger_service import LoggerService
-from modules.taskia.factories.formatter_factory import FormatterFactory
+from modules.taskia.services.task_processor import TaskProcessor
 
 
 class ServiceFactory:
@@ -26,7 +27,7 @@ class ServiceFactory:
     Principe SRP : Responsabilité unique = créer des services
     """
 
-    def __init__(self, formatter_factory: Optional[FormatterFactory] = None):
+    def __init__(self, formatter_factory: FormatterFactory | None = None):
         """
         Initialise la factory de services.
 

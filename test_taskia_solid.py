@@ -7,8 +7,8 @@
 📅 Created: 2025-01-27
 """
 
-import sys
 import os
+import sys
 
 
 def test_solid_refactoring():
@@ -21,25 +21,25 @@ def test_solid_refactoring():
         # Test 1: Import des interfaces
         print("📋 Test 1: Import des interfaces...")
         from modules.taskia.interfaces.formatter_interface import IFormatter
-        from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
         from modules.taskia.interfaces.health_check_interface import IHealthChecker
+        from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
 
         print("✅ Interfaces importées avec succès")
 
         # Test 2: Import des formateurs
         print("📋 Test 2: Import des formateurs...")
-        from modules.taskia.formatters.summary_formatter import SummaryFormatter
+        from modules.taskia.formatters.html_formatter import HtmlFormatter
         from modules.taskia.formatters.json_formatter import JsonFormatter
         from modules.taskia.formatters.markdown_formatter import MarkdownFormatter
-        from modules.taskia.formatters.html_formatter import HtmlFormatter
+        from modules.taskia.formatters.summary_formatter import SummaryFormatter
 
         print("✅ Formateurs importés avec succès")
 
         # Test 3: Import des services
         print("📋 Test 3: Import des services...")
-        from modules.taskia.services.task_processor import TaskProcessor
         from modules.taskia.services.health_checker import HealthChecker
         from modules.taskia.services.logger_service import LoggerService
+        from modules.taskia.services.task_processor import TaskProcessor
 
         print("✅ Services importés avec succès")
 

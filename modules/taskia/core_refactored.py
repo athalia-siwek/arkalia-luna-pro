@@ -7,9 +7,10 @@
 📅 Created: 2025-01-27
 """
 
-from typing import Dict, Any
-from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
+from typing import Any
+
 from modules.taskia.factories.service_factory import ServiceFactory
+from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
 
 
 class TaskIACore:
@@ -44,7 +45,7 @@ class TaskIACore:
         self._logger.info("🌕 Services TaskIA initialisés")
 
     def process_task(
-        self, context: Dict[str, Any], format_type: str = "summary", **formatter_kwargs
+        self, context: dict[str, Any], format_type: str = "summary", **formatter_kwargs
     ) -> str:
         """
         Traite une tâche avec le formatage spécifié.
@@ -70,7 +71,7 @@ class TaskIACore:
             self._logger.error(f"Erreur lors du traitement: {e}")
             raise
 
-    def check_health(self) -> Dict[str, Any]:
+    def check_health(self) -> dict[str, Any]:
         """
         Vérifie la santé du module.
 
@@ -113,7 +114,7 @@ class TaskIACore:
 
 
 # Fonction de compatibilité avec l'ancien code
-def taskia_main(context: Dict[str, Any]) -> str:
+def taskia_main(context: dict[str, Any]) -> str:
     """
     Fonction de compatibilité avec l'ancien code.
 
@@ -128,7 +129,7 @@ def taskia_main(context: Dict[str, Any]) -> str:
 
 
 # Fonction de compatibilité avec l'ancien code
-def format_summary(context: Dict[str, Any]) -> str:
+def format_summary(context: dict[str, Any]) -> str:
     """
     Fonction de compatibilité avec l'ancien code.
 

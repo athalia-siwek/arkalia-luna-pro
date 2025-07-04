@@ -1,5 +1,5 @@
 ---
-name: 🚀 Arkalia-LUNA CI/CD
+name: �� Arkalia-LUNA CI/CD - Enhanced
 
 on:
   push:
@@ -25,11 +25,11 @@ permissions:
   # Réactiver si scan de vulnérabilités ajouté
 
 jobs:
-  # 🔍 Linting et formatage
+  # 🔍 Linting et formatage amélioré
   lint:
-    name: 🔍 Lint & Format
+    name: 🔍 Lint & Format Enhanced
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
-          pip install black isort ruff mypy bandit
+          pip install black isort ruff mypy bandit safety detect-secrets autoflake
 
       - name: 🧹 Clean generated files
         run: |
@@ -54,6 +54,18 @@ jobs:
           find . -name ".DS_Store" -delete
           find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
           find . -name "*.pyc" -delete
+
+      # Nouveau : Vérification des versions
+      - name: 🔍 Check version consistency
+        run: |
+          echo "🔍 Vérification de cohérence des versions..."
+          python scripts/check_versions.py
+
+      # Nouveau : Vérification de la documentation
+      - name: 📚 Check documentation quality
+        run: |
+          echo "📚 Vérification de la qualité de la documentation..."
+          python scripts/check_docs.py || echo "⚠️ Problèmes de documentation détectés"
 
       - name: 🎨 Check code formatting
         run: |
@@ -63,7 +75,7 @@ jobs:
           echo "🔍 Vérification imports avec isort..."
           isort --check-only --diff . || (echo "❌ Imports incorrects. Exécutez: isort ." && exit 1)
 
-      - name: 🔍 Run linting
+      - name: 🔍 Run enhanced linting
         run: |
           echo "🔍 Linting avec ruff..."
           ruff check . --output-format=github || exit 1
@@ -71,23 +83,34 @@ jobs:
           echo "🔍 Type checking avec mypy..."
           mypy modules/ --ignore-missing-imports --no-strict-optional || echo "⚠️ Type checking terminé avec avertissements"
 
-      - name: 🔒 Security scan with bandit
+          echo "🔍 Suppression imports inutilisés avec autoflake..."
+          autoflake --remove-all-unused-imports --remove-unused-variables --in-place --recursive modules/ || echo "⚠️ Autoflake terminé"
+
+      - name: 🔒 Enhanced security scan
         run: |
           echo "🔒 Scan de sécurité avec bandit..."
-          bandit -r modules/ -f json -o bandit-report.json || echo "⚠️ Scan de sécurité terminé avec avertissements"
+          bandit -r modules/ -f json -o bandit-report.json || echo "⚠️ Scan bandit terminé avec avertissements"
 
-      - name: 📋 Upload linting artifacts
+          echo "🔒 Vérification des vulnérabilités avec safety..."
+          safety check --json --output safety-report.json || echo "⚠️ Scan safety terminé avec avertissements"
+
+          echo "🔒 Détection des secrets..."
+          detect-secrets scan --baseline .secrets.baseline || echo "⚠️ Scan secrets terminé"
+
+      - name: 📋 Upload enhanced linting artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: linting-artifacts
+          name: enhanced-linting-artifacts
           path: |
             bandit-report.json
+            safety-report.json
+            .secrets.baseline
           if-no-files-found: warn
 
-  # 🧪 Tests unitaires et d'intégration
+  # 🧪 Tests unitaires et d'intégration améliorés
   test:
-    name: 🧪 Tests Unitaires & Intégration
+    name: 🧪 Tests Unitaires & Intégration Enhanced
     runs-on: ubuntu-latest
     needs: lint
     timeout-minutes: 30
@@ -110,7 +133,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
-          pip install pytest pytest-cov pytest-xdist pytest-timeout
+          pip install pytest pytest-cov pytest-xdist pytest-timeout pytest-asyncio
 
       - name: 🧹 Clean test artifacts
         run: |
@@ -128,9 +151,9 @@ jobs:
           echo "📁 Tests disponibles:"
           find tests/ -name "test_*.py" | wc -l
 
-      - name: 🧪 Run unit tests with coverage
+      - name: 🧪 Run unit tests with enhanced coverage
         run: |
-          echo "🧪 Exécution des tests unitaires avec couverture..."
+          echo "🧪 Exécution des tests unitaires avec couverture améliorée..."
           pytest tests/unit/ \
             --cov=modules \
             --cov=scripts \
@@ -150,9 +173,9 @@ jobs:
             --strict-markers \
             -v
 
-      - name: 📊 Display coverage summary
+      - name: 📊 Display enhanced coverage summary
         run: |
-          echo "=== 📊 COUVERTURE DE TESTS ==="
+          echo "=== 📊 COUVERTURE DE TESTS AMÉLIORÉE ==="
           coverage report --show-missing
           echo "=== 📁 FICHIERS COUVERTURE ==="
           ls -la coverage.xml htmlcov/ || echo "⚠️ Fichiers de couverture non trouvés"
@@ -166,6 +189,15 @@ jobs:
             --timeout=300 \
             -v
 
+      # Nouveau : Tests de performance
+      - name: ⚡ Run performance tests
+        run: |
+          echo "⚡ Exécution des tests de performance..."
+          pytest tests/performance/ \
+            --junitxml=performance-test-results.xml \
+            --timeout=600 \
+            -v || echo "⚠️ Tests de performance terminés avec avertissements"
+
       - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         if: success()
@@ -177,23 +209,24 @@ jobs:
           verbose: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: 📋 Upload test results
+      - name: 📋 Upload enhanced test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results-${{ matrix.os }}-${{ matrix.python-version }}
+          name: enhanced-test-results-${{ matrix.os }}-${{ matrix.python-version }}
           path: |
             test-results.xml
             integration-test-results.xml
+            performance-test-results.xml
             htmlcov/
             .coverage
             coverage.xml
           retention-days: 30
           if-no-files-found: warn
 
-  # 🔒 Tests de sécurité
+  # 🔒 Tests de sécurité améliorés
   security:
-    name: 🔒 Tests de Sécurité
+    name: 🔒 Tests de Sécurité Enhanced
     runs-on: ubuntu-latest
     needs: test
     timeout-minutes: 15
@@ -494,3 +527,23 @@ jobs:
           if [ -f "docker-compose.prod.yml" ]; then
             docker-compose -f docker-compose.prod.yml down || docker compose -f docker-compose.prod.yml down || echo "⚠️ Nettoyage production échoué"
           fi
+
+  # 🔒 Audit de sécurité pip
+  pip_audit:
+    name: "🔒 pip-audit"
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install pip-audit
+      - name: 🔒 pip-audit
+        run: pip-audit

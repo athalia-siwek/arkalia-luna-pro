@@ -7,7 +7,8 @@
 📅 Created: 2025-01-27
 """
 
-from typing import Dict, Any
+from typing import Any
+
 from modules.taskia.interfaces.formatter_interface import IFormatter
 
 
@@ -19,7 +20,7 @@ class SummaryFormatter(IFormatter):
     Principe LSP : Implémente l'interface IFormatter
     """
 
-    def format(self, data: Dict[str, Any]) -> str:
+    def format(self, data: dict[str, Any]) -> str:
         """
         Formate les données en résumé liste.
 
@@ -35,7 +36,7 @@ class SummaryFormatter(IFormatter):
         formatted_lines = []
         for key, value in data.items():
             # Gestion des valeurs complexes
-            if isinstance(value, (dict, list)):
+            if isinstance(value, dict | list):
                 formatted_lines.append(f"- {key}: {str(value)}")
             else:
                 formatted_lines.append(f"- {key}: {value}")

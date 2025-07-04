@@ -63,7 +63,7 @@ class LoggerService:
         """
         self._logger.setLevel(level)
 
-    def log_operation(self, operation: str, details: Optional[str] = None) -> None:
+    def log_operation(self, operation: str, details: str | None = None) -> None:
         """
         Log une opération avec des détails optionnels.
 
@@ -77,7 +77,7 @@ class LoggerService:
 
         self._logger.info(message)
 
-    def log_error(self, error: str, context: Optional[str] = None) -> None:
+    def log_error(self, error: str, context: str | None = None) -> None:
         """
         Log une erreur avec un contexte optionnel.
 

@@ -8,7 +8,7 @@
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any
+from typing import Any
 
 
 class ITaskProcessor(ABC):
@@ -20,7 +20,7 @@ class ITaskProcessor(ABC):
     """
 
     @abstractmethod
-    def process(self, context: Dict[str, Any]) -> str:
+    def process(self, context: dict[str, Any]) -> str:
         """
         Traite le contexte et génère un résultat formaté.
 
@@ -33,7 +33,7 @@ class ITaskProcessor(ABC):
         pass
 
     @abstractmethod
-    def validate_context(self, context: Dict[str, Any]) -> bool:
+    def validate_context(self, context: dict[str, Any]) -> bool:
         """
         Valide le contexte d'entrée.
 

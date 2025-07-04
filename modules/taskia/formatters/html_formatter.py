@@ -7,7 +7,8 @@
 📅 Created: 2025-01-27
 """
 
-from typing import Dict, Any
+from typing import Any
+
 from modules.taskia.interfaces.formatter_interface import IFormatter
 
 
@@ -30,7 +31,7 @@ class HtmlFormatter(IFormatter):
         self._title = title
         self._css_class = css_class
 
-    def format(self, data: Dict[str, Any]) -> str:
+    def format(self, data: dict[str, Any]) -> str:
         """
         Formate les données en HTML.
 
@@ -82,7 +83,7 @@ class HtmlFormatter(IFormatter):
 
         return "\n".join(html_parts)
 
-    def _format_dict_html(self, data: Dict[str, Any]) -> str:
+    def _format_dict_html(self, data: dict[str, Any]) -> str:
         """Formate un dictionnaire en HTML."""
         lines = []
         for k, v in data.items():
