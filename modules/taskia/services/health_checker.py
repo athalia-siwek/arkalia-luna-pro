@@ -10,7 +10,7 @@
 import logging
 from datetime import datetime
 from typing import Dict, Any
-from interfaces import IHealthChecker
+from modules.taskia.interfaces.health_check_interface import IHealthChecker
 
 
 class HealthChecker(IHealthChecker):

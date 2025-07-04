@@ -9,9 +9,13 @@
 
 import logging
 from typing import Optional
-from interfaces import IFormatter, ITaskProcessor, IHealthChecker
-from services import TaskProcessor, HealthChecker, LoggerService
-from formatter_factory import FormatterFactory
+from modules.taskia.interfaces.formatter_interface import IFormatter
+from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
+from modules.taskia.interfaces.health_check_interface import IHealthChecker
+from modules.taskia.services.task_processor import TaskProcessor
+from modules.taskia.services.health_checker import HealthChecker
+from modules.taskia.services.logger_service import LoggerService
+from modules.taskia.factories.formatter_factory import FormatterFactory
 
 
 class ServiceFactory:

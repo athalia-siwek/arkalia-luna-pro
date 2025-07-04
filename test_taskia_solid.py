@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """
-🌕 TaskIA Simple Test
-📝 Test simple du refactoring SOLID
+🌕 TaskIA SOLID Test
+📝 Test du refactoring SOLID depuis la racine
 🔧 Version: 2.0.0
 👤 Author: Athalia
 📅 Created: 2025-01-27
 """
 
+import sys
+import os
+
 def test_solid_refactoring():
     """Test simple du refactoring SOLID."""
     
-    print("🚀 TEST SIMPLE SOLID TASKIA")
+    print("🚀 TEST SOLID TASKIA")
     print("=" * 40)
     
     try:
@@ -38,7 +41,7 @@ def test_solid_refactoring():
         
         # Test 4: Import des factories
         print("📋 Test 4: Import des factories...")
-        from modules.taskia.factories.formatter_factory import FormatterFactory
+        from modules.taskia.factories import FormatterFactory
         print("✅ Factories importées avec succès")
         
         # Test 5: Test de création d'objets
@@ -93,5 +96,4 @@ def test_solid_refactoring():
 
 if __name__ == "__main__":
     success = test_solid_refactoring()
-    import sys
     sys.exit(0 if success else 1) 

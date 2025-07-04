@@ -12,9 +12,13 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from core_refactored import TaskIACore
-from factories import ServiceFactory, FormatterFactory
-from formatters import SummaryFormatter, JsonFormatter, MarkdownFormatter, HtmlFormatter
+from modules.taskia.core_refactored import TaskIACore
+from modules.taskia.factories.service_factory import ServiceFactory
+from modules.taskia.factories.formatter_factory import FormatterFactory
+from modules.taskia.formatters.summary_formatter import SummaryFormatter
+from modules.taskia.formatters.json_formatter import JsonFormatter
+from modules.taskia.formatters.markdown_formatter import MarkdownFormatter
+from modules.taskia.formatters.html_formatter import HtmlFormatter
 
 
 def demo_solid_principles():

@@ -9,7 +9,7 @@
 
 import json
 from typing import Dict, Any
-from interfaces import IFormatter
+from modules.taskia.interfaces.formatter_interface import IFormatter
 
 
 class JsonFormatter(IFormatter):

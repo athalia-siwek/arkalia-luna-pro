@@ -8,13 +8,11 @@
 """
 
 from typing import Dict, Type
-from interfaces import IFormatter
-from formatters import (
-    SummaryFormatter,
-    JsonFormatter,
-    MarkdownFormatter,
-    HtmlFormatter
-)
+from modules.taskia.interfaces.formatter_interface import IFormatter
+from modules.taskia.formatters.summary_formatter import SummaryFormatter
+from modules.taskia.formatters.json_formatter import JsonFormatter
+from modules.taskia.formatters.markdown_formatter import MarkdownFormatter
+from modules.taskia.formatters.html_formatter import HtmlFormatter
 
 
 class FormatterFactory:

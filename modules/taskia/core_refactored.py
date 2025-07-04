@@ -8,8 +8,8 @@
 """
 
 from typing import Dict, Any
-from interfaces import ITaskProcessor
-from factories import ServiceFactory
+from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
+from modules.taskia.factories.service_factory import ServiceFactory
 
 
 class TaskIACore:

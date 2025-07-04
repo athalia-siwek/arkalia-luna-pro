@@ -9,7 +9,8 @@
 
 import logging
 from typing import Dict, Any
-from interfaces import ITaskProcessor, IFormatter
+from modules.taskia.interfaces.task_processor_interface import ITaskProcessor
+from modules.taskia.interfaces.formatter_interface import IFormatter
 
 
 class TaskProcessor(ITaskProcessor):
