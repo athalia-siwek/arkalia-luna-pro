@@ -63,12 +63,6 @@ repos:
       - id: safety
         args: [--json, --output, safety-report.json]
 
-  - repo: https://github.com/apache/skywalking-eyes
-    rev: v0.5.0
-    hooks:
-      - id: license-eye
-        args: [header, fix]
-
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.4.0
     hooks:
