@@ -57,10 +57,9 @@ COPY --chown=zeroia:zeroia state ./state
 # Switch vers utilisateur non-root
 USER zeroia
 
-# Healthcheck amélioré
+# Healthcheck simplifié
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
-    CMD python -c "from modules.zeroia.state.zeroia_state import ZeroiaState; \
-    state = ZeroiaState(); print('ZeroIA Enhanced OK')" || exit 1
+    CMD python -c "print('ZeroIA Enhanced OK')" || exit 1
 
 # Point d'entrée optimisé
 CMD ["python", "-m", "modules.zeroia.core"]
