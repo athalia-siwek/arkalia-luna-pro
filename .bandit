@@ -5,17 +5,5 @@
 # Répertoires à exclure
 exclude_dirs = tests,htmlcov,.pytest_cache,node_modules,site,docs
 
-# Niveau de confiance minimum
-confidence = HIGH
-
-# Niveau de gravité minimum
-severity = LOW
-
-# Nombre de lignes de contexte
-lines = 5
-
-# Format de sortie
-output_format = json
-
 # Fichiers à ignorer
 skips = B101
