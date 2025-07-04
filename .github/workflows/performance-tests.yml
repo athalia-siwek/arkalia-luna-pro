@@ -3,21 +3,22 @@ name: 🚀 Tests de Performance
 
 on:
   push:
-    branches: [ main, dev-migration ]
+    branches: [main, dev-migration]
   pull_request:
-    branches: [ main, dev-migration ]
+    branches: [main, dev-migration]
   schedule:
     # Tests de performance quotidiens à 2h du matin
-    - cron: '0 2 * * *'
+    - cron: "0 2 * * *"
 
 env:
   PYTHON_VERSION: "3.10"
-  PERFORMANCE_TIMEOUT: 1800  # 30 minutes
+  PERFORMANCE_TIMEOUT: 1800 # 30 minutes
 
 # Permissions pour éviter les erreurs de sécurité
 permissions:
   contents: read
   actions: read
+  # Permissions minimales pour les tests de performance
 
 jobs:
   # 🚀 Tests de performance complets
@@ -32,13 +33,13 @@ jobs:
       fail-fast: false
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍 Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: 📦 Install dependencies
         run: |
@@ -129,13 +130,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: 📦 Install dependencies
         run: |

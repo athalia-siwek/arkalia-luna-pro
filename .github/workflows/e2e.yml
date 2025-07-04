@@ -1,15 +1,21 @@
 ---
-name: 🧪 Tests E2E
+name: 🧪 Tests End-to-End (E2E)
 
 on:
   push:
-    branches: [ main, develop, dev-migration, refonte-stable ]
+    branches: [main, dev-migration]
   pull_request:
-    branches: [ main, develop, dev-migration, refonte-stable ]
+    branches: [main, dev-migration]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  # Permissions minimales pour les tests E2E
 
 env:
   PYTHON_VERSION: "3.10"
-  TEST_TIMEOUT: 1800  # 30 minutes
+  TEST_TIMEOUT: 1800 # 30 minutes
 
 jobs:
   e2e-tests:
@@ -23,13 +29,13 @@ jobs:
       fail-fast: false
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍 Setup Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: 📦 Install dependencies
         run: |
@@ -145,13 +151,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: 📦 Install dependencies
         run: |

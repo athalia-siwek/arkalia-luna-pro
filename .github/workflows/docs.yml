@@ -8,7 +8,7 @@ on:
     branches: [main, develop, dev-migration, refonte-stable]
 
 permissions:
-  contents: write  # ⬅️ Autorise le push sur gh-pages via le GITHUB_TOKEN
+  contents: write # ⬅️ Autorise le push sur gh-pages via le GITHUB_TOKEN
   pages: write
   id-token: write
 
@@ -23,13 +23,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 📥 Checkout du dépôt
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: 📦 Installer les dépendances
         run: |
@@ -102,13 +102,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: 📥 Checkout du dépôt
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: 📦 Installer les dépendances
         run: |
@@ -167,13 +167,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 📥 Checkout du dépôt
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: 📦 Installer les dépendances
         run: |
@@ -240,7 +240,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: 📥 Checkout du dépôt
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 📊 Generate documentation report
         run: |
