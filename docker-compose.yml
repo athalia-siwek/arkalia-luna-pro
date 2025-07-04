@@ -135,7 +135,7 @@ services:
       context: .
       dockerfile: Dockerfile.zeroia
     image: arkalia-luna-zeroia:optimized
-    command: python scripts/demo_orchestrator_enhanced.py --mode daemon
+    command: python -m modules.zeroia.orchestrator_enhanced --mode daemon
     environment:
       - ZEROIA_ENV=development
       - ZEROIA_HOLD_LOOP=false
@@ -170,7 +170,7 @@ services:
       context: .
       dockerfile: Dockerfile.sandozia
     image: arkalia-luna-sandozia:optimized
-    command: python scripts/demo_sandozia.py --daemon
+    command: python -m modules.sandozia.core.sandozia_core --start
     environment:
       - SANDOZIA_ENV=development
       - SANDOZIA_MONITORING_ENABLED=true

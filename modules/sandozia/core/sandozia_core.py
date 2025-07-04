@@ -469,10 +469,22 @@ class SandoziaCore:
 
 
 # === Métriques Prometheus pour Sandozia ===
-sandozia_uptime = Gauge("sandozia_uptime_seconds", "Temps de fonctionnement de Sandozia (secondes)")
-sandozia_coherence_score = Gauge(
-    "sandozia_coherence_score", "Score de cohérence inter-modules Sandozia"
-)
+# Gestion simple des métriques avec try/except pour éviter les doublons
+try:
+    sandozia_uptime = Gauge(
+        "sandozia_uptime_seconds", "Temps de fonctionnement de Sandozia (secondes)"
+    )
+    sandozia_coherence_score = Gauge(
+        "sandozia_coherence_score", "Score de cohérence inter-modules Sandozia"
+    )
+except ValueError:
+    # Les métriques existent déjà, on crée des objets mock pour éviter les erreurs
+    class MockGauge:
+        def set(self, value):
+            pass
+
+    sandozia_uptime = MockGauge()
+    sandozia_coherence_score = MockGauge()
 
 # === FastAPI app ===
 app = FastAPI()
