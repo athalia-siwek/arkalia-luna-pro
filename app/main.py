@@ -60,9 +60,9 @@ app = FastAPI(
 # Configuration CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "http://localhost:8000", "http://127.0.0.1:3000", "http://127.0.0.1:8000"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -70,12 +70,12 @@ app.add_middleware(
 # Middleware pour les métriques
 @app.middleware("http")
 async def metrics_middleware(request: Request, call_next):
-    start_time = time.time()
+    request_start_time = time.time()
 
     response = await call_next(request)
 
     # Calculer la durée
-    duration = time.time() - start_time
+    duration = time.time() - request_start_time
 
     # Incrémenter les compteurs
     metrics.arkalia_requests_total.labels(
