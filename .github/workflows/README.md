@@ -14,23 +14,39 @@
 - **Jobs** : Validation pré-déploiement, build images Docker, tests E2E
 - **Statut** : **Workflow principal pour déploiement**
 
-### 3. **`e2e.yml`** - Tests End-to-End
-- **But** : Tests E2E complets (build, up, healthcheck, tests)
-- **Déclencheurs** : `push`, `pull_request` sur branches principales
-- **Jobs** : Build, up, healthcheck, pytest e2e + intégration, artefacts
-- **Statut** : **Workflow principal pour tests E2E**
+### 3. **`security-scan.yml`** - Scan de Sécurité
+- **But** : Scan de sécurité avancé (Bandit, Safety, pip-audit, npm audit)
+- **Déclencheurs** : `push`, `pull_request`, `schedule` (cron quotidien)
+- **Jobs** : Security scan, dependency update check, artefacts
+- **Statut** : **Workflow spécialisé pour sécurité**
 
 ### 4. **`performance-tests.yml`** - Tests de Performance
 - **But** : Tests de performance (ZeroIA, API, intégration)
 - **Déclencheurs** : `push`, `pull_request`, `schedule` (cron quotidien)
 - **Jobs** : Benchmarks, artefacts, rapport de performance
-- **Statut** : **Workflow principal pour performance**
+- **Statut** : **Workflow spécialisé pour performance**
 
 ### 5. **`docs.yml`** - Documentation
 - **But** : Build, validation, et déploiement de la documentation
 - **Déclencheurs** : `push`, `pull_request` sur branches principales
 - **Jobs** : Validation, build, artefacts, déploiement GitHub Pages
-- **Statut** : **Workflow principal pour documentation**
+- **Statut** : **Workflow spécialisé pour documentation**
+
+---
+
+## 🧹 **Optimisation Récente (Janvier 2025)**
+
+### **Suppression des Doublons**
+- ❌ **`arkalia-ci-cd.yml`** supprimé (doublon avec `ci.yml` et `deploy.yml`)
+- ✅ **Structure simplifiée** : 5 workflows essentiels au lieu de 6
+- ✅ **Élimination de la redondance** dans les tests et scans
+
+### **Architecture Optimisée**
+- **`ci.yml`** : CI/CD principale (tests, lint, sécurité basique)
+- **`deploy.yml`** : Déploiement (build Docker, E2E)
+- **`security-scan.yml`** : Sécurité avancée (spécialisé)
+- **`performance-tests.yml`** : Performance (spécialisé)
+- **`docs.yml`** : Documentation (spécialisé)
 
 ---
 
