@@ -3,7 +3,7 @@ Validateurs étendus pour Arkalia-LUNA
 """
 
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 
 def validate_config(config: dict[str, Any]) -> list[str]:

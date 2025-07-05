@@ -106,7 +106,6 @@ jobs:
             bandit-report.json
             safety-report.json
             .secrets.baseline
-          if-no-files-found: ignore
 
   # 🧪 Tests unitaires et d'intégration améliorés
   test:
@@ -222,7 +221,6 @@ jobs:
             .coverage
             coverage.xml
           retention-days: 30
-          if-no-files-found: ignore
 
   # 🔒 Tests de sécurité améliorés
   security:
@@ -270,7 +268,6 @@ jobs:
             bandit-report.json
             safety-report.json
           retention-days: 90
-          if-no-files-found: ignore
 
   # 🌀 Tests de chaos (nightly)
   chaos:
