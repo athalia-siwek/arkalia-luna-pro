@@ -23,7 +23,6 @@ from typing import Any, Optional
 
 import toml
 
-from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
 from modules.zeroia.circuit_breaker import (  # noqa: F401
     CircuitBreaker,
     CognitiveOverloadError,
@@ -947,6 +946,14 @@ class ReasonLoopEnhanced:
             except Exception as e:
                 logger.error(f"🚨 Erreur dans la boucle: {e}")
                 time.sleep(10)
+
+
+def should_lower_cpu_threshold() -> bool:
+    """
+    Détermine si le seuil CPU doit être abaissé (logique simple, à adapter selon besoins).
+    Ici, on retourne False par défaut (comportement safe).
+    """
+    return False
 
 
 if __name__ == "__main__":
