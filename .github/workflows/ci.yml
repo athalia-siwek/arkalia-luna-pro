@@ -70,15 +70,15 @@ jobs:
       - name: 🎨 Check code formatting
         run: |
           echo "🔍 Vérification formatage avec black..."
-          black --check --diff . || (echo "❌ Formatage incorrect. Exécutez: black ." && exit 1)
+          black --check --diff . --exclude archive/ || (echo "❌ Formatage incorrect. Exécutez: black ." && exit 1)
 
           echo "🔍 Vérification imports avec isort..."
-          isort --check-only --diff . || (echo "❌ Imports incorrects. Exécutez: isort ." && exit 1)
+          isort --check-only --diff . --skip archive/ || (echo "❌ Imports incorrects. Exécutez: isort ." && exit 1)
 
       - name: 🔍 Run enhanced linting
         run: |
           echo "🔍 Linting avec ruff..."
-          ruff check . --output-format=github || exit 1
+          ruff check . --output-format=github --exclude archive/ || exit 1
 
           echo "🔍 Type checking avec mypy..."
           mypy modules/ --ignore-missing-imports --no-strict-optional || echo "⚠️ Type checking terminé avec avertissements"
@@ -89,7 +89,7 @@ jobs:
       - name: 🔒 Enhanced security scan
         run: |
           echo "🔒 Scan de sécurité avec bandit..."
-          bandit -r modules/ -f json -o bandit-report.json || echo "⚠️ Scan bandit terminé avec avertissements"
+          bandit -r modules/ -f json -o bandit-report.json --exclude archive/ || echo "⚠️ Scan bandit terminé avec avertissements"
 
           echo "🔒 Vérification des vulnérabilités avec safety..."
           safety check --json --output safety-report.json || echo "⚠️ Scan safety terminé avec avertissements"

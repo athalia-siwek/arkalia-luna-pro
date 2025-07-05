@@ -51,7 +51,7 @@ dev = [
 [tool.ruff]
 target-version = "py310"
 line-length = 100
-exclude = ["node_modules/*"]
+exclude = ["node_modules/*", "archive/*"]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "C4", "UP"]
@@ -88,6 +88,7 @@ extend-exclude = '''
   | state
   | htmlcov
   | benchmark_results
+  | archive
 )/
 '''
 
@@ -102,7 +103,8 @@ skip_glob = [
     "*/logs/*",
     "*/state/*",
     "*/htmlcov/*",
-    "*/benchmark_results/*"
+    "*/benchmark_results/*",
+    "*/archive/*"
 ]
 
 [tool.coverage.run]

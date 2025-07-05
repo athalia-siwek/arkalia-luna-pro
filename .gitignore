@@ -75,6 +75,11 @@ state/zeroia_dashboard.json
 modules/zeroia/state/zeroia_*.toml
 
 # ======================================================
+# 📁 Dossier archive (usage personnel, exclu de CI/CD)
+# ======================================================
+archive/
+
+# ======================================================
 # 💻 macOS / fichiers systèmes cachés
 # ======================================================
 .DS_Store
