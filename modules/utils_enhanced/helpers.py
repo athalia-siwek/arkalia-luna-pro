@@ -10,7 +10,7 @@ from typing import Any, Optional
 logger = logging.getLogger(__name__)
 
 
-def safe_json_load(file_path: Path) -> dict[str, Any] | None:
+def safe_json_load(file_path: Path) -> Any:
     """Charge un fichier JSON de manière sécurisée."""
     try:
         with open(file_path, encoding="utf-8") as f:
