@@ -48,7 +48,7 @@ repos:
     rev: v1.16.1
     hooks:
       - id: mypy
-        additional_dependencies: [types-requests]
+        additional_dependencies: [types-requests, types-PyYAML]
         args: [--ignore-missing-imports]
         exclude: ^archive/
 
@@ -71,14 +71,14 @@ repos:
 
       - id: version-check
         name: Version consistency check
-        entry: python scripts/check_versions.py
+        entry: python3 scripts/check_versions.py
         language: system
         files: "version.toml|pyproject.toml|requirements.txt"
         pass_filenames: false
 
       - id: docs-check
         name: Documentation check
-        entry: python scripts/check_docs.py
+        entry: python3 scripts/check_docs.py
         language: system
         files: "^modules/.*\\.py$"
         exclude: ^archive/
