@@ -1,8 +1,10 @@
-# 📁 tests/e2e — Tests End-to-End (E2E)
+# Tests End-to-End (E2E)
 
-Ce dossier contient les **tests bout-en-bout** (E2E) :
-- Scénarios complets API + DB + mémoire
-- Validation du parcours utilisateur ou de l'intégration système
+Ce dossier contient les tests bout-en-bout simulant des scénarios réels d’utilisation.
+
+- **But** : Valider le fonctionnement global de la plateforme (API, UI, flux utilisateur).
+- **Organisation** : Un fichier par scénario E2E.
+- **Exécution** : `pytest tests/e2e/`
 
 ## Règles
 - Utiliser des données de test isolées

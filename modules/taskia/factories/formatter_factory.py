@@ -7,7 +7,6 @@
 📅 Created: 2025-01-27
 """
 
-
 from modules.taskia.formatters.html_formatter import HtmlFormatter
 from modules.taskia.formatters.json_formatter import JsonFormatter
 from modules.taskia.formatters.markdown_formatter import MarkdownFormatter

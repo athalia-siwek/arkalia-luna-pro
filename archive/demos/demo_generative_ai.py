@@ -6,11 +6,11 @@
 Script de démonstration pour tester les capacités d'auto-génération de code.
 """
 
-import argparse
-import asyncio
-import pathlib
-import subprocess
-import sys
+# import argparse
+# import asyncio
+# import pathlib
+# import subprocess
+# import sys
 from pathlib import Path
 
 # Ajouter le répertoire modules au path

@@ -15,13 +15,13 @@ Utilisation :
 python scripts/demo_sandozia.py --full-demo
 """
 
-import asyncio
-import json
-import logging
-import random
-import subprocess
-import sys
-import time
+# import asyncio
+# import json
+# import logging
+# import random
+# import subprocess
+# import sys
+# import time
 from pathlib import Path
 
 # Ajouter le path des modules

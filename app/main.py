@@ -1,20 +1,14 @@
 import logging
 import time
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from datetime import datetime
+from typing import Union
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, PlainTextResponse
-from prometheus_client import (
-    CONTENT_TYPE_LATEST,
-    REGISTRY,
-    Counter,
-    Gauge,
-    Histogram,
-    Summary,
-    generate_latest,
-)
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from modules.assistantia.core import router as assistantia_router
 from modules.monitoring.prometheus_metrics import ArkaliaMetrics
@@ -25,7 +19,7 @@ from modules.zeroia.core import router as zeroia_router
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Instance globale des métriques
+# Instance globale des métriques avec registre unique
 metrics = ArkaliaMetrics()
 
 # Variables globales pour le suivi
@@ -33,7 +27,7 @@ start_time = time.time()
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Gestion du cycle de vie de l'application"""
     logger.info("🚀 Démarrage Arkalia-LUNA API")
 
@@ -56,19 +50,20 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Configuration CORS
+# Configuration CORS corrigée
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Permettre toutes les origines pour les tests
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
 # Middleware pour les métriques
 @app.middleware("http")
-async def metrics_middleware(request: Request, call_next):
+async def metrics_middleware(request: Request, call_next) -> PlainTextResponse:
     start_time = time.time()
 
     response = await call_next(request)
@@ -78,7 +73,7 @@ async def metrics_middleware(request: Request, call_next):
 
     # Incrémenter les compteurs
     metrics.arkalia_requests_total.labels(
-        method=request.method, endpoint=request.url.path, status=response.status_code
+        method=request.method, endpoint=request.url.path, status=str(response.status_code)
     ).inc()
 
     # Enregistrer la durée
@@ -90,7 +85,7 @@ async def metrics_middleware(request: Request, call_next):
 
 
 @app.get("/")
-async def root():
+async def root() -> dict:
     """Endpoint racine"""
     return {
         "message": "🌕 Arkalia-LUNA Pro API",
@@ -103,13 +98,13 @@ async def root():
 
 
 @app.get("/health")
-async def health():
+async def health() -> dict:
     """Health check"""
     return {"status": "ok", "service": "arkalia-api"}
 
 
 @app.get("/status")
-async def get_status():
+async def get_status() -> dict:
     """Statut détaillé de l'API"""
     import psutil
 
@@ -148,8 +143,8 @@ async def get_metrics():
         cpu_percent = psutil.cpu_percent(interval=0.1)
         metrics.arkalia_cpu_usage.set(cpu_percent)
 
-        # Générer le format Prometheus
-        prometheus_data = generate_latest()
+        # Générer le format Prometheus avec le registre unique
+        prometheus_data = generate_latest(metrics.get_registry())
 
         return PlainTextResponse(content=prometheus_data, media_type=CONTENT_TYPE_LATEST)
     except Exception as e:

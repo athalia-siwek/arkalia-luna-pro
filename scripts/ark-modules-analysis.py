@@ -221,15 +221,15 @@ class ArkaliaModulesAnalyzer:
             print("\n# === INITIALISATION DANS initialize_modules() ===")
             for item in high_priority:
                 component_name = item["component"].split(".")[-1]
-                print(f'# {item["module"].upper()} - {item["type"]}')
+                print(f"# {item['module'].upper()} - {item['type']}")
                 print(f'if "{item["module"]}" in self.config.enabled_modules:')
                 print("    try:")
-                print(f'        {item["module"]}_component = {component_name}()')
+                print(f"        {item['module']}_component = {component_name}()")
                 print(
                     f'        initialization_results["{item["module"]}_'
                     f'{component_name.lower()}"] = '
                     f'ModuleWrapper("{item["module"]}_{component_name.lower()}", '
-                    f'{item["module"]}_component)'
+                    f"{item['module']}_component)"
                 )
                 print(
                     f'        initialization_results["{item["module"]}_'

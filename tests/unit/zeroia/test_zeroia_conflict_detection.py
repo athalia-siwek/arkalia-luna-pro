@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from modules.zeroia.reason_loop import check_for_ia_conflict
-from tests.fixtures.test_helpers import ensure_test_toml
+from tests.fixtures.__test_helpers import ensure_test_toml
 
 # Setup TOML minimal au cas où certains tests accèdent aux chemins globaux
 ensure_test_toml()

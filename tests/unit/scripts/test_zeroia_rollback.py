@@ -1,18 +1,20 @@
+import os
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
 import pytest
+import toml
 
-from scripts import zeroia_rollback
+from scripts import _zeroia_rollback as zeroia_rollback
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 
 # 📁 Setup de répertoires temporaires pour simuler l'état ZeroIA
 @pytest.fixture
-def temp_env(monkeypatch) -> None:
+def temp_env(monkeypatch):
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp_path = Path(tmpdir)
 
@@ -84,20 +86,33 @@ def test_rollback_failure(monkeypatch) -> None:
     zeroia_rollback.rollback_from_backup()
 
 
-def test_zeroia_rollback_script_runs():
-    """Teste que le script zeroia_rollback s'exécute sans erreur"""
+def test_zeroia_rollback_script_runs(tmp_path: Path) -> None:
+    """Test que le script de rollback s'exécute correctement."""
+
+    # Créer un état de test
+    state_dir = Path("data/zeroia")
+    state_dir.mkdir(parents=True, exist_ok=True)
+
+    test_state = {
+        "status": {"active": True, "last_check": "2024-03-20T12:00:00", "decision": "continue"},
+        "metrics": {"cpu_usage": 45.2, "memory_usage": 68.7, "response_time": 0.123},
+    }
+
+    state_file = state_dir / "state.toml"
+    with open(state_file, "w", encoding="utf-8") as f:
+        toml.dump(test_state, f)
+
+    # Exécuter le script avec --force
     result = subprocess.run(
-        ["python", "scripts/zeroia_rollback.py", "--silent"],
+        ["python", "scripts/zeroia_rollback.py", "--force", "--silent"],
         capture_output=True,
         text=True,
-        cwd=PROJECT_ROOT,
     )
 
-    # Vérifie que le script s'exécute sans erreur
+    # Vérifier que le script s'est exécuté avec succès
     assert result.returncode == 0, f"Script a échoué avec code {result.returncode}"
 
-    # Vérifie que la sortie contient les messages attendus ou est vide (mode silent)
-    output = result.stdout
-    if output:  # Si il y a une sortie
-        assert "🗄️" in output or "✅" in output or "❌" in output
-    # Si pas de sortie, c'est normal en mode silent
+    # Vérifier qu'un backup a été créé
+    backup_dir = Path("data/backups")
+    assert backup_dir.exists(), "Le répertoire de backup n'a pas été créé"
+    assert any(backup_dir.iterdir()), "Aucun fichier de backup n'a été créé"

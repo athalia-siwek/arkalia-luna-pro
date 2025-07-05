@@ -11,12 +11,13 @@ import sys
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 
 class StructureAnalyzer:
     def __init__(self, root_path: str = "."):
         self.root_path = Path(root_path)
-        self.analysis = {
+        self.analysis: dict[str, Any] = {
             "summary": {},
             "files_by_type": defaultdict(list),
             "files_by_size": defaultdict(list),
@@ -157,11 +158,11 @@ class StructureAnalyzer:
 
         return duplicates
 
-    def analyze_structure(self) -> dict:
+    def analyze_structure(self) -> dict[str, Any]:
         """Analyse complète de la structure"""
         print("🔍 Analyse de la structure en cours...")
 
-        all_files = []
+        all_files: list[dict[str, Any]] = []
         total_size = 0
         file_count = 0
 
@@ -230,7 +231,7 @@ class StructureAnalyzer:
 
     def _identify_potential_issues(self):
         """Identifie les problèmes potentiels"""
-        issues = []
+        issues: list[dict] = []
 
         # Fichiers volumineux
         large_files = [f for f in self.analysis["large_files"] if f["size_mb"] > 5]
@@ -281,19 +282,19 @@ class StructureAnalyzer:
 
         report = f"""# 📊 RAPPORT D'ANALYSE DE STRUCTURE - Arkalia Luna Pro
 
-**Date d'analyse :** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+**Date d'analyse :** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 **Racine analysée :** {self.root_path.absolute()}
 
 ## 📈 RÉSUMÉ GLOBAL
 
-- **Total fichiers :** {analysis['summary']['total_files']}
-- **Taille totale :** {analysis['summary']['total_size_mb']} MB
-- **Fichiers Python :** {analysis['summary']['python_modules']}
-- **Scripts :** {analysis['summary']['scripts']}
-- **Tests :** {analysis['summary']['test_files']}
-- **Configuration :** {analysis['summary']['config_files']}
-- **Documentation :** {analysis['summary']['documentation_files']}
-- **Docker :** {analysis['summary']['docker_files']}
+- **Total fichiers :** {analysis["summary"]["total_files"]}
+- **Taille totale :** {analysis["summary"]["total_size_mb"]} MB
+- **Fichiers Python :** {analysis["summary"]["python_modules"]}
+- **Scripts :** {analysis["summary"]["scripts"]}
+- **Tests :** {analysis["summary"]["test_files"]}
+- **Configuration :** {analysis["summary"]["config_files"]}
+- **Documentation :** {analysis["summary"]["documentation_files"]}
+- **Docker :** {analysis["summary"]["docker_files"]}
 
 ## ⚠️ PROBLÈMES POTENTIELS
 

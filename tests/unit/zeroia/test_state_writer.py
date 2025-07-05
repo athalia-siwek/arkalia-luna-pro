@@ -2,6 +2,7 @@ import json
 import os
 import time
 from pathlib import Path
+from typing import Any
 
 import toml
 
@@ -15,12 +16,12 @@ TMP_TOML = "tests/tmp/test_state.toml"
 TMP_JSON = "tests/tmp/test_dashboard.json"
 
 
-def read_toml(path) -> None:
+def read_toml(path: str) -> dict[str, Any]:
     with open(path, encoding="utf-8") as f:
         return toml.load(f)
 
 
-def read_json(path) -> None:
+def read_json(path: str) -> dict[str, Any]:
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 

@@ -19,4 +19,4 @@ if [ ! -f "$SOURCE" ]; then
 fi
 
 cp "$SOURCE" "$CIBLE/"
-echo "✅ $FICHIER restauré dans $CIBLE/" 
+echo "✅ $FICHIER restauré dans $CIBLE/"

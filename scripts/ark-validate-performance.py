@@ -26,11 +26,16 @@ def validate_imports() -> bool:
 
     try:
         # Vérifier que les imports globaux ont fonctionné
-        assert "create_default_context_enhanced" in globals()
-        assert "CircuitBreaker" in globals()
-        assert "EventStore" in globals()
-        assert "EventType" in globals()
-        assert "psutil" in globals()
+        if "create_default_context_enhanced" not in globals():
+            raise ImportError("create_default_context_enhanced not imported")
+        if "CircuitBreaker" not in globals():
+            raise ImportError("CircuitBreaker not imported")
+        if "EventStore" not in globals():
+            raise ImportError("EventStore not imported")
+        if "EventType" not in globals():
+            raise ImportError("EventType not imported")
+        if "psutil" not in globals():
+            raise ImportError("psutil not imported")
         print("✅ Tous les imports OK")
         return True
 
@@ -80,8 +85,10 @@ def validate_event_store_performance() -> bool:
 
             # Vérifier récupération
             event = event_store.get_event(event_id)
-            assert event is not None
-            assert event.data["decision"] == "test"
+            if event is None:
+                raise ValueError("Event not found")
+            if event.data["decision"] != "test":
+                raise ValueError("Event data mismatch")
 
             print(f"✅ EventStore: {duration:.3f}s pour ajout + récupération")
             return duration < 0.1  # Doit être < 100ms
@@ -108,9 +115,12 @@ def validate_context_creation() -> bool:
         print(f"✅ Contexte créé en {duration:.3f}s")
 
         # Vérifier structure
-        assert "system_status" in context
-        assert "active_modules" in context
-        assert "status" in context
+        if "system_status" not in context:
+            raise ValueError("system_status missing from context")
+        if "active_modules" not in context:
+            raise ValueError("active_modules missing from context")
+        if "status" not in context:
+            raise ValueError("status missing from context")
 
         return duration < 0.05  # Doit être < 50ms
 

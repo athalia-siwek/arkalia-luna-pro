@@ -5,12 +5,12 @@ Démontre l'intégration complète du système Error Recovery
 dans la boucle de raisonnement ZeroIA Enhanced.
 """
 
-import asyncio
-import logging
-import pathlib
-import subprocess
-import sys
-import time
+# import asyncio
+# import logging
+# import pathlib
+# import subprocess
+# import sys
+# import time
 from pathlib import Path
 
 # Ajout du chemin modules

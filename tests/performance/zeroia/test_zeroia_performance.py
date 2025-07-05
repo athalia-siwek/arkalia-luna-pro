@@ -177,7 +177,7 @@ def test_circuit_breaker_latency_under_10ms(performance_metrics):
     )
 
     print(f"✅ Circuit Breaker - Latence moyenne : {avg_latency_ms:.2f}ms")
-    print(f"📊 Min: {min_latency*1000:.2f}ms | Max: {max_latency_ms:.2f}ms")
+    print(f"📊 Min: {min_latency * 1000:.2f}ms | Max: {max_latency_ms:.2f}ms")
 
 
 @pytest.mark.performance

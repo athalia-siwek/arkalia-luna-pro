@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BehaviorPattern:
-    """Pattern comportemental détecté"""
+    """Pattern de comportement détecté"""
 
     pattern_type: str
     severity: str  # "low", "medium", "high", "critical"
@@ -44,6 +44,11 @@ class BehaviorPattern:
     metadata: dict[str, Any]
 
     def to_dict(self) -> dict:
+        """
+        Fonction to_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         return {
             "pattern_type": self.pattern_type,
             "severity": self.severity,
@@ -69,6 +74,11 @@ class BehaviorAnalyzer:
     """
 
     def __init__(self, config: dict | None = None) -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.config = config or {
             "window_size_minutes": 60,
             "anomaly_threshold": 2.0,  # Écarts-types
@@ -105,7 +115,6 @@ class BehaviorAnalyzer:
             self._update_baseline_stats(key)
 
     def add_decision_event(self, module_name: str, decision_data: dict):
-        """Ajoute un événement de décision pour analyse"""
         decision_event = {
             "module": module_name,
             "timestamp": datetime.now(),
@@ -114,7 +123,6 @@ class BehaviorAnalyzer:
         self.decision_history.append(decision_event)
 
     def _update_baseline_stats(self, metric_key: str):
-        """Met à jour les statistiques de base pour une métrique"""
         samples = self.metrics_buffer[metric_key]
         values = [s["value"] for s in samples]
 
@@ -130,7 +138,6 @@ class BehaviorAnalyzer:
             }
 
     def detect_statistical_anomalies(self) -> list[BehaviorPattern]:
-        """Détecte des anomalies statistiques dans les métriques"""
         patterns: list[Any] = []
         now = datetime.now()
         threshold = self.config["anomaly_threshold"]
@@ -188,7 +195,6 @@ class BehaviorAnalyzer:
         return patterns
 
     def detect_performance_regression(self) -> list[BehaviorPattern]:
-        """Détecte des régressions de performance"""
         patterns: list[Any] = []
 
         # Analyser les métriques de performance connues
@@ -260,7 +266,6 @@ class BehaviorAnalyzer:
         return patterns
 
     def detect_decision_patterns(self) -> list[BehaviorPattern]:
-        """Détecte des patterns suspects dans les décisions"""
         patterns: list[Any] = []
 
         if len(self.decision_history) < 10:
@@ -339,7 +344,6 @@ class BehaviorAnalyzer:
         return patterns
 
     def detect_correlation_anomalies(self) -> list[BehaviorPattern]:
-        """Détecte des anomalies dans les corrélations entre modules"""
         patterns: list[Any] = []
 
         # Analyser les corrélations de confiance entre modules
@@ -386,7 +390,6 @@ class BehaviorAnalyzer:
         return patterns
 
     def analyze_behavior(self) -> dict[str, Any]:
-        """Exécute une analyse complète des comportements"""
         logger.info("🔍 Starting behavior analysis...")
 
         # Exécuter toutes les analyses
@@ -406,8 +409,8 @@ class BehaviorAnalyzer:
             self.pattern_history = self.pattern_history[-max_history:]
 
         # Calculer des statistiques globales
-        severity_counts = defaultdict(int)
-        pattern_type_counts = defaultdict(int)
+        severity_counts: dict[str, int] = defaultdict(int)
+        pattern_type_counts: dict[str, int] = defaultdict(int)
         affected_modules: set[str] = set()
 
         for pattern in all_patterns:
@@ -439,12 +442,10 @@ class BehaviorAnalyzer:
         return summary
 
     def get_pattern_history(self, limit: int | None = None) -> list[dict]:
-        """Retourne l'historique des patterns détectés"""
         patterns = self.pattern_history[-limit:] if limit else self.pattern_history
         return [p.to_dict() for p in patterns]
 
     def get_metrics_summary(self) -> dict[str, Any]:
-        """Retourne un résumé des métriques surveillées"""
         summary: dict[str, Any] = {}
 
         for metric_key, samples in self.metrics_buffer.items():
@@ -482,12 +483,12 @@ if __name__ == "__main__":
 
         # Générer des données synthétiques
         for _i in range(50):
-            # Métriques normales
-            analyzer.add_metric_sample("reflexia", "confidence_score", random.uniform(0.7, 0.95))
-            analyzer.add_metric_sample("zeroia", "confidence_score", random.uniform(0.6, 0.9))
+            # Métriques normales (démo uniquement)
+            analyzer.add_metric_sample("reflexia", "confidence_score", random.uniform(0.7, 0.95))  # nosec B311
+            analyzer.add_metric_sample("zeroia", "confidence_score", random.uniform(0.6, 0.9))  # nosec B311
 
             # Temps de réponse
-            analyzer.add_metric_sample("reflexia", "response_time", random.uniform(0.1, 0.5))
+            analyzer.add_metric_sample("reflexia", "response_time", random.uniform(0.1, 0.5))  # nosec B311
 
             time.sleep(0.01)  # Petit délai
 

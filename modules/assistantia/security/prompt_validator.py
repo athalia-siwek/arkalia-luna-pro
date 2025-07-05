@@ -1,4 +1,4 @@
-# 🛡️ Validateur de Prompts - Sécurité LLM Arkalia-LUNA
+# Validateur de Prompts - Sécurité LLM Arkalia-LUNA
 # Protection contre prompt injection, code injection, et attaques DOS
 
 import hashlib

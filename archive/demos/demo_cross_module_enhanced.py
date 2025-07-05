@@ -21,17 +21,17 @@ Copyright 2025 Arkalia-LUNA Enterprise
 Version: Enhanced v2.7.1-performance
 """
 
-import argparse
-import pathlib
-import subprocess
-import sys
-import time
+# import argparse
+# import pathlib
+# import subprocess
+# import sys
+# import time
 from pathlib import Path
 
 # Ajouter le path des modules
 sys.path.append(str(Path(__file__).parent.parent / "modules"))
 
-import logging
+# import logging
 
 from utils_enhanced import get_cache_stats, load_toml_cached
 

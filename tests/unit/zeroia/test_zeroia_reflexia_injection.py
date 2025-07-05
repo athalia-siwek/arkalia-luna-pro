@@ -3,7 +3,7 @@ from pathlib import Path
 import toml
 
 from modules.zeroia.reason_loop import reason_loop
-from tests.fixtures.test_helpers import ensure_test_toml, ensure_zeroia_state_file
+from tests.fixtures.__test_helpers import ensure_test_toml, ensure_zeroia_state_file
 
 ensure_test_toml()
 

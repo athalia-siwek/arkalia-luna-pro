@@ -1,7 +1,31 @@
+"""
+Module core.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 # modules/helloria/core.py
+
+import os
+import sys
 
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.responses import JSONResponse
+
+# === Ajout ZeroIA (import robuste) ===
+zeroia_router = None
+try:
+    from modules.zeroia.core import router as zeroia_router
+except ImportError:
+    try:
+        from zeroia.core import router as zeroia_router
+    except ImportError:
+        # Ajout du chemin modules/ au sys.path si besoin
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
+        try:
+            from modules.zeroia.core import router as zeroia_router
+        except ImportError:
+            pass
 
 router = APIRouter()
 
@@ -18,6 +42,10 @@ async def status():
 
 app = FastAPI()
 app.include_router(router)
+
+# === Inclusion du routeur ZeroIA ===
+if zeroia_router is not None:
+    app.include_router(zeroia_router, prefix="/zeroia")
 
 
 @app.post("/echo", tags=["Test"])

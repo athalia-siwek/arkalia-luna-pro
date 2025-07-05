@@ -105,7 +105,11 @@ class Chronalia:
 
         # Construction du cycle selon tes spécifications exactes
         cycle = CognitiveCycle(
-            timestamp=self.current_cycle_start.isoformat(),
+            timestamp=(
+                self.current_cycle_start.isoformat()
+                if self.current_cycle_start
+                else datetime.now().isoformat()
+            ),
             reflexia_score=context.get("reflexia_score", 0.5),
             sandozia_health=context.get("sandozia_health", 0.5),
             contradiction=context.get("contradiction", False),
@@ -201,106 +205,95 @@ class Chronalia:
                 bucket["avg_confidence"] /= count
                 bucket["modules_noise_level"] /= count
 
-        return {
-            "heatmap_data": list(heatmap.values()),
-            "summary": {
-                "total_cycles": len(cycles),
-                "time_range_hours": hours_back,
-                "resolution_minutes": resolution_minutes,
-                "generated_at": datetime.now().isoformat(),
-            },
-        }
+        return heatmap
 
     def detect_patterns(self, window_minutes: int = 30) -> list[dict[str, Any]]:
-        """🔍 Détecte patterns temporels automatiquement"""
+        """🔍 Détecte les patterns temporels dans les cycles cognitifs"""
 
         since = datetime.now() - timedelta(minutes=window_minutes)
         cycles = self._load_cycles_since(since)
-        patterns: list[Any] = []
 
         if len(cycles) < 3:
-            return patterns
+            return []
 
-        # 🎯 Pattern 1: Décisions répétitives (ton cas d'usage principal)
-        recent_decisions = [cycle.zeroia_decision for cycle in cycles[-10:]]
-        unique_decisions = set(recent_decisions)
+        patterns = []
 
-        if len(unique_decisions) == 1 and len(recent_decisions) >= 7:
-            pattern = {
-                "pattern_type": "repetitive_decisions",
-                "severity": "high",
-                "description": (
-                    f"{len(recent_decisions)} décisions identiques: " f"{list(unique_decisions)[0]}"
-                ),
-                "detected_at": datetime.now().isoformat(),
-                "repetition_count": len(recent_decisions),
-                "trigger_cognitive_pause": True,
-            }
-            patterns.append(pattern)
-            self._persist_pattern(pattern)
+        # Pattern de répétition
+        repeat_count = 0
+        last_decision = None
+        for cycle in cycles:
+            if cycle.zeroia_decision == last_decision:
+                repeat_count += 1
+            else:
+                if repeat_count >= 3:
+                    patterns.append(
+                        {
+                            "pattern_type": "repeat",
+                            "decision": last_decision,
+                            "occurrences": repeat_count,
+                            "confidence": min(repeat_count / 10, 1.0),
+                            "start_time": cycles[cycles.index(cycle) - repeat_count].timestamp,
+                            "end_time": cycles[cycles.index(cycle) - 1].timestamp,
+                        }
+                    )
+                repeat_count = 1
+                last_decision = cycle.zeroia_decision
 
-        # 🎯 Pattern 2: Confiance en chute libre
-        confidences = [cycle.confidence for cycle in cycles[-5:]]
-        if len(confidences) >= 3:
-            trend_down = all(
-                confidences[i] > confidences[i + 1] for i in range(len(confidences) - 1)
-            )
-            if trend_down and confidences[-1] < 0.3:
-                pattern = {
-                    "pattern_type": "confidence_collapse",
-                    "severity": "critical",
-                    "description": (
-                        f"Confiance effondrée: {confidences[0]:.2f} → " f"{confidences[-1]:.2f}"
-                    ),
-                    "detected_at": datetime.now().isoformat(),
-                    "trigger_berserk_check": True,
+        # Pattern de contradiction
+        contradiction_cycles = [c for c in cycles if c.contradiction]
+        if len(contradiction_cycles) >= 2:
+            patterns.append(
+                {
+                    "pattern_type": "contradiction",
+                    "occurrences": len(contradiction_cycles),
+                    "confidence": min(len(contradiction_cycles) / 5, 1.0),
+                    "start_time": contradiction_cycles[0].timestamp,
+                    "end_time": contradiction_cycles[-1].timestamp,
                 }
-                patterns.append(pattern)
-                self._persist_pattern(pattern)
+            )
+
+        # Pattern de mode berserk
+        berserk_cycles = [c for c in cycles if c.berserk_mode]
+        if len(berserk_cycles) >= 1:
+            patterns.append(
+                {
+                    "pattern_type": "berserk",
+                    "occurrences": len(berserk_cycles),
+                    "confidence": min(len(berserk_cycles) / 3, 1.0),
+                    "start_time": berserk_cycles[0].timestamp,
+                    "end_time": berserk_cycles[-1].timestamp,
+                }
+            )
 
         return patterns
 
     def export_timeline(self, hours_back: int = 24) -> Path:
-        """📤 Exporte timeline complète pour analyse"""
-
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_file = self.timeline_dir / f"mind_timeline_export_{timestamp}.json"
+        """📤 Exporte la timeline cognitive au format JSONL"""
 
         since = datetime.now() - timedelta(hours=hours_back)
         cycles = self._load_cycles_since(since)
 
-        export_data = {
-            "export_metadata": {
-                "generated_at": datetime.now().isoformat(),
-                "time_range_hours": hours_back,
-                "total_cycles": len(cycles),
-                "arkalia_version": "v3.0-phase1",
-            },
-            "cognitive_cycles": [asdict(cycle) for cycle in cycles],
-            "heatmap_data": self.get_heatmap_data(hours_back),
-        }
+        # Fichier d'export avec timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        export_file = self.timeline_dir / f"timeline_export_{timestamp}.jsonl"
 
-        with output_file.open("w") as f:
-            json.dump(export_data, f, indent=2, ensure_ascii=False)
-
-        logger.info(f"📤 Timeline exportée: {output_file} ({len(cycles)} cycles)")
-        return output_file
-
-    def _persist_cycle(self, cycle: CognitiveCycle):
-        """💾 Persiste cycle au format JSONL"""
-        try:
-            with self.cycles_file.open("a") as f:
+        # Écrire les cycles
+        with open(export_file, "w", encoding="utf-8") as f:
+            for cycle in cycles:
                 f.write(json.dumps(asdict(cycle), ensure_ascii=False) + "\n")
-        except Exception as e:
-            logger.error(f"❌ Erreur persistence cycle: {e}")
 
-    def _persist_pattern(self, pattern: dict[str, Any]):
-        """💾 Persiste pattern détecté"""
-        try:
-            with self.patterns_file.open("a") as f:
-                f.write(json.dumps(pattern, ensure_ascii=False) + "\n")
-        except Exception as e:
-            logger.error(f"❌ Erreur persistence pattern: {e}")
+        logger.info(f"📤 Timeline exportée: {export_file} ({len(cycles)} cycles)")
+        return export_file
+
+    def _persist_cycle(self, cycle: CognitiveCycle) -> None:
+        """💾 Persiste un cycle cognitif au format JSONL"""
+        with open(self.cycles_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(asdict(cycle), ensure_ascii=False) + "\n")
+
+    def _persist_pattern(self, pattern: dict[str, Any]) -> None:
+        """💾 Persiste un pattern détecté"""
+        with open(self.patterns_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(pattern, ensure_ascii=False) + "\n")
 
     def _load_cycles_since(self, since: datetime) -> list[CognitiveCycle]:
         """📖 Charge cycles depuis une date"""

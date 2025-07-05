@@ -1,3 +1,9 @@
+"""
+Module healthcheck_zeroia.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 import os
 import sys
 from pathlib import Path
@@ -8,11 +14,15 @@ DEFAULT_PATH = "modules/zeroia/state/zeroia_state.toml"
 
 
 def get_state_path() -> Path:
+    """
+    Fonction get_state_path.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     return Path(os.environ.get("ZEROIA_STATE_PATH", DEFAULT_PATH))
 
 
 def check_zeroia_health(verbose: bool = True) -> bool:
-    """Vérifie si ZeroIA est active avec une dernière décision."""
     try:
         state_path = get_state_path()
 

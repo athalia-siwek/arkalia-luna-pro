@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, mock_open, patch
 
-from scripts.generate_updates_page import main as run
+from scripts._generate_updates_page import main as run
 
 
 class TestGenerateUpdatesPage(unittest.TestCase):
@@ -37,7 +37,7 @@ class TestGenerateUpdatesPage(unittest.TestCase):
 
             # Mock de l'écriture de fichier pour éviter l'erreur
             with patch("builtins.open", mock_open()) as mock_file:
-                from scripts.generate_updates_page import main
+                from scripts._generate_updates_page import main
 
                 main()
 

@@ -7,10 +7,10 @@ Remplace uniquement les print() de criticité LOW (sûrs)
 avec validation et tests automatiques.
 """
 
-import json
-import re
-import subprocess
-import sys
+# import json
+# import re
+# import subprocess
+# import sys
 from pathlib import Path
 from typing import Any
 

@@ -35,4 +35,4 @@ Exemple :
 ```
 
 ---
-**Aucune config n'est supprimée, tout est archivé ici pour traçabilité et restauration rapide.** 
+**Aucune config n'est supprimée, tout est archivé ici pour traçabilité et restauration rapide.**

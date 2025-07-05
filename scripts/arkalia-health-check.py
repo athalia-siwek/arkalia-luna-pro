@@ -61,7 +61,9 @@ class ArkaliaHealthChecker:
         ports_to_check = [8080, 5173, 3000, 8000]
         for port in ports_to_check:
             try:
-                result = subprocess.run(["lsof", "-ti", f":{port}"], capture_output=True, text=True)
+                result = subprocess.run(
+                    ["/usr/sbin/lsof", "-ti", f":{port}"], capture_output=True, text=True
+                )  # nosec B607
                 if result.stdout.strip():
                     processes[f"port_{port}"] = {
                         "status": "in_use",

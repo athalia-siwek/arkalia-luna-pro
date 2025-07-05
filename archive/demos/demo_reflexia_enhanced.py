@@ -6,9 +6,9 @@ Demo Reflexia Enhanced v2.6.0
 Test de la nouvelle version avec vraies métriques système
 """
 
-import pathlib
-import subprocess
-import sys
+# import pathlib
+# import subprocess
+# import sys
 from pathlib import Path
 
 # Ajouter le répertoire racine au path

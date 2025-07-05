@@ -85,7 +85,7 @@ class CognitiveReactor:
         self.reaction_count = 0
         self.start_time = time.time()
         self.last_reaction_time = 0
-        self.cognitive_state = {
+        self.cognitive_state: dict[str, Any] = {
             "active": True,
             "mode": mode,
             "reactions_triggered": 0,
@@ -99,9 +99,9 @@ class CognitiveReactor:
         self.state_dir.mkdir(parents=True, exist_ok=True)
 
         # === Patterns d'apprentissage ===
-        self.learned_patterns = []
-        self.reaction_history = []
-        self.stimuli_queue = []
+        self.learned_patterns: list[dict[str, Any]] = []
+        self.reaction_history: list[dict[str, Any]] = []
+        self.stimuli_queue: list[dict[str, Any]] = []
 
         logger.info(f"🧠 CognitiveReactor initialisé en mode {mode}")
 
@@ -165,7 +165,7 @@ class CognitiveReactor:
 
     def detect_cognitive_patterns(self, context: dict[str, Any]) -> list[dict[str, Any]]:
         """Détecte les patterns cognitifs dans le contexte"""
-        patterns: list[Any] = []
+        patterns: list[dict[str, Any]] = []
 
         # === Pattern 1: Surcharge système ===
         if context.get("system_metrics", {}).get("cpu_percent", 0) > 80:
@@ -209,7 +209,7 @@ class CognitiveReactor:
 
     def generate_cognitive_reactions(self, patterns: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Génère des réactions cognitives basées sur les patterns"""
-        reactions: list[Any] = []
+        reactions: list[dict[str, Any]] = []
 
         for pattern in patterns:
             if pattern["type"] == "system_overload":
@@ -306,7 +306,9 @@ class CognitiveReactor:
                 "context": self.analyze_system_context(),
             }
             self.reaction_history.append(learning_entry)
-            self.cognitive_state["learning_cycles"] += 1
+            self.cognitive_state["learning_cycles"] = (
+                int(self.cognitive_state.get("learning_cycles", 0)) + 1
+            )
 
         # Limiter l'historique
         if len(self.reaction_history) > 1000:
@@ -342,7 +344,7 @@ class CognitiveReactor:
         if not stimulus or not isinstance(stimulus, dict):
             return {"processed": False, "error": "invalid_stimulus"}
 
-        result = {"processed": True}
+        result: dict[str, Any] = {"processed": True}
 
         # Gestion de la sévérité
         severity = stimulus.get("severity", "low")
@@ -496,7 +498,9 @@ class CognitiveReactor:
                     predictions = self.predict_future_patterns()
                     if predictions:
                         logger.info(f"🔮 Prédictions: {len(predictions)}")
-                        self.cognitive_state["predictions_made"] += len(predictions)
+                        self.cognitive_state["predictions_made"] = int(
+                            self.cognitive_state.get("predictions_made", 0)
+                        ) + len(predictions)
 
                 # === Mise à jour de l'état ===
                 self.cognitive_state["reactions_triggered"] = self.reaction_count

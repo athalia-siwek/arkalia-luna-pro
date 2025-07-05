@@ -1,3 +1,9 @@
+"""
+Module main.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 import os
 
 from core import app

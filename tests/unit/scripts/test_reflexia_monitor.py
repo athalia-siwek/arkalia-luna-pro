@@ -52,7 +52,7 @@ def test_reflexia_monitor_runs():
             mock_post.return_value = mock_response
 
             # Importer et exécuter le script directement
-            import scripts.reflexia_monitor as monitor
+            import scripts._reflexia_monitor as monitor
 
             monitor.export_to_grafana(
                 {

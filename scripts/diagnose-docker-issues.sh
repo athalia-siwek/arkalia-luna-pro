@@ -39,7 +39,7 @@ if command -v docker &> /dev/null; then
     log_success "Docker installé"
     docker_version=$(docker --version)
     log_info "Version: $docker_version"
-    
+
     if docker info &> /dev/null; then
         log_success "Docker daemon fonctionnel"
     else
@@ -97,7 +97,7 @@ missing_files=()
 for dockerfile in "${dockerfiles[@]}"; do
     if [ -f "$dockerfile" ]; then
         log_success "$dockerfile trouvé"
-        
+
         # Vérification basique de la syntaxe
         if docker build --help &> /dev/null; then
             log_success "Docker build disponible pour $dockerfile"
@@ -118,7 +118,7 @@ fi
 log_info "5. Vérification de docker-compose.yml..."
 if [ -f "docker-compose.yml" ]; then
     log_success "docker-compose.yml trouvé"
-    
+
     if docker compose config --quiet; then
         log_success "Configuration docker-compose.yml valide"
     else
@@ -203,7 +203,7 @@ if [ -f "docker-compose.yml" ]; then
     log_info "Démarrage des services (test rapide)..."
     if timeout 120 docker compose up -d --remove-orphans &> /dev/null; then
         log_success "Services démarrés avec succès"
-        
+
         # Test de santé rapide
         sleep 10
         if curl -f -s --max-time 10 "http://localhost:8000/health" > /dev/null; then
@@ -211,7 +211,7 @@ if [ -f "docker-compose.yml" ]; then
         else
             log_warning "API principale non accessible"
         fi
-        
+
         # Arrêt des services
         docker compose down --remove-orphans &> /dev/null || true
     else
@@ -227,4 +227,4 @@ echo ""
 log_info "Pour plus d'informations, consultez:"
 echo "   - Les logs GitHub Actions"
 echo "   - La documentation de déploiement"
-echo "   - Les rapports de nettoyage dans archive/" 
+echo "   - Les rapports de nettoyage dans archive/"

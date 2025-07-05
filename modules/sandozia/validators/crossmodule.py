@@ -31,8 +31,6 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Niveaux de validation"""
-
     CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
@@ -41,8 +39,6 @@ class ValidationLevel(Enum):
 
 @dataclass
 class ValidationResult:
-    """Résultat d'une validation croisée"""
-
     level: ValidationLevel
     module_source: str
     module_target: str
@@ -52,6 +48,11 @@ class ValidationResult:
     suggested_action: str | None = None
 
     def to_dict(self) -> dict:
+        """
+        Fonction to_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         return {
             "level": self.level.value,
             "module_source": self.module_source,
@@ -65,37 +66,260 @@ class ValidationResult:
 
 class CrossModuleValidator:
     """
-    Validateur de cohérence inter-modules IA
+    Validateur cross-modules Sandozia
 
-    Fonctionnalités :
-    - Validation temporelle (synchronisation)
-    - Validation logique (contradictions)
-    - Validation de confiance (scores cohérents)
-    - Validation comportementale (patterns)
+    Valide la cohérence entre modules :
+    - Vérification des interfaces
+    - Validation des données partagées
+    - Détection des incohérences
+    - Rapport de validation
     """
 
     def __init__(self, config: dict | None = None) -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.config = config or {
-            "temporal_tolerance_minutes": 5,
-            "confidence_variance_threshold": 0.2,
-            "critical_coherence_threshold": 0.6,
-            "max_validation_history": 1000,
+            "validation_timeout": 30,
+            "strict_mode": False,
+            "auto_fix": False,
         }
-
-        self.validation_history: list[ValidationResult] = []
+        self.validation_history: list[dict] = []
+        self.known_issues: dict[str, list] = {}
+        self.state_paths: dict[str, Path] = {}
         self.state_cache: dict[str, dict] = {}
-
-        # Chemins des états des modules
-        self.state_paths = {
-            "reflexia": Path("state/reflexia_state.toml"),
-            "zeroia": Path("state/zeroia_state.toml"),
-            "global": Path("state/global_context.toml"),
-        }
-
         logger.info("🔍 CrossModuleValidator initialized")
 
+    def validate_module_interfaces(self, modules_data: dict[str, dict]) -> dict[str, Any]:
+        """
+        Valide les interfaces entre modules
+
+        Args:
+            modules_data: Données des modules
+
+        Returns:
+            dict: Résultats de validation
+        """
+        logger.info("🔍 Starting cross-module interface validation...")
+
+        validation_result = {
+            "status": "completed",
+            "modules_checked": list(modules_data.keys()),
+            "issues_found": [],
+            "warnings": [],
+            "passed": True,
+            "timestamp": datetime.now().isoformat(),
+        }
+
+        # Vérifier les interfaces communes
+        for module1, data1 in modules_data.items():
+            for module2, data2 in modules_data.items():
+                if module1 >= module2:
+                    continue
+
+                interface_issues = self._validate_interface(module1, data1, module2, data2)
+                validation_result["issues_found"].extend(interface_issues)  # type: ignore
+
+        # Déterminer le statut global
+        if validation_result["issues_found"]:
+            validation_result["passed"] = False
+
+        # Enregistrer dans l'historique
+        self.validation_history.append(validation_result)
+        if len(self.validation_history) > 50:
+            self.validation_history = self.validation_history[-50:]
+
+        logger.info(f"✅ Cross-module validation completed: {validation_result['passed']}")
+        return validation_result
+
+    def _validate_interface(
+        self, module1: str, data1: dict, module2: str, data2: dict
+    ) -> list[dict]:
+        """
+        Valide l'interface entre deux modules
+
+        Args:
+            module1: Nom du premier module
+            data1: Données du premier module
+            module2: Nom du deuxième module
+            data2: Données du deuxième module
+
+        Returns:
+            list[dict]: Problèmes détectés
+        """
+        issues = []
+
+        # Vérifier les types de données partagées
+        shared_keys = set(data1.keys()) & set(data2.keys())
+        for key in shared_keys:
+            type1 = type(data1[key])
+            type2 = type(data2[key])
+
+            if type1 != type2:
+                issues.append(
+                    {
+                        "type": "type_mismatch",
+                        "module1": module1,
+                        "module2": module2,
+                        "key": key,
+                        "type1": str(type1),
+                        "type2": str(type2),
+                        "severity": "error",
+                    }
+                )
+
+        # Vérifier les valeurs incohérentes
+        for key in shared_keys:
+            if isinstance(data1[key], int | float) and isinstance(data2[key], int | float):
+                if abs(data1[key] - data2[key]) > 0.01:  # Tolérance pour les floats
+                    issues.append(
+                        {
+                            "type": "value_mismatch",
+                            "module1": module1,
+                            "module2": module2,
+                            "key": key,
+                            "value1": data1[key],
+                            "value2": data2[key],
+                            "severity": "warning",
+                        }
+                    )
+
+        return issues
+
+    def validate_data_consistency(self, modules_data: dict[str, dict]) -> dict[str, Any]:
+        """
+        Valide la cohérence des données entre modules
+
+        Args:
+            modules_data: Données des modules
+
+        Returns:
+            dict: Résultats de validation
+        """
+        logger.info("🔍 Starting data consistency validation...")
+
+        consistency_result = {
+            "status": "completed",
+            "consistency_score": 1.0,
+            "inconsistencies": [],
+            "timestamp": datetime.now().isoformat(),
+        }
+
+        # Analyser la cohérence des données
+        all_keys: set[str] = set()
+        for data in modules_data.values():
+            all_keys.update(data.keys())
+
+        for key in all_keys:
+            values = []
+            for module_name, data in modules_data.items():
+                if key in data:
+                    values.append((module_name, data[key]))
+
+            if len(values) > 1:
+                inconsistency = self._check_value_consistency(key, values)
+                if inconsistency:
+                    consistency_result["inconsistencies"].append(inconsistency)
+
+        # Calculer le score de cohérence
+        total_checks = len(all_keys)
+        failed_checks = len(consistency_result["inconsistencies"])
+        if total_checks > 0:
+            consistency_result["consistency_score"] = 1.0 - (failed_checks / total_checks)
+
+        logger.info(
+            f"✅ Data consistency validation completed: {consistency_result['consistency_score']:.2f}"
+        )
+        return consistency_result
+
+    def _check_value_consistency(self, key: str, values: list[tuple[str, Any]]) -> dict | None:
+        """
+        Vérifie la cohérence des valeurs pour une clé
+
+        Args:
+            key: Clé à vérifier
+            values: Liste de (module, valeur)
+
+        Returns:
+            dict | None: Incohérence détectée ou None
+        """
+        if not values:
+            return None
+
+        # Vérifier si toutes les valeurs sont identiques
+        first_value = values[0][1]
+        inconsistent_modules = []
+
+        for module_name, value in values:
+            if value != first_value:
+                inconsistent_modules.append(
+                    {
+                        "module": module_name,
+                        "value": value,
+                    }
+                )
+
+        if inconsistent_modules:
+            return {
+                "key": key,
+                "expected_value": first_value,
+                "inconsistent_modules": inconsistent_modules,
+            }
+
+        return None
+
+    def get_validation_summary(self) -> dict[str, Any]:
+        """
+        Récupère un résumé des validations
+
+        Returns:
+            dict: Résumé des validations
+        """
+        if not self.validation_history:
+            return {"total_validations": 0, "success_rate": 0.0}
+
+        total_validations = len(self.validation_history)
+        successful_validations = sum(1 for v in self.validation_history if v.get("passed", False))
+        success_rate = successful_validations / total_validations
+
+        return {
+            "total_validations": total_validations,
+            "successful_validations": successful_validations,
+            "success_rate": success_rate,
+            "last_validation": self.validation_history[-1] if self.validation_history else None,
+        }
+
+    def get_known_issues(self) -> dict[str, list]:
+        """
+        Récupère les problèmes connus
+
+        Returns:
+            dict: Problèmes connus par module
+        """
+        return self.known_issues.copy()
+
+    def add_known_issue(self, module: str, issue: dict) -> None:
+        """
+        Ajoute un problème connu
+
+        Args:
+            module: Nom du module
+            issue: Description du problème
+        """
+        if module not in self.known_issues:
+            self.known_issues[module] = []
+        self.known_issues[module].append(issue)
+
+    def clear_validation_history(self) -> None:
+        """
+        Nettoie l'historique de validation
+        """
+        self.validation_history.clear()
+        logger.info("🧹 Validation history cleared")
+
     def load_module_states(self) -> dict[str, dict]:
-        """Charge les états actuels de tous les modules"""
         states: dict[str, Any] = {}
 
         for module_name, state_path in self.state_paths.items():
@@ -116,7 +340,6 @@ class CrossModuleValidator:
         return states
 
     def validate_temporal_coherence(self, states: dict[str, dict]) -> list[ValidationResult]:
-        """Valide la cohérence temporelle entre modules"""
         results: list[Any] = []
         now = datetime.now()
         tolerance = timedelta(minutes=self.config["temporal_tolerance_minutes"])
@@ -192,7 +415,6 @@ class CrossModuleValidator:
         return results
 
     def validate_confidence_coherence(self, states: dict[str, dict]) -> list[ValidationResult]:
-        """Valide la cohérence des scores de confiance"""
         results: list[Any] = []
         now = datetime.now()
 
@@ -244,7 +466,6 @@ class CrossModuleValidator:
         return results
 
     def validate_logical_consistency(self, states: dict[str, dict]) -> list[ValidationResult]:
-        """Valide la consistance logique entre modules"""
         results: list[Any] = []
         now = datetime.now()
 
@@ -298,7 +519,6 @@ class CrossModuleValidator:
         return results
 
     def validate_behavioral_patterns(self, states: dict[str, dict]) -> list[ValidationResult]:
-        """Valide les patterns comportementaux"""
         results: list[Any] = []
         now = datetime.now()
 
@@ -308,7 +528,9 @@ class CrossModuleValidator:
 
             # Compter les erreurs critiques récentes
             critical_count = sum(
-                1 for v in recent_validations if v.level == ValidationLevel.CRITICAL
+                1
+                for v in recent_validations
+                if isinstance(v, ValidationResult) and v.level == ValidationLevel.CRITICAL
             )
 
             if critical_count >= 3:
@@ -333,7 +555,6 @@ class CrossModuleValidator:
         return results
 
     def run_full_validation(self) -> dict[str, Any]:
-        """Exécute une validation complète inter-modules"""
         logger.info("🔍 Starting cross-module validation...")
 
         # Charger les états
@@ -381,7 +602,9 @@ class CrossModuleValidator:
             "overall_status": (
                 "healthy"
                 if coherence_score > 0.8
-                else "degraded" if coherence_score > 0.6 else "critical"
+                else "degraded"
+                if coherence_score > 0.6
+                else "critical"
             ),
         }
 
@@ -438,12 +661,13 @@ class CrossModuleValidator:
             return {"status": "error", "error": str(e), "coherence_score": 0.0}
 
     def get_validation_report(self) -> dict[str, Any]:
-        """Génère un rapport de validation"""
         recent_validations = self.validation_history[-50:] if self.validation_history else []
 
         return {
             "total_validations_run": len(self.validation_history),
-            "recent_validations": [v.to_dict() for v in recent_validations],
+            "recent_validations": [
+                v.to_dict() if hasattr(v, "to_dict") else v for v in recent_validations
+            ],
             "current_config": self.config,
             "modules_monitored": list(self.state_paths.keys()),
         }

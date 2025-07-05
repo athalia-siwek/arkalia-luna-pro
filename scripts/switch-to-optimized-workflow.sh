@@ -146,4 +146,4 @@ fi
 
 echo ""
 log_success "Basculement vers le workflow optimisé terminé!"
-log_info "Le prochain push déclenchera le nouveau workflow avec des timeouts augmentés." 
+log_info "Le prochain push déclenchera le nouveau workflow avec des timeouts augmentés."

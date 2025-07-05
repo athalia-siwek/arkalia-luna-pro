@@ -4,6 +4,7 @@
 import json
 import random
 import subprocess
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -12,8 +13,11 @@ from unittest.mock import patch
 import pytest
 import toml
 
+root = str(Path(__file__).parent.parent.parent)
+sys.path.insert(0, root)
+sys.path.insert(0, root + "/utils")
+from modules.utils.helpers.io_safe import atomic_write, locked_read
 from modules.zeroia.reason_loop import load_context
-from utils.io_safe import atomic_write, locked_read
 
 
 class ChaosTestConfig:

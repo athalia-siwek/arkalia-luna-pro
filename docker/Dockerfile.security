@@ -1,0 +1,94 @@
+# 🛡️ Dockerfile.security - Security Guardian Optimisé
+# Stage 1: Builder
+FROM python:3.10-slim AS builder
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PIP_NO_CACHE_DIR=1
+
+# Installation des outils de build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Création d'un environnement virtuel
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Installation des dépendances
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Stage 2: Runtime
+FROM python:3.10-slim AS runtime
+
+# Métadonnées
+LABEL maintainer="Athalia <athalia@arkalia.ai>"
+LABEL description="Security Guardian - Protection Avancée Arkalia-LUNA"
+LABEL version="4.0.0"
+
+# Variables d'environnement
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PATH="/opt/venv/bin:$PATH"
+ENV PYTHONPATH=/app
+ENV SECURITY_ENV=production
+ENV SECURITY_LOG_LEVEL=INFO
+
+# Installation des dépendances système de sécurité
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    wget \
+    procps \
+    net-tools \
+    iptables \
+    && rm -rf /var/lib/apt/lists/*
+
+# Création utilisateur non-root pour sécurité
+RUN groupadd -r security && \
+    useradd -r -g security -d /app -s /bin/bash security && \
+    mkdir -p /app/logs /app/state /app/security /app/cache && \
+    chown -R security:security /app
+
+# Copie du venv
+COPY --from=builder /opt/venv /opt/venv
+
+WORKDIR /app
+
+# Copie sélective du code security
+COPY --chown=security:security modules/security ./modules/security
+COPY --chown=security:security modules/core ./modules/core
+COPY --chown=security:security modules/monitoring ./modules/monitoring
+COPY --chown=security:security modules/utils_enhanced ./modules/utils_enhanced
+COPY --chown=security:security modules/__init__.py ./modules/
+COPY --chown=security:security config ./config
+COPY --chown=security:security state ./state
+COPY --chown=security:security utils ./utils
+
+# Création des répertoires de sécurité
+RUN mkdir -p /app/security/vault \
+    /app/security/audit \
+    /app/security/keys \
+    /app/security/policies && \
+    chown -R security:security /app/security
+
+# Configuration des permissions de sécurité
+RUN chmod 700 /app/security/vault && \
+    chmod 700 /app/security/keys && \
+    chmod 600 /app/security/policies/* 2>/dev/null || true
+
+# Switch vers utilisateur non-root
+USER security
+
+# Healthcheck de sécurité
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD curl -f http://localhost:8004/health || exit 1
+
+# Exposition du port de sécurité
+EXPOSE 8004
+
+# Point d'entrée sécurisé
+CMD ["python", "-m", "modules.security.core", "--mode", "guardian"] 

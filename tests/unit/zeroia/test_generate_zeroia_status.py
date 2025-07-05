@@ -2,7 +2,12 @@ from unittest import mock
 
 import pytest
 
-from scripts import generate_zeroia_status as gzs
+from scripts._generate_zeroia_status import (
+    get_container_logs,
+    get_container_status,
+    parse_decisions,
+    write_markdown,
+)
 
 DUMMY_LOGS = """
 ZeroIA decided: reduce_load (confidence=0.75)
@@ -16,12 +21,12 @@ ZeroIA decided: reboot_module (confidence=0.42)
 def dummy_output_file(tmp_path, monkeypatch) -> None:
     # Rediriger le fichier vers un chemin temporaire
     output_file = tmp_path / "zeroia_status.md"
-    monkeypatch.setattr(gzs, "OUTPUT_FILE", str(output_file))
+    monkeypatch.setattr("scripts._generate_zeroia_status.OUTPUT_FILE", str(output_file))
     return output_file
 
 
 def test_parse_decisions() -> None:
-    decisions = gzs.parse_decisions(DUMMY_LOGS)
+    decisions = parse_decisions(DUMMY_LOGS)
     assert len(decisions) == 3
     assert "reduce_load" in decisions[0]
     assert "watchdog" in decisions[1]
@@ -31,14 +36,14 @@ def test_parse_decisions() -> None:
 @mock.patch("subprocess.check_output")
 def test_get_container_status(mock_subproc) -> None:
     mock_subproc.return_value = b"running"
-    status = gzs.get_container_status("zeroia")
+    status = get_container_status("zeroia")
     assert status == "running"
 
 
 @mock.patch("subprocess.check_output")
 def test_get_container_logs(mock_subproc) -> None:
     mock_subproc.return_value = DUMMY_LOGS.encode("utf-8")
-    logs = gzs.get_container_logs("zeroia", tail=10)
+    logs = get_container_logs("zeroia", tail=10)
     assert "reduce_load" in logs
     assert logs.count("ZeroIA decided") == 3
 
@@ -49,7 +54,7 @@ def test_write_markdown(dummy_output_file) -> None:
         "ZeroIA decided: reduce_load (confidence=0.75)",
         "ZeroIA decided: activate_watchdog (confidence=0.89)",
     ]
-    gzs.write_markdown(status, decisions)
+    write_markdown(status, decisions)
 
     content = dummy_output_file.read_text(encoding="utf-8")
     assert "# 🤖 ZeroIA — Statut automatique" in content

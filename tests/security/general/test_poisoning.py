@@ -22,7 +22,7 @@ class ModelPoisoningDetector:
 
     def __init__(self) -> None:
         self.anomaly_threshold = 0.85
-        self.decision_history = []
+        self.decision_history: list[dict] = []
         self.confidence_baseline = 0.6
 
     def analyze_decision_pattern(self, decisions: list) -> dict:

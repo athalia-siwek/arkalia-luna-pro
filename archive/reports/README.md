@@ -49,4 +49,4 @@ cat archive/reports/RAPPORT_NETTOYAGE_FINAL_V2.md
 
 ---
 
-**Note:** Ces rapports sont archivés pour référence. Pour les informations actuelles, consultez `RAPPORT_FINAL_CONSOLIDE.md` à la racine du projet. 
+**Note:** Ces rapports sont archivés pour référence. Pour les informations actuelles, consultez `RAPPORT_FINAL_CONSOLIDE.md` à la racine du projet.

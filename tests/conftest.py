@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 try:
-    from tests.fixtures.test_helpers import ensure_test_toml, restore_snapshot_if_missing
+    from tests.fixtures.__test_helpers import ensure_test_toml, restore_snapshot_if_missing
 except ImportError:
     # fallback pour appel direct
     pass

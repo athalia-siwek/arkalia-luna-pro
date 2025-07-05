@@ -13,7 +13,7 @@ from modules.zeroia.snapshot_generator import (
     is_valid_toml,
     load_state,
 )
-from tests.fixtures.test_helpers import ensure_test_toml
+from tests.fixtures.__test_helpers import ensure_test_toml
 
 ensure_test_toml()
 

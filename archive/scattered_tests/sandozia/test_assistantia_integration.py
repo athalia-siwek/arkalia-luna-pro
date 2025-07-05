@@ -1,8 +1,8 @@
-import os
-import sys
+# import os
+# import sys
 from unittest.mock import patch
 
-import pytest
+# import pytest
 from fastapi.testclient import TestClient
 
 # Ajout dynamique du chemin du projet pour garantir l'import correct

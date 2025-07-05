@@ -1,3 +1,9 @@
+"""
+Module core.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 import asyncio
 import json
 import logging
@@ -19,7 +25,6 @@ from .utils.processing import process_input
 
 
 def _check_ollama_health() -> bool:
-    """Wrapper pour check_ollama_health qui peut être mockée dans les tests"""
     return check_ollama_health()
 
 
@@ -52,6 +57,12 @@ router = APIRouter()
 
 
 class MessageInput(BaseModel):
+    """
+    Classe MessageInput.
+
+    Cette classe fait partie du système Arkalia Luna Pro.
+    """
+
     message: str = Field(..., min_length=1, max_length=2000, description="Message utilisateur")
     model: str | None = Field(default="mistral:latest", description="Modèle IA à utiliser")
     temperature: float | None = Field(
@@ -61,6 +72,12 @@ class MessageInput(BaseModel):
 
 
 class ChatResponse(BaseModel):
+    """
+    Classe ChatResponse.
+
+    Cette classe fait partie du système Arkalia Luna Pro.
+    """
+
     response: str
     model_used: str
     processing_time: float
@@ -69,6 +86,12 @@ class ChatResponse(BaseModel):
 
 
 class HealthResponse(BaseModel):
+    """
+    Classe HealthResponse.
+
+    Cette classe fait partie du système Arkalia Luna Pro.
+    """
+
     status: str
     ollama_available: bool
     arkalia_modules: dict[str, str]
@@ -82,7 +105,6 @@ active_connections = 0
 
 
 def get_query_ollama() -> Callable[[str, str, float], str]:
-    """Retourne une fonction curryée pour interroger Ollama"""
     return lambda prompt, model, temp: real_query_ollama(prompt, model, temp)
 
 

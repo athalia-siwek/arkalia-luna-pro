@@ -7,4 +7,4 @@ Ce dossier contient tous les **scripts utilitaires** (bash, python, etc.) utilis
 - Scripts de migration
 - Scripts de test
 
-**Consultez ce dossier avant d'écrire un nouveau script !** 
+**Consultez ce dossier avant d'écrire un nouveau script !**

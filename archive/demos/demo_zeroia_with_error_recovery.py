@@ -5,8 +5,8 @@ Démontre l'intégration complète du système Error Recovery
 dans la boucle de raisonnement ZeroIA Enhanced.
 """
 
-import logging
-import sys
+# import logging
+# import sys
 from pathlib import Path
 
 # Ajout du chemin modules

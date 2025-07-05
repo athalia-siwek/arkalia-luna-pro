@@ -9,9 +9,7 @@ def test_load_state_file_not_found():
     Vérifie que `load_state()` retourne un dict vide si le fichier n'existe pas.
     """
     result = load_state(Path("non_existent_file.toml"))
-    assert result == {}, (
-        "Le fichier de l'état devrait être vide " "si le fichier TOML n'existe pas."
-    )
+    assert result == {}, "Le fichier de l'état devrait être vide si le fichier TOML n'existe pas."
 
 
 def test_is_valid_toml_invalid_data_forced():
@@ -37,7 +35,7 @@ def test_generate_snapshot_invalid_toml(tmp_path):
     with patch("modules.zeroia.snapshot_generator.is_valid_toml", return_value=False):
         result = generate_snapshot(input_path=invalid_toml_path, fallback=False)
         assert result is False, (
-            "Le snapshot ne devrait pas être généré " "avec un fichier TOML invalide."
+            "Le snapshot ne devrait pas être généré avec un fichier TOML invalide."
         )
 
 
@@ -49,4 +47,4 @@ def test_snapshot_generator_returns_valid_path(tmp_path):
     valid_path.write_text("fake = 'value'")
 
     result = generate_snapshot(input_path=valid_path, fallback=True)
-    assert result, "Snapshot non généré malgré fallback=True " "et un fichier TOML valide."
+    assert result, "Snapshot non généré malgré fallback=True et un fichier TOML valide."

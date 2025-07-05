@@ -1,15 +1,11 @@
-# 📁 tests/performance — Tests de performance
+# Tests de Performance
 
-Ce dossier contient les **tests de performance** et benchmarks :
-- Mesure du temps de réponse, du débit, de la consommation mémoire
-- Stress tests, benchmarks, tests de scalabilité
+Ce dossier contient les tests de performance et benchmarks.
+
+- **But** : Mesurer la latence, le débit, la robustesse sous charge.
+- **Organisation** : Un fichier par type de test (API, modules, global).
+- **Exécution** : `pytest tests/performance/`
 
 ## Conventions
 - Fichiers : `test_*.py`
 - Markers : `@pytest.mark.performance`
-- Rapports générés dans `tests/reports/`
-
-## Bonnes pratiques
-- Isoler les tests de performance des autres types de tests
-- Documenter les métriques mesurées
-- Nettoyer les ressources après chaque test

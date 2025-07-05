@@ -97,7 +97,7 @@ class CognitiveReactor:
         self.behavior_analyzer = behavior_analyzer or BehaviorAnalyzer()
         self.event_store = EventStore()
         self.quarantined_modules: dict[str, ModuleQuarantine] = {}
-        self.reaction_history: list[CognitiveReaction] = []
+        self.reaction_history: list[dict[str, Any] | CognitiveReaction] = []
         self.config = {
             "repetition_threshold": 7,
             "confidence_threshold": 0.5,
@@ -109,8 +109,8 @@ class CognitiveReactor:
         self.berserk_mode_active = False
         self.last_berserk_trigger: datetime | None = None
         # Ajouts pour les tests unitaires :
-        self.stimuli_queue = []
-        self.cognitive_state = {}
+        self.stimuli_queue: list[dict[str, Any]] = []
+        self.cognitive_state: dict[str, Any] = {}
 
         logger.info("🔥 CognitiveReactor initialized - Réactions automatiques activées")
 
@@ -222,7 +222,7 @@ class CognitiveReactor:
         Returns:
             Liste des réactions déclenchées
         """
-        reactions: list[Any] = []
+        reactions: list[CognitiveReaction] = []
 
         try:
             # 1. Nettoyer les quarantines expirées
@@ -509,7 +509,7 @@ class CognitiveReactor:
 
     async def _check_module_health(self, context: dict) -> list[CognitiveReaction]:
         """Vérifie la santé des modules et déclenche des quarantines si nécessaire"""
-        reactions: list[Any] = []
+        reactions: list[CognitiveReaction] = []
 
         for module in ["zeroia", "reflexia", "sandozia"]:
             confidence = context.get(f"{module}_confidence", 0.5)
@@ -564,8 +564,20 @@ def trigger_cognitive_reaction(context: dict, decision_pattern_count: int = 0) -
     reactor = create_cognitive_reactor()
 
     try:
-        # Appel synchrone simple pour intégration
-        reactions = asyncio.run(reactor.check_and_react(context, decision_pattern_count))
+        # Vérifier si une boucle d'événements est déjà en cours
+        try:
+            loop = asyncio.get_running_loop()
+            # Si on est dans une boucle, créer une tâche
+            import concurrent.futures
+
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future = executor.submit(
+                    asyncio.run, reactor.check_and_react(context, decision_pattern_count)
+                )
+                reactions = future.result(timeout=10)  # Timeout de 10 secondes
+        except RuntimeError:
+            # Pas de boucle en cours, on peut utiliser asyncio.run
+            reactions = asyncio.run(reactor.check_and_react(context, decision_pattern_count))
 
         return [f"{r.action}:{r.severity.value}" for r in reactions]
 

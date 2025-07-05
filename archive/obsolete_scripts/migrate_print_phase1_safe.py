@@ -6,10 +6,10 @@ Arkalia-LUNA Pro v4.0+
 Version sécurisée qui vérifie les imports avant migration.
 """
 
-import json
-import re
-import subprocess
-import sys
+# import json
+# import re
+# import subprocess
+# import sys
 from pathlib import Path
 from typing import Any
 

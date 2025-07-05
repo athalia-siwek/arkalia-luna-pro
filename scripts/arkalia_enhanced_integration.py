@@ -176,21 +176,21 @@ class ArkaliaEnhancedEngine:
         """Génère un contexte de démo réaliste"""
         import random
 
-        # Simulation réaliste
-        base_cpu = 45 + random.randint(-15, 35)  # 30-80% CPU
-        base_ram = 40 + random.randint(-10, 30)  # 30-70% RAM
+        # Simulation réaliste (démo uniquement)
+        base_cpu = 45 + random.randint(-15, 35)  # nosec B311  # 30-80% CPU
+        base_ram = 40 + random.randint(-10, 30)  # nosec B311  # 30-70% RAM
 
         return {
             "timestamp": datetime.now().isoformat(),
             "system_cpu": base_cpu,
             "system_ram": base_ram,
-            "reflexia_score": round(random.uniform(0.6, 1.0), 3),
-            "sandozia_health": round(random.uniform(0.7, 0.95), 3),
-            "contradiction": random.choice([False, False, False, True]),  # 25% contradictions
+            "reflexia_score": round(random.uniform(0.6, 1.0), 3),  # nosec B311
+            "sandozia_health": round(random.uniform(0.7, 0.95), 3),  # nosec B311
+            "contradiction": random.choice([False, False, False, True]),  # nosec B311  # 25% contradictions
             "modules_active": ["zeroia", "reflexia", "sandozia"],
             "quarantined_modules": [],
             "berserk_mode": False,
-            "global_health_score": round(random.uniform(0.5, 0.9), 3),
+            "global_health_score": round(random.uniform(0.5, 0.9), 3),  # nosec B311
         }
 
     def _generate_heatmap_metrics(self, context: dict, reactions: list) -> dict:
@@ -255,11 +255,11 @@ class ArkaliaEnhancedEngine:
             # Log progression
             if result["cognitive_reactions"]:
                 logger.warning(
-                    f"🔥 Cycle {i+1}: Réactions déclenchées: {result['cognitive_reactions']}"
+                    f"🔥 Cycle {i + 1}: Réactions déclenchées: {result['cognitive_reactions']}"
                 )
 
             if result["berserk_mode"]:
-                logger.critical(f"🚨 Cycle {i+1}: MODE BERSERK ACTIVÉ!")
+                logger.critical(f"🚨 Cycle {i + 1}: MODE BERSERK ACTIVÉ!")
 
             # Délai entre cycles
             await asyncio.sleep(0.1)
@@ -338,7 +338,7 @@ async def demo_complete_workflow():
     print("🔄 Exécution 5 cycles normaux...")
     for i in range(5):
         result = await engine.run_enhanced_cycle()
-        print(f"   Cycle {i+1}: {result['decision']} (confiance: {result['confidence']:.2f})")
+        print(f"   Cycle {i + 1}: {result['decision']} (confiance: {result['confidence']:.2f})")
 
     print()
 
@@ -387,7 +387,7 @@ async def integrate_with_zeroia():
         result = await engine.run_enhanced_cycle(context)
 
         if result["cognitive_reactions"]:
-            print(f"🔥 Réactions automatiques cycle {i+1}: {result['cognitive_reactions']}")
+            print(f"🔥 Réactions automatiques cycle {i + 1}: {result['cognitive_reactions']}")
 
     print("✅ Intégration ZeroIA testée avec succès")
 

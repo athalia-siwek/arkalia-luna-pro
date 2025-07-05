@@ -7,7 +7,7 @@ from unittest.mock import patch
 import pytest
 import toml
 
-from utils.io_safe import (
+from modules.utils.helpers.io_safe import (
     AtomicWriteError,
     LockedReadError,
     atomic_write,
@@ -176,7 +176,7 @@ class TestLockedRead:
         test_file.write_text("test data")
 
         # Simule un timeout en prenant le verrou
-        from utils.io_safe import _get_file_lock
+        from modules.utils.helpers.io_safe import _get_file_lock
 
         file_lock = _get_file_lock(test_file)
         file_lock.acquire()

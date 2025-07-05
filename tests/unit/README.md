@@ -1,17 +1,11 @@
-# 📁 tests/unit — Tests unitaires
+# Tests Unitaires
 
-Ce dossier contient les **tests unitaires** d’Arkalia-LUNA Pro.
+Ce dossier contient tous les tests unitaires pour chaque module d’Arkalia Luna Pro.
 
-- Cible : modules isolés, logique métier, fonctions pures
-- Objectif : garantir la robustesse de chaque composant indépendamment
+- **But** : Vérifier le comportement isolé de chaque fonction, classe ou composant.
+- **Organisation** : Un fichier par module, nommage `test_<module>.py`.
+- **Exécution** : `pytest tests/unit/`
 
 ## Conventions
 - Fichiers : `test_*.py`
 - Markers : `@pytest.mark.unit`
-- Pas de dépendance réseau ou base de données
-- Utiliser les fixtures de `tests/fixtures/` si besoin
-
-## Bonnes pratiques
-- Un test = un comportement attendu
-- Garder les tests rapides et indépendants
-- Documenter les cas limites

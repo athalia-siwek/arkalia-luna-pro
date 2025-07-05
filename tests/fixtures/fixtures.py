@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.fixtures.test_helpers import ensure_test_toml, ensure_zeroia_state_file
+from tests.fixtures.__test_helpers import ensure_test_toml, ensure_zeroia_state_file
 
 
 @pytest.fixture(scope="session")

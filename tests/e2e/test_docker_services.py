@@ -12,9 +12,10 @@ import subprocess
 import time
 from typing import Any
 
-import docker
 import httpx
 import pytest
+
+import docker
 
 
 @pytest.fixture(scope="session")

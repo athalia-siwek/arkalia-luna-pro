@@ -1,3 +1,9 @@
+"""
+Module failsafe.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 import json
 import shutil
 from datetime import datetime
@@ -12,7 +18,6 @@ FAILURE_LOG = Path("logs/failure_analysis.md")
 
 
 def load_snapshot(snapshot_path: str) -> dict[str, Any] | None:
-    """Charge un snapshot depuis le fichier spécifié."""
     try:
         with open(snapshot_path) as f:
             data = toml.load(f)
@@ -24,7 +29,6 @@ def load_snapshot(snapshot_path: str) -> dict[str, Any] | None:
 
 
 def log_failure(error_message: str, log_file: str = "logs/failsafe_errors.log") -> None:
-    """Enregistre une erreur dans le fichier de log."""
     try:
         log_path = Path(log_file)
         log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -37,7 +41,6 @@ def log_failure(error_message: str, log_file: str = "logs/failsafe_errors.log") 
 
 
 def restore_backup(backup_path: str, target_path: str) -> bool:
-    """Restaure un backup vers le chemin cible."""
     try:
         shutil.copy2(backup_path, target_path)
         return True
@@ -46,7 +49,6 @@ def restore_backup(backup_path: str, target_path: str) -> bool:
 
 
 def create_backup(source_path: str, backup_dir: str = "backups") -> str | None:
-    """Crée un backup du fichier source."""
     try:
         source = Path(source_path)
         if not source.exists():
@@ -65,7 +67,6 @@ def create_backup(source_path: str, backup_dir: str = "backups") -> str | None:
 
 
 def log_success(message: str, log_file: str = "logs/failsafe_success.log") -> None:
-    """Enregistre un succès dans le fichier de log."""
     try:
         log_path = Path(log_file)
         log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -78,7 +79,6 @@ def log_success(message: str, log_file: str = "logs/failsafe_success.log") -> No
 
 
 def rollback_system(snapshot_path: str, target_path: str) -> bool:
-    """Effectue un rollback du système vers un snapshot."""
     try:
         # Créer un backup avant rollback
         backup_path = create_backup(target_path)
@@ -100,7 +100,12 @@ def rollback_system(snapshot_path: str, target_path: str) -> bool:
 
 
 def failsafe_mode() -> None:
-    print("🛡️ Activation du mode Failsafe ZeroIA…")
+    """
+    Fonction failsafe_mode.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
+    print("Mode Failsafe Activation du mode Failsafe ZeroIA…")
     snapshot = load_snapshot(str(SNAPSHOT_PATH))
 
     if snapshot is None or "decision" not in snapshot:
@@ -109,7 +114,7 @@ def failsafe_mode() -> None:
         if success:
             print("✅ Restauration réussie.")
         else:
-            print("❌ Aucune restauration possible. " "ZeroIA doit être relancé manuellement.")
+            print("❌ Aucune restauration possible. ZeroIA doit être relancé manuellement.")
     else:
         print("✅ Snapshot valide. Aucun failsafe nécessaire.")
 

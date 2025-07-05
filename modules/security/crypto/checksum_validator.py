@@ -1,3 +1,9 @@
+"""
+Module checksum_validator.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 # 🔐 modules/security/crypto/checksum_validator.py
 # Validation checksums SHA256 des artefacts de build
 
@@ -12,8 +18,6 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityError(Exception):
-    """Exception levée lors de violations d'intégrité"""
-
     pass
 
 
@@ -29,6 +33,11 @@ class BuildIntegrityValidator:
     """
 
     def __init__(self, base_dir: Path | None = None) -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.base_dir = Path(base_dir or ".")
         self.critical_extensions = {".py", ".so", ".dll", ".dylib", ".exe", ".jar"}
         self.manifest_file = self.base_dir / "security" / "checksums.manifest.json"
@@ -185,7 +194,6 @@ class BuildIntegrityValidator:
         return results
 
     def _is_critical_file(self, file_path: Path) -> bool:
-        """Détermine si un fichier est critique pour la sécurité"""
         if not file_path.is_file():
             return False
 
@@ -215,7 +223,6 @@ class BuildIntegrityValidator:
         return False
 
     def _compute_file_hash(self, file_path: Path) -> str:
-        """Calcule SHA256 d'un fichier"""
         hasher = hashlib.sha256()
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(8192), b""):
@@ -223,7 +230,6 @@ class BuildIntegrityValidator:
         return hasher.hexdigest()
 
     def _get_arkalia_version(self) -> str:
-        """Récupère version Arkalia depuis version.toml"""
         try:
             import toml
 
@@ -236,7 +242,6 @@ class BuildIntegrityValidator:
         return "unknown"
 
     def _get_critical_files_list(self) -> list[str]:
-        """Liste des fichiers ultra-critiques pour quick check"""
         return [
             "modules/zeroia/core.py",
             "modules/reflexia/core.py",
@@ -247,7 +252,6 @@ class BuildIntegrityValidator:
         ]
 
     def _log_violations(self, violations: list[str], metadata: dict):
-        """Log les violations d'intégrité avec détails"""
         timestamp = datetime.now().isoformat()
         log_entry = {
             "timestamp": timestamp,
@@ -266,7 +270,6 @@ class BuildIntegrityValidator:
 
 # Fonctions utilitaires
 def generate_build_manifest(output_path: Path | None = None) -> Path:
-    """Génère manifest pour le build courant"""
     validator = BuildIntegrityValidator()
     checksums = validator.generate_checksums()
 
@@ -281,7 +284,6 @@ def generate_build_manifest(output_path: Path | None = None) -> Path:
 
 
 def validate_production_integrity() -> bool:
-    """Validation rapide intégrité pour production"""
     try:
         validator = BuildIntegrityValidator()
         return validator.validate_integrity()
@@ -291,7 +293,6 @@ def validate_production_integrity() -> bool:
 
 
 def _get_git_commit() -> str:
-    """Récupère hash du commit Git courant"""
     try:
         import subprocess
 

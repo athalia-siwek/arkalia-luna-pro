@@ -1,9 +1,10 @@
-# 📁 tests/chaos — Tests de chaos engineering
+# Tests de Chaos
 
-Ce dossier regroupe les **tests de chaos** :
+Ce dossier regroupe les tests de chaos engineering.
 
-- Simulation de pannes, coupures réseau, corruption de fichiers, etc.
-- Objectif : tester la résilience et la tolérance aux pannes
+- **But** : Valider la résilience du système face à des pannes simulées (CPU, réseau, fichiers, etc).
+- **Organisation** : Un fichier par type de chaos.
+- **Exécution** : `pytest tests/chaos/`
 
 ## Conventions
 

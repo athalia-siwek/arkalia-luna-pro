@@ -49,9 +49,12 @@ router = APIRouter(tags=["ZeroIA"])
 
 # === CORE ZEROIA ===
 class ZeroIACore:
-    """🧠 Core ZeroIA - Système de décision intelligent"""
-
     def __init__(self):
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         print("🧠 ZeroIACore __init__ appelé")
         self.circuit_breaker = CircuitBreaker()
         self.state_path = Path("state/zeroia_state.toml")
@@ -61,6 +64,11 @@ class ZeroIACore:
         self._load_state()
 
     def _ensure_state_files(self):
+        """
+        Fonction _ensure_state_files.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.state_path.parent.mkdir(exist_ok=True)
         if not self.state_path.exists():
             initial_state: dict[str, Any] = {
@@ -84,6 +92,11 @@ class ZeroIACore:
                 json.dump(initial_dashboard, f, indent=2)
 
     def _load_state(self):
+        """
+        Fonction _load_state.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         try:
             if self.state_path.exists():
                 self.state = toml.load(self.state_path)
@@ -94,6 +107,11 @@ class ZeroIACore:
             self.state = {}
 
     def _save_state(self):
+        """
+        Fonction _save_state.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         try:
             with open(self.state_path, "w") as f:
                 toml.dump(self.state, f)
@@ -110,6 +128,11 @@ class ZeroIACore:
             logger.error(f"Erreur sauvegarde état ZeroIA: {e}")
 
     def make_decision(self, context: str) -> dict[str, Any]:
+        """
+        Fonction make_decision.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         print("🧪 make_decision déclaré")
         try:
             if not self.circuit_breaker.allow_request():
@@ -141,6 +164,11 @@ class ZeroIACore:
             return {"decision": "error", "confidence": 0.0, "reason": str(e)}
 
     def get_status(self) -> dict[str, Any]:
+        """
+        Fonction get_status.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         return {
             "status": "active",
             "last_decision": self.state.get("last_decision", "unknown"),
@@ -170,7 +198,13 @@ async def get_zeroia_status():
 
 
 class DecisionRequest(BaseModel):
-    context: str
+    """
+    Classe DecisionRequest.
+
+    Cette classe fait partie du système Arkalia Luna Pro.
+    """
+
+    context: Any
 
 
 @router.post("/decision")
@@ -183,6 +217,11 @@ async def make_decision(request: DecisionRequest):
 
 @router.get("/dummy-check")
 def dummy_check():
+    """
+    Fonction dummy_check.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     return {"status": "router loaded"}
 
 

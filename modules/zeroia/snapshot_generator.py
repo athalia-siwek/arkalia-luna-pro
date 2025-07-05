@@ -1,3 +1,9 @@
+"""
+Module snapshot_generator.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 # 📄 modules/zeroia/snapshot_generator.py
 
 import subprocess  # nosec
@@ -15,6 +21,11 @@ FAILSAFE_SCRIPT = Path(__file__).parent / "failsafe.py"
 
 
 def load_state(file_path: Path) -> dict:
+    """
+    Fonction load_state.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     try:
         return toml.load(file_path)
     except FileNotFoundError:
@@ -26,6 +37,11 @@ def load_state(file_path: Path) -> dict:
 
 
 def is_valid_toml(data: dict) -> bool:
+    """
+    Fonction is_valid_toml.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     try:
         toml.dumps(data)
         return True

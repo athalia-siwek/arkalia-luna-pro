@@ -79,7 +79,7 @@ def analyze_system_health(metrics: dict[str, Any]) -> dict[str, str]:
     analysis["arkalia_modules"] = {}
 
     # Vérifier les modules principaux
-    arkalia_modules = {
+    arkalia_modules: dict[str, str] = {
         "zeroia": "modules/zeroia/state/zeroia_state.toml",
         "sandozia": "state/sandozia",
         "assistantia": "modules/assistantia",

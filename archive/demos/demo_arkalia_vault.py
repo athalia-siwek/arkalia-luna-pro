@@ -2,7 +2,7 @@
 # 🔐 scripts/demo_arkalia_vault.py
 # Démonstration d'Arkalia-Vault Enterprise
 
-import sys
+# import sys
 from pathlib import Path
 
 # Ajouter le projet au PYTHONPATH

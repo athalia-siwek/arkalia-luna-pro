@@ -1,3 +1,9 @@
+"""
+Module token_lifecycle.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 # 🎫 modules/security/crypto/token_lifecycle.py
 # Gestion du cycle de vie des tokens et sessions Arkalia-Vault
 
@@ -17,8 +23,6 @@ logger = logging.getLogger(__name__)
 
 
 class TokenType(Enum):
-    """Types de tokens gérés"""
-
     SESSION = "session"
     API_KEY = "api_key"
     ACCESS_TOKEN = "access_token"
@@ -27,8 +31,6 @@ class TokenType(Enum):
 
 
 class TokenStatus(Enum):
-    """États des tokens"""
-
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -37,8 +39,6 @@ class TokenStatus(Enum):
 
 @dataclass
 class TokenMetadata:
-    """Métadonnées complètes d'un token"""
-
     token_id: str
     token_type: TokenType
     status: TokenStatus
@@ -54,7 +54,6 @@ class TokenMetadata:
     tags: list[str]
 
     def to_dict(self) -> dict:
-        """Conversion en dictionnaire pour sérialisation"""
         data = asdict(self)
         # Convertir les enums en strings
         data["token_type"] = self.token_type.value
@@ -69,7 +68,11 @@ class TokenMetadata:
 
     @classmethod
     def from_dict(cls, data: dict) -> "TokenMetadata":
-        """Création depuis un dictionnaire"""
+        """
+        Fonction from_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         return cls(
             token_id=data["token_id"],
             token_type=TokenType(data["token_type"]),
@@ -91,19 +94,31 @@ class TokenMetadata:
         )
 
     def is_expired(self) -> bool:
-        """Vérifie si le token est expiré"""
+        """
+        Fonction is_expired.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         if self.expires_at is None:
             return False
         return datetime.now() > self.expires_at
 
     def is_usage_exceeded(self) -> bool:
-        """Vérifie si le nombre max d'utilisations est dépassé"""
+        """
+        Fonction is_usage_exceeded.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         if self.max_usage_count is None:
             return False
         return self.usage_count >= self.max_usage_count
 
     def is_valid(self) -> bool:
-        """Vérifie si le token est valide pour utilisation"""
+        """
+        Fonction is_valid.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         return (
             self.status == TokenStatus.ACTIVE
             and not self.is_expired()
@@ -125,6 +140,11 @@ class TokenManager:
     """
 
     def __init__(self, vault: ArkaliaVault, jwt_secret_name: str = "jwt_master_secret") -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.vault = vault
         self.jwt_secret_name = jwt_secret_name
         self.token_metadata: dict[str, TokenMetadata] = {}
@@ -139,7 +159,11 @@ class TokenManager:
         logger.info("🎫 TokenManager initialized")
 
     def _ensure_jwt_secret(self):
-        """S'assure que le secret JWT existe dans le vault"""
+        """
+        Fonction _ensure_jwt_secret.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         try:
             jwt_secret = self.vault.retrieve_secret(self.jwt_secret_name)
             if jwt_secret is None:
@@ -157,14 +181,22 @@ class TokenManager:
             raise
 
     def _get_jwt_secret(self) -> str:
-        """Récupère le secret JWT du vault"""
+        """
+        Fonction _get_jwt_secret.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         jwt_secret = self.vault.retrieve_secret(self.jwt_secret_name)
         if jwt_secret is None:
             raise VaultError("JWT secret not found in vault")
         return jwt_secret
 
     def _load_token_metadata(self):
-        """Charge les métadonnées des tokens depuis le vault"""
+        """
+        Fonction _load_token_metadata.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         try:
             metadata_json = self.vault.retrieve_secret("token_metadata")
             if metadata_json:
@@ -177,7 +209,11 @@ class TokenManager:
             logger.warning(f"⚠️ Could not load token metadata: {e}")
 
     def _save_token_metadata(self):
-        """Sauvegarde les métadonnées des tokens dans le vault"""
+        """
+        Fonction _save_token_metadata.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         try:
             data = {token_id: meta.to_dict() for token_id, meta in self.token_metadata.items()}
             metadata_json = json.dumps(data, indent=2)
@@ -302,7 +338,6 @@ class TokenManager:
         return jwt.encode(payload, jwt_secret, algorithm="HS256")
 
     def _generate_api_key(self, metadata: TokenMetadata) -> str:
-        """Génère une clé API"""
         prefix = f"ak_{metadata.token_type.value}"
         suffix = secrets.token_urlsafe(32)
         return f"{prefix}_{suffix}"
@@ -426,7 +461,7 @@ class TokenManager:
             Nombre de tokens nettoyés
         """
         cleaned_count = 0
-        expired_tokens: list[Any] = []
+        expired_tokens: list[str] = []
 
         for token_id, metadata in self.token_metadata.items():
             if metadata.is_expired() or metadata.is_usage_exceeded():
@@ -473,9 +508,8 @@ class TokenManager:
         logger.info(f"🔄 Token refreshed for user {metadata.associated_user}")
         return new_token_id, new_token_value
 
-    def get_token_stats(self) -> dict:
-        """Retourne les statistiques des tokens"""
-        stats = {
+    def get_token_stats(self) -> dict[str, Any]:
+        stats: dict[str, Any] = {
             "total_tokens": len(self.token_metadata),
             "active_tokens": 0,
             "expired_tokens": 0,
@@ -517,7 +551,7 @@ class TokenManager:
         Returns:
             Liste des métadonnées des tokens actifs
         """
-        active_tokens: list[Any] = []
+        active_tokens: list[TokenMetadata] = []
 
         for metadata in self.token_metadata.values():
             if metadata.is_valid():

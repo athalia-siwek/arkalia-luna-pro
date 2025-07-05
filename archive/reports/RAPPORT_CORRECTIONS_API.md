@@ -112,4 +112,4 @@ Toutes les erreurs critiques de l'API ont été corrigées :
 - ✅ Métriques disponibles
 - ✅ Scripts de nettoyage améliorés
 
-L'API Arkalia-LUNA est maintenant **100% opérationnelle** ! 🚀 
+L'API Arkalia-LUNA est maintenant **100% opérationnelle** ! 🚀

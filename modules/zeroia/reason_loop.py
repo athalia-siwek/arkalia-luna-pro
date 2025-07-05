@@ -1,3 +1,9 @@
+"""
+Module reason_loop.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 import logging
 import textwrap
 import time
@@ -124,14 +130,29 @@ def load_toml(path: Path) -> dict:
 
 
 def load_context(path: Path = CTX_PATH) -> dict:
+    """
+    Fonction load_context.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     return load_toml(path)
 
 
 def load_reflexia_state(path: Path = REFLEXIA_STATE) -> dict:
+    """
+    Fonction load_reflexia_state.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     return load_toml(path)
 
 
 def decide(context: dict) -> tuple[str, float]:
+    """
+    Fonction decide.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     status = context.get("status", {})
     severity = status.get("severity", "none")
     cpu = status.get("cpu", 0)
@@ -148,7 +169,6 @@ def decide(context: dict) -> tuple[str, float]:
 
 
 def should_process_decision(new_decision: str) -> bool:
-    """Évite les répétitions excessives de la même décision"""
     global LAST_DECISION, LAST_DECISION_TIME
 
     current_time = datetime.now()
@@ -175,6 +195,11 @@ def should_process_decision(new_decision: str) -> bool:
 
 
 def ensure_parent_dir(path: Path) -> None:
+    """
+    Fonction ensure_parent_dir.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     target = path.parent if path.suffix else path
     target.mkdir(parents=True, exist_ok=True)
 
@@ -237,6 +262,11 @@ def update_dashboard(
 
 
 def get_configured_contradiction_log() -> Path:
+    """
+    Fonction get_configured_contradiction_log.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     try:
         config = toml.load(CONFIG_PATH)
         log_path_str = config.get("logging", {}).get("contradiction_log_path")
@@ -266,14 +296,19 @@ def check_for_ia_conflict(
 
 
 def log_conflict(conflict_msg: str) -> None:
+    """
+    Fonction log_conflict.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     logger.debug(conflict_msg)
     logger.info("🔄 ZeroIA loop started successfully")
 
 
 def validate_and_fix_context(ctx: dict) -> dict:
     """
-    🛡️ VALIDATION ET CORRECTION DU CONTEXTE
-    Assure que toutes les clés requises sont présentes avec des valeurs par défaut sécurisées
+    Validation et correction du contexte.
+    Assure que toutes les clés requises sont présentes avec des valeurs par défaut sécurisées.
     """
     # Créer une copie pour éviter de modifier l'original
     validated_ctx = ctx.copy()
@@ -316,12 +351,12 @@ def reason_loop(
     ctx = load_context(context_path or CTX_PATH)
     reflexia_data = load_reflexia_state(reflexia_path or REFLEXIA_STATE)
 
-    # 🛡️ ROBUSTESSE v4.0 - Validation et correction automatique du contexte
+    # ROBUSTESSE v4.0 - Validation et correction automatique du contexte
     ctx = validate_and_fix_context(ctx)
 
     decision, score = decide(ctx)
 
-    # 🛡️ VALIDATION INTÉGRITÉ MODÈLE - Roadmap S2
+    # VALIDATION INTÉGRITÉ MODÈLE - Roadmap S2
     try:
         integrity_valid, integrity_reason = validate_decision_integrity(ctx, decision, score)
         if not integrity_valid:
@@ -348,9 +383,7 @@ def reason_loop(
         decision,
         log_path=contradiction_log_path or get_configured_contradiction_log(),
     ):
-        log_conflict(
-            f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, " f"ZeroIA = {decision}"
-        )
+        log_conflict(f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, ZeroIA = {decision}")
 
     # Logs modifiés pour éviter le spam
     status = ctx.get("status", {})
@@ -362,10 +395,20 @@ def reason_loop(
 
 
 def compute_confidence_score(success_rate: float, error_rate: float) -> float:
+    """
+    Fonction compute_confidence_score.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     return max(0.0, min(1.0, success_rate - error_rate))
 
 
 def main_loop() -> None:
+    """
+    Fonction main_loop.
+
+    Cette fonction fait partie du système Arkalia Luna Pro.
+    """
     print("[ZeroIA] loop started", flush=True)
     try:
         reason_loop()

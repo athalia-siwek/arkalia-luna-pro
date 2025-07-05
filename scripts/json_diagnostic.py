@@ -12,13 +12,14 @@ import sys
 from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 
 class JSONDiagnostic:
     def __init__(self, root_path: str = "."):
         self.root_path = Path(root_path)
-        self.json_files = []
-        self.analysis = {
+        self.json_files: list[dict] = []
+        self.analysis: dict[str, Any] = {
             "summary": {},
             "by_size": [],
             "by_directory": defaultdict(list),
@@ -151,18 +152,18 @@ class JSONDiagnostic:
 
         report = f"""# 📊 DIAGNOSTIC FICHIERS JSON - Arkalia Luna Pro
 
-**Date d'analyse :** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+**Date d'analyse :** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 **Racine analysée :** {self.root_path.absolute()}
 
 ## 📈 RÉSUMÉ GLOBAL
 
-- **Total fichiers JSON :** {self.analysis['summary']['total_files']}
-- **Taille totale :** {self.analysis['summary']['total_size_mb']} MB
-- **Fichiers volumineux (>1MB) :** {self.analysis['summary']['large_files']}
-- **Fichiers de cache :** {self.analysis['summary']['cache_files']}
-- **Fichiers de données :** {self.analysis['summary']['data_files']}
-- **Fichiers de config :** {self.analysis['summary']['config_files']}
-- **Fichiers de rapport :** {self.analysis['summary']['report_files']}
+- **Total fichiers JSON :** {self.analysis["summary"]["total_files"]}
+- **Taille totale :** {self.analysis["summary"]["total_size_mb"]} MB
+- **Fichiers volumineux (>1MB) :** {self.analysis["summary"]["large_files"]}
+- **Fichiers de cache :** {self.analysis["summary"]["cache_files"]}
+- **Fichiers de données :** {self.analysis["summary"]["data_files"]}
+- **Fichiers de config :** {self.analysis["summary"]["config_files"]}
+- **Fichiers de rapport :** {self.analysis["summary"]["report_files"]}
 
 ## 🚨 FICHIERS VOLUMINEUX (>1MB)
 

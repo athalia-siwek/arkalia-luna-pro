@@ -3,6 +3,7 @@
 
 import shutil
 import tempfile
+from collections.abc import Generator
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -15,13 +16,13 @@ class TestArkaliaVault:
     """Tests pour la classe ArkaliaVault"""
 
     @pytest.fixture
-    def temp_vault_dir(self) -> None:
+    def temp_vault_dir(self) -> Generator[Path, None, None]:
         temp_dir = tempfile.mkdtemp()
         yield Path(temp_dir)
         shutil.rmtree(temp_dir)
 
     @pytest.fixture
-    def vault(self, temp_vault_dir) -> None:
+    def vault(self, temp_vault_dir: Path) -> ArkaliaVault:
         return ArkaliaVault(base_dir=temp_vault_dir)
 
     def test_vault_initialization(self, vault, temp_vault_dir) -> None:

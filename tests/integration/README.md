@@ -1,9 +1,7 @@
-# Tests d'intégration — Arkalia-LUNA Pro
+# Tests d'Intégration
 
-Ce dossier regroupe tous les tests d'intégration des modules critiques du projet Arkalia-LUNA Pro.
+Ce dossier regroupe les tests d'intégration entre modules et composants.
 
-- Chaque sous-dossier correspond à un module.
-- Les tests vérifient l'intégration réelle entre modules, la robustesse et la non-régression.
-- Convention : `test_<module>_integration.py`.
-
-Respecte la philosophie ultra-pro Arkalia : tests propres, sans print, markers explicites, et couverture réelle.
+- **But** : Vérifier l'interopérabilité et les flux entre modules.
+- **Organisation** : Un fichier par scénario d'intégration.
+- **Exécution** : `pytest tests/integration/`

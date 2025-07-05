@@ -11,7 +11,7 @@ from modules.zeroia.reason_loop import (
     get_configured_contradiction_log,
     log_conflict,
 )
-from tests.fixtures.test_helpers import ensure_test_toml
+from tests.fixtures.__test_helpers import ensure_test_toml
 
 ensure_test_toml()
 

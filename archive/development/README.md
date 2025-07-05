@@ -8,4 +8,4 @@ Ce dossier contient tous les **bilans, plans, logs, métriques et fichiers de tr
 - Fichiers de session
 - Workflows
 
-**Aucun fichier n'est supprimé, tout est archivé ici pour historique et analyse.** 
+**Aucun fichier n'est supprimé, tout est archivé ici pour historique et analyse.**

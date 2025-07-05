@@ -25,3 +25,10 @@ Ce dossier centralise toutes les **fixtures** et **helpers** réutilisables dans
 ---
 
 **But :** éviter la duplication, garantir la cohérence et accélérer l'écriture de nouveaux tests.
+
+# Fixtures de Test
+
+Ce dossier contient les fixtures et helpers partagés pour les tests.
+
+- **But** : Mutualiser la préparation de données, mocks, contextes.
+- **Utilisation** : Import dans les tests via `from tests.fixtures import ...`
