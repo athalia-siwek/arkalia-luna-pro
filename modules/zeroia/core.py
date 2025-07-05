@@ -41,6 +41,23 @@ zeroia_confidence_score = Gauge(
     "zeroia_confidence_score", "Score de confiance de la dernière décision ZeroIA"
 )
 
+zeroia_circuit_breaker_state = Gauge(
+    "zeroia_circuit_breaker_state",
+    "État du circuit breaker (0=closed, 1=open, 2=half_open)",
+    ["state_name"],
+)
+
+zeroia_event_store_events = Gauge(
+    "zeroia_event_store_events_total",
+    "Nombre total d'événements dans l'event store",
+    ["event_type"],
+)
+
+zeroia_decision_duration = Gauge(
+    "zeroia_decision_duration_seconds",
+    "Durée de la dernière décision en secondes",
+)
+
 logger = logging.getLogger(__name__)
 
 # === ROUTER ZEROIA ===
@@ -223,6 +240,59 @@ def dummy_check():
     Cette fonction fait partie du système Arkalia Luna Pro.
     """
     return {"status": "router loaded"}
+
+
+@router.get("/metrics")
+async def get_metrics():
+    """
+    📊 Endpoint métriques Prometheus pour ZeroIA
+    """
+    try:
+        # Récupérer l'état actuel
+        cb, es, _, _ = initialize_components_with_recovery()
+        
+        # Mettre à jour les métriques du circuit breaker
+        cb_status = cb.get_status()
+        state_name = cb_status["state"].value
+        zeroia_circuit_breaker_state.labels(state_name=state_name).set(1)
+        
+        # Mettre à jour les métriques de l'event store
+        analytics = es.get_analytics()
+        for event_type, count in analytics.get("events_by_type", {}).items():
+            zeroia_event_store_events.labels(event_type=event_type).set(count)
+        
+        # Lire le dashboard pour les métriques récentes
+        dashboard_path = Path("state/zeroia_dashboard.json")
+        if dashboard_path.exists():
+            try:
+                with open(dashboard_path) as f:
+                    dashboard = json.load(f)
+                
+                confidence = dashboard.get("confidence", 0.0)
+                zeroia_confidence_score.set(confidence)
+                
+                # Mettre à jour les métriques de décision
+                decision = dashboard.get("last_decision", "unknown")
+                if decision != "unknown":
+                    zeroia_decisions_total.labels(
+                        decision_type=decision,
+                        confidence_level="high" if confidence > 0.7 else "medium" if confidence > 0.4 else "low"
+                    ).inc()
+                    
+            except Exception as e:
+                logger.warning(f"Erreur lecture dashboard: {e}")
+        
+        # Générer le format Prometheus
+        prometheus_data = generate_latest()
+        
+        return PlainTextResponse(content=prometheus_data, media_type=CONTENT_TYPE_LATEST)
+        
+    except Exception as e:
+        logger.error(f"Erreur métriques ZeroIA: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Erreur métriques : {str(e)}"},
+        )
 
 
 # Instance globale (singleton pattern simple)
