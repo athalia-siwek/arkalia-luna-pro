@@ -6,15 +6,24 @@ Permet de restaurer un état précédent en cas de problème.
 
 import argparse
 import logging
+import os
 import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
+# Ajouter le répertoire parent au PYTHONPATH pour les imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
 import toml
 
-from modules.utils.helpers.io_safe import read_state_safe
-from modules.zeroia.failsafe import restore_backup
+try:
+    from modules.utils.helpers.io_safe import read_state_safe
+    from modules.zeroia.failsafe import restore_backup
+except ImportError as e:
+    print(f"Erreur d'import: {e}")
+    print("Vérifiez que le PYTHONPATH inclut le répertoire racine du projet")
+    sys.exit(1)
 
 # Configuration du logging
 logging.basicConfig(
