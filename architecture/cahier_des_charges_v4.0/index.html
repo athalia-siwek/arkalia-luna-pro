@@ -1,0 +1,4559 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Système d'Intelligence Artificielle Enterprise - v2.8.0 Production Ready">
+      
+      
+        <meta name="author" content="Arkalia-LUNA Team">
+      
+      
+        <link rel="canonical" href="https://arkalia-luna-system.github.io/arkalia-luna-pro/architecture/cahier_des_charges_v4.0/">
+      
+      
+        <link rel="prev" href="../decision_flow/">
+      
+      
+        <link rel="next" href="../../modules/zeroia/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Cahier des Charges - Arkalia-LUNA Pro</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/arkalia-luna-theme.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="slate" data-md-color-accent="slate">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cahier-des-charges-arkalia-luna-pro-v40" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Arkalia-LUNA Pro" class="md-header__button md-logo" aria-label="Arkalia-LUNA Pro" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arkalia-LUNA Pro
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cahier des Charges
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="slate" data-md-color-accent="slate"  aria-label="Passer au mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="slate" data-md-color-accent="slate"  aria-label="Passer au mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arkalia-luna-system/arkalia-luna-pro
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/quick-start/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../fonctionnement/structure/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../modules/zeroia/" class="md-tabs__link">
+          
+  
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../devops/" class="md-tabs__link">
+          
+  
+  
+  Infrastructure
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../security/security/" class="md-tabs__link">
+          
+  
+  
+  Security
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../devops/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/docker_hardening/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../releases/v2.8.0/" class="md-tabs__link">
+          
+  
+  
+  Releases
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../plan-ameliorations-futures/" class="md-tabs__link">
+          
+  
+  
+  Planning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../support/faqs/" class="md-tabs__link">
+          
+  
+  
+  Support
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../legal/license/" class="md-tabs__link">
+          
+  
+  
+  Legal
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Arkalia-LUNA Pro" class="md-nav__button md-logo" aria-label="Arkalia-LUNA Pro" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Arkalia-LUNA Pro
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arkalia-luna-system/arkalia-luna-pro
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/cognitive-levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cognitive Levels
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fonctionnement/structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fonctionnement/composants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Components
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fonctionnement/kernel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kernel
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fonctionnement/utilisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decision_flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Decision Flow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Cahier des Charges
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cahier des Charges
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Sur cette page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sur cette page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objectifs-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 🌟 Objectifs du Projet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 🌟 Objectifs du Projet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vision-progressive-et-realiste" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Vision Progressive et Réaliste
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#court-terme-13-mois" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Court Terme (1–3 mois)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moyen-terme-36-mois" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Moyen Terme (3–6 mois)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-terme-612-mois" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Long Terme (6–12 mois)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-contexte-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 🌐 Contexte du Projet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-architecture-actuelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 🧱 Architecture Actuelle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-regles-de-codage-bonnes-pratiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 📏 Règles de Codage &amp; Bonnes Pratiques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📏 Règles de Codage &amp; Bonnes Pratiques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#principes-architecturaux" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Principes Architecturaux
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solid" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 SOLID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Conventions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nouvelles-regles-migration-print-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 NOUVELLES RÈGLES - Migration print() → logging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔹 NOUVELLES RÈGLES - Migration print() → logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zones-interdites-ne-jamais-toucher" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚫 ZONES INTERDITES (Ne jamais toucher)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zones-autorisees-migration-manuelle-uniquement" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ ZONES AUTORISÉES (Migration manuelle uniquement)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regles-de-securite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 RÈGLES DE SÉCURITÉ
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-des-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Architecture des tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4bis-methodologie-discipline-de-travail-arkalia" class="md-nav__link">
+    <span class="md-ellipsis">
+      4bis. 🛡️ Méthodologie &amp; Discipline de Travail Arkalia
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4bis. 🛡️ Méthodologie &amp; Discipline de Travail Arkalia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cicd-stricte-workflow-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 CI/CD Stricte &amp; Workflow Git
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 CI/CD Stricte &amp; Workflow Git">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-cicd-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences CI/CD (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-git-professionnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Git Professionnel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests-qualite-de-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧪 Tests &amp; Qualité de Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧪 Tests &amp; Qualité de Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-tests-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Tests (CRITIQUES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualite-de-code-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      Qualité de Code (OBLIGATOIRE)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Documentation &amp; Reporting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 Documentation &amp; Reporting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-documentation-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Documentation (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reporting-tracabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reporting &amp; Traçabilité
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#securite-conformite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Sécurité &amp; Conformité
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 Sécurité &amp; Conformité">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-securite-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Sécurité (CRITIQUES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gestion-des-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gestion des Secrets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hygiene-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧹 Hygiène &amp; Maintenance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧹 Hygiène &amp; Maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-dhygiene-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences d'Hygiène (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance-preventive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintenance Préventive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-de-migration-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Process de Migration &amp; Validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Process de Migration &amp; Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-migration-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Migration (CRITIQUES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist de Validation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-observabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Monitoring &amp; Observabilité
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Monitoring &amp; Observabilité">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-monitoring-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Monitoring (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metriques-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Métriques Critiques
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pratiques-interdites" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚫 Pratiques Interdites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚫 Pratiques Interdites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interdictions-absolues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interdictions Absolues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pratiques-a-eviter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pratiques à Éviter
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pratiques-recommandees" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Pratiques Recommandées
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ Pratiques Recommandées">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bonnes-pratiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bonnes Pratiques
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exigences-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. ⚙️ Exigences Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. ⚙️ Exigences Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Sécurité
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observabilite-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Observabilité &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🥺 Qualité
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-roadmap-technique" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 🛠️ Roadmap Technique
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-annexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 📌 Annexes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 📌 Annexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-dossier" class="md-nav__link">
+    <span class="md-ellipsis">
+      📂 Structure Dossier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kpis-suivis" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 KPIs Suivis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-auth-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔑 Exemple Auth FastAPI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nouveau-plan-de-migration-print-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 NOUVEAU - Plan de Migration print() → logging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔍 NOUVEAU - Plan de Migration print() → logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-audit-et-preparation-termine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1 : Audit et Préparation (✅ Terminé)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-tests-et-genere-en-cours" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2 : Tests et Généré (🟡 En cours)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-debug-simple-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 3 : Debug Simple (⏳ Future)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-modules-critiques-tres-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 4 : Modules Critiques (⏳ Très Future)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-lecons-apprises-migration-print" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 🚨 LEÇONS APPRISES - Migration print()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🚨 LEÇONS APPRISES - Migration print()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ce-qui-na-pas-fonctionne" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Ce qui n'a pas fonctionné
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-qui-fonctionne" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Ce qui fonctionne
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regles-de-securite-etablies" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Règles de Sécurité Établies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rappel-final-progressivite-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Rappel final : Progressivité Obligatoire
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/zeroia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/zeroia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/reflexia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reflexia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/sandozia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sandozia
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/cognitive-reactor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cognitive Reactor
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/assistantia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AssistantIA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/helloria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Helloria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Security Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Security Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Monitoring Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Monitoring Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Infrastructure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/model-poisoning-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Model Poisoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/penetration-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Penetration Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/incident-response/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Incident Response
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/backup-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Backup & Recovery
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/compliance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Compliance
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/log_redaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Log Redaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/endpoints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Endpoints
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Metrics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Operations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/linting-resolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Linting Resolution
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DevOps Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chaos/chaos_test_suite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Chaos Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/docker_hardening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Hardening
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/ops-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Operations Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/rebuild-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rebuild Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Releases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Releases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/v2.8.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    v2.8.0
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    All Releases
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/dernieres_updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Latest Updates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Planning
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Planning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plan-ameliorations-futures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Future Improvements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../planning/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roadmap Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../planning/roadmap/ENHANCEMENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Enhancements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Support
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Support
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/faqs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VSCode Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Legal
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../legal/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    License
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../credits/CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../credits/credits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Credits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Sur cette page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sur cette page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objectifs-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 🌟 Objectifs du Projet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 🌟 Objectifs du Projet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vision-progressive-et-realiste" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Vision Progressive et Réaliste
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#court-terme-13-mois" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Court Terme (1–3 mois)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moyen-terme-36-mois" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Moyen Terme (3–6 mois)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-terme-612-mois" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Long Terme (6–12 mois)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-contexte-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 🌐 Contexte du Projet
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-architecture-actuelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 🧱 Architecture Actuelle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-regles-de-codage-bonnes-pratiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 📏 Règles de Codage &amp; Bonnes Pratiques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📏 Règles de Codage &amp; Bonnes Pratiques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#principes-architecturaux" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Principes Architecturaux
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solid" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 SOLID
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Conventions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nouvelles-regles-migration-print-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 NOUVELLES RÈGLES - Migration print() → logging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔹 NOUVELLES RÈGLES - Migration print() → logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zones-interdites-ne-jamais-toucher" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚫 ZONES INTERDITES (Ne jamais toucher)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zones-autorisees-migration-manuelle-uniquement" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ ZONES AUTORISÉES (Migration manuelle uniquement)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regles-de-securite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 RÈGLES DE SÉCURITÉ
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-des-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Architecture des tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4bis-methodologie-discipline-de-travail-arkalia" class="md-nav__link">
+    <span class="md-ellipsis">
+      4bis. 🛡️ Méthodologie &amp; Discipline de Travail Arkalia
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4bis. 🛡️ Méthodologie &amp; Discipline de Travail Arkalia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cicd-stricte-workflow-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 CI/CD Stricte &amp; Workflow Git
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 CI/CD Stricte &amp; Workflow Git">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-cicd-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences CI/CD (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-git-professionnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Git Professionnel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests-qualite-de-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧪 Tests &amp; Qualité de Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧪 Tests &amp; Qualité de Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-tests-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Tests (CRITIQUES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualite-de-code-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      Qualité de Code (OBLIGATOIRE)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Documentation &amp; Reporting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 Documentation &amp; Reporting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-documentation-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Documentation (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reporting-tracabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reporting &amp; Traçabilité
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#securite-conformite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Sécurité &amp; Conformité
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔐 Sécurité &amp; Conformité">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-securite-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Sécurité (CRITIQUES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gestion-des-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gestion des Secrets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hygiene-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧹 Hygiène &amp; Maintenance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧹 Hygiène &amp; Maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-dhygiene-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences d'Hygiène (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance-preventive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maintenance Préventive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-de-migration-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 Process de Migration &amp; Validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔄 Process de Migration &amp; Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-migration-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Migration (CRITIQUES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-de-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist de Validation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-observabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Monitoring &amp; Observabilité
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 Monitoring &amp; Observabilité">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exigences-de-monitoring-obligatoires" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exigences de Monitoring (OBLIGATOIRES)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metriques-critiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Métriques Critiques
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pratiques-interdites" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚫 Pratiques Interdites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚫 Pratiques Interdites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interdictions-absolues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interdictions Absolues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pratiques-a-eviter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pratiques à Éviter
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pratiques-recommandees" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Pratiques Recommandées
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ Pratiques Recommandées">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bonnes-pratiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bonnes Pratiques
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exigences-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. ⚙️ Exigences Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. ⚙️ Exigences Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Sécurité
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observabilite-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 Observabilité &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualite" class="md-nav__link">
+    <span class="md-ellipsis">
+      🥺 Qualité
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-roadmap-technique" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 🛠️ Roadmap Technique
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-annexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 📌 Annexes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 📌 Annexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-dossier" class="md-nav__link">
+    <span class="md-ellipsis">
+      📂 Structure Dossier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kpis-suivis" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 KPIs Suivis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-auth-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔑 Exemple Auth FastAPI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nouveau-plan-de-migration-print-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 NOUVEAU - Plan de Migration print() → logging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔍 NOUVEAU - Plan de Migration print() → logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-audit-et-preparation-termine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1 : Audit et Préparation (✅ Terminé)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-tests-et-genere-en-cours" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2 : Tests et Généré (🟡 En cours)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-debug-simple-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 3 : Debug Simple (⏳ Future)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-modules-critiques-tres-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 4 : Modules Critiques (⏳ Très Future)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-lecons-apprises-migration-print" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 🚨 LEÇONS APPRISES - Migration print()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🚨 LEÇONS APPRISES - Migration print()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ce-qui-na-pas-fonctionne" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❌ Ce qui n'a pas fonctionné
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-qui-fonctionne" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Ce qui fonctionne
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regles-de-securite-etablies" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔐 Règles de Sécurité Établies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rappel-final-progressivite-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Rappel final : Progressivité Obligatoire
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cahier-des-charges-arkalia-luna-pro-v40">📘 Cahier des Charges – Arkalia-LUNA Pro (v4.0+)<a class="headerlink" href="#cahier-des-charges-arkalia-luna-pro-v40" title="Permanent link">&para;</a></h1>
+<h2 id="1-objectifs-du-projet">1. 🌟 Objectifs du Projet<a class="headerlink" href="#1-objectifs-du-projet" title="Permanent link">&para;</a></h2>
+<h3 id="vision-progressive-et-realiste">🔹 Vision Progressive et Réaliste<a class="headerlink" href="#vision-progressive-et-realiste" title="Permanent link">&para;</a></h3>
+<p>Le développement d'Arkalia suit une approche <strong>progressive, modulaire et sécurisée</strong>, compatible avec les contraintes d'un développeur solo. Le but n'est pas d'implémenter tout d'un coup, mais d'avancer <strong>itérativement</strong>, en garantissant la stabilité à chaque étape.</p>
+<h3 id="court-terme-13-mois">🔹 Court Terme (1–3 mois)<a class="headerlink" href="#court-terme-13-mois" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Stabiliser 100 % des conteneurs Docker (healthchecks inclus)</li>
+<li>Refactorer les modules critiques (<code>reason_loop</code>, <code>snapshot</code>, <code>security.py</code>) selon SOLID</li>
+<li>Implémenter une authentification API (JWT + rate limiting)</li>
+<li>Réduire le temps de réponse de MkDocs à &lt; 1s (via cache Redis)</li>
+<li>Déployer CI/CD locale complète (pytest, black, ruff, GitHub Actions avec <code>act</code>)</li>
+<li><strong>NOUVEAU</strong> : Renforcer la couverture de tests des modules critiques (reflexia, zeroia, reason_loop_enhanced.py)</li>
+</ul>
+<h3 id="moyen-terme-36-mois">🔹 Moyen Terme (3–6 mois)<a class="headerlink" href="#moyen-terme-36-mois" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Migration progressive vers architecture hexagonale (api/, domain/, use_cases/, infra/)</li>
+<li>Intégrer OpenTelemetry (tracing distribué)</li>
+<li>Finaliser les interactions ZeroIA ↔ ReflexIA ↔ Sandozia</li>
+<li>Créer un environnement staging avec rollback sécurisé</li>
+<li><strong>NOUVEAU</strong> : Migration ciblée print() → ark_logger (tests/ et generated/ uniquement)</li>
+</ul>
+<h3 id="long-terme-612-mois">🔹 Long Terme (6–12 mois)<a class="headerlink" href="#long-terme-612-mois" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Déploiement Cloud (AWS/GCP via Terraform), auto-scaling, CDN</li>
+<li>Intégration de LLM avancés (Claude, GPT-4) dans AssistantIA</li>
+<li>Auto-apprentissage par feedback utilisateur (ZeroIA v2)</li>
+<li>Audit sécurité externe (ISO 27001, RGPD), sandbox cognitive</li>
+<li><strong>NOUVEAU</strong> : Migration complète print() → ark_logger (après couverture tests &gt; 90%)</li>
+</ul>
+<hr />
+<h2 id="2-contexte-du-projet">2. 🌐 Contexte du Projet<a class="headerlink" href="#2-contexte-du-projet" title="Permanent link">&para;</a></h2>
+<p>Arkalia-LUNA est un système cognitif IA auto-réparateur, conteneurisé, piloté par API REST (FastAPI) et disposant d'une interface SPA (React).</p>
+<p><strong>Cibles</strong> :</p>
+<ul>
+<li>Développeurs IA, DevOps cognitifs</li>
+<li>Systèmes critiques, laboratoire R\&amp;D, observabilité avancée</li>
+</ul>
+<hr />
+<h2 id="3-architecture-actuelle">3. 🧱 Architecture Actuelle<a class="headerlink" href="#3-architecture-actuelle" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Conteneurs actifs : 15 (ZeroIA, ReflexIA, Sandozia, AssistantIA, etc.)</li>
+<li>API REST : FastAPI (<code>arkalia-api</code>)</li>
+<li>LLM local : mistral:latest (Ollama)</li>
+<li>Monitoring : Prometheus, Grafana, Loki, cadvisor</li>
+<li>Frontend : React (Vite + Tailwind)</li>
+<li>Documentation : MkDocs (Material Theme)</li>
+<li>CI/CD : GitHub Actions, pytest, coverage, pre-commit, <code>act</code></li>
+</ul>
+<hr />
+<h2 id="4-regles-de-codage-bonnes-pratiques">4. 📏 Règles de Codage &amp; Bonnes Pratiques<a class="headerlink" href="#4-regles-de-codage-bonnes-pratiques" title="Permanent link">&para;</a></h2>
+<h3 id="principes-architecturaux">🔹 Principes Architecturaux<a class="headerlink" href="#principes-architecturaux" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Clean Architecture stricte : <code>core/</code>, <code>domain/</code>, <code>infra/</code>, <code>interfaces/</code></li>
+<li>SOLID appliqué sur tous les modules IA</li>
+<li>Domain Driven Design (DDD) en phase d'introduction</li>
+</ul>
+<h3 id="solid">🔹 SOLID<a class="headerlink" href="#solid" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Principe</th>
+<th>Exigence</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S</td>
+<td>Une classe = une responsabilité</td>
+<td><code>Reasoner</code>, <code>ErrorDetector</code></td>
+</tr>
+<tr>
+<td>O</td>
+<td>Ouvert à extension</td>
+<td><code>on_reasoning_complete()</code></td>
+</tr>
+<tr>
+<td>L</td>
+<td>Substituabilité</td>
+<td><code>IModule</code> → <code>ZeroIA</code>, <code>Reflexia</code></td>
+</tr>
+<tr>
+<td>I</td>
+<td>Interfaces fines</td>
+<td><code>ILogger</code>, <code>IScorer</code></td>
+</tr>
+<tr>
+<td>D</td>
+<td>Inversion d'injection</td>
+<td><code>def __init__(self, scorer: IScorer)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="conventions">🔹 Conventions<a class="headerlink" href="#conventions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>PEP8, ruff, black</li>
+<li><strong>RÈGLE RÉVISÉE</strong> : <code>print()</code> → <code>ark_logger</code> (migration progressive et sécurisée)</li>
+<li>Variables explicites : <code>score_final</code>, <code>module_state</code></li>
+<li>Tests avec <code>pytest</code>, <code>pytest-mock</code>, <code>--cov</code>, seuil &gt; 85 %</li>
+</ul>
+<h3 id="nouvelles-regles-migration-print-logging">🔹 <strong>NOUVELLES RÈGLES - Migration print() → logging</strong><a class="headerlink" href="#nouvelles-regles-migration-print-logging" title="Permanent link">&para;</a></h3>
+<h4 id="zones-interdites-ne-jamais-toucher">🚫 <strong>ZONES INTERDITES (Ne jamais toucher)</strong><a class="headerlink" href="#zones-interdites-ne-jamais-toucher" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>helloria/__init__.py</code> - Messages de démarrage critiques</li>
+<li><code>reflexia/logic/main_loop*.py</code> - Boucles vitales et monitoring</li>
+<li><code>zeroia/reason_loop*.py</code> - Logique de décision critique</li>
+<li><code>print(json.dumps(...))</code> - Communication inter-process</li>
+</ul>
+<h4 id="zones-autorisees-migration-manuelle-uniquement">✅ <strong>ZONES AUTORISÉES (Migration manuelle uniquement)</strong><a class="headerlink" href="#zones-autorisees-migration-manuelle-uniquement" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>tests/</code> - Tests unitaires et d'intégration</li>
+<li><code>modules/*/generated/</code> - Code généré automatiquement</li>
+<li>Messages de debug simples (<code>print("debug")</code> → <code>ark_logger.debug("debug")</code>)</li>
+</ul>
+<h4 id="regles-de-securite">🔒 <strong>RÈGLES DE SÉCURITÉ</strong><a class="headerlink" href="#regles-de-securite" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Aucune automatisation</strong> de migration print() → logging</li>
+<li><strong>Test obligatoire</strong> après chaque modification</li>
+<li><strong>Sauvegarde</strong> avant chaque changement</li>
+<li><strong>Validation</strong> par tests unitaires complets</li>
+</ul>
+<h3 id="architecture-des-tests">🔹 Architecture des tests<a class="headerlink" href="#architecture-des-tests" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>tests/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── unit/
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── integration/
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── chaos/
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── performance/
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── security/
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>├── matrix/
+</span></code></pre></div>
+<blockquote>
+<p>Aucun test en dehors de ce dossier. Convention : <code>test_*.py</code>, markers <code>@pytest.mark.unit</code>, etc.</p>
+</blockquote>
+<hr />
+<h2 id="4bis-methodologie-discipline-de-travail-arkalia">4bis. 🛡️ Méthodologie &amp; Discipline de Travail Arkalia<a class="headerlink" href="#4bis-methodologie-discipline-de-travail-arkalia" title="Permanent link">&para;</a></h2>
+<h3 id="cicd-stricte-workflow-git">🔄 <strong>CI/CD Stricte &amp; Workflow Git</strong><a class="headerlink" href="#cicd-stricte-workflow-git" title="Permanent link">&para;</a></h3>
+<h4 id="exigences-cicd-obligatoires"><strong>Exigences CI/CD (OBLIGATOIRES)</strong><a class="headerlink" href="#exigences-cicd-obligatoires" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Tout commit doit passer la CI</strong> : tests unitaires + intégration, linting (black, ruff), build Docker, healthcheck natif Python</li>
+<li><strong>Seuil de couverture bloquant</strong> : minimum 28% (actuellement 59.25% - largement dépassé)</li>
+<li><strong>671 tests passés, 0 échec</strong> : validation systématique avant merge</li>
+<li><strong>Artefacts conditionnels</strong> : upload automatique des rapports de couverture et logs</li>
+<li><strong>Healthcheck natif</strong> : validation de l'API arkalia avec urllib Python (pas de curl)</li>
+<li><strong>Pre-commit hooks</strong> : validation automatique avant commit</li>
+</ul>
+<h4 id="workflow-git-professionnel"><strong>Workflow Git Professionnel</strong><a class="headerlink" href="#workflow-git-professionnel" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Branches courtes</strong> : feature branches limitées à 1-2 jours max</li>
+<li><strong>Pull Request systématique</strong> : même pour les corrections mineures</li>
+<li><strong>Squash &amp; rebase</strong> : historique Git propre et linéaire</li>
+<li><strong>Commits signés</strong> : GPG obligatoire pour les releases</li>
+<li><strong>Tags versionnés</strong> : bumpver automatique, tags explicites</li>
+<li><strong>Validation croisée</strong> : relecture obligatoire pour tout changement critique</li>
+</ul>
+<h3 id="tests-qualite-de-code">🧪 <strong>Tests &amp; Qualité de Code</strong><a class="headerlink" href="#tests-qualite-de-code" title="Permanent link">&para;</a></h3>
+<h4 id="exigences-de-tests-critiques"><strong>Exigences de Tests (CRITIQUES)</strong><a class="headerlink" href="#exigences-de-tests-critiques" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>100% des features critiques testées</strong> : modules zeroia, reflexia, sandozia, security</li>
+<li><strong>Tests E2E</strong> : validation complète des workflows</li>
+<li><strong>Tests d'intégration</strong> : validation des interactions inter-modules</li>
+<li><strong>Tests de non-régression</strong> : validation automatique après chaque modification</li>
+<li><strong>Tests de sécurité</strong> : validation des vulnérabilités potentielles</li>
+<li><strong>Tests de performance</strong> : validation des seuils de latence et de charge</li>
+<li><strong>Tests de chaos</strong> : validation de la résilience du système</li>
+</ul>
+<h4 id="qualite-de-code-obligatoire"><strong>Qualité de Code (OBLIGATOIRE)</strong><a class="headerlink" href="#qualite-de-code-obligatoire" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Formatage automatique</strong> : black, ruff, pre-commit hooks</li>
+<li><strong>PEP8 strict</strong> : pas d'écart sans justification documentée</li>
+<li><strong>Pas de code mort</strong> : suppression systématique des imports et fonctions inutilisés</li>
+<li><strong>Pas de TODO non justifié</strong> : tous les TODO doivent avoir un ticket associé</li>
+<li><strong>Refactoring continu</strong> : dette technique traçable et planifiée</li>
+<li><strong>Documentation inline</strong> : docstrings pour toutes les fonctions publiques</li>
+</ul>
+<h3 id="documentation-reporting">📚 <strong>Documentation &amp; Reporting</strong><a class="headerlink" href="#documentation-reporting" title="Permanent link">&para;</a></h3>
+<h4 id="exigences-de-documentation-obligatoires"><strong>Exigences de Documentation (OBLIGATOIRES)</strong><a class="headerlink" href="#exigences-de-documentation-obligatoires" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Chaque module critique documenté</strong> : README.md, docstrings, exemples d'usage</li>
+<li><strong>Badges à jour</strong> : couverture, CI, version, licence</li>
+<li><strong>Changelog maintenu</strong> : historique des changements et breaking changes</li>
+<li><strong>Reporting automatique</strong> : génération automatique des rapports de couverture</li>
+<li><strong>Statuts visibles</strong> : dashboard de santé du projet accessible</li>
+<li><strong>Documentation technique</strong> : architecture, API, déploiement, troubleshooting</li>
+</ul>
+<h4 id="reporting-tracabilite"><strong>Reporting &amp; Traçabilité</strong><a class="headerlink" href="#reporting-tracabilite" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Logs centralisés</strong> : tous les modules loggent vers un système centralisé</li>
+<li><strong>Métriques Prometheus</strong> : monitoring en temps réel de tous les modules</li>
+<li><strong>Alertes automatiques</strong> : notification en cas de dégradation</li>
+<li><strong>Artefacts de build</strong> : conservation des logs et rapports de build</li>
+<li><strong>Historique des déploiements</strong> : traçabilité complète des releases</li>
+</ul>
+<h3 id="securite-conformite">🔐 <strong>Sécurité &amp; Conformité</strong><a class="headerlink" href="#securite-conformite" title="Permanent link">&para;</a></h3>
+<h4 id="exigences-de-securite-critiques"><strong>Exigences de Sécurité (CRITIQUES)</strong><a class="headerlink" href="#exigences-de-securite-critiques" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Audit régulier</strong> : scan de vulnérabilités automatique</li>
+<li><strong>Pas de secrets en clair</strong> : chiffrement AES-256 obligatoire</li>
+<li><strong>Rotation des clés</strong> : rotation hebdomadaire des secrets</li>
+<li><strong>User non-root</strong> : tous les conteneurs exécutés en tant qu'utilisateur non-privilégié</li>
+<li><strong>Logs redondants</strong> : sauvegarde des logs critiques</li>
+<li><strong>Monitoring sécurité</strong> : détection d'intrusion et alertes</li>
+<li><strong>Conformité RGPD</strong> : gestion des données personnelles conforme</li>
+</ul>
+<h4 id="gestion-des-secrets"><strong>Gestion des Secrets</strong><a class="headerlink" href="#gestion-des-secrets" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Vault Arkalia</strong> : gestion centralisée des secrets</li>
+<li><strong>Chiffrement en transit</strong> : TLS obligatoire pour toutes les communications</li>
+<li><strong>Chiffrement au repos</strong> : chiffrement des données sensibles</li>
+<li><strong>Audit des accès</strong> : journalisation de tous les accès aux secrets</li>
+</ul>
+<h3 id="hygiene-maintenance">🧹 <strong>Hygiène &amp; Maintenance</strong><a class="headerlink" href="#hygiene-maintenance" title="Permanent link">&para;</a></h3>
+<h4 id="exigences-dhygiene-obligatoires"><strong>Exigences d'Hygiène (OBLIGATOIRES)</strong><a class="headerlink" href="#exigences-dhygiene-obligatoires" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Suppression fichiers système</strong> : nettoyage automatique des <code>.DS_Store</code>, <code>._*</code></li>
+<li><strong>Nettoyage des caches</strong> : suppression des <code>__pycache__</code>, <code>.pytest_cache</code></li>
+<li><strong>Gestion des logs</strong> : rotation et compression automatique</li>
+<li><strong>Nettoyage des artefacts</strong> : suppression des artefacts obsolètes</li>
+<li><strong>Validation de l'intégrité</strong> : checksums des fichiers critiques</li>
+</ul>
+<h4 id="maintenance-preventive"><strong>Maintenance Préventive</strong><a class="headerlink" href="#maintenance-preventive" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Mise à jour des dépendances</strong> : scan de vulnérabilités automatique</li>
+<li><strong>Refactoring planifié</strong> : plan de refactoring trimestriel</li>
+<li><strong>Optimisation continue</strong> : monitoring des performances</li>
+<li><strong>Backup automatique</strong> : sauvegarde des données critiques</li>
+</ul>
+<h3 id="process-de-migration-validation">🔄 <strong>Process de Migration &amp; Validation</strong><a class="headerlink" href="#process-de-migration-validation" title="Permanent link">&para;</a></h3>
+<h4 id="exigences-de-migration-critiques"><strong>Exigences de Migration (CRITIQUES)</strong><a class="headerlink" href="#exigences-de-migration-critiques" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Audit préalable</strong> : analyse complète avant toute migration</li>
+<li><strong>Sauvegarde obligatoire</strong> : backup avant toute modification critique</li>
+<li><strong>Migration manuelle uniquement</strong> : pas d'automatisation pour les migrations critiques</li>
+<li><strong>Tests systématiques</strong> : validation après chaque étape</li>
+<li><strong>Rollback possible</strong> : possibilité de revenir en arrière</li>
+<li><strong>Validation croisée</strong> : relecture par un pair (même en solo, auto-relecture)</li>
+</ul>
+<h4 id="checklist-de-validation"><strong>Checklist de Validation</strong><a class="headerlink" href="#checklist-de-validation" title="Permanent link">&para;</a></h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tests unitaires passent</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tests d'intégration passent</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Couverture de code maintenue</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Documentation mise à jour</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Logs vérifiés</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Performance validée</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Sécurité vérifiée</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Artefacts générés</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> CI/CD verte</li>
+</ul>
+<h3 id="monitoring-observabilite">📊 <strong>Monitoring &amp; Observabilité</strong><a class="headerlink" href="#monitoring-observabilite" title="Permanent link">&para;</a></h3>
+<h4 id="exigences-de-monitoring-obligatoires"><strong>Exigences de Monitoring (OBLIGATOIRES)</strong><a class="headerlink" href="#exigences-de-monitoring-obligatoires" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Prometheus</strong> : métriques système et applicatives</li>
+<li><strong>Grafana</strong> : dashboards de monitoring</li>
+<li><strong>Loki</strong> : centralisation des logs</li>
+<li><strong>Alertes</strong> : notification en temps réel</li>
+<li><strong>Traces</strong> : traçabilité des requêtes</li>
+<li><strong>Healthchecks</strong> : validation de la santé des services</li>
+</ul>
+<h4 id="metriques-critiques"><strong>Métriques Critiques</strong><a class="headerlink" href="#metriques-critiques" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Latence API</strong> : &lt; 300ms</li>
+<li><strong>Uptime</strong> : &gt; 99.9%</li>
+<li><strong>CPU par module</strong> : &lt; 80%</li>
+<li><strong>RAM par module</strong> : &lt; 100MB</li>
+<li><strong>Couverture de tests</strong> : &gt; 28% (actuellement 59.25%)</li>
+</ul>
+<h3 id="pratiques-interdites">🚫 <strong>Pratiques Interdites</strong><a class="headerlink" href="#pratiques-interdites" title="Permanent link">&para;</a></h3>
+<h4 id="interdictions-absolues"><strong>Interdictions Absolues</strong><a class="headerlink" href="#interdictions-absolues" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Migration automatique des print()</strong> : jamais d'automatisation pour les migrations critiques</li>
+<li><strong>Commits sans tests</strong> : tous les commits doivent passer les tests</li>
+<li><strong>Code non documenté</strong> : pas de fonction publique sans docstring</li>
+<li><strong>Secrets en clair</strong> : jamais de secrets dans le code ou les logs</li>
+<li><strong>User root</strong> : jamais d'exécution en tant que root</li>
+<li><strong>TODO sans ticket</strong> : pas de TODO sans justification et ticket</li>
+<li><strong>Code mort</strong> : pas de code inutilisé dans le repository</li>
+</ul>
+<h4 id="pratiques-a-eviter"><strong>Pratiques à Éviter</strong><a class="headerlink" href="#pratiques-a-eviter" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Branches longues</strong> : éviter les branches de plus de 2 jours</li>
+<li><strong>Commits multiples</strong> : préférer le squash pour les features</li>
+<li><strong>Documentation obsolète</strong> : maintenir la documentation à jour</li>
+<li><strong>Tests manuels</strong> : automatiser tous les tests possibles</li>
+<li><strong>Logs non structurés</strong> : utiliser le logging structuré</li>
+</ul>
+<h3 id="pratiques-recommandees">✅ <strong>Pratiques Recommandées</strong><a class="headerlink" href="#pratiques-recommandees" title="Permanent link">&para;</a></h3>
+<h4 id="bonnes-pratiques"><strong>Bonnes Pratiques</strong><a class="headerlink" href="#bonnes-pratiques" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Tests en premier</strong> : TDD pour les nouvelles fonctionnalités</li>
+<li><strong>Documentation vivante</strong> : documentation qui évolue avec le code</li>
+<li><strong>Refactoring continu</strong> : amélioration continue du code</li>
+<li><strong>Monitoring proactif</strong> : détection des problèmes avant qu'ils n'impactent</li>
+<li><strong>Communication transparente</strong> : partage des décisions et des problèmes</li>
+<li><strong>Apprentissage continu</strong> : amélioration des pratiques basée sur les retours</li>
+</ul>
+<hr />
+<h2 id="5-exigences-techniques">5. ⚙️ Exigences Techniques<a class="headerlink" href="#5-exigences-techniques" title="Permanent link">&para;</a></h2>
+<h3 id="securite">🔐 Sécurité<a class="headerlink" href="#securite" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Auth API (JWT + header <code>X-API-Token</code>)</li>
+<li>Rate limiting : 10 req/s/IP max (slowapi)</li>
+<li>Pas d'utilisateur root en conteneur (USER = <code>arkalia</code>)</li>
+<li>Secrets encryptés (AES-256), rotation hebdomadaire</li>
+<li><strong>NOUVEAU</strong> : Audit print() → logging obligatoire avant déploiement</li>
+</ul>
+<h3 id="observabilite-monitoring">📊 Observabilité &amp; Monitoring<a class="headerlink" href="#observabilite-monitoring" title="Permanent link">&para;</a></h3>
+<ul>
+<li>/metrics Prometheus par module</li>
+<li>Dashboards Grafana dynamiques</li>
+<li>Alertes Slack/mail (CPU &gt; 80 %, ZeroIA KO, etc.)</li>
+<li>Tracing avec OpenTelemetry</li>
+<li><strong>NOUVEAU</strong> : Logging structuré <code>ark_logger</code> pour tous les modules</li>
+</ul>
+<h3 id="qualite">🥺 Qualité<a class="headerlink" href="#qualite" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Couverture cible : 90 %</li>
+<li>CI bloquante &lt; 85 %</li>
+<li>Pre-commit actifs</li>
+<li>Docs : Swagger pour API, MkDocs pour architecture</li>
+<li><strong>NOUVEAU</strong> : Tests obligatoires pour modules critiques (reflexia, zeroia, reason_loop)</li>
+<li><strong>CI/CD 100% verte</strong> : 671 tests passés, 0 échec</li>
+<li><strong>Healthcheck natif</strong> : validation Python urllib intégrée</li>
+<li><strong>Artefacts conditionnels</strong> : upload automatique des rapports</li>
+</ul>
+<hr />
+<h2 id="6-roadmap-technique">6. 🛠️ Roadmap Technique<a class="headerlink" href="#6-roadmap-technique" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mois</th>
+<th>Objectifs Clés</th>
+<th>Priorité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–2</td>
+<td>Auth API, refactor SOLID, cache Redis</td>
+<td>🔴 Haute</td>
+</tr>
+<tr>
+<td>2–3</td>
+<td><strong>NOUVEAU</strong> : Renforcer tests modules critiques</td>
+<td>🔴 Haute</td>
+</tr>
+<tr>
+<td>3–4</td>
+<td>CI/CD, staging, Swagger stable</td>
+<td>🔵 Moyenne</td>
+</tr>
+<tr>
+<td>4–5</td>
+<td>Migration ciblée print() → ark_logger (tests/)</td>
+<td>🟡 Basse</td>
+</tr>
+<tr>
+<td>5–6</td>
+<td>Tracing OpenTelemetry, Reasoning multi-agent</td>
+<td>🔵 Moyenne</td>
+</tr>
+<tr>
+<td>6–12</td>
+<td>Cloud (Terraform), sandbox cognitive, auto-learn</td>
+<td>🟢 Future</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-annexes">7. 📌 Annexes<a class="headerlink" href="#7-annexes" title="Permanent link">&para;</a></h2>
+<h3 id="structure-dossier">📂 Structure Dossier<a class="headerlink" href="#structure-dossier" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>arkalia-luna/
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── api/
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── core/
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── modules/
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>├── docs/
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>├── frontend/
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>├── infrastructure/
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>├── tests/
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>├── scripts/
+</span></code></pre></div>
+<h3 id="kpis-suivis">📊 KPIs Suivis<a class="headerlink" href="#kpis-suivis" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>KPI</th>
+<th>Cible</th>
+<th>État Actuel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latence API</td>
+<td>&lt; 300 ms</td>
+<td>✅ OK</td>
+</tr>
+<tr>
+<td>Uptime</td>
+<td>&gt; 99.9 %</td>
+<td>✅ OK</td>
+</tr>
+<tr>
+<td>CPU/Module</td>
+<td>&lt; 80 %</td>
+<td>✅ OK</td>
+</tr>
+<tr>
+<td>RAM/module</td>
+<td>&lt; 100 MB</td>
+<td>✅ OK</td>
+</tr>
+<tr>
+<td>Couverture tests</td>
+<td>&gt; 28 %</td>
+<td>✅ 59.25%</td>
+</tr>
+<tr>
+<td>CI/CD Status</td>
+<td>100% verte</td>
+<td>✅ 671 tests passés</td>
+</tr>
+<tr>
+<td>Healthcheck</td>
+<td>Natif Python</td>
+<td>✅ urllib intégré</td>
+</tr>
+<tr>
+<td>Artefacts</td>
+<td>Conditionnels</td>
+<td>✅ Upload auto</td>
+</tr>
+</tbody>
+</table>
+<h3 id="exemple-auth-fastapi">🔑 Exemple Auth FastAPI<a class="headerlink" href="#exemple-auth-fastapi" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">Header</span><span class="p">,</span> <span class="n">HTTPException</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">check_token</span><span class="p">(</span><span class="n">x_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Header</span><span class="p">(</span><span class="o">...</span><span class="p">)):</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">if</span> <span class="n">x_token</span> <span class="o">!=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARKALIA_TOKEN&quot;</span><span class="p">):</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Access Denied&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="nouveau-plan-de-migration-print-logging">🔍 <strong>NOUVEAU - Plan de Migration print() → logging</strong><a class="headerlink" href="#nouveau-plan-de-migration-print-logging" title="Permanent link">&para;</a></h3>
+<h4 id="phase-1-audit-et-preparation-termine">Phase 1 : Audit et Préparation (✅ Terminé)<a class="headerlink" href="#phase-1-audit-et-preparation-termine" title="Permanent link">&para;</a></h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Audit complet des print() dans modules/</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Classification par criticité (HIGH/MEDIUM/LOW/EXCLUDE)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Création de <code>print_audit.json</code> pour référence</li>
+</ul>
+<h4 id="phase-2-tests-et-genere-en-cours">Phase 2 : Tests et Généré (🟡 En cours)<a class="headerlink" href="#phase-2-tests-et-genere-en-cours" title="Permanent link">&para;</a></h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Migration manuelle dans <code>tests/</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Migration manuelle dans <code>modules/*/generated/</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Validation par tests unitaires</li>
+</ul>
+<h4 id="phase-3-debug-simple-future">Phase 3 : Debug Simple (⏳ Future)<a class="headerlink" href="#phase-3-debug-simple-future" title="Permanent link">&para;</a></h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Migration des <code>print("debug")</code> → <code>ark_logger.debug("debug")</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tests systématiques après chaque modification</li>
+</ul>
+<h4 id="phase-4-modules-critiques-tres-future">Phase 4 : Modules Critiques (⏳ Très Future)<a class="headerlink" href="#phase-4-modules-critiques-tres-future" title="Permanent link">&para;</a></h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Migration uniquement après couverture tests &gt; 90%</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Validation complète par tests d'intégration</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tests de charge et de résilience</li>
+</ul>
+<hr />
+<h2 id="8-lecons-apprises-migration-print">8. 🚨 <strong>LEÇONS APPRISES - Migration print()</strong><a class="headerlink" href="#8-lecons-apprises-migration-print" title="Permanent link">&para;</a></h2>
+<h3 id="ce-qui-na-pas-fonctionne">❌ <strong>Ce qui n'a pas fonctionné</strong><a class="headerlink" href="#ce-qui-na-pas-fonctionne" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Migration automatique globale</li>
+<li>Remplacement sans vérification des imports</li>
+<li>Modification des modules critiques sans tests complets</li>
+</ul>
+<h3 id="ce-qui-fonctionne">✅ <strong>Ce qui fonctionne</strong><a class="headerlink" href="#ce-qui-fonctionne" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Audit préalable et classification</li>
+<li>Migration manuelle et ciblée</li>
+<li>Tests systématiques après modification</li>
+<li>Sauvegarde avant chaque changement</li>
+</ul>
+<h3 id="regles-de-securite-etablies">🔐 <strong>Règles de Sécurité Établies</strong><a class="headerlink" href="#regles-de-securite-etablies" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Jamais</strong> de migration automatique des print()</li>
+<li><strong>Toujours</strong> tester après modification</li>
+<li><strong>Conserver</strong> les print() critiques (helloria, reflexia, zeroia)</li>
+<li><strong>Prioriser</strong> la stabilité sur la perfection</li>
+</ul>
+<hr />
+<h2 id="rappel-final-progressivite-obligatoire">✅ Rappel final : Progressivité Obligatoire<a class="headerlink" href="#rappel-final-progressivite-obligatoire" title="Permanent link">&para;</a></h2>
+<p>Ce cahier des charges <strong>n'est pas un objectif à tout faire d'un coup</strong>. Il sert à guider un développement <strong>progressif</strong>, propre, sans dette technique, en mode expert IA solo. Chaque étape doit être validée avant la suivante.</p>
+<p><strong>Document à relire chaque trimestre</strong> — Version : v4.2-Janvier-2025</p>
+<p><strong>Dernière mise à jour</strong> : Janvier 2025 - Intégration de la méthodologie &amp; discipline de travail Arkalia</p>
+<p>Signé :</p>
+<ul>
+<li>🧠 <strong>Athalia</strong> – Architecte IA Système</li>
+<li>🔐 Responsable sécurité : …</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Cette page était-elle utile ?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="Cette page m'a aidé" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m7 0c0 .8-.7 1.5-1.5 1.5S14 10.3 14 9.5 14.7 8 15.5 8s1.5.7 1.5 1.5m-5 7.73c-1.75 0-3.29-.73-4.19-1.81L9.23 14c.45.72 1.52 1.23 2.77 1.23s2.32-.51 2.77-1.23l1.42 1.42c-.9 1.08-2.44 1.81-4.19 1.81"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="Cette page pourrait être améliorée" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10m-6.5-4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m2 4.5c1.75 0 3.29.72 4.19 1.81l-1.42 1.42C14.32 16.5 13.25 16 12 16s-2.32.5-2.77 1.23l-1.42-1.42C8.71 14.72 10.25 14 12 14"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Merci ! Votre feedback nous aide à améliorer la documentation.
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Dites-nous comment améliorer cette page en <a href="https://github.com/arkalia-luna-system/arkalia-luna-pro/issues/new" target="_blank" rel="noopener">créant une issue</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.expand", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../../assets/js/arkalia-assistant.js"></script>
+      
+        <script src="../../assets/js/arkalia-enhancements.js"></script>
+      
+    
+  </body>
+</html>
