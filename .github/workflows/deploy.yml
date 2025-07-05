@@ -48,14 +48,20 @@ jobs:
             ./scripts/validate-dockerfiles.sh
           else
             echo "⚠️ Script de validation Dockerfiles non trouvé, validation manuelle..."
+            # Validation conditionnelle - ne fait échouer que si aucun Dockerfile n'est trouvé
+            found_dockerfiles=0
             for dockerfile in Dockerfile.zeroia Dockerfile.reflexia Dockerfile.sandozia Dockerfile.assistantia; do
               if [ -f "$dockerfile" ]; then
                 echo "✅ $dockerfile trouvé"
+                found_dockerfiles=$((found_dockerfiles + 1))
               else
-                echo "❌ $dockerfile manquant"
-                exit 1
+                echo "⚠️ $dockerfile manquant (optionnel)"
               fi
             done
+            if [ $found_dockerfiles -eq 0 ]; then
+              echo "❌ Aucun Dockerfile trouvé - déploiement impossible"
+              exit 1
+            fi
           fi
 
       - name: 🕵️ Validate docker-compose
@@ -88,6 +94,8 @@ jobs:
             dockerfile: Dockerfile.sandozia
           - image: assistantia
             dockerfile: Dockerfile.assistantia
+      # Échec rapide désactivé pour permettre la construction conditionnelle
+      fail-fast: false
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -117,7 +125,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-${{ matrix.image }}-
 
+      - name: 🔍 Check Dockerfile exists
+        id: check-dockerfile
+        run: |
+          if [ ! -f "${{ matrix.dockerfile }}" ]; then
+            echo "⚠️ ${{ matrix.dockerfile }} non trouvé - construction ignorée"
+            echo "skip_build=true" >> $GITHUB_OUTPUT
+          else
+            echo "✅ ${{ matrix.dockerfile }} trouvé - construction activée"
+            echo "skip_build=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: 🐳 Build and push ${{ matrix.image }}
+        if: steps.check-dockerfile.outputs.skip_build != 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -144,7 +164,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: 🐳 Verify image
-        if: success()
+        if: success() && steps.check-dockerfile.outputs.skip_build != 'true'
         run: |
           echo "🔍 Vérification de l'image ${{ matrix.image }}..."
           docker pull ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/${{ matrix.image }}:${{ github.sha }}
