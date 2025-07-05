@@ -4,6 +4,7 @@
 
 import fcntl
 import json
+import logging
 import os
 import tempfile
 import threading
@@ -12,6 +13,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 import toml
+
+logger = logging.getLogger(__name__)
 
 
 class AtomicWriteError(Exception):
@@ -113,8 +116,8 @@ def atomic_write(
             if "tmp_path" in locals() and os.path.exists(tmp_path):
                 try:
                     os.unlink(tmp_path)
-                except OSError:
-                    pass
+                except OSError as cleanup_error:
+                    logger.warning(f"Failed to cleanup temporary file {tmp_path}: {cleanup_error}")  # nosec B110
 
             raise AtomicWriteError(f"Erreur écriture atomique {file_path}: {e}") from e
 
