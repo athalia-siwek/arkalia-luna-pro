@@ -25,8 +25,8 @@ logger = logging.getLogger(__name__)
 class TokenType(Enum):
     SESSION = "session"
     API_KEY = "api_key"
-    ACCESS_TOKEN = "access_token"
-    REFRESH_TOKEN = "refresh_token"
+    ACCESS_TOKEN = "access_token"  # nosec B105
+    REFRESH_TOKEN = "refresh_token"  # nosec B105
     TEMPORARY = "temporary"
 
 
@@ -139,7 +139,7 @@ class TokenManager:
     - Rate limiting par token
     """
 
-    def __init__(self, vault: ArkaliaVault, jwt_secret_name: str = "jwt_master_secret") -> None:
+    def __init__(self, vault: ArkaliaVault, jwt_secret_name: str = "jwt_master_secret") -> None:  # nosec B107
         """
         Fonction __init__.
 

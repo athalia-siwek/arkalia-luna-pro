@@ -172,7 +172,9 @@ def main():
 
     # 5. Vérifier le résultat
     print("\n🔍 Vérification finale...")
-    result = subprocess.run(["/usr/local/bin/ruff", "check", ".", "--statistics"], capture_output=True, text=True)  # nosec B607
+    result = subprocess.run(
+        ["/usr/local/bin/ruff", "check", ".", "--statistics"], capture_output=True, text=True
+    )  # nosec B607
 
     if result.returncode == 0:
         print("✅ Toutes les erreurs corrigées !")

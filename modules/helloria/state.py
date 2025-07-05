@@ -4,9 +4,12 @@ Module state.
 Ce module fait partie du système Arkalia Luna Pro.
 """
 
+import logging
 from typing import Any, Optional
 
 import toml
+
+logger = logging.getLogger(__name__)
 
 
 class HelloriaStateManager:
@@ -60,8 +63,8 @@ def save_helloria_state(state: dict[str, Any]) -> None:
     try:
         with open("state/helloria_state.toml", "w") as f:
             toml.dump(state, f)
-    except Exception:
-        pass  # Ignore les erreurs d'écriture
+    except Exception as e:
+        logger.warning(f"Failed to save Helloria state: {e}")  # nosec B110
 
 
 IS_HELLORIA = True
