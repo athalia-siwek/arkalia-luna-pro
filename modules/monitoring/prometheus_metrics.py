@@ -20,11 +20,40 @@ class ArkaliaMetrics:
         # Utiliser le registre fourni ou créer un nouveau
         self._registry = registry or CollectorRegistry()
 
-        # Métriques système
+        # Métriques système standardisées
         self.arkalia_system_uptime = Gauge(
-            "arkalia_system_uptime",
+            "arkalia_system_uptime_seconds",
             "Temps d'activité du système en secondes",
             registry=self._registry,
+        )
+        
+        # Métriques communes par module (standard Prometheus)
+        self.arkalia_module_name = Gauge(
+            "arkalia_module_name",
+            "Nom du module Arkalia",
+            ["module"],
+            registry=self._registry
+        )
+        
+        self.arkalia_uptime_seconds = Gauge(
+            "arkalia_uptime_seconds",
+            "Temps de fonctionnement du module en secondes",
+            ["module"],
+            registry=self._registry
+        )
+        
+        self.arkalia_last_successful_interaction_timestamp = Gauge(
+            "arkalia_last_successful_interaction_timestamp",
+            "Timestamp de la dernière interaction réussie",
+            ["module"],
+            registry=self._registry
+        )
+        
+        self.arkalia_cognitive_score = Gauge(
+            "arkalia_cognitive_score",
+            "Score cognitif du module (0.0-1.0)",
+            ["module"],
+            registry=self._registry
         )
 
         self.arkalia_cpu_usage = Gauge(
@@ -146,11 +175,32 @@ class ArkaliaMetrics:
             "monitoring": "modules/monitoring/prometheus_metrics.py"
         }
         
+        current_time = time.time()
+        
         for module_name, module_path in modules.items():
             try:
                 path = Path(module_path)
                 is_active = path.exists()
                 self.update_module_status(module_name, is_active)
+                
+                # Mettre à jour les métriques standardisées
+                self.arkalia_module_name.labels(module=module_name).set(1)
+                self.arkalia_uptime_seconds.labels(module=module_name).set(current_time)
+                self.arkalia_last_successful_interaction_timestamp.labels(module=module_name).set(current_time)
+                
+                # Score cognitif simulé (en production, récupérer depuis le module)
+                cognitive_scores = {
+                    "zeroia": 0.85,
+                    "reflexia": 0.78,
+                    "assistantia": 0.82,
+                    "sandozia": 0.75,
+                    "cognitive_reactor": 0.88,
+                    "security": 0.90,
+                    "monitoring": 0.70
+                }
+                score = cognitive_scores.get(module_name, 0.5)
+                self.arkalia_cognitive_score.labels(module=module_name).set(score)
+                
             except Exception as e:
                 logger.warning(f"Erreur vérification module {module_name}: {e}")
                 self.update_module_status(module_name, False)
