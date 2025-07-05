@@ -7,43 +7,42 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+
 # Configuration du logger principal
 def setup_logger(
-    name: str = "arkalia",
-    level: int = logging.INFO,
-    log_file: Optional[Path] = None
+    name: str = "arkalia", level: int = logging.INFO, log_file: Path | None = None
 ) -> logging.Logger:
     """Configure et retourne le logger principal Arkalia."""
-    
+
     logger = logging.getLogger(name)
     logger.setLevel(level)
-    
+
     # Éviter les handlers dupliqués
     if logger.handlers:
         return logger
-    
+
     # Format personnalisé
     formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
     )
-    
+
     # Handler console
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
-    
+
     # Handler fichier si spécifié
     if log_file:
-        file_handler = logging.FileHandler(log_file, encoding='utf-8')
+        file_handler = logging.FileHandler(log_file, encoding="utf-8")
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
-    
+
     return logger
 
 
 # Logger principal global
 ark_logger = setup_logger("arkalia")
+
 
 # Loggers spécialisés
 def get_module_logger(module_name: str) -> logging.Logger:
@@ -64,12 +63,15 @@ def get_security_logger() -> logging.Logger:
 # Fonctions utilitaires
 def log_function_call(func_name: str, module: str = "core"):
     """Décorateur pour logger les appels de fonction."""
+
     def decorator(func):
         def wrapper(*args, **kwargs):
             logger = get_module_logger(module)
             logger.debug(f"🧪 {func_name} déclaré")
             return func(*args, **kwargs)
+
         return wrapper
+
     return decorator
 
 
@@ -108,5 +110,5 @@ __all__ = [
     "log_error",
     "log_success",
     "log_warning",
-    "log_info"
-] 
+    "log_info",
+]

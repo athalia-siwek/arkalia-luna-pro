@@ -2,8 +2,8 @@ import re
 import sys
 from pathlib import Path
 
-import pytest
 import httpx
+import pytest
 from fastapi.testclient import TestClient
 
 # ✅ Forcer ajout de la racine du projet dans sys.path AVANT les autres imports
@@ -39,14 +39,15 @@ def zeroia_core():
     """
     Fixture pour les tests ZeroIA - instance du core ZeroIA.
     """
+
     # Mock ZeroIACore pour les tests
     class MockZeroIACore:
         def make_decision(self, context):
             return {"decision": "normal", "confidence": 0.5}
-        
+
         def get_status(self):
             return {"status": "active"}
-    
+
     return MockZeroIACore()
 
 
