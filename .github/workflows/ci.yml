@@ -106,7 +106,7 @@ jobs:
             bandit-report.json
             safety-report.json
             .secrets.baseline
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
   # 🧪 Tests unitaires et d'intégration améliorés
   test:
@@ -222,7 +222,7 @@ jobs:
             .coverage
             coverage.xml
           retention-days: 30
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
   # 🔒 Tests de sécurité améliorés
   security:
@@ -270,7 +270,7 @@ jobs:
             bandit-report.json
             safety-report.json
           retention-days: 90
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
   # 🌀 Tests de chaos (nightly)
   chaos:
@@ -308,7 +308,7 @@ jobs:
             chaos_reports/
             chaos_metric_*.toml
           retention-days: 30
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
   # 📊 Rapport final
   report:
@@ -325,6 +325,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts/
+          if-no-files-found: ignore
 
       - name: 📊 Generate final report
         run: |
@@ -353,7 +354,7 @@ jobs:
           name: ci-report
           path: report.md
           retention-days: 90
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
       - name: 🚨 Notify on failure
         if: failure()
