@@ -61,4 +61,4 @@ if ! curl -s http://localhost:8000/metrics | grep -q "arkalia"; then
 fi
 
 echo "✅ Tous les endpoints fonctionnent correctement !"
-echo "🎉 API Arkalia-LUNA opérationnelle" 
+echo "🎉 API Arkalia-LUNA opérationnelle"

@@ -8,10 +8,10 @@ import requests
 
 STATE_FILE = Path("modules/reflexia/state/reflexia_state.json")
 GRAFANA_API_URL = "http://your-grafana-instance/api/dashboards/db"
-GRAFANA_API_KEY = "your_grafana_api_key"
+GRAFANA_API_KEY = "your_grafana_api_key"  # pragma: allowlist secret
 
 
-def read_state() -> None:
+def read_state() -> dict:
     if not STATE_FILE.exists():
         return {"status": "💥", "error": "Fichier reflexia_state.json introuvable."}
 
@@ -23,7 +23,7 @@ def read_state() -> None:
         return {"status": "💥", "error": f"Erreur JSON: {e}"}
 
 
-def display_info(result) -> None:
+def display_info(result: dict) -> None:
     if result["status"] != "✅":
         print(f"[ERREUR] {result['error']}")
         return

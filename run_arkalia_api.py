@@ -83,7 +83,7 @@ def start_api():
 
         uvicorn.run(
             app,
-            host="0.0.0.0",
+            host="127.0.0.1",  # nosec B104 - Interface locale pour développement
             port=8000,
             workers=1,
             access_log=True,

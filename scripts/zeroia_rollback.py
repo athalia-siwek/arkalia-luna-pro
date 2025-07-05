@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Optional
 
 # Ajouter le répertoire parent au PYTHONPATH pour les imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import toml
 

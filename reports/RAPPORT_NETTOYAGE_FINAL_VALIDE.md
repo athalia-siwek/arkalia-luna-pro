@@ -206,7 +206,7 @@ Le nettoyage complet d'Arkalia Luna Pro a été réalisé avec succès :
 
 ---
 
-**📅 Date**: 2025-07-04 18:35  
-**👤 Auteur**: Athalia  
-**🎯 Statut**: ✅ NETTOYAGE TERMINÉ ET VALIDÉ  
-**📦 Archive**: `archive/obsolete_files_20250704_183542/` 
+**📅 Date**: 2025-07-04 18:35
+**👤 Auteur**: Athalia
+**🎯 Statut**: ✅ NETTOYAGE TERMINÉ ET VALIDÉ
+**📦 Archive**: `archive/obsolete_files_20250704_183542/`

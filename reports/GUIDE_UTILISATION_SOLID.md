@@ -122,7 +122,7 @@ class CsvFormatter(IFormatter):
     def format(self, data: dict[str, Any]) -> str:
         lines = [f"{k},{v}" for k, v in data.items()]
         return "\n".join(lines)
-    
+
     def get_format_type(self) -> str:
         return "csv"
 
@@ -145,7 +145,7 @@ class XmlFormatter(IFormatter):
             xml_lines.append(f'  <{key}>{value}</{key}>')
         xml_lines.append('</data>')
         return '\n'.join(xml_lines)
-    
+
     def get_format_type(self) -> str:
         return "xml"
 
@@ -247,7 +247,7 @@ def test_taskia_core():
 def test_all_formatters():
     core = TaskIACore()
     context = {"key": "value"}
-    
+
     for fmt_type in core.get_available_formatters():
         result = core.process_task(context, format_type=fmt_type)
         assert len(result) > 0
@@ -352,7 +352,7 @@ core = TaskIACore()
 def format_data():
     data = request.json
     format_type = request.args.get('format', 'json')
-    
+
     try:
         result = core.process_task(data, format_type=format_type)
         return jsonify({"result": result, "format": format_type})
@@ -390,4 +390,4 @@ Le module `taskia` est maintenant un **exemple parfait de code SOLID** :
 
 ---
 
-*Guide généré le 27 janvier 2025* 
+*Guide généré le 27 janvier 2025*

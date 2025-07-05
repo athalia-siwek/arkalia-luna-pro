@@ -2,6 +2,7 @@
 """
 ⚡ Test de performance - Optimisations avancées du core
 """
+
 import time
 
 from modules.core.optimizations import (

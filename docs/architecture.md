@@ -13,28 +13,28 @@ graph TB
             C[Health Monitor]
             D[Config Manager]
         end
-        
+
         subgraph "🔧 Modules Principaux"
             E[ZeroIA - Décisions]
             F[Reflexia - Surveillance]
             G[Sandozia - Analyse]
             H[Security - Protection]
         end
-        
+
         subgraph "⚡ Optimisations"
             I[Cache Manager]
             J[Load Balancer]
             K[Circuit Breaker]
             L[Advanced Metrics]
         end
-        
+
         subgraph "🔗 Intégration"
             M[Optimization Integrator]
             N[Module Adapters]
             O[API Gateway]
         end
     end
-    
+
     A --> E
     A --> F
     A --> G
@@ -67,7 +67,7 @@ graph LR
         C[Health Monitor]
         D[Config Manager]
     end
-    
+
     A --> B
     A --> C
     A --> D
@@ -91,7 +91,7 @@ graph TD
     B --> C[Confidence Calculator]
     B --> D[Risk Assessor]
     B --> E[Action Executor]
-    
+
     C --> F[Historical Analysis]
     D --> G[Threat Modeling]
     E --> H[Resource Allocation]
@@ -111,7 +111,7 @@ graph TD
     B --> C[Threshold Monitor]
     B --> D[Anomaly Detector]
     B --> E[Response Coordinator]
-    
+
     C --> F[Real-time Monitoring]
     D --> G[Pattern Recognition]
     E --> H[Action Triggering]
@@ -131,7 +131,7 @@ graph TD
     B --> C[Pattern Detector]
     B --> D[Integrity Checker]
     B --> E[Learning Engine]
-    
+
     C --> F[Data Mining]
     D --> G[Consistency Validation]
     E --> H[Model Updates]
@@ -151,7 +151,7 @@ graph TD
     B --> C[Access Controller]
     B --> D[Encryption Manager]
     B --> E[Audit Logger]
-    
+
     C --> F[Rate Limiting]
     D --> G[Data Protection]
     E --> H[Compliance Monitoring]
@@ -174,12 +174,12 @@ graph TB
         D[Circuit Breaker]
         E[Advanced Metrics]
     end
-    
+
     A --> B
     A --> C
     A --> D
     A --> E
-    
+
     B --> F[Multi-level Cache]
     C --> G[Adaptive Routing]
     D --> H[Fault Tolerance]
@@ -204,7 +204,7 @@ sequenceDiagram
     participant R as Reflexia
     participant S as Sandozia
     participant ST as Storage
-    
+
     U->>O: Request Operation
     O->>Z: Check Decision
     Z->>ST: Get Historical Data
@@ -212,7 +212,7 @@ sequenceDiagram
     Z->>Z: Calculate Decision
     Z->>ST: Save Decision
     Z-->>O: Return Decision
-    
+
     O->>R: Monitor Execution
     R->>S: Analyze Behavior
     S->>ST: Get Analysis Data
@@ -220,7 +220,7 @@ sequenceDiagram
     S->>S: Perform Analysis
     S->>ST: Save Analysis
     S-->>R: Return Analysis
-    
+
     R->>ST: Save Alert
     R-->>O: Return Monitoring
     O-->>U: Return Result
@@ -235,7 +235,7 @@ sequenceDiagram
     participant R as Reflexia
     participant Z as ZeroIA
     participant A as Action
-    
+
     C->>S: Request
     S->>S: Scan Request
     alt Threat Detected
@@ -258,11 +258,11 @@ graph TB
         C[SQLite Backend]
         D[Future: Redis/MongoDB]
     end
-    
+
     A --> B
     A --> C
     A --> D
-    
+
     subgraph "Data Organization"
         E[Module States]
         F[Decisions]
@@ -270,7 +270,7 @@ graph TB
         H[Metrics]
         I[Configurations]
     end
-    
+
     B --> E
     B --> F
     B --> G
@@ -290,7 +290,7 @@ graph LR
         C[Performance Metrics]
         D[Security Status]
     end
-    
+
     A --> B
     A --> C
     A --> D
@@ -315,19 +315,19 @@ graph TB
         D[Encryption]
         E[Audit]
     end
-    
+
     A --> B
     B --> C
     C --> D
     D --> E
-    
+
     subgraph "Compliance"
         F[Data Protection]
         G[Access Control]
         H[Audit Trail]
         I[Incident Response]
     end
-    
+
     E --> F
     E --> G
     E --> H
@@ -347,18 +347,18 @@ graph TB
         D[Database]
         E[Monitoring]
     end
-    
+
     A --> B
     B --> C
     C --> D
     C --> E
-    
+
     subgraph "Backup & Recovery"
         F[Backup System]
         G[Disaster Recovery]
         H[Data Replication]
     end
-    
+
     D --> F
     F --> G
     G --> H
@@ -373,13 +373,13 @@ graph TB
         B[arkalia-optimizer:latest]
         C[arkalia-monitoring:latest]
     end
-    
+
     subgraph "Services"
         D[Core Service]
         E[Optimization Service]
         F[Monitoring Service]
     end
-    
+
     A --> D
     B --> E
     C --> F
@@ -397,7 +397,7 @@ graph TB
         C[Microservices]
         D[Distributed System]
     end
-    
+
     A --> B
     B --> C
     C --> D
@@ -431,4 +431,4 @@ graph TB
 
 ## Conclusion
 
-Arkalia-LUNA Pro représente une architecture moderne, évolutive et robuste pour les systèmes d'IA en production. L'approche modulaire, combinée aux optimisations avancées, garantit performance, fiabilité et maintenabilité. 
+Arkalia-LUNA Pro représente une architecture moderne, évolutive et robuste pour les systèmes d'IA en production. L'approche modulaire, combinée aux optimisations avancées, garantit performance, fiabilité et maintenabilité.

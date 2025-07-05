@@ -32,10 +32,6 @@ def test_format_summary_special_values() -> None:
         "dict": {"a": 1, "b": 2},
     }
     expected = (
-        "- none: None\n"
-        "- bool: True\n"
-        "- number: 42\n"
-        "- list: [1, 2, 3]\n"
-        "- dict: {'a': 1, 'b': 2}"
+        "- none: None\n- bool: True\n- number: 42\n- list: [1, 2, 3]\n- dict: {'a': 1, 'b': 2}"
     )
     assert format_summary(context) == expected

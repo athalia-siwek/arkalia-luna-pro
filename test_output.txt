@@ -200,4 +200,4 @@ tests/performance/zeroia/test_zeroia_performance.py::TestZeroIAPerformance::test
 tests/performance/zeroia/test_zeroia_performance.py::TestZeroIAPerformance::test_concurrent_decisions FAILED [ 26%]
 tests/performance/zeroia/test_zeroia_performance.py::TestZeroIAPerformance::test_concurrent_event_storage FAILED [ 27%]
 tests/performance/zeroia/test_zeroia_performance.py::TestZeroIAPerformance::test_concurrent_circuit_breaker_operations FAILED [ 27%]
-tests/performance/zeroia/test_zeroia_performance.py::TestZeroIAPerformance::test_zeroia_throughput 
+tests/performance/zeroia/test_zeroia_performance.py::TestZeroIAPerformance::test_zeroia_throughput

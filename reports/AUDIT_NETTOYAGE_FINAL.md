@@ -234,6 +234,6 @@ Tous les tests doivent passer pour confirmer que le nettoyage n'a pas cassé de 
 
 ---
 
-**📅 Date**: 2025-07-04  
-**👤 Auteur**: Athalia  
-**🎯 Objectif**: Nettoyage complet du projet pour la production 
+**📅 Date**: 2025-07-04
+**👤 Auteur**: Athalia
+**🎯 Objectif**: Nettoyage complet du projet pour la production

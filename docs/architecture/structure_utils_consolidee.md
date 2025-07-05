@@ -58,4 +58,4 @@ from modules.utils.helpers import atomic_write, locked_read
 
 ---
 
-*Document généré automatiquement lors de la consolidation (juillet 2025)* 
+*Document généré automatiquement lors de la consolidation (juillet 2025)*

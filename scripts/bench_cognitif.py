@@ -3,6 +3,7 @@
 Benchmark Cognitif Arkalia-LUNA Pro
 Mesure la latence, le temps de réaction et les erreurs évitées sur le flux ZeroIA → Reflexia → API
 """
+
 import time
 from statistics import mean
 
@@ -78,10 +79,10 @@ for i in range(N_RUNS):
 # Statistiques
 print("\n=== Benchmark Cognitif Arkalia-LUNA Pro ===")
 print(f"Runs: {N_RUNS}")
-print(f"Latence ZeroIA (ms): {mean([r['zeroia'] for r in results])*1000:.2f}")
-print(f"Latence Reflexia (ms): {mean([r['reflexia'] for r in results])*1000:.2f}")
-print(f"Latence Sandozia (ms): {mean([r['sandozia'] for r in results])*1000:.2f}")
-print(f"Latence Security (ms): {mean([r['security'] for r in results])*1000:.2f}")
-print(f"Latence Storage (ms): {mean([r['storage'] for r in results])*1000:.2f}")
-print(f"Temps de réaction total (ms): {mean([r['total'] for r in results])*1000:.2f}")
+print(f"Latence ZeroIA (ms): {mean([r['zeroia'] for r in results]) * 1000:.2f}")
+print(f"Latence Reflexia (ms): {mean([r['reflexia'] for r in results]) * 1000:.2f}")
+print(f"Latence Sandozia (ms): {mean([r['sandozia'] for r in results]) * 1000:.2f}")
+print(f"Latence Security (ms): {mean([r['security'] for r in results]) * 1000:.2f}")
+print(f"Latence Storage (ms): {mean([r['storage'] for r in results]) * 1000:.2f}")
+print(f"Temps de réaction total (ms): {mean([r['total'] for r in results]) * 1000:.2f}")
 print(f"Erreurs évitées (simulées): {errors_avoided}/{N_RUNS}")

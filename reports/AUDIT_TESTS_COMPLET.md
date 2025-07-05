@@ -2,10 +2,10 @@
 
 ## 📊 Résumé Exécutif
 
-**Date d'audit :** 4 juillet 2025  
-**Total tests identifiés :** 313  
-**Tests dans /tests/ :** 288  
-**Tests éparpillés :** 25  
+**Date d'audit :** 4 juillet 2025
+**Total tests identifiés :** 313
+**Tests dans /tests/ :** 288
+**Tests éparpillés :** 25
 **Statut :** ⚠️ Problèmes critiques détectés
 
 ---
@@ -166,4 +166,4 @@ tests/
 
 ---
 
-**Prochaines étapes :** Exécution du plan de correction par phases 
+**Prochaines étapes :** Exécution du plan de correction par phases

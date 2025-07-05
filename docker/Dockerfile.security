@@ -91,4 +91,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 EXPOSE 8004
 
 # Point d'entrée sécurisé
-CMD ["python", "-m", "modules.security.core", "--mode", "guardian"] 
+CMD ["python", "-m", "modules.security.core", "--mode", "guardian"]

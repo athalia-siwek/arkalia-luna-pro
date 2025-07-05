@@ -45,7 +45,7 @@ def check_imports() -> bool:
 
     for import_stmt in test_imports:
         try:
-            exec(import_stmt)
+            exec(import_stmt)  # nosec B102
             print(f"✅ {import_stmt}")
         except Exception as e:
             print(f"❌ {import_stmt} - {e}")

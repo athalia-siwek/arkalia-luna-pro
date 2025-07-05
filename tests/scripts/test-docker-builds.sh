@@ -83,19 +83,19 @@ log_success "Docker disponible et fonctionnel"
 for i in "${!IMAGES[@]}"; do
     image="${IMAGES[$i]}"
     dockerfile="${DOCKERFILES[$i]}"
-    
+
     echo ""
     log_info "Test de l'image: $image"
     echo "----------------------------------------"
-    
+
     # Vérification du Dockerfile
     if [ ! -f "$dockerfile" ]; then
         log_error "Dockerfile manquant: $dockerfile"
         continue
     fi
-    
+
     log_success "Dockerfile trouvé: $dockerfile"
-    
+
     # Vérification de la syntaxe
     log_info "Vérification de la syntaxe..."
     if docker build --dry-run -f "$dockerfile" . &> /dev/null; then
@@ -103,32 +103,32 @@ for i in "${!IMAGES[@]}"; do
     else
         log_warning "Problème de syntaxe détecté"
     fi
-    
+
     # Construction de l'image
     log_info "Construction de l'image test-$image..."
     start_time=$(date +%s)
-    
+
     if timeout 600 docker build -f "$dockerfile" -t "test-$image" .; then
         end_time=$(date +%s)
         duration=$((end_time - start_time))
         log_success "Construction réussie en ${duration}s"
-        
+
         # Vérification de la taille de l'image
         image_size=$(docker images "test-$image" --format "table {{.Size}}" | tail -n 1)
         log_info "Taille de l'image: $image_size"
-        
+
         # Test de démarrage du conteneur
         log_info "Test de démarrage du conteneur..."
         if docker run --rm -d --name "test-$image-container" "test-$image" &> /dev/null; then
             log_success "Conteneur démarré avec succès"
-            
+
             # Attendre un peu pour voir si le conteneur reste stable
             sleep 5
-            
+
             # Vérifier si le conteneur fonctionne toujours
             if docker ps | grep -q "test-$image-container"; then
                 log_success "Conteneur stable"
-                
+
                 # Test de santé si applicable
                 case "$image" in
                     "assistantia")
@@ -167,16 +167,16 @@ for i in "${!IMAGES[@]}"; do
             else
                 log_error "Conteneur arrêté prématurément"
             fi
-            
+
             # Arrêt du conteneur
             docker stop "test-$image-container" &> /dev/null || true
         else
             log_error "Échec du démarrage du conteneur"
         fi
-        
+
     else
         log_error "Échec de la construction"
-        
+
         # Affichage des logs d'erreur
         log_info "Logs d'erreur de la construction:"
         docker build -f "$dockerfile" -t "test-$image" . 2>&1 | tail -20 || true
@@ -219,4 +219,4 @@ log_info "Pour résoudre les problèmes de build:"
 echo "- Vérifiez les dépendances dans requirements.txt"
 echo "- Assurez-vous que tous les fichiers sont présents"
 echo "- Augmentez les timeouts si nécessaire"
-echo "- Utilisez le cache Docker pour accélérer les builds" 
+echo "- Utilisez le cache Docker pour accélérer les builds"

@@ -52,4 +52,4 @@
 
 ---
 
-**Phase 8 validée à 100% : Arkalia-LUNA est désormais optimisé, robuste et prêt pour la montée en charge !** 
+**Phase 8 validée à 100% : Arkalia-LUNA est désormais optimisé, robuste et prêt pour la montée en charge !**

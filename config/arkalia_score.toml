@@ -83,4 +83,4 @@ backend = "json"
 backup_path = "backup/arkalia_score"
 
 # Fréquence de sauvegarde (en heures)
-backup_frequency = 24 
+backup_frequency = 24

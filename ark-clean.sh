@@ -47,7 +47,7 @@ print_error() {
 backup_important_files() {
     print_status "📦 Sauvegarde des fichiers importants..."
     mkdir -p "$BACKUP_DIR"
-    
+
     # Sauvegarder les fichiers de config critiques
     if [ -f "config/core_config.json" ]; then
         cp "config/core_config.json" "$BACKUP_DIR/"
@@ -58,14 +58,14 @@ backup_important_files() {
     if [ -f "version.toml" ]; then
         cp "version.toml" "$BACKUP_DIR/"
     fi
-    
+
     print_success "Sauvegarde terminée dans $BACKUP_DIR"
 }
 
 # Fonction de nettoyage des caches Python
 clean_python_caches() {
     print_status "🐍 Nettoyage des caches Python..."
-    
+
     # Caches Python
     find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
     find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
@@ -74,32 +74,32 @@ clean_python_caches() {
     find . -name "*.pyc" -delete 2>/dev/null || true
     find . -name "*.pyo" -delete 2>/dev/null || true
     find . -name "*.pyd" -delete 2>/dev/null || true
-    
+
     # Fichiers de couverture (PRÉSERVÉS pour la couverture de tests)
     # find . -name ".coverage*" -delete 2>/dev/null || true
     # find . -name "coverage.xml" -delete 2>/dev/null || true
     # find . -name "htmlcov" -type d -exec rm -rf {} + 2>/dev/null || true
     print_warning "Fichiers de couverture préservés pour maintenir la couverture de tests"
-    
+
     print_success "Caches Python nettoyés"
 }
 
 # Fonction de nettoyage des fichiers macOS
 clean_macos_files() {
     print_status "🍎 Nettoyage des fichiers macOS..."
-    
+
     # Fichiers cachés macOS
     find . -name "._*" -delete 2>/dev/null || true
     find . -name ".DS_Store" -delete 2>/dev/null || true
     find . -name "Thumbs.db" -delete 2>/dev/null || true
-    
+
     print_success "Fichiers macOS nettoyés"
 }
 
 # Fonction de nettoyage des artefacts de build
 clean_build_artifacts() {
     print_status "🔨 Nettoyage des artefacts de build..."
-    
+
     # Node.js
     if [ -d "node_modules" ]; then
         rm -rf node_modules
@@ -109,66 +109,66 @@ clean_build_artifacts() {
         rm -f package-lock.json
         print_success "package-lock.json supprimé"
     fi
-    
+
     # Python
     find . -name "*.egg-info" -type d -exec rm -rf {} + 2>/dev/null || true
     find . -name "dist" -type d -exec rm -rf {} + 2>/dev/null || true
     find . -name "build" -type d -exec rm -rf {} + 2>/dev/null || true
-    
+
     # Docker
     find . -name ".dockerignore" -delete 2>/dev/null || true
-    
+
     print_success "Artefacts de build nettoyés"
 }
 
 # Fonction de nettoyage des logs et états
 clean_logs_and_states() {
     print_status "📝 Nettoyage des logs et états..."
-    
+
     # Logs
     if [ -d "logs" ]; then
         find logs -name "*.log" -mtime +7 -delete 2>/dev/null || true
         print_success "Logs anciens nettoyés"
     fi
-    
+
     # États temporaires
     if [ -d "temp" ]; then
         rm -rf temp/*
         print_success "Dossier temp nettoyé"
     fi
-    
+
     # Cache global
     if [ -d "cache" ]; then
         rm -rf cache/*
         print_success "Cache global nettoyé"
     fi
-    
+
     # États de démo
     if [ -d "demo_sandozia_state" ]; then
         rm -rf demo_sandozia_state/*
         print_success "États de démo nettoyés"
     fi
-    
+
     print_success "Logs et états nettoyés"
 }
 
 # Fonction de nettoyage des rapports de test
 clean_test_reports() {
     print_status "🧪 Nettoyage des rapports de test..."
-    
+
     # Rapports de test
     if [ -d "tests/reports" ]; then
         find tests/reports -name "*.log" -mtime +3 -delete 2>/dev/null || true
         find tests/reports -name "*.md" -mtime +3 -delete 2>/dev/null || true
         print_success "Rapports de test anciens nettoyés"
     fi
-    
+
     # Benchmarks
     if [ -d ".benchmarks" ]; then
         rm -rf .benchmarks/*
         print_success "Benchmarks nettoyés"
     fi
-    
+
     print_success "Rapports de test nettoyés"
 }
 
@@ -176,23 +176,23 @@ clean_test_reports() {
 clean_aggressive() {
     if [ $AGGRESSIVE -eq 1 ]; then
         print_warning "🧹 Nettoyage agressif activé..."
-        
+
         # Supprimer tous les fichiers de métriques temporaires
         find . -name "chaos_metric_*.toml" -delete 2>/dev/null || true
         find . -name "demo_results.json" -delete 2>/dev/null || true
-        
+
         # Nettoyer les backups anciens
         if [ -d "backup" ]; then
             find backup -type d -name "cleanup_*" -mtime +7 -exec rm -rf {} + 2>/dev/null || true
             print_success "Backups anciens supprimés"
         fi
-        
+
         # Nettoyer les archives anciennes
         if [ -d "archive" ]; then
             find archive -type d -name "*_obsolete_*" -mtime +30 -exec rm -rf {} + 2>/dev/null || true
             print_success "Archives anciennes supprimées"
         fi
-        
+
         print_success "Nettoyage agressif terminé"
     fi
 }
@@ -200,26 +200,26 @@ clean_aggressive() {
 # Fonction d'optimisation de l'espace disque
 optimize_disk_space() {
     print_status "💾 Optimisation de l'espace disque..."
-    
+
     # Vider la corbeille (macOS)
     if command -v osascript &>/dev/null; then
         osascript -e 'tell application "Finder" to empty trash' 2>/dev/null || true
         print_success "Corbeille vidée"
     fi
-    
+
     # Nettoyer les caches système (si possible)
     if command -v brew &>/dev/null; then
         brew cleanup 2>/dev/null || true
         print_success "Cache Homebrew nettoyé"
     fi
-    
+
     print_success "Optimisation disque terminée"
 }
 
 # Fonction de restauration des fichiers importants
 restore_important_files() {
     print_status "🔄 Restauration des fichiers importants..."
-    
+
     if [ -d "$BACKUP_DIR" ]; then
         if [ -f "$BACKUP_DIR/core_config.json" ]; then
             cp "$BACKUP_DIR/core_config.json" "config/" 2>/dev/null || true
@@ -293,4 +293,4 @@ print_summary "$DURATION secondes"
 print_success "🌕 Nettoyage Arkalia-LUNA terminé avec succès !"
 print_status "📊 Projet prêt pour une nouvelle session de développement"
 
-exit 0 
+exit 0

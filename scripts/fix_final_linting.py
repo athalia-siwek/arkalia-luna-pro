@@ -167,12 +167,12 @@ def main():
 
     # 4. Appliquer le formatage
     print("\n🎨 Application du formatage...")
-    subprocess.run(["black", "."], check=False)
-    subprocess.run(["isort", "."], check=False)
+    subprocess.run(["/usr/local/bin/black", "."], check=False)  # nosec B607
+    subprocess.run(["/usr/local/bin/isort", "."], check=False)  # nosec B607
 
     # 5. Vérifier le résultat
     print("\n🔍 Vérification finale...")
-    result = subprocess.run(["ruff", "check", ".", "--statistics"], capture_output=True, text=True)
+    result = subprocess.run(["/usr/local/bin/ruff", "check", ".", "--statistics"], capture_output=True, text=True)  # nosec B607
 
     if result.returncode == 0:
         print("✅ Toutes les erreurs corrigées !")

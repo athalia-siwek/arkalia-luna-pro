@@ -74,4 +74,4 @@ python scripts/bench_cognitif.py
 
 ---
 
-> **Arkalia-LUNA Pro** — L’IA cognitive modulaire, prête pour l’entreprise, la cybersécurité et l’automatisation intelligente. 
+> **Arkalia-LUNA Pro** — L’IA cognitive modulaire, prête pour l’entreprise, la cybersécurité et l’automatisation intelligente.

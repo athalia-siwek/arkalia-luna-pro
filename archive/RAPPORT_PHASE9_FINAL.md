@@ -123,4 +123,4 @@ scrape_configs:
 
 ---
 
-**🎯 Phase 9 validée à 100% : Arkalia-LUNA est prêt pour l'industrialisation et la production !** 
+**🎯 Phase 9 validée à 100% : Arkalia-LUNA est prêt pour l'industrialisation et la production !**

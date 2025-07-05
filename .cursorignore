@@ -54,4 +54,4 @@ build/
 docker/data/
 
 # Node modules (if any)
-node_modules/ 
+node_modules/

@@ -2,9 +2,9 @@
 
 ## 📊 Résumé Exécutif
 
-**Date :** 4 juillet 2025  
-**Statut :** ✅ **AUDIT TERMINÉ AVEC SUCCÈS**  
-**Tests fonctionnels :** 5/5 (100%)  
+**Date :** 4 juillet 2025
+**Statut :** ✅ **AUDIT TERMINÉ AVEC SUCCÈS**
+**Tests fonctionnels :** 5/5 (100%)
 **Structure :** ✅ Organisée et propre
 
 ---
@@ -212,5 +212,5 @@ python -m pytest tests/performance/ -v
 
 ---
 
-**Date de fin :** 4 juillet 2025  
-**Statut :** ✅ **TERMINÉ AVEC SUCCÈS** 
+**Date de fin :** 4 juillet 2025
+**Statut :** ✅ **TERMINÉ AVEC SUCCÈS**

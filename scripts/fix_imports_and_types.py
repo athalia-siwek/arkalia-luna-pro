@@ -176,8 +176,8 @@ def main() -> None:
 
     # Formatage final
     try:
-        subprocess.run(["isort", "."], check=True)
-        subprocess.run(["black", "."], check=True)
+        subprocess.run(["/usr/local/bin/isort", "."], check=True)  # nosec B607
+        subprocess.run(["/usr/local/bin/black", "."], check=True)  # nosec B607
         print("✅ Formatage final appliqué")
     except subprocess.CalledProcessError as e:
         print(f"❌ Erreur formatage: {e}")

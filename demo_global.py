@@ -107,9 +107,9 @@ class ArkaliaGlobalDemo:
 
     def print_header(self, title: str):
         """Affiche un en-tête de section"""
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"🎯 {title}")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
     def print_step(self, step: str, status: str = "✅"):
         """Affiche une étape"""
@@ -390,7 +390,7 @@ class ArkaliaGlobalDemo:
         print(f"⏱️  Durée totale: {summary['total_duration']}s")
         print(f"📝 Étapes totales: {summary['total_steps']}")
         print(f"⚡ Durée moyenne/scénario: {summary['avg_duration_per_scenario']}s")
-        print(f"✅ Taux de succès: {summary['success_rate']*100}%")
+        print(f"✅ Taux de succès: {summary['success_rate'] * 100}%")
         print(f"🔗 Modules intégrés: {', '.join(summary['modules_integrated'])}")
 
         # Sauvegarder le résumé

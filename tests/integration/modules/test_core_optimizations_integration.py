@@ -2,6 +2,7 @@
 """
 🧪 Test d'intégration - Optimisations avancées du core
 """
+
 import time
 
 import pytest

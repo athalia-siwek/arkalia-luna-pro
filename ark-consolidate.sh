@@ -45,14 +45,14 @@ print_error() {
 # Fonction de consolidation des dossiers de couverture
 consolidate_coverage() {
     print_status "📊 Consolidation des dossiers de couverture..."
-    
+
     if [ -d "htmlcov-performance" ] || [ -d "htmlcov-chaos" ] || [ -d "htmlcov-critical" ] || [ -d "htmlcov-security" ]; then
         print_warning "Fusion des dossiers de couverture dans htmlcov/"
-        
+
         if [ $DRY_RUN -eq 0 ]; then
             # Créer le dossier consolidé
             mkdir -p htmlcov/
-            
+
             # Fusionner tous les dossiers de couverture
             for dir in htmlcov-*; do
                 if [ -d "$dir" ]; then
@@ -60,7 +60,7 @@ consolidate_coverage() {
                     cp -r "$dir"/* htmlcov/ 2>/dev/null || true
                 fi
             done
-            
+
             # Supprimer les anciens dossiers
             rm -rf htmlcov-*
             print_success "Dossiers de couverture consolidés (68MB libéré)"
@@ -73,11 +73,11 @@ consolidate_coverage() {
 # Fonction de nettoyage des états et logs
 cleanup_state_logs() {
     print_status "🧹 Nettoyage des états et logs..."
-    
+
     # Nettoyer les logs anciens (plus de 30 jours)
     if [ -d "logs" ]; then
         print_warning "Suppression des logs de plus de 30 jours"
-        
+
         if [ $DRY_RUN -eq 0 ]; then
             find logs -type f -mtime +30 -delete
             print_success "Logs anciens supprimés"
@@ -85,11 +85,11 @@ cleanup_state_logs() {
             print_status "DRY RUN: Logs anciens seraient supprimés"
         fi
     fi
-    
+
     # Nettoyer les états temporaires
     if [ -d "state" ]; then
         print_warning "Nettoyage des états temporaires"
-        
+
         if [ $DRY_RUN -eq 0 ]; then
             # Garder seulement les états des 7 derniers jours
             find state -type f -mtime +7 -name "*.tmp" -delete
@@ -104,11 +104,11 @@ cleanup_state_logs() {
 # Fonction d'organisation des rapports
 organize_reports() {
     print_status "📄 Organisation des rapports..."
-    
+
     if [ $DRY_RUN -eq 0 ]; then
         # Créer le dossier reports
         mkdir -p reports/
-        
+
         # Déplacer tous les rapports .md
         for report in *.md; do
             if [ -f "$report" ] && [[ "$report" != "README.md" ]]; then
@@ -116,7 +116,7 @@ organize_reports() {
                 mv "$report" reports/
             fi
         done
-        
+
         print_success "Rapports organisés dans reports/"
     else
         print_status "DRY RUN: Rapports seraient organisés dans reports/"
@@ -126,11 +126,11 @@ organize_reports() {
 # Fonction de consolidation des configurations
 consolidate_configs() {
     print_status "🔧 Consolidation des configurations..."
-    
+
     if [ $DRY_RUN -eq 0 ]; then
         # Créer le dossier configs
         mkdir -p configs/
-        
+
         # Déplacer les configurations pytest
         for config in pytest-*.ini; do
             if [ -f "$config" ]; then
@@ -138,7 +138,7 @@ consolidate_configs() {
                 mv "$config" configs/
             fi
         done
-        
+
         # Déplacer les configurations Docker
         for compose in docker-compose*.yml; do
             if [ -f "$compose" ] && [[ "$compose" != "docker-compose.yml" ]]; then
@@ -146,7 +146,7 @@ consolidate_configs() {
                 mv "$compose" configs/
             fi
         done
-        
+
         # Créer un fichier de configuration unifié
         cat > configs/pytest-unified.ini << 'EOF'
 [tool:pytest]
@@ -155,7 +155,7 @@ testpaths = tests
 python_files = test_*.py
 python_classes = Test*
 python_functions = test_*
-addopts = 
+addopts =
     --strict-markers
     --strict-config
     --verbose
@@ -171,7 +171,7 @@ markers =
     security: Security tests
     chaos: Chaos engineering tests
 EOF
-        
+
         print_success "Configurations consolidées dans configs/"
     else
         print_status "DRY RUN: Configurations seraient consolidées"
@@ -181,11 +181,11 @@ EOF
 # Fonction d'organisation des Dockerfiles
 organize_dockerfiles() {
     print_status "🐳 Organisation des Dockerfiles..."
-    
+
     if [ $DRY_RUN -eq 0 ]; then
         # Créer le dossier docker
         mkdir -p docker/
-        
+
         # Déplacer tous les Dockerfiles sauf le principal
         for dockerfile in Dockerfile.*; do
             if [ -f "$dockerfile" ]; then
@@ -193,7 +193,7 @@ organize_dockerfiles() {
                 mv "$dockerfile" docker/
             fi
         done
-        
+
         print_success "Dockerfiles organisés dans docker/"
     else
         print_status "DRY RUN: Dockerfiles seraient organisés dans docker/"
@@ -203,28 +203,28 @@ organize_dockerfiles() {
 # Fonction de consolidation des outils de développement
 consolidate_dev_tools() {
     print_status "🛠️  Consolidation des outils de développement..."
-    
+
     if [ $DRY_RUN -eq 0 ]; then
         # Créer le dossier dev
         mkdir -p dev/
-        
+
         # Déplacer les dossiers de développement
         if [ -d ".dev" ]; then
             print_status "Déplacement de .dev vers dev/"
             mv .dev/* dev/ 2>/dev/null || true
             rmdir .dev
         fi
-        
+
         if [ -d ".vscode" ]; then
             print_status "Déplacement de .vscode vers dev/"
             mv .vscode dev/
         fi
-        
+
         if [ -d ".benchmarks" ]; then
             print_status "Déplacement de .benchmarks vers dev/"
             mv .benchmarks dev/
         fi
-        
+
         print_success "Outils de développement consolidés dans dev/"
     else
         print_status "DRY RUN: Outils de développement seraient consolidés"
@@ -234,18 +234,18 @@ consolidate_dev_tools() {
 # Fonction de nettoyage des caches
 cleanup_caches() {
     print_status "🗑️  Nettoyage des caches..."
-    
+
     if [ $DRY_RUN -eq 0 ]; then
         # Nettoyer les caches Python
         find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
         find . -name "*.pyc" -delete 2>/dev/null || true
-        
+
         # Nettoyer les caches de build
         rm -rf build/ dist/ *.egg-info/ 2>/dev/null || true
-        
+
         # Nettoyer les caches Node.js
         rm -rf node_modules/ .npm/ 2>/dev/null || true
-        
+
         print_success "Caches nettoyés"
     else
         print_status "DRY RUN: Caches seraient nettoyés"
@@ -255,7 +255,7 @@ cleanup_caches() {
 # Fonction de création d'un script de lancement unifié
 create_unified_launcher() {
     print_status "🚀 Création d'un lanceur unifié..."
-    
+
     if [ $DRY_RUN -eq 0 ]; then
         cat > arkalia.sh << 'EOF'
 #!/bin/bash
@@ -350,7 +350,7 @@ case "$1" in
         ;;
 esac
 EOF
-        
+
         chmod +x arkalia.sh
         print_success "Lanceur unifié créé: arkalia.sh"
     else
@@ -361,12 +361,12 @@ EOF
 # Fonction de calcul de l'espace qui sera libéré
 calculate_space_freed() {
     local total_freed=0
-    
+
     # Espace des dossiers de couverture
     if [ -d "htmlcov-performance" ] || [ -d "htmlcov-chaos" ] || [ -d "htmlcov-critical" ] || [ -d "htmlcov-security" ]; then
         total_freed=$((total_freed + 68))
     fi
-    
+
     # Espace des logs anciens (estimation)
     if [ -d "logs" ]; then
         local old_logs=$(find logs -type f -mtime +30 2>/dev/null | wc -l)
@@ -374,14 +374,14 @@ calculate_space_freed() {
             total_freed=$((total_freed + 10))
         fi
     fi
-    
+
     echo "$total_freed"
 }
 
 # Fonction d'affichage du résumé
 print_summary() {
     local space_freed=$1
-    
+
     echo -e "\n${CYAN}===== RÉSUMÉ DE LA CONSOLIDATION =====${NC}"
     echo -e "${CYAN}Espace qui sera libéré : ${space_freed}MB${NC}"
     echo -e "${CYAN}Log détaillé : $LOG_FILE${NC}"
@@ -449,4 +449,4 @@ print_status "📊 Structure du projet optimisée et organisée"
 print_warning "💡 Espace libéré : $SPACE_TO_FREE MB"
 print_status "🚀 Nouveau lanceur unifié : ./arkalia.sh"
 
-exit 0 
+exit 0
