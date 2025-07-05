@@ -298,7 +298,7 @@ def cache_result(ttl: int | None = None, level: CacheLevel = CacheLevel.L1):
             import hashlib
 
             key_parts = [func.__name__, str(args), str(sorted(kwargs.items()))]
-            key = hashlib.md5(":".join(key_parts).encode()).hexdigest()
+            key = hashlib.md5(":".join(key_parts).encode(), usedforsecurity=False).hexdigest()
 
             # Essayer de récupérer du cache
             cached_result = cache_manager.get(key)
