@@ -10,7 +10,6 @@ Fonctionnalités:
 - Métriques de nettoyage
 """
 
-from core.ark_logger import ark_logger
 import gzip
 import json
 import re
@@ -19,6 +18,8 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Optional
+
+from core.ark_logger import ark_logger
 
 
 class LogScrubber:

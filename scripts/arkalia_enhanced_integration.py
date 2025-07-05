@@ -17,7 +17,6 @@ Usage:
     python scripts/arkalia_enhanced_integration.py --generate-heatmap-data
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -25,6 +24,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+from core.ark_logger import ark_logger
 
 # Configuration logging
 logging.basicConfig(

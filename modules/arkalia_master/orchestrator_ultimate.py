@@ -6,7 +6,6 @@ Orchestrateur Maître coordonnant l'écosystème complet Arkalia-LUNA
 Gère intelligemment les 10 modules IA avec cycles adaptatifs
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import logging
 import time
@@ -17,6 +16,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 import toml
+
+from core.ark_logger import ark_logger
 
 # AssistantIA - Chat & interactions
 from ..assistantia.core import router as assistantia_router

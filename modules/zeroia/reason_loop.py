@@ -1,4 +1,3 @@
-from core.ark_logger import ark_logger
 import logging
 import textwrap
 import time
@@ -9,6 +8,7 @@ from typing import Any, Optional
 
 import toml
 
+from core.ark_logger import ark_logger
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
 from modules.zeroia.model_integrity import validate_decision_integrity
 from modules.zeroia.utils.backup import save_backup

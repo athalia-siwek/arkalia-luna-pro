@@ -2,9 +2,10 @@
 # 🔐 scripts/demo_arkalia_vault.py
 # Démonstration d'Arkalia-Vault Enterprise
 
-from core.ark_logger import ark_logger
 import sys
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le projet au PYTHONPATH
 project_root = Path(__file__).parent.parent
@@ -24,13 +25,19 @@ from modules.security.crypto import (
 
 def demo_basic_vault_operations():
     """Démonstration des opérations de base du vault"""
-    ark_logger.info("🔐 === DÉMONSTRATION ARKALIA-VAULT ENTERPRISE ===\n", extra={"module": "scripts"})
+    ark_logger.info(
+        "🔐 === DÉMONSTRATION ARKALIA-VAULT ENTERPRISE ===\n", extra={"module": "scripts"}
+    )
 
     # Créer un vault dans un répertoire temporaire
     demo_dir = Path("./demo_vault")
     vault = ArkaliaVault(base_dir=demo_dir)
 
-    ark_logger.info("✅ ArkaliaVault initialisé dans:", demo_dir / "security" / "vault", extra={"module": "scripts"})
+    ark_logger.info(
+        "✅ ArkaliaVault initialisé dans:",
+        demo_dir / "security" / "vault",
+        extra={"module": "scripts"},
+    )
 
     # 1. Stockage de secrets
     ark_logger.info("\n📦 1. STOCKAGE DE SECRETS", extra={"module": "scripts"})
@@ -60,14 +67,19 @@ def demo_basic_vault_operations():
     ark_logger.info("\n📋 3. LISTAGE DES SECRETS", extra={"module": "scripts"})
     secrets = vault.list_secrets()
     for secret in secrets:
-        ark_logger.info(f"   📝 {secret.name} - Tags: {secret.tags} - Accès: {secret.access_count}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"   📝 {secret.name} - Tags: {secret.tags} - Accès: {secret.access_count}",
+            extra={"module": "scripts"},
+        )
 
     # 4. Statistiques du vault
     ark_logger.info("\n📊 4. STATISTIQUES DU VAULT", extra={"module": "scripts"})
     stats = vault.get_vault_stats()
     ark_logger.info(f"   📈 Total secrets: {stats['total_secrets']}", extra={"module": "scripts"})
     ark_logger.info(f"   📈 Secrets actifs: {stats['active_secrets']}", extra={"module": "scripts"})
-    ark_logger.info(f"   📈 Taille vault: {stats['vault_size_bytes']} bytes", extra={"module": "scripts"})
+    ark_logger.info(
+        f"   📈 Taille vault: {stats['vault_size_bytes']} bytes", extra={"module": "scripts"}
+    )
 
     return vault
 
@@ -84,7 +96,9 @@ def demo_rotation_manager(vault):
     # Politique quotidienne pour JWT
     jwt_policy = create_daily_rotation_policy("jwt_secret")
     rotation_manager.add_policy(jwt_policy)
-    ark_logger.info("   ✅ Politique quotidienne ajoutée pour jwt_secret", extra={"module": "scripts"})
+    ark_logger.info(
+        "   ✅ Politique quotidienne ajoutée pour jwt_secret", extra={"module": "scripts"}
+    )
 
     # Politique basée sur l'accès pour API key
     from modules.security.crypto import RotationPolicy
@@ -97,7 +111,10 @@ def demo_rotation_manager(vault):
         generation_pattern="api_key",
     )
     rotation_manager.add_policy(api_policy)
-    ark_logger.info("   ✅ Politique par accès ajoutée pour api_key (max 100 accès)", extra={"module": "scripts"})
+    ark_logger.info(
+        "   ✅ Politique par accès ajoutée pour api_key (max 100 accès)",
+        extra={"module": "scripts"},
+    )
 
     # 2. Vérification des rotations nécessaires
     ark_logger.info("\n🔍 2. VÉRIFICATION DES ROTATIONS", extra={"module": "scripts"})
@@ -122,9 +139,17 @@ def demo_rotation_manager(vault):
     # 4. Statistiques de rotation
     ark_logger.info("\n📊 4. STATISTIQUES DE ROTATION", extra={"module": "scripts"})
     rotation_stats = rotation_manager.get_rotation_stats()
-    ark_logger.info(f"   📈 Politiques actives: {rotation_stats['total_policies']}", extra={"module": "scripts"})
-    ark_logger.info(f"   📈 Rotations effectuées: {rotation_stats['total_rotations']}", extra={"module": "scripts"})
-    ark_logger.info(f"   📈 Distribution: {rotation_stats['strategy_distribution']}", extra={"module": "scripts"})
+    ark_logger.info(
+        f"   📈 Politiques actives: {rotation_stats['total_policies']}", extra={"module": "scripts"}
+    )
+    ark_logger.info(
+        f"   📈 Rotations effectuées: {rotation_stats['total_rotations']}",
+        extra={"module": "scripts"},
+    )
+    ark_logger.info(
+        f"   📈 Distribution: {rotation_stats['strategy_distribution']}",
+        extra={"module": "scripts"},
+    )
 
     return rotation_manager
 
@@ -168,11 +193,19 @@ def demo_token_manager(vault):
 
     # Valider le token de session
     is_valid, metadata, reason = token_manager.validate_token(session_token)
-    ark_logger.info(f"   🎫 Session token valide: {is_valid} - {reason}", extra={"module": "scripts"})
+    ark_logger.info(
+        f"   🎫 Session token valide: {is_valid} - {reason}", extra={"module": "scripts"}
+    )
     if metadata:
-        ark_logger.info(f"      👤 Utilisateur: {metadata.associated_user}", extra={"module": "scripts"})
-        ark_logger.info(f"      🔐 Permissions: {metadata.permissions}", extra={"module": "scripts"})
-        ark_logger.info(f"      📊 Utilisations: {metadata.usage_count}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"      👤 Utilisateur: {metadata.associated_user}", extra={"module": "scripts"}
+        )
+        ark_logger.info(
+            f"      🔐 Permissions: {metadata.permissions}", extra={"module": "scripts"}
+        )
+        ark_logger.info(
+            f"      📊 Utilisations: {metadata.usage_count}", extra={"module": "scripts"}
+        )
 
     # Valider la clé API
     is_valid, metadata, reason = token_manager.validate_token(
@@ -183,10 +216,17 @@ def demo_token_manager(vault):
     # 4. Statistiques des tokens
     ark_logger.info("\n📊 4. STATISTIQUES DES TOKENS", extra={"module": "scripts"})
     token_stats = token_manager.get_token_stats()
-    ark_logger.info(f"   📈 Total tokens: {token_stats['total_tokens']}", extra={"module": "scripts"})
-    ark_logger.info(f"   📈 Tokens actifs: {token_stats['active_tokens']}", extra={"module": "scripts"})
+    ark_logger.info(
+        f"   📈 Total tokens: {token_stats['total_tokens']}", extra={"module": "scripts"}
+    )
+    ark_logger.info(
+        f"   📈 Tokens actifs: {token_stats['active_tokens']}", extra={"module": "scripts"}
+    )
     ark_logger.info(f"   📈 Par type: {token_stats['by_type']}", extra={"module": "scripts"})
-    ark_logger.info(f"   📈 Usage total: {token_stats['usage_stats']['total_usage']}", extra={"module": "scripts"})
+    ark_logger.info(
+        f"   📈 Usage total: {token_stats['usage_stats']['total_usage']}",
+        extra={"module": "scripts"},
+    )
 
     # 5. Révocation de token
     ark_logger.info("\n🚫 5. RÉVOCATION DE TOKEN", extra={"module": "scripts"})
@@ -195,7 +235,9 @@ def demo_token_manager(vault):
 
     # Vérifier que le token révoqué n'est plus valide
     is_valid, _, reason = token_manager.validate_token(api_token)
-    ark_logger.info(f"   🚫 Token après révocation: {is_valid} - {reason}", extra={"module": "scripts"})
+    ark_logger.info(
+        f"   🚫 Token après révocation: {is_valid} - {reason}", extra={"module": "scripts"}
+    )
 
     return token_manager
 
@@ -210,18 +252,24 @@ def demo_vault_integrity():
     ark_logger.info("🔍 1. VALIDATION D'INTÉGRITÉ COMPLÈTE", extra={"module": "scripts"})
     try:
         integrity_result = vault.validate_vault_integrity()
-        ark_logger.info(f"   ✅ Intégrité du vault: {integrity_result}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"   ✅ Intégrité du vault: {integrity_result}", extra={"module": "scripts"}
+        )
     except Exception as e:
         ark_logger.info(f"   ❌ Violation d'intégrité: {e}", extra={"module": "scripts"})
 
     ark_logger.info("\n🔐 2. ROTATION DE LA CLÉ MAÎTRE", extra={"module": "scripts"})
     try:
         new_key = vault.rotate_master_key()
-        ark_logger.info(f"   ✅ Clé maître tournée: {len(new_key, extra={"module": "scripts"})} bytes")
+        ark_logger.info(
+            f"   ✅ Clé maître tournée: {len(new_key, extra={"module": "scripts"})} bytes"
+        )
 
         # Re-valider l'intégrité après rotation
         integrity_result = vault.validate_vault_integrity()
-        ark_logger.info(f"   ✅ Intégrité après rotation: {integrity_result}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"   ✅ Intégrité après rotation: {integrity_result}", extra={"module": "scripts"}
+        )
 
     except Exception as e:
         ark_logger.info(f"   ❌ Erreur de rotation: {e}", extra={"module": "scripts"})
@@ -276,22 +324,38 @@ def main():
         demo_migration_env()
 
         ark_logger.info("\n🎉 === DÉMONSTRATION TERMINÉE ===", extra={"module": "scripts"})
-        ark_logger.info("✅ Arkalia-Vault Enterprise fonctionne parfaitement !", extra={"module": "scripts"})
+        ark_logger.info(
+            "✅ Arkalia-Vault Enterprise fonctionne parfaitement !", extra={"module": "scripts"}
+        )
 
         # Statistiques finales
         ark_logger.info("\n📊 STATISTIQUES FINALES:", extra={"module": "scripts"})
         final_stats = vault.get_vault_stats()
-        ark_logger.info(f"   📈 Total secrets: {final_stats['total_secrets']}", extra={"module": "scripts"})
-        ark_logger.info(f"   📈 Secrets actifs: {final_stats['active_secrets']}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"   📈 Total secrets: {final_stats['total_secrets']}", extra={"module": "scripts"}
+        )
+        ark_logger.info(
+            f"   📈 Secrets actifs: {final_stats['active_secrets']}", extra={"module": "scripts"}
+        )
 
         token_stats = token_manager.get_token_stats()
-        ark_logger.info(f"   🎫 Total tokens: {token_stats['total_tokens']}", extra={"module": "scripts"})
-        ark_logger.info(f"   🎫 Tokens actifs: {token_stats['active_tokens']}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"   🎫 Total tokens: {token_stats['total_tokens']}", extra={"module": "scripts"}
+        )
+        ark_logger.info(
+            f"   🎫 Tokens actifs: {token_stats['active_tokens']}", extra={"module": "scripts"}
+        )
 
         rotation_stats = rotation_manager.get_rotation_stats()
-        ark_logger.info(f"   🔄 Politiques rotation: {rotation_stats['total_policies']}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"   🔄 Politiques rotation: {rotation_stats['total_policies']}",
+            extra={"module": "scripts"},
+        )
 
-        ark_logger.info("\n📁 Données sauvegardées dans: ./demo_vault/security/vault/", extra={"module": "scripts"})
+        ark_logger.info(
+            "\n📁 Données sauvegardées dans: ./demo_vault/security/vault/",
+            extra={"module": "scripts"},
+        )
 
     except Exception as e:
         ark_logger.info(f"❌ Erreur lors de la démonstration: {e}", extra={"module": "scripts"})

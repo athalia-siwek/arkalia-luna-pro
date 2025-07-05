@@ -6,11 +6,12 @@ Demo Reflexia Enhanced v2.6.0
 Test de la nouvelle version avec vraies métriques système
 """
 
-from core.ark_logger import ark_logger
 import pathlib
 import subprocess
 import sys
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le répertoire racine au path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -49,7 +50,9 @@ def main() -> None:
 
     try:
         reflexia_loop_enhanced(max_iterations=3, sleep_seconds=3, verbose=True)
-        ark_logger.info("\n✅ Demo Reflexia Enhanced terminé avec succès !", extra={"module": "scripts"})
+        ark_logger.info(
+            "\n✅ Demo Reflexia Enhanced terminé avec succès !", extra={"module": "scripts"}
+        )
         format_generated()
 
     except KeyboardInterrupt:

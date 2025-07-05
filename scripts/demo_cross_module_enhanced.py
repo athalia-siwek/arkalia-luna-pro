@@ -21,13 +21,14 @@ Copyright 2025 Arkalia-LUNA Enterprise
 Version: Enhanced v2.7.1-performance
 """
 
-from core.ark_logger import ark_logger
 import argparse
 import pathlib
 import subprocess
 import sys
 import time
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le path des modules
 sys.path.append(str(Path(__file__).parent.parent / "modules"))

@@ -37,7 +37,7 @@ class ArkaliaLogger:
         # Format structuré conforme cahier des charges
         formatter = logging.Formatter(
             fmt="%(asctime)s - %(name)s - %(levelname)s - [%(arkalia_module)s] %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S"
+            datefmt="%Y-%m-%d %H:%M:%S",
         )
 
         # Handler console
@@ -51,8 +51,8 @@ class ArkaliaLogger:
 
         file_handler = logging.handlers.RotatingFileHandler(
             log_dir / f"{self.module_name}.log",
-            maxBytes=10*1024*1024,  # 10MB
-            backupCount=5
+            maxBytes=10 * 1024 * 1024,
+            backupCount=5,  # 10MB
         )
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
@@ -99,12 +99,15 @@ class ArkaliaLogger:
         extra["timestamp"] = datetime.now().isoformat()
         self.logger.critical(message, extra=extra)
 
+
 # Instance globale du logger Arkalia
 ark_logger = ArkaliaLogger("core")
+
 
 def get_ark_logger(module_name: str) -> ArkaliaLogger:
     """Factory pour obtenir un logger Arkalia pour un module spécifique"""
     return ArkaliaLogger(module_name)
+
 
 # Fonction de compatibilité pour migration
 def setup_ark_logger(module_name: str) -> ArkaliaLogger:

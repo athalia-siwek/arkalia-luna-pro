@@ -1,12 +1,13 @@
 # scripts/sitemap_generator.py
 
-from core.ark_logger import ark_logger
 import datetime
 import os
 import urllib.parse
 
 import requests
 import yaml
+
+from core.ark_logger import ark_logger
 
 
 def parse_nav_from_mkdocs(mkdocs_yml_path="mkdocs.yml"):

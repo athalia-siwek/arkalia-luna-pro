@@ -1,7 +1,6 @@
 # 🌀 tests/chaos/chaos_test.py
 # Tests de chaos pour résilience Arkalia-LUNA
 
-from core.ark_logger import ark_logger
 import json
 import random
 import subprocess
@@ -13,6 +12,7 @@ from unittest.mock import patch
 import pytest
 import toml
 
+from core.ark_logger import ark_logger
 from modules.zeroia.reason_loop import load_context
 from utils.io_safe import atomic_write, locked_read
 
@@ -85,7 +85,9 @@ class ChaosTester:
                     original_path.write_bytes(backup_path.read_bytes())
                     backup_path.unlink()
             except Exception as e:
-                ark_logger.info(f"⚠️ Erreur restauration {original_path}: {e}", extra={"module": "chaos"})
+                ark_logger.info(
+                    f"⚠️ Erreur restauration {original_path}: {e}", extra={"module": "chaos"}
+                )
         self.corrupted_files.clear()
 
     def simulate_high_load(self, duration: int = 10):

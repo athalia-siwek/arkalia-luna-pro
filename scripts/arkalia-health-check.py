@@ -4,7 +4,6 @@
 Script de diagnostic et monitoring des deux sites web
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -17,6 +16,8 @@ from pathlib import Path
 
 import requests
 import toml
+
+from core.ark_logger import ark_logger
 
 # Configuration logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

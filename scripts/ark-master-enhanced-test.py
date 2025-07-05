@@ -4,10 +4,11 @@
 Test complet de l'orchestrateur enhanced v5.0.0
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import sys
 from typing import Any, Optional
+
+from core.ark_logger import ark_logger
 
 
 async def test_enhanced_orchestrator():

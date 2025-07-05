@@ -13,7 +13,6 @@ Améliorations v3.x :
 - Recovery automatique et graceful degradation
 """
 
-from core.ark_logger import ark_logger
 import logging
 import sys
 import textwrap
@@ -24,6 +23,7 @@ from typing import Any, Optional
 
 import toml
 
+from core.ark_logger import ark_logger
 from modules.zeroia.adaptive_thresholds import should_lower_cpu_threshold
 from modules.zeroia.circuit_breaker import (  # noqa: F401
     CircuitBreaker,

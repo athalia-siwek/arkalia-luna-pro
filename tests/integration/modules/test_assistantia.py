@@ -4,7 +4,6 @@
 Teste le bon fonctionnement d'AssistantIA avec Ollama
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import json
 import time
@@ -12,6 +11,8 @@ from pathlib import Path
 from typing import Any
 
 import requests
+
+from core.ark_logger import ark_logger
 
 
 class AssistantIATester:
@@ -183,7 +184,9 @@ class AssistantIATester:
                 passed += 1
 
         ark_logger.info("=" * 50, extra={"module": "scripts"})
-        ark_logger.info(f"📊 Résultats: {passed}/{total} tests réussis", extra={"module": "scripts"})
+        ark_logger.info(
+            f"📊 Résultats: {passed}/{total} tests réussis", extra={"module": "scripts"}
+        )
 
         # Test de chat avancé
         ark_logger.info("\n🤖 Test de conversation avancée...", extra={"module": "scripts"})
@@ -212,7 +215,9 @@ class AssistantIATester:
             Path(filename).parent.mkdir(exist_ok=True)
             with open(filename, "w") as f:
                 json.dump(self.test_results, f, indent=2)
-            ark_logger.info(f"💾 Résultats sauvegardés dans {filename}", extra={"module": "scripts"})
+            ark_logger.info(
+                f"💾 Résultats sauvegardés dans {filename}", extra={"module": "scripts"}
+            )
         except Exception as e:
             ark_logger.info(f"❌ Erreur sauvegarde: {e}", extra={"module": "scripts"})
 
@@ -224,8 +229,13 @@ def main():
     tester.save_results()
 
     ark_logger.info("\n🎯 Résumé final:", extra={"module": "scripts"})
-    ark_logger.info(f"   Tests réussis: {results['passed_tests']}/{results['total_tests']}", extra={"module": "scripts"})
-    ark_logger.info(f"   Taux de succès: {results['success_rate']:.1f}%", extra={"module": "scripts"})
+    ark_logger.info(
+        f"   Tests réussis: {results['passed_tests']}/{results['total_tests']}",
+        extra={"module": "scripts"},
+    )
+    ark_logger.info(
+        f"   Taux de succès: {results['success_rate']:.1f}%", extra={"module": "scripts"}
+    )
 
     if results["success_rate"] >= 80:
         ark_logger.info("🎉 AssistantIA fonctionne correctement !", extra={"module": "scripts"})

@@ -3,7 +3,6 @@ Test Docker Enhanced pour ZeroIA Container
 Tests robustes de la boucle Enhanced avec tous les modules Arkalia
 """
 
-from core.ark_logger import ark_logger
 import json
 import shutil
 import subprocess
@@ -11,6 +10,8 @@ import time
 from pathlib import Path
 
 import pytest
+
+from core.ark_logger import ark_logger
 
 # Vérifie si Docker est disponible
 docker_available = shutil.which("docker") is not None

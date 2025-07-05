@@ -9,13 +9,14 @@ Usage:
     python scripts/demo_error_recovery.py --integration-test
 """
 
-from core.ark_logger import ark_logger
 import argparse
 import asyncio
 import logging
 import sys
 from datetime import datetime
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le module au path
 sys.path.insert(0, str(Path(__file__).parent.parent))

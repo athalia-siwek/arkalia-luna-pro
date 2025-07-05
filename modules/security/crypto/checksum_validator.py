@@ -1,13 +1,14 @@
 # 🔐 modules/security/crypto/checksum_validator.py
 # Validation checksums SHA256 des artefacts de build
 
-from core.ark_logger import ark_logger
 import hashlib
 import json
 import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
+
+from core.ark_logger import ark_logger
 
 logger = logging.getLogger(__name__)
 
@@ -331,10 +332,15 @@ if __name__ == "__main__":
                 ark_logger.info("✅ Quick check passed", extra={"module": "crypto"})
 
         else:
-            ark_logger.info("Usage: python checksum_validator.py [generate|validate|quick]", extra={"module": "crypto"})
+            ark_logger.info(
+                "Usage: python checksum_validator.py [generate|validate|quick]",
+                extra={"module": "crypto"},
+            )
             sys.exit(1)
     else:
         # Mode interactif
         validator = BuildIntegrityValidator()
         checksums = validator.generate_checksums()
-        ark_logger.info(f"Generated checksums for {len(checksums, extra={"module": "crypto"})} files")
+        ark_logger.info(
+            f"Generated checksums for {len(checksums, extra={"module": "crypto"})} files"
+        )

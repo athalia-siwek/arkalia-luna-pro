@@ -4,9 +4,10 @@
 Analyse tous les composants disponibles vs ceux intégrés dans l'orchestrateur
 """
 
-from core.ark_logger import ark_logger
 from pathlib import Path
 from typing import Any, Optional
+
+from core.ark_logger import ark_logger
 
 
 class ArkaliaModulesAnalyzer:

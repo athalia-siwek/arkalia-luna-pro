@@ -4,12 +4,13 @@
 Corrige les erreurs F841 (variables inutilisées), E722 (bare except), et F401 (imports inutilisés)
 """
 
-from core.ark_logger import ark_logger
 import os
 import re
 import subprocess
 from pathlib import Path
 from typing import Any
+
+from core.ark_logger import ark_logger
 
 
 def fix_unused_variables(file_path: Path) -> list[str]:
@@ -122,7 +123,10 @@ def run_ruff_fix() -> list[str]:
 
 def main():
     """Fonction principale de correction"""
-    ark_logger.info("🔧 Début de la correction automatique des problèmes de linting...", extra={"module": "scripts"})
+    ark_logger.info(
+        "🔧 Début de la correction automatique des problèmes de linting...",
+        extra={"module": "scripts"},
+    )
 
     fixes = []
 

@@ -1,9 +1,10 @@
-from core.ark_logger import ark_logger
 import os
 import sys
 from pathlib import Path
 
 import toml
+
+from core.ark_logger import ark_logger
 
 DEFAULT_PATH = "modules/zeroia/state/zeroia_state.toml"
 

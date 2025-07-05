@@ -15,7 +15,6 @@ Utilisation :
 python scripts/demo_sandozia.py --full-demo
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -24,6 +23,8 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le path des modules
 sys.path.insert(0, str(Path(__file__).parent.parent))

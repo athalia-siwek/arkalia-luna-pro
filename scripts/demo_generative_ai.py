@@ -6,13 +6,14 @@
 Script de démonstration pour tester les capacités d'auto-génération de code.
 """
 
-from core.ark_logger import ark_logger
 import argparse
 import asyncio
 import pathlib
 import subprocess
 import sys
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le répertoire modules au path
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))
@@ -40,9 +41,15 @@ async def demo_generative_ai():
     analysis = generative_ai.analyze_codebase()
 
     ark_logger.info(f"📊 Modules analysés: {len(analysis['modules'], extra={"module": "scripts"})}")
-    ark_logger.info(f"🔍 Patterns détectés: {len(analysis['patterns'], extra={"module": "scripts"})}")
-    ark_logger.info(f"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'], extra={"module": "scripts"})}")
-    ark_logger.info(f"🧪 Tests manquants: {len(analysis['missing_tests'], extra={"module": "scripts"})}")
+    ark_logger.info(
+        f"🔍 Patterns détectés: {len(analysis['patterns'], extra={"module": "scripts"})}"
+    )
+    ark_logger.info(
+        f"🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'], extra={"module": "scripts"})}"
+    )
+    ark_logger.info(
+        f"🧪 Tests manquants: {len(analysis['missing_tests'], extra={"module": "scripts"})}"
+    )
 
     # === Génération de code ===
     ark_logger.info("\n3️⃣ Génération de code automatique...", extra={"module": "scripts"})
@@ -53,10 +60,16 @@ async def demo_generative_ai():
     )
 
     if "error" not in module_result:
-        ark_logger.info(f"✅ Module généré: {module_result['module_path']}", extra={"module": "scripts"})
-        ark_logger.info(f"✅ Tests générés: {module_result['test_path']}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"✅ Module généré: {module_result['module_path']}", extra={"module": "scripts"}
+        )
+        ark_logger.info(
+            f"✅ Tests générés: {module_result['test_path']}", extra={"module": "scripts"}
+        )
     else:
-        ark_logger.error(f"❌ Erreur génération: {module_result['error']}", extra={"module": "scripts"})
+        ark_logger.error(
+            f"❌ Erreur génération: {module_result['error']}", extra={"module": "scripts"}
+        )
 
     # === Génération d'endpoint API ===
     ark_logger.info("\n4️⃣ Génération d'endpoint API...", extra={"module": "scripts"})
@@ -90,25 +103,49 @@ async def demo_generative_ai():
         if Path(module_path).exists():
             opt_result = generative_ai.optimize_existing_code(module_path)
             if "error" not in opt_result:
-                ark_logger.info(f"✅ Module optimisé: {opt_result['original_path']}", extra={"module": "scripts"})
-                ark_logger.info(f"📦 Backup créé: {opt_result['backup_path']}", extra={"module": "scripts"})
-                ark_logger.info(f"🔧 Optimisations: {opt_result['optimizations']}", extra={"module": "scripts"})
+                ark_logger.info(
+                    f"✅ Module optimisé: {opt_result['original_path']}",
+                    extra={"module": "scripts"},
+                )
+                ark_logger.info(
+                    f"📦 Backup créé: {opt_result['backup_path']}", extra={"module": "scripts"}
+                )
+                ark_logger.info(
+                    f"🔧 Optimisations: {opt_result['optimizations']}", extra={"module": "scripts"}
+                )
             else:
-                ark_logger.error(f"❌ Erreur optimisation: {opt_result['error']}", extra={"module": "scripts"})
+                ark_logger.error(
+                    f"❌ Erreur optimisation: {opt_result['error']}", extra={"module": "scripts"}
+                )
         else:
             ark_logger.info(f"⚠️  Module {module_path} non trouvé", extra={"module": "scripts"})
     else:
-        ark_logger.info("✅ Aucune opportunité d'optimisation détectée", extra={"module": "scripts"})
+        ark_logger.info(
+            "✅ Aucune opportunité d'optimisation détectée", extra={"module": "scripts"}
+        )
 
     # === Statut final ===
     ark_logger.info("\n6️⃣ Statut final du système...", extra={"module": "scripts"})
     status = generative_ai.get_status()
 
-    ark_logger.info(f"🚀 Générations effectuées: {status['generation_count']}", extra={"module": "scripts"})
-    ark_logger.info(f"📝 Code généré: {status['generative_state']['code_generated']}", extra={"module": "scripts"})
-    ark_logger.info(f"🧪 Tests générés: {status['generative_state']['tests_generated']}", extra={"module": "scripts"})
-    ark_logger.info(f"🔧 Optimisations appliquées: {status['generative_state']['optimizations_applied']}", extra={"module": "scripts"})
-    ark_logger.info(f"📁 Fichiers générés: {status['generated_files']}", extra={"module": "scripts"})
+    ark_logger.info(
+        f"🚀 Générations effectuées: {status['generation_count']}", extra={"module": "scripts"}
+    )
+    ark_logger.info(
+        f"📝 Code généré: {status['generative_state']['code_generated']}",
+        extra={"module": "scripts"},
+    )
+    ark_logger.info(
+        f"🧪 Tests générés: {status['generative_state']['tests_generated']}",
+        extra={"module": "scripts"},
+    )
+    ark_logger.info(
+        f"🔧 Optimisations appliquées: {status['generative_state']['optimizations_applied']}",
+        extra={"module": "scripts"},
+    )
+    ark_logger.info(
+        f"📁 Fichiers générés: {status['generated_files']}", extra={"module": "scripts"}
+    )
 
     # === Sauvegarde de l'état ===
     generative_ai.save_generative_state()
@@ -119,7 +156,9 @@ async def demo_generative_ai():
 
 def demo_quick():
     """Démonstration rapide"""
-    ark_logger.info("🚀 Démonstration rapide - Intelligence Générative", extra={"module": "scripts"})
+    ark_logger.info(
+        "🚀 Démonstration rapide - Intelligence Générative", extra={"module": "scripts"}
+    )
     ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     generative_ai = GenerativeAI(mode="demo")
@@ -141,7 +180,9 @@ def demo_quick():
 
 def demo_analysis():
     """Démonstration d'analyse uniquement"""
-    ark_logger.info("🔍 Démonstration d'analyse - Intelligence Générative", extra={"module": "scripts"})
+    ark_logger.info(
+        "🔍 Démonstration d'analyse - Intelligence Générative", extra={"module": "scripts"}
+    )
     ark_logger.info("=" * 50, extra={"module": "scripts"})
 
     generative_ai = GenerativeAI(mode="demo")
@@ -157,17 +198,27 @@ def demo_analysis():
         for i, module in enumerate(sorted_modules[:5], 1):
             name = module.get("name", "Unknown")
             complexity = module.get("complexity", 0)
-            ark_logger.info(f"  {i}. {name} - Complexité: {complexity}", extra={"module": "scripts"})
+            ark_logger.info(
+                f"  {i}. {name} - Complexité: {complexity}", extra={"module": "scripts"}
+            )
 
-    ark_logger.info(f"\n🔍 Patterns détectés: {len(analysis['patterns'], extra={"module": "scripts"})}")
+    ark_logger.info(
+        f"\n🔍 Patterns détectés: {len(analysis['patterns'], extra={"module": "scripts"})}"
+    )
     for pattern in analysis["patterns"]:
-        ark_logger.info(f"  - {pattern['type']}: {pattern['description']}", extra={"module": "scripts"})
+        ark_logger.info(
+            f"  - {pattern['type']}: {pattern['description']}", extra={"module": "scripts"}
+        )
 
-    ark_logger.info(f"\n🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'], extra={"module": "scripts"})}")
+    ark_logger.info(
+        f"\n🔧 Opportunités d'optimisation: {len(analysis['optimization_opportunities'], extra={"module": "scripts"})}"
+    )
     for opp in analysis["optimization_opportunities"][:3]:
         ark_logger.info(f"  - {opp['module']}: {opp['description']}", extra={"module": "scripts"})
 
-    ark_logger.info(f"\n🧪 Tests manquants: {len(analysis['missing_tests'], extra={"module": "scripts"})}")
+    ark_logger.info(
+        f"\n🧪 Tests manquants: {len(analysis['missing_tests'], extra={"module": "scripts"})}"
+    )
     for test in analysis["missing_tests"][:3]:
         ark_logger.info(f"  - {test['module']}: {test['description']}", extra={"module": "scripts"})
 
@@ -207,12 +258,16 @@ async def main():
         elif args.mode == "analysis":
             demo_analysis()
 
-        ark_logger.info("\n🌟 Intelligence Générative Avancée - Opérationnelle !", extra={"module": "scripts"})
+        ark_logger.info(
+            "\n🌟 Intelligence Générative Avancée - Opérationnelle !", extra={"module": "scripts"}
+        )
 
         format_generated()
 
     except KeyboardInterrupt:
-        ark_logger.info("\n⚠️  Démonstration interrompue par l'utilisateur", extra={"module": "scripts"})
+        ark_logger.info(
+            "\n⚠️  Démonstration interrompue par l'utilisateur", extra={"module": "scripts"}
+        )
     except Exception as e:
         raise RuntimeError(f"Erreur demo generative AI: {e}") from e
 

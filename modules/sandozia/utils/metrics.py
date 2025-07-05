@@ -12,13 +12,14 @@ Collecte et traite les métriques d'intelligence croisée :
 - Export Grafana
 """
 
-from core.ark_logger import ark_logger
 import logging
 import statistics
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Optional
+
+from core.ark_logger import ark_logger
 
 logger = logging.getLogger(__name__)
 

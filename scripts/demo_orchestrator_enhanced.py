@@ -10,13 +10,14 @@ FEATURES:
 - Monitoring et métriques temps réel
 """
 
-from core.ark_logger import ark_logger
 import argparse
 import logging
 import pathlib
 import subprocess
 import sys
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le path des modules
 sys.path.append(str(Path(__file__).parent.parent / "modules"))
@@ -45,9 +46,17 @@ def demo_quick() -> None:
 
     ark_logger.info("📊 Status initial:", extra={"module": "scripts"})
     status = orchestrator.get_status()
-    ark_logger.info(f"  - Loops prévus: {status['orchestrator']['max_loops']}", extra={"module": "scripts"})
-    ark_logger.info(f"  - Intervalle: {status['orchestrator']['interval_seconds']}s", extra={"module": "scripts"})
-    ark_logger.error(f"  - Circuit seuil: {orchestrator.circuit_breaker.failure_threshold}", extra={"module": "scripts"})
+    ark_logger.info(
+        f"  - Loops prévus: {status['orchestrator']['max_loops']}", extra={"module": "scripts"}
+    )
+    ark_logger.info(
+        f"  - Intervalle: {status['orchestrator']['interval_seconds']}s",
+        extra={"module": "scripts"},
+    )
+    ark_logger.error(
+        f"  - Circuit seuil: {orchestrator.circuit_breaker.failure_threshold}",
+        extra={"module": "scripts"},
+    )
 
     ark_logger.info("\n🔄 Exécution en cours...", extra={"module": "scripts"})
     orchestrator.run()
@@ -108,10 +117,20 @@ def demo_monitoring() -> None:
 
             # Afficher métriques
             status = temp_orchestrator.get_status()
-            ark_logger.info(f"✅ Loops: {status['orchestrator']['loop_count']}", extra={"module": "scripts"})
-            ark_logger.info(f"📈 Succès: {status['session_stats']['successful_decisions']}", extra={"module": "scripts"})
-            ark_logger.error(f"❌ Échecs: {status['session_stats']['failed_decisions']}", extra={"module": "scripts"})
-            ark_logger.info(f"🔄 Circuit: {status['circuit_breaker']['state']}", extra={"module": "scripts"})
+            ark_logger.info(
+                f"✅ Loops: {status['orchestrator']['loop_count']}", extra={"module": "scripts"}
+            )
+            ark_logger.info(
+                f"📈 Succès: {status['session_stats']['successful_decisions']}",
+                extra={"module": "scripts"},
+            )
+            ark_logger.error(
+                f"❌ Échecs: {status['session_stats']['failed_decisions']}",
+                extra={"module": "scripts"},
+            )
+            ark_logger.info(
+                f"🔄 Circuit: {status['circuit_breaker']['state']}", extra={"module": "scripts"}
+            )
 
             time.sleep(0.5)
 
@@ -151,10 +170,21 @@ def demo_daemon() -> None:
             # Afficher status périodique
             if cycle_count % 5 == 0:
                 status = orchestrator.get_status()
-                ark_logger.info(f"📊 Status après {cycle_count} cycles:", extra={"module": "scripts"})
-                ark_logger.info(f"  - Total decisions: {status['session_stats']['total_decisions']}", extra={"module": "scripts"})
-                ark_logger.info(f"  - Taux succès: {status['session_stats']['success_rate']:.1f}%", extra={"module": "scripts"})
-                ark_logger.info(f"  - Circuit état: {status['circuit_breaker']['state']}", extra={"module": "scripts"})
+                ark_logger.info(
+                    f"📊 Status après {cycle_count} cycles:", extra={"module": "scripts"}
+                )
+                ark_logger.info(
+                    f"  - Total decisions: {status['session_stats']['total_decisions']}",
+                    extra={"module": "scripts"},
+                )
+                ark_logger.info(
+                    f"  - Taux succès: {status['session_stats']['success_rate']:.1f}%",
+                    extra={"module": "scripts"},
+                )
+                ark_logger.info(
+                    f"  - Circuit état: {status['circuit_breaker']['state']}",
+                    extra={"module": "scripts"},
+                )
 
             # Pause entre cycles (important pour container)
             time.sleep(10)
@@ -205,7 +235,9 @@ def main():
         logging.getLogger().setLevel(logging.DEBUG)
 
     ark_logger.info("🌕 ARKALIA-LUNA v2.6.0 - ORCHESTRATOR ENHANCED", extra={"module": "scripts"})
-    ark_logger.info("🔄 Circuit Breaker + Event Sourcing + Resilience Patterns", extra={"module": "scripts"})
+    ark_logger.info(
+        "🔄 Circuit Breaker + Event Sourcing + Resilience Patterns", extra={"module": "scripts"}
+    )
     ark_logger.info("")
 
     try:

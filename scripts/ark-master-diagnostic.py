@@ -4,10 +4,11 @@
 Script pour valider tous les mécanismes de protection et résilience
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import logging
 from typing import Any, Optional
+
+from core.ark_logger import ark_logger
 
 # Configuration logging
 logging.basicConfig(

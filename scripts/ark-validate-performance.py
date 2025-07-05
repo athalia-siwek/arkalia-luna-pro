@@ -4,10 +4,11 @@
 Valide les modules ZeroIA, EventStore et CircuitBreaker
 """
 
-from core.ark_logger import ark_logger
 import tempfile
 import time
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 try:
     import psutil  # noqa: F401
@@ -17,7 +18,9 @@ try:
     from modules.zeroia.reason_loop_enhanced import create_default_context_enhanced  # noqa: F401
 except ImportError as e:
     ark_logger.info(f"❌ Erreur import modules: {e}", extra={"module": "scripts"})
-    ark_logger.info("💡 Vérifiez que les modules sont installés et accessibles", extra={"module": "scripts"})
+    ark_logger.info(
+        "💡 Vérifiez que les modules sont installés et accessibles", extra={"module": "scripts"}
+    )
     exit(1)
 
 
@@ -84,7 +87,10 @@ def validate_event_store_performance() -> bool:
             assert event is not None
             assert event.data["decision"] == "test"
 
-            ark_logger.info(f"✅ EventStore: {duration:.3f}s pour ajout + récupération", extra={"module": "scripts"})
+            ark_logger.info(
+                f"✅ EventStore: {duration:.3f}s pour ajout + récupération",
+                extra={"module": "scripts"},
+            )
             return duration < 0.1  # Doit être < 100ms
 
     except Exception as e:
@@ -138,7 +144,9 @@ def validate_system_resources() -> bool:
         disk = psutil.disk_usage("/")
         disk_free_gb = disk.free / (1024**3)
 
-        ark_logger.info(f"✅ RAM disponible: {memory_available_gb:.1f}GB", extra={"module": "scripts"})
+        ark_logger.info(
+            f"✅ RAM disponible: {memory_available_gb:.1f}GB", extra={"module": "scripts"}
+        )
         ark_logger.info(f"✅ CPU usage: {cpu_percent:.1f}%", extra={"module": "scripts"})
         ark_logger.info(f"✅ Disque libre: {disk_free_gb:.1f}GB", extra={"module": "scripts"})
 

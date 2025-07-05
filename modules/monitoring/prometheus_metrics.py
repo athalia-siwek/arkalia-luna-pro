@@ -1,7 +1,6 @@
 # 📊 modules/monitoring/prometheus_metrics.py
 # Système de métriques Prometheus pour Arkalia-LUNA
 
-from core.ark_logger import ark_logger
 import json
 import time
 from datetime import datetime
@@ -10,6 +9,8 @@ from typing import Any, Optional
 
 import toml
 from prometheus_client import Counter, Gauge, Histogram, Info, start_http_server
+
+from core.ark_logger import ark_logger
 
 
 class ArkaliaMetrics:

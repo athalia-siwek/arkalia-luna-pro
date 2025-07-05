@@ -13,7 +13,9 @@ __author__ = "Athalia"
 # Import des composants principaux
 try:
 from core.ark_logger import ark_logger
-    from .core import HelloriaAPI, get_helloria_status
+
+from .core import HelloriaAPI, get_helloria_status
+
 except ImportError:
     pass
 

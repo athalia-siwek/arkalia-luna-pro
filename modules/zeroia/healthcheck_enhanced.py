@@ -2,13 +2,14 @@
 # 🩺 modules/zeroia/healthcheck_enhanced.py
 """Healthcheck pour ZeroIA Orchestrator Enhanced"""
 
-from core.ark_logger import ark_logger
 import json
 import sys
 from pathlib import Path
 from typing import Any, Optional
 
 import toml
+
+from core.ark_logger import ark_logger
 
 
 def load_healthcheck_config() -> dict[str, Any]:
@@ -42,7 +43,9 @@ def check_enhanced_health():
         # Vérifier Event Store
         events_dir = Path("cache/zeroia_events/events")
         if not events_dir.exists():
-            ark_logger.debug(f"DEBUG: events_dir {events_dir} n existe pas", extra={"module": "zeroia"})
+            ark_logger.debug(
+                f"DEBUG: events_dir {events_dir} n existe pas", extra={"module": "zeroia"}
+            )
             ark_logger.info("❌ Event Store non trouvé", extra={"module": "zeroia"})
             return False
 
@@ -71,7 +74,9 @@ def check_enhanced_health():
         return True
 
     except Exception as e:
-        ark_logger.error(f"DEBUG: Exception dans check_enhanced_health: {e}", extra={"module": "zeroia"})
+        ark_logger.error(
+            f"DEBUG: Exception dans check_enhanced_health: {e}", extra={"module": "zeroia"}
+        )
         ark_logger.info(f"❌ Erreur healthcheck: {e}", extra={"module": "zeroia"})
         return False
 

@@ -1,6 +1,5 @@
 # 📄 modules/zeroia/snapshot_generator.py
 
-from core.ark_logger import ark_logger
 import subprocess  # nosec
 import sys
 from datetime import datetime
@@ -8,6 +7,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 import toml
+
+from core.ark_logger import ark_logger
 
 # 📌 Fichiers par défaut
 STATE_FILE = Path(__file__).parent / "state" / "zeroia_state.toml"

@@ -4,9 +4,10 @@ Script pour mettre à jour automatiquement les statistiques de tests
 dans toute la documentation Arkalia-LUNA.
 """
 
-from core.ark_logger import ark_logger
 import re
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Statistiques actuelles exactes
 CURRENT_STATS = {

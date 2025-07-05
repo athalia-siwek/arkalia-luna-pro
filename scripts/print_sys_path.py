@@ -1,8 +1,9 @@
 # scripts/print_sys_path.py
 
-from core.ark_logger import ark_logger
 import sys
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 ark_logger.info("📂 PYTHON sys.path (chemins d'import, extra={"module": "scripts"}):\n" + "=" * 40)
 for path in sys.path:

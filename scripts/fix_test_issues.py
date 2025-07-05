@@ -12,7 +12,6 @@ Problèmes corrigés :
 4. Tests obsolètes et dépréciés
 """
 
-from core.ark_logger import ark_logger
 import os
 import re
 import shutil
@@ -20,6 +19,8 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+from core.ark_logger import ark_logger
 
 # Configuration
 PROJECT_ROOT = Path(__file__).parent.parent

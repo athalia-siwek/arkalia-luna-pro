@@ -10,11 +10,12 @@ Boucle principale améliorée avec :
 - Logs structurés
 """
 
-from core.ark_logger import ark_logger
 import logging
 import time
 from datetime import datetime
 from typing import Any, Optional
+
+from core.ark_logger import ark_logger
 
 from .decision import monitor_status
 from .metrics_enhanced import read_metrics, read_metrics_enhanced

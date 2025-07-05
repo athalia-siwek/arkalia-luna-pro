@@ -1,8 +1,9 @@
 # scripts/generate_updates_page.py
 
-from core.ark_logger import ark_logger
 import subprocess  # nosec
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Supprimer les fichiers ._* (pollution macOS)
 for file in Path("docs/releases").glob("._*"):

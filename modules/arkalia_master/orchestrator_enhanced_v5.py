@@ -10,7 +10,6 @@ Version Enhanced avec les composants manquants intégrés :
 - CrossModule Validator pour validation croisée
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import logging
 import time
@@ -20,6 +19,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Optional
 
+from core.ark_logger import ark_logger
 from modules.zeroia.circuit_breaker import CircuitBreaker
 
 # === IMPORTS MODULES ARKALIA STANDARDS ===
@@ -698,14 +698,20 @@ if __name__ == "__main__":
         datefmt="%H:%M:%S",
     )
 
-    ark_logger.info("🌟 ARKALIA MASTER ORCHESTRATOR ENHANCED v5.0.0", extra={"module": "arkalia_master"})
+    ark_logger.info(
+        "🌟 ARKALIA MASTER ORCHESTRATOR ENHANCED v5.0.0", extra={"module": "arkalia_master"}
+    )
     ark_logger.info("=" * 70, extra={"module": "arkalia_master"})
     ark_logger.info("🧠 15 Modules IA Coordonnés (Enhanced)", extra={"module": "arkalia_master"})
     ark_logger.error("🛡️ Error Recovery System intégré", extra={"module": "arkalia_master"})
-    ark_logger.info("🧠 Cognitive Reactor pour réactions automatiques", extra={"module": "arkalia_master"})
+    ark_logger.info(
+        "🧠 Cognitive Reactor pour réactions automatiques", extra={"module": "arkalia_master"}
+    )
     ark_logger.info("🔐 Vault Manager pour sécurité renforcée", extra={"module": "arkalia_master"})
     ark_logger.info("⏰ Chronalia pour gestion temporelle", extra={"module": "arkalia_master"})
-    ark_logger.info("✅ CrossModule Validator pour validation croisée", extra={"module": "arkalia_master"})
+    ark_logger.info(
+        "✅ CrossModule Validator pour validation croisée", extra={"module": "arkalia_master"}
+    )
     ark_logger.info("=" * 70, extra={"module": "arkalia_master"})
 
     try:

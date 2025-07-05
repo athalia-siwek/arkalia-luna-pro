@@ -13,7 +13,6 @@ Benchmarks couverts :
 - Memory usage monitoring
 """
 
-from core.ark_logger import ark_logger
 import os
 import time
 from unittest.mock import patch
@@ -21,6 +20,7 @@ from unittest.mock import patch
 import psutil
 import pytest
 
+from core.ark_logger import ark_logger
 from modules.zeroia.circuit_breaker import CircuitBreaker
 from modules.zeroia.event_store import EventStore, EventType
 from modules.zeroia.reason_loop_enhanced import (

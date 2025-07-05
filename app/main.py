@@ -1,4 +1,3 @@
-from core.ark_logger import ark_logger
 import logging
 import time
 from contextlib import asynccontextmanager
@@ -17,6 +16,7 @@ from prometheus_client import (
     generate_latest,
 )
 
+from core.ark_logger import ark_logger
 from modules.assistantia.core import router as assistantia_router
 from modules.monitoring.prometheus_metrics import ArkaliaMetrics
 from modules.reflexia.core_api import router as reflexia_router
@@ -60,7 +60,12 @@ app = FastAPI(
 # Configuration CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:8000", "http://127.0.0.1:3000", "http://127.0.0.1:8000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:8000",
+    ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
@@ -170,4 +175,6 @@ app.include_router(zeroia_router, prefix="/zeroia")
 def print_status() -> None:
     from rich import print
 
-    ark_logger.info("[green bold]Arkalia-LUNA is active and running.[/green bold]", extra={"module": "app"})
+    ark_logger.info(
+        "[green bold]Arkalia-LUNA is active and running.[/green bold]", extra={"module": "app"}
+    )

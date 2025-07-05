@@ -4,11 +4,12 @@ Script de validation CI pour Arkalia-LUNA
 Vérifie les points critiques sans échouer sur les erreurs mineures
 """
 
-from core.ark_logger import ark_logger
 import os
 import subprocess
 import sys
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 
 def run_command(cmd: list[str], description: str) -> bool:
@@ -94,7 +95,9 @@ def check_test_structure() -> bool:
         if Path(test_dir).exists():
             test_files = list(Path(test_dir).rglob("test_*.py"))
             if test_files:
-                ark_logger.info(f"✅ {test_dir} ({len(test_files, extra={"module": "scripts"})} fichiers)")
+                ark_logger.info(
+                    f"✅ {test_dir} ({len(test_files, extra={"module": "scripts"})} fichiers)"
+                )
             else:
                 ark_logger.info(f"⚠️ {test_dir} - Aucun test trouvé", extra={"module": "scripts"})
         else:
@@ -140,10 +143,14 @@ def main() -> int:
         status = "✅ PASS" if success else "❌ FAIL"
         ark_logger.info(f"{status} {name}", extra={"module": "scripts"})
 
-    ark_logger.info(f"\n🎯 Résultat: {passed}/{total} vérifications réussies", extra={"module": "scripts"})
+    ark_logger.info(
+        f"\n🎯 Résultat: {passed}/{total} vérifications réussies", extra={"module": "scripts"}
+    )
 
     if passed == total:
-        ark_logger.info("🎉 Toutes les vérifications CI sont passées !", extra={"module": "scripts"})
+        ark_logger.info(
+            "🎉 Toutes les vérifications CI sont passées !", extra={"module": "scripts"}
+        )
         return 0
     else:
         ark_logger.info("⚠️ Certaines vérifications ont échoué", extra={"module": "scripts"})

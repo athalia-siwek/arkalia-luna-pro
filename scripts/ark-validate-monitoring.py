@@ -4,7 +4,6 @@
 Vérifie tous les composants de monitoring et génère un rapport détaillé
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -14,6 +13,8 @@ from typing import Any
 
 import aiohttp
 import psutil
+
+from core.ark_logger import ark_logger
 
 # Configuration logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

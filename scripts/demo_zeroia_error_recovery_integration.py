@@ -5,7 +5,6 @@ Démontre l'intégration complète du système Error Recovery
 dans la boucle de raisonnement ZeroIA Enhanced.
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import logging
 import pathlib
@@ -13,6 +12,8 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajout du chemin modules
 sys.path.insert(0, str(Path(__file__).parent.parent / "modules"))

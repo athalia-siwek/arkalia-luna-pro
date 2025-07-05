@@ -12,7 +12,6 @@ Fonctionnalités :
 - Détecte régressions performance
 """
 
-from core.ark_logger import ark_logger
 import argparse
 import json
 import os
@@ -21,6 +20,8 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
+
+from core.ark_logger import ark_logger
 
 # Ajouter le chemin des modules
 sys.path.insert(0, str(Path(__file__).parent.parent))

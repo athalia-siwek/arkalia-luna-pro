@@ -17,7 +17,6 @@ Détecte :
 - Dérives comportementales
 """
 
-from core.ark_logger import ark_logger
 import json
 import logging
 from dataclasses import dataclass
@@ -27,6 +26,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 import toml
+
+from core.ark_logger import ark_logger
 
 logger = logging.getLogger(__name__)
 
@@ -382,7 +383,9 @@ class CrossModuleValidator:
             "overall_status": (
                 "healthy"
                 if coherence_score > 0.8
-                else "degraded" if coherence_score > 0.6 else "critical"
+                else "degraded"
+                if coherence_score > 0.6
+                else "critical"
             ),
         }
 

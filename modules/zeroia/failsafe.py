@@ -1,4 +1,3 @@
-from core.ark_logger import ark_logger
 import json
 import shutil
 from datetime import datetime
@@ -6,6 +5,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 import toml
+
+from core.ark_logger import ark_logger
 
 SNAPSHOT_PATH = Path("state/zeroia_snapshot.toml")
 BACKUP_PATH = Path("state/zeroia_snapshot_backup.toml")
@@ -105,14 +106,22 @@ def failsafe_mode() -> None:
     snapshot = load_snapshot(str(SNAPSHOT_PATH))
 
     if snapshot is None or "decision" not in snapshot:
-        ark_logger.info("⚠️ Snapshot corrompu ou incomplet. Tentative de restauration…", extra={"module": "zeroia"})
+        ark_logger.info(
+            "⚠️ Snapshot corrompu ou incomplet. Tentative de restauration…",
+            extra={"module": "zeroia"},
+        )
         success = restore_backup(str(BACKUP_PATH), str(SNAPSHOT_PATH))
         if success:
             ark_logger.info("✅ Restauration réussie.", extra={"module": "zeroia"})
         else:
-            ark_logger.info("❌ Aucune restauration possible. " "ZeroIA doit être relancé manuellement.", extra={"module": "zeroia"})
+            ark_logger.info(
+                "❌ Aucune restauration possible. " "ZeroIA doit être relancé manuellement.",
+                extra={"module": "zeroia"},
+            )
     else:
-        ark_logger.error("✅ Snapshot valide. Aucun failsafe nécessaire.", extra={"module": "zeroia"})
+        ark_logger.error(
+            "✅ Snapshot valide. Aucun failsafe nécessaire.", extra={"module": "zeroia"}
+        )
 
 
 if __name__ == "__main__":

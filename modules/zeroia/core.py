@@ -7,7 +7,6 @@ ZeroIA Core - Point d'entrée principal du système de raisonnement
 Module core simplifié qui délègue aux composants enhanced spécialisés.
 """
 
-from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
@@ -21,6 +20,8 @@ import toml
 from fastapi import APIRouter, FastAPI
 from fastapi.responses import JSONResponse, PlainTextResponse
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Gauge, generate_latest
+
+from core.ark_logger import ark_logger
 
 from .circuit_breaker import CircuitBreaker
 from .reason_loop_enhanced import (
