@@ -4,7 +4,7 @@ import pytest
 import toml
 
 from modules.zeroia.reason_loop import load_context, load_reflexia_state, load_toml
-from tests.common.test_helpers import ensure_test_toml
+from tests.fixtures.__test_helpers import ensure_test_toml
 
 ensure_test_toml()
 

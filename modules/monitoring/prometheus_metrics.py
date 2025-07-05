@@ -1,149 +1,66 @@
-# 📊 modules/monitoring/prometheus_metrics.py
-# Système de métriques Prometheus pour Arkalia-LUNA
+"""Module de métriques Prometheus pour Arkalia-LUNA"""
 
+<<<<<<< HEAD
 from core.ark_logger import ark_logger
 import json
 import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
+=======
+from typing import Optional
+>>>>>>> dev-migration
 
-import toml
-from prometheus_client import Counter, Gauge, Histogram, Info, start_http_server
+from prometheus_client import CollectorRegistry, Counter, Gauge, Histogram
 
 
 class ArkaliaMetrics:
-    """Collecteur centralisé de métriques Arkalia-LUNA"""
+    """Classe de gestion des métriques Prometheus"""
 
-    def __init__(self) -> None:
-        # === MÉTRIQUES ZEROIA ===
-        self.zeroia_decisions = Counter(
-            "arkalia_zeroia_decisions_total",
-            "Nombre total de décisions ZeroIA",
-            ["decision_type", "confidence_level"],
-        )
+    def __init__(self, registry: CollectorRegistry | None = None) -> None:
+        # Utiliser le registre fourni ou créer un nouveau
+        self._registry = registry or CollectorRegistry()
 
-        self.zeroia_confidence = Gauge(
-            "arkalia_zeroia_confidence_score",
-            "Score de confiance de la dernière décision ZeroIA",
-        )
-
-        self.zeroia_loop_duration = Histogram(
-            "arkalia_zeroia_loop_duration_seconds",
-            "Durée d'exécution du reason loop ZeroIA",
-            buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0],
-        )
-
-        self.zeroia_contradictions = Counter(
-            "arkalia_zeroia_contradictions_total",
-            "Nombre de contradictions détectées par ZeroIA",
-        )
-
-        self.zeroia_state_health = Gauge(
-            "arkalia_zeroia_state_health",
-            "État de santé des fichiers state ZeroIA (1=sain, 0=corrompu)",
-        )
-
-        # === MÉTRIQUES REFLEXIA ===
-        self.reflexia_cpu_usage = Gauge(
-            "arkalia_reflexia_cpu_usage_percent",
-            "Utilisation CPU reportée par ReflexIA",
-        )
-
-        self.reflexia_ram_usage = Gauge(
-            "arkalia_reflexia_ram_usage_percent",
-            "Utilisation RAM reportée par ReflexIA",
-        )
-
-        self.reflexia_latency = Gauge(
-            "arkalia_reflexia_latency_ms", "Latence système reportée par ReflexIA"
-        )
-
-        self.reflexia_status_changes = Counter(
-            "arkalia_reflexia_status_changes_total",
-            "Nombre de changements de statut ReflexIA",
-            ["from_status", "to_status"],
-        )
-
-        self.reflexia_monitoring_cycles = Counter(
-            "arkalia_reflexia_monitoring_cycles_total",
-            "Nombre total de cycles de monitoring ReflexIA",
-        )
-
-        # === MÉTRIQUES ASSISTANTIA ===
-        self.assistantia_prompts_processed = Counter(
-            "arkalia_assistantia_prompts_total",
-            "Nombre total de prompts traités par AssistantIA",
-            ["status", "security_level"],
-        )
-
-        self.assistantia_security_blocks = Counter(
-            "arkalia_assistantia_security_blocks_total",
-            "Nombre de prompts bloqués par sécurité",
-            ["block_reason", "pattern_type"],
-        )
-
-        self.assistantia_response_time = Histogram(
-            "arkalia_assistantia_response_time_seconds",
-            "Temps de réponse AssistantIA",
-            buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 30.0],
-        )
-
-        self.assistantia_rate_limits = Counter(
-            "arkalia_assistantia_rate_limits_total", "Nombre de rate limits appliqués"
-        )
-
-        # === MÉTRIQUES GLOBALES SYSTÈME ===
-        self.arkalia_requests_total = Counter(
-            "arkalia_requests_total",
-            "Nombre total de requêtes API Arkalia",
-            ["method", "endpoint", "status"],
-        )
-        self.arkalia_request_duration = Histogram(
-            "arkalia_request_duration_seconds",
-            "Durée des requêtes API Arkalia",
-            ["method", "endpoint"],
-            buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0],
-        )
-        self.arkalia_active_connections = Gauge(
-            "arkalia_active_connections",
-            "Nombre de connexions actives",
-        )
+        # Métriques système
         self.arkalia_system_uptime = Gauge(
-            "arkalia_system_uptime_seconds",
-            "Temps de fonctionnement du système",
+            "arkalia_system_uptime",
+            "Temps d'activité du système en secondes",
+            registry=self._registry,
         )
-        self.arkalia_memory_usage = Gauge(
-            "arkalia_memory_usage_bytes",
-            "Utilisation mémoire du système",
-        )
+
         self.arkalia_cpu_usage = Gauge(
-            "arkalia_cpu_usage_percent",
-            "Utilisation CPU du système",
+            "arkalia_cpu_usage", "Utilisation CPU en pourcentage", registry=self._registry
         )
+
+        self.arkalia_memory_usage = Gauge(
+            "arkalia_memory_usage", "Utilisation mémoire en bytes", registry=self._registry
+        )
+
+        # Métriques des modules
         self.arkalia_modules_status = Gauge(
             "arkalia_modules_status",
             "Statut des modules (1=actif, 0=inactif)",
             ["module_name"],
-        )
-        self.file_operations = Counter(
-            "arkalia_file_operations_total",
-            "Opérations de fichiers (io_safe)",
-            ["operation", "file_type", "status"],
+            registry=self._registry,
         )
 
-        self.api_requests = Counter(
-            "arkalia_api_requests_total",
-            "Requêtes API Arkalia",
-            ["endpoint", "method", "status_code"],
+        # Métriques des requêtes
+        self.arkalia_requests_total = Counter(
+            "arkalia_requests_total",
+            "Nombre total de requêtes",
+            ["method", "endpoint", "status"],
+            registry=self._registry,
         )
 
-        self.error_count = Counter(
-            "arkalia_errors_total",
-            "Erreurs système Arkalia",
-            ["module", "error_type", "severity"],
+        self.arkalia_request_duration = Histogram(
+            "arkalia_request_duration",
+            "Durée des requêtes en secondes",
+            ["method", "endpoint"],
+            buckets=[0.1, 0.5, 1.0, 2.0, 5.0],
+            registry=self._registry,
         )
 
+<<<<<<< HEAD
         # === MÉTRIQUES INFO ===
         self.system_info = Info("arkalia_system_info", "Informations système Arkalia")
 
@@ -498,3 +415,8 @@ if __name__ == "__main__":
             time.sleep(30)  # Collecte toutes les 30 secondes
     except KeyboardInterrupt:
         ark_logger.info("🛑 Arrêt du serveur de métriques", extra={"module": "monitoring"})
+=======
+    def get_registry(self) -> CollectorRegistry:
+        """Retourne le registre de métriques"""
+        return self._registry
+>>>>>>> dev-migration

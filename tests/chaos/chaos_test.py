@@ -5,6 +5,7 @@ from core.ark_logger import ark_logger
 import json
 import random
 import subprocess
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -13,8 +14,11 @@ from unittest.mock import patch
 import pytest
 import toml
 
+root = str(Path(__file__).parent.parent.parent)
+sys.path.insert(0, root)
+sys.path.insert(0, root + "/utils")
+from modules.utils.helpers.io_safe import atomic_write, locked_read
 from modules.zeroia.reason_loop import load_context
-from utils.io_safe import atomic_write, locked_read
 
 
 class ChaosTestConfig:
@@ -175,6 +179,7 @@ class TestFileSystemChaos:
     def teardown_method(self) -> None:
         self.chaos.cleanup()
 
+    @pytest.mark.chaos
     def test_atomic_write_resilience(self) -> None:
         """🔥 Test résilience écriture atomique sous charge"""
         test_file = Path("test_atomic_chaos.toml")
@@ -198,6 +203,7 @@ class TestFileSystemChaos:
             if test_file.exists():
                 test_file.unlink()
 
+    @pytest.mark.chaos
     def test_locked_read_corruption_resilience(self) -> None:
         """🔥 Test résilience lecture verrouillée avec corruption"""
         test_file = Path("test_locked_chaos.toml")
@@ -234,6 +240,7 @@ class TestSystemLoadChaos:
     def teardown_method(self) -> None:
         self.chaos.cleanup()
 
+    @pytest.mark.chaos
     def test_system_under_high_cpu_load(self) -> None:
         """🔥 Test système sous charge CPU élevée"""
         try:
@@ -243,6 +250,7 @@ class TestSystemLoadChaos:
         except MemoryError:
             pytest.skip("Mémoire insuffisante pour le test")
 
+    @pytest.mark.chaos
     def test_performance_under_load(self) -> None:
         """⚡ Test performance sous charge"""
         start_time = time.time()
@@ -260,6 +268,7 @@ class TestSystemLoadChaos:
         # Sous charge, le système peut être plus lent mais doit rester fonctionnel
         assert execution_time < 30, f"Système trop lent sous charge: {execution_time:.2f}s"
 
+    @pytest.mark.chaos
     def test_memory_pressure_resilience(self) -> None:
         """🧠 Test résilience sous pression mémoire"""
         try:
@@ -296,6 +305,7 @@ class TestNetworkChaos:
     def teardown_method(self) -> None:
         self.chaos.cleanup()
 
+    @pytest.mark.chaos
     def test_system_offline_resilience(self) -> None:
         """📡 Test résilience système hors ligne"""
         with patch("socket.gethostbyname") as mock_dns:
@@ -307,6 +317,7 @@ class TestNetworkChaos:
 
             assert load_context() is not None
 
+    @pytest.mark.chaos
     def test_dns_failure_resilience(self) -> None:
         """🌐 Test résilience échec DNS"""
         with patch("socket.getaddrinfo") as mock_getaddr:
@@ -328,6 +339,7 @@ class TestStatePersistenceChaos:
     def teardown_method(self) -> None:
         self.chaos.cleanup()
 
+    @pytest.mark.chaos
     def test_state_corruption_recovery(self) -> None:
         """💾 Test récupération corruption état"""
         state_file = Path("test_state_chaos.toml")
@@ -357,6 +369,7 @@ class TestStatePersistenceChaos:
             if state_file.exists():
                 state_file.unlink()
 
+    @pytest.mark.chaos
     def test_concurrent_state_access_chaos(self) -> None:
         """🔄 Test accès concurrent état avec chaos"""
         state_file = Path("test_concurrent_chaos.toml")
@@ -423,6 +436,7 @@ class TestCriticalSystemChaos:
     def teardown_method(self) -> None:
         self.chaos.cleanup()
 
+    @pytest.mark.chaos
     def test_critical_decision_under_chaos(self) -> None:
         """⚠️ Test décision critique sous chaos"""
         # Crée contexte dégradé
@@ -449,6 +463,7 @@ class TestChaosIntegration:
     def teardown_method(self) -> None:
         self.chaos.cleanup()
 
+    @pytest.mark.chaos
     def test_full_system_chaos_simulation(self) -> None:
         """🌪️ Test simulation chaos système complet"""
         try:
@@ -476,6 +491,7 @@ class TestChaosIntegration:
         except MemoryError:
             pytest.skip("Ressources système insuffisantes")
 
+    @pytest.mark.chaos
     def test_chaos_recovery_metrics(self) -> None:
         """📊 Test métriques de récupération chaos"""
         recovery_stats = {

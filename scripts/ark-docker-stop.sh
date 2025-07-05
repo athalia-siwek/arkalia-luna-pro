@@ -33,7 +33,7 @@ fi
 
 # Arrêter les services
 echo -e "${BLUE}🛑 Arrêt des services Arkalia...${NC}"
-docker-compose -f "$COMPOSE_FILE" down --remove-orphans
+docker compose -f "$COMPOSE_FILE" down --remove-orphans
 
 # Nettoyer les conteneurs orphelins
 echo -e "${BLUE}🧹 Nettoyage des conteneurs orphelins...${NC}"

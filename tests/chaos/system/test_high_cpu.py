@@ -1,5 +1,5 @@
 # 🔥 Test de charge CPU élevée
-from tests.chaos.chaos_common import ChaosTestConfig, ChaosTester
+from tests.chaos.__chaos_common import ChaosTestConfig, ChaosTester
 
 
 class TestSystemLoadChaos:

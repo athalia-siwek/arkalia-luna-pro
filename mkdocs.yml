@@ -1,3 +1,4 @@
+---
 site_name: Arkalia-LUNA Pro
 site_description: Système d'Intelligence Artificielle Enterprise - v2.8.0 Production Ready
 site_author: Arkalia-LUNA Team
@@ -45,7 +46,6 @@ plugins:
   - search:
       lang: fr
       separator: '[\s\-,:!=\[\]()/]+'
-      prebuild_index: true
 
 extra_css:
   - assets/arkalia-luna-theme.css
@@ -77,7 +77,13 @@ extra:
 
 # 📊 SEO & Performance
 use_directory_urls: true
-strict: false
+strict: true
+
+# 🚫 Exclusion des fichiers temporaires macOS
+exclude_docs: |
+  .!*
+  .DS_Store
+  Thumbs.db
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -90,7 +96,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
       combine_header_slug: true
@@ -109,69 +115,69 @@ markdown_extensions:
 nav:
   - Home: README.md
   - Getting Started:
-    - Quick Start: getting-started/quick-start.md
-    - Cognitive Levels: getting-started/cognitive-levels.md
+      - Quick Start: getting-started/quick-start.md
+      - Cognitive Levels: getting-started/cognitive-levels.md
   - Architecture:
-    - Overview: fonctionnement/structure.md
-    - Components: fonctionnement/composants.md
-    - Kernel: fonctionnement/kernel.md
-    - Usage: fonctionnement/utilisation.md
-    - Decision Flow: architecture/decision_flow.md
+      - Overview: fonctionnement/structure.md
+      - Components: fonctionnement/composants.md
+      - Kernel: fonctionnement/kernel.md
+      - Usage: fonctionnement/utilisation.md
+      - Decision Flow: architecture/decision_flow.md
+      - Cahier des Charges: architecture/cahier_des_charges_v4.0.md
   - Modules:
-    - Overview: modules/index.md
-    - Core Modules:
-      - ZeroIA: modules/zeroia.md
-      - Reflexia: modules/reflexia.md
-      - Sandozia: modules/sandozia.md
-      - Cognitive Reactor: modules/cognitive-reactor.md
-      - AssistantIA: modules/assistantia.md
-      - Helloria: modules/helloria.md
-    - Security Modules:
-      - Security: security/security.md
-    - Monitoring Modules:
-      - Infrastructure Monitoring: infrastructure/monitoring.md
+      - Overview: modules/zeroia.md
+      - Core Modules:
+          - ZeroIA: modules/zeroia.md
+          - Reflexia: modules/reflexia.md
+          - Sandozia: modules/sandozia.md
+          - Cognitive Reactor: modules/cognitive-reactor.md
+          - AssistantIA: modules/assistantia.md
+          - Helloria: modules/helloria.md
+      - Security Modules:
+          - Security: security/security.md
+      - Monitoring Modules:
+          - Infrastructure Monitoring: devops/index.md
   - Infrastructure:
-    - Overview: infrastructure/index.md
-    - Configuration: infrastructure/configuration.md
-    - Deployment: infrastructure/deployment.md
-    - Monitoring: infrastructure/monitoring.md
-    - CI/CD: infrastructure/ci-cd.md
-    - Automation: infrastructure/automation.md
+      - Overview: devops/index.md
+      - Configuration: devops/index.md
+      - Deployment: devops/index.md
+      - Monitoring: devops/index.md
+      - CI/CD: devops/index.md
+      - Automation: devops/index.md
   - Security:
-    - Overview: security/security.md
-    - Architecture: security/architecture.md
-    - Model Poisoning: security/model-poisoning-detection.md
-    - Penetration Testing: security/penetration-testing.md
-    - Incident Response: security/incident-response.md
-    - Backup & Recovery: security/backup-recovery.md
-    - Compliance: security/compliance.md
-    - Log Redaction: security/log_redaction.md
+      - Overview: security/security.md
+      - Architecture: security/architecture.md
+      - Model Poisoning: security/model-poisoning-detection.md
+      - Penetration Testing: security/penetration-testing.md
+      - Incident Response: security/incident-response.md
+      - Backup & Recovery: security/backup-recovery.md
+      - Compliance: security/compliance.md
+      - Log Redaction: security/log_redaction.md
   - Reference:
-    - API Documentation: reference/api.md
-    - Endpoints: reference/endpoints.md
-    - Metrics: reference/metrics.md
+      - API Documentation: reference/api.md
+      - Endpoints: reference/endpoints.md
+      - Metrics: reference/metrics.md
   - Operations:
-    - DevOps Overview: devops/index.md
-    - Linting Resolution: devops/linting-resolution.md
-    - DevOps Security: devops/security.md
-    - Chaos Testing: chaos/chaos_test_suite.md
+      - DevOps Overview: devops/index.md
+      - Linting Resolution: devops/linting-resolution.md
+      - DevOps Security: devops/security.md
+      - Chaos Testing: chaos/chaos_test_suite.md
   - Guides:
-    - Docker Hardening: guides/docker_hardening.md
-    - Operations Guide: guides/ops-guide.md
-    - Rebuild Guide: guides/rebuild-guide.md
+      - Docker Hardening: guides/docker_hardening.md
+      - Operations Guide: guides/ops-guide.md
+      - Rebuild Guide: guides/rebuild-guide.md
   - Releases:
-    - v2.8.0: releases/v2.8.0.md
-    - All Releases: releases/index.md
-    - Latest Updates: releases/dernieres_updates.md
-    - Latest Updates: releases/dernieres_updates.md
+      - v2.8.0: releases/v2.8.0.md
+      - All Releases: releases/index.md
+      - Latest Updates: releases/dernieres_updates.md
   - Planning:
-    - Future Improvements: plan-ameliorations-futures.md
-    - Roadmap Overview: planning/roadmap/index.md
-    - Enhancements: planning/roadmap/ENHANCEMENTS.md
+      - Future Improvements: plan-ameliorations-futures.md
+      - Roadmap Overview: planning/roadmap/index.md
+      - Enhancements: planning/roadmap/ENHANCEMENTS.md
   - Support:
-    - FAQ: support/faqs.md
-    - VSCode Setup: vscode-setup.md
+      - FAQ: support/faqs.md
+      - VSCode Setup: vscode-setup.md
   - Legal:
-    - License: legal/license.md
-    - Contributing: credits/CONTRIBUTING.md
-    - Credits: credits/credits.md
+      - License: legal/license.md
+      - Contributing: credits/CONTRIBUTING.md
+      - Credits: credits/credits.md

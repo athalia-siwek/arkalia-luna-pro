@@ -16,7 +16,7 @@ from core.ark_logger import ark_logger
 import asyncio
 import json
 import logging
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Optional
@@ -39,25 +39,46 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SandoziaMetrics:
-    """Métriques d'intelligence croisée"""
+    """Métriques de performance Sandozia"""
 
     timestamp: datetime
-    coherence_score: float  # 0.0-1.0
+    coherence_score: float
     cross_validation_passed: int
     anomalies_detected: int
-    reasoning_alignment: float  # 0.0-1.0
+    reasoning_alignment: float
     modules_active: list[str]
     total_correlations: int
+    cpu_usage: float = 0.0
+    memory_usage: float = 0.0
+    response_time: float = 0.0
+    throughput: float = 0.0
+    error_rate: float = 0.0
 
     def to_dict(self) -> dict:
-        data = asdict(self)
-        data["timestamp"] = self.timestamp.isoformat()
-        return data
+        """
+        Fonction to_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
+        return {
+            "timestamp": self.timestamp.isoformat(),
+            "coherence_score": self.coherence_score,
+            "cross_validation_passed": self.cross_validation_passed,
+            "anomalies_detected": self.anomalies_detected,
+            "reasoning_alignment": self.reasoning_alignment,
+            "modules_active": self.modules_active,
+            "total_correlations": self.total_correlations,
+            "cpu_usage": self.cpu_usage,
+            "memory_usage": self.memory_usage,
+            "response_time": self.response_time,
+            "throughput": self.throughput,
+            "error_rate": self.error_rate,
+        }
 
 
 @dataclass
 class IntelligenceSnapshot:
-    """Snapshot état intelligence globale"""
+    """Snapshot de l'intelligence actuelle"""
 
     reflexia_state: dict
     zeroia_state: dict
@@ -69,23 +90,54 @@ class IntelligenceSnapshot:
     coherence_analysis: dict
     behavioral_patterns: list[dict]
     recommendations: list[str]
+    cognitive_level: int = 0
+    decision_confidence: float = 0.0
+    learning_progress: float = 0.0
+    adaptation_rate: float = 0.0
+    timestamp: datetime = field(default_factory=datetime.now)
 
     def to_dict(self) -> dict:
-        return asdict(self)
+        """
+        Fonction to_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
+        return {
+            "reflexia_state": self.reflexia_state,
+            "zeroia_state": self.zeroia_state,
+            "assistant_state": self.assistant_state,
+            "helloria_state": self.helloria_state,
+            "nyxalia_state": self.nyxalia_state,
+            "taskia_state": self.taskia_state,
+            "cognitive_state": self.cognitive_state,
+            "coherence_analysis": self.coherence_analysis,
+            "behavioral_patterns": self.behavioral_patterns,
+            "recommendations": self.recommendations,
+            "cognitive_level": self.cognitive_level,
+            "decision_confidence": self.decision_confidence,
+            "learning_progress": self.learning_progress,
+            "adaptation_rate": self.adaptation_rate,
+            "timestamp": self.timestamp.isoformat(),
+        }
 
 
 class SandoziaCore:
     """
-    Orchestrateur Intelligence Croisée Sandozia
+    Orchestrateur principal du système Sandozia
 
-    Fonctionnalités principales :
-    - Collecte métriques cross-modules en temps réel
-    - Détection incohérences et dérives comportementales
-    - Corrélation signaux IA multiples
-    - Recommandations intelligence collaborative
+    Responsabilités:
+    - Coordination des composants cognitifs
+    - Gestion du cycle de vie des intelligences
+    - Optimisation des performances
+    - Monitoring et métriques
     """
 
     def __init__(self, config_path: Path | None = None) -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.config_path = config_path or Path("modules/sandozia/config/sandozia_config.toml")
         self.state_dir = Path("state/sandozia")
         self.logs_dir = Path("logs/sandozia")
@@ -116,7 +168,6 @@ class SandoziaCore:
         logger.info("🧠 SandoziaCore initialized - Intelligence Croisée ready")
 
     def _load_config(self) -> dict:
-        """Charge la configuration Sandozia"""
         default_config = {
             "monitoring": {
                 "interval_seconds": 30,
@@ -455,8 +506,6 @@ class SandoziaCore:
             json.dump(metrics.to_dict(), f, indent=2)
 
     def get_current_status(self) -> dict:
-        """Retourne le statut actuel de Sandozia"""
-
         return {
             "is_running": self.is_running,
             "snapshots_count": self.snapshots_counter,
@@ -470,10 +519,37 @@ class SandoziaCore:
 
 
 # === Métriques Prometheus pour Sandozia ===
-sandozia_uptime = Gauge("sandozia_uptime_seconds", "Temps de fonctionnement de Sandozia (secondes)")
-sandozia_coherence_score = Gauge(
-    "sandozia_coherence_score", "Score de cohérence inter-modules Sandozia"
-)
+# Gestion simple des métriques avec try/except pour éviter les doublons
+try:
+    sandozia_uptime = Gauge(
+        "sandozia_uptime_seconds", "Temps de fonctionnement de Sandozia (secondes)"
+    )
+    sandozia_coherence_score = Gauge(
+        "sandozia_coherence_score", "Score de cohérence inter-modules Sandozia"
+    )
+except ValueError:
+    # Les métriques existent déjà, on crée des objets mock pour éviter les erreurs
+    pass
+
+
+class MockGauge:
+    """
+    Classe MockGauge.
+
+    Cette classe fait partie du système Arkalia Luna Pro.
+    """
+
+    def set(self, value):
+        """
+        Fonction set.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
+        pass
+
+
+sandozia_uptime = MockGauge()
+sandozia_coherence_score = MockGauge()
 
 # === FastAPI app ===
 app = FastAPI()

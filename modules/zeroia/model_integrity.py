@@ -125,7 +125,7 @@ class ModelIntegrityMonitor:
         self.anomaly_threshold = 0.6
         self.confidence_baseline = 0.6
         self.logger = self._setup_logger()
-        self.suspicious_context_hashes = set()
+        self.suspicious_context_hashes: set[str] = set()
         self.stealth_attack_counter = 0
         self.integrity_checker = ModelIntegrityChecker()
 
@@ -324,7 +324,7 @@ class ModelIntegrityMonitor:
         # Détection emergency_shutdown fréquent (plus strict)
         emergency_count = recent_decisions.count("emergency_shutdown")
         if emergency_count > 2:  # Plus strict (était 3)
-            msg = f"Excessive emergency shutdowns: " f"{emergency_count}/{len(recent_decisions)}"
+            msg = f"Excessive emergency shutdowns: {emergency_count}/{len(recent_decisions)}"
             self.logger.error(msg)
 
         # Nouvelle détection: CPU élevé mais décision normale
@@ -332,7 +332,7 @@ class ModelIntegrityMonitor:
             zip(recent_decisions[-5:], recent_cpus[-5:], strict=False)
         ):
             if cpu > 85 and decision == "normal":
-                msg = f"Suspicious: High CPU ({cpu}%) but normal decision " f"- possible injection"
+                msg = f"Suspicious: High CPU ({cpu}%) but normal decision - possible injection"
                 self.logger.warning(msg)
 
         # Nouvelle détection: Répétition même décision avec CPU variable
@@ -342,8 +342,7 @@ class ModelIntegrityMonitor:
                 cpu_variance = max(recent_cpus[-4:]) - min(recent_cpus[-4:])
                 if cpu_variance > 20:  # CPU très variable
                     msg = (
-                        f"Same decision despite CPU variance: "
-                        f"{cpu_variance}% - possible poisoning"
+                        f"Same decision despite CPU variance: {cpu_variance}% - possible poisoning"
                     )
                     self.logger.warning(msg)
 

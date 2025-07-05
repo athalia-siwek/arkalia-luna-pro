@@ -24,8 +24,6 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ReasoningResult:
-    """Résultat d'un raisonnement collaboratif"""
-
     consensus_reached: bool
     final_decision: str
     confidence: float
@@ -34,6 +32,11 @@ class ReasoningResult:
     timestamp: datetime
 
     def to_dict(self) -> dict:
+        """
+        Fonction to_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         return {
             "consensus_reached": self.consensus_reached,
             "final_decision": self.final_decision,
@@ -46,220 +49,306 @@ class ReasoningResult:
 
 class CollaborativeReasoning:
     """
-    Système de raisonnement collaboratif entre IA
+    Système de raisonnement collaboratif
 
-    Fonctionnalités :
-    - Collecte des raisons de chaque module
-    - Comparaison et analyse des divergences
-    - Calcul de consensus
+    Coordonne les intelligences multiples :
+    - Fusion des perspectives
     - Résolution de conflits
+    - Synthèse des décisions
+    - Apprentissage collectif
     """
 
     def __init__(self, config: dict | None = None) -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.config = config or {
-            "consensus_threshold": 0.8,
-            "max_reasoning_rounds": 3,
-            "confidence_weight": 0.7,
-            "agreement_weight": 0.3,
+            "consensus_threshold": 0.7,
+            "max_iterations": 3,
+            "timeout_seconds": 30,
+        }
+        self.reasoning_history: list[dict] = []
+        self.consensus_cache: dict[str, dict] = {}
+        logger.info("🤝 CollaborativeReasoning initialized")
+
+    def coordinate_reasoning(
+        self, module_insights: dict[str, dict], context: dict | None = None
+    ) -> dict[str, Any]:
+        """
+        Coordonne le raisonnement entre modules
+
+        Args:
+            module_insights: Insights de chaque module
+            context: Contexte additionnel
+
+        Returns:
+            dict: Synthèse collaborative
+        """
+        logger.info("🤝 Starting collaborative reasoning...")
+
+        # Analyser les insights
+        analysis = self._analyze_insights(module_insights)
+        if not analysis["has_conflicts"]:
+            return self._create_consensus(analysis)
+
+        # Résoudre les conflits
+        resolution = self._resolve_conflicts(analysis, context)
+        return self._create_final_synthesis(resolution)
+
+    def _analyze_insights(self, module_insights: dict[str, dict]) -> dict[str, Any]:
+        """
+        Analyse les insights des modules
+
+        Args:
+            module_insights: Insights de chaque module
+
+        Returns:
+            dict: Analyse des insights
+        """
+        analysis: dict[str, Any] = {
+            "modules": list(module_insights.keys()),
+            "insights": module_insights,
+            "conflicts": [],
+            "agreements": [],
+            "has_conflicts": False,
         }
 
-        self.reasoning_history: list[ReasoningResult] = []
+        # Détecter les conflits
+        for module1, insight1 in module_insights.items():
+            for module2, insight2 in module_insights.items():
+                if module1 >= module2:
+                    continue
 
-        logger.info("🧠 CollaborativeReasoning initialized")
+                conflict = self._detect_conflict(insight1, insight2)
+                if conflict:
+                    analysis["conflicts"].append(conflict)
+                    analysis["has_conflicts"] = True
+                else:
+                    agreement = self._detect_agreement(insight1, insight2)
+                    if agreement:
+                        analysis["agreements"].append(agreement)
 
-    def collect_module_reasoning(self, module_decisions: dict[str, dict]) -> dict[str, Any]:
-        """Collecte les raisonnements de chaque module"""
+        return analysis
 
-        reasoning_data: dict[str, Any] = {}
+    def _detect_conflict(self, insight1: dict, insight2: dict) -> dict | None:
+        """
+        Détecte les conflits entre insights
 
-        for module_name, decision_data in module_decisions.items():
-            reasoning_data[module_name] = {
-                "decision": decision_data.get("decision", "unknown"),
-                "confidence": decision_data.get("confidence", 0.0),
-                "reasoning": decision_data.get("reasoning", "No reasoning provided"),
-                "timestamp": decision_data.get("timestamp", datetime.now().isoformat()),
-            }
+        Args:
+            insight1: Premier insight
+            insight2: Deuxième insight
 
-        return reasoning_data
-
-    def calculate_consensus(self, reasoning_data: dict[str, Any]) -> ReasoningResult:
-        """Calcule le consensus entre les modules"""
-
-        if not reasoning_data:
-            return ReasoningResult(
-                consensus_reached=False,
-                final_decision="no_data",
-                confidence=0.0,
-                participating_modules=[],
-                reasoning_steps=[],
-                timestamp=datetime.now(),
-            )
-
-        # Analyser les décisions
-        decisions: dict[str, Any] = {}
-        total_confidence = 0.0
-
-        for module, data in reasoning_data.items():
-            decision = data.get("decision", "unknown")
-            confidence = data.get("confidence", 0.0)
-
-            if decision not in decisions:
-                decisions[decision] = []
-
-            decisions[decision].append(
-                {
-                    "module": module,
-                    "confidence": confidence,
-                    "reasoning": data.get("reasoning", ""),
+        Returns:
+            dict | None: Conflit détecté ou None
+        """
+        # Logique de détection de conflit simplifiée
+        if insight1.get("confidence", 0) > 0.8 and insight2.get("confidence", 0) > 0.8:
+            if insight1.get("decision") != insight2.get("decision"):
+                return {
+                    "type": "decision_conflict",
+                    "insight1": insight1,
+                    "insight2": insight2,
+                    "severity": "high",
                 }
-            )
+        return None
 
-            total_confidence += confidence
+    def _detect_agreement(self, insight1: dict, insight2: dict) -> dict | None:
+        """
+        Détecte les accords entre insights
 
-        # Trouver la décision majoritaire pondérée
-        best_decision = None
-        best_score = 0.0
+        Args:
+            insight1: Premier insight
+            insight2: Deuxième insight
 
-        for decision, supporters in decisions.items():
-            # Score = nombre de supporters + confiance moyenne
-            support_count = len(supporters)
-            avg_confidence = sum(s["confidence"] for s in supporters) / len(supporters)
+        Returns:
+            dict | None: Accord détecté ou None
+        """
+        if insight1.get("decision") == insight2.get("decision"):
+            return {
+                "type": "decision_agreement",
+                "insight1": insight1,
+                "insight2": insight2,
+                "confidence": (insight1.get("confidence", 0) + insight2.get("confidence", 0)) / 2,
+            }
+        return None
 
-            weighted_score = (
-                support_count * self.config["agreement_weight"]
-                + avg_confidence * self.config["confidence_weight"]
-            )
+    def _resolve_conflicts(self, analysis: dict, context: dict | None = None) -> dict[str, Any]:
+        """
+        Résout les conflits détectés
 
-            if weighted_score > best_score:
-                best_score = weighted_score
-                best_decision = decision
+        Args:
+            analysis: Analyse des insights
+            context: Contexte additionnel
 
-        # Calculer consensus
-        consensus_reached = best_score >= self.config["consensus_threshold"]
+        Returns:
+            dict: Résolution des conflits
+        """
+        resolution: dict[str, Any] = {
+            "resolved_conflicts": [],
+            "unresolved_conflicts": [],
+            "final_decision": None,
+            "confidence": 0.0,
+        }
 
-        # Confiance finale
-        if best_decision and best_decision in decisions:
-            final_confidence = sum(s["confidence"] for s in decisions[best_decision]) / len(
-                decisions[best_decision]
-            )
-        else:
-            final_confidence = 0.0
+        for conflict in analysis["conflicts"]:
+            resolved = self._resolve_single_conflict(conflict, context)
+            if resolved:
+                resolution["resolved_conflicts"].append(resolved)
+            else:
+                resolution["unresolved_conflicts"].append(conflict)
 
-        # Étapes de raisonnement
-        reasoning_steps = [
-            {
-                "step": "decision_collection",
-                "data": {
-                    "decisions_found": list(decisions.keys()),
-                    "total_modules": len(reasoning_data),
-                },
-            },
-            {
-                "step": "consensus_calculation",
-                "data": {
-                    "best_decision": best_decision,
-                    "best_score": best_score,
-                    "threshold": self.config["consensus_threshold"],
-                },
-            },
-        ]
+        # Créer la décision finale
+        if resolution["resolved_conflicts"]:
+            resolution["final_decision"] = self._create_final_decision(resolution)
+            resolution["confidence"] = self._calculate_final_confidence(resolution)
 
-        result = ReasoningResult(
-            consensus_reached=consensus_reached,
-            final_decision=best_decision or "no_consensus",
-            confidence=final_confidence,
-            participating_modules=list(reasoning_data.keys()),
-            reasoning_steps=reasoning_steps,
-            timestamp=datetime.now(),
-        )
+        return resolution
 
-        # Sauvegarder dans l'historique
-        self.reasoning_history.append(result)
+    def _resolve_single_conflict(self, conflict: dict, context: dict | None = None) -> dict | None:
+        """
+        Résout un conflit individuel
 
-        return result
+        Args:
+            conflict: Conflit à résoudre
+            context: Contexte additionnel
 
-    def analyze_disagreements(self, reasoning_data: dict[str, Any]) -> dict[str, Any]:
-        """Analyse les désaccords entre modules"""
+        Returns:
+            dict | None: Conflit résolu ou None
+        """
+        # Logique de résolution simplifiée
+        if conflict["type"] == "decision_conflict":
+            # Prioriser l'insight avec la plus haute confiance
+            insight1 = conflict["insight1"]
+            insight2 = conflict["insight2"]
 
-        disagreements: list[Any] = []
-        modules = list(reasoning_data.keys())
+            if insight1.get("confidence", 0) > insight2.get("confidence", 0):
+                return {
+                    "conflict": conflict,
+                    "resolution": "prioritize_insight1",
+                    "selected_insight": insight1,
+                }
+            else:
+                return {
+                    "conflict": conflict,
+                    "resolution": "prioritize_insight2",
+                    "selected_insight": insight2,
+                }
 
-        # Comparer chaque paire de modules
-        for i in range(len(modules)):
-            for j in range(i + 1, len(modules)):
-                module1, module2 = modules[i], modules[j]
+        return None
 
-                decision1 = reasoning_data[module1].get("decision")
-                decision2 = reasoning_data[module2].get("decision")
+    def _create_final_decision(self, resolution: dict) -> dict:
+        """
+        Crée la décision finale
 
-                if decision1 != decision2:
-                    disagreements.append(
-                        {
-                            "modules": [module1, module2],
-                            "decisions": [decision1, decision2],
-                            "confidence_gap": abs(
-                                reasoning_data[module1].get("confidence", 0)
-                                - reasoning_data[module2].get("confidence", 0)
-                            ),
-                        }
-                    )
+        Args:
+            resolution: Résolution des conflits
 
+        Returns:
+            dict: Décision finale
+        """
+        # Logique simplifiée pour créer la décision finale
+        selected_insights = [r["selected_insight"] for r in resolution["resolved_conflicts"]]
+        if not selected_insights:
+            return {"decision": "no_consensus", "confidence": 0.0}
+
+        # Prendre la décision avec la plus haute confiance
+        best_insight = max(selected_insights, key=lambda x: x.get("confidence", 0))
         return {
-            "disagreement_count": len(disagreements),
-            "disagreements": disagreements,
-            "agreement_ratio": 1.0
-            - (len(disagreements) / max(1, len(modules) * (len(modules) - 1) / 2)),
+            "decision": best_insight.get("decision"),
+            "confidence": best_insight.get("confidence", 0),
+            "reasoning": "highest_confidence_selection",
         }
 
-    def run_collaborative_reasoning(self, module_decisions: dict[str, dict]) -> dict[str, Any]:
-        """Exécute un cycle complet de raisonnement collaboratif"""
+    def _calculate_final_confidence(self, resolution: dict) -> float:
+        """
+        Calcule la confiance finale
 
-        logger.info("🧠 Starting collaborative reasoning...")
+        Args:
+            resolution: Résolution des conflits
 
-        # Collecter les raisonnements
-        reasoning_data = self.collect_module_reasoning(module_decisions)
+        Returns:
+            float: Confiance finale
+        """
+        if not resolution["resolved_conflicts"]:
+            return 0.0
 
-        # Analyser les désaccords
-        disagreement_analysis = self.analyze_disagreements(reasoning_data)
+        confidences = [
+            r["selected_insight"].get("confidence", 0) for r in resolution["resolved_conflicts"]
+        ]
+        return sum(confidences) / len(confidences)
 
-        # Calculer consensus
-        consensus_result = self.calculate_consensus(reasoning_data)
+    def _create_consensus(self, analysis: dict) -> dict[str, Any]:
+        """
+        Crée un consensus quand il n'y a pas de conflits
 
-        # Résumé complet
-        summary = {
+        Args:
+            analysis: Analyse des insights
+
+        Returns:
+            dict: Consensus créé
+        """
+        insights = list(analysis["insights"].values())
+        if not insights:
+            return {"decision": "no_insights", "confidence": 0.0}
+
+        # Prendre la décision avec la plus haute confiance
+        best_insight = max(insights, key=lambda x: x.get("confidence", 0))
+        return {
+            "decision": best_insight.get("decision"),
+            "confidence": best_insight.get("confidence", 0),
+            "reasoning": "consensus_no_conflicts",
+            "agreements": len(analysis["agreements"]),
+        }
+
+    def _create_final_synthesis(self, resolution: dict) -> dict[str, Any]:
+        """
+        Crée la synthèse finale
+
+        Args:
+            resolution: Résolution des conflits
+
+        Returns:
+            dict: Synthèse finale
+        """
+        synthesis = {
+            "status": "completed",
+            "final_decision": resolution["final_decision"],
+            "confidence": resolution["confidence"],
+            "conflicts_resolved": len(resolution["resolved_conflicts"]),
+            "conflicts_unresolved": len(resolution["unresolved_conflicts"]),
             "timestamp": datetime.now().isoformat(),
-            "input_modules": len(module_decisions),
-            "reasoning_data": reasoning_data,
-            "disagreement_analysis": disagreement_analysis,
-            "consensus_result": consensus_result.to_dict(),
-            "success": consensus_result.consensus_reached,
         }
 
-        logger.info(
-            f"✅ Collaborative reasoning complete - Consensus: {consensus_result.consensus_reached}"
-        )
+        # Enregistrer dans l'historique
+        self.reasoning_history.append(synthesis)
+        if len(self.reasoning_history) > 100:  # Limiter l'historique
+            self.reasoning_history = self.reasoning_history[-100:]
 
-        return summary
+        logger.info(f"🤝 Collaborative reasoning completed: {synthesis['final_decision']}")
+        return synthesis
 
     def get_reasoning_history(self, limit: int | None = None) -> list[dict]:
-        """Retourne l'historique des raisonnements"""
-        history = self.reasoning_history[-limit:] if limit else self.reasoning_history
-        return [r.to_dict() for r in history]
+        """
+        Récupère l'historique du raisonnement
 
-    def get_consensus_stats(self) -> dict[str, Any]:
-        """Statistiques sur les consensus atteints"""
-        if not self.reasoning_history:
-            return {"total_reasonings": 0, "consensus_rate": 0.0}
+        Args:
+            limit: Limite du nombre d'entrées
 
-        consensus_count = sum(1 for r in self.reasoning_history if r.consensus_reached)
+        Returns:
+            list[dict]: Historique du raisonnement
+        """
+        if limit:
+            return self.reasoning_history[-limit:]
+        return self.reasoning_history.copy()
 
-        return {
-            "total_reasonings": len(self.reasoning_history),
-            "consensus_reached": consensus_count,
-            "consensus_rate": consensus_count / len(self.reasoning_history),
-            "average_confidence": sum(r.confidence for r in self.reasoning_history)
-            / len(self.reasoning_history),
-        }
+    def clear_cache(self) -> None:
+        """
+        Nettoie le cache de consensus
+        """
+        self.consensus_cache.clear()
+        logger.info("🧹 Collaborative reasoning cache cleared")
 
 
 # CLI pour test

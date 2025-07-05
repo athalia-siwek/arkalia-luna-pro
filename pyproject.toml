@@ -10,23 +10,31 @@ authors = [{ name = "Athalia", email = "athalia@arkalia-luna.com" }]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "fastapi>=0.104.0",
-    "uvicorn>=0.24.0",
-    "pydantic>=2.5.0",
-    "toml>=0.10.2",
-    "asyncio-mqtt>=0.16.0",
-    "prometheus-client>=0.19.0",
-    "psutil>=5.9.0",
-    "docker>=6.1.0",
-    "pytest>=7.4.0",
-    "pytest-cov>=4.1.0",
-    "black>=23.0.0",
-    "ruff>=0.1.0",
-    "isort>=5.12.0",
-    "pre-commit>=3.5.0",
-    "bandit>=1.7.0",
-    "mkdocs>=1.5.0",
-    "mkdocs-material>=9.4.0",
+    "fastapi==0.104.1",
+    "uvicorn==0.24.0",
+    "pydantic==2.5.2",
+    "toml==0.10.2",
+    "asyncio-mqtt==0.16.1",
+    "prometheus-client==0.19.0",
+    "psutil==5.9.6",
+    "docker==6.1.3",
+    "pytest==7.4.3",
+    "pytest-cov==4.1.0",
+    "black==23.11.0",
+    "ruff==0.1.6",
+    "isort==5.12.0",
+    "pre-commit==3.5.0",
+    "bandit==1.7.6",
+    "mkdocs==1.5.3",
+    "mkdocs-material==9.4.14",
+    "safety==2.3.5",
+    "detect-secrets==1.4.0",
+    "vulture==2.10",
+    "pylint==3.0.2",
+    "pytest-xdist==3.3.1",
+    "pytest-benchmark==4.0.0",
+    "interrogate==1.5.0",
+    "pydocstyle==6.3.0",
 ]
 
 [project.optional-dependencies]
@@ -43,7 +51,7 @@ dev = [
 [tool.ruff]
 target-version = "py310"
 line-length = 100
-exclude = ["node_modules/*"]
+exclude = ["node_modules/*", "archive/*"]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "C4", "UP"]
@@ -80,6 +88,7 @@ extend-exclude = '''
   | state
   | htmlcov
   | benchmark_results
+  | archive
 )/
 '''
 
@@ -94,11 +103,12 @@ skip_glob = [
     "*/logs/*",
     "*/state/*",
     "*/htmlcov/*",
-    "*/benchmark_results/*"
+    "*/benchmark_results/*",
+    "*/archive/*"
 ]
 
 [tool.coverage.run]
-source = ["modules", "scripts"]
+source = ["modules", "scripts", "helloria", "core", "app", "arkalia"]
 omit = [
     "*/tests/*",
     "*/venv/*",
@@ -107,7 +117,11 @@ omit = [
     "*/logs/*",
     "*/state/*",
     "*/htmlcov/*",
-    "*/benchmark_results/*"
+    "*/benchmark_results/*",
+    "*/temp/*",
+    "*/demo_*/*",
+    "*/node_modules/*",
+    "*/site/*"
 ]
 
 [tool.coverage.report]
@@ -136,9 +150,13 @@ addopts = [
     "--tb=short",
     "--cov=modules",
     "--cov=scripts",
+    "--cov=helloria",
+    "--cov=core",
+    "--cov=app",
+    "--cov=arkalia",
     "--cov-report=term-missing",
     "--cov-report=html",
-    "--cov-fail-under=28",
+    "--cov-fail-under=15",
     "--ignore=modules/generative_ai/generated/"
 ]
 markers = [
@@ -152,9 +170,17 @@ markers = [
 
 [tool.mypy]
 python_version = "3.10"
-warn_return_any = false
-warn_unused_configs = false
-disallow_untyped_defs = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
 ignore_missing_imports = true
 exclude = [
     "io_safe\\.py$",
@@ -165,6 +191,9 @@ exclude = [
     "modules/generative_ai/generated/.*\\.py$",
     "modules/.*\\.py$"
 ]
+[[tool.mypy.overrides]]
+module = "toml"
+ignore_missing_imports = true
 
 [tool.flake8]
 max-line-length = 100

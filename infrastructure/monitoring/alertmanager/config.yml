@@ -1,3 +1,4 @@
+---
 global:
   smtp_smarthost: 'localhost:587'
   smtp_from: 'arkalia-alerts@localhost'

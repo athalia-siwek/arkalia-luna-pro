@@ -1,3 +1,9 @@
+"""
+Module vault_manager.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 # 🔐 modules/security/crypto/vault_manager.py
 # Arkalia-Vault Enterprise - Gestionnaire de secrets sécurisé
 
@@ -16,14 +22,10 @@ logger = logging.getLogger(__name__)
 
 
 class VaultError(SecurityError):
-    """Exception spécifique aux opérations Vault"""
-
     pass
 
 
 class SecretMetadata:
-    """Métadonnées d'un secret dans le vault"""
-
     def __init__(
         self,
         name: str,
@@ -39,6 +41,11 @@ class SecretMetadata:
         self.last_accessed: datetime | None = None
 
     def to_dict(self) -> dict:
+        """
+        Fonction to_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         return {
             "name": self.name,
             "created_at": self.created_at.isoformat(),
@@ -50,6 +57,11 @@ class SecretMetadata:
 
     @classmethod
     def from_dict(cls, data: dict) -> "SecretMetadata":
+        """
+        Fonction from_dict.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         metadata = cls(
             name=data["name"],
             created_at=datetime.fromisoformat(data["created_at"]),
@@ -75,6 +87,11 @@ class ArkaliaVault(BuildIntegrityValidator):
     """
 
     def __init__(self, base_dir: Path | None = None, master_key: bytes | None = None) -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         # Initialiser la classe parente
         super().__init__(base_dir)
 
@@ -97,7 +114,6 @@ class ArkaliaVault(BuildIntegrityValidator):
         logger.info("🔐 ArkaliaVault initialized successfully")
 
     def _initialize_encryption(self, master_key: bytes | None = None) -> Fernet:
-        """Initialise le système de chiffrement"""
         if master_key:
             # Utiliser la clé fournie
             key = master_key
@@ -115,7 +131,6 @@ class ArkaliaVault(BuildIntegrityValidator):
         return Fernet(key)
 
     def _load_metadata(self) -> dict[str, SecretMetadata]:
-        """Charge les métadonnées des secrets"""
         if not self.metadata_file.exists():
             return {}
 
@@ -133,14 +148,12 @@ class ArkaliaVault(BuildIntegrityValidator):
             return {}
 
     def _save_metadata(self):
-        """Sauvegarde les métadonnées des secrets"""
         data = {name: meta.to_dict() for name, meta in self.secrets_metadata.items()}
 
         with open(self.metadata_file, "w") as f:
             json.dump(data, f, indent=2)
 
     def _load_secrets(self) -> dict[str, str]:
-        """Charge et déchiffre tous les secrets"""
         if not self.secrets_file.exists():
             return {}
 
@@ -153,7 +166,6 @@ class ArkaliaVault(BuildIntegrityValidator):
             raise VaultError(f"Failed to decrypt vault: {e}") from e
 
     def _save_secrets(self, secrets: dict[str, str]):
-        """Chiffre et sauvegarde tous les secrets"""
         try:
             json_data = json.dumps(secrets, indent=2).encode()
             encrypted_data = self.cipher_suite.encrypt(json_data)
@@ -164,7 +176,6 @@ class ArkaliaVault(BuildIntegrityValidator):
             raise VaultError(f"Failed to encrypt vault: {e}") from e
 
     def _audit_log_entry(self, action: str, secret_name: str, details: str = ""):
-        """Enregistre une entrée dans l'audit log"""
         timestamp = datetime.now().isoformat()
         log_entry = f"{timestamp} | {action} | {secret_name} | {details}\n"
 
@@ -453,7 +464,6 @@ class ArkaliaVault(BuildIntegrityValidator):
         return True
 
     def get_vault_stats(self) -> dict:
-        """Retourne les statistiques du vault"""
         secrets = self.list_secrets(include_expired=True)
         expired_count = len([s for s in secrets if s.expires_at and datetime.now() > s.expires_at])
 
@@ -579,5 +589,4 @@ def migrate_from_env_file(
 
 
 def create_arkalia_vault(base_dir: Path | None = None) -> ArkaliaVault:
-    """Factory function pour créer une instance ArkaliaVault"""
     return ArkaliaVault(base_dir)

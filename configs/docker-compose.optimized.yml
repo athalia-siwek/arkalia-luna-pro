@@ -1,0 +1,397 @@
+---
+# 🚀 Arkalia Luna Pro — Docker Compose Optimisé v4.0
+# Configuration haute performance avec dépendances claires et sécurité renforcée
+
+version: "3.8"
+
+x-arkalia-defaults: &arkalia-defaults
+  build:
+    context: .
+  volumes:
+    - ./logs:/app/logs
+    - ./state:/app/state:rw
+    - ./config:/app/config:ro
+    - ./cache:/app/cache:rw
+  working_dir: /app
+  environment:
+    - PYTHONUNBUFFERED=1
+    - PYTHONDONTWRITEBYTECODE=1
+    - PYTHONPATH=/app:/app/modules
+  restart: unless-stopped
+  networks:
+    - arkalia_network
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  read_only: false
+
+services:
+  # 🛡️ SECURITY GUARDIAN - Premier à démarrer (base de sécurité)
+  security-guardian:
+    <<: *arkalia-defaults
+    container_name: security-guardian
+    build:
+      context: .
+      dockerfile: Dockerfile.security
+    image: arkalia-luna-security:optimized
+    ports:
+      - "${PORT_SECURITY:-8004}:8004"
+    command: python -m modules.security.core --mode guardian
+    environment:
+      - SECURITY_ENV=production
+      - SECURITY_LOG_LEVEL=INFO
+      - SECURITY_MONITORING_ENABLED=true
+      - SECURITY_RATE_LIMIT_ENABLED=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.8"
+        reservations:
+          memory: 256M
+          cpus: "0.4"
+
+  # 🔄 REFLEXIA - Observateur cognitif (dépend de security)
+  reflexia:
+    <<: *arkalia-defaults
+    container_name: reflexia
+    build:
+      context: .
+      dockerfile: Dockerfile.reflexia
+    image: arkalia-luna-reflexia:optimized
+    ports:
+      - "${PORT_REFLEXIA:-8002}:8002"
+    command: python run_reflexia_api.py
+    environment:
+      - REFLEXIA_ENV=production
+      - REFLEXIA_MONITORING_ENABLED=true
+      - REFLEXIA_LOG_LEVEL=INFO
+      - REFLEXIA_SECURITY_INTEGRATION=true
+    depends_on:
+      security-guardian:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from modules.reflexia.core import launch_reflexia_check; launch_reflexia_check(); print('OK')",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.8"
+        reservations:
+          memory: 256M
+          cpus: "0.4"
+
+  # 🧠 ZEROIA - Décisionneur autonome (dépend de reflexia et security)
+  zeroia:
+    <<: *arkalia-defaults
+    container_name: zeroia
+    build:
+      context: .
+      dockerfile: Dockerfile.zeroia
+    image: arkalia-luna-zeroia:optimized
+    command: python -m modules.zeroia.orchestrator_enhanced --mode daemon
+    environment:
+      - ZEROIA_ENV=production
+      - ZEROIA_HOLD_LOOP=false
+      - ZEROIA_ENHANCED_MODE=true
+      - ZEROIA_LOG_LEVEL=INFO
+      - ZEROIA_SECURITY_INTEGRATION=true
+      - ZEROIA_REFLEXIA_INTEGRATION=true
+    depends_on:
+      reflexia:
+        condition: service_healthy
+      security-guardian:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from modules.zeroia.core import ZeroiaCore; print('OK')",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+    volumes:
+      - ./modules/zeroia/state:/app/modules/zeroia/state
+      - ./logs:/app/logs
+      - ./state:/app/state
+    networks:
+      - arkalia_network
+
+  # 🧬 SANDOZIA - Intelligence Croisée (dépend de zeroia et reflexia)
+  sandozia:
+    <<: *arkalia-defaults
+    container_name: sandozia
+    build:
+      context: .
+      dockerfile: Dockerfile.sandozia
+    image: arkalia-luna-sandozia:optimized
+    command: python -m modules.sandozia.core.sandozia_core --start
+    environment:
+      - SANDOZIA_ENV=production
+      - SANDOZIA_MONITORING_ENABLED=true
+      - SANDOZIA_LOG_LEVEL=INFO
+      - SANDOZIA_ENHANCED_MODE=true
+      - SANDOZIA_SECURITY_INTEGRATION=true
+    depends_on:
+      zeroia:
+        condition: service_healthy
+      reflexia:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from modules.sandozia.core.sandozia_core import SandoziaCore; print('OK')",
+        ]
+      interval: 45s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.5"
+        reservations:
+          memory: 512M
+          cpus: "0.8"
+
+  # 🌐 HELLORIA - API centrale (dépend de tous les modules)
+  helloria:
+    <<: *arkalia-defaults
+    container_name: helloria
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: arkalia-luna-helloria:optimized
+    ports:
+      - "${PORT_API:-8000}:8000"
+    command: python run_arkalia_api.py
+    environment:
+      - ARKALIA_ENV=production
+      - ARKALIA_LOG_LEVEL=INFO
+      - ARKALIA_SECURITY_INTEGRATION=true
+      - ARKALIA_REFLEXIA_INTEGRATION=true
+      - ARKALIA_ZEROIA_INTEGRATION=true
+      - ARKALIA_SANDOZIA_INTEGRATION=true
+    depends_on:
+      security-guardian:
+        condition: service_healthy
+      reflexia:
+        condition: service_healthy
+      zeroia:
+        condition: service_healthy
+      sandozia:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "1.0"
+        reservations:
+          memory: 256M
+          cpus: "0.5"
+
+  # 🤖 ASSISTANTIA - Interface IA conversationnelle (dépend de helloria)
+  assistantia:
+    <<: *arkalia-defaults
+    container_name: assistantia
+    build:
+      context: .
+      dockerfile: Dockerfile.assistantia
+    image: arkalia-luna-assistantia:production
+    ports:
+      - "${PORT_ASSISTANTIA:-8001}:8001"
+    command: >
+      uvicorn modules.assistantia.core:app --host 0.0.0.0 --port 8001
+        --workers 1 --access-log --log-level info
+    environment:
+      - ASSISTANTIA_ENV=production
+      - ASSISTANTIA_LOG_LEVEL=INFO
+      - OLLAMA_HOST=host.docker.internal
+      - OLLAMA_PORT=11434
+      - ASSISTANTIA_SECURITY_INTEGRATION=true
+    depends_on:
+      helloria:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+      - ./state:/app/state
+      - ./modules/assistantia/logs:/app/modules/assistantia/logs
+    networks:
+      - arkalia_network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "1.0"
+        reservations:
+          memory: 256M
+          cpus: "0.5"
+
+  # 🧠 COGNITIVE REACTOR - Intelligence Avancée (dépend de sandozia)
+  cognitive-reactor:
+    <<: *arkalia-defaults
+    container_name: cognitive-reactor
+    build:
+      context: .
+      dockerfile: Dockerfile.cognitive-reactor
+    image: arkalia-luna-cognitive:production
+    ports:
+      - "${PORT_COGNITIVE:-8003}:8003"
+    command: --mode production --daemon
+    environment:
+      - COGNITIVE_REACTOR_ENV=production
+      - COGNITIVE_REACTOR_ENABLED=true
+      - CHRONALIA_ENABLED=true
+      - COGNITIVE_LOG_LEVEL=INFO
+      - COGNITIVE_MAX_REACTIONS=100
+      - COGNITIVE_REACTION_INTERVAL=30
+      - COGNITIVE_SECURITY_INTEGRATION=true
+    depends_on:
+      sandozia:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from modules.cognitive_reactor.core import CognitiveReactor; print('CognitiveReactor OK')",
+        ]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 45s
+    restart: unless-stopped
+    volumes:
+      - ./modules/cognitive_reactor/state:/app/modules/cognitive_reactor/state
+      - ./logs:/app/logs
+      - ./state:/app/state
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "1.0"
+        reservations:
+          memory: 256M
+          cpus: "0.5"
+
+  # 📊 PROMETHEUS - Monitoring et métriques
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: arkalia-prometheus
+    ports:
+      - "${PORT_PROMETHEUS:-9090}:9090"
+    volumes:
+      - ./infrastructure/monitoring/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    depends_on:
+      helloria:
+        condition: service_healthy
+    networks:
+      - arkalia_network
+      - monitoring_network
+
+  # 📈 GRAFANA - Dashboard et visualisation
+  grafana:
+    image: grafana/grafana:latest
+    container_name: arkalia-grafana
+    ports:
+      - "${PORT_GRAFANA:-3000}:3000"
+    volumes:
+      - ./infrastructure/monitoring/grafana:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=arkalia_admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      prometheus:
+        condition: service_started
+    networks:
+      - arkalia_network
+      - monitoring_network
+
+# === RÉSEAUX ===
+networks:
+  arkalia_network:
+    driver: bridge
+    name: arkalia_network
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+  monitoring_network:
+    driver: bridge
+    name: monitoring_network
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+
+# === VOLUMES ===
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  arkalia_state:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./state
+  arkalia_logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./logs
+  arkalia_cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./cache

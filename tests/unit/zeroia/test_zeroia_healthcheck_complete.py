@@ -7,7 +7,7 @@ from unittest.mock import patch
 import toml
 
 from modules.zeroia.healthcheck_zeroia import check_zeroia_health, get_state_path
-from tests.common.test_helpers import ensure_test_toml
+from tests.fixtures.__test_helpers import ensure_test_toml
 
 ensure_test_toml()
 

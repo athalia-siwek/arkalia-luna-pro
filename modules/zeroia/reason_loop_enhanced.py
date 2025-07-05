@@ -473,8 +473,7 @@ def check_for_ia_conflict_enhanced(
         # Event sourcing de la contradiction
         # Note: event_store  # noqa: F401   est géré dans la fonction appelante
         logger.warning(
-            f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, "
-            f"ZeroIA = {zeroia_decision}"
+            f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, ZeroIA = {zeroia_decision}"
         )
         return True
 
@@ -635,7 +634,7 @@ def reason_loop_enhanced_with_recovery(
             log_path=contradiction_log_path or Path(DEFAULT_CONTRADICTION_LOG),
         ):
             logger.warning(
-                f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, " f"ZeroIA = {decision}"
+                f"CONTRADICTION DETECTED: ReflexIA = {reflexia_decision}, ZeroIA = {decision}"
             )
 
         # Logs améliorés avec Error Recovery

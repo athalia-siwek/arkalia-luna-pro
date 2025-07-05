@@ -431,7 +431,7 @@ curl -X POST http://localhost:8005/chat \
 
 - [📖 API Documentation](api.md)
 - [📊 Métriques](metrics.md)
-- [🔧 Configuration](../infrastructure/configuration.md)
+- [🔧 Configuration](../devops/index.md)
 
 ---
 

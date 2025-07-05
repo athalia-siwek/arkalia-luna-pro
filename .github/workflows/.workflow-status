@@ -1,0 +1,32 @@
+# 📋 Statut des Workflows GitHub Actions - Arkalia-LUNA
+
+## ✅ WORKFLOWS ACTIFS (Affichés par défaut)
+- ci.yml - CI/CD principale (toujours actif)
+- deploy.yml - Déploiement (toujours actif)
+- docs.yml - Documentation (toujours actif)
+
+## 🔧 WORKFLOWS MANUELS (Masqués par défaut)
+- performance-tests.yml - Tests de performance (workflow_dispatch uniquement)
+- security-scan.yml - Scan de sécurité (workflow_dispatch uniquement)
+
+## 🎯 COMMENT AFFICHER/MASQUER LES WORKFLOWS
+
+### Pour masquer un workflow :
+1. Commenter les déclencheurs automatiques (push, pull_request, schedule)
+2. Garder seulement `workflow_dispatch:`
+3. Le workflow ne s'affichera plus dans la liste principale
+
+### Pour réactiver un workflow :
+1. Décommenter les déclencheurs souhaités
+2. Supprimer ou commenter `workflow_dispatch:`
+3. Le workflow réapparaîtra dans la liste principale
+
+### Pour exécuter un workflow masqué :
+1. Aller dans l'onglet "Actions" sur GitHub
+2. Sélectionner le workflow
+3. Cliquer sur "Run workflow" (bouton manuel)
+
+## 📊 RÉSULTAT
+- **Affichage principal** : 3 workflows essentiels
+- **Workflows masqués** : 2 workflows spécialisés (manuels)
+- **Interface plus propre** : Moins de bruit visuel

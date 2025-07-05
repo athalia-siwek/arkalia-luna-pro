@@ -1,0 +1,44 @@
+[run]
+source =
+    modules
+    core
+    helloria
+    app
+    arkalia
+branch = True
+parallel = True
+concurrency = multiprocessing
+omit =
+    */__pycache__/*
+    */migrations/*
+    setup.py
+    */generated/*
+    */temp/*
+    */cache/*
+    */tests/*
+    */venv/*
+    */.venv/*
+    */env/*
+    */.env/*
+    */node_modules/*
+    */dist/*
+    */build/*
+    */htmlcov/*
+    */.pytest_cache/*
+    */.mypy_cache/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod
+    if TYPE_CHECKING:
+    @overload
+show_missing = True
+skip_covered = False
+fail_under = 80

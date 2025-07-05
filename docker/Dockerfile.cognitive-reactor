@@ -1,0 +1,68 @@
+# 🧠 Cognitive Reactor — Dockerfile Production Ready
+FROM python:3.10-slim
+
+# === Métadonnées ===
+LABEL maintainer="Athalia <athalia@arkalia-luna.com>"
+LABEL version="2.7.0"
+LABEL description="Cognitive Reactor - Intelligence Avancée Arkalia-LUNA"
+
+# === Variables d'environnement ===
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV COGNITIVE_REACTOR_ENV=production
+ENV COGNITIVE_LOG_LEVEL=INFO
+
+# === Installation des dépendances système ===
+RUN apt-get update && apt-get install -y \
+    curl \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# === Création de l'utilisateur non-root ===
+RUN groupadd -r cognitive && useradd -r -g cognitive cognitive
+
+# === Répertoire de travail ===
+WORKDIR /app
+
+# === Copie des fichiers de dépendances ===
+COPY requirements.txt .
+COPY pyproject.toml .
+COPY version.toml .
+
+# === Installation des dépendances Python ===
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# === Copie du code source ===
+COPY modules/cognitive_reactor/ ./modules/cognitive_reactor/
+COPY modules/zeroia/ ./modules/zeroia/
+COPY modules/sandozia/ ./modules/sandozia/
+COPY modules/reflexia/ ./modules/reflexia/
+COPY modules/assistantia/ ./modules/assistantia/
+COPY modules/helloria/ ./modules/helloria/
+COPY modules/nyxalia/ ./modules/nyxalia/
+COPY modules/taskia/ ./modules/taskia/
+COPY modules/monitoring/ ./modules/monitoring/
+COPY modules/security/ ./modules/security/
+COPY modules/utils_enhanced/ ./modules/utils_enhanced/
+COPY modules/crossmodule_validator/ ./modules/crossmodule_validator/
+COPY modules/error_recovery/ ./modules/error_recovery/
+
+# === Création des répertoires nécessaires ===
+RUN mkdir -p /app/modules/cognitive_reactor/state \
+    /app/logs \
+    /app/state \
+    /app/cache
+
+# === Permissions ===
+RUN chown -R cognitive:cognitive /app
+USER cognitive
+
+# === Exposition du port ===
+EXPOSE 8003
+
+# === Point d'entrée ===
+ENTRYPOINT ["python", "modules/cognitive_reactor/core.py"]
+
+# === Commande par défaut ===
+CMD ["--mode", "production", "--daemon"]

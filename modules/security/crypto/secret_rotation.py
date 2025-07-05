@@ -1,3 +1,9 @@
+"""
+Module secret_rotation.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 # 🔄 modules/security/crypto/secret_rotation.py
 # Système de rotation automatique des secrets Arkalia-Vault
 
@@ -16,8 +22,6 @@ logger = logging.getLogger(__name__)
 
 
 class RotationStrategy(Enum):
-    """Stratégies de rotation des secrets"""
-
     MANUAL = "manual"
     TIME_BASED = "time_based"
     ACCESS_COUNT = "access_count"
@@ -26,8 +30,6 @@ class RotationStrategy(Enum):
 
 @dataclass
 class RotationPolicy:
-    """Politique de rotation pour un secret"""
-
     name: str
     strategy: RotationStrategy
     interval_days: int | None = None
@@ -40,29 +42,23 @@ class RotationPolicy:
 
 
 class SecretGenerator:
-    """Générateur de secrets sécurisés"""
-
     @staticmethod
     def generate_secure_random(length: int = 32) -> str:
-        """Génère un secret aléatoire sécurisé"""
         alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
         return "".join(secrets.choice(alphabet) for _ in range(length))
 
     @staticmethod
     def generate_alphanumeric(length: int = 24) -> str:
-        """Génère un secret alphanumérique"""
         alphabet = string.ascii_letters + string.digits
         return "".join(secrets.choice(alphabet) for _ in range(length))
 
     @staticmethod
     def generate_api_key(prefix: str = "ak", length: int = 40) -> str:
-        """Génère une clé API avec préfixe"""
         suffix = SecretGenerator.generate_alphanumeric(length - len(prefix) - 1)
         return f"{prefix}_{suffix}"
 
     @staticmethod
     def generate_jwt_secret(length: int = 64) -> str:
-        """Génère un secret pour JWT"""
         return secrets.token_urlsafe(length)
 
 
@@ -79,17 +75,20 @@ class RotationManager:
     """
 
     def __init__(self, vault: ArkaliaVault) -> None:
+        """
+        Fonction __init__.
+
+        Cette fonction fait partie du système Arkalia Luna Pro.
+        """
         self.vault = vault
         self.policies: dict[str, RotationPolicy] = {}
         self.rotation_history: list[dict] = []
 
     def add_policy(self, policy: RotationPolicy):
-        """Ajoute une politique de rotation"""
         self.policies[policy.name] = policy
         logger.info(f"📋 Rotation policy added for: {policy.name}")
 
     def remove_policy(self, secret_name: str):
-        """Supprime une politique de rotation"""
         if secret_name in self.policies:
             del self.policies[secret_name]
             logger.info(f"🗑️ Rotation policy removed for: {secret_name}")
@@ -230,7 +229,6 @@ class RotationManager:
             return False
 
     def _generate_new_value(self, policy: RotationPolicy) -> str:
-        """Génère une nouvelle valeur selon la politique"""
         if policy.custom_generator:
             return policy.custom_generator()
 
@@ -254,10 +252,8 @@ class RotationManager:
             Dict {secret_name: (needs_rotation, reason)}
         """
         results: dict[str, Any] = {}
-
         for secret_name in self.policies.keys():
             results[secret_name] = self.check_rotation_needed(secret_name)
-
         return results
 
     def auto_rotate_due_secrets(self) -> dict[str, bool]:
@@ -269,14 +265,12 @@ class RotationManager:
         """
         rotation_check = self.bulk_rotation_check()
         results: dict[str, Any] = {}
-
         for secret_name, (needs_rotation, reason) in rotation_check.items():
             if needs_rotation:
                 logger.info(f"🔄 Auto-rotating {secret_name}: {reason}")
                 results[secret_name] = self.rotate_secret(secret_name)
             else:
                 logger.debug(f"⏭️ Skipping {secret_name}: {reason}")
-
         return results
 
     def rollback_rotation(self, secret_name: str) -> bool:
@@ -366,7 +360,6 @@ class RotationManager:
         return deleted_count
 
     def get_rotation_stats(self) -> dict:
-        """Retourne les statistiques de rotation"""
         total_policies = len(self.policies)
         total_rotations = len(self.rotation_history)
 
@@ -395,7 +388,6 @@ class RotationManager:
 
 # Fonctions de politiques prédéfinies
 def create_daily_rotation_policy(secret_name: str) -> RotationPolicy:
-    """Politique de rotation quotidienne"""
     return RotationPolicy(
         name=secret_name,
         strategy=RotationStrategy.TIME_BASED,
@@ -406,7 +398,6 @@ def create_daily_rotation_policy(secret_name: str) -> RotationPolicy:
 
 
 def create_weekly_rotation_policy(secret_name: str) -> RotationPolicy:
-    """Politique de rotation hebdomadaire"""
     return RotationPolicy(
         name=secret_name,
         strategy=RotationStrategy.TIME_BASED,
@@ -417,7 +408,6 @@ def create_weekly_rotation_policy(secret_name: str) -> RotationPolicy:
 
 
 def create_monthly_rotation_policy(secret_name: str) -> RotationPolicy:
-    """Politique de rotation mensuelle"""
     return RotationPolicy(
         name=secret_name,
         strategy=RotationStrategy.TIME_BASED,
@@ -428,7 +418,6 @@ def create_monthly_rotation_policy(secret_name: str) -> RotationPolicy:
 
 
 def create_access_based_policy(secret_name: str, max_accesses: int = 100) -> RotationPolicy:
-    """Politique de rotation basée sur le nombre d'accès"""
     return RotationPolicy(
         name=secret_name,
         strategy=RotationStrategy.ACCESS_COUNT,

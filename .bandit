@@ -1,9 +1,9 @@
 [bandit]
-# Configuration Bandit pour Arkalia-LUNA
-# Ignore les warnings de sécurité random dans les demos/tests
+# 🔒 Configuration Bandit pour Arkalia Luna Pro
+# Optimisée pour détecter les vulnérabilités de sécurité
 
-skips = B311
-exclude_dirs = tests,scripts/demo_*
+# Répertoires à exclure
+exclude_dirs = tests,htmlcov,.pytest_cache,node_modules,site,docs
 
-# B311: random n'est pas critique pour les demos et tests
-# Les données générées sont pour simulation, pas cryptographie
+# Fichiers à ignorer
+skips = B101

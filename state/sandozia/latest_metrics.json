@@ -1,12 +1,11 @@
 {
-  "timestamp": "2025-07-01T00:13:53.735846",
-  "coherence_score": 1.0,
-  "cross_validation_passed": 1,
+  "timestamp": "2025-07-05T11:03:57.566593",
+  "coherence_score": 0.8,
+  "cross_validation_passed": 0,
   "anomalies_detected": 0,
   "reasoning_alignment": 0.85,
   "modules_active": [
     "reflexia",
-    "zeroia",
     "assistant"
   ],
   "total_correlations": 0

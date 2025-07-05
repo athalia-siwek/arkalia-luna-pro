@@ -62,11 +62,11 @@ curl http://localhost:8000/metrics
 - `arkalia_system_load_average` : Charge système moyenne
 
 ### Métriques API
-- `arkalia_api (port 8000)_requests_total` : Nombre total de requêtes
-- `arkalia_api (port 8000)_request_duration_seconds` : Durée des requêtes
-- `arkalia_api (port 8000)_requests_in_progress` : Requêtes en cours
-- `arkalia_api (port 8000)_errors_total` : Nombre total d'erreurs
-- `arkalia_api (port 8000)_response_size_bytes` : Taille des réponses
+- `arkalia_api_requests_total` : Nombre total de requêtes
+- `arkalia_api_request_duration_seconds` : Durée des requêtes
+- `arkalia_api_requests_in_progress` : Requêtes en cours
+- `arkalia_api_errors_total` : Nombre total d'erreurs
+- `arkalia_api_response_size_bytes` : Taille des réponses
 
 ### Métriques Modules
 - `arkalia_module_status` : Statut des modules (0=inactif, 1=actif)
@@ -212,266 +212,139 @@ curl http://localhost:8000/metrics
 
 ---
 
-## 🔧 Configuration
+## 📈 Métriques de Performance
 
-### Variables d'Environnement
-```bash
-# Monitoring
-PROMETHEUS_PORT=9090
-GRAFANA_PORT=3000
-ALERTMANAGER_PORT=9093
-LOKI_PORT=3100
-CADVISOR_PORT=8080
+### Métriques Clés
+- **Temps de réponse API** : < 2s (P95)
+- **Disponibilité système** : 99.9%+
+- **Couverture de tests** : 59.25%
+- **Tests passés** : 671/671 (100%)
+- **Métriques exposées** : 34
 
-# Grafana
-GRAFANA_ADMIN_USER=admin
-GRAFANA_ADMIN_PASSWORD=arkalia-secure-2025
+### Métriques de Qualité
+- **Erreurs de linting** : 0
+- **Warnings de sécurité** : 0
+- **Pipeline CI** : 100% verte
+- **Healthchecks** : Tous healthy
 
-# Prometheus
-PROMETHEUS_RETENTION_DAYS=30
-PROMETHEUS_SCRAPE_INTERVAL=15s
+---
 
-# AlertManager
-ALERTMANAGER_SMTP_HOST=smtp.gmail.com
-ALERTMANAGER_SMTP_PORT=587
-ALERTMANAGER_SMTP_USER=alerts@arkalia-luna.com
-ALERTMANAGER_SMTP_PASSWORD=secure-password
-```
+## 🔧 Configuration Avancée
 
-### Configuration Prometheus
+### Prometheus Configuration
 ```yaml
-# prometheus.yml
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
-rule_files:
-  - "rules/*.yml"
-
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets: ["alertmanager:9093"]
-
 scrape_configs:
-  - job_name: 'arkalia-api (port 8000)'
+  - job_name: 'arkalia-api'
     static_configs:
-      - targets: ['host.docker.internal:8000']
+      - targets: ['arkalia-api:8000']
     metrics_path: '/metrics'
-    scrape_interval: 15s
+    scrape_interval: 10s
 ```
 
-### Configuration AlertManager
-```yaml
-# alertmanager.yml
-global:
-  smtp_smarthost: 'smtp.gmail.com:587'
-  smtp_from: 'alerts@arkalia-luna.com'
-  smtp_auth_username: 'alerts@arkalia-luna.com'
-  smtp_auth_password: 'secure-password'
+### Grafana Dashboards
+- **Dashboard Principal** : Monitoring global
+- **Dashboard ZeroIA** : Métriques spécifiques ZeroIA
+- **Dashboard Reflexia** : Métriques monitoring
+- **Dashboard AssistantIA** : Métriques assistant
+- **Dashboard Sécurité** : Métriques sécurité
 
+### AlertManager Configuration
+```yaml
 route:
   group_by: ['alertname']
   group_wait: 10s
   group_interval: 10s
   repeat_interval: 1h
-  receiver: 'arkalia-alerts'
+  receiver: 'arkalia-team'
 
 receivers:
-  - name: 'arkalia-alerts'
-    email_configs:
-      - to: 'admin@arkalia-luna.com'
+  - name: 'arkalia-team'
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/...'
+        channel: '#arkalia-alerts'
 ```
 
 ---
 
-## 🛠️ Maintenance
+## 🚀 Maintenance et Optimisation
 
-### Logs
+### Tâches de Maintenance
 ```bash
-# Logs Prometheus
-docker logs prometheus
-
-# Logs Grafana
-docker logs grafana
-
-# Logs AlertManager
-docker logs alertmanager
-
-# Logs Loki
-docker logs loki
-
-# Logs cAdvisor
-docker logs cadvisor
-```
-
-### Sauvegarde
-```bash
-# Sauvegarder les configurations
-docker cp prometheus:/etc/prometheus ./backup/prometheus/
-docker cp grafana:/etc/grafana ./backup/grafana/
-docker cp alertmanager:/etc/alertmanager ./backup/alertmanager/
-
-# Sauvegarder les données
-docker cp prometheus:/prometheus ./backup/prometheus-data/
-docker cp grafana:/var/lib/grafana ./backup/grafana-data/
-```
-
-### Mise à Jour
-```bash
-# Arrêter les services
-cd infrastructure/monitoring
-docker-compose -f docker-compose.monitoring.yml down
-
-# Mettre à jour les images
-docker-compose -f docker-compose.monitoring.yml pull
-
-# Redémarrer
-docker-compose -f docker-compose.monitoring.yml up -d
-```
-
-### Nettoyage
-```bash
-# Nettoyer les anciennes données
-docker volume prune
-
-# Nettoyer les logs
-docker system prune -f
-
-# Redémarrer proprement
-cd infrastructure/monitoring
-docker-compose -f docker-compose.monitoring.yml down
-docker-compose -f docker-compose.monitoring.yml up -d
-```
-
----
-
-## 🔍 Troubleshooting
-
-### Problèmes Courants
-
-#### Prometheus ne scrape pas les métriques
-```bash
-# Vérifier la connectivité
-curl http://localhost:8000/metrics
-
-# Vérifier la configuration
-docker exec prometheus cat /etc/prometheus/prometheus.yml
-
-# Redémarrer Prometheus
-docker restart prometheus
-```
-
-#### Grafana ne se connecte pas
-```bash
-# Vérifier les logs
-docker logs grafana
-
-# Réinitialiser le mot de passe
-docker exec grafana grafana-cli admin reset-admin-password arkalia-secure-2025
-
-# Redémarrer Grafana
-docker restart grafana
-```
-
-#### Alertes ne fonctionnent pas
-```bash
-# Vérifier AlertManager
-curl http://localhost:9093/api/v1/alerts
-
-# Vérifier les règles Prometheus
-docker exec prometheus cat /etc/prometheus/rules/alerts.yml
-
-# Redémarrer AlertManager
-docker restart alertmanager
-```
-
-#### Métriques manquantes
-```bash
-# Vérifier l'API Arkalia
-curl http://localhost:8000/status
-
-# Vérifier les endpoints
-curl http://localhost:8000/metrics | grep arkalia
-
-# Redémarrer l'API
-docker restart arkalia-api (port 8000)
-```
-
----
-
-## 📈 Métriques de Performance
-
-### Objectifs SLO/SLI
-- **Disponibilité** : 99.9% uptime
-- **Latence** : P95 < 2s
-- **Erreurs** : < 0.1% taux d'erreur
-- **Throughput** : 1000+ req/min soutenus
-
-### Métriques Clés
-- **Temps de réponse** : < 2s (P95)
-- **Disponibilité** : 99.9%+
-- **Latence système** : < 100ms
-- **Recovery Time** : < 100ms automatique
-- **Error Rate** : < 0.1% (warnings seulement)
-
----
-
-## 🎯 Roadmap Future
-
-### v2.8.1 - Monitoring Avancé
-- [ ] Métriques business (KPI)
-- [ ] Alertes par email/Slack
-- [ ] Dashboards personnalisables
-- [ ] Machine learning pour prédiction
-
-### v3.0.0 - Observabilité Complète
-- [ ] Distributed tracing
-- [ ] APM (Application Performance Monitoring)
-- [ ] SLO/SLI définis
-- [ ] Chaos engineering
-
----
-
-## 📝 Commandes Utiles
-
-### Validation
-```bash
-# Validation complète
+# Vérification quotidienne
 python scripts/ark-validate-monitoring.py
 
-# Vérification services
-docker-compose -f infrastructure/monitoring/docker-compose.monitoring.yml ps
+# Nettoyage des métriques anciennes
+docker exec prometheus promtool tsdb clean --older-than 30d
 
-# Test métriques
+# Sauvegarde des dashboards
+python scripts/ark-backup-dashboards.py
+```
+
+### Optimisation des Performances
+- **Rétention des métriques** : 30 jours
+- **Compression des données** : Activée
+- **Cache Grafana** : 5 minutes
+- **Refresh des dashboards** : 30 secondes
+
+### Monitoring de la Monitoring
+- **Prometheus** : Métriques d'auto-monitoring
+- **Grafana** : Dashboards de santé
+- **AlertManager** : Alertes sur les alertes
+- **Loki** : Logs de monitoring
+
+---
+
+## 🎯 Bonnes Pratiques
+
+### Métriques
+- **Nommage** : Préfixe `arkalia_` pour toutes les métriques
+- **Labels** : Utilisation cohérente des labels
+- **Documentation** : Chaque métrique documentée
+- **Tests** : Validation des métriques
+
+### Alertes
+- **Seuils** : Seuils réalistes et testés
+- **Groupement** : Alertes groupées logiquement
+- **Escalade** : Processus d'escalade défini
+- **Documentation** : Runbooks pour chaque alerte
+
+### Dashboards
+- **Organisation** : Panels logiquement organisés
+- **Couleurs** : Palette de couleurs cohérente
+- **Annotations** : Annotations pour les événements
+- **Responsive** : Dashboards adaptatifs
+
+---
+
+## 🔍 Dépannage
+
+### Problèmes Courants
+1. **Prometheus ne scrape pas** : Vérifier la connectivité réseau
+2. **Grafana ne charge pas** : Vérifier les permissions
+3. **Alertes ne se déclenchent pas** : Vérifier la configuration
+4. **Métriques manquantes** : Vérifier les endpoints
+
+### Commandes de Diagnostic
+```bash
+# Vérifier Prometheus
+curl http://localhost:9090/api/v1/status/targets
+
+# Vérifier Grafana
+curl http://localhost:3000/api/health
+
+# Vérifier AlertManager
+curl http://localhost:9093/api/v1/status
+
+# Vérifier les métriques Arkalia
 curl http://localhost:8000/metrics
-```
-
-### Monitoring
-```bash
-# Statut services
-docker ps | grep monitoring
-
-# Logs temps réel
-docker-compose -f infrastructure/monitoring/docker-compose.monitoring.yml logs -f
-
-# Métriques système
-curl http://localhost:9090/api/v1/query?query=up
-```
-
-### Maintenance
-```bash
-# Redémarrer monitoring
-cd infrastructure/monitoring
-docker-compose -f docker-compose.monitoring.yml restart
-
-# Nettoyer
-docker system prune -f
-
-# Sauvegarder
-./scripts/ark-backup-monitoring.sh
 ```
 
 ---
 
-💡 **Le monitoring Arkalia-LUNA v2.8.0 offre une observabilité totale avec 34 métriques, 8 dashboards et 15 alertes pour garantir la fiabilité et les performances du système IA.**
+*Dernière mise à jour : 27 Janvier 2025 - 18:50*
+*Version : v2.8.0*
+*Mainteneur : Arkalia-LUNA Team*

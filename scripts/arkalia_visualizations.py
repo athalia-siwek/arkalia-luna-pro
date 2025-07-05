@@ -166,7 +166,7 @@ class ArkaliaVisualizer:
 
         # Module Status
         modules = ["ReflexIA", "ZeroIA", "Sandozia", "AssistantIA", "Helloria"]
-        module_status = [random.choice([0, 1]) for _ in modules]
+        module_status = [random.choice([0, 1]) for _ in modules]  # nosec B311
         colors = [
             self.colors["success"] if status else self.colors["warning"] for status in module_status
         ]
@@ -315,10 +315,10 @@ class ArkaliaVisualizer:
             for _i in range(50):
                 events_data.append(
                     {
-                        "timestamp": datetime.now() - timedelta(hours=random.randint(0, 24)),
-                        "event": random.choice(event_types),
-                        "module": random.choice(modules),
-                        "severity": random.choice(["low", "medium", "high"]),
+                        "timestamp": datetime.now() - timedelta(hours=random.randint(0, 24)),  # nosec B311
+                        "event": random.choice(event_types),  # nosec B311
+                        "module": random.choice(modules),  # nosec B311
+                        "severity": random.choice(["low", "medium", "high"]),  # nosec B311
                     }
                 )
 
@@ -387,20 +387,20 @@ class ArkaliaVisualizer:
             <title>Arkalia-LUNA Pro - Rapport de Synthèse</title>
             <style>
                 body {{ font-family: Arial, sans-serif; margin: 40px; }}
-                .header {{ background: linear-gradient(135deg, {self.colors['primary']}, {self.colors['secondary']});
+                .header {{ background: linear-gradient(135deg, {self.colors["primary"]}, {self.colors["secondary"]});
                           color: white; padding: 20px; border-radius: 10px; }}
                 .stats {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                          gap: 20px; margin: 20px 0; }}
                 .stat-card {{ background: #f8f9fa; padding: 20px; border-radius: 8px;
-                             border-left: 4px solid {self.colors['primary']}; }}
-                .stat-value {{ font-size: 24px; font-weight: bold; color: {self.colors['primary']}; }}
+                             border-left: 4px solid {self.colors["primary"]}; }}
+                .stat-value {{ font-size: 24px; font-weight: bold; color: {self.colors["primary"]}; }}
                 .stat-label {{ color: #666; margin-top: 5px; }}
             </style>
         </head>
         <body>
             <div class="header">
                 <h1>🌕 Arkalia-LUNA Pro</h1>
-                <p>Rapport de Synthèse - {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
+                <p>Rapport de Synthèse - {datetime.now().strftime("%Y-%m-%d %H:%M")}</p>
             </div>
 
             <div class="stats">
@@ -410,7 +410,7 @@ class ArkaliaVisualizer:
             html_content += f"""
                 <div class="stat-card">
                     <div class="stat-value">{value}</div>
-                    <div class="stat-label">{label.replace('_', ' ').title()}</div>
+                    <div class="stat-label">{label.replace("_", " ").title()}</div>
                 </div>
             """
 

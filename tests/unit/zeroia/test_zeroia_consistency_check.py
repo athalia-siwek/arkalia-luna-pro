@@ -1,4 +1,4 @@
-def should_adjust_thresholds(log) -> None:
+def should_adjust_thresholds(log) -> bool:
     return all(entry["output"] == log[0]["output"] for entry in log)
 
 

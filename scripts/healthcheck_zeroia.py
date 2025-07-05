@@ -12,7 +12,7 @@ STATE_PATH = "modules/zeroia/state/zeroia_state.toml"
 REQUIRED_FIELDS = ["last_decision", "confidence_score", "justification", "timestamp"]
 
 
-def check_state_file() -> None:
+def check_state_file() -> int:
     if not os.path.exists(STATE_PATH):
         ark_logger.info("❌ Fichier d'état introuvable.", extra={"module": "scripts"})
         return 2

@@ -289,7 +289,7 @@
 
 
       <li class="md-tabs__item">
-        <a href="../../modules/" class="md-tabs__link">
+        <a href="../../modules/zeroia/" class="md-tabs__link">
 
 
 
@@ -309,7 +309,7 @@
 
 
       <li class="md-tabs__item">
-        <a href="../../infrastructure/" class="md-tabs__link">
+        <a href="../../devops/" class="md-tabs__link">
 
 
 
@@ -431,7 +431,7 @@
 
 
       <li class="md-tabs__item">
-        <a href="../../planning/roadmap/" class="md-tabs__link">
+        <a href="../../plan-ameliorations-futures/" class="md-tabs__link">
 
 
 
@@ -807,6 +807,29 @@
 
 
 
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../../architecture/cahier_des_charges_v4.0/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Cahier des Charges
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
           </ul>
         </nav>
 
@@ -866,7 +889,7 @@
 
 
     <li class="md-nav__item">
-      <a href="../../modules/" class="md-nav__link">
+      <a href="../../modules/zeroia/" class="md-nav__link">
 
 
 
@@ -939,7 +962,7 @@
 
 
   <span class="md-ellipsis">
-    ZeroIA
+    Overview
 
   </span>
 
@@ -1201,7 +1224,7 @@
 
 
     <li class="md-nav__item">
-      <a href="../../infrastructure/monitoring/" class="md-nav__link">
+      <a href="../../devops/" class="md-nav__link">
 
 
 
@@ -1284,76 +1307,7 @@
 
 
     <li class="md-nav__item">
-      <a href="../../infrastructure/" class="md-nav__link">
-
-
-
-  <span class="md-ellipsis">
-    Overview
-
-  </span>
-
-
-      </a>
-    </li>
-
-
-
-
-
-
-
-
-
-
-    <li class="md-nav__item">
-      <a href="../../infrastructure/configuration/" class="md-nav__link">
-
-
-
-  <span class="md-ellipsis">
-    Configuration
-
-  </span>
-
-
-      </a>
-    </li>
-
-
-
-
-
-
-
-
-
-
-    <li class="md-nav__item">
-      <a href="../../infrastructure/deployment/" class="md-nav__link">
-
-
-
-  <span class="md-ellipsis">
-    Deployment
-
-  </span>
-
-
-      </a>
-    </li>
-
-
-
-
-
-
-
-
-
-
-    <li class="md-nav__item">
-      <a href="../../infrastructure/monitoring/" class="md-nav__link">
+      <a href="../../devops/" class="md-nav__link">
 
 
 
@@ -1376,12 +1330,12 @@
 
 
     <li class="md-nav__item">
-      <a href="../../infrastructure/ci-cd/" class="md-nav__link">
+      <a href="../../devops/" class="md-nav__link">
 
 
 
   <span class="md-ellipsis">
-    CI/CD
+    Infrastructure Monitoring
 
   </span>
 
@@ -1399,12 +1353,81 @@
 
 
     <li class="md-nav__item">
-      <a href="../../infrastructure/automation/" class="md-nav__link">
+      <a href="../../devops/" class="md-nav__link">
 
 
 
   <span class="md-ellipsis">
-    Automation
+    Infrastructure Monitoring
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../../devops/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Infrastructure Monitoring
 
   </span>
 
@@ -1946,7 +1969,7 @@
 
 
   <span class="md-ellipsis">
-    DevOps Overview
+    Infrastructure Monitoring
 
   </span>
 
@@ -2245,6 +2268,29 @@
 
 
 
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../../releases/dernieres_updates/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Latest Updates
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
+
           </ul>
         </nav>
 
@@ -2296,6 +2342,29 @@
             Planning
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+
+
+
+
+
+
+
+    <li class="md-nav__item">
+      <a href="../../plan-ameliorations-futures/" class="md-nav__link">
+
+
+
+  <span class="md-ellipsis">
+    Future Improvements
+
+  </span>
+
+
+      </a>
+    </li>
+
+
+
 
 
 
@@ -2681,425 +2750,439 @@
 
 <h1 id="architecture-securite-arkalia-luna">🏗️ Architecture Sécurité Arkalia-LUNA<a class="headerlink" href="#architecture-securite-arkalia-luna" title="Permanent link">&para;</a></h1>
 <h2 id="vue-densemble-securite-multi-couches">🔒 Vue d'Ensemble Sécurité Multi-Couches<a class="headerlink" href="#vue-densemble-securite-multi-couches" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>graph TB
+<p>```mermaid
+graph TB
     subgraph "🌐 Couche Externe"
         Internet[Internet]
         User[Utilisateur]
         Admin[Administrateur]
-    end
+    end</p>
+<div class="language-text highlight"><pre><span></span><code>subgraph &quot;🛡️ Couche Protection Périmètre&quot;
+    Firewall[Firewall/iptables]
+    Fail2Ban[Fail2Ban]
+    RateLimit[Rate Limiting]
+    TLS[TLS 1.3]
+end
 
-    subgraph "🛡️ Couche Protection Périmètre"
-        Firewall[Firewall/iptables]
-        Fail2Ban[Fail2Ban]
-        RateLimit[Rate Limiting]
-        TLS[TLS 1.3]
-    end
+subgraph &quot;🐳 Couche Container Security&quot;
+    DockerHost[Docker Host]
+    SecComp[SecComp Profile]
+    AppArmor[AppArmor]
+    Capabilities[Cap Drop ALL]
+end
 
-    subgraph "🐳 Couche Container Security"
-        DockerHost[Docker Host]
-        SecComp[SecComp Profile]
-        AppArmor[AppArmor]
-        Capabilities[Cap Drop ALL]
-    end
+subgraph &quot;🧠 Couche IA Cognitive&quot;
+    PromptValidator[Prompt Validator]
+    SandozIA[SandozIA Monitor]
+    AntiInjection[Anti-Injection]
+end
 
-    subgraph "🧠 Couche IA Cognitive"
-        PromptValidator[Prompt Validator]
-        SandozIA[SandozIA Monitor]
-        AntiInjection[Anti-Injection]
-    end
+subgraph &quot;💾 Couche Données&quot;
+    AtomicIO[Atomic I/O]
+    Encryption[Encryption]
+    Backup[Backup Chiffré]
+    StateValidation[State Validation]
+end
 
-    subgraph "💾 Couche Données"
-        AtomicIO[Atomic I/O]
-        Encryption[Encryption]
-        Backup[Backup Chiffré]
-        StateValidation[State Validation]
-    end
+Internet --&gt; Firewall
+User --&gt; Firewall
+Admin --&gt; Firewall
 
-    Internet --&gt; Firewall
-    User --&gt; Firewall
-    Admin --&gt; Firewall
+Firewall --&gt; Fail2Ban
+Fail2Ban --&gt; RateLimit
+RateLimit --&gt; TLS
 
-    Firewall --&gt; Fail2Ban
-    Fail2Ban --&gt; RateLimit
-    RateLimit --&gt; TLS
+TLS --&gt; DockerHost
+DockerHost --&gt; SecComp
+SecComp --&gt; AppArmor
+AppArmor --&gt; Capabilities
 
-    TLS --&gt; DockerHost
-    DockerHost --&gt; SecComp
-    SecComp --&gt; AppArmor
-    AppArmor --&gt; Capabilities
+Capabilities --&gt; PromptValidator
+PromptValidator --&gt; SandozIA
+SandozIA --&gt; AntiInjection
 
-    Capabilities --&gt; PromptValidator
-    PromptValidator --&gt; SandozIA
-    SandozIA --&gt; AntiInjection
+AntiInjection --&gt; AtomicIO
+AtomicIO --&gt; Encryption
+Encryption --&gt; Backup
+Backup --&gt; StateValidation
 
-    AntiInjection --&gt; AtomicIO
-    AtomicIO --&gt; Encryption
-    Encryption --&gt; Backup
-    Backup --&gt; StateValidation
-
-    style Internet fill:#ff9999
-    style Firewall fill:#99ccff
-    style DockerHost fill:#99ff99
-    style PromptValidator fill:#ffcc99
-    style AtomicIO fill:#cc99ff</code></pre>
+style Internet fill:#ff9999
+style Firewall fill:#99ccff
+style DockerHost fill:#99ff99
+style PromptValidator fill:#ffcc99
+style AtomicIO fill:#cc99ff
+</code></pre></div>
+<p>```</p>
 <h2 id="flux-modules-ia-et-etats">🚀 Flux Modules IA et États<a class="headerlink" href="#flux-modules-ia-et-etats" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>graph TD
+<p>```mermaid
+graph TD
     subgraph "🔄 Orchestrateur Principal"
         MainLoop[Main Loop]
         ErrorHandler[Error Handler]
         StateManager[State Manager]
-    end
+    end</p>
+<div class="language-text highlight"><pre><span></span><code>subgraph &quot;🧠 Modules IA Core&quot;
+    Reflexia[Reflexia&lt;br/&gt;Monitoring]
+    ZeroIA[ZeroIA&lt;br/&gt;Decision Engine]
+    AssistantIA[AssistantIA&lt;br/&gt;LLM Interface]
+end
 
-    subgraph "🧠 Modules IA Core"
-        ReflexIA[ReflexIA&lt;br/&gt;Monitoring]
-        ZeroIA[ZeroIA&lt;br/&gt;Decision Engine]
-        AssistantIA[AssistantIA&lt;br/&gt;LLM Interface]
-    end
+subgraph &quot;🌐 Services Support&quot;
+    Helloria[Helloria&lt;br/&gt;FastAPI Server]
+    Nyxalia[Nyxalia&lt;br/&gt;Mobile Interface]
+    Taskia[Taskia&lt;br/&gt;Task Manager]
+end
 
-    subgraph "🌐 Services Support"
-        Helloria[Helloria&lt;br/&gt;FastAPI Server]
-        Nyxalia[Nyxalia&lt;br/&gt;Mobile Interface]
-        Taskia[Taskia&lt;br/&gt;Task Manager]
-    end
+subgraph &quot;💾 États Persistants&quot;
+    ReflexiaState[(reflexia_state.toml)]
+    ZeroiaState[(zeroia_state.toml)]
+    GlobalState[(global_context.toml)]
+    Dashboard[(zeroia_dashboard.json)]
+end
 
-    subgraph "💾 États Persistants"
-        ReflexiaState[(reflexia_state.toml)]
-        ZeroiaState[(zeroia_state.toml)]
-        GlobalState[(global_context.toml)]
-        Dashboard[(zeroia_dashboard.json)]
-    end
+subgraph &quot;🔍 Monitoring &amp; Logs&quot;
+    PrometheusMetrics[Prometheus Metrics]
+    SecurityLogs[Security Logs]
+    AuditTrail[Audit Trail]
+end
 
-    subgraph "🔍 Monitoring &amp; Logs"
-        PrometheusMetrics[Prometheus Metrics]
-        SecurityLogs[Security Logs]
-        AuditTrail[Audit Trail]
-    end
+MainLoop --&gt; Reflexia
+MainLoop --&gt; ZeroIA
+MainLoop --&gt; AssistantIA
 
-    MainLoop --&gt; ReflexIA
-    MainLoop --&gt; ZeroIA
-    MainLoop --&gt; AssistantIA
+Reflexia --&gt; ReflexiaState
+Reflexia --&gt; PrometheusMetrics
+ReflexiaState --&gt; ZeroIA
 
-    ReflexIA --&gt; ReflexiaState
-    ReflexIA --&gt; PrometheusMetrics
-    ReflexiaState --&gt; ZeroIA
+ZeroIA --&gt; ZeroiaState
+ZeroIA --&gt; Dashboard
+ZeroIA --&gt; GlobalState
 
-    ZeroIA --&gt; ZeroiaState
-    ZeroIA --&gt; Dashboard
-    ZeroIA --&gt; GlobalState
+AssistantIA --&gt; SecurityLogs
+AssistantIA --&gt; AuditTrail
 
-    AssistantIA --&gt; SecurityLogs
-    AssistantIA --&gt; AuditTrail
+Helloria --&gt; AssistantIA
+Nyxalia --&gt; Helloria
+Taskia --&gt; StateManager
 
-    Helloria --&gt; AssistantIA
-    Nyxalia --&gt; Helloria
-    Taskia --&gt; StateManager
+StateManager --&gt; ReflexiaState
+StateManager --&gt; ZeroiaState
+StateManager --&gt; GlobalState
 
-    StateManager --&gt; ReflexiaState
-    StateManager --&gt; ZeroiaState
-    StateManager --&gt; GlobalState
+ErrorHandler --&gt; SecurityLogs
+ErrorHandler --&gt; AuditTrail
 
-    ErrorHandler --&gt; SecurityLogs
-    ErrorHandler --&gt; AuditTrail
-
-    style MainLoop fill:#ff6b6b
-    style ReflexIA fill:#4ecdc4
-    style ZeroIA fill:#45b7d1
-    style AssistantIA fill:#96ceb4
-    style PrometheusMetrics fill:#feca57
-    style SecurityLogs fill:#ff9ff3</code></pre>
+style MainLoop fill:#ff6b6b
+style Reflexia fill:#4ecdc4
+style ZeroIA fill:#45b7d1
+style AssistantIA fill:#96ceb4
+style PrometheusMetrics fill:#feca57
+style SecurityLogs fill:#ff9ff3
+</code></pre></div>
+<p>```</p>
 <h2 id="flux-securite-et-validation">🔐 Flux Sécurité et Validation<a class="headerlink" href="#flux-securite-et-validation" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>sequenceDiagram
+<p>```mermaid
+sequenceDiagram
     participant User as 👤 Utilisateur
     participant API as 🌐 API Gateway
     participant Validator as 🔍 Prompt Validator
     participant Assistant as 🧠 AssistantIA
     participant Monitor as 👁️ SandozIA Monitor
     participant Logger as 📝 Security Logger
-    participant Response as 📤 Response Handler
+    participant Response as 📤 Response Handler</p>
+<div class="language-text highlight"><pre><span></span><code>User-&gt;&gt;API: Prompt Request
+API-&gt;&gt;Validator: Validate Input
 
-    User-&gt;&gt;API: Prompt Request
-    API-&gt;&gt;Validator: Validate Input
+alt Prompt Malicious
+    Validator-&gt;&gt;Logger: Log Security Event
+    Validator-&gt;&gt;User: Block + Warning
+else Prompt Safe
+    Validator-&gt;&gt;Assistant: Process Prompt
+    Assistant-&gt;&gt;Monitor: Cognitive Analysis
 
-    alt Prompt Malicious
-        Validator-&gt;&gt;Logger: Log Security Event
-        Validator-&gt;&gt;User: Block + Warning
-    else Prompt Safe
-        Validator-&gt;&gt;Assistant: Process Prompt
-        Assistant-&gt;&gt;Monitor: Cognitive Analysis
-
-        alt Anomaly Detected
-            Monitor-&gt;&gt;Logger: Log Anomaly
-            Monitor-&gt;&gt;Assistant: Intervention
-        else Normal Processing
-            Assistant-&gt;&gt;Response: Generate Response
-            Response-&gt;&gt;Logger: Log Interaction
-            Response-&gt;&gt;User: Send Response
-        end
+    alt Anomaly Detected
+        Monitor-&gt;&gt;Logger: Log Anomaly
+        Monitor-&gt;&gt;Assistant: Intervention
+    else Normal Processing
+        Assistant-&gt;&gt;Response: Generate Response
+        Response-&gt;&gt;Logger: Log Interaction
+        Response-&gt;&gt;User: Send Response
     end
+end
 
-    Logger-&gt;&gt;Logger: Audit Trail Update</code></pre>
+Logger-&gt;&gt;Logger: Audit Trail Update
+</code></pre></div>
+<p>```</p>
 <h2 id="architecture-containers-et-reseaux">🏗️ Architecture Containers et Réseaux<a class="headerlink" href="#architecture-containers-et-reseaux" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>graph TB
+<p>```mermaid
+graph TB
     subgraph "🖥️ Host System"
         HostOS[Host OS]
         DockerDaemon[Docker Daemon]
         HostNetwork[Host Network]
-    end
+    end</p>
+<div class="language-text highlight"><pre><span></span><code>subgraph &quot;🐳 Docker Network&quot;
+    ArkaliaNetwork[arkalia-network&lt;br/&gt;bridge]
+    PrometheusNetwork[monitoring&lt;br/&gt;internal]
+end
 
-    subgraph "🐳 Docker Network"
-        ArkaliaNetwork[arkalia-network&lt;br/&gt;bridge]
-        PrometheusNetwork[monitoring&lt;br/&gt;internal]
-    end
+subgraph &quot;📦 Core Containers&quot;
+    APIContainer[arkalia-api (port 8000)&lt;br/&gt;:8000]
+    ReflexiaContainer[reflexia&lt;br/&gt;internal]
+    ZeroiaContainer[zeroia&lt;br/&gt;internal]
+end
 
-    subgraph "📦 Core Containers"
-        APIContainer[arkalia-api&lt;br/&gt;:8000]
-        ReflexiaContainer[reflexia&lt;br/&gt;internal]
-        ZeroiaContainer[zeroia&lt;br/&gt;internal]
-    end
+subgraph &quot;🧠 AI Containers&quot;
+    AssistantiaContainer[assistantia&lt;br/&gt;internal]
+    OllamaContainer[ollama&lt;br/&gt;:11434]
+end
 
-    subgraph "🧠 AI Containers"
-        AssistantiaContainer[assistantia&lt;br/&gt;internal]
-        OllamaContainer[ollama&lt;br/&gt;:11434]
-    end
+subgraph &quot;📊 Monitoring Stack&quot;
+    PrometheusContainer[prometheus&lt;br/&gt;:9090]
+    MetricsContainer[arkalia-metrics&lt;br/&gt;:8001]
+end
 
-    subgraph "📊 Monitoring Stack"
-        PrometheusContainer[prometheus&lt;br/&gt;:9090]
-        MetricsContainer[arkalia-metrics&lt;br/&gt;:8001]
-    end
+subgraph &quot;💾 Data Volumes&quot;
+    StateVolume[States Volume&lt;br/&gt;RW]
+    LogsVolume[Logs Volume&lt;br/&gt;RW]
+    ModelsVolume[Models Volume&lt;br/&gt;RO]
+    BackupVolume[Backup Volume&lt;br/&gt;encrypted]
+end
 
-    subgraph "💾 Data Volumes"
-        StateVolume[States Volume&lt;br/&gt;RW]
-        LogsVolume[Logs Volume&lt;br/&gt;RW]
-        ModelsVolume[Models Volume&lt;br/&gt;RO]
-        BackupVolume[Backup Volume&lt;br/&gt;encrypted]
-    end
+HostOS --&gt; DockerDaemon
+DockerDaemon --&gt; ArkaliaNetwork
+DockerDaemon --&gt; PrometheusNetwork
 
-    HostOS --&gt; DockerDaemon
-    DockerDaemon --&gt; ArkaliaNetwork
-    DockerDaemon --&gt; PrometheusNetwork
+ArkaliaNetwork --&gt; APIContainer
+ArkaliaNetwork --&gt; ReflexiaContainer
+ArkaliaNetwork --&gt; ZeroiaContainer
+ArkaliaNetwork --&gt; AssistantiaContainer
+ArkaliaNetwork --&gt; OllamaContainer
 
-    ArkaliaNetwork --&gt; APIContainer
-    ArkaliaNetwork --&gt; ReflexiaContainer
-    ArkaliaNetwork --&gt; ZeroiaContainer
-    ArkaliaNetwork --&gt; AssistantiaContainer
-    ArkaliaNetwork --&gt; OllamaContainer
+PrometheusNetwork --&gt; PrometheusContainer
+PrometheusNetwork --&gt; MetricsContainer
 
-    PrometheusNetwork --&gt; PrometheusContainer
-    PrometheusNetwork --&gt; MetricsContainer
+APIContainer --&gt; StateVolume
+ReflexiaContainer --&gt; StateVolume
+ZeroiaContainer --&gt; StateVolume
 
-    APIContainer --&gt; StateVolume
-    ReflexiaContainer --&gt; StateVolume
-    ZeroiaContainer --&gt; StateVolume
+APIContainer --&gt; LogsVolume
+AssistantiaContainer --&gt; LogsVolume
 
-    APIContainer --&gt; LogsVolume
-    AssistantiaContainer --&gt; LogsVolume
+OllamaContainer --&gt; ModelsVolume
 
-    OllamaContainer --&gt; ModelsVolume
+StateVolume --&gt; BackupVolume
+LogsVolume --&gt; BackupVolume
 
-    StateVolume --&gt; BackupVolume
-    LogsVolume --&gt; BackupVolume
+HostNetwork --&gt; APIContainer
 
-    HostNetwork --&gt; APIContainer
-
-    style HostOS fill:#333,color:#fff
-    style ArkaliaNetwork fill:#4ecdc4
-    style APIContainer fill:#ff6b6b
-    style StateVolume fill:#feca57
-    style BackupVolume fill:#ff9ff3</code></pre>
+style HostOS fill:#333,color:#fff
+style ArkaliaNetwork fill:#4ecdc4
+style APIContainer fill:#ff6b6b
+style StateVolume fill:#feca57
+style BackupVolume fill:#ff9ff3
+</code></pre></div>
+<p>```</p>
 <h2 id="etats-et-transitions-securite">🔄 États et Transitions Sécurité<a class="headerlink" href="#etats-et-transitions-securite" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>stateDiagram-v2
-    [*] --&gt; SystemInit
+<p>```mermaid
+stateDiagram-v2
+    [*] --&gt; SystemInit</p>
+<div class="language-text highlight"><pre><span></span><code>state SystemInit {
+    [*] --&gt; SecurityCheck
+    SecurityCheck --&gt; ConfigValidation
+    ConfigValidation --&gt; DockerSecurity
+    DockerSecurity --&gt; ModuleInit
+    ModuleInit --&gt; [*]
+}
 
-    state SystemInit {
-        [*] --&gt; SecurityCheck
-        SecurityCheck --&gt; ConfigValidation
-        ConfigValidation --&gt; DockerSecurity
-        DockerSecurity --&gt; ModuleInit
-        ModuleInit --&gt; [*]
+SystemInit --&gt; NormalOperation
+
+state NormalOperation {
+    [*] --&gt; Monitoring
+    Monitoring --&gt; RequestProcessing
+    RequestProcessing --&gt; StateUpdate
+    StateUpdate --&gt; Monitoring
+
+    state RequestProcessing {
+        [*] --&gt; InputValidation
+        InputValidation --&gt; PromptSecurity
+        PromptSecurity --&gt; AIProcessing
+        AIProcessing --&gt; ResponseGeneration
+        ResponseGeneration --&gt; [*]
     }
+}
 
-    SystemInit --&gt; NormalOperation
+NormalOperation --&gt; SecurityIncident : Threat Detected
 
-    state NormalOperation {
-        [*] --&gt; Monitoring
-        Monitoring --&gt; RequestProcessing
-        RequestProcessing --&gt; StateUpdate
-        StateUpdate --&gt; Monitoring
+state SecurityIncident {
+    [*] --&gt; ThreatAnalysis
+    ThreatAnalysis --&gt; ContainmentMode
+    ContainmentMode --&gt; IncidentResponse
+    IncidentResponse --&gt; Recovery
+    Recovery --&gt; [*]
+}
 
-        state RequestProcessing {
-            [*] --&gt; InputValidation
-            InputValidation --&gt; PromptSecurity
-            PromptSecurity --&gt; AIProcessing
-            AIProcessing --&gt; ResponseGeneration
-            ResponseGeneration --&gt; [*]
-        }
-    }
+SecurityIncident --&gt; NormalOperation : Threat Resolved
+SecurityIncident --&gt; EmergencyShutdown : Critical Threat
 
-    NormalOperation --&gt; SecurityIncident : Threat Detected
+state EmergencyShutdown {
+    [*] --&gt; ServiceStop
+    ServiceStop --&gt; StateBackup
+    StateBackup --&gt; SystemLockdown
+    SystemLockdown --&gt; [*]
+}
 
-    state SecurityIncident {
-        [*] --&gt; ThreatAnalysis
-        ThreatAnalysis --&gt; ContainmentMode
-        ContainmentMode --&gt; IncidentResponse
-        IncidentResponse --&gt; Recovery
-        Recovery --&gt; [*]
-    }
+EmergencyShutdown --&gt; SystemInit : Manual Recovery
 
-    SecurityIncident --&gt; NormalOperation : Threat Resolved
-    SecurityIncident --&gt; EmergencyShutdown : Critical Threat
+NormalOperation --&gt; Maintenance : Scheduled
+Maintenance --&gt; NormalOperation : Complete
 
-    state EmergencyShutdown {
-        [*] --&gt; ServiceStop
-        ServiceStop --&gt; StateBackup
-        StateBackup --&gt; SystemLockdown
-        SystemLockdown --&gt; [*]
-    }
-
-    EmergencyShutdown --&gt; SystemInit : Manual Recovery
-
-    NormalOperation --&gt; Maintenance : Scheduled
-    Maintenance --&gt; NormalOperation : Complete
-
-    note right of SecurityIncident
-        Triggers:
-        - Prompt Injection
-        - Container Escape
-        - State Corruption
-        - Anomalous Behavior
-    end note</code></pre>
+note right of SecurityIncident
+    Triggers:
+    - Prompt Injection
+    - Container Escape
+    - State Corruption
+    - Anomalous Behavior
+end note
+</code></pre></div>
+<p>```</p>
 <h2 id="flux-cognitif-ia-et-decisions">🧠 Flux Cognitif IA et Décisions<a class="headerlink" href="#flux-cognitif-ia-et-decisions" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>graph LR
+<p>```mermaid
+graph LR
     subgraph "📥 Input Layer"
         UserPrompt[User Prompt]
         SystemEvent[System Event]
         MetricData[Metric Data]
-    end
+    end</p>
+<div class="language-text highlight"><pre><span></span><code>subgraph &quot;🔍 Security Layer&quot;
+    PromptFilter[Prompt Filter]
+    ThreatDetection[Threat Detection]
+    InputValidation[Input Validation]
+end
 
-    subgraph "🔍 Security Layer"
-        PromptFilter[Prompt Filter]
-        ThreatDetection[Threat Detection]
-        InputValidation[Input Validation]
-    end
+subgraph &quot;🧠 Cognitive Layer&quot;
+    ContextBuilder[Context Builder]
+    DecisionEngine[Decision Engine]
+    ResponseGenerator[Response Generator]
+end
 
-    subgraph "🧠 Cognitive Layer"
-        ContextBuilder[Context Builder]
-        DecisionEngine[Decision Engine]
-        ResponseGenerator[Response Generator]
-    end
+subgraph &quot;⚡ Reflexive Layer&quot;
+    PerformanceMonitor[Performance Monitor]
+    AnomalyDetector[Anomaly Detector]
+    AdaptiveControl[Adaptive Control]
+end
 
-    subgraph "⚡ Reflexive Layer"
-        PerformanceMonitor[Performance Monitor]
-        AnomalyDetector[Anomaly Detector]
-        AdaptiveControl[Adaptive Control]
-    end
+subgraph &quot;💾 Persistence Layer&quot;
+    StateWriter[State Writer]
+    LogWriter[Log Writer]
+    MetricsCollector[Metrics Collector]
+end
 
-    subgraph "💾 Persistence Layer"
-        StateWriter[State Writer]
-        LogWriter[Log Writer]
-        MetricsCollector[Metrics Collector]
-    end
+subgraph &quot;📤 Output Layer&quot;
+    UserResponse[User Response]
+    SystemAction[System Action]
+    AlertGeneration[Alert Generation]
+end
 
-    subgraph "📤 Output Layer"
-        UserResponse[User Response]
-        SystemAction[System Action]
-        AlertGeneration[Alert Generation]
-    end
+UserPrompt --&gt; PromptFilter
+SystemEvent --&gt; ThreatDetection
+MetricData --&gt; InputValidation
 
-    UserPrompt --&gt; PromptFilter
-    SystemEvent --&gt; ThreatDetection
-    MetricData --&gt; InputValidation
+PromptFilter --&gt; ContextBuilder
+ThreatDetection --&gt; ContextBuilder
+InputValidation --&gt; ContextBuilder
 
-    PromptFilter --&gt; ContextBuilder
-    ThreatDetection --&gt; ContextBuilder
-    InputValidation --&gt; ContextBuilder
+ContextBuilder --&gt; DecisionEngine
+DecisionEngine --&gt; ResponseGenerator
 
-    ContextBuilder --&gt; DecisionEngine
-    DecisionEngine --&gt; ResponseGenerator
+DecisionEngine --&gt; PerformanceMonitor
+PerformanceMonitor --&gt; AnomalyDetector
+AnomalyDetector --&gt; AdaptiveControl
 
-    DecisionEngine --&gt; PerformanceMonitor
-    PerformanceMonitor --&gt; AnomalyDetector
-    AnomalyDetector --&gt; AdaptiveControl
+ResponseGenerator --&gt; StateWriter
+AdaptiveControl --&gt; LogWriter
+PerformanceMonitor --&gt; MetricsCollector
 
-    ResponseGenerator --&gt; StateWriter
-    AdaptiveControl --&gt; LogWriter
-    PerformanceMonitor --&gt; MetricsCollector
+StateWriter --&gt; UserResponse
+LogWriter --&gt; SystemAction
+MetricsCollector --&gt; AlertGeneration
 
-    StateWriter --&gt; UserResponse
-    LogWriter --&gt; SystemAction
-    MetricsCollector --&gt; AlertGeneration
-
-    style UserPrompt fill:#96ceb4
-    style PromptFilter fill:#ff6b6b
-    style DecisionEngine fill:#45b7d1
-    style AnomalyDetector fill:#feca57
-    style StateWriter fill:#ff9ff3</code></pre>
+style UserPrompt fill:#96ceb4
+style PromptFilter fill:#ff6b6b
+style DecisionEngine fill:#45b7d1
+style AnomalyDetector fill:#feca57
+style StateWriter fill:#ff9ff3
+</code></pre></div>
+<p>```</p>
 <h2 id="monitoring-et-metriques-securite">📊 Monitoring et Métriques Sécurité<a class="headerlink" href="#monitoring-et-metriques-securite" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>graph TB
+<p>```mermaid
+graph TB
     subgraph "📈 Data Sources"
         ContainerMetrics[Container Metrics]
         ApplicationLogs[Application Logs]
         SecurityEvents[Security Events]
         PerformanceData[Performance Data]
-    end
+    end</p>
+<div class="language-text highlight"><pre><span></span><code>subgraph &quot;🔄 Collection Layer&quot;
+    PrometheusAgent[Prometheus Agent]
+    LogCollector[Log Collector]
+    MetricsExporter[Metrics Exporter]
+end
 
-    subgraph "🔄 Collection Layer"
-        PrometheusAgent[Prometheus Agent]
-        LogCollector[Log Collector]
-        MetricsExporter[Metrics Exporter]
-    end
+subgraph &quot;💾 Storage Layer&quot;
+    PrometheusDB[Prometheus TSDB]
+    LogStorage[Log Storage]
+    StateBackup[State Backup]
+end
 
-    subgraph "💾 Storage Layer"
-        PrometheusDB[Prometheus TSDB]
-        LogStorage[Log Storage]
-        StateBackup[State Backup]
-    end
+subgraph &quot;🧠 Analysis Layer&quot;
+    MetricsAnalyzer[Metrics Analyzer]
+    LogAnalyzer[Log Analyzer]
+    ThreatIntel[Threat Intelligence]
+end
 
-    subgraph "🧠 Analysis Layer"
-        MetricsAnalyzer[Metrics Analyzer]
-        LogAnalyzer[Log Analyzer]
-        ThreatIntel[Threat Intelligence]
-    end
+subgraph &quot;🚨 Alert Layer&quot;
+    AlertManager[Alert Manager]
+    NotificationEngine[Notification Engine]
+    EscalationLogic[Escalation Logic]
+end
 
-    subgraph "🚨 Alert Layer"
-        AlertManager[Alert Manager]
-        NotificationEngine[Notification Engine]
-        EscalationLogic[Escalation Logic]
-    end
+subgraph &quot;📊 Visualization&quot;
+    GrafanaDashboard[Grafana Dashboard]
+    SecurityDashboard[Security Dashboard]
+    ComplianceReports[Compliance Reports]
+end
 
-    subgraph "📊 Visualization"
-        GrafanaDashboard[Grafana Dashboard]
-        SecurityDashboard[Security Dashboard]
-        ComplianceReports[Compliance Reports]
-    end
+ContainerMetrics --&gt; PrometheusAgent
+ApplicationLogs --&gt; LogCollector
+SecurityEvents --&gt; MetricsExporter
+PerformanceData --&gt; PrometheusAgent
 
-    ContainerMetrics --&gt; PrometheusAgent
-    ApplicationLogs --&gt; LogCollector
-    SecurityEvents --&gt; MetricsExporter
-    PerformanceData --&gt; PrometheusAgent
+PrometheusAgent --&gt; PrometheusDB
+LogCollector --&gt; LogStorage
+MetricsExporter --&gt; PrometheusDB
 
-    PrometheusAgent --&gt; PrometheusDB
-    LogCollector --&gt; LogStorage
-    MetricsExporter --&gt; PrometheusDB
+PrometheusDB --&gt; MetricsAnalyzer
+LogStorage --&gt; LogAnalyzer
+SecurityEvents --&gt; ThreatIntel
 
-    PrometheusDB --&gt; MetricsAnalyzer
-    LogStorage --&gt; LogAnalyzer
-    SecurityEvents --&gt; ThreatIntel
+MetricsAnalyzer --&gt; AlertManager
+LogAnalyzer --&gt; AlertManager
+ThreatIntel --&gt; AlertManager
 
-    MetricsAnalyzer --&gt; AlertManager
-    LogAnalyzer --&gt; AlertManager
-    ThreatIntel --&gt; AlertManager
+AlertManager --&gt; NotificationEngine
+NotificationEngine --&gt; EscalationLogic
 
-    AlertManager --&gt; NotificationEngine
-    NotificationEngine --&gt; EscalationLogic
+PrometheusDB --&gt; GrafanaDashboard
+LogStorage --&gt; SecurityDashboard
+MetricsAnalyzer --&gt; ComplianceReports
 
-    PrometheusDB --&gt; GrafanaDashboard
-    LogStorage --&gt; SecurityDashboard
-    MetricsAnalyzer --&gt; ComplianceReports
-
-    style SecurityEvents fill:#ff6b6b
-    style ThreatIntel fill:#ff9ff3
-    style AlertManager fill:#feca57
-    style SecurityDashboard fill:#4ecdc4</code></pre>
+style SecurityEvents fill:#ff6b6b
+style ThreatIntel fill:#ff9ff3
+style AlertManager fill:#feca57
+style SecurityDashboard fill:#4ecdc4
+</code></pre></div>
+<p>```</p>
 <hr />
 <p><em>Diagrammes maintenus par Arkalia-LUNA Architecture Team — Version sécurité renforcée</em>
 <em>🏗️ "Architecture défensive, sécurité par conception" — Arkalia Security Design</em></p>
@@ -3108,7 +3191,7 @@
     participant S as Sandozia
     participant C as CognitiveReactor
     participant V as CrossValidator
-    participant R as ReflexIA
+    participant R as Reflexia
     participant E as ErrorRecovery
     participant T as Chronalia
     participant M as Monitoring</p>

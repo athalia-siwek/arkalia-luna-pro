@@ -32,6 +32,7 @@ def test_chat_response_time_under_2s():
 
 
 @pytest.mark.performance
+@pytest.mark.skipif(os.getenv("ARK_FORCE_OLLAMA") != "true", reason="Requires real Ollama")
 def test_chat_response_time_with_real_ollama():
     """
     Test optionnel avec Ollama réel (plus lent, pour validation complète).

@@ -1,0 +1,183 @@
+name: 🔒 Security Scan
+
+on:
+  # Désactivé temporairement - décommenter pour activer
+  # push:
+  #   branches: [main, dev-migration]
+  # pull_request:
+  #   branches: [main, dev-migration]
+  # schedule:
+  #   # Scan quotidien à 2h du matin
+  #   - cron: "0 2 * * *"
+  workflow_dispatch: # Seulement manuel
+
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
+env:
+  PYTHON_VERSION: "3.10"
+  SECURITY_SCAN_TIMEOUT: 600
+
+jobs:
+  security-scan:
+    name: 🔍 Security Vulnerability Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 📦 Install security tools
+        run: |
+          pip install --upgrade pip
+          pip install bandit safety pip-audit
+          npm install -g audit
+
+      - name: 🔍 Python Security Scan (Bandit)
+        run: |
+          echo "🔍 Scanning Python code with Bandit..."
+          bandit -r . -f json -o bandit-report.json --confidence-level high --severity-level low --skip B101 || true
+          bandit -r . -f txt -o bandit-report.txt --confidence-level high --severity-level low --skip B101 || true
+          if [ -f bandit-report.json ] && [ -s bandit-report.json ]; then
+            CRITICAL_ISSUES=$(python -c "import json; f=open('bandit-report.json'); data=json.load(f); f.close(); print(sum(1 for result in data.get('results', []) if result.get('issue_severity')=='HIGH'))")
+            if [ "$CRITICAL_ISSUES" -gt 0 ]; then
+              echo "❌ $CRITICAL_ISSUES vulnérabilités critiques détectées"
+              exit 1
+            fi
+          else
+            echo "✅ Aucune vulnérabilité détectée par Bandit"
+          fi
+
+      - name: 🔍 Dependency Security Scan (Safety)
+        run: |
+          echo "🔍 Scanning Python dependencies with Safety..."
+          safety check --json --output safety-report.json || true
+          safety check --output safety-report.txt || true
+
+      - name: 🔍 Dependency Security Scan (pip-audit)
+        run: |
+          echo "🔍 Scanning Python dependencies with pip-audit..."
+          pip-audit --format json --output pip-audit-report.json || true
+          pip-audit --output pip-audit-report.txt || true
+
+      - name: 🔍 Node.js Security Scan
+        if: hashFiles('package.json') != ''
+        run: |
+          echo "🔍 Scanning Node.js dependencies..."
+          npm audit --audit-level=high --json > npm-audit-report.json || true
+          npm audit --audit-level=high > npm-audit-report.txt || true
+
+      - name: 🔍 Docker Security Scan
+        run: |
+          echo "🔍 Scanning Docker images for vulnerabilities..."
+          echo "📋 Checking Dockerfile best practices..."
+          grep -r "FROM" . --include="Dockerfile*" | grep -v "python:3.10-slim" | grep -v "node:" || echo "✅ Base images look good"
+          grep -r "USER" . --include="Dockerfile*" || echo "⚠️ Some Dockerfiles might not use non-root users"
+
+      - name: 📊 Upload Security Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            *-report.json
+            *-report.txt
+          retention-days: 30
+
+      - name: 🚨 Security Summary
+        run: |
+          echo "🔒 SECURITY SCAN SUMMARY"
+          echo "========================"
+          if [ -f bandit-report.json ] && [ -s bandit-report.json ]; then
+            echo "📊 Bandit Results:"
+            python -c "import json; f=open('bandit-report.json'); data=json.load(f); f.close(); issues=len(data.get('results', [])); high=sum(1 for r in data.get('results', []) if r.get('issue_severity')=='HIGH'); medium=sum(1 for r in data.get('results', []) if r.get('issue_severity')=='MEDIUM'); low=sum(1 for r in data.get('results', []) if r.get('issue_severity')=='LOW'); print('  - Total issues:', issues); print('  - High:', high, 'Medium:', medium, 'Low:', low)"
+          else
+            echo "📊 Bandit Results: ✅ Aucune vulnérabilité détectée"
+          fi
+          if [ -f safety-report.json ] && [ -s safety-report.json ]; then
+            echo "📊 Safety Results:"
+            python -c "import json; f=open('safety-report.json'); data=json.load(f); f.close(); issues=len(data); print('  - Vulnerable packages:', issues) if issues else print('  - No vulnerabilities found')"
+          else
+            echo "📊 Safety Results: ✅ Aucune vulnérabilité détectée"
+          fi
+          if [ -f pip-audit-report.json ] && [ -s pip-audit-report.json ]; then
+            echo "📊 pip-audit Results:"
+            python -c "import json; f=open('pip-audit-report.json'); data=json.load(f); f.close(); issues=len(data.get('vulnerabilities', [])); print('  - Vulnerabilities:', issues) if issues else print('  - No vulnerabilities found')"
+          else
+            echo "📊 pip-audit Results: ✅ Aucune vulnérabilité détectée"
+          fi
+
+      - name: 🎯 Security Score
+        run: |
+          echo "🎯 SECURITY SCORE CALCULATION"
+          echo "============================"
+          SCORE=100
+          if [ -f bandit-report.json ] && [ -s bandit-report.json ]; then
+            CRITICAL=$(python -c "import json; f=open('bandit-report.json'); data=json.load(f); f.close(); print(sum(1 for r in data.get('results', []) if r.get('issue_severity')=='HIGH'))")
+            SCORE=$((SCORE - CRITICAL * 10))
+          fi
+          if [ -f safety-report.json ] && [ -s safety-report.json ]; then
+            VULNS=$(python -c "import json; f=open('safety-report.json'); data=json.load(f); f.close(); print(len(data))")
+            SCORE=$((SCORE - VULNS * 5))
+          fi
+          if [ $SCORE -lt 0 ]; then
+            SCORE=0
+          fi
+          echo "🔒 Security Score: $SCORE/100"
+          if [ $SCORE -lt 70 ]; then
+            echo "❌ Security score too low ($SCORE/100)"
+            exit 1
+          elif [ $SCORE -lt 90 ]; then
+            echo "⚠️ Security score acceptable but needs improvement ($SCORE/100)"
+          else
+            echo "✅ Excellent security score ($SCORE/100)"
+          fi
+
+  dependency-update-check:
+    name: 📦 Dependency Update Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 📦 Check Python dependencies
+        run: |
+          pip install pip-check-updates
+          pcu --version
+          echo "📋 Checking for outdated Python packages..."
+          pcu --dry-run requirements.txt > dependency-updates.txt || true
+          echo "📊 Dependency Update Summary:"
+          cat dependency-updates.txt || echo "No updates available"
+
+      - name: 📦 Check Node.js dependencies
+        if: hashFiles('package.json') != ''
+        run: |
+          echo "📋 Checking for outdated Node.js packages..."
+          npm outdated --json > npm-outdated.json || true
+          echo "📊 Node.js Dependency Update Summary:"
+          cat npm-outdated.json || echo "No updates available"
+
+      - name: 📊 Upload Dependency Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-reports
+          path: |
+            dependency-updates.txt
+            npm-outdated.json
+          retention-days: 7

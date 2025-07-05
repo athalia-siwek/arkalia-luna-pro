@@ -3,13 +3,15 @@
 import json
 import logging
 
-from fastapi import APIRouter, FastAPI, Request
+from fastapi import APIRouter, FastAPI, Request, Response
 from fastapi.responses import JSONResponse, PlainTextResponse
-
-from modules.monitoring.prometheus_metrics import get_metrics_summary
 
 # 📦 Import des routes externes (modules IA)
 from modules.reflexia.core_api import router as reflexia_router
+from modules.zeroia.core import router as zeroia_router
+
+# from modules.monitoring.prometheus_metrics import get_metrics_summary  # Module supprimé
+
 
 # 🚦 Router principal
 router = APIRouter()
@@ -24,7 +26,7 @@ logging.basicConfig(
 
 # 🎯 Endpoint principal IA
 @router.post("/chat", tags=["IA"])
-async def chat(request: Request) -> dict:
+async def chat(request: Request):
     try:
         data = await request.json()
         prompt = data.get("message", "").strip()
@@ -39,18 +41,17 @@ async def chat(request: Request) -> dict:
     except Exception as e:
         logging.error(f"Erreur interne : {str(e)}")
         raise Exception(f"Erreur Helloria: {e}") from e
-        return JSONResponse(status_code=500, content={"error": f"Erreur interne : {str(e)}"})
 
 
 # 🌐 Racine API
 @router.get("/", tags=["Root"])
-async def root() -> dict:
+async def root():
     return {"message": "Arkalia-LUNA API active"}
 
 
 # 📊 Endpoint statut détaillé
 @router.get("/status", tags=["Status"])
-async def status() -> dict:
+async def status():
     """Statut détaillé de l'API avec métriques système"""
     import time
 
@@ -88,14 +89,14 @@ async def status() -> dict:
 
 # 📊 Endpoint métriques Prometheus
 @router.get("/metrics", tags=["Monitoring"])
-async def metrics() -> str:
+async def metrics():
     """
     Endpoint Prometheus pour exposition des métriques Arkalia-LUNA
     Format: OpenMetrics/Prometheus standard
     """
     try:
         # Version JSON simplifiée des métriques pour compatibilité
-        metrics_data = get_metrics_summary()
+        metrics_data = _get_fallback_metrics()
         try:
             from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
@@ -109,10 +110,6 @@ async def metrics() -> str:
     except Exception as e:
         logging.error(f"Erreur endpoint /metrics: {e}")
         raise Exception(f"Erreur Helloria: {e}") from e
-        return JSONResponse(
-            status_code=500,
-            content={"error": "Erreur collecte métriques", "details": str(e)},
-        )
 
 
 def _get_fallback_metrics() -> dict:
@@ -236,7 +233,8 @@ app = FastAPI(
 
 # 🧩 Inclusion des routers
 app.include_router(router)
-app.include_router(reflexia_router)  # ✅ Active le endpoint /reflexia/check
+app.include_router(reflexia_router, prefix="/reflexia")
+app.include_router(zeroia_router, prefix="/zeroia")
 
 
 @app.get("/health")
@@ -244,10 +242,53 @@ def health() -> dict:
     return {"status": "ok"}
 
 
+@app.get("/zeroia/health", tags=["ZeroIA"])
+def zeroia_health() -> dict:
+    try:
+        from modules.zeroia.core import health_check
+
+        return health_check()
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+@app.get("/reflexia/health", tags=["ReflexIA"])
+def reflexia_health() -> dict:
+    try:
+        # Vérification simple de l'état ReflexIA
+        from pathlib import Path
+
+        reflexia_state = Path("state/reflexia_state.toml")
+        if reflexia_state.exists():
+            return {"status": "active", "module": "reflexia"}
+        else:
+            return {"status": "inactive", "module": "reflexia"}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+@app.get("/sandozia/health", tags=["Sandozia"])
+def sandozia_health() -> dict:
+    try:
+        # Vérification simple de l'état Sandozia
+        from pathlib import Path
+
+        sandozia_state = Path("state/sandozia")
+        if sandozia_state.exists():
+            return {"status": "active", "module": "sandozia"}
+        else:
+            return {"status": "inactive", "module": "sandozia"}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
 @app.get("/zeroia/status", tags=["ZeroIA"])
-def zeroia_status() -> dict:
-    with open("state/zeroia_dashboard.json") as f:
-        return json.load(f)
+def zeroia_status():
+    try:
+        with open("state/zeroia_dashboard.json") as f:
+            return json.load(f)
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 
 def _get_metrics() -> dict:

@@ -1,0 +1,86 @@
+# Configuration des seuils pour Arkalia Score Generator
+# Fichier de configuration des seuils cognitifs
+
+[arkalia_score]
+version = "1.0"
+description = "Configuration des seuils pour le score cognitif global Arkalia-LUNA"
+
+# Seuils par défaut pour les composants
+[arkalia_score.thresholds]
+# Confiance ZeroIA (0.0 - 1.0)
+zeroia_confidence = 0.7
+
+# Nombre maximum d'alertes Reflexia actives
+reflexia_alerts = 5
+
+# Score d'intégrité Sandozia (0.0 - 1.0)
+sandozia_integrity = 0.8
+
+# Charge cognitive maximale (0.0 - 1.0)
+cognitive_load = 0.6
+
+# Santé système minimale (0.0 - 1.0)
+system_health = 0.8
+
+# Seuils d'alerte avancés
+[arkalia_score.alert_thresholds]
+# Seuil critique
+critical = 0.3
+
+# Seuil d'avertissement
+warning = 0.5
+
+# Seuil d'excellence
+excellent = 0.8
+
+# Configuration des poids pour le calcul du score global
+[arkalia_score.weights]
+zeroia_confidence = 0.25
+reflexia_alerts = 0.20
+sandozia_integrity = 0.20
+cognitive_load = 0.15
+system_health = 0.20
+
+# Configuration du monitoring
+[arkalia_score.monitoring]
+# Intervalle de mise à jour du score (en secondes)
+update_interval = 30
+
+# Taille maximale de l'historique
+max_history_size = 100
+
+# Activation du monitoring temps réel
+real_time_monitoring = true
+
+# Configuration des notifications
+[arkalia_score.notifications]
+# Activation des alertes par email
+email_alerts = false
+
+# Activation des alertes Slack
+slack_alerts = false
+
+# Activation des alertes webhook
+webhook_alerts = false
+
+# Configuration des métriques avancées
+[arkalia_score.advanced_metrics]
+# Activation des métriques détaillées
+detailed_metrics = true
+
+# Activation du tracking des tendances
+trend_tracking = true
+
+# Activation de l'analyse prédictive
+predictive_analysis = false
+
+# Configuration de la persistance
+[arkalia_score.persistence]
+# Backend de stockage (json, sqlite)
+backend = "json"
+
+# Chemin de sauvegarde
+backup_path = "backup/arkalia_score"
+
+# Fréquence de sauvegarde (en heures)
+backup_frequency = 24

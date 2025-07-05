@@ -45,8 +45,8 @@ start_containers() {
     find . -name ".DS_Store" -delete 2>/dev/null || true
 
     # Construction et démarrage
-    docker-compose -f "$COMPOSE_FILE" build --no-cache
-    docker-compose -f "$COMPOSE_FILE" up -d
+    docker compose -f "$COMPOSE_FILE" build --no-cache
+    docker compose -f "$COMPOSE_FILE" up -d
 
     log_info "✅ Conteneurs démarrés"
     log_info "🌐 API disponible sur: http://localhost:8000"
@@ -55,7 +55,7 @@ start_containers() {
 
 stop_containers() {
     log_info "🛑 Arrêt des conteneurs..."
-    docker-compose -f "$COMPOSE_FILE" down -v || true
+    docker compose -f "$COMPOSE_FILE" down -v || true
     log_info "✅ Conteneurs arrêtés"
 }
 
@@ -69,7 +69,7 @@ rebuild_containers() {
 show_status() {
     log_info "📊 Statut des conteneurs..."
     echo ""
-    docker-compose -f "$COMPOSE_FILE" ps
+    docker compose -f "$COMPOSE_FILE" ps
     echo ""
 
     # Test de connectivité
@@ -90,10 +90,10 @@ show_logs() {
     local service=${1:-""}
     if [[ -n "$service" ]]; then
         log_info "📋 Logs du service: $service"
-        docker-compose -f "$COMPOSE_FILE" logs -f --tail=100 "$service"
+        docker compose -f "$COMPOSE_FILE" logs -f --tail=100 "$service"
     else
         log_info "📋 Logs de tous les services"
-        docker-compose -f "$COMPOSE_FILE" logs -f --tail=50
+        docker compose -f "$COMPOSE_FILE" logs -f --tail=50
     fi
 }
 
@@ -103,7 +103,7 @@ health_check() {
     local all_healthy=true
 
     # Test des services
-    if docker-compose -f "$COMPOSE_FILE" ps | grep -q "Up"; then
+    if docker compose -f "$COMPOSE_FILE" ps | grep -q "Up"; then
         echo -e "  ${GREEN}✅${NC} Services Docker - Running"
     else
         echo -e "  ${RED}❌${NC} Services Docker - Stopped"

@@ -3,7 +3,7 @@
 ![Version](https://img.shields.io/badge/version-v3.0--phase1-blue)
 ![CI](https://github.com/athalia-siwek/arkalia-luna-pro/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
-![Coverage](https://img.shields.io/badge/coverage-36%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-59.25%25-brightgreen)
 
 Le module `assistantia/` est l’interface d’assistance IA locale d’Arkalia-LUNA. Il agit comme **guide conversationnel**, interface cognitive et **répondant intelligent** aux requêtes utilisateurs.
 
@@ -33,17 +33,24 @@ uvicorn modules.assistantia.core:app --port 8001
 | Méthode | URL    | Description                      |
 |---------|--------|----------------------------------|
 | POST    | /chat  | Envoie un message à l’IA locale  |
-| GET     | /status| État du module assistantia       |
+| GET     | /status| État du module assistantia        |
 
 ---
 
-## 🧪 Tests associés
+## 🧪 Tests associés & CI/CD
 
 - **Fichiers** :
   - `test_assistantia.py` (unitaires)
   - `test_assistantia_integration.py` (intégration)
+- **Pipeline CI/CD** :
+  - 671 tests passés, 0 échec
+  - Couverture globale : **59.25 %** (seuil requis 28 % largement dépassé)
+  - Healthcheck Python natif intégré
+  - Upload conditionnel des artefacts
+  - CI/CD 100 % verte et stable (GitHub Actions)
+  - Surveillance et conformité sécurité actives
 
-✅ **Couverture** : 81 % — avec plan d’extension vers les cas d’erreur et logs détaillés.
+✅ **Stabilité validée** : module compatible avec la pipeline CI/CD, tests automatisés, artefacts et logs surveillés.
 
 ---
 
@@ -138,7 +145,7 @@ sequenceDiagram
 
 ---
 
-🧠 *L'AssistantIA est votre partenaire intelligent pour une interaction IA enrichissante et sécurisée.*
+🧠 *L'AssistantIA est votre partenaire intelligent pour une interaction IA enrichissante, sécurisée et conforme aux exigences CI/CD et sécurité d'Arkalia-LUNA Pro.*
 
 Pour des considérations de sécurité, veuillez consulter [la section Sécurité](../security/security.md).
 

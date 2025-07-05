@@ -1,0 +1,45 @@
+---
+# Configuration Codecov pour Arkalia-LUNA Pro
+# Assure une couverture précise et cohérente avec les tests locaux
+
+coverage:
+  precision: 2
+  round: down
+  range: "80...100"
+  status:
+    project:
+      default:
+        target: 28%
+        threshold: 5%
+    patch:
+      default:
+        target: 28%
+        threshold: 5%
+
+# Inclure tous les modules Python
+codecov:
+  require_ci_to_pass: true
+  notify:
+    wait_for_ci: true
+
+# Configuration des flags pour correspondre aux tests unitaires
+flags:
+  unittests:
+    paths:
+      - modules/
+
+# Exclusions pour éviter les faux négatifs
+ignore:
+  - "tests/"
+  - "*/tests/*"
+  - "*/__pycache__/*"
+  - "*/migrations/*"
+  - "setup.py"
+  - "*/generated/*"
+  - "*/generative_ai/generated/*"
+
+# Commentaires sur les PR
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: false

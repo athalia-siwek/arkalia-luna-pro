@@ -1,0 +1,49 @@
+# 🚀 Intelligence Générative Avancée - Arkalia-LUNA v2.8.0
+FROM python:3.11-slim
+
+# === Métadonnées ===
+LABEL maintainer="Athalia - Arkalia-LUNA"
+LABEL version="2.8.0"
+LABEL description="Intelligence Générative Avancée pour auto-génération de code"
+
+# === Variables d'environnement ===
+ENV PYTHONPATH=/app/modules
+ENV GENERATIVE_AI_ENABLED=true
+ENV GENERATIVE_AI_MAX_GENERATIONS=50
+ENV GENERATIVE_AI_INTERVAL=60
+ENV PYTHONUNBUFFERED=1
+
+# === Installation des dépendances système ===
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# === Répertoire de travail ===
+WORKDIR /app
+
+# === Copie des fichiers de dépendances ===
+COPY requirements.txt .
+COPY pyproject.toml .
+
+# === Installation des dépendances Python ===
+RUN pip install --no-cache-dir -r requirements.txt
+
+# === Copie du code source ===
+COPY modules/generative_ai/ ./modules/generative_ai/
+COPY modules/__init__.py ./modules/
+
+# === Création des répertoires nécessaires ===
+RUN mkdir -p /app/logs \
+    && mkdir -p /app/modules/generative_ai/state \
+    && mkdir -p /app/modules/generative_ai/generated
+
+# === Exposition du port ===
+EXPOSE 8001
+
+# === Script de démarrage ===
+COPY scripts/start_generative_ai.sh /start.sh
+RUN chmod +x /start.sh
+
+# === Point d'entrée ===
+ENTRYPOINT ["/start.sh"]

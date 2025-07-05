@@ -1,38 +1,276 @@
-name: Deploy Docs
+---
+name: 📘 Deploy Documentation
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop, dev-migration, refonte-stable]
+  pull_request:
+    branches: [main, develop, dev-migration, refonte-stable]
 
 permissions:
-  contents: write  # ⬅️ Autorise le push sur gh-pages via le GITHUB_TOKEN
+  contents: write # ⬅️ Autorise le push sur gh-pages via le GITHUB_TOKEN
+  pages: write
+  id-token: write
+
+env:
+  PYTHON_VERSION: "3.10"
 
 jobs:
-  deploy:
+  # 🔍 Validation de la documentation
+  validate-docs:
+    name: 🔍 Validation Documentation
     runs-on: ubuntu-latest
-
+    timeout-minutes: 10
     steps:
-      - name: 🧾 Checkout du dépôt
+      - name: 📥 Checkout du dépôt
         uses: actions/checkout@v4
 
       - name: 🐍 Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
 
       - name: 📦 Installer les dépendances
         run: |
+          python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
+          pip install mkdocs mkdocs-material mkdocs-minify-plugin
 
       - name: 🧹 Clean generated files
         run: |
           find . -name "._*" -delete
           find . -name ".DS_Store" -delete
+          find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
+      - name: 🕵️ Installer mkdocs et plugins
+        run: |
+          python -m pip install --upgrade pip setuptools wheel pipx
+          python -m pipx ensurepath
+          pipx install mkdocs
+          pipx runpip mkdocs install mkdocs-material mkdocs-minify-plugin
+
+      - name: 🕵️ Validate mkdocs configuration
+        run: |
+          echo "🔍 Validation de la configuration MkDocs..."
+          if [ -f "mkdocs.yml" ]; then
+            echo "✅ mkdocs.yml trouvé"
+            mkdocs build --strict || (echo "❌ mkdocs.yml invalide" && exit 1)
+          else
+            echo "❌ mkdocs.yml manquant"
+            exit 1
+          fi
+
+      - name: 🔍 Check documentation structure
+        run: |
+          echo "🔍 Vérification de la structure de documentation..."
+
+          # Vérification des dossiers critiques
+          required_dirs=("docs" "site")
+
+          for dir in "${required_dirs[@]}"; do
+            if [ -d "$dir" ]; then
+              echo "✅ $dir trouvé"
+            else
+              echo "⚠️ $dir manquant"
+            fi
+          done
+
+          # Vérification des fichiers critiques
+          if [ -f "docs/README.md" ]; then
+            echo "✅ docs/README.md trouvé"
+          else
+            echo "⚠️ docs/README.md manquant"
+          fi
+
+      - name: 🔍 Validate markdown files
+        run: |
+          echo "🔍 Validation des fichiers Markdown..."
+
+          # Vérification basique des fichiers markdown
+          find docs/ -name "*.md" -exec echo "📄 {}" \;
+
+          # Comptage des fichiers
+          md_count=$(find docs/ -name "*.md" | wc -l)
+          echo "📊 Nombre de fichiers Markdown: $md_count"
+
+  # 📘 Build de la documentation
+  build-docs:
+    name: 📘 Build Documentation
+    runs-on: ubuntu-latest
+    needs: validate-docs
+    timeout-minutes: 15
+    steps:
+      - name: 📥 Checkout du dépôt
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+
+      - name: 📦 Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+          pip install mkdocs mkdocs-material mkdocs-minify-plugin
+
+      - name: 🧹 Clean build artifacts
+        run: |
+          find . -name "._*" -delete
+          find . -name ".DS_Store" -delete
+          rm -rf site/ .cache/
+
+      - name: 📘 Build documentation
+        run: |
+          echo "📘 Construction de la documentation..."
+          mkdocs build --clean --strict || (echo "❌ Échec de la construction" && exit 1)
+
+          echo "📊 Statistiques de build:"
+          echo "📁 Fichiers générés: $(find site/ -type f | wc -l)"
+          echo "📄 Pages HTML: $(find site/ -name "*.html" | wc -l)"
+          echo "📦 Taille totale: $(du -sh site/ | cut -f1)"
+
+      - name: 🔍 Validate built documentation
+        run: |
+          echo "🔍 Validation de la documentation construite..."
+
+          # Vérification des fichiers critiques
+          if [ -f "site/index.html" ]; then
+            echo "✅ site/index.html généré"
+          else
+            echo "❌ site/index.html manquant"
+            exit 1
+          fi
+
+          # Vérification des assets
+          if [ -d "site/assets" ]; then
+            echo "✅ Assets générés"
+          else
+            echo "⚠️ Assets manquants"
+          fi
+
+      - name: 📋 Upload built documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-build
+          path: site/
+          retention-days: 7
+
+  # 🚀 Déploiement de la documentation
+  deploy-docs:
+    name: 🚀 Deploy Documentation
+    runs-on: ubuntu-latest
+    needs: build-docs
+    if: github.event_name == 'push'
+    timeout-minutes: 10
+    steps:
+      - name: 📥 Checkout du dépôt
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+
+      - name: 📦 Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+          pip install mkdocs mkdocs-material mkdocs-minify-plugin
+
+      - name: 📋 Download built documentation
+        uses: actions/download-artifact@v4
+        with:
+          name: documentation-build
+          path: site/
+
+      - name: 🔐 Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: 📘 Déployer la documentation avec mkdocs
+        id: deployment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "🚀 Déploiement de la documentation..."
           git config --global user.email "ci@arkalia.ai"
           git config --global user.name "arkalia-bot"
-          mkdocs gh-deploy --force --remote-branch gh-pages --remote-name origin || echo "Documentation deployment failed"
+          if mkdocs gh-deploy --force --remote-branch gh-pages --remote-name origin; then
+            echo "✅ Déploiement réussi"
+            echo "page_url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Échec du déploiement"
+            exit 1
+          fi
+
+      - name: 📋 Logs du container arkalia-api en cas d'échec
+        if: failure()
+        run: |
+          echo "===== LOGS DU CONTAINER arkalia-api ====="
+          docker ps -a
+          docker logs arkalia-api || echo "Pas de logs disponibles pour arkalia-api"
+
+      - name: 🏥 Health check documentation
+        run: |
+          echo "🏥 Vérification de la documentation déployée..."
+
+          # Attendre que GitHub Pages soit disponible
+          sleep 30
+
+          # Vérification avec retry
+          for i in {1..10}; do
+            if curl -f -s "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" > /dev/null; then
+              echo "✅ Documentation disponible"
+              break
+            else
+              echo "⏳ Tentative $i/10 - Documentation non disponible"
+              sleep 30
+            fi
+          done
+
+  # 📊 Rapport de déploiement documentation
+  docs-report:
+    name: 📊 Rapport Documentation
+    runs-on: ubuntu-latest
+    needs: [validate-docs, build-docs, deploy-docs]
+    if: always()
+    timeout-minutes: 5
+    steps:
+      - name: 📥 Checkout du dépôt
+        uses: actions/checkout@v4
+
+      - name: 📊 Generate documentation report
+        run: |
+          echo "## 📘 Rapport Déploiement Documentation Arkalia-LUNA" > docs-report.md
+          echo "### 📅 Date: $(date)" >> docs-report.md
+          echo "### 🔗 Commit: ${{ github.sha }}" >> docs-report.md
+          echo "### 🌿 Branche: ${{ github.ref }}" >> docs-report.md
+          echo "### 🏃‍♂️ Event: ${{ github.event_name }}" >> docs-report.md
+          echo "" >> docs-report.md
+          echo "### ✅ Statut des étapes:" >> docs-report.md
+          echo "- Validation: ${{ needs.validate-docs.result }}" >> docs-report.md
+          echo "- Build: ${{ needs.build-docs.result }}" >> docs-report.md
+          echo "- Déploiement: ${{ needs.deploy-docs.result }}" >> docs-report.md
+          echo "" >> docs-report.md
+          echo "### 🌐 URL Documentation:" >> docs-report.md
+          echo "- Production: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> docs-report.md
+          echo "" >> docs-report.md
+          echo "### 📊 Statistiques:" >> docs-report.md
+          echo "- Fichiers Markdown: $(find docs/ -name '*.md' | wc -l)" >> docs-report.md
+          echo "- Pages générées: $(find site/ -name '*.html' | wc -l 2>/dev/null || echo 'N/A')" >> docs-report.md
+
+      - name: 📋 Upload documentation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-report
+          path: docs-report.md
+          retention-days: 90
+
+      - name: 🚨 Notify on documentation failure
+        if: failure()
+        run: |
+          echo "❌ Déploiement documentation a échoué sur ${{ github.ref }}"
+          echo "🔗 Voir les détails: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

@@ -148,7 +148,7 @@ def test_circuit_transitions_to_half_open(circuit_breaker, mock_event_store):
     # Simuler expiration du timeout
     circuit_breaker.last_failure_time = datetime.now() - timedelta(seconds=31)
 
-    def successful_function() -> None:
+    def successful_function() -> str:
         return "success"
 
     result = circuit_breaker.call(successful_function)
@@ -163,7 +163,7 @@ def test_half_open_to_closed_on_success(circuit_breaker, mock_event_store):
     circuit_breaker.state = "HALF_OPEN"
     circuit_breaker.metrics.consecutive_failures = 2
 
-    def successful_function() -> None:
+    def successful_function() -> str:
         return "recovery success"
 
     result = circuit_breaker.call(successful_function)
@@ -252,7 +252,7 @@ def test_retry_mechanism_with_tenacity(circuit_breaker, mock_event_store):
 def test_metrics_calculation(circuit_breaker, mock_event_store):
     """🧪 Test calcul des métriques"""
 
-    def successful_function() -> None:
+    def successful_function() -> str:
         return "success"
 
     def failing_function() -> None:

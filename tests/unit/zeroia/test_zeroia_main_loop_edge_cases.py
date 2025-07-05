@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 
 from modules.zeroia.reason_loop import main_loop
-from tests.common.test_helpers import ensure_test_toml
+from tests.fixtures.__test_helpers import ensure_test_toml
 
 ensure_test_toml()
 

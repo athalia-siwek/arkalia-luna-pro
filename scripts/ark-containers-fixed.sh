@@ -53,7 +53,7 @@ check_requirements() {
         exit 1
     fi
 
-    if ! command -v docker-compose &> /dev/null; then
+    if ! command -v docker compose &> /dev/null; then
         log "ERROR" "Docker Compose n'est pas installé"
         exit 1
     fi
@@ -93,10 +93,10 @@ ark-start-fixed() {
 
     # Construire et démarrer
     log "INFO" "🔨 Construction des images..."
-    docker-compose -f "$COMPOSE_FILE" build --no-cache
+    docker compose -f "$COMPOSE_FILE" build --no-cache
 
     log "INFO" "▶️ Démarrage des services..."
-    docker-compose -f "$COMPOSE_FILE" up -d
+    docker compose -f "$COMPOSE_FILE" up -d
 
     # Attendre que les services soient prêts
     log "INFO" "⏳ Attente de la disponibilité des services..."
@@ -113,7 +113,7 @@ ark-start-fixed() {
 ark-stop-fixed() {
     log "INFO" "🛑 Arrêt des conteneurs Arkalia-LUNA (FIXED)..."
 
-    docker-compose -f "$COMPOSE_FILE" down -v || true
+    docker compose -f "$COMPOSE_FILE" down -v || true
 
     log "INFO" "✅ Tous les conteneurs sont arrêtés"
 }
@@ -145,7 +145,7 @@ ark-status-fixed() {
     echo -e "${CYAN}═══════════════════════════════════════════════════════════════════${NC}"
 
     # Statut Docker Compose
-    docker-compose -f "$COMPOSE_FILE" ps
+    docker compose -f "$COMPOSE_FILE" ps
 
     echo -e "\n${PURPLE}🔍 Tests de connectivité:${NC}"
 
@@ -179,10 +179,10 @@ ark-logs-fixed() {
 
     if [[ -n "$service" ]]; then
         log "INFO" "📋 Logs du service: $service"
-        docker-compose -f "$COMPOSE_FILE" logs -f --tail=100 "$service"
+        docker compose -f "$COMPOSE_FILE" logs -f --tail=100 "$service"
     else
         log "INFO" "📋 Logs de tous les services (temps réel)"
-        docker-compose -f "$COMPOSE_FILE" logs -f --tail=50
+        docker compose -f "$COMPOSE_FILE" logs -f --tail=50
     fi
 }
 
@@ -196,10 +196,10 @@ ark-restart-service-fixed() {
     fi
 
     log "INFO" "🔄 Redémarrage du service: $service"
-    docker-compose -f "$COMPOSE_FILE" restart "$service"
+    docker compose -f "$COMPOSE_FILE" restart "$service"
 
     sleep 5
-    docker-compose -f "$COMPOSE_FILE" ps "$service"
+    docker compose -f "$COMPOSE_FILE" ps "$service"
 
     log "INFO" "✅ Service $service redémarré"
 }
@@ -208,7 +208,7 @@ ark-shell-fixed() {
     local service=${1:-"arkalia-api-fixed"}
 
     log "INFO" "🐚 Ouverture d'un shell dans le conteneur: $service"
-    docker-compose -f "$COMPOSE_FILE" exec "$service" /bin/bash
+    docker compose -f "$COMPOSE_FILE" exec "$service" /bin/bash
 }
 
 ark-health-check-fixed() {
@@ -220,7 +220,7 @@ ark-health-check-fixed() {
     services=("arkalia-api-fixed" "assistantia-fixed" "reflexia-fixed" "zeroia-fixed" "sandozia-fixed" "cognitive-reactor-fixed")
 
     for service in "${services[@]}"; do
-        if docker-compose -f "$COMPOSE_FILE" ps "$service" | grep -q "Up"; then
+        if docker compose -f "$COMPOSE_FILE" ps "$service" | grep -q "Up"; then
             echo -e "  ${GREEN}✅${NC} $service - Running"
         else
             echo -e "  ${RED}❌${NC} $service - Stopped/Error"

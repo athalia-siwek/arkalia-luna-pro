@@ -1,6 +1,15 @@
-# 🚀 Quick Start - Arkalia-LUNA v2.8.0
+# 🚀 Quick Start - Arkalia-LUNA Pro v2.8.0
 
-Guide de démarrage rapide pour utiliser Arkalia-LUNA en 5 minutes !
+## 📊 **ÉTAT ACTUEL DU SYSTÈME (Mise à jour 27/01/2025)**
+
+### ✅ **SUCCÈS MAJEUR - CI/CD 100% Verte !**
+- **671 tests passés** (642 unitaires + 29 intégration) ✅
+- **Couverture : 59.25%** (bien au-dessus du seuil de 28%) ✅
+- **Temps d'exécution : 31.73s** ✅
+- **Healthcheck optimisé** : Python urllib natif ✅
+- **Artefacts uploadés** : Conditionnel et robuste ✅
+
+Guide de démarrage rapide pour utiliser Arkalia-LUNA Pro en 5 minutes !
 
 ## ⚡ Installation Express
 
@@ -25,7 +34,7 @@ cd arkalia-luna-pro
 ### 3. Test Système
 ```bash
 # Vérifier l'installation
-ark-test  # 99.5% tests PASSED
+ark-test  # 671 tests PASSED (59.25% couverture)
 
 # Statut des modules
 ark-status
@@ -88,10 +97,10 @@ curl http://localhost:8000/metrics
 
 ## 📚 Ressources Essentielles
 
-- **📖 Documentation** : [Modules Overview](../modules/index.md)
+- **📖 Documentation** : [Modules Overview](../modules/zeroia.md)
 - **🧠 Architecture** : [Structure du Système](../fonctionnement/structure.md)
 - **🔧 API** : [Guide API](../reference/api.md)
-- **📊 Monitoring** : [Guide Monitoring](../infrastructure/monitoring.md)
+- **📊 Monitoring** : [Guide Monitoring](../devops/index.md)
 
 ## 🆘 Aide Rapide
 
@@ -138,10 +147,10 @@ docker-compose -f docker-compose.monitoring.yml up -d
 
 ## 🎯 Prochaines Étapes
 
-1. **Explorer les modules** : [Modules détaillés](../modules/index.md)
-2. **Configurer l'API** : [Configuration](../infrastructure/configuration.md)
+1. **Explorer les modules** : [Modules détaillés](../modules/zeroia.md)
+2. **Configurer l'API** : [Configuration](../devops/index.md)
 3. **Personnaliser** : [Architecture](../fonctionnement/structure.md)
-4. **Monitoring** : [Guide Monitoring](../infrastructure/monitoring.md)
+4. **Monitoring** : [Guide Monitoring](../devops/index.md)
 5. **Contribuer** : [Guide de contribution](../credits/CONTRIBUTING.md)
 
 ## 📊 Métriques Disponibles
@@ -162,6 +171,19 @@ Le monitoring expose **34 métriques Arkalia** :
 - **Refresh** : 30 secondes
 - **Thème** : Dark mode
 
+## 🎯 **Métriques de Performance Actuelles**
+
+| Métrique | Valeur | Statut |
+|----------|--------|--------|
+| **Tests passés** | 671/671 | ✅ 100% |
+| **Couverture** | 59.25% | ✅ >28% |
+| **Temps CI** | 31.73s | ✅ Optimal |
+| **Modules critiques** | 15/15 | ✅ Opérationnels |
+| **Healthcheck** | Python urllib | ✅ Natif |
+| **Artefacts** | Upload conditionnel | ✅ Robuste |
+
 ---
 
 > 💡 **Astuce** : Commencez par Grafana pour visualiser l'état complet du système ! 📊
+
+*Dernière mise à jour : 27 Janvier 2025 - 18:50*

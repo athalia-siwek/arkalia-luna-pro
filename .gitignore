@@ -50,7 +50,6 @@ htmlcov/
 # 📘 MkDocs : site statique généré + fichiers auxiliaires
 # ======================================================
 site/
-docs/releases/dernieres_updates.md
 docs_in_nav.txt
 docs_all.txt
 liens_non_listes.txt
@@ -66,7 +65,6 @@ liens_non_listes.txt
 # 🐳 Docker (non versionnés dans Git)
 # ======================================================
 docker-compose.override.yml
-Dockerfile*
 
 # ======================================================
 # 🧠 Fichiers de state IA (dynamiques à exclure du contrôle Git)
@@ -75,6 +73,11 @@ modules/reflexia/state/reflexia_state.toml
 modules/zeroia/state/zeroia_state.toml
 state/zeroia_dashboard.json
 modules/zeroia/state/zeroia_*.toml
+
+# ======================================================
+# 📁 Dossier archive (usage personnel, exclu de CI/CD)
+# ======================================================
+archive/
 
 # ======================================================
 # 💻 macOS / fichiers systèmes cachés
@@ -339,7 +342,6 @@ modules/*/generated/
 .coverage
 coverage.xml
 test-results.xml
-bandit-report.json
 
 # Documentation build
 site/
@@ -350,3 +352,33 @@ docs/_build/
 
 # Pre-commit
 .pre-commit-config.yaml.bak
+
+tests/tmp/
+
+# ======================================================
+# 🧠 JSON MASSIFS - Arkalia-LUNA Cognitive System
+# ======================================================
+# Ignorer tous les JSON sauf les configs importantes
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!*.schema.json
+!config/*.json
+!docs/assets/docs/*.json
+
+# Rapports et états générés automatiquement
+logs/**/*.json
+modules/**/state/*.json
+snapshots/
+coverage*.json
+bandit-report.json
+print_audit.json
+demo_sandozia_results.json
+
+# Caches Python spécifiques
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc

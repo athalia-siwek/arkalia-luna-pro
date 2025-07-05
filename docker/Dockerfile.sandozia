@@ -1,0 +1,56 @@
+# 🧠 Dockerfile.sandozia - Intelligence Croisée Arkalia-LUNA
+FROM python:3.10-slim
+
+# Métadonnées
+LABEL maintainer="Athalia <athalia@arkalia.ai>"
+LABEL description="Sandozia - Intelligence Croisée Enterprise"
+LABEL version="2.6.0"
+
+# Variables d'environnement
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV SANDOZIA_ENV=production
+
+# Création utilisateur non-root pour sécurité
+RUN groupadd -r sandozia && \
+    useradd -r -g sandozia -d /app -s /bin/bash sandozia
+
+# Répertoire de travail
+WORKDIR /app
+
+# Installation dépendances système
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copie et installation des dépendances Python
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copie sélective du code
+COPY --chown=sandozia:sandozia modules/sandozia ./modules/sandozia
+COPY --chown=sandozia:sandozia modules/monitoring ./modules/monitoring
+COPY --chown=sandozia:sandozia modules/utils_enhanced ./modules/utils_enhanced
+COPY --chown=sandozia:sandozia modules/__init__.py ./modules/
+COPY --chown=sandozia:sandozia config ./config
+COPY --chown=sandozia:sandozia state ./state
+COPY --chown=sandozia:sandozia scripts ./scripts
+COPY --chown=sandozia:sandozia modules/reflexia ./modules/reflexia
+COPY --chown=sandozia:sandozia modules/zeroia ./modules/zeroia
+
+# Création des dossiers nécessaires avec bonnes permissions
+RUN mkdir -p /app/demo_sandozia_state && \
+    mkdir -p /app/cache/sandozia_snapshots && \
+    chown -R sandozia:sandozia /app/demo_sandozia_state && \
+    chown -R sandozia:sandozia /app/cache
+
+# Switch vers utilisateur non-root
+USER sandozia
+
+# Healthcheck Sandozia simplifié
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+    CMD python -c "print('Sandozia OK')" || exit 1
+
+# Point d'entrée
+CMD ["python", "-m", "modules.sandozia.core"]

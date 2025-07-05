@@ -1,3 +1,9 @@
+"""
+Module core_api.
+
+Ce module fait partie du système Arkalia Luna Pro.
+"""
+
 # 📁 modules/reflexia/core_api.py
 
 from fastapi import APIRouter

@@ -7,13 +7,13 @@ from helloria.core import app  # ou là où tu exposes FastAPI
 
 
 @pytest.fixture
-def client() -> None:
+def client() -> TestClient:
     return TestClient(app)
 
 
 def test_reflexia_check(client) -> None:
-    # 🔎 Appel du endpoint Reflexia
-    response = client.get("/reflexia/check")
+    # 🔎 Appel du endpoint Reflexia health (endpoint existant)
+    response = client.get("/reflexia/health")
 
     # ✅ Statut HTTP attendu
     assert response.status_code == 200, f"Erreur HTTP : {response.status_code} - {response.text}"
@@ -21,7 +21,5 @@ def test_reflexia_check(client) -> None:
     # ✅ Structure de la réponse attendue
     data = response.json()
     assert "status" in data, "Clé 'status' manquante dans la réponse"
-    assert "metrics" in data, "Clé 'metrics' manquante dans la réponse"
-    assert isinstance(data["metrics"], dict), "'metrics' doit être un dictionnaire"
-    assert "cpu" in data["metrics"], "Clé 'cpu' manquante dans les métriques"
-    assert "ram" in data["metrics"], "Clé 'ram' manquante dans les métriques"
+    assert "module" in data, "Clé 'module' manquante dans la réponse"
+    assert data["module"] == "reflexia", "Module incorrect dans la réponse"

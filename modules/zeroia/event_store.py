@@ -83,7 +83,7 @@ class EventStore:
     """Stockage des événements pour Arkalia-LUNA"""
 
     def __init__(
-        self, cache_dir: str = "./cache/zeroia_events", size_limit: int = 10_000_000
+        self, cache_dir: str = "./cache/zeroia_events.json", size_limit: int = 10_000_000
     ) -> None:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.parent.mkdir(parents=True, exist_ok=True)
@@ -329,7 +329,7 @@ class EventStore:
         # Filtrer les événements récents
         recent_events = [e for e in recent_events if e.timestamp >= since]
 
-        anomalies = {
+        anomalies: dict[str, Any] = {
             "window_minutes": window_minutes,
             "total_events": len(recent_events),
             "anomalies": [],

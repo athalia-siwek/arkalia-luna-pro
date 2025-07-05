@@ -45,8 +45,8 @@ alias ark-docs='mkdocs serve -a 127.0.0.1:9000'
 alias ark-docs-build='mkdocs build'
 
 # Docker
-alias ark-docker-up='docker-compose up -d'
-alias ark-docker-down='docker-compose down'
+alias ark-docker-up='docker compose up -d'
+alias ark-docker-down='docker compose down'
 alias ark-docker-status='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
 
 # Développement

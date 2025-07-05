@@ -22,7 +22,7 @@ echo "✅ [CHECK] requirements.txt trouvé ($(wc -l < requirements.txt) lignes)"
 
 # === Nettoyage Docker ===
 echo "🐳 [DOCKER] Nettoyage du système Docker..."
-docker-compose down 2>/dev/null || true
+docker compose down 2>/dev/null || true
 docker system prune -f
 docker builder prune -f
 
@@ -31,7 +31,7 @@ echo "🔨 [BUILD] Construction des images optimisées..."
 
 # API Principale d'abord
 echo "🌐 [API] Construction Arkalia API..."
-if docker-compose build --no-cache arkalia-api; then
+if docker compose build --no-cache arkalia-api; then
     echo "✅ [API] Arkalia API construite avec succès"
 else
     echo "❌ [API] Échec construction Arkalia API"
@@ -40,7 +40,7 @@ fi
 
 # AssistantIA
 echo "🤖 [ASSISTANTIA] Construction AssistantIA..."
-if docker-compose build --no-cache assistantia; then
+if docker compose build --no-cache assistantia; then
     echo "✅ [ASSISTANTIA] AssistantIA construite avec succès"
 else
     echo "⚠️ [ASSISTANTIA] Échec construction AssistantIA - Continuons..."
@@ -48,7 +48,7 @@ fi
 
 # ReflexIA
 echo "🔄 [REFLEXIA] Construction ReflexIA..."
-if docker-compose build --no-cache reflexia; then
+if docker compose build --no-cache reflexia; then
     echo "✅ [REFLEXIA] ReflexIA construite avec succès"
 else
     echo "⚠️ [REFLEXIA] Échec construction ReflexIA - Continuons..."
@@ -56,7 +56,7 @@ fi
 
 # ZeroIA
 echo "🧠 [ZEROIA] Construction ZeroIA..."
-if docker-compose build --no-cache zeroia; then
+if docker compose build --no-cache zeroia; then
     echo "✅ [ZEROIA] ZeroIA construite avec succès"
 else
     echo "⚠️ [ZEROIA] Échec construction ZeroIA - Continuons..."
@@ -64,7 +64,7 @@ fi
 
 # Sandozia
 echo "🧬 [SANDOZIA] Construction Sandozia..."
-if docker-compose build --no-cache sandozia; then
+if docker compose build --no-cache sandozia; then
     echo "✅ [SANDOZIA] Sandozia construite avec succès"
 else
     echo "⚠️ [SANDOZIA] Échec construction Sandozia - Continuons..."
@@ -72,7 +72,7 @@ fi
 
 # === Démarrage des conteneurs ===
 echo "🚀 [START] Démarrage des conteneurs optimisés..."
-docker-compose up -d
+docker compose up -d
 
 # === Vérification santé ===
 echo "🏥 [HEALTH] Vérification de la santé des conteneurs..."
