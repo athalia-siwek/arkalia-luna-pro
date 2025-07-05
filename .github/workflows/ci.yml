@@ -370,52 +370,52 @@ jobs:
         uses: actions/checkout@v4
       - name: 🐳 Build ZeroIA
         run: |
-          if [ -f "Dockerfile.zeroia" ]; then
-            docker build -f Dockerfile.zeroia -t arkalia-zeroia . || echo "⚠️ Construction ZeroIA échouée"
+          if [ -f "docker/Dockerfile.zeroia" ]; then
+            docker build -f docker/Dockerfile.zeroia -t arkalia-zeroia . || echo "⚠️ Construction ZeroIA échouée"
           else
-            echo "⚠️ Dockerfile.zeroia non trouvé"
+            echo "⚠️ docker/Dockerfile.zeroia non trouvé"
           fi
       - name: 🐳 Build ReflexIA
         run: |
-          if [ -f "Dockerfile.reflexia" ]; then
-            docker build -f Dockerfile.reflexia -t arkalia-reflexia . || echo "⚠️ Construction ReflexIA échouée"
+          if [ -f "docker/Dockerfile.reflexia" ]; then
+            docker build -f docker/Dockerfile.reflexia -t arkalia-reflexia . || echo "⚠️ Construction ReflexIA échouée"
           else
-            echo "⚠️ Dockerfile.reflexia non trouvé"
+            echo "⚠️ docker/Dockerfile.reflexia non trouvé"
           fi
       - name: 🐳 Build Sandozia
         run: |
-          if [ -f "Dockerfile.sandozia" ]; then
-            docker build -f Dockerfile.sandozia -t arkalia-sandozia . || echo "⚠️ Construction Sandozia échouée"
+          if [ -f "docker/Dockerfile.sandozia" ]; then
+            docker build -f docker/Dockerfile.sandozia -t arkalia-sandozia . || echo "⚠️ Construction Sandozia échouée"
           else
-            echo "⚠️ Dockerfile.sandozia non trouvé"
+            echo "⚠️ docker/Dockerfile.sandozia non trouvé"
           fi
       - name: 🐳 Build AssistantIA
         run: |
-          if [ -f "Dockerfile.assistantia" ]; then
-            docker build -f Dockerfile.assistantia -t arkalia-assistantia . || echo "⚠️ Construction AssistantIA échouée"
+          if [ -f "docker/Dockerfile.assistantia" ]; then
+            docker build -f docker/Dockerfile.assistantia -t arkalia-assistantia . || echo "⚠️ Construction AssistantIA échouée"
           else
-            echo "⚠️ Dockerfile.assistantia non trouvé"
+            echo "⚠️ docker/Dockerfile.assistantia non trouvé"
           fi
       - name: 🐳 Build Cognitive Reactor
         run: |
-          if [ -f "Dockerfile.cognitive-reactor" ]; then
-            docker build -f Dockerfile.cognitive-reactor -t arkalia-cognitive-reactor . || echo "⚠️ Construction Cognitive Reactor échouée"
+          if [ -f "docker/Dockerfile.cognitive-reactor" ]; then
+            docker build -f docker/Dockerfile.cognitive-reactor -t arkalia-cognitive-reactor . || echo "⚠️ Construction Cognitive Reactor échouée"
           else
-            echo "⚠️ Dockerfile.cognitive-reactor non trouvé"
+            echo "⚠️ docker/Dockerfile.cognitive-reactor non trouvé"
           fi
       - name: 🐳 Build Generative AI
         run: |
-          if [ -f "Dockerfile.generative-ai" ]; then
-            docker build -f Dockerfile.generative-ai -t arkalia-generative-ai . || echo "⚠️ Construction Generative AI échouée"
+          if [ -f "docker/Dockerfile.generative-ai" ]; then
+            docker build -f docker/Dockerfile.generative-ai -t arkalia-generative-ai . || echo "⚠️ Construction Generative AI échouée"
           else
-            echo "⚠️ Dockerfile.generative-ai non trouvé"
+            echo "⚠️ docker/Dockerfile.generative-ai non trouvé"
           fi
       - name: 🐳 Build Master
         run: |
-          if [ -f "Dockerfile.master" ]; then
-            docker build -f Dockerfile.master -t arkalia-master . || echo "⚠️ Construction Master échouée"
+          if [ -f "docker/Dockerfile.master" ]; then
+            docker build -f docker/Dockerfile.master -t arkalia-master . || echo "⚠️ Construction Master échouée"
           else
-            echo "⚠️ Dockerfile.master non trouvé"
+            echo "⚠️ docker/Dockerfile.master non trouvé"
           fi
 
   # 🧪 Tests E2E
