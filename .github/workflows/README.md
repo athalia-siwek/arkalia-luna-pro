@@ -48,6 +48,12 @@
 - **`performance-tests.yml`** : Performance (spécialisé)
 - **`docs.yml`** : Documentation (spécialisé)
 
+### **🎯 Interface GitHub Actions Optimisée**
+- **Workflows visibles** : 3 workflows essentiels (ci.yml, deploy.yml, docs.yml)
+- **Workflows masqués** : 2 workflows spécialisés (performance-tests.yml, security-scan.yml)
+- **Exécution manuelle** : Les workflows masqués sont disponibles via "Run workflow"
+- **Interface plus propre** : Moins de bruit visuel dans l'onglet Actions
+
 ---
 
 ## 🎯 **Philosophie Ultra-Pro**

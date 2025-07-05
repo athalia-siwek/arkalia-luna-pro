@@ -2,13 +2,15 @@
 name: 🚀 Tests de Performance
 
 on:
-  push:
-    branches: [main, dev-migration]
-  pull_request:
-    branches: [main, dev-migration]
-  schedule:
-    # Tests de performance quotidiens à 2h du matin
-    - cron: "0 2 * * *"
+  # Désactivé temporairement - décommenter pour activer
+  # push:
+  #   branches: [main, dev-migration]
+  # pull_request:
+  #   branches: [main, dev-migration]
+  # schedule:
+  #   # Tests de performance quotidiens à 2h du matin
+  #   - cron: "0 2 * * *"
+  workflow_dispatch: # Seulement manuel
 
 env:
   PYTHON_VERSION: "3.10"
