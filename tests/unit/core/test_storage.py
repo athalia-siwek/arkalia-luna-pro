@@ -25,15 +25,18 @@ def temp_dir() -> Generator[Path, None, None]:
     with tempfile.TemporaryDirectory() as temp:
         yield Path(temp)
 
+
 @pytest.fixture
 def json_backend(temp_dir: Path) -> JSONFileBackend:
     """Fixture pour créer un backend JSON"""
     return JSONFileBackend(str(temp_dir))
 
+
 @pytest.fixture
 def sqlite_backend(temp_dir: Path) -> SQLiteBackend:
     """Fixture pour créer un backend SQLite"""
     return SQLiteBackend(str(temp_dir / "test.db"))
+
 
 def test_json_backend_basic_operations(json_backend: JSONFileBackend) -> None:
     """Test des opérations de base du backend JSON"""
@@ -49,6 +52,7 @@ def test_json_backend_basic_operations(json_backend: JSONFileBackend) -> None:
     assert json_backend.delete("test_key")
     assert not json_backend.exists("test_key")
     assert json_backend.get("test_key") is None
+
 
 def test_json_backend_list_keys(json_backend: JSONFileBackend) -> None:
     """Test du listage des clés du backend JSON"""
@@ -70,6 +74,7 @@ def test_json_backend_list_keys(json_backend: JSONFileBackend) -> None:
     assert "test1" in test_keys
     assert "test2" in test_keys
 
+
 def test_sqlite_backend_basic_operations(sqlite_backend: SQLiteBackend) -> None:
     """Test des opérations de base du backend SQLite"""
     # Test set et get
@@ -84,6 +89,7 @@ def test_sqlite_backend_basic_operations(sqlite_backend: SQLiteBackend) -> None:
     assert sqlite_backend.delete("test_key")
     assert not sqlite_backend.exists("test_key")
     assert sqlite_backend.get("test_key") is None
+
 
 def test_storage_manager_module_operations(temp_dir: Path) -> None:
     """Test des opérations sur les modules du StorageManager"""
@@ -108,6 +114,7 @@ def test_storage_manager_module_operations(temp_dir: Path) -> None:
     assert manager.save_decision("test_module", "decision1", decision)
     assert manager.get_decision("test_module", "decision1") == decision
 
+
 def test_storage_manager_backup_restore(temp_dir: Path) -> None:
     """Test des opérations de backup/restore du StorageManager"""
     manager = StorageManager(backend="json", base_path=str(temp_dir))
@@ -130,6 +137,7 @@ def test_storage_manager_backup_restore(temp_dir: Path) -> None:
     assert manager.get_state("test_module") == {"status": "active"}
     assert manager.get_config("test_module") == {"param": "value"}
     assert manager.get_metrics("test_module") == {"cpu": 45.2}
+
 
 def test_storage_singleton() -> None:
     """Test du singleton de stockage"""

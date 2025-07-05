@@ -8,6 +8,7 @@ def test_core_initialization() -> None:
     core = TestCore()
     assert isinstance(core, TestCore)
 
+
 def test_basic_functionality() -> None:
     """Test de la fonctionnalité de base"""
     core = TestCore()

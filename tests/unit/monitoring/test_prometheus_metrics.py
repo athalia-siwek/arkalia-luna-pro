@@ -16,12 +16,16 @@ def test_metrics_initialization():
     assert metrics.arkalia_requests_total._name == "arkalia_requests"
     assert metrics.arkalia_request_duration._name == "arkalia_request_duration"
 
+
 def test_metrics_labels():
     registry = CollectorRegistry()
     metrics = ArkaliaMetrics(registry=registry)
     metrics.arkalia_requests_total.labels(method="GET", endpoint="/", status=200).inc()
-    value = registry.get_sample_value("arkalia_requests_total", labels={"method": "GET", "endpoint": "/", "status": "200"})
+    value = registry.get_sample_value(
+        "arkalia_requests_total", labels={"method": "GET", "endpoint": "/", "status": "200"}
+    )
     assert value == 1
+
 
 def test_metrics_values():
     registry = CollectorRegistry()
@@ -29,9 +33,12 @@ def test_metrics_values():
     metrics.arkalia_system_uptime.set(123.45)
     assert registry.get_sample_value("arkalia_system_uptime") == 123.45
 
+
 def test_metrics_histogram():
     registry = CollectorRegistry()
     metrics = ArkaliaMetrics(registry=registry)
     metrics.arkalia_request_duration.labels(method="GET", endpoint="/").observe(0.5)
-    count = registry.get_sample_value("arkalia_request_duration_count", labels={"method": "GET", "endpoint": "/"})
+    count = registry.get_sample_value(
+        "arkalia_request_duration_count", labels={"method": "GET", "endpoint": "/"}
+    )
     assert count == 1

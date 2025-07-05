@@ -55,9 +55,9 @@ class CoreManager:
         try:
             self.logger.info("🧠 Initialisation Core SOLID...")
             if ConfigManager is not None:
-                    self.config_manager = ConfigManager()
+                self.config_manager = ConfigManager()
             if HealthMonitor is not None:
-                    self.health_monitor = HealthMonitor()
+                self.health_monitor = HealthMonitor()
             if CoreOrchestrator is not None:
                 try:
                     self.orchestrator = CoreOrchestrator()

@@ -23,10 +23,12 @@ def temp_timeline_dir(tmp_path: Path) -> Generator[Path, None, None]:
     timeline_dir.mkdir()
     yield timeline_dir
 
+
 @pytest.fixture
 def chronalia(temp_timeline_dir: Path) -> Chronalia:
     """Fixture pour créer une instance de Chronalia"""
     return create_chronalia(str(temp_timeline_dir))
+
 
 def test_cognitive_cycle_creation() -> None:
     """Test de la création d'un cycle cognitif"""
@@ -46,7 +48,7 @@ def test_cognitive_cycle_creation() -> None:
         cognitive_reactions=["test_reaction"],
         cycle_duration_ms=100,
         pattern_repetition_count=0,
-        global_health_score=0.85
+        global_health_score=0.85,
     )
 
     assert cycle.timestamp == "2024-03-20T12:00:00"
@@ -66,6 +68,7 @@ def test_cognitive_cycle_creation() -> None:
     assert cycle.pattern_repetition_count == 0
     assert cycle.global_health_score == 0.85
 
+
 def test_chronalia_initialization(temp_timeline_dir: Path) -> None:
     """Test de l'initialisation de Chronalia"""
     chronalia = Chronalia(str(temp_timeline_dir))
@@ -75,6 +78,7 @@ def test_chronalia_initialization(temp_timeline_dir: Path) -> None:
     assert chronalia.patterns_file == temp_timeline_dir / "detected_patterns.jsonl"
     assert chronalia.recent_cycles == []
     assert chronalia.current_cycle_start is None
+
 
 def test_chronalia_cycle_management(chronalia: Chronalia) -> None:
     """Test de la gestion des cycles"""
@@ -97,7 +101,7 @@ def test_chronalia_cycle_management(chronalia: Chronalia) -> None:
         "quarantined_modules": [],
         "berserk_mode": False,
         "pattern_repetition_count": 0,
-        "global_health_score": 0.85
+        "global_health_score": 0.85,
     }
     reactions = ["test_reaction"]
 
@@ -118,6 +122,7 @@ def test_chronalia_cycle_management(chronalia: Chronalia) -> None:
         assert saved_cycle["reflexia_score"] == 0.8
         assert saved_cycle["sandozia_health"] == 0.9
 
+
 def test_chronalia_heatmap_data(chronalia: Chronalia) -> None:
     """Test de la génération des données heatmap"""
     # Créer quelques cycles de test
@@ -136,7 +141,7 @@ def test_chronalia_heatmap_data(chronalia: Chronalia) -> None:
             "quarantined_modules": ["test"] if i == 2 else [],  # Un cycle avec quarantaine
             "berserk_mode": i == 0,  # Un cycle en mode berserk
             "pattern_repetition_count": i,
-            "global_health_score": 0.85
+            "global_health_score": 0.85,
         }
         chronalia.start_cycle()
         chronalia.complete_cycle(context, [f"reaction_{i}"])
@@ -153,6 +158,7 @@ def test_chronalia_heatmap_data(chronalia: Chronalia) -> None:
     assert bucket["quarantined_modules"] == 1
     assert "continue" in bucket["decisions"]
     assert bucket["decisions"]["continue"] == 3
+
 
 def test_chronalia_pattern_detection(chronalia: Chronalia) -> None:
     """Test de la détection des patterns"""
@@ -171,7 +177,7 @@ def test_chronalia_pattern_detection(chronalia: Chronalia) -> None:
             "quarantined_modules": [],
             "berserk_mode": False,
             "pattern_repetition_count": i,
-            "global_health_score": 0.85
+            "global_health_score": 0.85,
         }
         chronalia.start_cycle()
         chronalia.complete_cycle(context, ["repeat_action"])
@@ -191,7 +197,7 @@ def test_chronalia_pattern_detection(chronalia: Chronalia) -> None:
         "quarantined_modules": [],
         "berserk_mode": False,
         "pattern_repetition_count": 0,
-        "global_health_score": 0.85
+        "global_health_score": 0.85,
     }
     chronalia.start_cycle()
     chronalia.complete_cycle(context, ["stop_action"])
@@ -217,6 +223,7 @@ def test_chronalia_pattern_detection(chronalia: Chronalia) -> None:
     assert "start_time" in pattern
     assert "end_time" in pattern
 
+
 def test_chronalia_export_timeline(chronalia: Chronalia) -> None:
     """Test de l'export de la timeline"""
     # Créer quelques cycles
@@ -234,7 +241,7 @@ def test_chronalia_export_timeline(chronalia: Chronalia) -> None:
             "quarantined_modules": [],
             "berserk_mode": False,
             "pattern_repetition_count": i,
-            "global_health_score": 0.85
+            "global_health_score": 0.85,
         }
         chronalia.start_cycle()
         chronalia.complete_cycle(context, [f"action_{i}"])

@@ -13,6 +13,7 @@ from app.main import app, metrics, start_time
 
 client = TestClient(app)
 
+
 def test_root_endpoint():
     """Test de l'endpoint racine"""
     response = client.get("/")
@@ -27,11 +28,13 @@ def test_root_endpoint():
     assert isinstance(data["uptime"], float)
     assert datetime.fromisoformat(data["timestamp"])
 
+
 def test_health_endpoint():
     """Test de l'endpoint health"""
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok", "service": "arkalia-api"}
+
 
 @patch("psutil.cpu_percent")
 @patch("psutil.virtual_memory")
@@ -51,15 +54,12 @@ def test_status_endpoint(mock_disk, mock_memory, mock_cpu):
     assert data["version"] == "2.8.0"
     assert data["status"] == "active"
     assert isinstance(data["uptime_seconds"], float)
-    assert data["modules"] == {
-        "assistantia": "active",
-        "reflexia": "active",
-        "zeroia": "active"
-    }
+    assert data["modules"] == {"assistantia": "active", "reflexia": "active", "zeroia": "active"}
     assert data["metrics"] == "available"
     assert data["system"]["cpu_percent"] == 45.2
     assert data["system"]["memory_percent"] == 68.7
     assert data["system"]["disk_usage"] == 72.1
+
 
 @patch("psutil.cpu_percent")
 @patch("psutil.virtual_memory")
@@ -76,6 +76,7 @@ def test_metrics_endpoint(mock_memory, mock_cpu):
     assert b"arkalia_memory_usage" in response.content
     assert b"arkalia_cpu_usage" in response.content
 
+
 @patch("psutil.cpu_percent", side_effect=Exception("Test error"))
 def test_metrics_endpoint_error(mock_cpu):
     """Test de l'endpoint metrics avec erreur"""
@@ -83,6 +84,7 @@ def test_metrics_endpoint_error(mock_cpu):
     assert response.status_code == 500
     assert "error" in response.json()
     assert "Test error" in response.json()["error"]
+
 
 def test_metrics_middleware():
     """Test du middleware de métriques"""
@@ -108,6 +110,7 @@ def test_metrics_middleware():
     # Vérifier la durée
     assert len(metrics.arkalia_request_duration._metrics) > 0
 
+
 def test_cors_middleware():
     """Test de la configuration CORS"""
     # Test avec une requête GET avec Origin
@@ -130,9 +133,11 @@ def test_cors_middleware():
     assert "GET" in response.headers["access-control-allow-methods"]
     assert "content-type" in response.headers["access-control-allow-headers"].lower()
 
+
 def test_print_status(capsys):
     """Test de la fonction print_status"""
     from app.main import print_status
+
     print_status()
     captured = capsys.readouterr()
     assert "Arkalia-LUNA is active and running" in captured.out
